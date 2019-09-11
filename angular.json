@@ -39,10 +39,70 @@
                         "es5BrowserSupport": true
                     },
                     "configurations": {
-                        "production": {
+                        "ric411": {
                             "fileReplacements": [{
                                 "replace": "src/environments/environment.ts",
-                                "with": "src/environments/environment.prod.ts"
+                                "with": "src/environments/environment.ric411.ts"
+                            }],
+                            "optimization": true,
+                            "outputHashing": "all",
+                            "sourceMap": false,
+                            "extractCss": true,
+                            "namedChunks": false,
+                            "aot": true,
+                            "extractLicenses": true,
+                            "vendorChunk": false,
+                            "buildOptimizer": true,
+                            "budgets": [{
+                                "type": "initial",
+                                "maximumWarning": "20mb",
+                                "maximumError": "50mb"
+                            }]
+                        },
+                        "ric411-prod": {
+                            "fileReplacements": [{
+                                "replace": "src/environments/environment.ts",
+                                "with": "src/environments/environment.ric411-prod.ts"
+                            }],
+                            "optimization": true,
+                            "outputHashing": "all",
+                            "sourceMap": false,
+                            "extractCss": true,
+                            "namedChunks": false,
+                            "aot": true,
+                            "extractLicenses": true,
+                            "vendorChunk": false,
+                            "buildOptimizer": true,
+                            "budgets": [{
+                                "type": "initial",
+                                "maximumWarning": "20mb",
+                                "maximumError": "50mb"
+                            }]
+                        },
+                        "ric355": {
+                            "fileReplacements": [{
+                                "replace": "src/environments/environment.ts",
+                                "with": "src/environments/environment.ric355.ts"
+                            }],
+                            "optimization": true,
+                            "outputHashing": "all",
+                            "sourceMap": false,
+                            "extractCss": true,
+                            "namedChunks": false,
+                            "aot": true,
+                            "extractLicenses": true,
+                            "vendorChunk": false,
+                            "buildOptimizer": true,
+                            "budgets": [{
+                                "type": "initial",
+                                "maximumWarning": "20mb",
+                                "maximumError": "50mb"
+                            }]
+                        },
+                        "ric364": {
+                            "fileReplacements": [{
+                                "replace": "src/environments/environment.ts",
+                                "with": "src/environments/environment.ric364.ts"
                             }],
                             "optimization": true,
                             "outputHashing": "all",
@@ -67,8 +127,17 @@
                         "browserTarget": "metaheuristic-app:build"
                     },
                     "configurations": {
-                        "production": {
-                            "browserTarget": "metaheuristic-app:build:production"
+                        "ric411": {
+                            "browserTarget": "metaheuristic-app:build:ric411"
+                        },
+                        "ric411-prod": {
+                            "browserTarget": "metaheuristic-app:build:ric411-prod"
+                        },
+                        "ric355": {
+                            "browserTarget": "metaheuristic-app:build:ric355"
+                        },
+                        "ric364": {
+                            "browserTarget": "metaheuristic-app:build:ric364"
                         }
                     }
                 },
@@ -76,23 +145,6 @@
                     "builder": "@angular-devkit/build-angular:extract-i18n",
                     "options": {
                         "browserTarget": "metaheuristic-app:build"
-                    }
-                },
-                "test": {
-                    "builder": "@angular-devkit/build-angular:karma",
-                    "options": {
-                        "main": "src/test.ts",
-                        "polyfills": "src/polyfills.ts",
-                        "tsConfig": "src/tsconfig.spec.json",
-                        "karmaConfig": "src/karma.conf.js",
-                        "styles": [
-                            "src/styles.scss"
-                        ],
-                        "scripts": [],
-                        "assets": [
-                            "src/favicon.ico",
-                            "src/assets"
-                        ]
                     }
                 },
                 "lint": {
@@ -121,8 +173,17 @@
                         "devServerTarget": "metaheuristic-app:serve"
                     },
                     "configurations": {
-                        "production": {
-                            "devServerTarget": "metaheuristic-app:serve:production"
+                        "ric411": {
+                            "devServerTarget": "metaheuristic-app:serve:ric411"
+                        },
+                        "ric411-prod": {
+                            "devServerTarget": "metaheuristic-app:serve:ric411-prod"
+                        },
+                        "ric355": {
+                            "devServerTarget": "metaheuristic-app:serve:ric355"
+                        },
+                        "ric364": {
+                            "devServerTarget": "metaheuristic-app:serve:ric364"
                         }
                     }
                 },
