@@ -39,70 +39,10 @@
                         "es5BrowserSupport": true
                     },
                     "configurations": {
-                        "ric411": {
+                        "production": {
                             "fileReplacements": [{
                                 "replace": "src/environments/environment.ts",
-                                "with": "src/environments/environment.ric411.ts"
-                            }],
-                            "optimization": true,
-                            "outputHashing": "all",
-                            "sourceMap": false,
-                            "extractCss": true,
-                            "namedChunks": false,
-                            "aot": true,
-                            "extractLicenses": true,
-                            "vendorChunk": false,
-                            "buildOptimizer": true,
-                            "budgets": [{
-                                "type": "initial",
-                                "maximumWarning": "20mb",
-                                "maximumError": "50mb"
-                            }]
-                        },
-                        "ric411-prod": {
-                            "fileReplacements": [{
-                                "replace": "src/environments/environment.ts",
-                                "with": "src/environments/environment.ric411-prod.ts"
-                            }],
-                            "optimization": true,
-                            "outputHashing": "all",
-                            "sourceMap": false,
-                            "extractCss": true,
-                            "namedChunks": false,
-                            "aot": true,
-                            "extractLicenses": true,
-                            "vendorChunk": false,
-                            "buildOptimizer": true,
-                            "budgets": [{
-                                "type": "initial",
-                                "maximumWarning": "20mb",
-                                "maximumError": "50mb"
-                            }]
-                        },
-                        "ric355": {
-                            "fileReplacements": [{
-                                "replace": "src/environments/environment.ts",
-                                "with": "src/environments/environment.ric355.ts"
-                            }],
-                            "optimization": true,
-                            "outputHashing": "all",
-                            "sourceMap": false,
-                            "extractCss": true,
-                            "namedChunks": false,
-                            "aot": true,
-                            "extractLicenses": true,
-                            "vendorChunk": false,
-                            "buildOptimizer": true,
-                            "budgets": [{
-                                "type": "initial",
-                                "maximumWarning": "20mb",
-                                "maximumError": "50mb"
-                            }]
-                        },
-                        "ric364": {
-                            "fileReplacements": [{
-                                "replace": "src/environments/environment.ts",
-                                "with": "src/environments/environment.ric364.ts"
+                                "with": "src/environments/environment.production.ts"
                             }],
                             "optimization": true,
                             "outputHashing": "all",
@@ -127,17 +67,8 @@
                         "browserTarget": "metaheuristic-app:build"
                     },
                     "configurations": {
-                        "ric411": {
-                            "browserTarget": "metaheuristic-app:build:ric411"
-                        },
-                        "ric411-prod": {
-                            "browserTarget": "metaheuristic-app:build:ric411-prod"
-                        },
-                        "ric355": {
-                            "browserTarget": "metaheuristic-app:build:ric355"
-                        },
-                        "ric364": {
-                            "browserTarget": "metaheuristic-app:build:ric364"
+                        "production": {
+                            "browserTarget": "metaheuristic-app:build:production"
                         }
                     }
                 },
@@ -173,17 +104,8 @@
                         "devServerTarget": "metaheuristic-app:serve"
                     },
                     "configurations": {
-                        "ric411": {
-                            "devServerTarget": "metaheuristic-app:serve:ric411"
-                        },
-                        "ric411-prod": {
-                            "devServerTarget": "metaheuristic-app:serve:ric411-prod"
-                        },
-                        "ric355": {
-                            "devServerTarget": "metaheuristic-app:serve:ric355"
-                        },
-                        "ric364": {
-                            "devServerTarget": "metaheuristic-app:serve:ric364"
+                        "production": {
+                            "devServerTarget": "metaheuristic-app:serve:production"
                         }
                     }
                 },
