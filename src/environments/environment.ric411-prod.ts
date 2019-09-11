@@ -1,4 +1,4 @@
 export const environment = {
     production: true,
-    baseUrl: 'https://ric364.stp-baikal.ru/rest/v1/',
+    baseUrl: 'https://cons-411.herokuapp.com/rest/v1/',
 };
