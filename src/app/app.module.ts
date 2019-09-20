@@ -10,7 +10,6 @@ import { AccountsService } from '@app/services/accounts/accounts.service';
 import { AuthenticationService } from '@app/services/authentication/authentication.service';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-import { PlotlyModule } from 'angular-plotly.js';
 import { SimpleNotificationsModule } from 'angular2-notifications';
 import { NgxJsonViewerModule } from 'ngx-json-viewer';
 import { AppComponent } from './app.component';
@@ -20,6 +19,10 @@ import { JwtInterceptor } from './jwt.interceptor';
 import { MaterialAppModule } from './ngmaterial.module';
 import { NotificationsInterceptor } from './notifications.interceptor';
 
+import * as PlotlyJS from 'plotly.js/dist/plotly.js';
+import { PlotlyModule } from 'angular-plotly.js';
+
+PlotlyModule.plotlyjs = PlotlyJS;
 
 export function HttpLoaderFactory(http: HttpClient) {
     return new TranslateHttpLoader(http);
