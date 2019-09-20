@@ -16,7 +16,7 @@
         "review": "ng build --stats-json && webpack-bundle-analyzer dist/metaheuristic-app/stats.json",
         "review-prod": "ng build --prod=true --stats-json && webpack-bundle-analyzer dist/metaheuristic-app/stats.json",
         "extract-i18n": "ngx-translate-extract  -p /**/*.html /**/*.ts /**/*.pug --input ./src --output ./src/assets/i18n/EN.json ./src/assets/i18n/RU.json --clean --sort --format json --marker marker",
-        "postinstall--": "node ng-add-pug-loader.js"
+        "postinstall": "node ng-add-pug-loader.js"
     },
     "private": true,
     "dependencies": {
@@ -33,7 +33,7 @@
         "@biesbjerg/ngx-translate-extract-marker": "1.0.0",
         "@ngx-translate/core": "11.0.1",
         "@ngx-translate/http-loader": "4.0.0",
-        "angular-plotly.js": "1.4.2",
+        "angular-plotly.js": "1.3.2",
         "angular2-notifications": "2.0.0",
         "core-js": "2.6.9",
         "file-saver": "2.0.2",
