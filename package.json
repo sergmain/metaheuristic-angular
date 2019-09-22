@@ -10,6 +10,8 @@
         "build": "ng build",
         "build2": "ng build --baseHref=/aiai-app/ --prod=true",
         "build3": "ng build --prod=true",
+        "build4": "ng build --aot --prod=true",
+        "npm-install": "npm i",
         "test": "ng test",
         "lint": "ng lint",
         "e2e": "ng e2e",
