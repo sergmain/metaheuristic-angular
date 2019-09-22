@@ -1,5 +1,5 @@
 export let environment: { baseUrl: string; production: boolean };
 environment = {
     production: true,
-    baseUrl: 'https://cons-41111.herokuapp.com/rest/v1/',
+    baseUrl: 'http://localhost:8080/rest/v1/',
 };

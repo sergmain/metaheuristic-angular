@@ -7,7 +7,7 @@
     "scripts": {
         "ng": "ng",
         "start": "ng serve --open --disable-host-check",
-        "build": "ng build --prod=true",
+        "build": "ng build",
         "build2": "ng build --baseHref=/aiai-app/ --prod=true",
         "build3": "ng build --prod=true",
         "test": "ng test",
