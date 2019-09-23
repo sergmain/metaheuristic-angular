@@ -1,4 +1,6 @@
+@import "../../../variables.scss";
+
 :host {
     display: block;
-    padding: 8px 24px;
+    padding: unit(1) unit(3);
 }

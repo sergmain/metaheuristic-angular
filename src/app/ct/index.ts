@@ -15,6 +15,7 @@ export * from './ct-section/ct-section.component';
 export * from './ct-table/ct-table.component';
 export * from './ct-wrap-block/ct-wrap-block.component';
 export * from './ct-pre/ct-pre.component';
+export * from './ct-content/ct-content.component';
 
 export * from './ct-section-content/ct-section-content.component';
 export * from './ct-hint/ct-hint.component';

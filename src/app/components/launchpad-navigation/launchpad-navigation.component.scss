@@ -1,0 +1,13 @@
+@import '../../../variables.scss';
+
+:host {
+    width: 150px;
+    display: flex;
+    flex-direction: column;
+    padding: unit(1);
+
+}
+
+:host>* {
+    margin-bottom: unit(1);
+}

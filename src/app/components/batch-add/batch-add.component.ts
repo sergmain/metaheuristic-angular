@@ -7,6 +7,7 @@ import { CtFileUploadComponent } from '@src/app/ct';
 import { Subscription } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 import { SettingsService } from '@services/settings/settings.service';
+import { Settings } from '@src/app/services/settings/Settings';
 
 @Component({
     selector: 'batch-add',
@@ -33,7 +34,9 @@ export class BatchAddComponent implements OnInit {
         private settingsService: SettingsService
     ) {
         this.currentStates.add(this.states.firstLoading);
-        this.settingsService.languageObserver.subscribe((lang: string) => this.translate.use(lang));
+        this.settingsService.settingsObserver
+            .subscribe((settings: Settings) =>
+                this.translate.use(settings.language));
     }
 
     ngOnInit() { this.updateResponse(); }

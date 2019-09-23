@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import * as components from '@app/ct';
-import { MaterialAppModule } from './ngmaterial.module';
+import { MaterialAppModule } from '../ngmaterial.module';
 
 
 const list: any[] = [
@@ -23,7 +23,8 @@ const list: any[] = [
     components.CtFlexComponent,
     components.CtFlexItemComponent,
     components.CtSectionBodyComponent,
-    components.CtHintComponent
+    components.CtHintComponent,
+    components.CtContentComponent
 ];
 
 @NgModule({

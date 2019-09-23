@@ -4,25 +4,26 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import * as components from '@app/components';
 import { AuthGuard } from '@app/guards/auth/auth.guard';
 import { AccountsService } from '@app/services/accounts/accounts.service';
 import { AuthenticationService } from '@app/services/authentication/authentication.service';
-import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { SimpleNotificationsModule } from 'angular2-notifications';
 import { NgxJsonViewerModule } from 'ngx-json-viewer';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app.routing.module';
-import { CtAppModule } from './ct.module';
+import { AppDialogConfirmationComponent } from './components/app-dialog-confirmation/app-dialog-confirmation.component';
+import { AppViewComponent } from './components/app-view/app-view.component';
+import { BillingComponent } from './components/billing/billing.component';
+import { LoginComponent } from './components/login/login.component';
+import { NavPilotComponent } from './components/nav-pilot/nav-pilot.component';
+import { PilotComponent } from './components/pilot/pilot.component';
+import { CtAppModule } from './modules/ct.module';
 import { JwtInterceptor } from './jwt.interceptor';
 import { MaterialAppModule } from './ngmaterial.module';
 import { NotificationsInterceptor } from './notifications.interceptor';
-
-import * as PlotlyJS from 'plotly.js/dist/plotly.js';
-import { PlotlyModule } from 'angular-plotly.js';
-
-PlotlyModule.plotlyjs = PlotlyJS;
+import { LoremIndexComponent } from './components/lorem-index/lorem-index.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
     return new TranslateHttpLoader(http);
@@ -32,53 +33,18 @@ export function HttpLoaderFactory(http: HttpClient) {
 @NgModule({
     declarations: [
         AppComponent,
-        components.AppViewComponent,
-        components.NavLaunchpadComponent,
-        components.LaunchpadComponent,
-        components.AccountsComponent,
-        components.AccountAddComponent,
-        components.AccountEditComponent,
-        components.AccountEditPassComponent,
-        components.ExperimentsComponent,
-        components.ExperimentAddComponent,
-        components.ExperimentEditComponent,
-        components.ExperimentInfoComponent,
-        components.PlansComponent,
-        components.PlanAddComponent,
-        components.PlanEditComponent,
-        components.PlansArchiveComponent,
-        components.WorkbooksComponent,
-        components.WorkbookAddComponent,
-        components.EditWorkbookComponent,
-        components.ResourcesComponent,
-        components.ResourceAddComponent,
-        components.SnippetsComponent,
-        components.SnippetAddComponent,
-        components.StationsComponent,
-        components.StationEditComponent,
-        components.PilotComponent,
-        components.NavPilotComponent,
-        components.AboutComponent,
-        components.LoginComponent,
-        components.AtlasExperimentsComponent,
-        components.AtlasExperimentInfoComponent,
-        components.AtlasExperimentFeatureProgressComponent,
-        components.BatchComponent,
-        components.BatchStatusComponent,
-        components.BatchAddComponent,
-        components.AppDialogConfirmationComponent,
-        components.AtlasExperimentExportImportComponent,
-        components.AccountAccessComponent,
-        components.BillingComponent,
-        components.ExperimentFeatureProgressComponent,
-        components.ExperimentMetricsComponent,
-        components.ExperimentTasksComponent,
-        components.AtlasExperimentTasksComponent,
-        components.AtlasExperimentMetricsComponent
+        AppViewComponent,
+
+        PilotComponent,
+        NavPilotComponent,
+        LoginComponent,
+        BillingComponent,
+
+        LoremIndexComponent,
+        AppDialogConfirmationComponent,
     ],
     imports: [
         CommonModule,
-        PlotlyModule,
         BrowserModule,
         AppRoutingModule,
         BrowserAnimationsModule,
@@ -98,7 +64,7 @@ export function HttpLoaderFactory(http: HttpClient) {
         SimpleNotificationsModule.forRoot()
     ],
     entryComponents: [
-        components.AppDialogConfirmationComponent
+        AppDialogConfirmationComponent,
     ],
     providers: [
         AuthGuard,

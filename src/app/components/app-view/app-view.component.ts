@@ -1,9 +1,12 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatSidenav, MatSelect, MatSlideToggle } from '@angular/material';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
+import { MatSelect, MatSidenav, MatSlideToggle } from '@angular/material';
+import { ActivatedRoute, NavigationCancel, NavigationEnd, NavigationError, NavigationStart, Router, RouterEvent, RoutesRecognized } from '@angular/router';
 import { AuthenticationService } from '@app/services/authentication/authentication.service';
-import { SettingsService, enumOfLanguages, setOfLanguages } from '@app/services/settings/settings.service';
+import { setOfLanguages, SettingsService } from '@app/services/settings/settings.service';
 import { Subscription } from 'rxjs';
+import { Settings, SettingsLanguage, SettingsSidenav, SettingsSidenavState, SettingsTheme } from '@src/app/services/settings/Settings';
+
+
 
 @Component({
     selector: 'app-view',
@@ -12,11 +15,11 @@ import { Subscription } from 'rxjs';
 })
 
 export class AppViewComponent implements OnInit {
-    sidenavIsOpen: boolean = false;
-    sidenavIsDisabled: boolean = false;
-    themeActive: boolean = false;
+    sidenavButtonDisable: boolean = false;
+    themeState: boolean = false;
     language: any;
-    languageSelected: string;
+    languages: Set < SettingsLanguage > = setOfLanguages;
+    settings: Settings;
 
     @ViewChild(MatSidenav) sidenav: MatSidenav;
     @ViewChild('matSlideToggleTheme') matSlideToggleTheme: MatSlideToggle;
@@ -27,55 +30,65 @@ export class AppViewComponent implements OnInit {
         private settingsService: SettingsService,
         private route: ActivatedRoute,
         private router: Router,
+        private changeDetectorRef: ChangeDetectorRef
+    ) {
+        // this.router.events.subscribe((event: RouterEvent) => {
+        //     if (event instanceof NavigationStart) {
 
-    ) {}
+        //     }
+        //     if (event instanceof NavigationEnd) {
+
+        //     }
+        //     if (event instanceof NavigationError) {
+
+        //     }
+        //     if (event instanceof NavigationCancel) {
+
+        //     }
+        //     if (event instanceof RoutesRecognized) {
+        //         this.updateSidenavState(event.state.root.firstChild.data);
+        //         // console.log(this);
+        //     }
+        // });
+    }
 
     ngOnInit() {
-        this.settingsService.getSettings().subscribe(data => {
-            this.themeActive = data.darkTheme;
-            this.sidenavIsOpen = data.openSide;
-            this.language = {
-                active: data.language,
-                list: setOfLanguages
-            };
+        this.settingsService.settingsObserver.subscribe((settings: any) => {
+            this.settings = settings;
+            this.updateSidenav();
+            this.updateThemeState();
         });
-        this.checkSidenav();
         this.isAuth();
+    }
+
+    private updateThemeState() {
+        this.themeState = false;
+        if (this.settings.theme === SettingsTheme.Dark) {
+            this.themeState = true;
+        }
+    }
+
+    private updateSidenav() {
+        this.sidenavButtonDisable = true;
+        if (this.settings.sidenav === SettingsSidenav.Enable) {
+            this.sidenavButtonDisable = false;
+        }
     }
 
     isAuth() {
         return this.authenticationService.isAuth();
-
     }
 
-    checkSidenav() {
-        const subscribe: Subscription = this.route.data.subscribe(
-            (response: any) => {
-                this.sidenavIsDisabled = response.sidenavIsDisabled || false;
-                this.sidenavIsDisabled ?
-                    this.sidenavIsOpen = false :
-                    this.sidenavIsOpen = this.sidenavIsOpen;
-            },
-            () => {},
-            () => subscribe.unsubscribe()
-        );
+    toggleSidenav() {
+        this.settingsService.toggleSidenav();
     }
 
-    sideToggle() {
-        this.sidenav.toggle();
-        this.sidenav.opened ?
-            this.settingsService.showSide() :
-            this.settingsService.hideSide();
+    toggleTheme(event: any) {
+        this.settingsService.toggleTheme(event.checked);
     }
 
-    themeToggle(event) {
-        event.checked ?
-            this.settingsService.setDarkTheme() :
-            this.settingsService.setLightTheme();
-    }
-
-    languageChanged() {
-        this.settingsService.setLanguage(this.matSelectLanguage.value);
+    toggleLanguage() {
+        this.settingsService.toggleLanguage(this.matSelectLanguage.value);
     }
 
     logout() {

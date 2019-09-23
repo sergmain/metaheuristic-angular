@@ -1,17 +1,25 @@
+:host-context([gap="18px"]) {
+    margin: (18px / 2);
+}
+
 :host-context([gap="16px"]) {
-    margin: 16px;
+    margin: (16px / 2);
 }
 
 :host-context([gap="12px"]) {
-    margin: 12px;
+    margin: (12px / 2);
+}
+
+:host-context([gap="9px"]) {
+    margin: (9px / 2);
 }
 
 :host-context([gap="8px"]) {
-    margin: 8px;
+    margin: (8px / 2);
 }
 
 :host-context([gap="4px"]) {
-    margin: 4px;
+    margin: (4px / 2);
 }
 
 

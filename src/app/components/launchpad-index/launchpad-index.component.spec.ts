@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AboutComponent } from './about.component';
+import { LaunchpadIndexComponent } from './launchpad-index.component';
 
-describe('AboutComponent', () => {
-  let component: AboutComponent;
-  let fixture: ComponentFixture<AboutComponent>;
+describe('LaunchpadIndexComponent', () => {
+  let component: LaunchpadIndexComponent;
+  let fixture: ComponentFixture<LaunchpadIndexComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AboutComponent ]
+      declarations: [ LaunchpadIndexComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(AboutComponent);
+    fixture = TestBed.createComponent(LaunchpadIndexComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

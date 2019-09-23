@@ -1,7 +1,10 @@
+@import '../../../variables.scss';
+
 :host {
     display: block;
-    font-weight: bold;
+    font-weight: 900;
     margin: 0;
     padding: 0;
-    font-size: 150%;
+    line-height: unit(4);
+    font-size: unit(4);
 }

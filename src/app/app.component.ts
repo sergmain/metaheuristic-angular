@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { SettingsService } from '@services/settings/settings.service';
 import { TranslateService } from '@ngx-translate/core';
-
+import { Settings } from './services/settings/Settings';
 
 @Component({
     selector: 'app-root',
@@ -14,6 +14,8 @@ export class AppComponent {
         private settingsService: SettingsService,
         private translate: TranslateService
     ) {
-        this.settingsService.languageObserver.subscribe((lang: string) => this.translate.use(lang));
+        this.settingsService.settingsObserver
+            .subscribe((settings: Settings) =>
+                this.translate.use(settings.language));
     }
 }
