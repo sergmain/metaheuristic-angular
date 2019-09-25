@@ -89,7 +89,7 @@ export class AtlasExperimentsComponent implements OnInit {
     delete(experiment: Experiment) {
         this.deletedExperiments.push(experiment);
         const subscribe: Subscription = this.atlasService.experiment
-            .deleteCommit({ id: experiment.id })
+            .deleteCommit(experiment.id.toString())
             .subscribe(
                 (response: DefaultResponse) => {},
                 () => {},

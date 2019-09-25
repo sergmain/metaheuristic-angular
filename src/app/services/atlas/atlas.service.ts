@@ -22,14 +22,20 @@ export class AtlasService {
         info: (id: string): Observable < any > =>
             this.http.get(urls.experiment.info(id)),
 
-        deleteCommit: (data: any): Observable < any > =>
-            this.http.post(urls.experiment.deleteCommit(data), null),
+        deleteCommit: (id: string): Observable < any > => {
+            const formData: FormData = new FormData();
+            formData.append('id', id);
+            return this.http.post(urls.experiment.deleteCommit(), formData);
+        },
 
         featureProgress: (atlasId: string, experimentId: string, featureId: string): Observable < any > =>
             this.http.get(urls.experiment.featureProgress(atlasId, experimentId, featureId)),
 
-        featureProgressPart: (atlasId: string, experimentId: string, featureId: string, params: any, page: number): Observable < any > =>
-            this.http.post(urls.experiment.featureProgressPart(atlasId, experimentId, featureId, params, { page }), null),
+        featureProgressPart: (atlasId: string, experimentId: string, featureId: string, params: any, page: number): Observable < any > => {
+            const formData: FormData = new FormData();
+            formData.append('page', page);
+            return this.http.post(urls.experiment.featureProgressPart(atlasId, experimentId, featureId, params), formData)
+        },
 
         featureProgressConsolePart: (atlasId: string, taskId: string): Observable < any > =>
             this.http.post(urls.experiment.featureProgressConsolePart(atlasId, taskId), null),
