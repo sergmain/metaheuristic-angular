@@ -61,6 +61,8 @@ body {
         line-height: unit(4);
         height: unit(4);
         text-align: left;
+        overflow: hidden;
+        text-overflow: ellipsis;
         &.active {
             background: rgba(128, 128, 128, 0.175);
         }
