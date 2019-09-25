@@ -1,3 +1,5 @@
+@import '../../../variables.scss';
+
 :host {
     display: flex;
     width: inherit;
@@ -28,6 +30,13 @@
 
     &[align-items=center] {
         align-items: center;
+    }
+
+    &[gap="unit(1)"]{
+        margin: (unit(1) / -2);
+    }
+    &[gap="unit(2)"]{
+        margin: (unit(2) / -2);
     }
 
     &[gap="18px"] {
