@@ -20,7 +20,7 @@ export class AccountAccessComponent implements OnInit {
     isData: boolean = false;
     isAdmin: boolean = false;
     isServerRestAccess: boolean = false;
-    
+
     constructor(
         private router: Router,
         private route: ActivatedRoute,
@@ -64,7 +64,7 @@ export class AccountAccessComponent implements OnInit {
         formData.append('roles', roles.join(','));
 
         const subscribe: Subscription = this.accountsService.account
-            .roleCommit({ accountId, roles: roles.join(',') })
+            .roleCommit(accountId, roles.join(','))
             .subscribe(
                 (response: any) => {
                     console.log(response);

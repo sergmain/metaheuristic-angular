@@ -3,14 +3,9 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { urls } from './urls';
 
-@Injectable({
-    providedIn: 'root'
-})
-
+@Injectable({ providedIn: 'root' })
 export class AccountsService {
-    constructor(
-        private http: HttpClient
-    ) {}
+    constructor(private http: HttpClient) {}
 
     accounts = {
         get: (page: number): Observable < object > => this.http.get(urls.accounts.get(page))
@@ -20,16 +15,31 @@ export class AccountsService {
         get: (id: string | number): Observable < object > =>
             this.http.get(urls.account.get(id)),
 
-        addCommit: (data: object): Observable < object > =>
-            this.http.post(urls.account.addCommit(data), data),
+        addCommit: (data: object): Observable < object > => {
+            return this.http.post(urls.account.addCommit(), data);
+        },
 
-        editCommit: (data: object): Observable < object > =>
-            this.http.post(urls.account.editCommit(data), data),
+        editCommit: (id: string, publicName: string, enabled: boolean): Observable < object > => {
+            const formData: FormData = new FormData();
+            formData.append('id', id);
+            formData.append('publicName', publicName);
+            formData.append('enabled', enabled.toString());
+            return this.http.post(urls.account.editCommit(), formData);
+        },
 
-        passwordEditCommit: (data: object): Observable < object > =>
-            this.http.post(urls.account.passwordEditCommit(data), data),
+        passwordEditCommit: (id: string, password: string, password2: string): Observable < object > => {
+            const formData: FormData = new FormData();
+            formData.append('id', id);
+            formData.append('password', password);
+            formData.append('password2', password2);
+            return this.http.post(urls.account.passwordEditCommit(), formData)
+        },
 
-        roleCommit: (data: object): Observable < object > =>
-            this.http.post(urls.account.roleCommit(data), data)
+        roleCommit: (accountId: string, roles: string): Observable < object > => {
+            const formData: FormData = new FormData();
+            formData.append('accountId', accountId);
+            formData.append('roles', roles);
+            return this.http.post(urls.account.roleCommit(), formData)
+        }
     };
 }

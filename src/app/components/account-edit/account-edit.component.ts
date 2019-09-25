@@ -51,22 +51,18 @@ export class AccountEditComponent implements OnInit {
     }
 
     save() {
-        this.currentStates.add(this.states.wait)
+        this.currentStates.add(this.states.wait);
         const subscribe = this.accountsService.account
-            .editCommit({
-                id: this.account.id,
-                publicName: this.account.publicName,
-                enabled: this.account.enabled,
-            })
+            .editCommit(this.account.id.toString(), this.account.publicName, this.account.enabled)
             .subscribe(
                 (response) => {
                     this.router.navigate(['/launchpad', 'accounts']);
                 },
                 () => {},
                 () => {
-                    this.currentStates.delete(this.states.wait)
-                    subscribe.unsubscribe()
+                    this.currentStates.delete(this.states.wait);
+                    subscribe.unsubscribe();
                 }
-            )
+            );
     }
 }

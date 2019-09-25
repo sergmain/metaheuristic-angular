@@ -51,7 +51,7 @@ export class AccountEditPassComponent implements OnInit {
         this.getAccount();
     }
 
-    back(){
+    back() {
         this.location.back();
     }
 
@@ -73,7 +73,7 @@ export class AccountEditPassComponent implements OnInit {
     save() {
         this.currentStates.add(this.states.wait)
         const subscribe: Subscription = this.accountsService.account
-            .passwordEditCommit(Object.assign({}, { id: this.account.id }, this.form.value))
+            .passwordEditCommit(this.account.id.toString(), this.form.value.password, this.form.value.password2)
             .subscribe(
                 (response: any) => {
                     this.router.navigate(['/launchpad', 'accounts']);
