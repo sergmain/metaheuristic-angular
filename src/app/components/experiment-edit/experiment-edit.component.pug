@@ -3,7 +3,7 @@ mixin default-metadata
     ct-section('*ngIf'='hyperParams')
         ct-section-header
             ct-section-header-row
-                ct-heading Metadata
+                ct-heading Default Metadata
         ct-section-body
             ct-section-body-row
                 ct-pre
@@ -12,11 +12,19 @@ mixin default-metadata
                     | Array defined in loop - (10,30,10)
                     | Concrete value - 10
                     | Array of strings, some strings contain space - ['#some custom accuracy', accuracy]
-            ct-section-body-row
-                button(mat-flat-button color="primary" wide size="x" '(click)'="addDefaultHyperParams()") Fill with Default Metadatas
+        ct-section-footer
+            ct-section-footer-row
+                ct-flex(justify-content="flex-end")
+                    ct-flex-item    
+                        button(mat-flat-button color="primary" wide size="x" '(click)'="addDefaultHyperParams()") Fill with Default Metadatas
 
 mixin metadata-new-param
     ct-section('*ngIf'='hyperParams' style="font-size:14px")
+
+        ct-section-header
+            ct-section-header-row
+                ct-heading New Metadata
+
         ct-section-body
             ct-section-body-row
                 ct-flex(align-items="baseline" justify-content="space-between" gap="8px")
@@ -28,7 +36,8 @@ mixin metadata-new-param
                         mat-form-field(appearance="outline")
                             mat-label Value
                             input(matInput autocomplete="off" '[(ngModel)]'="newHyperParams.values")
-            ct-section-body-row
+        ct-section-footer
+            ct-section-footer-row
                 ct-flex(justify-content="flex-end")
                     ct-flex-item    
                         button(mat-flat-button color="primary" size="x" '(click)'="addHyperParams(el)") Add Metadata

@@ -5,7 +5,7 @@ import { MatDialog, MatTableDataSource } from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ConfirmationDialogMethod } from '@app/components/app-dialog-confirmation/app-dialog-confirmation.component';
 import { DefaultResponse } from '@app/models';
-import { response, ExperimentsService, HyperParam, HyperParams, SimpleExperiment, Snippet, SnippetResult } from '@app/services/experiments/';
+import { ExperimentsService, HyperParam, HyperParams, response, SimpleExperiment, Snippet, SnippetResult } from '@app/services/experiments/';
 import { CtWrapBlockComponent } from '@src/app/ct/ct-wrap-block/ct-wrap-block.component';
 import { Subscription } from 'rxjs';
 
@@ -182,29 +182,16 @@ export class ExperimentEditComponent implements OnInit {
     })
     deleteHyperParams(el) {
         this.metadataBlock.wait();
-        const subscribe: Subscription = this.experimentsService.experiment
-            .metadataDeleteCommit(this.simpleExperiment.id.toString(), el.id)
-            .subscribe(
-                () => this.loadExperimet(),
-                () => {},
-                () => subscribe.unsubscribe()
-            );
+        this.experimentsService.experiment
+            .metadataDeleteCommit(this.simpleExperiment.id, el.key)
+            .subscribe(() => this.loadExperimet());
     }
 
     addDefaultHyperParams() {
         this.metadataBlock.wait();
-        let experimentId = this.simpleExperiment.id.toString();
-        let subscribe = this.experimentsService.experiment
-            .metadataDefaultAddCommit(experimentId)
-            .subscribe(
-                () => {
-                    this.loadExperimet();
-                },
-                () => {},
-                () => {
-                    subscribe.unsubscribe();
-                }
-            );
+        this.experimentsService.experiment
+            .metadataDefaultAddCommit(this.simpleExperiment.id)
+            .subscribe(() => this.loadExperimet());
     }
 
 

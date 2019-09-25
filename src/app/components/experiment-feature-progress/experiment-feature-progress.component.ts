@@ -106,7 +106,7 @@ export class ExperimentFeatureProgressComponent implements OnInit {
     }
 
     updateResponse() {
-        const subscribe: Subscription = this.experimentsService.experiment
+        this.experimentsService.experiment
             .featureProgress(this.experimentId, this.featureId)
             .subscribe((response: response.experiment.FeatureProgress) => {
                     this.response = response;
@@ -120,14 +120,12 @@ export class ExperimentFeatureProgressComponent implements OnInit {
 
                     this.metricsResult = response.metricsResult;
                     this.tasks = response.tasksResult;
-                },
-                () => {},
-                () => { subscribe.unsubscribe(); }
+                }
             );
     }
 
     featureProgressPart(params) {
-        const subscribe: Subscription = this.experimentsService.experiment
+        this.experimentsService.experiment
             .featureProgressPart(this.experimentId, this.featureId, params)
             .subscribe((response: response.experiment.FeatureProgress) => {
                 this.tables.tasks.table = new MatTableDataSource(response.tasksResult.items.content);
@@ -136,16 +134,12 @@ export class ExperimentFeatureProgressComponent implements OnInit {
 
     featureProgressConsolePart(taskId) {
         this.consoleView.wait();
-        const subscribe: Subscription = this.experimentsService.experiment
+        this.experimentsService.experiment
             .featureProgressConsolePart(taskId)
             .subscribe(
-                (response: ExperimentFeatureProgressConsolePartResponse.Response) => {
-                    this.consolePartResponse = response;
-                },
-                () => {},
-                () => {
+                (res: ExperimentFeatureProgressConsolePartResponse.Response) => {
+                    this.consolePartResponse = res;
                     this.consoleView.show();
-                    subscribe.unsubscribe();
                 },
             );
     }
@@ -155,7 +149,6 @@ export class ExperimentFeatureProgressComponent implements OnInit {
             .taskRerun(taskId)
             .subscribe((response: DefaultResponse) => {
                 this.updateResponse();
-                subscribe.unsubscribe();
             });
     }
 
@@ -210,14 +203,6 @@ export class ExperimentFeatureProgressComponent implements OnInit {
         this.canDraw = !this.pickedAxes.includes(false);
     }
 
-    featureProgressConsole(taskId) {
-        const subscribe: Subscription = this.experimentsService.experiment
-            .featureProgressConsole(taskId)
-            .subscribe(response => {
-                subscribe.unsubscribe();
-            });
-    }
-
     featurePlotDataPart(params, paramsAxis) {
         const subscribe: Subscription = this.experimentsService.experiment
             .featurePlotDataPart(this.experimentId, this.featureId, params, paramsAxis)
@@ -225,7 +210,6 @@ export class ExperimentFeatureProgressComponent implements OnInit {
                 this.plotDataResponse = response;
                 this.dataGraph.show = true;
                 this.dataGraph.initData();
-                console.log(this.dataGraph);
                 subscribe.unsubscribe();
             });
     }

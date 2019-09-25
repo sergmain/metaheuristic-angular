@@ -41,7 +41,7 @@ export class ExperimentsComponent implements OnInit {
     updateTable(page: number) {
         this.currentStates.add(this.states.loading);
         const subscribe: Subscription = this.experimentsService.experiments
-            .get(page)
+            .get(page.toString())
             .subscribe(
                 (response: response.experiments.Get) => {
                     this.experimentsResponse = response;
@@ -66,9 +66,7 @@ export class ExperimentsComponent implements OnInit {
     delete(experiment: ExperimentItem) {
         this.deletedExperiments.push(experiment);
         const subscribe: Subscription = this.experimentsService.experiment
-            .deleteCommit({
-                id: experiment.experiment.id
-            })
+            .deleteCommit(experiment.experiment.id.toString())
             .subscribe(
                 (response: DefaultResponse) => {
                     // this.updateTable(this.experimentsResponse.items.number);
@@ -82,9 +80,7 @@ export class ExperimentsComponent implements OnInit {
         this.currentStates.add(this.states.loading);
         this.table.wait();
         const subscribe: Subscription = this.experimentsService.experiment
-            .cloneCommit({
-                id: element.experiment.id
-            })
+            .cloneCommit(element.experiment.id)
             .subscribe(
                 () => this.updateTable(this.experimentsResponse.items.number),
                 () => this.updateTable(this.experimentsResponse.items.number),

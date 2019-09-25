@@ -65,7 +65,7 @@ export class ExperimentInfoComponent implements OnInit {
 
 
     stop() {
-
+        // TODO  experimentsService.stop notExist
     }
 
     load() {
