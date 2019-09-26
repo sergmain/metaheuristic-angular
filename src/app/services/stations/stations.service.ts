@@ -1,7 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { urls } from './urls';
 import { Station } from './response';
 import { environment } from '@src/environments/environment';
 import { generateFormData } from '@src/app/helpers/generateFormData';
@@ -16,9 +15,6 @@ export class StationsService {
     formData: any;
     constructor(private http: HttpClient) {
         const base: any = (url: string): string => `${environment.baseUrl}launchpad${url}`;
-        const POST: any = (url: string, data: any): Observable < any > => this.http.post(base(url), data);
-        const GET: any = (url: string): Observable < any > => this.http.get(base(url));
-
         this.POST = (url: string, data: any): Observable < any > => this.http.post(base(url), data);
         this.GET = (url: string): Observable < any > => this.http.get(base(url));
         this.formData = generateFormData;
