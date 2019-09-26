@@ -7,6 +7,7 @@ import { AboutIndexComponent } from '../components/about-index/about-index.compo
 import { AboutRootComponent } from '../components/about-root/about-root.component';
 import { CtAppModule } from './ct.module';
 import { MaterialAppModule } from '../ngmaterial.module';
+import { CopyRightModule } from './copy-right.module';
 
 
 const routes: Routes = [{
@@ -33,6 +34,7 @@ export class AboutRoutingModule {}
         CommonModule,
         AboutRoutingModule,
         CtAppModule,
+        CopyRightModule,
         MaterialAppModule,
         TranslateModule.forChild({})
     ],

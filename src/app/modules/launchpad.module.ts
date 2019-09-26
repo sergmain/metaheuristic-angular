@@ -6,8 +6,9 @@ import { TranslateModule } from '@ngx-translate/core';
 import { LaunchpadIndexComponent } from '../components/launchpad-index/launchpad-index.component';
 import { LaunchpadNavigationComponent } from '../components/launchpad-navigation/launchpad-navigation.component';
 import { LaunchpadRootComponent } from '../components/launchpad-root/launchpad-root.component';
-import { CtAppModule } from './ct.module';
 import { MaterialAppModule } from '../ngmaterial.module';
+import { CopyRightModule } from './copy-right.module';
+import { CtAppModule } from './ct.module';
 
 
 const routes: Routes = [{
@@ -81,13 +82,14 @@ export class LaunchpadRoutingModule {}
         CommonModule,
         LaunchpadRoutingModule,
         CtAppModule,
+        CopyRightModule,
         MaterialAppModule,
         TranslateModule.forChild({})
     ],
     declarations: [
         LaunchpadRootComponent,
         LaunchpadIndexComponent,
-        LaunchpadNavigationComponent
+        LaunchpadNavigationComponent,
     ]
 })
 export class LaunchpadModule {}
