@@ -17,13 +17,14 @@ import { AppDialogConfirmationComponent } from './components/app-dialog-confirma
 import { AppViewComponent } from './components/app-view/app-view.component';
 import { BillingComponent } from './components/billing/billing.component';
 import { LoginComponent } from './components/login/login.component';
+import { LoremIndexComponent } from './components/lorem-index/lorem-index.component';
 import { NavPilotComponent } from './components/nav-pilot/nav-pilot.component';
 import { PilotComponent } from './components/pilot/pilot.component';
-import { CtAppModule } from './modules/ct.module';
 import { JwtInterceptor } from './jwt.interceptor';
+import { CopyRightModule } from './modules/copy-right.module';
+import { CtAppModule } from './modules/ct.module';
 import { MaterialAppModule } from './ngmaterial.module';
 import { NotificationsInterceptor } from './notifications.interceptor';
-import { LoremIndexComponent } from './components/lorem-index/lorem-index.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
     return new TranslateHttpLoader(http);
@@ -50,6 +51,7 @@ export function HttpLoaderFactory(http: HttpClient) {
         BrowserAnimationsModule,
         MaterialAppModule,
         CtAppModule,
+        CopyRightModule,
         FormsModule,
         ReactiveFormsModule,
         NgxJsonViewerModule,

@@ -32,10 +32,16 @@
         align-items: center;
     }
 
-    &[gap="unit(1)"]{
+    &[flex-direction=column] {
+        flex-direction: column
+    }
+
+
+    &[gap="unit(1)"] {
         margin: (unit(1) / -2);
     }
-    &[gap="unit(2)"]{
+
+    &[gap="unit(2)"] {
         margin: (unit(2) / -2);
     }
 
