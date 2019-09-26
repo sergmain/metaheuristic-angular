@@ -35,7 +35,7 @@ export class SnippetsService {
         // public OperationStatusRest uploadSnippet(final MultipartFile file) {
         //     return snippetTopLevelService.uploadSnippet(file);
         // }
-        upload: (file: any): Observable < any > =>
+        upload: (file: File): Observable < any > =>
             this.POST(`/snippet-upload-from-file/`, this.formData({ file })),
 
         // @GetMapping("/snippet-delete/{id}")
