@@ -2,12 +2,11 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatButton, MatDialog, MatTableDataSource } from '@angular/material';
 import { ConfirmationDialogMethod } from '@app/components/app-dialog-confirmation/app-dialog-confirmation.component';
 import { LoadStates } from '@app/enums/LoadStates';
-import { Snippet, snippets, SnippetsService } from '@app/services/snippets/snippets.service';
+import { SnippetsService } from '@app/services/snippets/snippets.service';
 import { CtTableComponent } from '@src/app/ct/ct-table/ct-table.component';
-import { Subscription } from 'rxjs';
+import { Snippet, snippets } from '@src/app/services/snippets/response';
 
 @Component({
-    // tslint:disable-next-line: component-selector
     selector: 'snippets-view',
     templateUrl: './snippets.component.pug',
     styleUrls: ['./snippets.component.scss']
@@ -41,7 +40,7 @@ export class SnippetsComponent implements OnInit {
     updateTable(page: number) {
         // TODO: response не содержит pageable
         // TODO: листание
-        const subscribe: Subscription = this.snippetsService.snippets.get(page)
+        this.snippetsService.snippets.get(page)
             .subscribe(
                 (response: snippets.get.Response) => {
                     this.response = response;
@@ -52,11 +51,7 @@ export class SnippetsComponent implements OnInit {
                     } else {
                         this.currentState.add(LoadStates.empty);
                     }
-                },
-                () => {},
-                () => {
                     this.currentState.delete(LoadStates.loading);
-                    subscribe.unsubscribe();
                 }
             );
     }
@@ -69,16 +64,9 @@ export class SnippetsComponent implements OnInit {
     })
     delete(snippet: Snippet) {
         this.deletedSnippets.push(snippet);
-        const subscribe: Subscription = this.snippetsService.snippet
+        this.snippetsService.snippet
             .delete(snippet.id)
-            .subscribe(
-                () => {
-                    // this.updateTable(0);
-                },
-                () => {},
-                () => {
-                    subscribe.unsubscribe();
-                });
+            .subscribe();
     }
 
     next() {
