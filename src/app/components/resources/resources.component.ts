@@ -1,13 +1,12 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatButton, MatTableDataSource, MatDialog } from '@angular/material';
-import { CtTableComponent } from '@src/app/ct/ct-table/ct-table.component';
-import { LoadStates } from '@app/enums/LoadStates';
-import { ResourcesService, resources, Resource } from '@app/services/resources/resources.service';
-import { Subscription } from 'rxjs';
+import { MatButton, MatDialog, MatTableDataSource } from '@angular/material';
 import { ConfirmationDialogMethod } from '@app/components/app-dialog-confirmation/app-dialog-confirmation.component';
+import { LoadStates } from '@app/enums/LoadStates';
+import { Resource, resources, ResourcesService } from '@app/services/resources/resources.service';
+import { CtTableComponent } from '@src/app/ct/ct-table/ct-table.component';
+import { Subscription } from 'rxjs';
 
 @Component({
-    // tslint:disable-next-line: component-selector
     selector: 'resources-view',
     templateUrl: './resources.component.pug',
     styleUrls: ['./resources.component.scss'],
@@ -50,20 +49,16 @@ export class ResourcesComponent implements OnInit {
 
     updateTable(page: number) {
         this.currentStates.add(this.states.loading);
-        const subscribe: Subscription = this.resourcesService.resources.get(page)
+        this.resourcesService.resources.get(page)
             .subscribe(
                 (response: resources.get.Response) => {
                     this.response = response;
                     this.dataSource = new MatTableDataSource(response.items.content || []);
-                },
-                () => {},
-                () => {
                     this.table.show();
                     this.currentStates.delete(this.states.firstLoading);
                     this.currentStates.delete(this.states.loading);
                     this.prevTable.disabled = this.response.items.first;
                     this.nextTable.disabled = this.response.items.last;
-                    subscribe.unsubscribe();
                 }
             );
     }
@@ -76,16 +71,8 @@ export class ResourcesComponent implements OnInit {
     })
     delete(resource: Resource) {
         this.deletedResourses.push(resource);
-        const subscribe: Subscription = this.resourcesService.resource.delete(resource.id)
-            .subscribe(
-                () => {
-                    // this.updateTable(0);
-                },
-                () => {},
-                () => {
-                    subscribe.unsubscribe();
-                }
-            );
+        this.resourcesService.resource.delete(resource.id)
+            .subscribe();
     }
 
     next() {

@@ -1,11 +1,10 @@
 import { Location } from '@angular/common';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { DefaultResponse } from '@app/models';
 import { ResourcesService } from '@app/services/resources/resources.service';
 import { CtFileUploadComponent } from '@src/app/ct';
-import { Subscription } from 'rxjs';
 
 @Component({
     selector: 'resource-add',
@@ -13,7 +12,7 @@ import { Subscription } from 'rxjs';
     styleUrls: ['./resource-add.component.scss']
 })
 
-export class ResourceAddComponent implements OnInit {
+export class ResourceAddComponent {
 
     urlResponse: DefaultResponse;
     fileResponse: DefaultResponse;
@@ -36,39 +35,30 @@ export class ResourceAddComponent implements OnInit {
         private router: Router,
     ) {}
 
-    ngOnInit() {}
-
     cancel() {
         this.location.back();
     }
 
     upload() {
-        const formData: FormData = new FormData();
-
-        formData.append('file', this.fileUpload.fileInput.nativeElement.files[0]);
-        formData.append('code', this.uploadForm.value.code);
-        formData.append('poolCode', this.uploadForm.value.poolCode);
-
-        const subscribe: Subscription = this.resourcesService.resource
-            .upload(formData)
+        this.resourcesService.resource
+            .upload(
+                this.uploadForm.value.code,
+                this.uploadForm.value.poolCode,
+                this.fileUpload.fileInput.nativeElement.files[0]
+            )
             .subscribe((response: DefaultResponse) => {
-                    this.fileResponse = response;
-                    if (response.errorMessages || response.infoMessages) {
-                        //  ???
-                    } else {
-                        this.router.navigate(['/launchpad', 'resources']);
-                    }
-                },
-                () => {},
-                () => subscribe.unsubscribe());
+                this.fileResponse = response;
+                if (response.errorMessages || response.infoMessages) {
+                    //  ???
+                } else {
+                    this.router.navigate(['/launchpad', 'resources']);
+                }
+            });
     }
 
     create() {
-        const formData: FormData = new FormData();
-        formData.append('code', this.urlForm.value.storageUrl);
-        formData.append('poolCode', this.urlForm.value.poolCode);
-        const subscribe: Subscription = this.resourcesService.resource
-            .external(formData)
+        this.resourcesService.resource
+            .external(this.urlForm.value.poolCode, this.urlForm.value.storageUrl)
             .subscribe(
                 (response: DefaultResponse) => {
                     this.urlResponse = response;
@@ -77,10 +67,7 @@ export class ResourceAddComponent implements OnInit {
                     } else {
                         this.router.navigate(['/launchpad', 'resources']);
                     }
-                },
-                () => {},
-                () => subscribe.unsubscribe()
+                }
             );
-
     }
 }
