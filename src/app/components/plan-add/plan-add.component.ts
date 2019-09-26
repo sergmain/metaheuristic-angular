@@ -36,7 +36,7 @@ export class PlanAddComponent implements OnInit {
         this.response = null;
         this.submitButton.disabled = true;
         this.plansService.plan
-            .add(this.planYaml)
+            .add(this.form.value.planYaml)
             .subscribe(
                 (response: response.plan.Add) => {
                     this.response = response;

@@ -54,7 +54,7 @@ export class PlanEditComponent implements OnInit {
     save() {
         this.currentState = this.states.wait;
         const subscribe: Subscription = this.plansService.plan
-            .update(this.plan.id, this.plan.params)
+            .edit(this.plan.id, this.plan.params)
             .subscribe((data: PlanResponse.Response) => {
                     if (data.errorMessages) {
                         this.currentState = this.states.show;

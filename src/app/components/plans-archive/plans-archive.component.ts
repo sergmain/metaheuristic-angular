@@ -1,5 +1,4 @@
 import { Component, OnInit, ViewChild, } from '@angular/core';
-import { ArchivePlansService } from '@app/services/archive-plans/archive-plans.service';
 import { MatTableDataSource, MatButton } from '@angular/material';
 import { LoadStates } from '@app/enums/LoadStates';
 import { PlansResponse } from '@app/models';
@@ -7,6 +6,7 @@ import { CtTableComponent } from '@src/app/ct/ct-table/ct-table.component';
 import { Subscription } from 'rxjs';
 import { MatDialog } from '@angular/material';
 import { ConfirmationDialogMethod } from '@app/components/app-dialog-confirmation/app-dialog-confirmation.component';
+import { PlansService } from '@src/app/services/plans/plans.service';
 
 @Component({
     // tslint:disable-next-line: component-selector
@@ -28,7 +28,7 @@ export class PlansArchiveComponent implements OnInit {
 
     constructor(
         private dialog: MatDialog,
-        private archivePlansService: ArchivePlansService
+        private plansService: PlansService
     ) {}
 
     ngOnInit() {
@@ -38,22 +38,16 @@ export class PlansArchiveComponent implements OnInit {
 
     updateTable(page: number) {
         this.currentStates.add(this.states.loading);
-        const subscribe: Subscription = this.archivePlansService.plans.get({
-                page
-            })
+        this.plansService.plans.getArchivedOnly(page)
             .subscribe(
                 (response: PlansResponse.Response) => {
                     this.response = response;
                     this.dataSource = new MatTableDataSource(response.items.content || []);
-                },
-                () => {},
-                () => {
                     this.table.show();
                     this.currentStates.delete(this.states.firstLoading);
                     this.currentStates.delete(this.states.loading);
                     this.prevTable.disabled = this.response.items.first;
                     this.nextTable.disabled = this.response.items.last;
-                    subscribe.unsubscribe();
                 }
             );
     }
@@ -66,19 +60,11 @@ export class PlansArchiveComponent implements OnInit {
     })
     delete(plan: PlansResponse.Plan) {
         this.deletedPlans.push(plan);
-        const subscribe: Subscription = this.archivePlansService.plan
+        this.plansService.plan
             .delete(plan.id)
-            .subscribe(
-                () => {
-                    // this.updateTable(0);
-                },
-                () => {},
-                () => {
-                    subscribe.unsubscribe();
-                }
-            );
-    }
+            .subscribe();
 
+    }
 
     next() {
         this.table.wait();

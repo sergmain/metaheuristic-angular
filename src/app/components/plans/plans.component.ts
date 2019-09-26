@@ -43,21 +43,17 @@ export class PlansComponent implements OnInit, ConfirmationDialogInterface {
 
     updateTable(page: number) {
         this.currentStates.add(this.states.loading);
-        const subscribe: Subscription = this.planService.plans
-            .get({ page })
+        this.planService.plans
+            .get(page)
             .subscribe(
                 (response: PlansResponse.Response) => {
                     this.response = response;
                     this.dataSource = new MatTableDataSource(response.items.content || []);
-                },
-                () => {},
-                () => {
                     this.table.show();
                     this.currentStates.delete(this.states.firstLoading);
                     this.currentStates.delete(this.states.loading);
                     this.prevTable.disabled = this.response.items.first;
                     this.nextTable.disabled = this.response.items.last;
-                    subscribe.unsubscribe();
                 }
             );
     }
@@ -70,17 +66,9 @@ export class PlansComponent implements OnInit, ConfirmationDialogInterface {
     })
     delete(plan: PlansResponse.Plan) {
         this.deletedPlans.push(plan);
-        const subscribe: Subscription = this.planService.plan
+        this.planService.plan
             .delete(plan.id)
-            .subscribe(
-                () => {
-                    // this.updateTable(0);
-                },
-                () => {},
-                () => {
-                    subscribe.unsubscribe();
-                }
-            );
+            .subscribe()
     }
 
     @ConfirmationDialogMethod({
@@ -91,15 +79,9 @@ export class PlansComponent implements OnInit, ConfirmationDialogInterface {
     })
     archive(plan: PlansResponse.Plan) {
         this.archivedPlans.push(plan);
-        const subscribe: Subscription = this.planService.plan
+        this.planService.plan
             .archive(plan.id)
-            .subscribe(
-                () => {},
-                () => {},
-                () => {
-                    subscribe.unsubscribe();
-                },
-            );
+            .subscribe();
     }
 
     tabChange() {

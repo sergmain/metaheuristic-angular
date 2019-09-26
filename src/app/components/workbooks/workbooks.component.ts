@@ -48,9 +48,9 @@ export class WorkbooksComponent implements OnInit {
         this.getResponse(0);
     }
 
-    getResponse(page) {
+    getResponse(page: number) {
         this.currentState = this.states.loading;
-        let subscribe = this.plansService.workbooks
+        this.plansService.workbooks
             .get(this.planId, page)
             .subscribe((response: WorkbooksResponse.Response) => {
                 this.response = response;
@@ -59,12 +59,11 @@ export class WorkbooksComponent implements OnInit {
                 this.currentState = this.states.show;
                 this.prevTable.disabled = response.instances.first;
                 this.nextTable.disabled = response.instances.last;
-                subscribe.unsubscribe();
             });
     }
 
-    updateResponse(page) {
-        let subscribe = this.plansService.workbooks
+    updateResponse(page: number) {
+        this.plansService.workbooks
             .get(this.planId, page)
             .subscribe((response: WorkbooksResponse.Response) => {
                 this.response = response;
@@ -72,18 +71,14 @@ export class WorkbooksComponent implements OnInit {
                 this.dataSource = new MatTableDataSource(response.instances.content);
                 this.prevTable.disabled = response.instances.first;
                 this.nextTable.disabled = response.instances.last;
-                subscribe.unsubscribe();
             });
     }
 
 
     delete(el) {
         el.__deleted = true;
-        let subscribe = this.plansService.workbook
+        this.plansService.workbook
             .deleteCommit(el.planId, el.id)
-            .subscribe((response) => {
-                subscribe.unsubscribe();
-            });
     }
 
     next() {
@@ -96,10 +91,9 @@ export class WorkbooksComponent implements OnInit {
 
 
     runExecState(id, state) {
-        let subscribe = this.plansService.workbook
+        this.plansService.workbook
             .targetExecState(this.planId, state, id)
             .subscribe((response) => {
-                subscribe.unsubscribe();
                 this.updateResponse(this.response.instances.number);
             });
     }
