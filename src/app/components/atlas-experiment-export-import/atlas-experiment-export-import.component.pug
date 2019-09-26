@@ -4,14 +4,15 @@ ct-cols
             ct-section-header
                 ct-section-header-row 
                     ct-heading Export an Experiment from Atlas 
-            ct-section-body 
-                ct-section-body-row 
-                    ct-section-content
-                        a( target="_self" href="{{'/launchpad/atlas/atlas-experiment-export/' + atlasDownloadName}}" '[download]'="atlasDownloadName")
-                            button(mat-flat-button size-x wide color="primary") Export
-                ct-section-body-row 
-                    ct-section-content
-                        button(mat-stroked-button '(click)'="back()") Cancel
+            ct-section-body            
+            ct-section-footer
+                ct-section-footer-row 
+                    ct-flex(justify-content="flex-end" gap="unit(1)")
+                        ct-flex-item
+                            button(mat-stroked-button '(click)'="back()") Cancel
+                        ct-flex-item
+                            a( target="_self" href="{{'/launchpad/atlas/atlas-experiment-export/' + atlasDownloadName}}" '[download]'="atlasDownloadName")
+                                button(mat-flat-button color="primary") Export
 
 ct-cols
     ct-col(size="6")
@@ -26,7 +27,7 @@ ct-cols
                         ct-file-upload(#fileUpload acceptTypes="sdfsd")
             ct-section-footer
                 ct-section-footer-row
-                    ct-flex(justify-content="flex-end" gap="8px")
+                    ct-flex(justify-content="flex-end" gap="unit(1)")
                         ct-flex-item
                             button(mat-stroked-button '(click)'="back()") Cancel
                         ct-flex-item
