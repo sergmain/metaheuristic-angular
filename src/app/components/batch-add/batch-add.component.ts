@@ -64,22 +64,16 @@ export class BatchAddComponent implements OnInit {
     }
 
     upload() {
-        const formData: FormData = new FormData();
-        formData.append('file', this.fileUpload.fileInput.nativeElement.files[0]);
-        formData.append('planId', this.plan.id);
-        const subscribe: Subscription = this.batchService.batch
-            .upload(formData)
-            .subscribe(
-                (response: batch.upload.Response) => {
-                    if (response.status.toLowerCase() === 'ok') {
-                        this.router.navigate(['/launchpad', 'batch']);
-                    }
-                    this.uploadResponse = response;
-                },
-                () => {},
-                () => subscribe.unsubscribe()
-            );
+        this.batchService.batch
+            .upload(this.plan.id, this.fileUpload.fileInput.nativeElement.files[0])
+            .subscribe((response: batch.upload.Response) => {
+                if (response.status.toLowerCase() === 'ok') {
+                    this.router.navigate(['/launchpad', 'batch']);
+                }
+                this.uploadResponse = response;
+            });
     }
+
     fileUploadChanged() {
         this.file = this.fileUpload.fileInput.nativeElement.files[0] || false;
     }
