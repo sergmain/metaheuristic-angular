@@ -14,7 +14,7 @@ const routes: Routes = [{
         component: StationsComponent
     },
     {
-        path: 'l:id/edit',
+        path: ':id/edit',
         component: StationEditComponent
     }
 ];
