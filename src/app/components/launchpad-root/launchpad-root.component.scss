@@ -1,7 +1,10 @@
-mat-sidenav-container {
-    min-height: 100%
-}
+@import '../../../variables.scss';
 
 mat-sidenav-content {
     overflow: hidden;
+}
+
+mat-sidenav {
+    position: fixed;
+    top: unit(6)
 }
