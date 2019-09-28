@@ -7,14 +7,14 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
     templateUrl: './login.component.pug',
     styleUrls: ['./login.component.scss']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent {
 
     username: string = '';
     password: string = '';
 
     form = new FormGroup({
-        username: new FormControl('', [Validators.required, Validators.minLength(3)]),
-        password: new FormControl('', [Validators.required, Validators.minLength(3)]),
+        username: new FormControl('', [Validators.required, Validators.minLength(1)]),
+        password: new FormControl('', [Validators.required, Validators.minLength(1)]),
         remember: new FormControl(),
     });
 
@@ -22,9 +22,9 @@ export class LoginComponent implements OnInit {
         private authenticationService: AuthenticationService
     ) {}
 
-    ngOnInit() {}
-
     login() {
-        this.authenticationService.login(this.form.value.username, this.form.value.password, this.form.value.remember);
+        if (this.form.valid) {
+            this.authenticationService.login(this.form.value.username, this.form.value.password, this.form.value.remember);
+        }
     }
 }
