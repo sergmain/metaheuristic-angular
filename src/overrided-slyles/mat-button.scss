@@ -8,11 +8,13 @@ body {
     .mat-flat-button,
     .mat-icon-button,
     .mat-stroked-button {
+        font-family: inherit;
         letter-spacing: 0.5px;
         padding: 0 unit(2);
         line-height: unit(4);
         height: unit(4);
         .mat-button-wrapper {
+            display: block;
             font-weight: 500;
             font-size: unit(1.5);
             line-height: inherit;
