@@ -12,6 +12,7 @@
         "build3": "ng build --prod=true",
         "build4": "ng build --aot --prod=true",
         "npm-install": "npm i",
+        "npm-install2": "npm install -g npm",
         "test": "ng test",
         "lint": "ng lint",
         "e2e": "ng e2e",
