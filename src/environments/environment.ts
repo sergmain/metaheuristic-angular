@@ -5,12 +5,12 @@
 export let environment: {
     baseUrl: string;
     production: boolean;
-    userLifetime: number;
+    userLifeTime?: number;
 };
 environment = {
     production: false,
     baseUrl: 'http://localhost:8080/rest/v1/',
-    userLifetime: 24 * 60 * 60 * 1000
+    userLifeTime: 24 * 60 * 60 * 1000 // 24 hours
 };
 
 /*

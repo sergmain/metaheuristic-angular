@@ -11,20 +11,17 @@ import { User } from './User';
 
 export class AuthenticationService {
 
-    deafultTimeExpires: number = 7 * 24 * 60 * 60 * 1000;
-
     constructor(
         private http: HttpClient,
         private settingsService: SettingsService
     ) {}
 
     isAuth() {
-        if (this.getUserLifeTimeExpired()) {
-            this.logout();
-            return false;
-        }
-
         if (localStorage.getItem('user')) {
+            if (this.getUserLifeTimeExpiration()) {
+                this.logout();
+                return false;
+            }
             return true;
         }
         return false;
@@ -48,23 +45,26 @@ export class AuthenticationService {
             });
     }
 
-    getUserLifeTimeExpired(): boolean {
-        const userLifetime: number = environment.userLifetime || this.deafultTimeExpires;
-        const last: number = parseInt(localStorage.getItem('__last'), 10) || 0;
-        const now: number = Date.now();
+    getUserLifeTimeExpiration(): boolean {
+        if (environment.userLifeTime) {
+            const userLifeTime: number = environment.userLifeTime;
+            const last: number = parseInt(localStorage.getItem('__last'), 10) || 0;
+            const now: number = Date.now();
 
-        if (last === 0) {
-            localStorage.setItem('__last', now.toString());
-            return false;
-        }
+            if (last === 0) {
+                localStorage.setItem('__last', now.toString());
+                return false;
+            }
 
-        if ((now - last) > userLifetime) {
-            return true;
+            if ((now - last) > userLifeTime) {
+                return true;
+            } else {
+                localStorage.setItem('__last', now.toString());
+                return false;
+            }
         } else {
-            localStorage.setItem('__last', now.toString());
             return false;
         }
-
     }
 
     logout() {

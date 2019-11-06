@@ -1,3 +1,4 @@
+import { HttpResponse } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatButton, MatDialog, MatTableDataSource } from '@angular/material';
 import { ConfirmationDialogMethod, QuestionData } from '@app/components/app-dialog-confirmation/app-dialog-confirmation.component';
@@ -7,10 +8,10 @@ import { marker } from '@biesbjerg/ngx-translate-extract-marker';
 import { TranslateService } from '@ngx-translate/core';
 import { SettingsService } from '@services/settings/settings.service';
 import { CtTableComponent } from '@src/app/ct/ct-table/ct-table.component';
+import { Role } from '@src/app/services/authentication';
 import { AuthenticationService } from '@src/app/services/authentication/authentication.service';
 import * as fileSaver from 'file-saver';
-import { Role } from '@src/app/services/authentication';
-import { HttpResponse } from '@angular/common/http';
+
 
 @Component({
     selector: 'batch',
@@ -75,9 +76,14 @@ export class BatchComponent implements OnInit {
 
     downloadFile(batchId: string) {
         this.batchService.downloadFile(batchId)
-            .subscribe((res: any) => {
-               console.log(res.headers);
-               this._saveFile(res.body, 'result.zip');
+            .subscribe((res: HttpResponse < any > ) => {
+                let filename: string = 'result.zip';
+                try {
+                    filename = res.headers.get('Content-Disposition').split('\'\'')[1];
+                } catch (e) {
+                    console.log(e);
+                }
+                this._saveFile(res.body, filename);
             });
     }
 
