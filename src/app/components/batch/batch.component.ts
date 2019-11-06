@@ -8,8 +8,9 @@ import { TranslateService } from '@ngx-translate/core';
 import { SettingsService } from '@services/settings/settings.service';
 import { CtTableComponent } from '@src/app/ct/ct-table/ct-table.component';
 import { AuthenticationService } from '@src/app/services/authentication/authentication.service';
-import { Subscription } from 'rxjs';
 import * as fileSaver from 'file-saver';
+import { Role } from '@src/app/services/authentication';
+import { HttpResponse } from '@angular/common/http';
 
 @Component({
     selector: 'batch',
@@ -24,6 +25,7 @@ export class BatchComponent implements OnInit {
     response: batches.get.Response;
     dataSource = new MatTableDataSource < Batch > ([]);
     columnsToDisplay = ['id', 'createdOn', 'isBatchConsistent', 'planCode', 'execState', 'bts'];
+
     deletedRows: Batch[] = [];
 
     fileSystemName: string;
@@ -51,9 +53,18 @@ export class BatchComponent implements OnInit {
         this.batchService.batches.get(page)
             .subscribe(
                 (response: batches.get.Response) => {
+
+                    // bug 704
+                    if (this.authenticationService.getUserRole().has(Role.Operator)) {
+                        this.columnsToDisplay = ['id', 'createdOn', 'planCode', 'execState', 'bts'];
+                    } else {
+                        this.columnsToDisplay = ['id', 'createdOn', 'isBatchConsistent', 'planCode', 'execState', 'bts'];
+                    }
+
                     this.response = response;
                     this.dataSource = new MatTableDataSource(response.batches.content || []);
                     this.table.show();
+
                     this.currentStates.delete(this.states.firstLoading);
                     this.currentStates.delete(this.states.loading);
                     this.prevTable.disabled = this.response.batches.first;
@@ -65,7 +76,8 @@ export class BatchComponent implements OnInit {
     downloadFile(batchId: string) {
         this.batchService.downloadFile(batchId)
             .subscribe((res: any) => {
-                this._saveFile(res.body, 'result.zip');
+               console.log(res.headers);
+               this._saveFile(res.body, 'result.zip');
             });
     }
 

@@ -15,7 +15,6 @@ export class LoginComponent {
     form = new FormGroup({
         username: new FormControl('', [Validators.required, Validators.minLength(1)]),
         password: new FormControl('', [Validators.required, Validators.minLength(1)]),
-        remember: new FormControl(),
     });
 
     constructor(
@@ -24,7 +23,7 @@ export class LoginComponent {
 
     login() {
         if (this.form.valid) {
-            this.authenticationService.login(this.form.value.username, this.form.value.password, this.form.value.remember);
+            this.authenticationService.login(this.form.value.username, this.form.value.password);
         }
     }
 }
