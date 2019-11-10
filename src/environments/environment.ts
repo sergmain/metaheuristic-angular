@@ -10,7 +10,7 @@ export let environment: {
 environment = {
     production: false,
     baseUrl: 'http://localhost:8080/rest/v1/',
-    userLifeTime: 24 * 60 * 60 * 1000 // 24 hours
+    userLifeTime: 30 * 60 * 1000 // 30 minutes
 };
 
 /*
