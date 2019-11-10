@@ -83,7 +83,7 @@ export class BatchComponent implements OnInit {
                 } catch (e) {
                     console.log(e);
                 }
-                this._saveFile(res.body, filename);
+                this._saveFile(res.body, decodeURIComponent(filename));
             });
     }
 
