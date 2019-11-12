@@ -1,0 +1,14 @@
+---- bug-801
+url - http://localhost:4200/launchpad/experiments/651/edit
+при удалении снипета вызывать урл
+/rest/v1/launchpad/experiment/experiment-snippet-delete-by-type-commit/{experimentId}/{snippetType}
+
+и передавать тип снипета, а не его код
+
+сейчас для удаления вызывается /rest/v1/launchpad/experiment/experiment-snippet-delete-commit/{experimentId}/{snippet}
+
+---- bug-802
+определять по какому соединению идет обращени - по http Или https
+если соединение устанавливается по http по делать принудительный редирект на https
+
+
