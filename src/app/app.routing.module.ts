@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { RouterModule, Routes, ExtraOptions } from '@angular/router';
 import { AuthGuard } from '@app/guards/auth/auth.guard';
 import { BillingComponent } from './components/billing/billing.component';
 import { PilotComponent } from './components/pilot/pilot.component';
 import { LoremIndexComponent } from './components/lorem-index/lorem-index.component';
-
+import { environment } from '@src/environments/environment';
 const routes: Routes = [{
     path: '',
     component: LoremIndexComponent,
@@ -29,8 +29,12 @@ const routes: Routes = [{
     pathMatch: 'full'
 }];
 
+const extraOptions: ExtraOptions = {
+    useHash: environment.hashLocationStrategy
+};
+
 @NgModule({
-    imports: [RouterModule.forRoot(routes)],
+    imports: [RouterModule.forRoot(routes, extraOptions)],
     exports: [RouterModule]
 })
 

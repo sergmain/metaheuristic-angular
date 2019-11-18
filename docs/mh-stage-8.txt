@@ -7,6 +7,11 @@ url - http://localhost:4200/launchpad/experiments/651/edit
 
 сейчас для удаления вызывается /rest/v1/launchpad/experiment/experiment-snippet-delete-commit/{experimentId}/{snippet}
 
+
+
+
+
+
 ---- bug-802
 определять по какому соединению идет обращени - по http Или https
 если соединение устанавливается по http, то делать принудительный редирект на https
@@ -16,6 +21,15 @@ url - http://localhost:4200/launchpad/experiments/651/edit
 в environment.ts со значением false
 в environment.production.ts со значением true
 
+
+
+
+
+
+
+
+
+
 ---- bug-803
 url - /launchpad/batch
 сейчас отсутствуют средства для перезапроса данных с сервера. чтобы получить актуальное состояние
@@ -23,6 +37,14 @@ url - /launchpad/batch
 
 что нужно
 необходимо добавить перезапрос данных при нажатии пункта меню Пакеты, которое находится слева
+
+
+
+
+
+
+
+
 
 
 ---- bug 804
@@ -47,6 +69,17 @@ https://angular.io/guide/router
 - запустить ng build --aot --prod=true
 - результат из дира distr поместить на этот сервер
 - перейти по любому урл, который не индекс и нажать рефрешь
+
+DONE
+
+
+
+
+
+
+
+
+
 
 
 
