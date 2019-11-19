@@ -1,10 +1,10 @@
-export let environment: {
+interface IEnvironment {
     baseUrl: string;
     production: boolean;
-    userLifeTime?: number;
+    userLifeTime ? : number;
     hashLocationStrategy: boolean;
-};
-environment = {
+}
+export const environment: IEnvironment = {
     production: false,
     baseUrl: 'http://localhost:8080/rest/v1/',
     hashLocationStrategy: true,
