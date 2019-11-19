@@ -11,6 +11,7 @@
         "build2": "ng build --baseHref=/aiai-app/ --prod=true",
         "build3": "ng build --prod=true",
         "build4": "ng build --aot --prod=true",
+        "build5": "ng build --aot",
         "npm-install": "npm i",
         "npm-install2": "npm install -g npm",
         "test": "ng test",
