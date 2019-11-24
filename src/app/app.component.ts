@@ -19,7 +19,6 @@ export class AppComponent {
         private store: Store < IAppState >
     ) {
         this.store.subscribe((state: IAppState) => {
-            console.log('app.component', state);
             this.translate.use(state.settings.language);
         });
         this.store.dispatch(settingsServiceActions.getAll());
