@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Settings, SettingsSidenavState } from '@src/app/services/settings/Settings';
-import { SettingsService } from '@src/app/services/settings/settings.service';
+import { Settings } from '@src/app/services/settings/Settings';
+import { Store } from '@ngrx/store';
+import { IAppState } from '@src/app/app.reducers';
 
 @Component({
     selector: 'launchpad-root',
@@ -12,18 +13,18 @@ export class LaunchpadRootComponent implements OnInit {
     sidenavOpened: boolean;
 
     constructor(
-        private settingsService: SettingsService,
+        private store: Store < IAppState >
 
     ) {
-        this.settingsService.settingsObserver.subscribe((settings: any) => {
-            this.settings = settings;
+        this.store.subscribe((data: IAppState) => {
+            this.settings = data.settings;
             this.updateSidenavState();
         });
     }
 
     private updateSidenavState() {
         this.sidenavOpened = false;
-        if (this.settings.sidenavState === SettingsSidenavState.Open) {
+        if (this.settings.sidenav === true) {
             this.sidenavOpened = true;
         }
     }

@@ -25,6 +25,10 @@ import { CopyRightModule } from './modules/copy-right.module';
 import { CtAppModule } from './modules/ct.module';
 import { MaterialAppModule } from './ngmaterial.module';
 import { NotificationsInterceptor } from './notifications.interceptor';
+import { StoreModule } from '@ngrx/store';
+import { settingsReducer } from './services/settings/settings.reducer';
+import { EffectsModule } from '@ngrx/effects';
+import { SettingsEffects } from './services/settings/settings.effects';
 
 export function HttpLoaderFactory(http: HttpClient) {
     return new TranslateHttpLoader(http, './assets/i18n/');
@@ -56,6 +60,10 @@ export function HttpLoaderFactory(http: HttpClient) {
         ReactiveFormsModule,
         NgxJsonViewerModule,
         HttpClientModule,
+
+        StoreModule.forRoot({ settings: settingsReducer }),
+        EffectsModule.forRoot([SettingsEffects]),
+
         TranslateModule.forRoot({
             loader: {
                 provide: TranslateLoader,

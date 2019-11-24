@@ -3,11 +3,11 @@ import { Router } from '@angular/router';
 import { LoadStates } from '@app/enums/LoadStates';
 import { Plan } from '@app/models/Plan';
 import { batch, BatchService } from '@app/services/batch/batch.service';
+import { Store } from '@ngrx/store';
+import { TranslateService } from '@ngx-translate/core';
+import { IAppState } from '@src/app/app.reducers';
 import { CtFileUploadComponent } from '@src/app/ct';
 import { Subscription } from 'rxjs';
-import { TranslateService } from '@ngx-translate/core';
-import { SettingsService } from '@services/settings/settings.service';
-import { Settings } from '@src/app/services/settings/Settings';
 
 @Component({
     selector: 'batch-add',
@@ -31,12 +31,16 @@ export class BatchAddComponent implements OnInit {
         private batchService: BatchService,
         private router: Router,
         private translate: TranslateService,
-        private settingsService: SettingsService
+        private store: Store < IAppState >
     ) {
         this.currentStates.add(this.states.firstLoading);
-        this.settingsService.settingsObserver
-            .subscribe((settings: Settings) =>
-                this.translate.use(settings.language));
+        // this.settingsService.settingsObserver
+        //     .subscribe((settings: Settings) =>
+        //         this.translate.use(settings.language));
+
+        store.subscribe((data: IAppState) => {
+            this.translate.use(data.settings.language);
+        });
     }
 
     ngOnInit() { this.updateResponse(); }

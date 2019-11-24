@@ -1,7 +1,10 @@
 import { Component } from '@angular/core';
-import { SettingsService } from '@services/settings/settings.service';
+import { SettingsService } from '@src/app/services/settings/settings.service';
 import { TranslateService } from '@ngx-translate/core';
 import { Settings } from './services/settings/Settings';
+import { Store } from '@ngrx/store';
+import { IAppState } from './app.reducers';
+import * as settingsServiceActions from './services/settings/settings.actions';
 
 @Component({
     selector: 'app-root',
@@ -12,10 +15,13 @@ export class AppComponent {
     title = 'metaheuristic-app';
     constructor(
         private settingsService: SettingsService,
-        private translate: TranslateService
+        private translate: TranslateService,
+        private store: Store < IAppState >
     ) {
-        this.settingsService.settingsObserver
-            .subscribe((settings: Settings) =>
-                this.translate.use(settings.language));
+        this.store.subscribe((state: IAppState) => {
+            console.log('app.component', state);
+            this.translate.use(state.settings.language);
+        });
+        this.store.dispatch(settingsServiceActions.getAll());
     }
 }

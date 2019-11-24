@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { Settings, SettingsLanguage, SettingsSidenav, SettingsSidenavState, SettingsTheme } from './Settings';
-import { Router, RoutesRecognized, RouterEvent, ActivatedRoute } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
+import { IAppState } from '../../app.reducers';
+import { Settings, SettingsLanguage, SettingsTheme } from './Settings';
 
 export const setOfLanguages: Set < SettingsLanguage > = new Set([
     SettingsLanguage.EN,
@@ -10,49 +11,43 @@ export const setOfLanguages: Set < SettingsLanguage > = new Set([
 
 @Injectable({ providedIn: 'root' })
 export class SettingsService {
-    private settings: Settings;
-    private defaultSettings: Settings = {
-        theme: SettingsTheme.Light,
-        sidenavState: SettingsSidenavState.Open,
-        sidenav: SettingsSidenav.Enable,
+    localStorageName: string = 'settingsService';
+
+    storageDefaultData: Settings = {
+        theme: SettingsTheme.Dark,
+        sidenav: true,
+        sidenavButton: true,
         language: SettingsLanguage.EN
     };
 
-    settingsObserver: BehaviorSubject < any > ;
-
     constructor(
-        private router: Router,
-        private route: ActivatedRoute
+        private store: Store < IAppState >
     ) {
-        this.settings = this.getSettingsFromLocalStore();
-        this.settingsObserver = new BehaviorSubject < any > (this.settings);
-        this.router.events.subscribe((event: RouterEvent) => {
-            if (event instanceof RoutesRecognized) {
-                if (this.getRouteData(event).sidenav) {
-                    this.settings.sidenav = SettingsSidenav.Enable;
-                } else {
-                    this.settings.sidenav = SettingsSidenav.Disable;
-                }
-                this.saveSettingsToLocalStore()
-            }
+        this.store.subscribe((state: IAppState) => {
+            this.updateTheme(state.settings.theme);
         });
-        this.updateTheme();
     }
 
-    private saveSettingsToLocalStore(): void {
-        localStorage.setItem('settingsService', JSON.stringify(this.settings));
-        this.settingsObserver.next(this.getSettingsFromLocalStore());
+    update(newStorageData: any) {
+        return new Observable(sub => {
+            this.saveToLocalStore(newStorageData);
+            sub.next(this.getFromLocalStore());
+            sub.complete();
+        });
     }
 
-    private getSettingsFromLocalStore(): Settings {
-        return Object.assign({}, this.defaultSettings, JSON.parse(localStorage.getItem('settingsService')));
+    getAll() {
+        return new Observable(sub => {
+            sub.next(this.getFromLocalStore());
+            sub.complete();
+        });
     }
 
-    private updateTheme() {
+    private updateTheme(theme: SettingsTheme) {
         const body: HTMLElement = document.querySelector('body');
         body.classList.remove('dark-theme');
         body.classList.remove('light-theme');
-        switch (this.settings.theme) {
+        switch (theme) {
             case SettingsTheme.Dark:
                 body.classList.add('dark-theme');
                 break;
@@ -64,63 +59,11 @@ export class SettingsService {
         }
     }
 
-    private getRouteData(event: any) {
-        let data: any = {};
-        return getData(event.state.root.firstChild);
-
-        function getData(firstChild: any) {
-            data = Object.assign(data, firstChild.data);
-            if (firstChild.firstChild) {
-                return getData(firstChild.firstChild);
-            }
-            return data;
-        }
+    private saveToLocalStore(newStorageData: Settings): void {
+        localStorage.setItem(this.localStorageName, JSON.stringify(Object.assign({}, this.storageDefaultData, newStorageData)));
     }
 
-    toggleLanguage(value: string) {
-        value = value.trim().toUpperCase();
-        switch (value) {
-            case SettingsLanguage.RU:
-                this.settings.language = SettingsLanguage.RU;
-                break;
-            case SettingsLanguage.EN:
-                this.settings.language = SettingsLanguage.EN;
-                break;
-            default:
-                this.settings.language = SettingsLanguage.EN;
-                break;
-        }
-        this.saveSettingsToLocalStore();
-    }
-
-    toggleTheme(check: boolean) {
-        switch (check) {
-            case true:
-                this.settings.theme = SettingsTheme.Dark;
-                break;
-            case false:
-                this.settings.theme = SettingsTheme.Light;
-                break;
-            default:
-                this.settings.theme = SettingsTheme.Light;
-                break;
-        }
-        this.updateTheme();
-        this.saveSettingsToLocalStore();
-    }
-
-    toggleSidenav() {
-        switch (this.settings.sidenavState) {
-            case SettingsSidenavState.Hide:
-                this.settings.sidenavState = SettingsSidenavState.Open;
-                break;
-            case SettingsSidenavState.Open:
-                this.settings.sidenavState = SettingsSidenavState.Hide;
-                break;
-            default:
-                this.settings.sidenavState = SettingsSidenavState.Open;
-                break;
-        }
-        this.saveSettingsToLocalStore();
+    private getFromLocalStore(): Settings {
+        return Object.assign({}, JSON.parse(localStorage.getItem(this.localStorageName)));
     }
 }

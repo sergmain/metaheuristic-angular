@@ -3,14 +3,6 @@ export enum SettingsTheme {
         Light = 'light'
 }
 
-export enum SettingsSidenav {
-    Disable = 'disable',
-        Enable = 'enable'
-}
-export enum SettingsSidenavState {
-    Open = 'open',
-        Hide = 'hide'
-}
 export enum SettingsLanguage {
     RU = 'RU',
         EN = 'EN'
@@ -18,7 +10,7 @@ export enum SettingsLanguage {
 
 export interface Settings {
     theme: SettingsTheme;
-    sidenav: SettingsSidenav;
-    sidenavState: SettingsSidenavState;
+    sidenav: boolean;
+    sidenavButton:boolean;
     language: SettingsLanguage;
 }

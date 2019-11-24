@@ -6,7 +6,6 @@ import { LoadStates } from '@app/enums/LoadStates';
 import { Batch, batches, BatchService } from '@app/services/batch/batch.service';
 import { marker } from '@biesbjerg/ngx-translate-extract-marker';
 import { TranslateService } from '@ngx-translate/core';
-import { SettingsService } from '@services/settings/settings.service';
 import { CtTableComponent } from '@src/app/ct/ct-table/ct-table.component';
 import { Role } from '@src/app/services/authentication';
 import { AuthenticationService } from '@src/app/services/authentication/authentication.service';
@@ -41,7 +40,6 @@ export class BatchComponent implements OnInit {
         private dialog: MatDialog,
         private batchService: BatchService,
         private authenticationService: AuthenticationService,
-        private settingsService: SettingsService
     ) {}
 
     ngOnInit() {

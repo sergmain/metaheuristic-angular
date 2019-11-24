@@ -1,7 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild, Input, OnChanges, EventEmitter, Output } from '@angular/core';
 import { marker } from '@biesbjerg/ngx-translate-extract-marker';
 import { TranslateService } from '@ngx-translate/core';
-import { SettingsService } from '@services/settings/settings.service';
 
 @Component({
     selector: 'ct-file-upload',

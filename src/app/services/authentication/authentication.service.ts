@@ -1,6 +1,5 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { SettingsService } from '@services/settings/settings.service';
 import { environment } from '@src/environments/environment';
 import { user as userResponse } from './response';
 import { User } from './User';
@@ -13,7 +12,6 @@ export class AuthenticationService {
 
     constructor(
         private http: HttpClient,
-        private settingsService: SettingsService
     ) {}
 
     isAuth() {
