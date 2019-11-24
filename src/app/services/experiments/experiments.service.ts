@@ -136,12 +136,10 @@ export class ExperimentsService {
         metadataDefaultAddCommit: (experimentId: string | number): Observable < any > =>
             this.GET(`/experiment-metadata-default-add-commit/${experimentId}`),
 
-        // @GetMapping("/experiment-snippet-delete-commit/{experimentId}/{snippetCode}")
-        // public OperationStatusRest snippetDeleteCommit(@PathVariable Long experimentId, @PathVariable String snippetCode) {
-        //     return experimentTopLevelService.snippetDeleteCommit(experimentId, snippetCode);
-        // }
-        snippetDeleteCommit: (experimentId: string, id: string): Observable < any > =>
-            this.GET(`/experiment-snippet-delete-commit/${experimentId}/${id}`),
+
+        snippetDeleteByTypeCommit: (experimentId: string, snippetType: string): Observable < any > =>
+            this.GET(`/experiment-snippet-delete-by-type-commit/${experimentId}/${snippetType}`),
+
 
         // @PostMapping("/experiment-delete-commit")
         // public OperationStatusRest deleteCommit(Long id) {
