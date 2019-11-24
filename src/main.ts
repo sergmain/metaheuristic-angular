@@ -6,10 +6,16 @@ import { environment } from './environments/environment';
 
 import 'hammerjs';
 
-
-if (environment.production) {
-  enableProdMode();
+if (environment.isSslRequired) {
+    if (window.location.protocol === 'http:') {
+        window.location.href = window.location.href.replace('http', 'https');
+    }
 }
 
-platformBrowserDynamic().bootstrapModule(AppModule)
-  .catch(err => console.error(err));
+if (environment.production) {
+    enableProdMode();
+}
+
+platformBrowserDynamic()
+    .bootstrapModule(AppModule)
+    .catch(err => console.error(err));
