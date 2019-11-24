@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { AuthenticationService, Role } from '@src/app/services/authentication';
 
 @Component({
@@ -6,17 +7,17 @@ import { AuthenticationService, Role } from '@src/app/services/authentication';
     templateUrl: './launchpad-navigation.component.pug',
     styleUrls: ['./launchpad-navigation.component.scss']
 })
-export class LaunchpadNavigationComponent implements OnInit {
+export class LaunchpadNavigationComponent {
 
     userRole: Set < Role > ;
 
     constructor(
         private authenticationService: AuthenticationService,
+        private router: Router,
     ) {
+        this.router.routeReuseStrategy.shouldReuseRoute = () => false;
         this.userRole = this.authenticationService.getUserRole();
     }
-
-    ngOnInit() {}
 
     accessPlans() {
         if (this.userRole.has(Role.Admin) ||

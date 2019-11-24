@@ -30,7 +30,9 @@ const routes: Routes = [{
 }];
 
 const extraOptions: ExtraOptions = {
-    useHash: environment.hashLocationStrategy
+    useHash: environment.hashLocationStrategy,
+    onSameUrlNavigation: 'reload',
+
 };
 
 @NgModule({
