@@ -1,7 +1,7 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Location } from '@angular/common';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatDialog, MatTableDataSource } from '@angular/material';
+import { MatDialog, MatTableDataSource, MatSelect, MatSelectChange } from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ConfirmationDialogMethod } from '@app/components/app-dialog-confirmation/app-dialog-confirmation.component';
 import { DefaultResponse } from '@app/models';
@@ -69,6 +69,8 @@ export class ExperimentEditComponent implements OnInit {
 
     // newMetadata: Metadata = new Metadata('', '')
     @ViewChild('snippetsBlock') snippetsBlock: CtWrapBlockComponent;
+    @ViewChild('snippetMatSelect') snippetMatSelect: MatSelect;
+
     @ViewChild('metadataBlock') metadataBlock: CtWrapBlockComponent;
 
     constructor(
@@ -243,6 +245,19 @@ export class ExperimentEditComponent implements OnInit {
                 }
             );
     }
+
+    snippetMatSelectChange(event: MatSelectChange) {
+        console.log(event.value);
+        console.log(event.source);
+        console.log(this.snippetMatSelect.selected);
+    }
+    snippetMatSelectSelected() {
+        if (this.snippetMatSelect && this.snippetMatSelect.selected) {
+            return true;
+        }
+        return false;
+    }
+
 
     save() {
         this.back();
