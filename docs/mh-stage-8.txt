@@ -8,7 +8,7 @@ url - http://localhost:4200/launchpad/experiments/651/edit
 сейчас для удаления вызывается /rest/v1/launchpad/experiment/experiment-snippet-delete-commit/{experimentId}/{snippet}
 
 DONE
-
+CONFIRMED
 
 
 
@@ -22,7 +22,7 @@ DONE
 в environment.production.ts со значением true
 
 DONE
-
+CONFIRMED
 
 
 
@@ -38,6 +38,8 @@ url - /launchpad/batch
 что нужно
 необходимо добавить перезапрос данных при нажатии пункта меню Пакеты, которое находится слева
 
+DONE
+CONFIRMED
 
 
 
@@ -73,13 +75,6 @@ https://angular.io/guide/router
 DONE
 
 CONFIRMED
-
-
-
-
-
-
-
 
 
 
