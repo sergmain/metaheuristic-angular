@@ -7,7 +7,7 @@ import { PlansService } from '@app/services/plans/plans.service';
 import { Store } from '@ngrx/store';
 import { IAppState } from '@src/app/app.reducers';
 import { Subscription } from 'rxjs';
-import { getWorkbook, getPlan } from '@src/app/services/plans/plans.actions';
+import { getWorkbook, getPlan, getPlanNull } from '@src/app/services/plans/plans.actions';
 import { response } from '@src/app/services/plans/response';
 @Component({
     selector: 'workbook-add',
@@ -51,6 +51,7 @@ export class WorkbookAddComponent implements OnInit, OnDestroy {
         if (this.storeSubscription) {
             this.storeSubscription.unsubscribe();
         }
+        this.store.dispatch(getPlanNull())
     }
 
     cancel() {

@@ -5,6 +5,8 @@ import { LoadStates } from '@app/enums/LoadStates';
 import { PlanResponse } from '@app/models';
 import { PlansService } from '@app/services/plans/plans.service';
 import { Subscription } from 'rxjs';
+import { response } from '@src/app/services/plans/response';
+import { IPlan } from '@src/app/services/plans/IPlan';
 
 
 @Component({
@@ -17,8 +19,8 @@ export class PlanEditComponent implements OnInit {
     readonly states = LoadStates;
     currentState: LoadStates = LoadStates.firstLoading;
 
-    plan: PlanResponse.Plan;
-    response: PlanResponse.Response;
+    plan: IPlan;
+    response: response.plan.Get;
 
     constructor(
         private location: Location,
@@ -35,7 +37,7 @@ export class PlanEditComponent implements OnInit {
         const id: string | number = this.route.snapshot.paramMap.get('planId');
         const subscribe: Subscription = this.plansService.plan
             .get(id)
-            .subscribe((response: PlanResponse.Response) => {
+            .subscribe((response: response.plan.Get) => {
                     this.response = response;
                     this.plan = response.plan;
                     this.currentState = this.states.show;
@@ -55,7 +57,7 @@ export class PlanEditComponent implements OnInit {
         this.currentState = this.states.wait;
         const subscribe: Subscription = this.plansService.plan
             .edit(this.plan.id, this.plan.params)
-            .subscribe((data: PlanResponse.Response) => {
+            .subscribe((data: response.plan.Get) => {
                     if (data.errorMessages) {
                         this.currentState = this.states.show;
                         this.response = data;
@@ -76,7 +78,7 @@ export class PlanEditComponent implements OnInit {
         const subscribe: Subscription = this.plansService
             .plan.validate(id)
             .subscribe(
-                (data: PlanResponse.Response) => {
+                (data: response.plan.Get) => {
                     this.response = data;
                     this.currentState = this.states.show;
                     subscribe.unsubscribe();

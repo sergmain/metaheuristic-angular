@@ -1,7 +1,6 @@
-import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatButton, MatDialog, MatTableDataSource } from '@angular/material';
 import { ActivatedRoute } from '@angular/router';
-import { LoadStates } from '@app/enums/LoadStates';
 import { WorkbookExecState } from '@app/enums/WorkbookExecState';
 import { PlansService } from '@app/services/plans/plans.service';
 import { Store } from '@ngrx/store';
@@ -10,8 +9,9 @@ import { IPlan } from '@src/app/services/plans/IPlan';
 import { IPlansState } from '@src/app/services/plans/IPlansState';
 import { IWorkbook } from '@src/app/services/plans/IWorkbook';
 import { deleteWorkbook, getWorkbooks } from '@src/app/services/plans/plans.actions';
-import { ConfirmationDialogMethod } from '../app-dialog-confirmation/app-dialog-confirmation.component';
 import { Subscription } from 'rxjs';
+import { ConfirmationDialogMethod } from '../app-dialog-confirmation/app-dialog-confirmation.component';
+import { response } from '@src/app/services/plans/response';
 
 
 @Component({
@@ -20,18 +20,15 @@ import { Subscription } from 'rxjs';
     styleUrls: ['./workbooks.component.scss']
 })
 export class WorkbooksComponent implements OnInit, OnDestroy {
-    readonly states = LoadStates;
     readonly execState = WorkbookExecState;
-    currentState = this.states.loading;
-
 
     @ViewChild('nextTable') nextTable: MatButton;
     @ViewChild('prevTable') prevTable: MatButton;
 
     storeSubscription: Subscription;
-    state: IPlansState;
     plan: IPlan;
     planId: string;
+    workbooksResponse: response.workbooks.Get;
     workbooksTableSource = new MatTableDataSource < IWorkbook > ([]);
     workbooksColumnsToDisplay = [
         'id',
@@ -55,12 +52,12 @@ export class WorkbooksComponent implements OnInit, OnDestroy {
     ngOnInit() {
         this.planId = this.route.snapshot.paramMap.get('planId');
         this.storeSubscription = this.store.subscribe((state: IAppState) => {
-            this.state = state.plans;
-            if (this.state.workbooksResponse) {
-                this.plan = Object.values(this.state.workbooksResponse.plans)[0];
-                this.workbooksTableSource = new MatTableDataSource(this.state.workbooksResponse.instances.content);
-                this.prevTable.disabled = this.state.workbooksResponse.instances.first;
-                this.nextTable.disabled = this.state.workbooksResponse.instances.last;
+            this.workbooksResponse = state.plans.getWorkbooksResponse;
+            if (this.workbooksResponse) {
+                this.plan = Object.values(this.workbooksResponse.plans)[0];
+                this.workbooksTableSource = new MatTableDataSource(this.workbooksResponse.instances.content);
+                this.prevTable.disabled = this.workbooksResponse.instances.first;
+                this.nextTable.disabled = this.workbooksResponse.instances.last;
             }
         });
         this.store.dispatch(getWorkbooks({
@@ -71,7 +68,7 @@ export class WorkbooksComponent implements OnInit, OnDestroy {
 
     ngOnDestroy() {
         if (this.storeSubscription) {
-            this.storeSubscription.unsubscribe()
+            this.storeSubscription.unsubscribe();
         }
     }
 
@@ -93,7 +90,7 @@ export class WorkbooksComponent implements OnInit, OnDestroy {
         this.store.dispatch(
             getWorkbooks({
                 planId: this.planId,
-                pageNumber: this.state.workbooksResponse.instances.number + 1
+                pageNumber: this.workbooksResponse.instances.number + 1
             })
         );
     }
@@ -102,7 +99,7 @@ export class WorkbooksComponent implements OnInit, OnDestroy {
         this.store.dispatch(
             getWorkbooks({
                 planId: this.planId,
-                pageNumber: this.state.workbooksResponse.instances.number - 1
+                pageNumber: this.workbooksResponse.instances.number - 1
             })
         );
     }
@@ -113,7 +110,7 @@ export class WorkbooksComponent implements OnInit, OnDestroy {
             .subscribe((response) => {
                 this.store.dispatch(getWorkbooks({
                     planId: this.planId,
-                    pageNumber: this.state.workbooksResponse.instances.number
+                    pageNumber: this.workbooksResponse.instances.number
                 }));
             });
     }

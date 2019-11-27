@@ -36,7 +36,7 @@ export class PlansService {
         add: (planYaml: string): Observable < any > =>
             this.POST(`/plan-add-commit`, fd({ planYaml })),
 
-        edit: (planId: number, planYaml: string): Observable < any > =>
+        edit: (planId: string, planYaml: string): Observable < any > =>
             this.POST(`/plan-edit-commit/`, fd({ planId, planYaml })),
 
         delete: (id: string | number): Observable < any > =>
