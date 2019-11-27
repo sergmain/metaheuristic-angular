@@ -26,9 +26,10 @@ import { CtAppModule } from './modules/ct.module';
 import { MaterialAppModule } from './ngmaterial.module';
 import { NotificationsInterceptor } from './notifications.interceptor';
 import { StoreModule } from '@ngrx/store';
-import { settingsReducer } from './services/settings/settings.reducer';
 import { EffectsModule } from '@ngrx/effects';
 import { SettingsEffects } from './services/settings/settings.effects';
+import { PlansEffects } from './services/plans/plans.effects';
+import { appReducers, appMetaReducers } from './app.reducers';
 
 export function HttpLoaderFactory(http: HttpClient) {
     return new TranslateHttpLoader(http, './assets/i18n/');
@@ -61,8 +62,11 @@ export function HttpLoaderFactory(http: HttpClient) {
         NgxJsonViewerModule,
         HttpClientModule,
 
-        StoreModule.forRoot({ settings: settingsReducer }),
-        EffectsModule.forRoot([SettingsEffects]),
+        StoreModule.forRoot(appReducers, { metaReducers: appMetaReducers }),
+        EffectsModule.forRoot([
+            SettingsEffects,
+            PlansEffects
+        ]),
 
         TranslateModule.forRoot({
             loader: {

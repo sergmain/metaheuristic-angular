@@ -175,7 +175,6 @@ export class ExperimentEditComponent implements OnInit {
             );
     }
 
-
     @ConfirmationDialogMethod({
         question: (hyperParam: HyperParam): string =>
             `Do you want to delete hyper\xa0param\xa0[${hyperParam.key}]`,
@@ -195,7 +194,6 @@ export class ExperimentEditComponent implements OnInit {
             .metadataDefaultAddCommit(this.simpleExperiment.id)
             .subscribe(() => this.loadExperimet());
     }
-
 
     openEditHyperParams(el) {
         if (this.currentEditHyperParams === el) {
@@ -246,18 +244,12 @@ export class ExperimentEditComponent implements OnInit {
             );
     }
 
-    snippetMatSelectChange(event: MatSelectChange) {
-        console.log(event.value);
-        console.log(event.source);
-        console.log(this.snippetMatSelect.selected);
-    }
     snippetMatSelectSelected() {
         if (this.snippetMatSelect && this.snippetMatSelect.selected) {
             return true;
         }
         return false;
     }
-
 
     save() {
         this.back();

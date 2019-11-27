@@ -54,7 +54,7 @@ export class AppViewComponent implements OnInit {
     }
 
     toggleSideNav() {
-        this.store.dispatch(settingsServiceActions.toggleSideNav())
+        this.store.dispatch(settingsServiceActions.toggleSideNav());
     }
 
     toggleTheme(event: MatSlideToggleChange) {

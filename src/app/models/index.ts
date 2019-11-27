@@ -13,7 +13,6 @@ export * from './ExperimentFeaturePlotDataPartResponse';
 
 
 export * from './PlansResponse';
-export * from './WorkbooksResponse';
 export * from './WorkbookAddCommitResponse';
 
 

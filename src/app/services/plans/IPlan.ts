@@ -1,4 +1,4 @@
-export interface Plan {
+export interface IPlan {
     code: string;
     createdOn: string;
     id: string;
@@ -6,4 +6,5 @@ export interface Plan {
     valid: string;
     params: string;
     version: string;
+    clean: boolean;
 }

@@ -1,11 +1,16 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatButton, MatDialog, MatTabGroup, MatTableDataSource } from '@angular/material';
 import { ConfirmationDialogInterface, ConfirmationDialogMethod } from '@app/components/app-dialog-confirmation/app-dialog-confirmation.component';
 import { LoadStates } from '@app/enums/LoadStates';
-import { PlansResponse } from '@app/models';
 import { PlansService } from '@app/services/plans/plans.service';
+import { Store } from '@ngrx/store';
+import { IAppState } from '@src/app/app.reducers';
 import { PlansArchiveComponent } from '@src/app/components/plans-archive/plans-archive.component';
 import { CtTableComponent } from '@src/app/ct/ct-table/ct-table.component';
+import { IPlan } from '@src/app/services/plans/IPlan';
+import { IPlansState } from '@src/app/services/plans/IPlansState';
+import { getPlans } from '@src/app/services/plans/plans.actions';
+import { response } from '@src/app/services/plans/response';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -14,16 +19,18 @@ import { Subscription } from 'rxjs';
     styleUrls: ['./plans.component.scss']
 })
 
-export class PlansComponent implements OnInit, ConfirmationDialogInterface {
+export class PlansComponent implements OnInit, OnDestroy, ConfirmationDialogInterface {
     TABINDEX: number = 0;
 
     states = LoadStates;
     currentStates = new Set();
-    response: PlansResponse.Response;
-    dataSource = new MatTableDataSource < PlansResponse.Plan > ([]);
+    response: response.plans.Get;
+    dataSource = new MatTableDataSource < IPlan > ([]);
     columnsToDisplay = ['id', 'code', 'createdOn', 'valid', 'bts'];
-    deletedPlans: PlansResponse.Plan[] = [];
-    archivedPlans: PlansResponse.Plan[] = [];
+    deletedPlans: IPlan[] = [];
+    archivedPlans: IPlan[] = [];
+
+    storeSubscription: Subscription;
 
     @ViewChild('nextTable') nextTable: MatButton;
     @ViewChild('prevTable') prevTable: MatButton;
@@ -31,22 +38,39 @@ export class PlansComponent implements OnInit, ConfirmationDialogInterface {
     @ViewChild('table') table: CtTableComponent;
     @ViewChild('plansArchive') plansArchive: PlansArchiveComponent;
 
+    // ############################
+
+    state: IPlansState;
+
     constructor(
         readonly dialog: MatDialog,
         private planService: PlansService,
-    ) {
+        private store: Store < IAppState >
+    ) {}
+
+    ngOnInit() {
         this.currentStates.add(this.states.firstLoading);
         this.updateTable(0);
+
+        this.storeSubscription = this.store.subscribe((state) => {
+            this.state = state.plans;
+        });
+        this.store.dispatch(getPlans({ pageNumber: 0 }));
     }
 
-    ngOnInit() {}
+    ngOnDestroy() {
+        if (this.storeSubscription) {
+            this.storeSubscription.unsubscribe();
+        }
+    }
+
 
     updateTable(page: number) {
         this.currentStates.add(this.states.loading);
         this.planService.plans
             .get(page)
             .subscribe(
-                (response: PlansResponse.Response) => {
+                (response: response.plans.Get) => {
                     this.response = response;
                     this.dataSource = new MatTableDataSource(response.items.content || []);
                     this.table.show();
@@ -59,25 +83,25 @@ export class PlansComponent implements OnInit, ConfirmationDialogInterface {
     }
 
     @ConfirmationDialogMethod({
-        question: (plan: PlansResponse.Plan): string =>
+        question: (plan: IPlan): string =>
             `Do you want to delete Plan\xa0#${plan.id}`,
         rejectTitle: 'Cancel',
         resolveTitle: 'Delete'
     })
-    delete(plan: PlansResponse.Plan) {
+    delete(plan: IPlan) {
         this.deletedPlans.push(plan);
         this.planService.plan
             .delete(plan.id)
-            .subscribe()
+            .subscribe();
     }
 
     @ConfirmationDialogMethod({
-        question: (plan: PlansResponse.Plan): string =>
+        question: (plan: IPlan): string =>
             `Do you want to archive Plan\xa0#${plan.id}`,
         rejectTitle: 'Cancel',
         resolveTitle: 'Archive'
     })
-    archive(plan: PlansResponse.Plan) {
+    archive(plan: IPlan) {
         this.archivedPlans.push(plan);
         this.planService.plan
             .archive(plan.id)

@@ -11,6 +11,6 @@ export enum SettingsLanguage {
 export interface Settings {
     theme: SettingsTheme;
     sidenav: boolean;
-    sidenavButton:boolean;
+    sidenavButton: boolean;
     language: SettingsLanguage;
 }
