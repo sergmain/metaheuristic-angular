@@ -11,7 +11,7 @@ const routes: Routes = [{
 }, {
     path: 'launchpad',
     canActivate: [AuthGuard],
-    loadChildren: 'src/app/modules/launchpad.module#LaunchpadModule',
+    loadChildren: () => import('src/app/modules/launchpad.module').then(m => m.LaunchpadModule),
     data: { sidenav: true }
 }, {
     path: 'billing',
@@ -22,7 +22,7 @@ const routes: Routes = [{
     component: PilotComponent,
 }, {
     path: 'about',
-    loadChildren: 'src/app/modules/about.module#AboutModule',
+    loadChildren: () => import('src/app/modules/about.module').then(m => m.AboutModule),
 }, {
     path: '**',
     redirectTo: '',

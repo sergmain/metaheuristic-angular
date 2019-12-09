@@ -27,7 +27,7 @@ export class ResourceAddComponent {
         poolCode: new FormControl('', [Validators.required, Validators.minLength(1)]),
     });
 
-    @ViewChild('fileUpload') fileUpload: CtFileUploadComponent;
+    @ViewChild('fileUpload', { static: true }) fileUpload: CtFileUploadComponent;
 
     constructor(
         private location: Location,

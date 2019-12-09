@@ -15,8 +15,8 @@ import { Subscription } from 'rxjs';
 
 export class AtlasExperimentFeatureProgressComponent implements OnInit {
 
-    @ViewChild(PlotComponent)
-    @ViewChild('consoleView') consoleView: CtWrapBlockComponent;
+    @ViewChild(PlotComponent, { static: false })
+    @ViewChild('consoleView',{ static: false }) consoleView: CtWrapBlockComponent;
 
     plotly: PlotComponent;
 

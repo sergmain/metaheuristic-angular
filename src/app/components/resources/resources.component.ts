@@ -33,9 +33,9 @@ export class ResourcesComponent implements OnInit {
         'bts'
     ];
 
-    @ViewChild('nextTable') nextTable: MatButton;
-    @ViewChild('prevTable') prevTable: MatButton;
-    @ViewChild('table') table: CtTableComponent;
+    @ViewChild('nextTable', { static: true }) nextTable: MatButton;
+    @ViewChild('prevTable', { static: true }) prevTable: MatButton;
+    @ViewChild('table', { static: true }) table: CtTableComponent;
 
     constructor(
         private dialog: MatDialog,

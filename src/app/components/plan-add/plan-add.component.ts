@@ -15,7 +15,7 @@ import { response } from '@services/plans/response';
 export class PlanAddComponent implements OnInit {
     planYaml: string = '';
     response: response.plan.Add;
-    @ViewChild('submitButton') submitButton: MatButton;
+    @ViewChild('submitButton', { static: true }) submitButton: MatButton;
 
     form = new FormGroup({
         planYaml: new FormControl('', [Validators.required, Validators.minLength(1)]),

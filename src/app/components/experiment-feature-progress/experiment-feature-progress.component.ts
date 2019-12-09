@@ -16,8 +16,8 @@ import { Subscription } from 'rxjs';
 
 export class ExperimentFeatureProgressComponent implements OnInit {
 
-    @ViewChild(PlotComponent)
-    @ViewChild('consoleView') consoleView: CtWrapBlockComponent;
+    @ViewChild(PlotComponent, { static: false })
+    @ViewChild('consoleView', { static: false }) consoleView: CtWrapBlockComponent;
 
     plotly: PlotComponent;
 
@@ -109,19 +109,18 @@ export class ExperimentFeatureProgressComponent implements OnInit {
         this.experimentsService.experiment
             .featureProgress(this.experimentId, this.featureId)
             .subscribe((response: response.experiment.FeatureProgress) => {
-                    this.response = response;
-                    this.tables.features.table = Object
-                        .keys(response.experimentFeature)
-                        .filter(key => ['resourceCodes', 'id', 'execStatusAsString'].includes(key))
-                        .map(key => [key, response.experimentFeature[key]]);
-                    this.tables.hyperParameters.table = new MatTableDataSource(response.hyperParamResult.elements);
-                    this.tables.metrics.table = new MatTableDataSource(response.metricsResult.metrics);
-                    this.tables.tasks.table = new MatTableDataSource(response.tasksResult.items.content);
+                this.response = response;
+                this.tables.features.table = Object
+                    .keys(response.experimentFeature)
+                    .filter(key => ['resourceCodes', 'id', 'execStatusAsString'].includes(key))
+                    .map(key => [key, response.experimentFeature[key]]);
+                this.tables.hyperParameters.table = new MatTableDataSource(response.hyperParamResult.elements);
+                this.tables.metrics.table = new MatTableDataSource(response.metricsResult.metrics);
+                this.tables.tasks.table = new MatTableDataSource(response.tasksResult.items.content);
 
-                    this.metricsResult = response.metricsResult;
-                    this.tasks = response.tasksResult;
-                }
-            );
+                this.metricsResult = response.metricsResult;
+                this.tasks = response.tasksResult;
+            });
     }
 
     featureProgressPart(params) {

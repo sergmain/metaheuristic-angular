@@ -18,10 +18,10 @@ export class AtlasExperimentTasksComponent implements OnInit, OnChanges {
     @Output() nextPage = new EventEmitter < string > ();
     @Output() prevPage = new EventEmitter < string > ();
 
-    @ViewChild('nextTable') nextTable: MatButton;
-    @ViewChild('prevTable') prevTable: MatButton;
-    @ViewChild('table') table: CtTableComponent;
-    @ViewChild('consoleView') consoleView: CtWrapBlockComponent;
+    @ViewChild('nextTable', { static: true }) nextTable: MatButton;
+    @ViewChild('prevTable', { static: true }) prevTable: MatButton;
+    @ViewChild('table', { static: true }) table: CtTableComponent;
+    @ViewChild('consoleView', { static: true }) consoleView: CtWrapBlockComponent;
 
     consolePartResponse: response.experiment.FeatureProgressConsolePart;
     featureProgressPartResponse: response.experiment.FeatureProgressPart;

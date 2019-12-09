@@ -10,7 +10,7 @@ import { TranslateService } from '@ngx-translate/core';
 export class CtFileUploadComponent implements OnInit, OnChanges {
     @Output() changed = new EventEmitter < string > ();
 
-    @ViewChild('fileInput') fileInput: ElementRef;
+    @ViewChild('fileInput', { static: true }) fileInput: ElementRef;
     @Input('buttonTitle') buttonTitle: string;
     @Input('acceptTypes') acceptTypes: string;
 

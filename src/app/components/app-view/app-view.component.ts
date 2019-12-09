@@ -22,9 +22,9 @@ export class AppViewComponent implements OnInit {
         current ? : SettingsLanguage;
     } = {};
 
-    @ViewChild(MatSidenav) sidenav: MatSidenav;
-    @ViewChild('matSlideToggleTheme') matSlideToggleTheme: MatSlideToggle;
-    @ViewChild('matSelectLanguage') matSelectLanguage: MatSelect;
+    @ViewChild(MatSidenav, { static: false }) sidenav: MatSidenav;
+    @ViewChild('matSlideToggleTheme', { static: false }) matSlideToggleTheme: MatSlideToggle;
+    @ViewChild('matSelectLanguage', { static: false }) matSelectLanguage: MatSelect;
 
     constructor(
         private authenticationService: AuthenticationService,

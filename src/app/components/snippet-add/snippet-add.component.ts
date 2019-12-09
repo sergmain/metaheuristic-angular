@@ -17,7 +17,7 @@ export class SnippetAddComponent {
 
     response: DefaultResponse;
 
-    @ViewChild('fileUpload') fileUpload: CtFileUploadComponent;
+    @ViewChild('fileUpload', { static: true }) fileUpload: CtFileUploadComponent;
 
     constructor(
         private snippetsService: SnippetsService,

@@ -25,7 +25,7 @@ export class BatchAddComponent implements OnInit {
     plan: Plan;
     file: any;
     listOfPlans: Plan[] = [];
-    @ViewChild('fileUpload') fileUpload: CtFileUploadComponent;
+    @ViewChild('fileUpload', { static: false }) fileUpload: CtFileUploadComponent;
 
     constructor(
         private batchService: BatchService,

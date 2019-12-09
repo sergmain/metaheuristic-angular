@@ -22,9 +22,9 @@ export class PlansArchiveComponent implements OnInit {
     columnsToDisplay = ['id', 'code', 'createdOn', 'valid', 'bts'];
     deletedPlans: (PlansResponse.Plan)[] = [];
 
-    @ViewChild('nextTable') nextTable: MatButton;
-    @ViewChild('prevTable') prevTable: MatButton;
-    @ViewChild('table') table: CtTableComponent;
+    @ViewChild('nextTable', { static: true }) nextTable: MatButton;
+    @ViewChild('prevTable', { static: true }) prevTable: MatButton;
+    @ViewChild('table', { static: true }) table: CtTableComponent;
 
     constructor(
         private dialog: MatDialog,

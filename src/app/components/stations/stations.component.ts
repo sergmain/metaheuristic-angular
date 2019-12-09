@@ -23,8 +23,8 @@ export class StationsComponent implements OnInit, ConfirmationDialogInterface {
     columnsToDisplay: string[] = ['id', 'ip', 'description', 'isActive', 'isBlacklisted', 'lastSeen', 'bts'];
     secondColumnsToDisplay = ['empty', 'env'];
 
-    @ViewChild('nextTable') nextTable: MatButton;
-    @ViewChild('prevTable') prevTable: MatButton;
+    @ViewChild('nextTable', { static: true }) nextTable: MatButton;
+    @ViewChild('prevTable', { static: true }) prevTable: MatButton;
 
     constructor(
         readonly dialog: MatDialog,

@@ -68,10 +68,10 @@ export class ExperimentEditComponent implements OnInit {
     // currentEditMetadata: Metadata | null;
 
     // newMetadata: Metadata = new Metadata('', '')
-    @ViewChild('snippetsBlock') snippetsBlock: CtWrapBlockComponent;
-    @ViewChild('snippetMatSelect') snippetMatSelect: MatSelect;
+    @ViewChild('snippetsBlock', { static: true }) snippetsBlock: CtWrapBlockComponent;
+    @ViewChild('snippetMatSelect', { static: false }) snippetMatSelect: MatSelect;
 
-    @ViewChild('metadataBlock') metadataBlock: CtWrapBlockComponent;
+    @ViewChild('metadataBlock', { static: true }) metadataBlock: CtWrapBlockComponent;
 
     constructor(
         private route: ActivatedRoute,

@@ -22,9 +22,9 @@ export class SnippetsComponent implements OnInit {
 
     showParams: boolean = false;
 
-    @ViewChild('nextTable') nextTable: MatButton;
-    @ViewChild('prevTable') prevTable: MatButton;
-    @ViewChild('table') table: CtTableComponent;
+    @ViewChild('nextTable', { static: true }) nextTable: MatButton;
+    @ViewChild('prevTable', { static: true }) prevTable: MatButton;
+    @ViewChild('table', { static: false }) table: CtTableComponent;
 
     constructor(
         private snippetsService: SnippetsService,

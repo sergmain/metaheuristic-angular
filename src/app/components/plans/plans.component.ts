@@ -32,11 +32,11 @@ export class PlansComponent implements OnInit, OnDestroy, ConfirmationDialogInte
 
     storeSubscription: Subscription;
 
-    @ViewChild('nextTable') nextTable: MatButton;
-    @ViewChild('prevTable') prevTable: MatButton;
-    @ViewChild('matTabGroup') matTabGroup: MatTabGroup;
-    @ViewChild('table') table: CtTableComponent;
-    @ViewChild('plansArchive') plansArchive: PlansArchiveComponent;
+    @ViewChild('nextTable', { static: true }) nextTable: MatButton;
+    @ViewChild('prevTable', { static: true }) prevTable: MatButton;
+    @ViewChild('matTabGroup', { static: true }) matTabGroup: MatTabGroup;
+    @ViewChild('table', { static: true }) table: CtTableComponent;
+    @ViewChild('plansArchive', { static: true }) plansArchive: PlansArchiveComponent;
 
     // ############################
 

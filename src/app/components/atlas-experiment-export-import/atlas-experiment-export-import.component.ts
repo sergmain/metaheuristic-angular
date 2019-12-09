@@ -14,7 +14,7 @@ export class AtlasExperimentExportImportComponent {
     currentStates = new Set();
     atlasDownloadName: string;
 
-    @ViewChild('fileUpload') fileUpload: CtFileUploadComponent;
+    @ViewChild('fileUpload', { static: true }) fileUpload: CtFileUploadComponent;
 
     constructor(
         private route: ActivatedRoute,

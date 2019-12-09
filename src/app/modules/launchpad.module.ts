@@ -23,49 +23,49 @@ const routes: Routes = [{
     path: 'plans',
     canActivate: [AuthGuard],
     component: LaunchpadRootComponent,
-    loadChildren: 'src/app/modules/plans.module#PlansModule',
+    loadChildren: () => import('src/app/modules/plans.module').then(m => m.PlansModule),
     data: { section: 'plans' },
 }, {
     path: 'experiments',
     canActivate: [AuthGuard],
     component: LaunchpadRootComponent,
-    loadChildren: 'src/app/modules/experiments.module#ExperimentsModule',
+    loadChildren: () => import('src/app/modules/experiments.module').then(m => m.ExperimentsModule),
     data: { section: 'experiments' }
 }, {
     path: 'resources',
     canActivate: [AuthGuard],
     component: LaunchpadRootComponent,
-    loadChildren: 'src/app/modules/resources.module#ResourcesModule',
+    loadChildren: () => import('src/app/modules/resources.module').then(m => m.ResourcesModule),
     data: { section: 'resources' }
 }, {
     path: 'snippets',
     canActivate: [AuthGuard],
     component: LaunchpadRootComponent,
-    loadChildren: 'src/app/modules/snippets.module#SnippetsModule',
+    loadChildren: () => import('src/app/modules/snippets.module').then(m => m.SnippetsModule),
     data: { section: 'snippets' }
 }, {
     path: 'stations',
     canActivate: [AuthGuard],
     component: LaunchpadRootComponent,
-    loadChildren: 'src/app/modules/stations.module#StationsModule',
+    loadChildren: () => import('src/app/modules/stations.module').then(m => m.StationsModule),
     data: { section: 'stations' }
 }, {
     path: 'accounts',
     canActivate: [AuthGuard],
     component: LaunchpadRootComponent,
-    loadChildren: 'src/app/modules/accounts.module#AccountsModule',
+    loadChildren: () => import('src/app/modules/accounts.module').then(m => m.AccountsModule),
     data: { section: 'accounts' }
 }, {
     path: 'batch',
     canActivate: [AuthGuard],
     component: LaunchpadRootComponent,
-    loadChildren: 'src/app/modules/batch.module#BatchModule',
+    loadChildren: () => import('src/app/modules/batch.module').then(m => m.BatchModule),
     data: { section: 'batch' }
 }, {
     path: 'atlas',
     canActivate: [AuthGuard],
     component: LaunchpadRootComponent,
-    loadChildren: 'src/app/modules/atlas.module#AtlasModule',
+    loadChildren: () => import('src/app/modules/atlas.module').then(m => m.AtlasModule),
     data: { section: 'atlas' }
 }];
 

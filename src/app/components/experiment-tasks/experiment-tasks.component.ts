@@ -12,10 +12,10 @@ import { CtTableComponent } from '@app/ct';
 export class ExperimentTasksComponent implements OnInit, OnChanges {
 
     @Input() tasks: TasksResult;
-    @ViewChild('nextTable') nextTable: MatButton;
-    @ViewChild('prevTable') prevTable: MatButton;
-    @ViewChild('table') table: CtTableComponent;
-    @ViewChild('consoleView') consoleView: CtWrapBlockComponent;
+    @ViewChild('nextTable', { static: false }) nextTable: MatButton;
+    @ViewChild('prevTable', { static: false }) prevTable: MatButton;
+    @ViewChild('table', { static: false }) table: CtTableComponent;
+    @ViewChild('consoleView', { static: true }) consoleView: CtWrapBlockComponent;
 
     consolePartResponse: response.experiment.FeatureProgressConsolePart;
 

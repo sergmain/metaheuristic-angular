@@ -22,8 +22,8 @@ import { response } from '@src/app/services/plans/response';
 export class WorkbooksComponent implements OnInit, OnDestroy {
     readonly execState = WorkbookExecState;
 
-    @ViewChild('nextTable') nextTable: MatButton;
-    @ViewChild('prevTable') prevTable: MatButton;
+    @ViewChild('nextTable', { static: true }) nextTable: MatButton;
+    @ViewChild('prevTable', { static: true }) prevTable: MatButton;
 
     storeSubscription: Subscription;
     plan: IPlan;
