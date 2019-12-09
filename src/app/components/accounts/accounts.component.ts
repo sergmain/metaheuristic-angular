@@ -9,7 +9,7 @@ import { Subscription } from 'rxjs';
 @Component({
     // tslint:disable-next-line: component-selector
     selector: 'accounts-view',
-    templateUrl: './accounts.component.pug',
+    templateUrl: './accounts.component.html',
     styleUrls: ['./accounts.component.scss']
 })
 

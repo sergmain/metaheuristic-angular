@@ -1,0 +1,68 @@
+<ct-section>
+    <ct-section-header>
+        <ct-section-header-row>
+            <ct-heading>Atlas Experiments</ct-heading>
+        </ct-section-header-row>
+    </ct-section-header>
+    <ct-section-body>
+        <ct-section-body-row>
+            <ct-table #table>
+                <table class="mat-table" mat-table="mat-table" [dataSource]="dataSource">
+                    <ng-container matColumnDef="id">
+                        <th mat-header-cell="mat-header-cell" *matHeaderCellDef>Id</th>
+                        <td mat-cell="mat-cell" *matCellDef="let el">{{el.id}} </td>
+                    </ng-container>
+                    <ng-container matColumnDef="name">
+                        <th mat-header-cell="mat-header-cell" *matHeaderCellDef>Name</th>
+                        <td mat-cell="mat-cell" *matCellDef="let el">{{el.name}} </td>
+                    </ng-container>
+                    <ng-container matColumnDef="description">
+                        <th mat-header-cell="mat-header-cell" *matHeaderCellDef>Description</th>
+                        <td mat-cell="mat-cell" *matCellDef="let el">{{el.description}} </td>
+                    </ng-container>
+                    <ng-container matColumnDef="createdOn">
+                        <th mat-header-cell="mat-header-cell" *matHeaderCellDef>Created on</th>
+                        <td mat-cell="mat-cell" *matCellDef="let el">{{el.createdOn | date:'HH:mm:ss, MMM d, yyyy'}} </td>
+                    </ng-container>
+                    <ng-container matColumnDef="bts">
+                        <th mat-header-cell="mat-header-cell" *matHeaderCellDef> </th>
+                        <td mat-cell="mat-cell" *matCellDef="let el">
+                            <ct-flex justify-content="flex-end" gap="9px" align-items="center">
+                                <ct-flex-item><a [routerLink]="['/launchpad/atlas/experiment-info',el.id]">
+                                        <button size="forTableRow" mat-flat-button="mat-flat-button" color="primary">Detail</button></a></ct-flex-item>
+                                <ct-flex-item><a [routerLink]="['/launchpad/atlas/experiment-export-import/',el.id]">
+                                        <button size="forTableRow" mat-flat-button="mat-flat-button" color="primary">Export / Import</button></a></ct-flex-item>
+                                <ct-flex-item>
+                                    <button size="forTableRow" mat-flat-button="mat-flat-button" color="warn" (click)="delete(el)">
+                                        <mat-icon>delete</mat-icon>
+                                    </button>
+                                </ct-flex-item>
+                            </ct-flex>
+                        </td>
+                    </ng-container>
+                    <tr mat-header-row="mat-header-row" *matHeaderRowDef="columnsToDisplay"></tr>
+                    <tr mat-row="mat-row" *matRowDef="let row; columns: columnsToDisplay;" [class.deleted-table-row]="deletedExperiments.includes(row)"></tr>
+                </table>
+            </ct-table>
+        </ct-section-body-row>
+        <ct-section-body-row *ngIf="currentStates.has(states.firstLoading)">
+            <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+        </ct-section-body-row>
+    </ct-section-body>
+    <ct-section-footer>
+        <ct-section-footer-row>
+            <ct-flex justify-content="flex-start" gap="8px">
+                <ct-flex-item>
+                    <button mat-flat-button="mat-flat-button" #prevTable (click)="prev()" disabled="disabled">
+                        <mat-icon>arrow_back_ios</mat-icon>
+                    </button>
+                </ct-flex-item>
+                <ct-flex-item>
+                    <button mat-flat-button="mat-flat-button" #nextTable (click)="next()" disabled="disabled">
+                        <mat-icon>arrow_forward_ios</mat-icon>
+                    </button>
+                </ct-flex-item>
+            </ct-flex>
+        </ct-section-footer-row>
+    </ct-section-footer>
+</ct-section>

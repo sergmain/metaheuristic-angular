@@ -4,7 +4,7 @@ import { TranslateService } from '@ngx-translate/core';
 
 @Component({
     selector: 'ct-file-upload',
-    templateUrl: './ct-file-upload.component.pug',
+    templateUrl: './ct-file-upload.component.html',
     styleUrls: ['./ct-file-upload.component.scss']
 })
 export class CtFileUploadComponent implements OnInit, OnChanges {

@@ -1,0 +1,227 @@
+
+<ct-cols>
+  <ct-col size="6">
+    <ct-section *ngIf="simpleExperiment">
+      <ct-section-header>
+        <ct-section-header-row> 
+          <ct-heading>Experiment #{{simpleExperiment.id}}</ct-heading>
+        </ct-section-header-row>
+      </ct-section-header>
+      <ct-section-body>
+        <ct-section-body-row>
+          <mat-form-field appearance="outline">
+            <mat-label>Name</mat-label>
+            <input matInput="matInput" autocomplete="off" [(ngModel)]="simpleExperiment.name"/>
+            <mat-hint>This is a required field. </mat-hint>
+          </mat-form-field>
+        </ct-section-body-row>
+        <ct-section-body-row>
+          <mat-form-field appearance="outline">
+            <mat-label>Description</mat-label>
+            <textarea matInput="matInput" cdkTextareaAutosize="cdkTextareaAutosize" cdkAutosizeMinRows="5" [(ngModel)]="simpleExperiment.description"></textarea>
+            <mat-hint>This is a required field. </mat-hint>
+          </mat-form-field>
+        </ct-section-body-row>
+        <ct-section-body-row>
+          <mat-form-field appearance="outline">
+            <mat-label>Experiment code</mat-label>
+            <textarea matInput="matInput" cdkTextareaAutosize="cdkTextareaAutosize" cdkAutosizeMinRows="5" [(ngModel)]="simpleExperiment.code"></textarea>
+            <mat-hint>This is a required field. </mat-hint>
+          </mat-form-field>
+        </ct-section-body-row>
+        <ct-section-body-row>
+          <mat-form-field appearance="outline">
+            <mat-label>Seed</mat-label>
+            <input matInput="matInput" autocomplete="off" [(ngModel)]="simpleExperiment.seed"/>
+            <mat-hint>Default value will be used if not defined. Which is 1. </mat-hint>
+          </mat-form-field>
+        </ct-section-body-row>
+      </ct-section-body>
+      <ct-section-footer>
+        <ct-section-footer-row>
+          <ct-flex justify-content="flex-end" gap="8px">
+            <ct-flex-item>
+              <button mat-stroked-button="mat-stroked-button" (click)="cancel()" title="Cancel"> Back</button>
+            </ct-flex-item>
+            <ct-flex-item>
+              <button mat-flat-button="mat-flat-button" (click)="updateSimpleExperiment($event)" color="primary" title="Save">Save</button>
+            </ct-flex-item>
+          </ct-flex>
+        </ct-section-footer-row>
+      </ct-section-footer>
+    </ct-section>
+  </ct-col>
+  <ct-col size="6">
+    <ct-section *ngIf="simpleExperimentResponse">
+      <ct-section-body>
+        <ct-section-body-row>STATUS: {{simpleExperimentResponse.status}}</ct-section-body-row>
+        <ct-section-body-row *ngFor="let error of simpleExperimentResponse.errorMessages; index as i; trackBy: trackByFn">{{error}}</ct-section-body-row>
+      </ct-section-body>
+    </ct-section>
+  </ct-col>
+</ct-cols>
+<ct-wrap-block #snippetsBlock>
+  <ct-section *ngIf="snippetResult">
+    <ct-section-header>
+      <ct-section-header-row>
+        <ct-heading>Snippets</ct-heading>
+      </ct-section-header-row>
+    </ct-section-header>
+    <ct-section-body>
+      <ct-section-body-row *ngIf="snippetsDataSource.filteredData.length">
+        <ct-table>
+          <table class="mat-table" mat-table="mat-table" [dataSource]="snippetsDataSource"> 
+            <ng-container matColumnDef="type"> 
+              <th mat-header-cell="mat-header-cell" *matHeaderCellDef>Type </th>
+              <td mat-cell="mat-cell" *matCellDef="let el">{{el.type}} </td>
+            </ng-container>
+            <ng-container matColumnDef="code"> 
+              <th mat-header-cell="mat-header-cell" *matHeaderCellDef>Code </th>
+              <td mat-cell="mat-cell" *matCellDef="let el">{{el.snippetCode}} </td>
+            </ng-container>
+            <ng-container matColumnDef="bts"> 
+              <th mat-header-cell="mat-header-cell" *matHeaderCellDef> </th>
+              <td mat-cell="mat-cell" *matCellDef="let el"> 
+                <ct-flex gap="9px" justify-content="flex-end">
+                  <ct-flex-item>
+                    <button mat-flat-button="mat-flat-button" size="forTableRow" color="warn" (click)="snippetDeleteCommit(el)" title="Delete">
+                      <mat-icon>delete</mat-icon>
+                    </button>
+                  </ct-flex-item>
+                </ct-flex>
+              </td>
+            </ng-container>
+            <tr mat-header-row="mat-header-row" *matHeaderRowDef="snippetsColumnsToDisplay"></tr>
+            <tr mat-row="mat-row" *matRowDef="let row; columns: snippetsColumnsToDisplay;"> </tr>
+          </table>
+        </ct-table>
+      </ct-section-body-row>
+      <ct-section-body-row *ngIf="snippetResult.selectOptions.length">
+        <mat-form-field>
+          <mat-label>Snippet</mat-label>
+          <mat-select #snippetMatSelect [(ngModel)]="currentSnippetAddCommit">
+            <mat-option [value]="snippet" *ngFor="let snippet of snippetResult.selectOptions">{{snippet.desc}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </ct-section-body-row>
+    </ct-section-body>
+    <ct-section-footer *ngIf="snippetResult.selectOptions.length">
+      <ct-section-footer-row>
+        <ct-flex justify-content="flex-end" align-items="baseline" gap="8px">
+          <ct-flex-item>
+            <button mat-flat-button="mat-flat-button" wide="wide" (click)="snippetAddCommit(currentSnippetAddCommit)" color="primary" title="Save" [disabled]="!snippetMatSelectSelected()">Add Snippet</button>
+          </ct-flex-item>
+        </ct-flex>
+      </ct-section-footer-row>
+    </ct-section-footer>
+  </ct-section>
+</ct-wrap-block>
+<ct-wrap-block #metadataBlock>
+  <ct-section *ngIf="hyperParams">
+    <ct-section-header>
+      <ct-section-header-row>
+        <ct-heading>Default Metadata</ct-heading>
+      </ct-section-header-row>
+    </ct-section-header>
+    <ct-section-body>
+      <ct-section-body-row>
+        <ct-pre>
+          Array of concrete values - [10,27,21]
+          Array defined in loop - range(10,30,10)
+          Array defined in loop - (10,30,10)
+          Concrete value - 10
+          Array of strings, some strings contain space - ['#some custom accuracy', accuracy]
+        </ct-pre>
+      </ct-section-body-row>
+    </ct-section-body>
+    <ct-section-footer>
+      <ct-section-footer-row>
+        <ct-flex justify-content="flex-end">
+          <ct-flex-item>   
+            <button mat-flat-button="mat-flat-button" color="primary" wide="wide" size="x" (click)="addDefaultHyperParams()">Fill with Default Metadatas</button>
+          </ct-flex-item>
+        </ct-flex>
+      </ct-section-footer-row>
+    </ct-section-footer>
+  </ct-section>
+  <ct-section *ngIf="hyperParams" style="font-size:14px">
+    <ct-section-header>
+      <ct-section-header-row>
+        <ct-heading>New Metadata</ct-heading>
+      </ct-section-header-row>
+    </ct-section-header>
+    <ct-section-body>
+      <ct-section-body-row>
+        <ct-flex align-items="baseline" justify-content="space-between" gap="8px">
+          <ct-flex-item flex="1">
+            <mat-form-field appearance="outline">
+              <mat-label>Key</mat-label>
+              <input matInput="matInput" autocomplete="off" [(ngModel)]="newHyperParams.key"/>
+            </mat-form-field>
+          </ct-flex-item>
+          <ct-flex-item flex="2">
+            <mat-form-field appearance="outline">
+              <mat-label>Value</mat-label>
+              <input matInput="matInput" autocomplete="off" [(ngModel)]="newHyperParams.values"/>
+            </mat-form-field>
+          </ct-flex-item>
+        </ct-flex>
+      </ct-section-body-row>
+    </ct-section-body>
+    <ct-section-footer>
+      <ct-section-footer-row>
+        <ct-flex justify-content="flex-end">
+          <ct-flex-item>   
+            <button mat-flat-button="mat-flat-button" color="primary" size="x" (click)="addHyperParams(el)">Add Metadata</button>
+          </ct-flex-item>
+        </ct-flex>
+      </ct-section-footer-row>
+    </ct-section-footer>
+  </ct-section>
+  <ct-section class="metadata-sections" *ngIf="hyperParams">
+    <ct-section-body>
+      <ct-section-body-row>
+        <ct-table class="metadata-params">
+          <mat-table class="mat-table" [dataSource]="hyperParamsDataSource" multiTemplateDataRows="multiTemplateDataRows"> 
+            <ng-container matColumnDef="key"> 
+              <mat-header-cell *matHeaderCellDef> Key </mat-header-cell>
+              <mat-cell *matCellDef="let el">{{el.key}} </mat-cell>
+              <mat-cell *matCellDef="let el"> </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="edit"> 
+              <mat-cell *matCellDef="let el"> 
+                <mat-form-field appearance="outline">
+                  <mat-label>New Value</mat-label>
+                  <input matInput="matInput" autocomplete="off" [(ngModel)]="currentEditHyperParams.newValues"/>
+                </mat-form-field>
+              </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="empty"> 
+              <mat-cell *matCellDef="let el"> </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="done"> 
+              <mat-cell *matCellDef="let el">
+                <button mat-flat-button="mat-flat-button" color="primary" (click)="updateHyperParams(el,$event)" style="position:relative; top: -5px;">Update</button>
+              </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="values"> 
+              <mat-header-cell *matHeaderCellDef>Value </mat-header-cell>
+              <mat-cell *matCellDef="let el">{{el.values}} </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="delete"> 
+              <mat-header-cell *matHeaderCellDef> </mat-header-cell>
+              <mat-cell *matCellDef="let el" (click)="$event.stopPropagation()"> 
+                <button mat-flat-button="mat-flat-button" color="warn" (click)="deleteHyperParams(el)" title="Delete">
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </mat-cell>
+            </ng-container>
+            <mat-header-row *matHeaderRowDef="hyperParamsColumnsToDisplay"></mat-header-row>
+            <mat-row class="caption-row" [@editMetadataCaption]="(currentEditHyperParams == row) ? 'expanded' : 'collapsed' " *matRowDef="let row; columns: hyperParamsColumnsToDisplay;" (click)="openEditHyperParams(row)" [class.picked-row]="currentEditHyperParams == row"></mat-row>
+            <mat-row class="edit-row" [@editMetadataValue]="(currentEditHyperParams == row) ? 'expanded' : 'collapsed' " *matRowDef="let row; columns: hyperParamsSecondColumnsToDisplay;"> </mat-row>
+          </mat-table>
+        </ct-table>
+      </ct-section-body-row>
+    </ct-section-body>
+  </ct-section>
+</ct-wrap-block>

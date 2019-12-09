@@ -7,7 +7,7 @@ import { Subscription } from 'rxjs';
 
 @Component({
     selector: 'account-access',
-    templateUrl: './account-access.component.pug',
+    templateUrl: './account-access.component.html',
     styleUrls: ['./account-access.component.scss']
 })
 export class AccountAccessComponent implements OnInit {

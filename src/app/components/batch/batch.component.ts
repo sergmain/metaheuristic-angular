@@ -14,7 +14,7 @@ import * as fileSaver from 'file-saver';
 
 @Component({
     selector: 'batch',
-    templateUrl: './batch.component.pug',
+    templateUrl: './batch.component.html',
     styleUrls: ['./batch.component.scss']
 })
 

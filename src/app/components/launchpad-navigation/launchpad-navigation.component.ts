@@ -4,7 +4,7 @@ import { AuthenticationService, Role } from '@src/app/services/authentication';
 
 @Component({
     selector: 'launchpad-navigation',
-    templateUrl: './launchpad-navigation.component.pug',
+    templateUrl: './launchpad-navigation.component.html',
     styleUrls: ['./launchpad-navigation.component.scss']
 })
 export class LaunchpadNavigationComponent {

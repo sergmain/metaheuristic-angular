@@ -11,7 +11,7 @@ import { IPlan } from '@src/app/services/plans/IPlan';
 
 @Component({
     selector: 'plan-edit',
-    templateUrl: './plan-edit.component.pug',
+    templateUrl: './plan-edit.component.html',
     styleUrls: ['./plan-edit.component.scss']
 })
 

@@ -11,7 +11,7 @@ import { PlansService } from '@src/app/services/plans/plans.service';
 @Component({
     // tslint:disable-next-line: component-selector
     selector: 'plans-archive',
-    templateUrl: './plans-archive.component.pug',
+    templateUrl: './plans-archive.component.html',
     styleUrls: ['./plans-archive.component.scss']
 })
 export class PlansArchiveComponent implements OnInit {

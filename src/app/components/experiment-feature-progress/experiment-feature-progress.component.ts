@@ -10,7 +10,7 @@ import { Subscription } from 'rxjs';
 
 @Component({
     selector: 'experiment-feature-progress',
-    templateUrl: './experiment-feature-progress.component.pug',
+    templateUrl: './experiment-feature-progress.component.html',
     styleUrls: ['./experiment-feature-progress.component.scss']
 })
 

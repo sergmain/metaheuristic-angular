@@ -8,7 +8,7 @@ import { Subscription } from 'rxjs';
 
 @Component({
     selector: 'resources-view',
-    templateUrl: './resources.component.pug',
+    templateUrl: './resources.component.html',
     styleUrls: ['./resources.component.scss'],
     providers: [ResourcesService]
 })

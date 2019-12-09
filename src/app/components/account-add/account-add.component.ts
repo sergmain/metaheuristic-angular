@@ -9,7 +9,7 @@ import { DefaultResponse } from '@app/models/DefaultResponse';
 
 @Component({
     selector: 'account-add',
-    templateUrl: './account-add.component.pug',
+    templateUrl: './account-add.component.html',
     styleUrls: ['./account-add.component.scss']
 })
 

@@ -8,7 +8,7 @@ import { MatButton } from '@angular/material';
 import { response } from '@services/plans/response';
 @Component({
     selector: 'plan-add',
-    templateUrl: './plan-add.component.pug',
+    templateUrl: './plan-add.component.html',
     styleUrls: ['./plan-add.component.scss']
 })
 

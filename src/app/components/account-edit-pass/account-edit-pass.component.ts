@@ -9,7 +9,7 @@ import { Subscription } from 'rxjs';
 
 @Component({
     selector: 'account-edit-pass',
-    templateUrl: './account-edit-pass.component.pug',
+    templateUrl: './account-edit-pass.component.html',
     styleUrls: ['./account-edit-pass.component.scss']
 })
 

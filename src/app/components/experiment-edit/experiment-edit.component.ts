@@ -11,7 +11,7 @@ import { Subscription } from 'rxjs';
 
 @Component({
     selector: 'experiment-edit',
-    templateUrl: './experiment-edit.component.pug',
+    templateUrl: './experiment-edit.component.html',
     styleUrls: ['./experiment-edit.component.scss'],
     animations: [
         trigger('editMetadataCaption', [

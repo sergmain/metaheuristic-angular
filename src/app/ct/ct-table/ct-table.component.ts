@@ -8,7 +8,7 @@ import {
 @Component({
     // tslint:disable-next-line: component-selector
     selector: 'ct-table',
-    templateUrl: './ct-table.component.pug',
+    templateUrl: './ct-table.component.html',
     styleUrls: ['./ct-table.component.scss']
 })
 export class CtTableComponent implements OnInit, OnDestroy {

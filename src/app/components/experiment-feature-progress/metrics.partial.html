@@ -1,0 +1,55 @@
+
+<ct-cols>
+  <ct-col>
+    <ct-section>
+      <ct-section-header>
+        <ct-section-header-row>
+          <ct-heading style="white-space: nowrap;">Metrics as the table</ct-heading>
+        </ct-section-header-row>
+      </ct-section-header>
+      <ct-section-body>
+        <ct-section-body-row>
+          <ct-table>
+            <table mat-table="mat-table" [dataSource]="tables.metrics.table"> 
+              <ng-container matColumnDef="values"> 
+                <th mat-header-cell="mat-header-cell" *matHeaderCellDef>{{response.metricsResult.metricNames}} </th>
+                <td mat-cell="mat-cell" *matCellDef="let el"> 
+                  <div *ngFor="let value of el.values">{{value}}</div>
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="params"> 
+                <th mat-header-cell="mat-header-cell" *matHeaderCellDef>Hyper Params </th>
+                <td mat-cell="mat-cell" *matCellDef="let el"> {{el.params}}</td>
+              </ng-container>
+              <tr mat-header-row="mat-header-row" *matHeaderRowDef="tables.metrics.columnsToDisplay"> </tr>
+              <tr mat-row="mat-row" *matRowDef="let row; columns: tables.metrics.columnsToDisplay;"> </tr>
+            </table>
+          </ct-table>
+        </ct-section-body-row>
+      </ct-section-body>
+    </ct-section>
+  </ct-col>
+  <ct-col style="flex:1">
+    <ct-section>
+      <ct-section-header>
+        <ct-section-header-row>
+          <ct-heading style="white-space: nowrap;">...as the graph</ct-heading>
+        </ct-section-header-row>
+      </ct-section-header>
+      <ct-section-body>
+        <ct-section-body-row>
+          <ct-flex justify-content="center">
+            <ct-flex-item>
+              <button mat-flat-button="mat-flat-button" color="primary" [disabled]="pickedAxes.includes(false)" (click)="drawPlot()">Draw Plot </button>
+            </ct-flex-item>
+          </ct-flex>
+        </ct-section-body-row>
+        <ct-section-body-row *ngIf="dataGraph.show">
+          <div class="graph">
+            <plotly-plot [data]="dataGraph.data" [config]="dataGraph.config" [layout]="dataGraph.layout" [useResizeHandler]="true" [style]="{position: 'relative', width: '100%', height: '100%'}"></plotly-plot>
+          </div>
+        </ct-section-body-row>
+      </ct-section-body>
+    </ct-section>
+  </ct-col>
+</ct-cols>

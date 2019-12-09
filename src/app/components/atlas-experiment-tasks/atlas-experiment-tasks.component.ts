@@ -7,7 +7,7 @@ import { CtTableComponent } from '@app/ct';
 
 @Component({
     selector: 'atlas-experiment-tasks',
-    templateUrl: './atlas-experiment-tasks.component.pug',
+    templateUrl: './atlas-experiment-tasks.component.html',
     styleUrls: ['./atlas-experiment-tasks.component.scss']
 })
 export class AtlasExperimentTasksComponent implements OnInit, OnChanges {

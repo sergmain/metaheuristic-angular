@@ -10,7 +10,7 @@ import * as settingsServiceActions from '../../services/settings/settings.action
 
 @Component({
     selector: 'app-view',
-    templateUrl: './app-view.component.pug',
+    templateUrl: './app-view.component.html',
     styleUrls: ['./app-view.component.scss']
 })
 

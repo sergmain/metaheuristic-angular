@@ -7,7 +7,7 @@ import { Subscription } from 'rxjs';
 
 @Component({
     selector: 'batch-status',
-    templateUrl: './batch-status.component.pug',
+    templateUrl: './batch-status.component.html',
     styleUrls: ['./batch-status.component.scss']
 })
 

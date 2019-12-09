@@ -7,7 +7,7 @@ import { ConfirmationDialogMethod, ConfirmationDialogInterface } from '@app/comp
 
 @Component({
     selector: 'stations-view',
-    templateUrl: './stations.component.pug',
+    templateUrl: './stations.component.html',
     styleUrls: ['./stations.component.scss']
 })
 

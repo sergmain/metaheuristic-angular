@@ -8,7 +8,7 @@ import { CtFileUploadComponent } from '@src/app/ct';
 
 @Component({
     selector: 'snippet-add',
-    templateUrl: './snippet-add.component.pug',
+    templateUrl: './snippet-add.component.html',
     styleUrls: ['./snippet-add.component.scss']
 })
 

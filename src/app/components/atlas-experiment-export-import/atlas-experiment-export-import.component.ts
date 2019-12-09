@@ -6,7 +6,7 @@ import { AtlasService } from '@src/app/services/atlas';
 
 @Component({
     selector: 'atlas-experiment-export-import',
-    templateUrl: './atlas-experiment-export-import.component.pug',
+    templateUrl: './atlas-experiment-export-import.component.html',
     styleUrls: ['./atlas-experiment-export-import.component.scss']
 })
 export class AtlasExperimentExportImportComponent {

@@ -5,7 +5,7 @@ import { IAppState } from '@src/app/app.reducers';
 
 @Component({
     selector: 'launchpad-root',
-    templateUrl: './launchpad-root.component.pug',
+    templateUrl: './launchpad-root.component.html',
     styleUrls: ['./launchpad-root.component.scss']
 })
 export class LaunchpadRootComponent implements OnInit {

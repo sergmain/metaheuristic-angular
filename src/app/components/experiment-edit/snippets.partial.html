@@ -1,0 +1,57 @@
+
+<ct-wrap-block #snippetsBlock>
+  <ct-section *ngIf="snippetResult">
+    <ct-section-header>
+      <ct-section-header-row>
+        <ct-heading>Snippets</ct-heading>
+      </ct-section-header-row>
+    </ct-section-header>
+    <ct-section-body>
+      <ct-section-body-row *ngIf="snippetsDataSource.filteredData.length">
+        <ct-table>
+          <table class="mat-table" mat-table="mat-table" [dataSource]="snippetsDataSource"> 
+            <ng-container matColumnDef="type"> 
+              <th mat-header-cell="mat-header-cell" *matHeaderCellDef>Type </th>
+              <td mat-cell="mat-cell" *matCellDef="let el">{{el.type}} </td>
+            </ng-container>
+            <ng-container matColumnDef="code"> 
+              <th mat-header-cell="mat-header-cell" *matHeaderCellDef>Code </th>
+              <td mat-cell="mat-cell" *matCellDef="let el">{{el.snippetCode}} </td>
+            </ng-container>
+            <ng-container matColumnDef="bts"> 
+              <th mat-header-cell="mat-header-cell" *matHeaderCellDef> </th>
+              <td mat-cell="mat-cell" *matCellDef="let el"> 
+                <ct-flex gap="9px" justify-content="flex-end">
+                  <ct-flex-item>
+                    <button mat-flat-button="mat-flat-button" size="forTableRow" color="warn" (click)="snippetDeleteCommit(el)" title="Delete">
+                      <mat-icon>delete</mat-icon>
+                    </button>
+                  </ct-flex-item>
+                </ct-flex>
+              </td>
+            </ng-container>
+            <tr mat-header-row="mat-header-row" *matHeaderRowDef="snippetsColumnsToDisplay"></tr>
+            <tr mat-row="mat-row" *matRowDef="let row; columns: snippetsColumnsToDisplay;"> </tr>
+          </table>
+        </ct-table>
+      </ct-section-body-row>
+      <ct-section-body-row *ngIf="snippetResult.selectOptions.length">
+        <mat-form-field>
+          <mat-label>Snippet</mat-label>
+          <mat-select #snippetMatSelect [(ngModel)]="currentSnippetAddCommit">
+            <mat-option [value]="snippet" *ngFor="let snippet of snippetResult.selectOptions">{{snippet.desc}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </ct-section-body-row>
+    </ct-section-body>
+    <ct-section-footer *ngIf="snippetResult.selectOptions.length">
+      <ct-section-footer-row>
+        <ct-flex justify-content="flex-end" align-items="baseline" gap="8px">
+          <ct-flex-item>
+            <button mat-flat-button="mat-flat-button" wide="wide" (click)="snippetAddCommit(currentSnippetAddCommit)" color="primary" title="Save" [disabled]="!snippetMatSelectSelected()">Add Snippet</button>
+          </ct-flex-item>
+        </ct-flex>
+      </ct-section-footer-row>
+    </ct-section-footer>
+  </ct-section>
+</ct-wrap-block>

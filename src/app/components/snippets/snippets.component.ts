@@ -8,7 +8,7 @@ import { Snippet, snippets } from '@src/app/services/snippets/response';
 
 @Component({
     selector: 'snippets-view',
-    templateUrl: './snippets.component.pug',
+    templateUrl: './snippets.component.html',
     styleUrls: ['./snippets.component.scss']
 })
 

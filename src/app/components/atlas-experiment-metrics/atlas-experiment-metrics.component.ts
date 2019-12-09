@@ -3,7 +3,7 @@ import { MatTableDataSource } from '@angular/material';
 import { MetricsResult, MetricsEntity } from '@services/atlas';
 @Component({
     selector: 'atlas-experiment-metrics',
-    templateUrl: './atlas-experiment-metrics.component.pug',
+    templateUrl: './atlas-experiment-metrics.component.html',
     styleUrls: ['./atlas-experiment-metrics.component.scss']
 })
 export class AtlasExperimentMetricsComponent implements OnInit, OnChanges {

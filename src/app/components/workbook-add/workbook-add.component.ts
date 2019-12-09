@@ -11,7 +11,7 @@ import { getWorkbook, getPlan, getPlanNull } from '@src/app/services/plans/plans
 import { response } from '@src/app/services/plans/response';
 @Component({
     selector: 'workbook-add',
-    templateUrl: './workbook-add.component.pug',
+    templateUrl: './workbook-add.component.html',
     styleUrls: ['./workbook-add.component.scss']
 })
 

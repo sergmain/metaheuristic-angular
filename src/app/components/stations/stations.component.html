@@ -1,0 +1,93 @@
+
+<ct-section>
+  <ct-section-header>
+    <ct-section-header-row>
+      <ct-flex justify-content="space-between" align-items="center">
+        <ct-flex-item>
+          <ct-heading>Stations</ct-heading>
+        </ct-flex-item>
+        <ct-flex-item>
+          <mat-slide-toggle [(ngModel)]="showStatusOfStation">Show current status of station</mat-slide-toggle>
+        </ct-flex-item>
+      </ct-flex>
+    </ct-section-header-row>
+  </ct-section-header>
+  <ct-section-body>
+    <ct-section-body-row *ngIf="currentState == states.show">
+      <ct-table>
+        <table class="mat-table" mat-table="mat-table" [dataSource]="dataSource" multiTemplateDataRows="multiTemplateDataRows"> 
+          <ng-container matColumnDef="id"> 
+            <th mat-header-cell="mat-header-cell" *matHeaderCellDef>Id </th>
+            <td mat-cell="mat-cell" *matCellDef="let el">{{el.station.id}}  </td>
+            <td mat-cell="mat-cell" *matCellDef="let el">test</td>
+          </ng-container>
+          <ng-container matColumnDef="ip"> 
+            <th mat-header-cell="mat-header-cell" *matHeaderCellDef>IP Address  </th>
+            <td mat-cell="mat-cell" *matCellDef="let el">{{el.ip || '—'}} <br> {{el.host || '—'}} </td>
+          </ng-container>
+          <ng-container matColumnDef="description"> 
+            <th mat-header-cell="mat-header-cell" *matHeaderCellDef>Description  </th>
+            <td mat-cell="mat-cell" *matCellDef="let el">{{el.station.description || '—'}}  </td>
+          </ng-container>
+          <ng-container matColumnDef="empty"> 
+            <td mat-cell="mat-cell" *matCellDef="let el"> </td>
+          </ng-container>
+          <ng-container matColumnDef="env"> 
+            <td mat-cell="mat-cell" *matCellDef="let el" [attr.colspan]="columnsToDisplay.length - 1"> <b>Status of Station:</b>
+              <ct-pre>{{el.station.status || '—'}}  </ct-pre>
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="isActive"> 
+            <th mat-header-cell="mat-header-cell" *matHeaderCellDef>is Active</th>
+            <td mat-cell="mat-cell" *matCellDef="let el">{{el.active }}  </td>
+          </ng-container>
+          <ng-container matColumnDef="isBlacklisted"> 
+            <th mat-header-cell="mat-header-cell" *matHeaderCellDef>is Blacklisted</th>
+            <td mat-cell="mat-cell" *matCellDef="let el">{{el.blacklisted }}</td>
+          </ng-container>
+          <ng-container matColumnDef="lastSeen"> 
+            <th mat-header-cell="mat-header-cell" *matHeaderCellDef>Last Seen </th>
+            <td mat-cell="mat-cell" *matCellDef="let el">{{el.lastSeen | date:'MMM d, y, hh:mm'}}  </td>
+          </ng-container>
+          <ng-container matColumnDef="bts"> 
+            <th mat-header-cell="mat-header-cell" *matHeaderCellDef>  </th>
+            <td mat-cell="mat-cell" *matCellDef="let el">
+              <ct-flex justify-content="flex-end" gap="9px">
+                <ct-flex-item>
+                  <button mat-flat-button="mat-flat-button" size="forTableRow" color="primary" [routerLink]="['/launchpad/stations',el.station.id,'edit']">Edit</button>
+                </ct-flex-item>
+                <ct-flex-item>
+                  <button mat-flat-button="mat-flat-button" size="forTableRow" color="warn" (click)="delete(el)">
+                    <mat-icon>delete</mat-icon>
+                  </button>
+                </ct-flex-item>
+              </ct-flex>
+            </td>
+          </ng-container>
+          <tr mat-header-row="mat-header-row" *matHeaderRowDef="columnsToDisplay"></tr>
+          <tr class="first-row" mat-row="mat-row" *matRowDef="let row; columns: columnsToDisplay;"> </tr>
+          <tr class="second-row" mat-row="mat-row" *matRowDef="let row; columns: secondColumnsToDisplay;" [hidden]="!showStatusOfStation"> </tr>
+        </table>
+      </ct-table>
+    </ct-section-body-row>
+    <ct-section-body-row *ngIf="currentState == states.loading">
+      <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+    </ct-section-body-row>
+  </ct-section-body>
+  <ct-section-footer>
+    <ct-section-footer-row>
+      <ct-flex justify-content="flex-start" gap="8px">
+        <ct-flex-item>
+          <button mat-flat-button="mat-flat-button" color="primary" #prevTable (click)="prev()" disabled="disabled">
+            <mat-icon>arrow_back_ios</mat-icon>
+          </button>
+        </ct-flex-item>
+        <ct-flex-item>
+          <button mat-flat-button="mat-flat-button" color="primary" #nextTable (click)="next()" disabled="disabled">
+            <mat-icon>arrow_forward_ios</mat-icon>
+          </button>
+        </ct-flex-item>
+      </ct-flex>
+    </ct-section-footer-row>
+  </ct-section-footer>
+</ct-section>

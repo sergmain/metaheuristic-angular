@@ -4,7 +4,7 @@ import { MetricsResult, MetricsEntity } from '@services/experiments'
 
 @Component({
     selector: 'experiment-metrics',
-    templateUrl: './experiment-metrics.component.pug',
+    templateUrl: './experiment-metrics.component.html',
     styleUrls: ['./experiment-metrics.component.scss']
 })
 export class ExperimentMetricsComponent implements OnInit {

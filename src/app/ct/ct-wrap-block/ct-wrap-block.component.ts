@@ -8,7 +8,7 @@ import {
 @Component({
     // tslint:disable-next-line: component-selector
     selector: 'ct-wrap-block',
-    templateUrl: './ct-wrap-block.component.pug',
+    templateUrl: './ct-wrap-block.component.html',
     styleUrls: ['./ct-wrap-block.component.scss']
 })
 export class CtWrapBlockComponent implements OnInit, OnDestroy {

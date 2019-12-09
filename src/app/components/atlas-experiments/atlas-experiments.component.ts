@@ -11,7 +11,7 @@ import { Subscription } from 'rxjs';
 
 @Component({
     selector: 'atlas-experiments',
-    templateUrl: './atlas-experiments.component.pug',
+    templateUrl: './atlas-experiments.component.html',
     styleUrls: ['./atlas-experiments.component.scss']
 })
 

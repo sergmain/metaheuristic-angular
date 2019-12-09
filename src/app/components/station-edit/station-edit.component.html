@@ -1,0 +1,48 @@
+
+<ct-cols>
+  <ct-col size="6">
+    <ct-section>
+      <ct-section-header>
+        <ct-section-header-row>
+          <ct-heading>Edit Station {{station ? station.id : '...'}}</ct-heading>
+        </ct-section-header-row>
+      </ct-section-header>
+      <ct-section-body>
+        <ct-section-body-row *ngIf="currentState != states.firstLoading">
+          <ct-section-content>
+            <mat-form-field appearance="outline"> 
+              <mat-label>Description </mat-label>
+              <textarea matInput="matInput" [(ngModel)]="station.description" value="" cdkTextareaAutosize="cdkTextareaAutosize" cdkAutosizeMinRows="5"> </textarea>
+            </mat-form-field>
+          </ct-section-content>
+        </ct-section-body-row>
+        <ct-section-body-row *ngIf="currentState == states.firstLoading">
+          <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+        </ct-section-body-row>
+      </ct-section-body>
+      <ct-section-footer>
+        <ct-section-footer-row>
+          <ct-flex justify-content="flex-end" gap="8px">
+            <ct-flex-item>
+              <button mat-stroked-button="mat-stroked-button" (click)="cancel()">Cancel</button>
+            </ct-flex-item>
+            <ct-flex-item>
+              <button mat-flat-button="mat-flat-button" (click)="save()" color="primary" [disabled]="[states.wait,states.firstLoading].includes(currentState)">Save</button>
+            </ct-flex-item>
+          </ct-flex>
+        </ct-section-footer-row>
+      </ct-section-footer>
+    </ct-section>
+  </ct-col>
+  <ct-col size="6">
+    <ct-section *ngIf="formResponse">
+      <ct-section-body>
+        <ct-section-body-row>
+          <p>STATUS: {{formResponse.status}}</p>
+          <p *ngFor="let error of formResponse.errorMessages; index as i; trackBy: trackByFn">{{error}}</p>
+          <p *ngFor="let info of formResponse.infoMessages; index as i; trackBy: trackByFn">{{info}}</p>
+        </ct-section-body-row>
+      </ct-section-body>
+    </ct-section>
+  </ct-col>
+</ct-cols>

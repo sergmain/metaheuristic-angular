@@ -8,7 +8,7 @@ import { ExperimentsService } from '@app/services/experiments/experiments.servic
 import { Subscription } from 'rxjs';
 @Component({
     selector: 'experiment-add',
-    templateUrl: './experiment-add.component.pug',
+    templateUrl: './experiment-add.component.html',
     styleUrls: ['./experiment-add.component.scss']
 })
 

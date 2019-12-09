@@ -11,7 +11,7 @@ import { Subscription } from 'rxjs';
 
 @Component({
     selector: 'batch-add',
-    templateUrl: './batch-add.component.pug',
+    templateUrl: './batch-add.component.html',
     styleUrls: ['./batch-add.component.scss']
 })
 

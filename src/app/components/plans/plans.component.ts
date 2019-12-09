@@ -15,7 +15,7 @@ import { Subscription } from 'rxjs';
 
 @Component({
     selector: 'plans-view',
-    templateUrl: './plans.component.pug',
+    templateUrl: './plans.component.html',
     styleUrls: ['./plans.component.scss']
 })
 

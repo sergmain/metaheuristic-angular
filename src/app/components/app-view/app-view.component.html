@@ -1,0 +1,91 @@
+<ng-template [ngIf]="isAuth()">
+    <div class="app-view">
+        <div class="app-view__header">
+            <mat-toolbar class="toolbar" color="primary">
+                <mat-toolbar-row>
+                    <ct-flex justify-content="space-between" align-items="center">
+                        <ct-flex-item>
+                            <ct-flex justify-content="flex-start" gap="9px" align-items="center">
+                                <ct-flex-item>
+                                    <button class="mat-button mat-button--sidenav" mat-button="mat-button" [disabled]="sidenavButtonDisable" (click)="toggleSideNav()">
+                                        <mat-icon class="mat-icon">menu</mat-icon>
+                                    </button>
+                                </ct-flex-item>
+                                <ct-flex-item>
+                                    <button class="mat-button mat-button--menu-item" mat-button="mat-button" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" routerLink="">Metaheuristic</button>
+                                </ct-flex-item>
+                                <ct-flex-item>
+                                    <button class="mat-button mat-button--menu-item" mat-button="mat-button" routerLinkActive="active" routerLink="/launchpad">{{ 'app-view.Launchpad' | translate }}</button>
+                                </ct-flex-item>
+                            </ct-flex>
+                        </ct-flex-item>
+                        <ct-flex-item>
+                            <ct-flex justify-content="flex-end" gap="9px" align-items="center">
+                                <ct-flex-item>
+                                    <mat-slide-toggle #matSlideToggleTheme [checked]="theme === 'dark'" (change)="toggleTheme($event)"></mat-slide-toggle>
+                                </ct-flex-item>
+                                <ct-flex-item>
+                                    <mat-select #matSelectLanguage [(value)]="lang.current" (selectionChange)="toggleLanguage($event)">
+                                        <mat-option *ngFor="let language of lang.list" [value]="language">{{language}}</mat-option>
+                                    </mat-select>
+                                </ct-flex-item>
+                                <ct-flex-item>
+                                    <button class="mat-button mat-button--menu-item" mat-button="mat-button" routerLinkActive="active" routerLink="/about">{{ 'app-view.About' | translate }}</button>
+                                </ct-flex-item>
+                                <ct-flex-item>
+                                    <button class="mat-button mat-button--menu-item" mat-button="mat-button" (click)="logout()">{{ 'app-view.Logout' | translate }}</button>
+                                </ct-flex-item>
+                            </ct-flex>
+                        </ct-flex-item>
+                    </ct-flex>
+                </mat-toolbar-row>
+            </mat-toolbar>
+        </div>
+        <div class="app-view__body">
+            <router-outlet></router-outlet>
+        </div>
+    </div>
+</ng-template>
+<ng-template [ngIf]="!isAuth()">
+    <div class="app-view">
+        <div class="app-view__header">
+            <mat-toolbar class="toolbar" color="primary">
+                <mat-toolbar-row class="toolbar__row">
+                    <div class="toolbar__left">
+                        <button class="mat-button" mat-button="mat-button" routerLink="/">Metaheuristic</button>
+                    </div>
+                    <div class="toolbar__right"></div>
+                </mat-toolbar-row>
+            </mat-toolbar>
+        </div>
+        <div class="app-view__body">
+            <ct-content>
+                <ct-flex justify-content="flex-start" align-items="flex-start" gap="9px">
+                    <ct-flex-item flex="2">
+                        <ct-section>
+                            <ct-section-header>
+                                <ct-section-header-row>
+                                    <ct-heading>Metaheuristic</ct-heading>
+                                </ct-section-header-row>
+                            </ct-section-header>
+                            <ct-section-body>
+                                <ct-section-body-row>
+                                    <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Aperiam, libero molestiae! Neque fugiat necessitatibus pariatur aliquid vel rerum ad sequi, sed beatae hic consequatur similique eveniet reiciendis sapiente soluta explicabo.</p>
+                                    <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Consectetur, quod! Aliquid nihil vero velit, id blanditiis odit amet dignissimos libero ullam quod quia illo voluptas repellendus magni maiores! Quia, quisquam?</p>
+                                </ct-section-body-row>
+                            </ct-section-body>
+                        </ct-section>
+                    </ct-flex-item>
+                    <ct-flex-item flex="1">
+                        <login-view> </login-view>
+                    </ct-flex-item>
+                </ct-flex>
+            </ct-content>
+        </div>
+        <div class="app-view__footer">
+            <ct-flex justify-content="center">
+                <ct-flex-item>Metaheuristic, © 2017-2019</ct-flex-item>
+            </ct-flex>
+        </div>
+    </div>
+</ng-template>

@@ -9,7 +9,7 @@ import { Subscription } from 'rxjs';
 
 @Component({
     selector: 'atlas-experiment-feature-progress',
-    templateUrl: './atlas-experiment-feature-progress.component.pug',
+    templateUrl: './atlas-experiment-feature-progress.component.html',
     styleUrls: ['./atlas-experiment-feature-progress.component.scss']
 })
 

@@ -8,7 +8,7 @@ import { DefaultResponse } from '@src/app/models';
 
 @Component({
     selector: 'station-edit',
-    templateUrl: './station-edit.component.pug',
+    templateUrl: './station-edit.component.html',
     styleUrls: ['./station-edit.component.scss']
 })
 

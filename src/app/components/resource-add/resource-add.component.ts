@@ -8,7 +8,7 @@ import { CtFileUploadComponent } from '@src/app/ct';
 
 @Component({
     selector: 'resource-add',
-    templateUrl: './resource-add.component.pug',
+    templateUrl: './resource-add.component.html',
     styleUrls: ['./resource-add.component.scss']
 })
 

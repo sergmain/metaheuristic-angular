@@ -1,0 +1,108 @@
+
+<ct-cols>
+  <ct-col>
+    <ct-section>
+      <ct-section-header>
+        <ct-section-header-row>
+          <ct-heading>Tasks</ct-heading>
+        </ct-section-header-row>
+      </ct-section-header>
+      <ct-section-body>
+        <ct-section-body-row>
+          <ct-table class="tasks" #table>
+            <table mat-table="mat-table" [dataSource]="dataSource"> 
+              <ng-container matColumnDef="id"> 
+                <td mat-cell="mat-cell" *matCellDef="let el">{{el.taskId}}</td>
+              </ng-container>
+              <ng-container matColumnDef="info"> 
+                <td mat-cell="mat-cell" *matCellDef="let el"> 
+                  <table>
+                    <tr>
+                      <td>type: </td>
+                      <td style="text-transform:uppercase;">{{el.typeAsString}}</td>
+                    </tr>
+                    <tr>
+                      <td>completed: </td>
+                      <td><span class="completed" [class.completed--on]="el.completed">{{el.completed}} </span></td>
+                    </tr>
+                    <tr>
+                      <td>assigned: </td>
+                      <td> <span *ngIf="el.assignedOn == null">null</span><span>{{el.assignedOn | date:'MMM d, yyyy, HH:mm:ss'}} </span></td>
+                    </tr>
+                    <tr>
+                      <td>completed: </td>
+                      <td> <span *ngIf="el.completedOn == null">null</span><span>{{el.completedOn | date:'MMM d, yyyy, HH:mm:ss'}} </span></td>
+                    </tr>
+                  </table>
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="bts"> 
+                <td mat-cell="mat-cell" *matCellDef="let el"> 
+                  <button mat-stroked-button="mat-stroked-button" (click)="currentTask = el; featureProgressConsolePart(el.taskId)" [color]="currentTask == el ? 'primary' : ''" [class.mat-flat-button]="currentTask == el" [class.mat-stroked-button]="currentTask != el">Info</button>
+                </td>
+              </ng-container>
+              <tr mat-row="mat-row" *matRowDef="let row; columns: columnsToDisplay;"> </tr>
+            </table>
+          </ct-table>
+        </ct-section-body-row>
+      </ct-section-body>
+      <ct-section-footer>
+        <ct-section-footer-row>
+          <ct-flex justify-content="flex-start" gap="8px">
+            <ct-flex-item flex="1">
+              <button style="width:100%" mat-flat-button="mat-flat-button" color="primary" #prevTable (click)="prev()">
+                <mat-icon>arrow_back_ios</mat-icon>
+              </button>
+            </ct-flex-item>
+            <ct-flex-item flex="1">
+              <button style="width:100%" mat-flat-button="mat-flat-button" color="primary" #nextTable (click)="next()">
+                <mat-icon>arrow_forward_ios</mat-icon>
+              </button>
+            </ct-flex-item>
+          </ct-flex>
+        </ct-section-footer-row>
+      </ct-section-footer>
+    </ct-section>
+  </ct-col>
+  <ct-col style="flex:1; overflow:auto;">
+    <ct-section>
+      <ct-section-header>
+        <ct-section-header-row>
+          <ct-heading>Console output</ct-heading>
+        </ct-section-header-row>
+      </ct-section-header>
+      <ct-section-body>
+        <ct-section-body-row>
+          <ct-section-content>
+            <ct-wrap-block #consoleView> 
+              <ct-flex justify-content="center" align-items="center" *ngIf="!consolePartResponse">
+                <ct-flex-item>
+                  <div style="min-height: 100px;">No Task Info</div>
+                </ct-flex-item>
+              </ct-flex>
+              <div *ngIf="consolePartResponse">
+                <ct-pre overflow-x="auto">
+                  <pre style="white-space:pre;">
+                    <table>
+                      <tr>
+                        <td>exitCode:</td>
+                        <td>{{consolePartResponse.exitCode}}</td>
+                      </tr>
+                      <tr>
+                        <td>isOk:</td>
+                        <td>{{consolePartResponse.isOk}}</td>
+                      </tr>
+                    </table></pre>
+                </ct-pre><br/>
+                <ct-pre overflow-x="auto">
+                  <pre style="white-space:pre;">
+                    <div>{{consolePartResponse.console}}</div></pre>
+                </ct-pre>
+              </div>
+            </ct-wrap-block>
+          </ct-section-content>
+        </ct-section-body-row>
+      </ct-section-body>
+    </ct-section>
+  </ct-col>
+</ct-cols>

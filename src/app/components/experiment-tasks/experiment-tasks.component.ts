@@ -6,7 +6,7 @@ import { CtTableComponent } from '@app/ct';
 
 @Component({
     selector: 'experiment-tasks',
-    templateUrl: './experiment-tasks.component.pug',
+    templateUrl: './experiment-tasks.component.html',
     styleUrls: ['./experiment-tasks.component.scss']
 })
 export class ExperimentTasksComponent implements OnInit, OnChanges {

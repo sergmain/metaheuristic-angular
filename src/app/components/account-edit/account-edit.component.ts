@@ -8,7 +8,7 @@ import { AccountResponse } from '@app/models/AccountResponse';
 @Component({
     // tslint:disable-next-line: component-selector
     selector: 'account-edit',
-    templateUrl: './account-edit.component.pug',
+    templateUrl: './account-edit.component.html',
     styleUrls: ['./account-edit.component.scss']
 })
 

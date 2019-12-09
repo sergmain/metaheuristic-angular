@@ -9,7 +9,7 @@ import { Subscription } from 'rxjs';
 
 @Component({
     selector: 'experiment-info',
-    templateUrl: './experiment-info.component.pug',
+    templateUrl: './experiment-info.component.html',
     styleUrls: ['./experiment-info.component.scss']
 })
 

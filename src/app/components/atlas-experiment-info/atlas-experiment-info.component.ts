@@ -9,7 +9,7 @@ import { Subscription } from 'rxjs';
 
 @Component({
     selector: 'atlas-experiment-info',
-    templateUrl: './atlas-experiment-info.component.pug',
+    templateUrl: './atlas-experiment-info.component.html',
     styleUrls: ['./atlas-experiment-info.component.scss']
 })
 export class AtlasExperimentInfoComponent implements OnInit {

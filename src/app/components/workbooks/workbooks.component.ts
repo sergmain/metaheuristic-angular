@@ -16,7 +16,7 @@ import { response } from '@src/app/services/plans/response';
 
 @Component({
     selector: 'workbooks-view',
-    templateUrl: './workbooks.component.pug',
+    templateUrl: './workbooks.component.html',
     styleUrls: ['./workbooks.component.scss']
 })
 export class WorkbooksComponent implements OnInit, OnDestroy {
