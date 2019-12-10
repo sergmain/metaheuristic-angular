@@ -1,41 +1,24 @@
 import { DefaultResponse } from '@app/models/DefaultResponse';
-import { Batches } from './Batches'
-import { Plan } from '@app/models/Plan';
+import { IPlan } from '@app/services/plans/IPlan';
+import { Batches } from './Batches';
 
-export namespace batches {
-    export namespace get {
-        export interface Response extends DefaultResponse {
-            batches: Batches;
-        }
-    }
-}
-
-export namespace batch {
-    export namespace get {
-        export interface Response extends DefaultResponse {
+export namespace response {
+    export namespace batches {
+        export interface Get extends DefaultResponse {
             batches: Batches;
         }
     }
 
-    // export namespace delete {
-    //     export interface Response extends DefaultResponse {
-    //         batches: Batches;
-    //     }
-    // }
-    export namespace status {
-        export interface Response extends DefaultResponse {
+    export namespace batch {
+        export interface Status extends DefaultResponse {
             batchId: number | string;
             console: string;
             ok: boolean;
         }
-    }
-    export namespace add {
-        export interface Response extends DefaultResponse {
-            items: Plan[];
+        export interface Add extends DefaultResponse {
+            items: IPlan[];
         }
-    }
-    export namespace upload {
-        export interface Response extends DefaultResponse {
+        export interface Upload extends DefaultResponse {
 
         }
     }

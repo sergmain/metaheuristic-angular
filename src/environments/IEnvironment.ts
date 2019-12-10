@@ -4,4 +4,7 @@ export interface IEnvironment {
     userLifeTime ? : number;
     hashLocationStrategy: boolean;
     isSslRequired: boolean;
+    batchInterval: number;
+    language: string;
+    lorem: string;
 }

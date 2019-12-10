@@ -1,14 +1,9 @@
 import { Action, createReducer, on } from '@ngrx/store';
-import { Settings, SettingsLanguage, SettingsTheme } from './Settings';
+import { defaultSettings, Settings, SettingsTheme } from './Settings';
 import * as actions from './settings.actions';
 
 
-export const initialState: Settings = {
-    theme: SettingsTheme.Light,
-    sidenav: true,
-    sidenavButton: true,
-    language: SettingsLanguage.EN
-};
+export const initialState: Settings = defaultSettings;
 
 const reducer = createReducer(
     initialState,
@@ -22,7 +17,7 @@ const reducer = createReducer(
 
     on(actions.toggleLanguage, (state: Settings, { language }) => ({ ...state, language })),
 
-    on(actions.toggleSideNav, (state: Settings) => ({ ...state, sidenav: !state.sidenav }))
+    on(actions.toggleSideNav, (state: Settings) => ({ ...state, sidenav: !state.sidenav })),
 
 );
 

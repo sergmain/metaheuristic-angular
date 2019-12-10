@@ -2,85 +2,69 @@ import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { generateFormData } from '@src/app/helpers/generateFormData';
 import { environment } from '@src/environments/environment';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, forkJoin, Observable, timer } from 'rxjs';
+import { repeatWhen } from 'rxjs/operators';
+import { Batch } from './Bacth';
+import { response } from './response';
 
-export * from './Bacth';
-export * from './response';
+
+const FINISHED_STATE = 'Finished';
 
 @Injectable({ providedIn: 'root' })
-
 export class BatchService {
     POST: any;
     GET: any;
-    formData: any;
+
+    finishedNotification: BehaviorSubject < boolean > = new BehaviorSubject(false);
 
     constructor(private http: HttpClient) {
         const base: any = (url: string): string => `${environment.baseUrl}launchpad/batch${url}`;
         this.POST = (url: string, data: any): Observable < any > => this.http.post(base(url), data);
         this.GET = (url: string, options: any = {}): Observable < any > => this.http.get(base(url), options);
-        this.formData = generateFormData;
+        this._startIntervalRequset()(environment.batchInterval);
     }
 
     batches = {
-        // @GetMapping("/batches")
-        // public BatchData.BatchesResult batches(@PageableDefault(size = 20) Pageable pageable) {
-        //     return batchTopLevelService.getBatches(pageable);
-        // }
-        get: (page: number): Observable < any > =>
-            this.GET(`/batches?page=${page}`),
+        getAll: () => {
+            return new Observable(subscriber => {
+                this.batches.get(0).subscribe((firstResponse: response.batches.Get) => {
+                    let pages: number = firstResponse.batches.totalPages - 1;
+                    const list: Observable < response.batches.Get > [] = [];
+                    while (pages !== 0) {
+                        list.push(this.batches.get(pages));
+                        pages--;
+                    }
+                    forkJoin(list.reverse()).subscribe((data: response.batches.Get[]) => {
+                        subscriber.next([firstResponse].concat(data));
+                        subscriber.complete();
+                    });
+                });
+            });
+        },
 
-        // @PostMapping("/batches-part")
-        // public BatchData.BatchesResult batchesPart(@PageableDefault(size = 20) Pageable pageable) {
-        //     return batchTopLevelService.getBatches(pageable);
-        // }
+        get: (page: number): Observable < response.batches.Get > => this.GET(`/batches?page=${page}`),
+
         part: (page: number): Observable < any > =>
             this.POST(`/batches-part`)
     };
 
-    batch: any = {
-        // @GetMapping(value = "/batch-add")
-        // public BatchData.PlansForBatchResult batchAdd() {
-        //     return batchTopLevelService.getPlansForBatchResult();
-        // }
-        add: (): Observable < any > =>
+    batch = {
+        add: (): Observable < response.batch.Add > =>
             this.GET(`/batch-add`),
 
-        // @GetMapping("/batch-delete/{batchId}")
-        // public BatchData.Status processResourceDelete(@PathVariable Long batchId) {
-        //     return batchTopLevelService.getProcessingResourceStatus(batchId);
-        // }
         delete: (batchId: string): Observable < any > =>
             this.GET(`/batch-delete/${batchId}`),
 
-
-        // @PostMapping("/batch-delete-commit")
-        // public OperationStatusRest processResourceDeleteCommit(Long batchId) {
-        //     return batchTopLevelService.processResourceDeleteCommit(batchId);
-        // }
         deleteCommit: (batchId: string): Observable < any > =>
-            this.POST(`/batch-delete-commit`, this.formData({ batchId })),
+            this.POST(`/batch-delete-commit`, generateFormData({ batchId })),
 
-        // @GetMapping(value= "/batch-status/{batchId}" )
-        // public BatchData.Status getProcessingResourceStatus(@PathVariable("batchId") Long batchId) {
-        //     return batchTopLevelService.getProcessingResourceStatus(batchId);
-        // }
-        status: (batchId: string): Observable < any > =>
+        status: (batchId: string): Observable < response.batch.Status > =>
             this.GET(`/batch-status/${batchId}`),
 
-        // @PostMapping(value = "/batch-upload-from-file")
-        // public OperationStatusRest uploadFile(final MultipartFile file, Long planId) {
-        //     return batchTopLevelService.batchUploadFromFile(file, planId);
-        // }
-        upload: (planId: string | number, file: File): Observable < any > =>
-            this.POST(`/batch-upload-from-file`, this.formData({ file, planId })),
+        upload: (planId: string | number, file: File): Observable < response.batch.Upload > =>
+            this.POST(`/batch-upload-from-file`, generateFormData({ file, planId })),
     };
 
-    // @GetMapping(value= "/batch-download-result/{batchId}/{fileName}", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
-    // public HttpEntity<AbstractResource> downloadProcessingResult(
-    //         HttpServletResponse response, @PathVariable("batchId") Long batchId,
-    //         @SuppressWarnings("unused") @PathVariable("fileName") String fileName) throws IOException {
-    //     return batchTopLevelService.getBatchProcessingResult(batchId);
-    // }
     downloadFile(batchId: string): Observable < HttpResponse < Blob >> {
         let headers: HttpHeaders = new HttpHeaders();
         headers = headers.append('Accept', 'application/octet-stream');
@@ -90,5 +74,36 @@ export class BatchService {
             observe: 'response',
             responseType: 'blob'
         });
+    }
+
+    private _startIntervalRequset() {
+        let prevList: Batch[] = [];
+        let currentList: Batch[] = [];
+        return (interval) => {
+            interval = parseInt(interval, 10);
+            if (!interval) { return false; }
+            this.batches.getAll()
+                .pipe(repeatWhen(() => timer(interval, interval)))
+                .subscribe((content: response.batches.Get[]) => {
+                    let exist: boolean = false;
+                    let newList: Batch[] = [];
+                    content.forEach((e: response.batches.Get) => newList = [].concat(newList, e.batches.content));
+                    prevList = currentList;
+                    currentList = newList;
+
+                    currentList
+                        .filter((e: Batch) => e.execStateStr === FINISHED_STATE)
+                        .forEach((finishedElement: Batch) => {
+                            prevList.find((element: Batch) => {
+                                if (element.batch.id === finishedElement.batch.id) {
+                                    if (element.execStateStr !== finishedElement.execStateStr) {
+                                        exist = true;
+                                    }
+                                }
+                            });
+                        });
+                    this.finishedNotification.next(exist);
+                });
+        };
     }
 }

@@ -20,7 +20,7 @@ export class SettingsEffects {
                 settingsAction.setDarkTheme,
                 settingsAction.setLightTheme,
                 settingsAction.toggleLanguage,
-                settingsAction.toggleSideNav
+                settingsAction.toggleSideNav,
             ),
 
             concatMap(action => of (action).pipe(

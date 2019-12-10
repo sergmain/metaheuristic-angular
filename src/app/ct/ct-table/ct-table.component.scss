@@ -6,7 +6,7 @@
     margin: 0 unit(0);
     overflow-y: auto;
 
-    /deep/ {
+    ::ng-deep {
         .mat-table {
             width: 100%;
             border-collapse: collapse;
@@ -58,7 +58,7 @@
 }
 
 :host-context(.light-theme) {
-    /deep/ {
+    ::ng-deep {
         .mat-header-cell,
         .mat-cell,
         .mat-footer-cell {
@@ -70,7 +70,7 @@
 
 
 :host-context(.dark-theme) {
-    /deep/ {
+    ::ng-deep {
         .mat-header-cell,
         .mat-cell,
         .mat-footer-cell {

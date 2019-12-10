@@ -2,27 +2,19 @@ import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { IAppState } from '../../app.reducers';
-import { Settings, SettingsLanguage, SettingsTheme } from './Settings';
-
-export const setOfLanguages: Set < SettingsLanguage > = new Set([
-    SettingsLanguage.EN,
-    SettingsLanguage.RU,
-]);
+import { defaultSettings, Settings, SettingsTheme } from './Settings';
+import * as action from './settings.actions';
 
 @Injectable({ providedIn: 'root' })
 export class SettingsService {
     localStorageName: string = 'settingsService';
 
-    storageDefaultData: Settings = {
-        theme: SettingsTheme.Dark,
-        sidenav: true,
-        sidenavButton: true,
-        language: SettingsLanguage.EN
-    };
+    storageDefaultData: Settings = defaultSettings;
 
     constructor(
         private store: Store < IAppState >
     ) {
+        this.saveToLocalStore(this.storageDefaultData)
         this.store.subscribe((state: IAppState) => {
             this.updateTheme(state.settings.theme);
         });

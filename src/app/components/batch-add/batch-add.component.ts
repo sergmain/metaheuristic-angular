@@ -2,7 +2,8 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { LoadStates } from '@app/enums/LoadStates';
 import { Plan } from '@app/models/Plan';
-import { batch, BatchService } from '@app/services/batch/batch.service';
+import { BatchService } from '@app/services/batch/batch.service';
+import { response } from '@app/services/batch/response';
 import { Store } from '@ngrx/store';
 import { TranslateService } from '@ngx-translate/core';
 import { IAppState } from '@src/app/app.reducers';
@@ -19,8 +20,8 @@ export class BatchAddComponent implements OnInit {
     readonly states = LoadStates;
 
     currentStates = new Set();
-    response: batch.add.Response;
-    uploadResponse: batch.upload.Response;
+    response: response.batch.Add;
+    uploadResponse: response.batch.Upload;
 
     plan: Plan;
     file: any;
@@ -49,7 +50,7 @@ export class BatchAddComponent implements OnInit {
         const subscribe: Subscription = this.batchService.batch
             .add()
             .subscribe(
-                (response: batch.add.Response) => {
+                (response: response.batch.Add) => {
                     this.response = response;
                     this.listOfPlans = this.response.items;
                 },
@@ -70,7 +71,7 @@ export class BatchAddComponent implements OnInit {
     upload() {
         this.batchService.batch
             .upload(this.plan.id, this.fileUpload.fileInput.nativeElement.files[0])
-            .subscribe((response: batch.upload.Response) => {
+            .subscribe((response: response.batch.Upload) => {
                 if (response.status.toLowerCase() === 'ok') {
                     this.router.navigate(['/launchpad', 'batch']);
                 }

@@ -15,7 +15,7 @@ export class PlansService {
     constructor(private http: HttpClient) {
         const base: any = (url: string): string => `${environment.baseUrl}launchpad/plan${url}`;
 
-        this.POST = (url: string, data: any): Observable < any >=> this.http.post(base(url), data);
+        this.POST = (url: string, data: any): Observable < any > => this.http.post(base(url), data);
         this.GET = (url: string): Observable < any > => this.http.get(base(url));
     }
 

@@ -20,6 +20,9 @@
                             </ct-flex>
                         </ct-flex-item>
                         <ct-flex-item>
+                            <span *ngIf="batchFinished">Batch Finished </span>
+                        </ct-flex-item>
+                        <ct-flex-item>
                             <ct-flex justify-content="flex-end" gap="9px" align-items="center">
                                 <ct-flex-item>
                                     <mat-slide-toggle #matSlideToggleTheme [checked]="theme === 'dark'" (change)="toggleTheme($event)"></mat-slide-toggle>

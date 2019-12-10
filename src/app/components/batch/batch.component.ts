@@ -3,7 +3,9 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatButton, MatDialog, MatTableDataSource } from '@angular/material';
 import { ConfirmationDialogMethod, QuestionData } from '@app/components/app-dialog-confirmation/app-dialog-confirmation.component';
 import { LoadStates } from '@app/enums/LoadStates';
-import { Batch, batches, BatchService } from '@app/services/batch/batch.service';
+import { Batch } from '@app/services/batch/Bacth';
+import { BatchService } from '@app/services/batch/batch.service';
+import { response } from '@app/services/batch/response';
 import { marker } from '@biesbjerg/ngx-translate-extract-marker';
 import { TranslateService } from '@ngx-translate/core';
 import { CtTableComponent } from '@src/app/ct/ct-table/ct-table.component';
@@ -22,7 +24,7 @@ export class BatchComponent implements OnInit {
     states = LoadStates;
     currentStates = new Set();
 
-    response: batches.get.Response;
+    response: response.batches.Get;
     dataSource = new MatTableDataSource < Batch > ([]);
     columnsToDisplay = ['id', 'createdOn', 'isBatchConsistent', 'planCode', 'execState', 'bts'];
 
@@ -51,8 +53,7 @@ export class BatchComponent implements OnInit {
         this.currentStates.add(this.states.loading);
         this.batchService.batches.get(page)
             .subscribe(
-                (response: batches.get.Response) => {
-
+                (response: response.batches.Get) => {
                     // bug 704
                     if (this.authenticationService.getUserRole().has(Role.Operator)) {
                         this.columnsToDisplay = ['id', 'createdOn', 'planCode', 'execState', 'bts'];
@@ -106,7 +107,7 @@ export class BatchComponent implements OnInit {
     delete(batch: Batch) {
         this.deletedRows.push(batch);
         this.batchService.batch
-            .deleteCommit(batch.batch.id)
+            .deleteCommit(batch.batch.id.toString())
             .subscribe();
     }
 

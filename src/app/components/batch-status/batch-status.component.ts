@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LoadStates } from '@app/enums/LoadStates';
-import { BatchService, batch } from '@app/services/batch/batch.service';
+import { BatchService } from '@app/services/batch/batch.service';
 import { Subscription } from 'rxjs';
+import { response } from '@app/services/batch/response';
 
 @Component({
     selector: 'batch-status',
@@ -15,7 +16,7 @@ export class BatchStatusComponent implements OnInit {
     readonly states = LoadStates;
     currentState: LoadStates = LoadStates.firstLoading;
 
-    response: batch.status.Response;
+    response: response.batch.Status;
     batchId: string
 
     constructor(
@@ -32,7 +33,7 @@ export class BatchStatusComponent implements OnInit {
         const subscribe: Subscription = this.batchService.batch
             .status(this.batchId )
             .subscribe(
-                (response: batch.status.Response) => {
+                (response: response.batch.Status) => {
                     this.response = response;
                     this.currentState = this.states.show;
                 },
