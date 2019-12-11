@@ -2,6 +2,7 @@ issue-901
 перевести на ангулар 8.хх
 
 DONE
+CONFIRMED
 
 
 
@@ -23,14 +24,21 @@ issue-903
 сейчас первый язык это всегда английский.
 
 DONE
+CONFIRMED
 
 
 
 issue-904
 Добавить в в environment.ts параметр, который будте заменять текст "Lorem ipsum"
 в файле Lorem ipsum dolor
-
 DONE
+
+NOT YET
+поле lorem переименовать в brandingMsg
+
+сделать brandingMsgIndex который по функциональности такой же как brandingMsg (ака lorem)
+но показывается на главной странице
+
 
 issue-905
 при первом вводе http://localhost:4200/
