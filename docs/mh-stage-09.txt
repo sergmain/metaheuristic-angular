@@ -31,3 +31,8 @@ issue-904
 в файле Lorem ipsum dolor
 
 DONE
+
+issue-905
+при первом вводе http://localhost:4200/
+не должна быть ошибка 401
+

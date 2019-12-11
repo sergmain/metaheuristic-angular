@@ -8,7 +8,9 @@ export const environment: IEnvironment = {
     isSslRequired: false,
     batchInterval: 15 * 1000,
     language: 'RU',
-    lorem:"<p>Lorem ipsum <b>dolor</b>, sit amet consectetur adipisicing elit. Aperiam, libero molestiae! Neque fugiat necessitatibus pariatur aliquid vel rerum ad sequi, sed beatae hic consequatur similique eveniet reiciendis sapiente soluta explicabo.</p>"
+    lorem: '<p>Lorem ipsum <b>dolor</b>, sit amet consectetur adipisicing elit. Aperiam, ' +
+        'libero molestiae! Neque fugiat necessitatibus pariatur aliquid vel rerum ad sequi, ' +
+        'sed beatae hic consequatur similique eveniet reiciendis sapiente soluta explicabo.</p>'
 };
 
 /*

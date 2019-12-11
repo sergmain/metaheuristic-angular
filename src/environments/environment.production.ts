@@ -6,7 +6,9 @@ export const environment: IEnvironment = {
     hashLocationStrategy: true,
     userLifeTime: 30 * 60 * 1000, // 30 minutes
     isSslRequired: true,
-    batchInterval: 15 * 1000,
-    language: 'EN',
-    lorem: "<p>Lorem ipsum <b>dolor</b>, sit amet consectetur adipisicing elit. Aperiam, libero molestiae! Neque fugiat necessitatibus pariatur aliquid vel rerum ad sequi, sed beatae hic consequatur similique eveniet reiciendis sapiente soluta explicabo.</p>"
+    batchInterval: 15 * 1000, // in milliseconds
+    language: 'EN', // other supported languages: 'RU'
+    lorem: '<p>Lorem ipsum <b>dolor</b>, sit amet consectetur adipisicing elit. Aperiam, ' +
+        'libero molestiae! Neque fugiat necessitatibus pariatur aliquid vel rerum ad sequi, ' +
+        'sed beatae hic consequatur similique eveniet reiciendis sapiente soluta explicabo.</p>'
 };
