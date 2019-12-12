@@ -4,10 +4,10 @@ import { BehaviorSubject } from 'rxjs';
 
 
 export class BatchExexStatusComparer {
-    isFirstBacth = true;
+    private isFirstBacth = true;
 
-    list: BatchExecStatus[] = [];
-    statuses: number[] = [];
+    private list: BatchExecStatus[] = [];
+    private statuses: number[] = [];
 
     notification: BehaviorSubject < boolean > = new BehaviorSubject(false);
 
@@ -21,26 +21,22 @@ export class BatchExexStatusComparer {
         } else {
             const differenceList: BatchExecStatus[] = [];
 
-            // find new
-            newList.forEach(newElem => {
-                let elem = this.list.find(elem => elem.id === newElem.id);
-                if (!elem) {
-                    differenceList.push(newElem);
-                }
-            });
-            // find difference
             newList.forEach(newElem => {
                 let elem = this.list.find(elem => elem.id === newElem.id);
                 if (elem) {
+                    // find difference state
                     if (elem.state !== newElem.state) {
                         differenceList.push(newElem);
                     }
+                } else {
+                    //  new elem
+                    differenceList.push(newElem);
                 }
             });
 
             this.checkStatus(differenceList);
         }
-        this.list = [].concat(newList);
+        this.list = Array.from(newList);
     }
 
     private checkStatus(list: BatchExecStatus[]) {
