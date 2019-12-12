@@ -37,7 +37,7 @@ export class AuthenticationService {
 
     isAuth() {
         if (this.user && this.user.token) {
-            if (this.getUserLifeTimeExpiration()) {
+            if (this.userLifeTimeExpired()) {
                 this.logout();
                 return false;
             }
@@ -93,18 +93,19 @@ export class AuthenticationService {
     }
 
 
-    getUserLifeTimeExpiration(): boolean {
+    userLifeTimeExpired(): boolean {
         if (environment.userLifeTime) {
             const userLifeTime: number = environment.userLifeTime;
             const last: number = parseInt(localStorage.getItem('__last'), 10) || 0;
             const now: number = Date.now();
+            const passedTime: number = now - last;
 
             if (last === 0) {
                 localStorage.setItem('__last', now.toString());
                 return false;
             }
 
-            if ((now - last) > userLifeTime) {
+            if (passedTime > userLifeTime) {
                 return true;
             } else {
                 localStorage.setItem('__last', now.toString());

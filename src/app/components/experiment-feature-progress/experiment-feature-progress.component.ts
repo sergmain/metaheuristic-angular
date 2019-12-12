@@ -189,7 +189,6 @@ export class ExperimentFeatureProgressComponent implements OnInit {
             }, []).join(',');
 
         }
-        console.log(params, paramsAxis);
         this.featurePlotDataPart(params || ',', paramsAxis);
     }
 

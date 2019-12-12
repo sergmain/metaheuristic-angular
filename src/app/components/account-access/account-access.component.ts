@@ -63,17 +63,9 @@ export class AccountAccessComponent implements OnInit {
         formData.append('accountId', this.route.snapshot.paramMap.get('accountId'));
         formData.append('roles', roles.join(','));
 
-        const subscribe: Subscription = this.accountsService.account
+        this.accountsService.account
             .roleCommit(accountId, roles.join(','))
-            .subscribe(
-                (response: any) => {
-                    console.log(response);
-                },
-                () => {},
-                () => {
-                    subscribe.unsubscribe();
-                }
-            );
+            .subscribe((response: any) => { console.log(response); });
     }
 
     back() {

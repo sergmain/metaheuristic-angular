@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { MatSelect, MatSelectChange, MatSidenav, MatSlideToggle, MatSlideToggleChange } from '@angular/material';
 import { Router } from '@angular/router';
 import { AuthenticationService } from '@app/services/authentication/authentication.service';
@@ -20,7 +20,7 @@ import { environment } from '@src/environments/environment';
     styleUrls: ['./app-view.component.scss']
 })
 
-export class AppViewComponent implements OnInit {
+export class AppViewComponent implements OnInit, OnDestroy {
     htmlContent: SafeHtml;
     sidenavButtonDisable: boolean = false;
     theme: SettingsTheme;
@@ -44,22 +44,24 @@ export class AppViewComponent implements OnInit {
         private domSanitizer: DomSanitizer
     ) {
         this.htmlContent = domSanitizer.bypassSecurityTrustHtml(environment.brandingMsgIndex);
+        this.lang.list = setOfLanguages;
     }
 
     ngOnInit() {
+        this.store.subscribe((state: IAppState) => {
+            this.theme = state.settings.theme;
+            this.lang.current = state.settings.language;
+        });
+
         this.batchService.finishedNotification.subscribe((exist: boolean) => {
             if (exist) {
                 this.audioNotification.play();
                 this.batchFinished = true;
             }
         });
-        this.lang.list = setOfLanguages;
-        this.store.subscribe((state: IAppState) => {
-            this.theme = state.settings.theme;
-            this.lang.current = state.settings.language;
-        });
-        this.isAuth();
     }
+
+    ngOnDestroy() {}
 
     isAuth() {
         return this.authenticationService.isAuth();

@@ -8,6 +8,7 @@ import { Batch } from './Bacth';
 import { response } from './response';
 import { BatchExecStatus } from './BatchExecStatus';
 import { AuthenticationService } from '../authentication';
+import { BatchExexStatusComparer } from './BatchExexStatusComparer';
 
 
 const FINISHED_STATE: number = 4;
@@ -16,10 +17,8 @@ const ERROR_STATE: number = -1;
 @Injectable({ providedIn: 'root' })
 export class BatchService {
 
-    private firstIntervalRequest: boolean = true;
     private intervalStarted: boolean = false;
-    private prevList: BatchExecStatus[] = [];
-    private currentList: BatchExecStatus[] = [];
+    batchExexStatusComparer: BatchExexStatusComparer;
 
     POST: any;
     GET: any;
@@ -33,6 +32,11 @@ export class BatchService {
         const base: any = (url: string): string => `${environment.baseUrl}launchpad/batch${url}`;
         this.POST = (url: string, data: any): Observable < any > => this.http.post(base(url), data);
         this.GET = (url: string, options: any = {}): Observable < any > => this.http.get(base(url), options);
+        this.batchExexStatusComparer = new BatchExexStatusComparer([FINISHED_STATE, ERROR_STATE]);
+
+        this.batchExexStatusComparer.notification.subscribe(s => {
+            this.finishedNotification.next(s)
+        })
     }
 
     batches = {
@@ -93,41 +97,7 @@ export class BatchService {
                 return false;
             }
             base.batch.execStatuses().subscribe((content: response.batch.ExecStatuses) => {
-                let exist: boolean = false;
-                base.currentList = content.statuses;
-
-                // if state change
-                base.currentList
-                    .filter((e) => (e.state === FINISHED_STATE || e.state === ERROR_STATE))
-                    .forEach((filteredElement) => {
-                        base.prevList.find((element) => {
-                            if (element.id === filteredElement.id) {
-                                if (element.state !== filteredElement.state) {
-                                    exist = true;
-                                }
-                            }
-                        });
-                    });
-                // if new element with finished state
-                if (!base.firstIntervalRequest) {
-                    let newList = Array.from(base.currentList);
-                    base.prevList.forEach(prevEl => {
-                        let index = newList.findIndex(newEl => newEl ? (prevEl.id === newEl.id) : false);
-                        delete newList[index];
-                    });
-                    newList
-                        .filter(el => !!el)
-                        .forEach(el => {
-                            if (el.state === FINISHED_STATE || el.state === ERROR_STATE) {
-                                exist = true;
-                            }
-                        });
-                }
-
-                base.finishedNotification.next(exist);
-                base.prevList = base.currentList;
-                base.firstIntervalRequest = false;
-
+                base.batchExexStatusComparer.takeApart(content.statuses)
                 if (base.intervalStarted) {
                     setTimeout(() => { fn(); }, interval);
                 }

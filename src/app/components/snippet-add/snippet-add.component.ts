@@ -32,7 +32,6 @@ export class SnippetAddComponent {
     upload() {
         const formData: FormData = new FormData();
         formData.append('file', this.fileUpload.fileInput.nativeElement.files[0]);
-        console.log(this.fileUpload.fileInput.nativeElement.files[0]);
         this.snippetsService.snippet.upload(this.fileUpload.fileInput.nativeElement.files[0])
             .subscribe(
                 (response: DefaultResponse) => {

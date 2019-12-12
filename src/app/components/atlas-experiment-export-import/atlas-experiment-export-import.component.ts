@@ -33,7 +33,6 @@ export class AtlasExperimentExportImportComponent {
             .uploadFromFile(this.fileUpload.fileInput.nativeElement.files[0])
             .subscribe(
                 (res: any) => {
-                    console.log(res)
                     if (res.status.toLowerCase() === 'ok') {
                         this.back();
                     }
