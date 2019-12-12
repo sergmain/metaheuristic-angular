@@ -27,6 +27,7 @@
 	"batch.isBatchConsistent.Error": "Ошибка",
 	"batch.isBatchConsistent.Finished": "Закончен",
 	"batch.isBatchConsistent.Processing": "Обработка",
+	"batch.isBatchConsistent.Preparing": "Подготовка",
 	"batch.isBatchConsistent.false": "Нет",
 	"batch.isBatchConsistent.true": "Да",
 	"nav-launchpad.Accounts": "Аккаунты",

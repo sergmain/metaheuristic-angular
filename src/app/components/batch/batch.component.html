@@ -34,7 +34,10 @@
           </ng-container>
           <ng-container matColumnDef="execState"> 
             <th mat-header-cell="mat-header-cell" *matHeaderCellDef> {{ 'batch.Exec State' | translate }}</th>
-            <td mat-cell="mat-cell" *matCellDef="let el"> <span *ngIf="el.execState === -1">{{ 'batch.isBatchConsistent.Error' | translate }}</span><span *ngIf="el.execState === 3">{{ 'batch.isBatchConsistent.Processing' | translate }}</span><span *ngIf="el.execState === 4">{{ 'batch.isBatchConsistent.Finished' | translate }}</span></td>
+            <td mat-cell="mat-cell" *matCellDef="let el"> <span *ngIf="el.execState === -1">{{ 'batch.isBatchConsistent.Error' | translate }}</span>
+              <span *ngIf="el.execState === 2">{{ 'batch.isBatchConsistent.Preparing' | translate }}</span>
+              <span *ngIf="el.execState === 3">{{ 'batch.isBatchConsistent.Processing' | translate }}</span>
+              <span *ngIf="el.execState === 4">{{ 'batch.isBatchConsistent.Finished' | translate }}</span></td>
           </ng-container>
           <ng-container matColumnDef="bts"> 
             <th mat-header-cell="mat-header-cell" *matHeaderCellDef> </th>

@@ -27,6 +27,7 @@
 	"batch.isBatchConsistent.Error": "Error",
 	"batch.isBatchConsistent.Finished": "Finished",
 	"batch.isBatchConsistent.Processing": "Processing",
+	"batch.isBatchConsistent.Preparing": "Preparing",
 	"batch.isBatchConsistent.false": "NO",
 	"batch.isBatchConsistent.true": "OK",
 	"nav-launchpad.Accounts": "Accounts",
