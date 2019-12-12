@@ -1,12 +1,10 @@
 import { Role } from './Role';
 
-export namespace user {
-    export namespace get {
-        export interface Response {
-            authorities: Authority[];
-            publicName: string;
-            username: string;
-        }
+export namespace response {
+    export interface User {
+        authorities: Authority[];
+        publicName: string;
+        username: string;
     }
 }
 

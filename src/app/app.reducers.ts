@@ -4,15 +4,18 @@ import { plansReducer } from './services/plans/plans.reducer';
 import { Settings } from './services/settings/Settings';
 import { settingsReducer } from './services/settings/settings.reducer';
 import { environment } from '@src/environments/environment';
-
+import { authenticationReducer } from '@src/app/services/authentication/authentication.reducer';
+import { User } from './services/authentication';
 export interface IAppState {
     settings: Settings;
     plans: IPlansState;
+    user: User;
 }
 
 export const appReducers: ActionReducerMap < IAppState > = {
     settings: settingsReducer,
-    plans: plansReducer
+    plans: plansReducer,
+    user: authenticationReducer
 };
 
 export function debug(reducer: ActionReducer < any > ): ActionReducer < any > {

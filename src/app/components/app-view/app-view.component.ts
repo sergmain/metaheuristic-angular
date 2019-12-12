@@ -5,10 +5,14 @@ import { AuthenticationService } from '@app/services/authentication/authenticati
 import { Store } from '@ngrx/store';
 import { setOfLanguages, SettingsLanguage, SettingsTheme } from '@src/app/services/settings/Settings';
 import { SettingsService } from '@src/app/services/settings/settings.service';
-import { IAppState } from '../../app.reducers';
-import * as settingsServiceActions from '../../services/settings/settings.actions';
+import { IAppState } from '@src/app/app.reducers';
+import * as settingsAction from '@src/app/services/settings/settings.actions';
 import { BatchService } from '@src/app/services/batch/batch.service';
 import { AudioNotification } from '@src/app/services/audioNotification/audioNotification.service';
+import * as authenticationAction from '@src/app/services/authentication/authentication.action';
+import { SafeHtml, DomSanitizer } from '@angular/platform-browser';
+import { environment } from '@src/environments/environment';
+
 
 @Component({
     selector: 'app-view',
@@ -17,6 +21,7 @@ import { AudioNotification } from '@src/app/services/audioNotification/audioNoti
 })
 
 export class AppViewComponent implements OnInit {
+    htmlContent: SafeHtml;
     sidenavButtonDisable: boolean = false;
     theme: SettingsTheme;
     lang: {
@@ -35,15 +40,18 @@ export class AppViewComponent implements OnInit {
         private router: Router,
         private batchService: BatchService,
         private audioNotification: AudioNotification,
-        private store: Store < IAppState >
-    ) {}
+        private store: Store < IAppState > ,
+        private domSanitizer: DomSanitizer
+    ) {
+        this.htmlContent = domSanitizer.bypassSecurityTrustHtml(environment.brandingMsgIndex);
+    }
 
     ngOnInit() {
         this.batchService.finishedNotification.subscribe((exist: boolean) => {
             if (exist) {
                 this.audioNotification.play();
                 this.batchFinished = true;
-            } 
+            }
         });
         this.lang.list = setOfLanguages;
         this.store.subscribe((state: IAppState) => {
@@ -53,36 +61,32 @@ export class AppViewComponent implements OnInit {
         this.isAuth();
     }
 
-    private updateSidenav() {
-        // this.sidenavButtonDisable = true;
-        // if (this.settings.sidenav === SettingsSidenav.Enable) {
-        //     this.sidenavButtonDisable = false;
-        // }
-    }
-
     isAuth() {
         return this.authenticationService.isAuth();
     }
 
+    hideBatchNotification() {
+        this.batchFinished = false;
+    }
+
     toggleSideNav() {
-        this.store.dispatch(settingsServiceActions.toggleSideNav());
+        this.store.dispatch(settingsAction.toggleSideNav());
     }
 
     toggleTheme(event: MatSlideToggleChange) {
         if (event.checked) {
-            this.store.dispatch(settingsServiceActions.setDarkTheme());
+            this.store.dispatch(settingsAction.setDarkTheme());
         } else {
-            this.store.dispatch(settingsServiceActions.setLightTheme());
+            this.store.dispatch(settingsAction.setLightTheme());
         }
 
     }
 
     toggleLanguage(event: MatSelectChange) {
-        this.store.dispatch(settingsServiceActions.toggleLanguage({ language: event.value }));
+        this.store.dispatch(settingsAction.toggleLanguage({ language: event.value }));
     }
 
     logout() {
-        this.authenticationService.logout();
-        this.router.navigate(['/']);
+        this.store.dispatch(authenticationAction.logout());
     }
 }

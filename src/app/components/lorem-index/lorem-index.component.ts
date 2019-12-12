@@ -9,7 +9,7 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 })
 export class LoremIndexComponent {
     content: SafeHtml;
-    constructor(domSanitizer: DomSanitizer) {
-        this.content = domSanitizer.bypassSecurityTrustHtml(environment.lorem);
+    constructor(private domSanitizer: DomSanitizer) {
+        this.content = domSanitizer.bypassSecurityTrustHtml(environment.brandingMsg);
     }
 }

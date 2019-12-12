@@ -6,42 +6,36 @@ import { BehaviorSubject, forkJoin, Observable, timer } from 'rxjs';
 import { repeatWhen } from 'rxjs/operators';
 import { Batch } from './Bacth';
 import { response } from './response';
+import { BatchExecStatus } from './BatchExecStatus';
+import { AuthenticationService } from '../authentication';
 
 
-const FINISHED_STATE = 'Finished';
+const FINISHED_STATE: number = 4;
+const ERROR_STATE: number = -1;
 
 @Injectable({ providedIn: 'root' })
 export class BatchService {
+
+    private firstIntervalRequest: boolean = true;
+    private intervalStarted: boolean = false;
+    private prevList: BatchExecStatus[] = [];
+    private currentList: BatchExecStatus[] = [];
+
     POST: any;
     GET: any;
 
     finishedNotification: BehaviorSubject < boolean > = new BehaviorSubject(false);
 
-    constructor(private http: HttpClient) {
+    constructor(
+        private http: HttpClient,
+        private authenticationService: AuthenticationService
+    ) {
         const base: any = (url: string): string => `${environment.baseUrl}launchpad/batch${url}`;
         this.POST = (url: string, data: any): Observable < any > => this.http.post(base(url), data);
         this.GET = (url: string, options: any = {}): Observable < any > => this.http.get(base(url), options);
-        this._startIntervalRequset()(environment.batchInterval);
     }
 
     batches = {
-        getAll: () => {
-            return new Observable(subscriber => {
-                this.batches.get(0).subscribe((firstResponse: response.batches.Get) => {
-                    let pages: number = firstResponse.batches.totalPages - 1;
-                    const list: Observable < response.batches.Get > [] = [];
-                    while (pages !== 0) {
-                        list.push(this.batches.get(pages));
-                        pages--;
-                    }
-                    forkJoin(list.reverse()).subscribe((data: response.batches.Get[]) => {
-                        subscriber.next([firstResponse].concat(data));
-                        subscriber.complete();
-                    });
-                });
-            });
-        },
-
         get: (page: number): Observable < response.batches.Get > => this.GET(`/batches?page=${page}`),
 
         part: (page: number): Observable < any > =>
@@ -63,6 +57,8 @@ export class BatchService {
 
         upload: (planId: string | number, file: File): Observable < response.batch.Upload > =>
             this.POST(`/batch-upload-from-file`, generateFormData({ file, planId })),
+
+        execStatuses: (): Observable < response.batch.ExecStatuses > => this.GET(`/batch-exec-statuses`)
     };
 
     downloadFile(batchId: string): Observable < HttpResponse < Blob >> {
@@ -76,34 +72,66 @@ export class BatchService {
         });
     }
 
-    private _startIntervalRequset() {
-        let prevList: Batch[] = [];
-        let currentList: Batch[] = [];
-        return (interval) => {
-            interval = parseInt(interval, 10);
-            if (!interval) { return false; }
-            this.batches.getAll()
-                .pipe(repeatWhen(() => timer(interval, interval)))
-                .subscribe((content: response.batches.Get[]) => {
-                    let exist: boolean = false;
-                    let newList: Batch[] = [];
-                    content.forEach((e: response.batches.Get) => newList = [].concat(newList, e.batches.content));
-                    prevList = currentList;
-                    currentList = newList;
+    stopIntervalRequset() {
+        this.intervalStarted = false;
+    }
 
-                    currentList
-                        .filter((e: Batch) => e.execStateStr === FINISHED_STATE)
-                        .forEach((finishedElement: Batch) => {
-                            prevList.find((element: Batch) => {
-                                if (element.batch.id === finishedElement.batch.id) {
-                                    if (element.execStateStr !== finishedElement.execStateStr) {
-                                        exist = true;
-                                    }
+    startIntervalRequset(interval: number) {
+        if (this.intervalStarted) {
+            return false;
+        }
+        this.intervalRequset(interval);
+        this.intervalStarted = true;
+    }
+
+    private intervalRequset(interval: number) {
+        const base: BatchService = this;
+        fn();
+
+        function fn() {
+            if (!base.authenticationService.isAuth()) {
+                return false;
+            }
+            base.batch.execStatuses().subscribe((content: response.batch.ExecStatuses) => {
+                let exist: boolean = false;
+                base.currentList = content.statuses;
+
+                // if state change
+                base.currentList
+                    .filter((e) => (e.state === FINISHED_STATE || e.state === ERROR_STATE))
+                    .forEach((filteredElement) => {
+                        base.prevList.find((element) => {
+                            if (element.id === filteredElement.id) {
+                                if (element.state !== filteredElement.state) {
+                                    exist = true;
                                 }
-                            });
+                            }
                         });
-                    this.finishedNotification.next(exist);
-                });
-        };
+                    });
+                // if new element with finished state
+                if (!base.firstIntervalRequest) {
+                    let newList = Array.from(base.currentList);
+                    base.prevList.forEach(prevEl => {
+                        let index = newList.findIndex(newEl => newEl ? (prevEl.id === newEl.id) : false);
+                        delete newList[index];
+                    });
+                    newList
+                        .filter(el => !!el)
+                        .forEach(el => {
+                            if (el.state === FINISHED_STATE || el.state === ERROR_STATE) {
+                                exist = true;
+                            }
+                        });
+                }
+
+                base.finishedNotification.next(exist);
+                base.prevList = base.currentList;
+                base.firstIntervalRequest = false;
+
+                if (base.intervalStarted) {
+                    setTimeout(() => { fn(); }, interval);
+                }
+            });
+        }
     }
 }

@@ -5,9 +5,10 @@ import { BillingComponent } from './components/billing/billing.component';
 import { PilotComponent } from './components/pilot/pilot.component';
 import { LoremIndexComponent } from './components/lorem-index/lorem-index.component';
 import { environment } from '@src/environments/environment';
+import { AppIndexComponent } from './components/app-index/app-index.component';
 const routes: Routes = [{
     path: '',
-    component: LoremIndexComponent,
+    component: AppIndexComponent,
 }, {
     path: 'launchpad',
     canActivate: [AuthGuard],

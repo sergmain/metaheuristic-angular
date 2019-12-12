@@ -6,5 +6,6 @@ export interface IEnvironment {
     isSslRequired: boolean;
     batchInterval: number;
     language: string;
-    lorem: string;
+    brandingMsg: string;
+    brandingMsgIndex: string;
 }

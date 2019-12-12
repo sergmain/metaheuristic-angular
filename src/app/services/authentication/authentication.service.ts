@@ -1,7 +1,12 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { IAppState } from '@src/app/app.reducers';
 import { environment } from '@src/environments/environment';
-import { user as userResponse } from './response';
+import { Observable } from 'rxjs';
+import { Authority, response } from './response';
+import { Role } from './Role';
 import { User } from './User';
 
 @Injectable({
@@ -10,12 +15,28 @@ import { User } from './User';
 
 export class AuthenticationService {
 
+    localStorageName = 'authenticationService';
+    user: User;
+
     constructor(
         private http: HttpClient,
-    ) {}
+        private router: Router,
+        private store: Store < IAppState >
+    ) {
+        this.store.subscribe((state: IAppState) => {
+            this.user = state.user;
+        });
+    }
+
+    getData() {
+        return new Observable(subscriber => {
+            subscriber.next(this.getLocalStorageData());
+            subscriber.complete();
+        });
+    }
 
     isAuth() {
-        if (localStorage.getItem('user')) {
+        if (this.user && this.user.token) {
             if (this.getUserLifeTimeExpiration()) {
                 this.logout();
                 return false;
@@ -26,8 +47,20 @@ export class AuthenticationService {
     }
 
     getUserRole() {
-        const user: User = new User(JSON.parse(localStorage.getItem('user')));
-        return user.getRoleSet();
+        const set: Set < Role > = new Set();
+        if (this.user && this.user.authorities) {
+            this.user.authorities.forEach((authority: Authority) => {
+                set.add(authority.authority);
+            });
+        }
+        return set;
+    }
+
+    getToken() {
+        if (this.user) {
+            return this.user.token;
+        }
+        return null;
     }
 
     login(username: string, password: string) {
@@ -35,13 +68,30 @@ export class AuthenticationService {
         const token: string = 'Basic ' + btoa(username + ':' + password);
         const headers: HttpHeaders = new HttpHeaders({ Authorization: token });
 
-        this.http.post(url, { username, password }, { headers })
-            .subscribe((response: userResponse.get.Response) => {
-                if (response.username) {
-                    localStorage.setItem('user', JSON.stringify(Object.assign({}, response, { token })));
-                }
-            });
+        return new Observable(subscriber => {
+            this.http
+                .post(url, { username, password }, { headers })
+                .subscribe((response: response.User) => {
+                    if (response.username) {
+                        const data = Object.assign({}, response, { token });
+                        this.setLocalStorageData(data);
+                        subscriber.next(data);
+                    } else {
+                        subscriber.next(null);
+                    }
+                    subscriber.complete();
+                });
+        });
     }
+
+    getLocalStorageData() {
+        return JSON.parse(localStorage.getItem(this.localStorageName));
+    }
+
+    setLocalStorageData(content: User) {
+        localStorage.setItem(this.localStorageName, JSON.stringify(content));
+    }
+
 
     getUserLifeTimeExpiration(): boolean {
         if (environment.userLifeTime) {
@@ -66,7 +116,13 @@ export class AuthenticationService {
     }
 
     logout() {
-        localStorage.clear();
-        sessionStorage.clear();
+        return new Observable(subscriber => {
+            localStorage.clear();
+            sessionStorage.clear();
+            this.user = null;
+            this.router.navigate(['/']);
+            subscriber.next();
+            subscriber.complete();
+        });
     }
 }

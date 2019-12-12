@@ -30,6 +30,8 @@ import { EffectsModule } from '@ngrx/effects';
 import { SettingsEffects } from './services/settings/settings.effects';
 import { PlansEffects } from './services/plans/plans.effects';
 import { appReducers, appMetaReducers } from './app.reducers';
+import { AuthenticationEffects } from './services/authentication/authentication.effects';
+import { AppIndexComponent } from './components/app-index/app-index.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
     return new TranslateHttpLoader(http, './assets/i18n/');
@@ -40,7 +42,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     declarations: [
         AppComponent,
         AppViewComponent,
-
+        AppIndexComponent,
         PilotComponent,
         NavPilotComponent,
         LoginComponent,
@@ -65,7 +67,8 @@ export function HttpLoaderFactory(http: HttpClient) {
         StoreModule.forRoot(appReducers, { metaReducers: appMetaReducers }),
         EffectsModule.forRoot([
             SettingsEffects,
-            PlansEffects
+            PlansEffects,
+            AuthenticationEffects
         ]),
 
         TranslateModule.forRoot({

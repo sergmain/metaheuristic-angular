@@ -20,7 +20,11 @@
                             </ct-flex>
                         </ct-flex-item>
                         <ct-flex-item>
-                            <span *ngIf="batchFinished">Batch Finished </span>
+                            <ct-flex justify-content="space-between" align-items="center">
+                                <mat-icon class="mat-icon" style="transform: scale(1.25);" aria-hidden="true" *ngIf="batchFinished" (click)="hideBatchNotification()">
+                                    check_circle_outline
+                                </mat-icon>
+                            </ct-flex>
                         </ct-flex-item>
                         <ct-flex-item>
                             <ct-flex justify-content="flex-end" gap="9px" align-items="center">
@@ -66,15 +70,14 @@
                 <ct-flex justify-content="flex-start" align-items="flex-start" gap="9px">
                     <ct-flex-item flex="2">
                         <ct-section>
-                            <ct-section-header>
+                            <!-- <ct-section-header>
                                 <ct-section-header-row>
                                     <ct-heading>Metaheuristic</ct-heading>
                                 </ct-section-header-row>
-                            </ct-section-header>
+                            </ct-section-header> -->
                             <ct-section-body>
                                 <ct-section-body-row>
-                                    <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Aperiam, libero molestiae! Neque fugiat necessitatibus pariatur aliquid vel rerum ad sequi, sed beatae hic consequatur similique eveniet reiciendis sapiente soluta explicabo.</p>
-                                    <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Consectetur, quod! Aliquid nihil vero velit, id blanditiis odit amet dignissimos libero ullam quod quia illo voluptas repellendus magni maiores! Quia, quisquam?</p>
+                                    <div [innerHtml]="htmlContent"></div>
                                 </ct-section-body-row>
                             </ct-section-body>
                         </ct-section>

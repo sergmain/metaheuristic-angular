@@ -1,4 +1,4 @@
-import { environment } from "@src/environments/environment";
+import { environment } from '@src/environments/environment';
 
 export enum SettingsTheme {
     Dark = 'dark',
@@ -22,10 +22,10 @@ export const setOfLanguages: Set < SettingsLanguage > = new Set([
     SettingsLanguage.RU,
 ]);
 
-export const defaultSettings:Settings = {
+export const defaultSettings: Settings = {
     theme: SettingsTheme.Light,
     sidenav: true,
     sidenavButton: true,
     language: setOfLanguages.has(environment.language as SettingsLanguage) ?
     (environment.language as SettingsLanguage) : SettingsLanguage.EN
-}
+};

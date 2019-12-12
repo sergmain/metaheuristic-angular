@@ -3,7 +3,7 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { select, Store } from '@ngrx/store';
 import { of } from 'rxjs';
 import { concatMap, map, mergeMap, withLatestFrom } from 'rxjs/operators';
-import * as settingsAction from './settings.actions';
+import { getAll, getAllSuccess, setDarkTheme, setLightTheme, toggleLanguage, toggleSideNav, updated } from './settings.actions';
 import { SettingsService } from './settings.service';
 
 @Injectable()
@@ -14,39 +14,32 @@ export class SettingsEffects {
         private store: Store < any >
     ) {}
 
-    updated = createEffect(() =>
-        this.actions.pipe(
-            ofType(
-                settingsAction.setDarkTheme,
-                settingsAction.setLightTheme,
-                settingsAction.toggleLanguage,
-                settingsAction.toggleSideNav,
-            ),
+    updated = createEffect(() => this.actions.pipe(
+        ofType(
+            setDarkTheme,
+            setLightTheme,
+            toggleLanguage,
+            toggleSideNav,
+        ),
 
-            concatMap(action => of (action).pipe(
-                withLatestFrom(this.store.pipe(select((state) => state)))
-            )),
+        concatMap(action => of (action).pipe(
+            withLatestFrom(this.store.pipe(select(state => state)))
+        )),
 
-            mergeMap(([action, state]) => {
-                return this.settingsService.update(state.settings).pipe(
-                    map(state => ({ type: settingsAction.updated.type })),
-                );
-            })
-        )
-    );
+        mergeMap(([action, state]) => {
+            return this.settingsService
+                .update(state.settings)
+                .pipe(map(state => ({ type: updated.type })));
+        })
+    ));
 
-    getAll = createEffect(() =>
-        this.actions.pipe(
-            ofType(
-                settingsAction.getAll,
-            ),
+    getAll = createEffect(() => this.actions.pipe(
+        ofType(getAll),
 
-            mergeMap(() => {
-                return this.settingsService.getAll().pipe(
-                    map(state => ({ type: settingsAction.getAllSuccess.type, payload: state })),
-                );
-            })
-        )
-    );
-
+        mergeMap(() => {
+            return this.settingsService
+                .getAll()
+                .pipe(map(state => ({ type: getAllSuccess.type, payload: state })));
+        })
+    ));
 }

@@ -21,17 +21,17 @@ export class SettingsService {
     }
 
     update(newStorageData: any) {
-        return new Observable(sub => {
+        return new Observable(subscriber => {
             this.saveToLocalStore(newStorageData);
-            sub.next(this.getFromLocalStore());
-            sub.complete();
+            subscriber.next(this.getFromLocalStore());
+            subscriber.complete();
         });
     }
 
     getAll() {
-        return new Observable(sub => {
-            sub.next(this.getFromLocalStore());
-            sub.complete();
+        return new Observable(subscriber => {
+            subscriber.next(this.getFromLocalStore());
+            subscriber.complete();
         });
     }
 
