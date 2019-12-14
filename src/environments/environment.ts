@@ -8,22 +8,10 @@ export const environment: IEnvironment = {
     isSslRequired: false,
     batchInterval: 5 * 1000, // pause between requests in milliseconds, 0 means a disable of any requests
     language: 'RU',
-    brandingMsg: '<p><b>Проба ИИИ</b></p>' +
-        '<code>brandingMsg</code>' +
-        '<p>Lorem ipsum <b>dolor</b>, sit amet consectetur adipisicing elit. Aperiam, ' +
+    brandingMsg: '<p>Lorem ipsum <b>dolor</b>, sit amet consectetur adipisicing elit. Aperiam, ' +
         'libero molestiae! Neque fugiat necessitatibus pariatur aliquid vel rerum ad sequi, ' +
         'sed beatae hic consequatur similique eveniet reiciendis sapiente soluta explicabo.</p>',
-    brandingMsgIndex: '<p><b>Проба ИИИ</b></p>' +
-        '<code>brandingMsgIndex</code>' +
-        '<p>Lorem ipsum <b>dolor</b>, sit amet consectetur adipisicing elit. Aperiam, ' +
+    brandingMsgIndex: '<p>Lorem ipsum <b>dolor</b>, sit amet consectetur adipisicing elit. Aperiam, ' +
         'libero molestiae! Neque fugiat necessitatibus pariatur aliquid vel rerum ad sequi, ' +
         'sed beatae hic consequatur similique eveniet reiciendis sapiente soluta explicabo.</p>',
 };
-
-/*
- * For easier debugging in development mode, you can import the following file
- * to ignore zone related error stack frames such as `zone.run`, `zoneDelegate.invokeTask`.
- *
- * This import should be commented out in production mode because it will have a negative impact
- * on performance if an error is thrown.
- */
