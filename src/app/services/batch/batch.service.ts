@@ -34,9 +34,9 @@ export class BatchService {
         this.GET = (url: string, options: any = {}): Observable < any > => this.http.get(base(url), options);
         this.batchExexStatusComparer = new BatchExexStatusComparer([FINISHED_STATE, ERROR_STATE]);
 
-        this.batchExexStatusComparer.notification.subscribe(s => {
-            this.finishedNotification.next(s)
-        })
+        this.batchExexStatusComparer.notification.subscribe((s: boolean) => {
+            this.finishedNotification.next(s);
+        });
     }
 
     batches = {
@@ -97,7 +97,7 @@ export class BatchService {
                 return false;
             }
             base.batch.execStatuses().subscribe((content: response.batch.ExecStatuses) => {
-                base.batchExexStatusComparer.takeApart(content.statuses)
+                base.batchExexStatusComparer.takeApart(content.statuses);
                 if (base.intervalStarted) {
                     setTimeout(() => { fn(); }, interval);
                 }

@@ -40,9 +40,9 @@ export class BatchExexStatusComparer {
     }
 
     private checkStatus(list: BatchExecStatus[]) {
-        let exist = false;
-        list.forEach(elem => {
-            const index: number = this.statuses.findIndex(i => i === elem.state) + 1;
+        let exist: boolean = false;
+        list.forEach( (elem: BatchExecStatus) => {
+            const index: number = this.statuses.findIndex((i: number) => i === elem.state) + 1;
             if (index) {
                 exist = true;
             }

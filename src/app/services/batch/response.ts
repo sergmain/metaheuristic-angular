@@ -24,6 +24,7 @@ export namespace response {
 
         }
         export interface ExecStatuses extends DefaultResponse {
+            ts: string;
             statuses: BatchExecStatus[];
         }
     }
