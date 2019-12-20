@@ -106,6 +106,7 @@ export class AuthenticationService {
             }
 
             if (passedTime > userLifeTime) {
+                localStorage.removeItem('__last')
                 return true;
             } else {
                 localStorage.setItem('__last', now.toString());
