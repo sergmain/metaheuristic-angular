@@ -71,9 +71,10 @@ export class AuthenticationService {
         return new Observable(subscriber => {
             this.http
                 .post(url, { username, password }, { headers })
-                .subscribe((response: response.User) => {
-                    if (response.username) {
-                        const data = Object.assign({}, response, { token });
+                .subscribe((resultUser: response.User) => {
+                    console.log('username: ' + (resultUser ? resultUser.username : 'resultUser is null'));
+                    if (resultUser.username) {
+                        const data: User = Object.assign({}, resultUser, { token });
                         this.setLocalStorageData(data);
                         subscriber.next(data);
                     } else {
