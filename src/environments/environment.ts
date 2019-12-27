@@ -8,6 +8,7 @@ export const environment: IEnvironment = {
     isSslRequired: false,
     batchInterval: 5 * 1000, // pause between requests in milliseconds, 0 means a disable of any requests
     language: 'RU',
+    brandingTitle: 'Branding Title',
     brandingMsg: '<p>Lorem ipsum <b>dolor</b>, sit amet consectetur adipisicing elit. Aperiam, ' +
         'libero molestiae! Neque fugiat necessitatibus pariatur aliquid vel rerum ad sequi, ' +
         'sed beatae hic consequatur similique eveniet reiciendis sapiente soluta explicabo.</p>',

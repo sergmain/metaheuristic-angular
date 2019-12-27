@@ -8,4 +8,5 @@ export interface IEnvironment {
     language: string;
     brandingMsg: string;
     brandingMsgIndex: string;
+    brandingTitle: string;
 }

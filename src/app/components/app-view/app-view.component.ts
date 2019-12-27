@@ -29,6 +29,7 @@ export class AppViewComponent implements OnInit, OnDestroy {
         current ? : SettingsLanguage;
     } = {};
     batchFinished: boolean = false;
+    brandingTitle: string = environment.brandingTitle;
 
     @ViewChild(MatSidenav, { static: false }) sidenav: MatSidenav;
     @ViewChild('matSlideToggleTheme', { static: false }) matSlideToggleTheme: MatSlideToggle;
