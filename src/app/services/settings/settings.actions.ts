@@ -6,6 +6,8 @@ function named(name: string) { return `[Settings] ${name}`; }
 export const getAll = createAction(named('Get All'));
 export const getAllSuccess = createAction(named('Get All Success'), props < { payload: Settings } > ());
 
+
+export const setDefault = createAction(named('Set Default'));
 export const setDarkTheme = createAction(named('Set Dark Theme'));
 export const setLightTheme = createAction(named('Set Light Theme'));
 

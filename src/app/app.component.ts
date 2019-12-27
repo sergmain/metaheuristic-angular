@@ -8,6 +8,7 @@ import * as authenticationActions from './services/authentication/authentication
 
 import { BatchService } from './services/batch/batch.service';
 import { environment } from '@src/environments/environment';
+import { SettingsTheme } from './services/settings/Settings';
 
 
 @Component({
@@ -17,6 +18,10 @@ import { environment } from '@src/environments/environment';
 })
 export class AppComponent {
     title = 'metaheuristic-app';
+    theme = {
+        dark: false,
+        light: true
+    };
     constructor(
         private settingsService: SettingsService,
         private translate: TranslateService,
@@ -30,6 +35,14 @@ export class AppComponent {
                 this.batchService.startIntervalRequset(environment.batchInterval ? environment.batchInterval : 15000);
             } else {
                 this.batchService.stopIntervalRequset();
+            }
+
+            if (state.settings) {
+                this.theme.dark = (state.settings.theme === SettingsTheme.Dark) ? true : false;
+                this.theme.light = (state.settings.theme === SettingsTheme.Light) ? true : false;
+            } else {
+                this.theme.dark = false;
+                this.theme.light = true;
             }
         });
         this.store.dispatch(authenticationActions.initional());

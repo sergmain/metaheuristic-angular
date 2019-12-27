@@ -8,6 +8,7 @@ import { Observable } from 'rxjs';
 import { Authority, response } from './response';
 import { Role } from './Role';
 import { User } from './User';
+import * as settingsActions from '@src/app/services/settings/settings.actions';
 
 @Injectable({
     providedIn: 'root'
@@ -107,7 +108,7 @@ export class AuthenticationService {
             }
 
             if (passedTime > userLifeTime) {
-                localStorage.removeItem('__last')
+                localStorage.removeItem('__last');
                 return true;
             } else {
                 localStorage.setItem('__last', now.toString());
@@ -119,6 +120,7 @@ export class AuthenticationService {
     }
 
     logout() {
+        this.store.dispatch(settingsActions.setDefault());
         return new Observable(subscriber => {
             localStorage.clear();
             sessionStorage.clear();
