@@ -40,7 +40,8 @@ export class BatchService {
     }
 
     batches = {
-        get: (page: number): Observable < response.batches.Get > => this.GET(`/batches?page=${page}`),
+        get: (page: number, filterBatches: boolean): Observable < response.batches.Get > =>
+            this.GET(`/batches?page=${page}${ filterBatches ? '&filterBatches=true' : '' }`),
 
         part: (page: number): Observable < any > =>
             this.POST(`/batches-part`)

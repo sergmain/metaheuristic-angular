@@ -30,6 +30,7 @@
 	"batch.isBatchConsistent.Preparing": "Preparing",
 	"batch.isBatchConsistent.false": "NO",
 	"batch.isBatchConsistent.true": "OK",
+	"batch.onlyMyBatches":"Only My Batches",
 	"nav-launchpad.Accounts": "Accounts",
 	"nav-launchpad.Atlas": "Atlas",
 	"nav-launchpad.Batch": "Batch",

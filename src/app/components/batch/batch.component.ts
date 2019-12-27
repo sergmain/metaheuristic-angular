@@ -1,5 +1,5 @@
 import { HttpResponse } from '@angular/common/http';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { MatButton, MatDialog, MatTableDataSource } from '@angular/material';
 import { ConfirmationDialogMethod, QuestionData } from '@app/components/app-dialog-confirmation/app-dialog-confirmation.component';
 import { LoadStates } from '@app/enums/LoadStates';
@@ -12,6 +12,10 @@ import { CtTableComponent } from '@src/app/ct/ct-table/ct-table.component';
 import { Role } from '@src/app/services/authentication';
 import { AuthenticationService } from '@src/app/services/authentication/authentication.service';
 import * as fileSaver from 'file-saver';
+import { Store } from '@ngrx/store';
+import { IAppState } from '@src/app/app.reducers';
+import { toggleFilterBatches } from '@src/app/services/settings/settings.actions';
+import { Subscription } from 'rxjs';
 
 
 @Component({
@@ -20,7 +24,9 @@ import * as fileSaver from 'file-saver';
     styleUrls: ['./batch.component.scss']
 })
 
-export class BatchComponent implements OnInit {
+export class BatchComponent implements OnInit, OnDestroy {
+
+    storeSubscriber: Subscription;
     states = LoadStates;
     currentStates = new Set();
 
@@ -33,6 +39,8 @@ export class BatchComponent implements OnInit {
     fileSystemName: string;
     classpathFileName: string;
 
+    filterBatchesState: boolean;
+
     @ViewChild('nextTable', { static: true }) nextTable: MatButton;
     @ViewChild('prevTable', { static: true }) prevTable: MatButton;
     @ViewChild('table', { static: true }) table: CtTableComponent;
@@ -42,16 +50,33 @@ export class BatchComponent implements OnInit {
         private dialog: MatDialog,
         private batchService: BatchService,
         private authenticationService: AuthenticationService,
-    ) {}
+        private store: Store < IAppState >
+    ) {
+        this.storeSubscriber = this.store.subscribe((state: IAppState) => {
+            this.filterBatchesState = state.settings.filterBatches;
+        });
+    }
 
     ngOnInit() {
         this.currentStates.add(this.states.firstLoading);
         this.updateTable(0);
     }
 
+    ngOnDestroy() {
+        if (this.storeSubscriber) {
+            this.storeSubscriber.unsubscribe();
+        }
+    }
+
+    toggleFilterBatches() {
+        this.store.dispatch(toggleFilterBatches({ payload: !this.filterBatchesState }));
+        this.updateTable(0);
+    }
+
     updateTable(page: number) {
+        this.table.wait()
         this.currentStates.add(this.states.loading);
-        this.batchService.batches.get(page)
+        this.batchService.batches.get(page, this.filterBatchesState)
             .subscribe(
                 (response: response.batches.Get) => {
                     // bug 704

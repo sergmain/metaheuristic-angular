@@ -30,6 +30,7 @@
 	"batch.isBatchConsistent.Preparing": "Подготовка",
 	"batch.isBatchConsistent.false": "Нет",
 	"batch.isBatchConsistent.true": "Да",
+	"batch.onlyMyBatches":"Только мои пакеты",
 	"nav-launchpad.Accounts": "Аккаунты",
 	"nav-launchpad.Atlas": "Атлас",
 	"nav-launchpad.Batch": "Пакеты",

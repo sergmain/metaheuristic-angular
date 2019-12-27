@@ -3,7 +3,16 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { select, Store } from '@ngrx/store';
 import { of } from 'rxjs';
 import { concatMap, map, mergeMap, withLatestFrom } from 'rxjs/operators';
-import { getAll, getAllSuccess, setDarkTheme, setLightTheme, toggleLanguage, toggleSideNav, updated } from './settings.actions';
+import {
+    getAll,
+    getAllSuccess,
+    setDarkTheme,
+    setLightTheme,
+    toggleLanguage,
+    toggleSideNav,
+    updated,
+    toggleFilterBatches
+} from './settings.actions';
 import { SettingsService } from './settings.service';
 
 @Injectable()
@@ -20,6 +29,7 @@ export class SettingsEffects {
             setLightTheme,
             toggleLanguage,
             toggleSideNav,
+            toggleFilterBatches
         ),
 
         concatMap(action => of (action).pipe(
