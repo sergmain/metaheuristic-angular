@@ -1,14 +1,12 @@
 import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { TranslateService } from '@ngx-translate/core';
-import { SettingsService } from '@src/app/services/settings/settings.service';
-import { IAppState } from './app.reducers';
-import * as settingsActions from './services/settings/settings.actions';
-import * as authenticationActions from './services/authentication/authentication.action';
-
-import { BatchService } from './services/batch/batch.service';
 import { environment } from '@src/environments/environment';
-import { SettingsTheme } from './services/settings/Settings';
+import { IAppState } from './app.reducers';
+import * as authenticationActions from './services/authentication/authentication.action';
+import { BatchService } from './services/batch/batch.service';
+import * as settingsActions from './services/settings/settings.actions';
+
 
 
 @Component({
@@ -18,12 +16,8 @@ import { SettingsTheme } from './services/settings/Settings';
 })
 export class AppComponent {
     title = 'metaheuristic-app';
-    theme = {
-        dark: false,
-        light: true
-    };
+
     constructor(
-        private settingsService: SettingsService,
         private translate: TranslateService,
         private store: Store < IAppState > ,
         private batchService: BatchService
@@ -35,14 +29,6 @@ export class AppComponent {
                 this.batchService.startIntervalRequset(environment.batchInterval ? environment.batchInterval : 15000);
             } else {
                 this.batchService.stopIntervalRequset();
-            }
-
-            if (state.settings) {
-                this.theme.dark = (state.settings.theme === SettingsTheme.Dark) ? true : false;
-                this.theme.light = (state.settings.theme === SettingsTheme.Light) ? true : false;
-            } else {
-                this.theme.dark = false;
-                this.theme.light = true;
             }
         });
         this.store.dispatch(authenticationActions.initional());

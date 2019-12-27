@@ -14,9 +14,8 @@ export class SettingsService {
     constructor(
         private store: Store < IAppState >
     ) {
-        // this.saveToLocalStore(this.storageDefaultData);
         this.store.subscribe((state: IAppState) => {
-
+            this.updateTheme(state);
         });
     }
 
@@ -26,6 +25,29 @@ export class SettingsService {
             subscriber.next(this.getFromLocalStore());
             subscriber.complete();
         });
+    }
+
+    private updateTheme(state: IAppState) {
+        const body: HTMLElement = document.querySelector('body');
+        let theme = null;
+
+        if (state.settings) {
+            theme = state.settings.theme;
+        }
+
+        body.classList.remove('dark-theme');
+        body.classList.remove('light-theme');
+        switch (theme) {
+            case SettingsTheme.Dark:
+                body.classList.add('dark-theme');
+                break;
+            case SettingsTheme.Light:
+                body.classList.add('light-theme');
+                break;
+            default:
+                body.classList.add('light-theme');
+                break;
+        }
     }
 
     getAll() {
