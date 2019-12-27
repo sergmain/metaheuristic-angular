@@ -14,8 +14,9 @@
                         </ct-flex-item>
                         <ct-flex-item>
                             <button mat-stroked-button (click)="toggleFilterBatches()" [disabled]="currentStates.has(states.loading) || currentStates.has(states.firstLoading)">
-                                <span [style.opacity]="filterBatchesState ? '1' : '0.2'" style="vertical-align: baseline;">✓</span>
-                                {{ 'batch.onlyMyBatches' | translate }}
+								<span *ngIf="filterBatchesState" style="vertical-align: baseline;">✓&nbsp;&nbsp;</span>
+                                <span *ngIf="!filterBatchesState" style="vertical-align: baseline;">✗&nbsp;&nbsp;</span>
+                                <span>{{ 'batch.onlyMyBatches' | translate }}</span>
                             </button>
                         </ct-flex-item>
                     </ct-flex>
