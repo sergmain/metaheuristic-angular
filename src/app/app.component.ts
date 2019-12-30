@@ -3,7 +3,7 @@ import { Store } from '@ngrx/store';
 import { TranslateService } from '@ngx-translate/core';
 import { environment } from '@src/environments/environment';
 import { IAppState } from './app.reducers';
-import * as authenticationActions from './services/authentication/authentication.action';
+import * as authenticationActions from './services/authentication/authentication.actions';
 import { BatchService } from './services/batch/batch.service';
 import * as settingsActions from './services/settings/settings.actions';
 

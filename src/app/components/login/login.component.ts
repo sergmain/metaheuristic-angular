@@ -3,7 +3,7 @@ import { AuthenticationService } from '@app/services/authentication/authenticati
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { IAppState } from '@src/app/app.reducers';
-import * as authenticationAction from '@src/app/services/authentication/authentication.action';
+import * as authenticationAction from '@src/app/services/authentication/authentication.actions';
 @Component({
     selector: 'login-view',
     templateUrl: './login.component.html',

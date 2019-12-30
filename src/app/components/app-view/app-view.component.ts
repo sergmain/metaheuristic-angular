@@ -9,7 +9,7 @@ import { IAppState } from '@src/app/app.reducers';
 import * as settingsAction from '@src/app/services/settings/settings.actions';
 import { BatchService } from '@src/app/services/batch/batch.service';
 import { AudioNotification } from '@src/app/services/audioNotification/audioNotification.service';
-import * as authenticationAction from '@src/app/services/authentication/authentication.action';
+import * as authenticationAction from '@src/app/services/authentication/authentication.actions';
 import { SafeHtml, DomSanitizer } from '@angular/platform-browser';
 import { environment } from '@src/environments/environment';
 

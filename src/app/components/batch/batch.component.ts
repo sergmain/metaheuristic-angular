@@ -1,36 +1,31 @@
 import { HttpResponse } from '@angular/common/http';
-import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatButton, MatDialog, MatTableDataSource } from '@angular/material';
 import { ConfirmationDialogMethod, QuestionData } from '@app/components/app-dialog-confirmation/app-dialog-confirmation.component';
-import { LoadStates } from '@app/enums/LoadStates';
-import { Batch } from '@app/services/batch/Bacth';
 import { BatchService } from '@app/services/batch/batch.service';
-import { response } from '@app/services/batch/response';
 import { marker } from '@biesbjerg/ngx-translate-extract-marker';
-import { TranslateService } from '@ngx-translate/core';
-import { CtTableComponent } from '@src/app/ct/ct-table/ct-table.component';
-import { Role } from '@src/app/services/authentication';
-import { AuthenticationService } from '@src/app/services/authentication/authentication.service';
-import * as fileSaver from 'file-saver';
 import { Store } from '@ngrx/store';
+import { TranslateService } from '@ngx-translate/core';
 import { IAppState } from '@src/app/app.reducers';
+import { CtTableComponent } from '@src/app/ct/ct-table/ct-table.component';
+import { AuthenticationService } from '@src/app/services/authentication/authentication.service';
+import { Batch } from '@src/app/services/batch/Batch';
+import { getBatches } from '@src/app/services/batch/batch.actions';
+import { BatchesState } from '@src/app/services/batch/BatchesState';
 import { toggleFilterBatches } from '@src/app/services/settings/settings.actions';
+import * as fileSaver from 'file-saver';
 import { Subscription } from 'rxjs';
-
+import { Role } from '@src/app/services/authentication';
 
 @Component({
     selector: 'batch',
     templateUrl: './batch.component.html',
     styleUrls: ['./batch.component.scss']
 })
-
 export class BatchComponent implements OnInit, OnDestroy {
-
     storeSubscriber: Subscription;
-    states = LoadStates;
-    currentStates = new Set();
+    batches: BatchesState;
 
-    response: response.batches.Get;
     dataSource = new MatTableDataSource < Batch > ([]);
     columnsToDisplay = ['id', 'createdOn', 'isBatchConsistent', 'planCode', 'execState', 'bts'];
 
@@ -39,7 +34,7 @@ export class BatchComponent implements OnInit, OnDestroy {
     fileSystemName: string;
     classpathFileName: string;
 
-    filterBatchesState: boolean;
+    isFilterBatches: boolean;
 
     @ViewChild('nextTable', { static: true }) nextTable: MatButton;
     @ViewChild('prevTable', { static: true }) prevTable: MatButton;
@@ -52,14 +47,20 @@ export class BatchComponent implements OnInit, OnDestroy {
         private authenticationService: AuthenticationService,
         private store: Store < IAppState >
     ) {
-        this.storeSubscriber = this.store.subscribe((state: IAppState) => {
-            this.filterBatchesState = state.settings.filterBatches;
-        });
+
     }
 
     ngOnInit() {
-        this.currentStates.add(this.states.firstLoading);
-        this.updateTable(0);
+        this.storeSubscriber = this.store.subscribe((state: IAppState) => {
+            this.isFilterBatches = state.settings.filterBatches;
+            this.batches = state.batches;
+            this.updateTable();
+        });
+
+        this.store.dispatch(getBatches({
+            page: 0,
+            filterBatches: this.isFilterBatches
+        }));
     }
 
     ngOnDestroy() {
@@ -69,33 +70,25 @@ export class BatchComponent implements OnInit, OnDestroy {
     }
 
     toggleFilterBatches() {
-        this.store.dispatch(toggleFilterBatches({ payload: !this.filterBatchesState }));
-        this.updateTable(0);
+        this.store.dispatch(toggleFilterBatches({ payload: !this.isFilterBatches }));
+        this.store.dispatch(getBatches({
+            page: 0,
+            filterBatches: this.isFilterBatches
+        }));
     }
 
-    updateTable(page: number) {
-        this.table.wait()
-        this.currentStates.add(this.states.loading);
-        this.batchService.batches.get(page, this.filterBatchesState)
-            .subscribe(
-                (response: response.batches.Get) => {
-                    // bug 704
-                    if (this.authenticationService.getUserRole().has(Role.Operator)) {
-                        this.columnsToDisplay = ['id', 'createdOn', 'planCode', 'execState', 'bts'];
-                    } else {
-                        this.columnsToDisplay = ['id', 'createdOn', 'isBatchConsistent', 'planCode', 'execState', 'bts'];
-                    }
-
-                    this.response = response;
-                    this.dataSource = new MatTableDataSource(response.batches.content || []);
-                    this.table.show();
-
-                    this.currentStates.delete(this.states.firstLoading);
-                    this.currentStates.delete(this.states.loading);
-                    this.prevTable.disabled = this.response.batches.first;
-                    this.nextTable.disabled = this.response.batches.last;
-                }
-            );
+    updateTable() {
+        this.batches.isLoading !== true ? this.table.show() : this.table.wait();
+        if (this.batches.response) {
+            if (this.authenticationService.getUserRole().has(Role.Operator)) {
+                this.columnsToDisplay = ['id', 'createdOn', 'planCode', 'execState', 'bts'];
+            } else {
+                this.columnsToDisplay = ['id', 'createdOn', 'isBatchConsistent', 'planCode', 'execState', 'bts'];
+            }
+            this.dataSource = new MatTableDataSource(this.batches.response.batches.content || []);
+            this.prevTable.disabled = this.batches.response.batches.first;
+            this.nextTable.disabled = this.batches.response.batches.last;
+        }
     }
 
     downloadFile(batchId: string) {
@@ -111,13 +104,10 @@ export class BatchComponent implements OnInit, OnDestroy {
             });
     }
 
-
     private _saveFile(data: any, filename ? : string) {
         const blob: Blob = new Blob([data], { type: 'application/octet-stream' });
         fileSaver.saveAs(blob, filename);
     }
-
-
 
     @ConfirmationDialogMethod({
         question: (batch: Batch): QuestionData => {
@@ -140,13 +130,19 @@ export class BatchComponent implements OnInit, OnDestroy {
         this.table.wait();
         this.prevTable.disabled = true;
         this.nextTable.disabled = true;
-        this.updateTable(this.response.batches.number + 1);
+        this.store.dispatch(getBatches({
+            page: this.batches.response.batches.number + 1,
+            filterBatches: this.isFilterBatches
+        }));
     }
 
     prev() {
         this.table.wait();
         this.prevTable.disabled = true;
         this.nextTable.disabled = true;
-        this.updateTable(this.response.batches.number - 1);
+        this.store.dispatch(getBatches({
+            page: this.batches.response.batches.number - 1,
+            filterBatches: this.isFilterBatches
+        }));
     }
 }

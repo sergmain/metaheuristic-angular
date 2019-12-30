@@ -8,14 +8,14 @@
                 <ct-flex-item>
                     <ct-flex justify-content="flex-end" align-items="center" gap="unit(1)">
                         <ct-flex-item>
-                            <button mat-flat-button="mat-flat-button" color="primary" [disabled]="currentStates.has(states.loading) || currentStates.has(states.firstLoading)" routerLink="/launchpad/batch/add">
+                            <button mat-flat-button="mat-flat-button" color="primary" [disabled]="false" routerLink="/launchpad/batch/add">
                                 {{ 'batch.Upload files and start processing' | translate }}
                             </button>
                         </ct-flex-item>
                         <ct-flex-item>
-                            <button mat-stroked-button (click)="toggleFilterBatches()" [disabled]="currentStates.has(states.loading) || currentStates.has(states.firstLoading)">
-								<span *ngIf="filterBatchesState" style="vertical-align: baseline;">✓&nbsp;&nbsp;</span>
-                                <span *ngIf="!filterBatchesState" style="vertical-align: baseline;">✗&nbsp;&nbsp;</span>
+                            <button mat-stroked-button (click)="toggleFilterBatches()" [disabled]="false">
+								<span *ngIf="isFilterBatches" style="vertical-align: baseline;">✓&nbsp;&nbsp;</span>
+                                <span *ngIf="!isFilterBatches" style="vertical-align: baseline;">✗&nbsp;&nbsp;</span>
                                 <span>{{ 'batch.onlyMyBatches' | translate }}</span>
                             </button>
                         </ct-flex-item>
@@ -81,9 +81,9 @@
                 </table>
             </ct-table>
         </ct-section-body-row>
-        <ct-section-body-row *ngIf="currentStates.has(states.firstLoading)">
+        <!-- <ct-section-body-row *ngIf="">
             <mat-progress-bar mode="indeterminate"></mat-progress-bar>
-        </ct-section-body-row>
+        </ct-section-body-row> -->
     </ct-section-body>
     <ct-section-footer>
         <ct-section-footer-row>
@@ -103,7 +103,7 @@
                     </ct-flex>
                 </ct-flex-item>
                 <ct-flex-item>
-                    <button mat-flat-button="mat-flat-button" color="primary" [disabled]="currentStates.has(states.loading) || currentStates.has(states.firstLoading)" routerLink="/launchpad/batch/add"> {{ 'batch.Upload files and start processing' | translate }}</button>
+                    <button mat-flat-button="mat-flat-button" color="primary" [disabled]="false" routerLink="/launchpad/batch/add"> {{ 'batch.Upload files and start processing' | translate }}</button>
                 </ct-flex-item>
             </ct-flex>
         </ct-section-footer-row>

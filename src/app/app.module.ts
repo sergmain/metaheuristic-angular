@@ -32,6 +32,7 @@ import { PlansEffects } from './services/plans/plans.effects';
 import { appReducers, appMetaReducers } from './app.reducers';
 import { AuthenticationEffects } from './services/authentication/authentication.effects';
 import { AppIndexComponent } from './components/app-index/app-index.component';
+import { BatchEffects } from './services/batch/batch.effects';
 
 export function HttpLoaderFactory(http: HttpClient) {
     return new TranslateHttpLoader(http, './assets/i18n/');
@@ -68,7 +69,8 @@ export function HttpLoaderFactory(http: HttpClient) {
         EffectsModule.forRoot([
             SettingsEffects,
             PlansEffects,
-            AuthenticationEffects
+            AuthenticationEffects,
+            BatchEffects
         ]),
 
         TranslateModule.forRoot({

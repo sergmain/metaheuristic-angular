@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Store, select } from '@ngrx/store';
 import { map, mergeMap, merge, concatMap, withLatestFrom } from 'rxjs/operators';
-import { initional, initionalComplete, logout, logoutComplete, login, loginComplete } from './authentication.action';
+import { initional, initionalComplete, logout, logoutComplete, login, loginComplete } from './authentication.actions';
 import { AuthenticationService } from './authentication.service';
 import { of } from 'rxjs';
 

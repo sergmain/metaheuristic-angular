@@ -2,32 +2,31 @@ import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { generateFormData } from '@src/app/helpers/generateFormData';
 import { environment } from '@src/environments/environment';
-import { BehaviorSubject, forkJoin, Observable, timer } from 'rxjs';
-import { repeatWhen } from 'rxjs/operators';
-import { Batch } from './Bacth';
-import { response } from './response';
-import { BatchExecStatus } from './BatchExecStatus';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { AuthenticationService } from '../authentication';
 import { BatchExexStatusComparer } from './BatchExexStatusComparer';
-
+import { response } from './response';
+import { Batch } from './Batch';
+import { BatchExecStatus } from './BatchExecStatus';
+import { Store } from '@ngrx/store';
+import { IAppState } from '@src/app/app.reducers';
+import { newhExecStatus } from './batch.actions';
 
 const FINISHED_STATE: number = 4;
 const ERROR_STATE: number = -1;
 
+export interface GetBatchesParams {
+    page: number;
+    filterBatches: boolean;
+}
+
 @Injectable({ providedIn: 'root' })
 export class BatchService {
 
-    private intervalStarted: boolean = false;
-    batchExexStatusComparer: BatchExexStatusComparer;
-
-    POST: any;
-    GET: any;
-
-    finishedNotification: BehaviorSubject < boolean > = new BehaviorSubject(false);
-
     constructor(
         private http: HttpClient,
-        private authenticationService: AuthenticationService
+        private authenticationService: AuthenticationService,
+        private store: Store < IAppState >
     ) {
         const base: any = (url: string): string => `${environment.baseUrl}launchpad/batch${url}`;
         this.POST = (url: string, data: any): Observable < any > => this.http.post(base(url), data);
@@ -39,9 +38,17 @@ export class BatchService {
         });
     }
 
+    private intervalStarted: boolean = false;
+    batchExexStatusComparer: BatchExexStatusComparer;
+
+    POST: any;
+    GET: any;
+
+    finishedNotification: BehaviorSubject < boolean > = new BehaviorSubject(false);
+
     batches = {
-        get: (page: number, filterBatches: boolean): Observable < response.batches.Get > =>
-            this.GET(`/batches?page=${page}${ filterBatches ? '&filterBatches=true' : '' }`),
+        get: (params: GetBatchesParams): Observable < response.batches.Get > =>
+            this.GET(`/batches?page=${params.page}${ params.filterBatches ? '&filterBatches=true' : '' }`),
 
         part: (page: number): Observable < any > =>
             this.POST(`/batches-part`)
@@ -65,6 +72,16 @@ export class BatchService {
 
         execStatuses: (): Observable < response.batch.ExecStatuses > => this.GET(`/batch-exec-statuses`)
     };
+
+    static updateBatchExecStatus(batches: Batch[], statuses: BatchExecStatus[]) {
+        statuses.forEach(status => {
+            batches
+                .filter(batch => batch.batch.id === status.id)
+                .forEach(batch => {
+                    return batch.execState = status.state;
+                });
+        });
+    }
 
     downloadFile(batchId: string): Observable < HttpResponse < Blob >> {
         let headers: HttpHeaders = new HttpHeaders();
@@ -102,6 +119,7 @@ export class BatchService {
                 if (base.intervalStarted) {
                     setTimeout(() => { fn(); }, interval);
                 }
+                base.store.dispatch(newhExecStatus({ payload: content.statuses }));
             });
         }
     }

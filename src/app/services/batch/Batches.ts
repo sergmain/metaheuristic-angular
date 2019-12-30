@@ -1,6 +1,6 @@
 import { Pageable } from '@app/models/Pageable';
 import { Sort } from '@app/models/Sort';
-import { Batch } from './Bacth';
+import { Batch } from './Batch';
 export interface Batches {
     content ? : Batch[] | null;
     pageable: Pageable;

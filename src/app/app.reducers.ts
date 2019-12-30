@@ -6,16 +6,21 @@ import { settingsReducer } from './services/settings/settings.reducer';
 import { environment } from '@src/environments/environment';
 import { authenticationReducer } from '@src/app/services/authentication/authentication.reducer';
 import { User } from './services/authentication';
+import { BatchesState } from './services/batch/BatchesState';
+import { batchReducer } from './services/batch/batch.reducer';
+
 export interface IAppState {
     settings: Settings;
     plans: IPlansState;
     user: User;
+    batches: BatchesState;
 }
 
 export const appReducers: ActionReducerMap < IAppState > = {
     settings: settingsReducer,
     plans: plansReducer,
-    user: authenticationReducer
+    user: authenticationReducer,
+    batches: batchReducer
 };
 
 export function debug(reducer: ActionReducer < any > ): ActionReducer < any > {

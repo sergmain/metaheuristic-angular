@@ -6,7 +6,7 @@ import {
     logoutComplete,
     login,
     loginComplete
-} from './authentication.action';
+} from './authentication.actions';
 import { User } from './User';
 
 
