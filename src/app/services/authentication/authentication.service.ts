@@ -17,6 +17,7 @@ import * as settingsActions from '@src/app/services/settings/settings.actions';
 export class AuthenticationService {
 
     localStorageName = 'authenticationService';
+    userLifeTimeExpiredName = '__last';
     user: User;
 
     constructor(
@@ -98,20 +99,20 @@ export class AuthenticationService {
     userLifeTimeExpired(): boolean {
         if (environment.userLifeTime) {
             const userLifeTime: number = environment.userLifeTime;
-            const last: number = parseInt(localStorage.getItem('__last'), 10) || 0;
+            const last: number = parseInt(localStorage.getItem(this.userLifeTimeExpiredName), 10) || 0;
             const now: number = Date.now();
             const passedTime: number = now - last;
 
             if (last === 0) {
-                localStorage.setItem('__last', now.toString());
+                localStorage.setItem(this.userLifeTimeExpiredName, now.toString());
                 return false;
             }
 
             if (passedTime > userLifeTime) {
-                localStorage.removeItem('__last');
+                localStorage.removeItem(this.userLifeTimeExpiredName);
                 return true;
             } else {
-                localStorage.setItem('__last', now.toString());
+                localStorage.setItem(this.userLifeTimeExpiredName, now.toString());
                 return false;
             }
         } else {
@@ -122,7 +123,8 @@ export class AuthenticationService {
     logout() {
         this.store.dispatch(settingsActions.setDefault());
         return new Observable(subscriber => {
-            localStorage.clear();
+            localStorage.removeItem(this.localStorageName);
+            localStorage.removeItem(this.userLifeTimeExpiredName);
             sessionStorage.clear();
             this.user = null;
             this.router.navigate(['/']);

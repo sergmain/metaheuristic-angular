@@ -3,7 +3,6 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { IAppState } from '../../app.reducers';
 import { defaultSettings, Settings, SettingsTheme } from './Settings';
-import * as action from './settings.actions';
 
 @Injectable({ providedIn: 'root' })
 export class SettingsService {
@@ -15,6 +14,9 @@ export class SettingsService {
         private store: Store < IAppState >
     ) {
         this.store.subscribe((state: IAppState) => {
+            if (state.user && state.user.username) {
+                this.localStorageName = state.user.username + ':settingsService';
+            }
             this.updateTheme(state);
         });
     }

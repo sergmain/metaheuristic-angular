@@ -1,10 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { Store, select } from '@ngrx/store';
-import { map, mergeMap, merge, concatMap, withLatestFrom } from 'rxjs/operators';
-import { initional, initionalComplete, logout, logoutComplete, login, loginComplete } from './authentication.actions';
-import { AuthenticationService } from './authentication.service';
+import { select, Store } from '@ngrx/store';
+import * as settingsActions from '@src/app/services/settings/settings.actions';
 import { of } from 'rxjs';
+import { concatMap, map, mergeMap, withLatestFrom } from 'rxjs/operators';
+import { initional, initionalComplete, login, loginComplete, logout, logoutComplete } from './authentication.actions';
+import { AuthenticationService } from './authentication.service';
+
 
 @Injectable()
 export class AuthenticationEffects {
@@ -43,7 +45,12 @@ export class AuthenticationEffects {
             return this.authenticationService
                 .login(action.username, action.password)
                 .pipe(map(state => ({ type: loginComplete.type, payload: state })));
+
         })
     ));
 
+    loginComplete = createEffect(() => this.actions.pipe(
+        ofType(loginComplete),
+        map(state => ({ type: settingsActions.getAll.type }))
+    ));
 }
