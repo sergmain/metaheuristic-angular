@@ -62,6 +62,7 @@ export class PlansService {
         addCommit: (planId: string | number, poolCode: string, inputResourceParams: string): Observable < any > =>
             this.POST(`/workbook-add-commit/`, fd({ planId, poolCode, inputResourceParams })),
 
+        // For deletion
         create: (planId: string | number, inputResourceParam: string): Observable < any > =>
             this.POST(`/workbook-create`, fd({ planId, inputResourceParam })),
 

@@ -1,0 +1,25 @@
+issue-1101
+удалить PlansService.workbook.create
+урл /workbook-create больше не существует
+
+issue-1102
+удалить inputResourceParams из PlansService.workbook.planCodeWorkbookAddCommit и PlansService.workbook.addCommit
+данный параметр больше не используется. соответственно удалить его и из веб-форм
+
+issue-1103
+мигрировать на нову верси mh 4.x
+
+- везде заменить Plan на SourceCode
+- везде заменить Workbook на ExecContext
+- поле Plan.code теперь SourceCode.uid
+- поле Plan.poolCode теперь SourceCode.poolCode
+  есть сервер стал неправильно обрабоатывать параметр variable то сообщмть, чтобы было пофиксено на стороне сервера
+- везде заменить поле planId на sourceCodeId
+- везде заменить поле workbookId на execContextId
+- поле Workbook.execState теперь ExecContext.state
+
+заменить во всех урл:
+- заменить plan на source-code
+- заменить workbook на exec-context
+
+
