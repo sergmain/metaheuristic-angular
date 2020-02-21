@@ -7,19 +7,25 @@ issue-1102
 данный параметр больше не используется. соответственно удалить его и из веб-форм
 
 issue-1103
-мигрировать на нову верси mh 4.x
+мигрировать на новую версию mh 4.x
 
 - везде заменить Plan на SourceCode
 - везде заменить Workbook на ExecContext
+- везде заменить Snippet на Function
 - поле Plan.code теперь SourceCode.uid
 - поле Plan.poolCode теперь SourceCode.poolCode
-  есть сервер стал неправильно обрабоатывать параметр variable то сообщмть, чтобы было пофиксено на стороне сервера
+  есть сервер стал неправильно обрабоатывать параметр variable то сообщить, чтобы было пофиксено на стороне сервера
 - везде заменить поле planId на sourceCodeId
 - везде заменить поле workbookId на execContextId
 - поле Workbook.execState теперь ExecContext.state
 
+- везде заменить поле snippetId на functionId
+
 заменить во всех урл:
 - заменить plan на source-code
 - заменить workbook на exec-context
+- заменить snippet на function
+
+
 
 
