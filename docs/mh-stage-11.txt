@@ -12,6 +12,9 @@ issue-1103
 - везде заменить Plan на SourceCode
 - везде заменить Workbook на ExecContext
 - везде заменить Snippet на Function
+- везде заменить Resource на GlobalVariable
+- везде заменить Launchpad на Dispatcher
+
 - поле Plan.code теперь SourceCode.uid
 - поле Plan.poolCode теперь SourceCode.poolCode
   есть сервер стал неправильно обрабоатывать параметр variable то сообщить, чтобы было пофиксено на стороне сервера
@@ -25,6 +28,8 @@ issue-1103
 - заменить plan на source-code
 - заменить workbook на exec-context
 - заменить snippet на function
+- заменить resource на global-variable
+- заменить launchpad на dispatcher
 
 
 
