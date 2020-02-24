@@ -14,12 +14,15 @@ issue-1103
 - везде заменить Snippet на Function
 - везде заменить Resource на GlobalVariable
 - везде заменить Launchpad на Dispatcher
+- везде заменить Station на Processor
 
 - поле Plan.code теперь SourceCode.uid
 - поле Plan.poolCode теперь SourceCode.poolCode
   есть сервер стал неправильно обрабоатывать параметр variable то сообщить, чтобы было пофиксено на стороне сервера
 - везде заменить поле planId на sourceCodeId
 - везде заменить поле workbookId на execContextId
+- везде заменить поле stationId на processorId
+
 - поле Workbook.execState теперь ExecContext.state
 
 - везде заменить поле snippetId на functionId
@@ -30,6 +33,7 @@ issue-1103
 - заменить snippet на function
 - заменить resource на global-variable
 - заменить launchpad на dispatcher
+- заменить station на processor
 
 
 
