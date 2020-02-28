@@ -17,7 +17,7 @@ issue-1103
 - везде заменить Station на Processor
 
 - поле Plan.code теперь SourceCode.uid
-- поле Plan.poolCode теперь SourceCode.poolCode
+- поле Plan.poolCode теперь SourceCode.variable
   есть сервер стал неправильно обрабоатывать параметр variable то сообщить, чтобы было пофиксено на стороне сервера
 - везде заменить поле planId на sourceCodeId
 - везде заменить поле workbookId на execContextId
