@@ -1,5 +1,7 @@
 import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
-import { MatSelect, MatSelectChange, MatSidenav, MatSlideToggle, MatSlideToggleChange } from '@angular/material';
+import { MatSidenav } from '@angular/material/sidenav';
+import { MatSlideToggle, MatSlideToggleChange } from '@angular/material/slide-toggle';
+import { MatSelect, MatSelectChange } from '@angular/material/select';
 import { Router } from '@angular/router';
 import { AuthenticationService } from '@app/services/authentication/authentication.service';
 import { Store } from '@ngrx/store';

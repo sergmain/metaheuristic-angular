@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, OnChanges } from '@angular/core';
-import { MatTableDataSource } from '@angular/material';
+import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
 import { AtlasService, Experiment, response, Task, Tasks } from '@services/atlas';
 import { PlotComponent } from 'angular-plotly.js';
@@ -15,7 +15,7 @@ import { CtWrapBlockComponent } from '../../ct/ct-wrap-block/ct-wrap-block.compo
 
 export class AtlasExperimentFeatureProgressComponent implements OnInit {
 
-    @ViewChild(PlotComponent)
+    @ViewChild(PlotComponent) plotComponent;
     @ViewChild('consoleView') consoleView: CtWrapBlockComponent;
 
     plotly: PlotComponent;

@@ -1,5 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatButton, MatDialog, MatTableDataSource } from '@angular/material';
+
+import { MatTableDataSource } from '@angular/material/table';
+import { MatDialog, } from '@angular/material/dialog';
+import { MatButton, } from '@angular/material/button';
+
 import { ActivatedRoute } from '@angular/router';
 import { WorkbookExecState } from '@app/enums/WorkbookExecState';
 import { ConfirmationDialogMethod } from '@src/app/components/app-dialog-confirmation/app-dialog-confirmation.component';

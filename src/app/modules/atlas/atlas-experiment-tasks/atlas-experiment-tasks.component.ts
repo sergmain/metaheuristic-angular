@@ -1,9 +1,10 @@
 import { Component, OnInit, Input, Output, SimpleChanges, ViewChild, OnChanges, EventEmitter } from '@angular/core';
-import { MatTableDataSource, MatButton } from '@angular/material';
 import { AtlasService, Tasks, Task, response } from '@app/services/atlas/';
 import { Subscription } from 'rxjs';
 import { CtTableComponent } from '../../ct/ct-table/ct-table.component';
 import { CtWrapBlockComponent } from '../../ct/ct-wrap-block/ct-wrap-block.component';
+import { MatButton } from '@angular/material/button';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
     selector: 'atlas-experiment-tasks',

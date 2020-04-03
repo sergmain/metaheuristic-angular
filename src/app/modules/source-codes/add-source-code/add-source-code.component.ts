@@ -1,7 +1,7 @@
 import { Location } from '@angular/common';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { MatButton } from '@angular/material';
+import { MatButton } from '@angular/material/button';
 import { SourceCodesService } from '@src/app/services/source-codes/source-codes.service';
 @Component({
     selector: 'add-source-code',

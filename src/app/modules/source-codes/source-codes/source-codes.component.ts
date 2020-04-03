@@ -1,5 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatButton, MatDialog, MatTabGroup, MatTableDataSource } from '@angular/material';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatTabGroup, } from '@angular/material/tabs';
+import { MatDialog, } from '@angular/material/dialog';
+import { MatButton, } from '@angular/material/button';
+
 import { ConfirmationDialogInterface, ConfirmationDialogMethod } from '@app/components/app-dialog-confirmation/app-dialog-confirmation.component';
 import { LoadStates } from '@app/enums/LoadStates';
 import { SourceCodesService } from '@src/app/services/source-codes/source-codes.service';

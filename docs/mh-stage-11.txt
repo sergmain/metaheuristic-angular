@@ -36,12 +36,16 @@ DONE
 - поле Plan.poolCode теперь SourceCode.variable
   есть сервер стал неправильно обрабоатывать параметр variable то сообщить, чтобы было пофиксено на стороне сервера
 - везде заменить поле planId на sourceCodeId
+DONE
 - везде заменить поле workbookId на execContextId
+DONE
 - везде заменить поле stationId на processorId
-
+DONE
 - поле Workbook.execState теперь ExecContext.state
+NOT DONE в шаблонах не исправил
 
 - везде заменить поле snippetId на functionId
+
 
 заменить во всех урл:
 - заменить plan на source-code

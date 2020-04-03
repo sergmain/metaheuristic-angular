@@ -1,6 +1,5 @@
 import { HttpResponse } from '@angular/common/http';
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { MatButton, MatDialog, MatTableDataSource } from '@angular/material';
 import { ConfirmationDialogMethod, QuestionData } from '@app/components/app-dialog-confirmation/app-dialog-confirmation.component';
 import { BatchService } from '@app/services/batch/batch.service';
 import { marker } from '@biesbjerg/ngx-translate-extract-marker';
@@ -16,6 +15,9 @@ import { toggleFilterBatches } from '@src/app/services/settings/settings.actions
 import * as fileSaver from 'file-saver';
 import { Subscription } from 'rxjs';
 import { Role } from '@src/app/services/authentication';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatButton } from '@angular/material/button';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
     selector: 'batch',

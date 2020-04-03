@@ -1,13 +1,15 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Location } from '@angular/common';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatDialog, MatTableDataSource, MatSelect, MatSelectChange } from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ConfirmationDialogMethod } from '@app/components/app-dialog-confirmation/app-dialog-confirmation.component';
 import { ExperimentsService, HyperParam, HyperParams, response, SimpleExperiment, Snippet, SnippetResult } from '@app/services/experiments/';
 import { Subscription } from 'rxjs';
 import { CtWrapBlockComponent } from '../../ct/ct-wrap-block/ct-wrap-block.component';
 import { DefaultResponse } from '@src/app/models/DefaultResponse';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatDialog } from '@angular/material/dialog';
+import { MatSelect } from '@angular/material/select';
 
 @Component({
     selector: 'experiment-edit',

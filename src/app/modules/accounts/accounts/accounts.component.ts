@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatTableDataSource, MatButton } from '@angular/material';
+import { MatButton } from '@angular/material/button';
+import { MatTableDataSource } from '@angular/material/table';
 import { AccountsService } from '@app/services/accounts/accounts.service';
 import { LoadStates } from '@app/enums/LoadStates';
 import { CtTableComponent } from '../../ct/ct-table/ct-table.component';

@@ -1,5 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatButton, MatTableDataSource, MatDialog } from '@angular/material';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatDialog, } from '@angular/material/dialog';
+import { MatButton, } from '@angular/material/button';
 import { LoadStates } from '@app/enums/LoadStates';
 import { Subscription } from 'rxjs';
 import { ConfirmationDialogMethod, ConfirmationDialogInterface } from '@app/components/app-dialog-confirmation/app-dialog-confirmation.component';

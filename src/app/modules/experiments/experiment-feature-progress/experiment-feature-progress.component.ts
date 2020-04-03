@@ -1,6 +1,6 @@
 import { Location } from '@angular/common';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatTableDataSource } from '@angular/material';
+import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
 import { Experiment, ExperimentsService, MetricsResult, response, Task } from '@app/services/experiments';
 import { PlotComponent } from 'angular-plotly.js';
@@ -14,7 +14,7 @@ import { CtWrapBlockComponent } from '../../ct/ct-wrap-block/ct-wrap-block.compo
 
 export class ExperimentFeatureProgressComponent implements OnInit {
 
-    @ViewChild(PlotComponent)
+    @ViewChild(PlotComponent) plotComponent;
     @ViewChild('consoleView') consoleView: CtWrapBlockComponent;
 
     plotly: PlotComponent;

@@ -1,12 +1,14 @@
 import { Location } from '@angular/common';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatButton, MatDialog, MatTableDataSource } from '@angular/material';
 import { ActivatedRoute } from '@angular/router';
 import { ConfirmationDialogMethod } from '@app/components/app-dialog-confirmation/app-dialog-confirmation.component';
 import { LoadStates } from '@app/enums/LoadStates';
 import { AtlasService, Experiment, response, ExperimentItem } from '@services/atlas/';
 import { CtTableComponent } from '@src/app/modules/ct/ct-table/ct-table.component';
 import { Subscription } from 'rxjs';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatButton } from '@angular/material/button';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
     selector: 'atlas-experiments',
