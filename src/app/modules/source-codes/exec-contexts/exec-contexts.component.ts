@@ -5,10 +5,11 @@ import { MatDialog, } from '@angular/material/dialog';
 import { MatButton, } from '@angular/material/button';
 
 import { ActivatedRoute } from '@angular/router';
-import { WorkbookExecState } from '@app/enums/WorkbookExecState';
 import { ConfirmationDialogMethod } from '@src/app/components/app-dialog-confirmation/app-dialog-confirmation.component';
 import { ExecContext } from '@src/app/services/source-codes/ExecContext';
 import { SourceCodesService } from '@src/app/services/source-codes/source-codes.service';
+import { SourceCode } from '@src/app/services/source-codes/SourceCode';
+import { ExecContextState } from '@src/app/enums/ExecContextState';
 
 
 @Component({
@@ -17,21 +18,22 @@ import { SourceCodesService } from '@src/app/services/source-codes/source-codes.
     styleUrls: ['./exec-contexts.component.scss']
 })
 export class ExecContextsComponent implements OnInit {
-    readonly execState = WorkbookExecState;
+    readonly execState = ExecContextState;
 
     @ViewChild('nextTable', { static: true }) nextTable: MatButton;
     @ViewChild('prevTable', { static: true }) prevTable: MatButton;
 
     sourceCodeId: string;
+    sourceCode: SourceCode;
     response;
-    workbooksTableSource = new MatTableDataSource<ExecContext>([]);
-    workbooksColumnsToDisplay = [
+    execContextTableSource = new MatTableDataSource<ExecContext>([]);
+    execContextColumnsToDisplay = [
         'id',
-        'planCode',
-        'inputResourceParam',
+        'sourceCode',
+        'inputPoolCodes',
         'createdOn',
-        'isPlanValid',
-        'isWorkbookValid',
+        'isSourceCodeValid',
+        'isExecContextValid',
         'execState',
         'completedOn',
         'bts'
@@ -51,8 +53,12 @@ export class ExecContextsComponent implements OnInit {
     getExecContexts(page: number) {
         this.sourceCodesService.execContexts.get(this.sourceCodeId, page.toString()).subscribe(v => {
             this.response = v;
-            this.prevTable.disabled = v.instances.first;
-            this.nextTable.disabled = v.instances.last;
+            if (v) {
+                this.sourceCode = v.sourceCodes[0]
+                this.execContextTableSource = new MatTableDataSource(v.instances.content);
+                this.prevTable.disabled = v.instances.first;
+                this.nextTable.disabled = v.instances.last;
+            }
         });
     }
 
@@ -60,14 +66,14 @@ export class ExecContextsComponent implements OnInit {
 
     @ConfirmationDialogMethod({
         question: (execContext: ExecContext): string =>
-            `Do you want to delete Workbook\xa0#${execContext.id}`,
+            `Do you want to delete ExecContext\xa0#${execContext.id}`,
         rejectTitle: 'Cancel',
         resolveTitle: 'Delete'
     })
     delete(execContext: ExecContext) {
         this.sourceCodesService.execContext
-            .deleteCommit(this.sourceCodeId, execContext.id)
-            .subscribe(v => this.getExecContexts(this.response.instances.number))
+            .deleteCommit(this.sourceCodeId, execContext.id?.toString?.())
+            .subscribe(v => this.getExecContexts(this.response.instances.number));
     }
 
     next() {

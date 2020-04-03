@@ -58,8 +58,8 @@
                     <ct-section-content>
                         <div>
                             <div>{{ 'batch-add.STATUS' | translate }}: {{uploadResponse.status}}</div>
-                            <p *ngFor="let error of uploadResponse.errorMessages; index as i; trackBy: trackByFn">{{error}}</p>
-                            <p *ngFor="let info of uploadResponse.infoMessages; index as i; trackBy: trackByFn">{{info}}</p>
+                            <p *ngFor="let error of uploadResponse.errorMessages; index as i; ">{{error}}</p>
+                            <p *ngFor="let info of uploadResponse.infoMessages; index as i; ">{{info}}</p>
                         </div>
                     </ct-section-content>
                 </ct-section-body-row>

@@ -18,7 +18,6 @@ export class AddGlobalVariableComponent {
     fileResponse: DefaultResponse;
 
     uploadForm = new FormGroup({
-        code: new FormControl('', []),
         poolCode: new FormControl('', [Validators.required, Validators.minLength(1)]),
     });
 
@@ -41,8 +40,7 @@ export class AddGlobalVariableComponent {
 
     upload() {
         this.globalVariablesService.variable
-            .upload(
-                this.uploadForm.value.code,
+            .resourceUploadFromFile(
                 this.uploadForm.value.poolCode,
                 this.fileUpload.fileInput.nativeElement.files[0]
             )
@@ -58,7 +56,7 @@ export class AddGlobalVariableComponent {
 
     create() {
         this.globalVariablesService.variable
-            .external(this.urlForm.value.poolCode, this.urlForm.value.storageUrl)
+            .resourceInExternalStorage(this.urlForm.value.poolCode, this.urlForm.value.storageUrl)
             .subscribe(
                 (response: DefaultResponse) => {
                     this.urlResponse = response;

@@ -44,7 +44,7 @@
       <ct-section-body>
         <ct-section-body-row>
           <p>STATUS: {{response.status}}</p>
-          <p *ngFor="let error of response.errorMessages; index as i; trackBy: trackByFn">{{error}}</p>
+          <p *ngFor="let error of response.errorMessages; index as i; ">{{error}}</p>
         </ct-section-body-row>
       </ct-section-body>
     </ct-section>

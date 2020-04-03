@@ -84,7 +84,7 @@ export function ConfirmationDialogMethod(dialogData: DialogData) {
                     .subscribe(
                         (response: any) => {
                             this.dialog.open(AppDialogConfirmationComponent, {
-                                    width: '300px',
+                                    width: '500px',
                                     data: {
                                         question: response[0],
                                         resolveTitle: response[1],
@@ -101,7 +101,7 @@ export function ConfirmationDialogMethod(dialogData: DialogData) {
                     );
             } else {
                 this.dialog.open(AppDialogConfirmationComponent, {
-                        width: '300px',
+                        width: '500px',
                         data: {
                             question: questionData.text,
                             resolveTitle: dialogData.resolveTitle,

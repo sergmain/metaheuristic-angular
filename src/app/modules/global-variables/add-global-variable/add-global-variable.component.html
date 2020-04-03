@@ -1,136 +1,126 @@
-
 <ct-cols>
-  <ct-col size="6">
-    <ct-section>
-      <ct-section-header>
-        <ct-section-header-row>
-          <ct-heading>Create global variable from file</ct-heading>
-        </ct-section-header-row>
-      </ct-section-header>
-      <ct-section-body>
-        <form [formGroup]="uploadForm" novalidate="novalidate">
-          <ct-section-body-row>
-            <ct-section-content>
-              <ct-file-upload #fileUpload></ct-file-upload>
-            </ct-section-content>
-          </ct-section-body-row>
-          <ct-section-body-row>
-            <ct-section-content>
-              <mat-form-field appearance="outline">
-                <mat-label>Variable code</mat-label>
-                <input autocomplete="off" matInput="matInput" formControlName="code"/>
-                <mat-hint>This is an optional field.</mat-hint>
-              </mat-form-field>
-            </ct-section-content>
-          </ct-section-body-row>
-          <ct-section-body-row>
-            <ct-section-content>
-              <mat-form-field appearance="outline">
-                <mat-label>Variable pool code</mat-label>
-                <input autocomplete="off" matInput="matInput" formControlName="poolCode"/>
-                <mat-hint>This is a required field.</mat-hint>
-              </mat-form-field>
-            </ct-section-content>
-          </ct-section-body-row>
-        </form>
-      </ct-section-body>
-      <ct-section-footer>
-        <ct-section-footer-row>
-          <ct-flex justify-content="flex-end" gap="8px">
-            <ct-flex-item>
-              <button mat-stroked-button="mat-stroked-button" (click)="cancel()">Cancel</button>
-            </ct-flex-item>
-            <ct-flex-item>
-              <button mat-flat-button="mat-flat-button" (click)="upload()" color="primary">Create</button>
-            </ct-flex-item>
-          </ct-flex>
-        </ct-section-footer-row>
-      </ct-section-footer>
-    </ct-section>
-  </ct-col>
-  <ct-col size="6">
-    <ct-section *ngIf="fileResponse">
-      <ct-section-body>
-        <ct-section-body-row>
-          <p>STATUS: {{fileResponse.status}}</p>
-          <div *ngIf="fileResponse.errorMessages">
-            <p *ngFor="let error of response.errorMessages; index as i; trackBy: trackByFn">{{error}}</p>
-          </div>
-        </ct-section-body-row>
-      </ct-section-body>
-    </ct-section>
-  </ct-col>
+    <ct-col size="6">
+        <ct-section>
+            <ct-section-header>
+                <ct-section-header-row>
+                    <ct-heading>Create global variable from file</ct-heading>
+                </ct-section-header-row>
+            </ct-section-header>
+            <ct-section-body>
+                <form [formGroup]="uploadForm" novalidate="novalidate">
+                    <ct-section-body-row>
+                        <ct-section-content>
+                            <ct-file-upload #fileUpload></ct-file-upload>
+                        </ct-section-content>
+                    </ct-section-body-row>
+                    <ct-section-body-row>
+                        <ct-section-content>
+                            <mat-form-field appearance="outline">
+                                <mat-label>Variable</mat-label>
+                                <input autocomplete="off" matInput="matInput" formControlName="poolCode" />
+                                <mat-hint>This is a required field.</mat-hint>
+                            </mat-form-field>
+                        </ct-section-content>
+                    </ct-section-body-row>
+                </form>
+            </ct-section-body>
+            <ct-section-footer>
+                <ct-section-footer-row>
+                    <ct-flex justify-content="flex-end" gap="8px">
+                        <ct-flex-item>
+                            <button mat-stroked-button="mat-stroked-button" (click)="cancel()">Cancel</button>
+                        </ct-flex-item>
+                        <ct-flex-item>
+                            <button mat-flat-button="mat-flat-button" (click)="upload()" color="primary">Create</button>
+                        </ct-flex-item>
+                    </ct-flex>
+                </ct-section-footer-row>
+            </ct-section-footer>
+        </ct-section>
+    </ct-col>
+    <ct-col size="6">
+        <ct-section *ngIf="fileResponse">
+            <ct-section-body>
+                <ct-section-body-row>
+                    <p>STATUS: {{fileResponse.status}}</p>
+                    <div *ngIf="fileResponse.errorMessages">
+                        <p *ngFor="let error of fileResponse.errorMessages; index as i; ">{{error}}</p>
+                    </div>
+                </ct-section-body-row>
+            </ct-section-body>
+        </ct-section>
+    </ct-col>
 </ct-cols>
 <ct-cols>
-  <ct-col size="6">
-    <ct-section>
-      <ct-section-header>
-        <ct-section-header-row>
-          <ct-heading>Create Variable with Storage URL</ct-heading>
-        </ct-section-header-row>
-      </ct-section-header>
-      <ct-section-body>
-        <form [formGroup]="urlForm" novalidate="novalidate">
-          <ct-section-body-row>
-            <ct-section-content>
-              <mat-form-field appearance="outline">
-                <mat-label>Variable pool code</mat-label>
-                <input autocomplete="off" matInput="matInput" formControlName="poolCode"/>
-                <mat-hint>This is a required field.</mat-hint>
-              </mat-form-field>
-            </ct-section-content>
-          </ct-section-body-row>
-          <ct-section-body-row>
-            <ct-section-content>
-              <ct-section-content>
-                <mat-hint>
-                  <ct-pre><b>Example:</b>
-                    <pre>sourcing: disk 
+    <ct-col size="6">
+        <ct-section>
+            <ct-section-header>
+                <ct-section-header-row>
+                    <ct-heading>Create Variable with Storage URL</ct-heading>
+                </ct-section-header-row>
+            </ct-section-header>
+            <ct-section-body>
+                <form [formGroup]="urlForm" novalidate="novalidate">
+                    <ct-section-body-row>
+                        <ct-section-content>
+                            <mat-form-field appearance="outline">
+                                <mat-label>Variable</mat-label>
+                                <input autocomplete="off" matInput="matInput" formControlName="poolCode" />
+                                <mat-hint>This is a required field.</mat-hint>
+                            </mat-form-field>
+                        </ct-section-content>
+                    </ct-section-body-row>
+                    <ct-section-body-row>
+                        <ct-section-content>
+                            <mat-hint>
+                                <pre style="font-size: 80%; line-height: 1.1;"><b>Example:</b>
+sourcing: disk 
 disk: 
   code: storage-code 
-  mask: '*' </pre><br/><b>Example:</b>
-                    <pre>sourcing: git
+  mask: '*'</pre>
+
+                                <br>
+                                <pre style="font-size: 80%; line-height: 1.1;"><b>Example:</b>
+sourcing: git
 git:
   repo: https://github.com/sergmain/metaheuristic.git
   branch: master
   commit: b25331edba72a1a901634212ac55752238fd2dd5</pre>
-                  </ct-pre>
-                </mat-hint>
-              </ct-section-content>
-            </ct-section-content>
-          </ct-section-body-row>
-          <ct-section-body-row>
-            <ct-section-content>
-              <mat-form-field appearance="outline">
-                <mat-label>Params of variables</mat-label>
-                <textarea autocomplete="off" matInput="matInput" formControlName="storageUrl" cdkTextareaAutosize="cdkTextareaAutosize" style="min-height:5em;overflow: hidden;"></textarea>
-              </mat-form-field>
-            </ct-section-content>
-          </ct-section-body-row>
-        </form>
-      </ct-section-body>
-      <ct-section-footer>
-        <ct-section-footer-row>
-          <ct-flex justify-content="flex-end" gap="8px">
-            <ct-flex-item>
-              <button mat-stroked-button="mat-stroked-button" (click)="cancel()">Cancel</button>
-            </ct-flex-item>
-            <ct-flex-item>
-              <button mat-flat-button="mat-flat-button" (click)="create()" color="primary" [disabled]="urlForm.invalid">Create</button>
-            </ct-flex-item>
-          </ct-flex>
-        </ct-section-footer-row>
-      </ct-section-footer>
-    </ct-section>
-  </ct-col>
-  <ct-col size="6">
-    <ct-section *ngIf="urlResponse">
-      <ct-section-body>
-        <ct-section-body-row>
-          <p>STATUS: {{urlResponse.status}}</p>
-          <p *ngFor="let error of urlResponse.errorMessages; index as i; trackBy: trackByFn">{{error}}</p>
-        </ct-section-body-row>
-      </ct-section-body>
-    </ct-section>
-  </ct-col>
+                            </mat-hint>
+                        </ct-section-content>
+                    </ct-section-body-row>
+                    <ct-section-body-row>
+                        <ct-section-content>
+                            <mat-form-field appearance="outline">
+                                <mat-label>Params of variables</mat-label>
+                                <textarea autocomplete="off" matInput="matInput" formControlName="storageUrl" cdkTextareaAutosize="cdkTextareaAutosize" style="min-height:5em;overflow: hidden;"></textarea>
+                            </mat-form-field>
+                        </ct-section-content>
+                    </ct-section-body-row>
+                </form>
+            </ct-section-body>
+            <ct-section-footer>
+                <ct-section-footer-row>
+                    <ct-flex justify-content="flex-end" gap="8px">
+                        <ct-flex-item>
+                            <button mat-stroked-button="mat-stroked-button" (click)="cancel()">Cancel</button>
+                        </ct-flex-item>
+                        <ct-flex-item>
+                            <button mat-flat-button="mat-flat-button" (click)="create()" color="primary" [disabled]="urlForm.invalid">Create</button>
+                        </ct-flex-item>
+                    </ct-flex>
+                </ct-section-footer-row>
+            </ct-section-footer>
+        </ct-section>
+    </ct-col>
+    <ct-col size="6">
+        <ct-section *ngIf="urlResponse">
+            <ct-section-body>
+                <ct-section-body-row>
+                    <p>STATUS: {{urlResponse.status}}</p>
+                    <p *ngFor="let error of urlResponse.errorMessages; index as i; ">{{error}}</p>
+                </ct-section-body-row>
+            </ct-section-body>
+        </ct-section>
+    </ct-col>
 </ct-cols>

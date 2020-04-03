@@ -1,13 +1,12 @@
-import { ExperimentInfo } from '../experiments/ExperimentInfo';
 import { Atlas } from './Atlas';
 import { ConsoleResult } from './ConsoleResult';
-import { Experiment } from './Experiment';
 import { ExperimentFeature } from './ExperimentFeature';
 import { HyperParamResult } from './HyperParamResult';
 import { MetricsResult } from './MetricsResult';
 import { Tasks } from './Tasks';
 import { DefaultListOfItems } from '@src/app/models/DefaultListOfItems';
 import { DefaultResponse } from '@src/app/models/DefaultResponse';
+import { ExperimentApiData } from '../experiments/ExperimentApiData';
 
 
 export interface ListOfItems extends DefaultListOfItems {
@@ -15,7 +14,7 @@ export interface ListOfItems extends DefaultListOfItems {
 }
 
 export interface ExperimentItem extends DefaultResponse {
-    experiment: Experiment;
+    experiment: ExperimentApiData.ExperimentData;
 }
 
 export namespace response {
@@ -28,8 +27,8 @@ export namespace response {
 
     export namespace experiment {
         export interface Info extends DefaultResponse {
-            experiment: Experiment;
-            experimentInfo: ExperimentInfo;
+            experiment: ExperimentApiData.ExperimentData;
+            experimentInfo: ExperimentApiData.ExperimentInfoResult;
             atlas: Atlas;
         }
 

@@ -4,9 +4,13 @@ export interface ExecContext {
     sourceCodeId: number;
     createdOn: number;
     completedOn: number;
+    valid: boolean;
+    // new
+    execState: number;
+    params: string;
+    // old
     inputResourceParam: string;
     producingOrder: number;
-    valid: boolean;
     state: number;
-    __deleted:boolean;
+    __deleted: boolean;
 }

@@ -19,43 +19,17 @@ export class GlobalVariablesService {
     };
 
     variable = {
-        //     // @PostMapping(value = "/resource-upload-from-file-with-params/{resourcePoolCode}")
-        //     // public OperationStatusRest createResourceFromFileWithParams(
-        //     //         MultipartFile file, @PathVariable String resourcePoolCode) {
-        //     //     return resourceTopLevelService.createResourceFromFile(file, resourcePoolCode, null);
-        //     // }
-        //     resourceUploadFromFileWithParams: (resourcePoolCode: string, file: File): Observable<any> =>
-        //         this.POST(`/resource-upload-from-file-with-params/${resourcePoolCode}`, this.formData({ file })),
 
+        resourceUploadFromFileWithParams: (resourcePoolCode: string, file: File): Observable<any> =>
+            this.http.post(url(`/resource-upload-from-file-with-params/${resourcePoolCode}`), formData({ file })),
 
-        //     // @PostMapping(value = "/resource-upload-from-file", headers = ("content-type=multipart/*"), produces = "application/json", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-        //     // public OperationStatusRest createResourceFromFile(
-        //     //         @RequestPart MultipartFile file,
-        //     //         @RequestParam(name = "code") String resourceCode,
-        //     //         @RequestParam(name = "poolCode") String resourcePoolCode ) {
-        //     //     return resourceTopLevelService.createResourceFromFile(file, resourcePoolCode, resourceCode);
-        //     // }
-        upload: (code: string, poolCode: string, file: File): Observable<any> =>
-            this.http.post(url(`/resource-upload-from-file`), formData({ code, poolCode, file })),
+        resourceUploadFromFile: (poolCode: string, file: File): Observable<response.globalVariable.resourceUploadFromFile> =>
+            this.http.post<response.globalVariable.resourceUploadFromFile>(url(`/resource-upload-from-file`), formData({ poolCode, file })),
 
-        //     // @PostMapping(value = "/resource-in-external-storage")
-        //     // public OperationStatusRest registerResourceInExternalStorage(
-        //     //         @RequestParam(name = "poolCode") String resourcePoolCode,
-        //     //         @RequestParam(name = "storageUrl") String storageUrl ) {
-        //     //     return resourceTopLevelService.registerResourceInExternalStorage(resourcePoolCode, storageUrl);
-        //     // }
-        external: (poolCode: string, storageUrl: string): Observable<any> =>
-            this.http.post(url(`/resource-in-external-storage`), formData({ poolCode, storageUrl })),
+        resourceInExternalStorage: (poolCode: string, storageUrl: string): Observable<response.globalVariable.resourceInExternalStorage> =>
+            this.http.post<response.globalVariable.resourceInExternalStorage>(url(`/resource-in-external-storage`), formData({ poolCode, storageUrl })),
 
-
-        //     // @GetMapping("/resource/{id}")
-        //     // public ResourceData.ResourceResult get(@PathVariable Long id) {
-        //     //     return resourceTopLevelService.getResourceById(id);
-        //     // }
-        //     get: (id: string | number): Observable<any> =>
-        //         this.GET(`/resource/${id}`),
-
-        delete: (id: string): Observable<any> =>
-            this.http.post(url(`/resource-delete-commit`), formData({ id }))
+        globalVariableDeleteCommit: (id: string): Observable<response.globalVariable.globalVariableDeleteCommit> =>
+            this.http.post<response.globalVariable.globalVariableDeleteCommit>(url(`/global-variable-delete-commit`), formData({ id }))
     };
 }

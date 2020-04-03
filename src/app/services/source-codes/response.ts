@@ -57,7 +57,9 @@ export namespace response {
     }
 
     export namespace execContext {
-        export interface PlanCodeWorkbookAddCommit extends DefaultResponse { }
+        export interface UidExecContextAddCommit extends DefaultResponse {
+            execContextId: number;
+        }
         export interface AddCommit extends DefaultResponse { }
         export interface Create extends DefaultResponse { }
         export interface Get extends DefaultResponse { }

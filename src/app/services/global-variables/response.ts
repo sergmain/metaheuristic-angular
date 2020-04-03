@@ -5,14 +5,16 @@ import { GlobalVariable } from './GlobalVariables';
 export namespace response {
     export namespace globalVariables {
         export interface Get extends DefaultResponse {
-            items: Resources;
+            items: GlobalVariables;
         }
     }
     export namespace globalVariable {
-
+        export interface globalVariableDeleteCommit extends DefaultResponse { }
+        export interface resourceUploadFromFile extends DefaultResponse { }
+        export interface resourceInExternalStorage extends DefaultResponse { }
     }
 }
 
-export interface Resources extends DefaultListOfItems {
+export interface GlobalVariables extends DefaultListOfItems {
     content: GlobalVariable[];
 }

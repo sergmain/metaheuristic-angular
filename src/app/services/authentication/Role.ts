@@ -11,9 +11,9 @@ export enum Role {
 
 // -- ROLE_ADMIN - полный доступ ко всем функциям на сайте
 // -- ROLE_MANAGER
-//    - доступ на чтение для функций Plan, Workbook, Snippet
+//    - доступ на чтение для функций Plan, Exec State, Function
 //    - полный доступ к Batch
 //    - нет доступа ко всем остальным фунцциям
 // -- ROLE_OPERATOR - полный досуп ко всем функциям Batch
 // -- ROLE_BILLING - полный досуп ко всем функциям Billing
-// -- ROLE_DATA - полный доступ к функциям Plan, Workbook, Experiment, Atlas, Resource, Snippet
+// -- ROLE_DATA - полный доступ к функциям Plan, Exec State, Experiment, Atlas, Resource, Function

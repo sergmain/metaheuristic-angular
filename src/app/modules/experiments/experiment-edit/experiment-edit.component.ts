@@ -1,15 +1,17 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Location } from '@angular/common';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { ConfirmationDialogMethod } from '@app/components/app-dialog-confirmation/app-dialog-confirmation.component';
-import { ExperimentsService, HyperParam, HyperParams, response, SimpleExperiment, Snippet, SnippetResult } from '@app/services/experiments/';
-import { Subscription } from 'rxjs';
-import { CtWrapBlockComponent } from '../../ct/ct-wrap-block/ct-wrap-block.component';
-import { DefaultResponse } from '@src/app/models/DefaultResponse';
-import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSelect } from '@angular/material/select';
+import { MatTableDataSource } from '@angular/material/table';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ConfirmationDialogMethod } from '@app/components/app-dialog-confirmation/app-dialog-confirmation.component';
+import { ExperimentsService, response } from '@app/services/experiments/';
+import { DefaultResponse } from '@src/app/models/DefaultResponse';
+import { SimpleSelectOption } from '@src/app/models/SimpleSelectOption';
+import { ExperimentApiData } from '@src/app/services/experiments/ExperimentApiData';
+import { CtWrapBlockComponent } from '../../ct/ct-wrap-block/ct-wrap-block.component';
+import { ExperimentParamsYaml } from '@src/app/services/experiments/ExperimentParamsYaml';
 
 @Component({
     selector: 'experiment-edit',
@@ -42,36 +44,40 @@ import { MatSelect } from '@angular/material/select';
 })
 
 export class ExperimentEditComponent implements OnInit {
-    experimentEditResponse: response.experiment.Edit;
-    simpleExperimentResponse: response.experiment.Edit;
+
+    experimentEditResponse: ExperimentApiData.ExperimentsEditResult;
+    simpleExperimentResponse: response.experiment.EditCommit;
+
     addHyperParamsResponse: DefaultResponse;
     editHyperParamsResponse: DefaultResponse;
 
-    simpleExperiment: SimpleExperiment;
+    simpleExperiment: ExperimentApiData.SimpleExperiment;
 
-    hyperParams: HyperParams;
-    newHyperParams: HyperParam = {};
-    updatedHyperParams: HyperParam;
-    currentEditHyperParams: HyperParam = {};
+    hyperParams: ExperimentApiData.HyperParamsResult;
+    newHyperParams: ExperimentParamsYaml.HyperParam = {
+        key: null,
+        values: null,
+        variants: null
+    };
+    updatedHyperParams: ExperimentParamsYaml.HyperParam;
+    currentEditHyperParams = {
+        newValues: null
+    };
 
     hyperParamsDataSource = new MatTableDataSource([]);
     hyperParamsColumnsToDisplay = ['key', 'values', 'delete'];
     hyperParamsSecondColumnsToDisplay = ['empty', 'edit', 'done'];
 
-    snippetResult: SnippetResult;
-    snippetAddCommitResponse: DefaultResponse;
-    snippetDeleteCommitResponse: DefaultResponse;
-    currentSnippetAddCommit;
-    snippetsDataSource = new MatTableDataSource([]);
-    snippetsColumnsToDisplay = ['type', 'code', 'bts'];
+    functionAddCommitResponse: DefaultResponse;
+    functionDeleteCommitResponse: DefaultResponse;
+    currentFunctionAddCommit;
 
+    functionResult: ExperimentApiData.FunctionResult;
+    functionDataSource = new MatTableDataSource([]);
+    functionColumnsToDisplay = ['type', 'code', 'bts'];
 
-    // snippets: any = false;
-    // currentEditMetadata: Metadata | null;
-
-    // newMetadata: Metadata = new Metadata('', '')
-    @ViewChild('snippetsBlock', { static: true }) snippetsBlock: CtWrapBlockComponent;
-    @ViewChild('snippetMatSelect') snippetMatSelect: MatSelect;
+    @ViewChild('functionBlock', { static: true }) functionBlock: CtWrapBlockComponent;
+    @ViewChild('functionMatSelect') functionMatSelect: MatSelect;
 
     @ViewChild('metadataBlock', { static: true }) metadataBlock: CtWrapBlockComponent;
 
@@ -91,24 +97,22 @@ export class ExperimentEditComponent implements OnInit {
         const id: string = this.route.snapshot.paramMap.get('experimentId');
         this.experimentsService.experiment.edit(id)
             .subscribe(
-                (response: response.experiment.Edit) => {
+                (response) => {
                     this.experimentEditResponse = response;
                     this.simpleExperiment = response.simpleExperiment;
-
-                    if (this.simpleExperiment.seed.toString().trim() === '') {
-                        this.simpleExperiment.seed = 1;
-                    }
-
                     this.hyperParams = response.hyperParams;
                     this.hyperParamsDataSource = new MatTableDataSource(response.hyperParams.items);
-
-                    this.snippetResult = response.snippetResult;
-                    this.snippetsDataSource = new MatTableDataSource(response.snippetResult.snippets);
+                    this.functionResult = response.functionResult;
+                    this.functionDataSource = new MatTableDataSource(response.functionResult.functions);
+                    if (this.simpleExperiment.seed.toString().trim() === '') {
+                        // TODO why?
+                        this.simpleExperiment.seed = 1;
+                    }
                 },
                 () => { },
                 () => {
-                    if (this.snippetsBlock) {
-                        this.snippetsBlock.show();
+                    if (this.functionBlock) {
+                        this.functionBlock.show();
                     }
                     if (this.metadataBlock) {
                         this.metadataBlock.show();
@@ -118,12 +122,12 @@ export class ExperimentEditComponent implements OnInit {
     }
 
     updateSimpleExperiment(event: Event) {
-        const button: HTMLButtonElement = event.target as HTMLButtonElement;
+        const button = event.target as HTMLButtonElement;
         button.disabled = true;
         this.experimentsService.experiment
             .editCommit(this.simpleExperiment)
             .subscribe(
-                (response: response.experiment.Edit) => {
+                (response) => {
                     this.simpleExperimentResponse = response;
                 },
                 () => { },
@@ -159,9 +163,8 @@ export class ExperimentEditComponent implements OnInit {
             key: this.newHyperParams.key,
             value: this.newHyperParams.values
         };
-        let experimentId = this.simpleExperiment.id.toString();
         this.experimentsService.experiment
-            .metadataAddCommit(experimentId, data)
+            .metadataAddCommit(this.simpleExperiment.id.toString(), data)
             .subscribe((response: DefaultResponse) => {
                 this.addHyperParamsResponse = response;
                 this.loadExperimet();
@@ -169,7 +172,7 @@ export class ExperimentEditComponent implements OnInit {
     }
 
     @ConfirmationDialogMethod({
-        question: (hyperParam: HyperParam): string =>
+        question: (hyperParam: ExperimentParamsYaml.HyperParam): string =>
             `Do you want to delete hyper\xa0param\xa0[${hyperParam.key}]`,
         rejectTitle: 'Cancel',
         resolveTitle: 'Delete'
@@ -190,43 +193,43 @@ export class ExperimentEditComponent implements OnInit {
 
     openEditHyperParams(el) {
         if (this.currentEditHyperParams === el) {
-            this.currentEditHyperParams = {};
+            this.currentEditHyperParams = {
+                newValues: null
+            };
         } else {
             this.currentEditHyperParams = el;
         }
     }
 
     @ConfirmationDialogMethod({
-        question: (snippet: Snippet): string =>
-            `Do you want to delete snippet\xa0[${snippet.snippetCode}]`,
+        question: (functionCommit: ExperimentApiData.ExperimentFunctionResult): string => {
+            return `Do you want to delete function? [${functionCommit.functionCode}]`;
+        },
         rejectTitle: 'Cancel',
         resolveTitle: 'Delete'
     })
-    snippetDeleteCommit(el) {
-        this.snippetsBlock.wait();
+    functionDeleteByTypeCommit(el: ExperimentApiData.ExperimentFunctionResult) {
+        this.functionBlock.wait();
         this.experimentsService.experiment
-            .snippetDeleteByTypeCommit(el.experimentId, el.type)
-            // .snippetDeleteCommit(el.experimentId, el.snippetCode)
+            .functionDeleteByTypeCommit(el.experimentId?.toString?.(), el.type)
             .subscribe((response: DefaultResponse) => {
-                this.snippetDeleteCommitResponse = response;
+                this.functionDeleteCommitResponse = response;
                 this.loadExperimet();
             });
     }
 
-    snippetAddCommit(el) {
-        this.snippetsBlock.wait();
-        const experimentId = this.simpleExperiment.id.toString();
-        const data = { code: el.value };
+    functionAddCommit(el: SimpleSelectOption) {
+        this.functionBlock.wait();
         this.experimentsService.experiment
-            .snippetAddCommit(experimentId, data)
+            .functionAddCommit(this.simpleExperiment?.id?.toString?.(), el.value)
             .subscribe((response: DefaultResponse) => {
-                this.snippetAddCommitResponse = response;
+                this.functionAddCommitResponse = response;
                 this.loadExperimet();
             });
     }
 
-    snippetMatSelectSelected() {
-        if (this.snippetMatSelect && this.snippetMatSelect.selected) {
+    functionMatSelectSelected() {
+        if (this.functionMatSelect && this.functionMatSelect.selected) {
             return true;
         }
         return false;

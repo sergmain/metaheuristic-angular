@@ -45,7 +45,7 @@ export class SourceCodesService {
 
         uploadFromFile: (file: any): Observable<response.sourceCode.Upload> =>
             this.http.post<response.sourceCode.Upload>(url(`source-code-upload-from-file`), formData({ file }))
-    }; 
+    };
 
     execContexts = {
         get: (sourceCodeId: string, page: string): Observable<response.execContexts.Get> =>
@@ -53,19 +53,19 @@ export class SourceCodesService {
     };
 
     execContext = {
-        planCodeWorkbookAddCommit: (planCode: string, poolCode: string): Observable<response.execContext.PlanCodeWorkbookAddCommit> =>
-            this.http.post<response.execContext.PlanCodeWorkbookAddCommit>(url(`plan-code-workbook-add-commit`), formData({ planCode, poolCode })),
+        uidExecContextAddCommit: (uid: string, variable: string): Observable<response.execContext.UidExecContextAddCommit> =>
+            this.http.post<response.execContext.UidExecContextAddCommit>(url(`uid-exec-context-add-commit`), formData({ uid, variable })),
 
-        addCommit: (sourceCodeId: string | number, variable: string): Observable<response.execContext.AddCommit> =>
+        addCommit: (sourceCodeId: string, variable: string): Observable<response.execContext.AddCommit> =>
             this.http.post<response.execContext.AddCommit>(url(`exec-context-add-commit`), formData({ sourceCodeId, variable })),
 
-        get: (sourceCodeId: string | number, execContextId: string | number): Observable<response.execContext.Get> =>
-            this.http.get<response.execContext.Get>(url(`workbook/${sourceCodeId}/${execContextId}`)),
+        get: (sourceCodeId: string, execContextId: string): Observable<response.execContext.Get> =>
+            this.http.get<response.execContext.Get>(url(`exec-context/${sourceCodeId}/${execContextId}`)),
 
-        deleteCommit: (sourceCodeId: string | number, execContextId: string | number): Observable<response.execContext.DeleteCommit> =>
-            this.http.post<response.execContext.DeleteCommit>(url(`workbook-delete-commit/`), formData({ sourceCodeId, execContextId })),
+        deleteCommit: (sourceCodeId: string, execContextId: string): Observable<response.execContext.DeleteCommit> =>
+            this.http.post<response.execContext.DeleteCommit>(url(`exec-context-delete-commit/`), formData({ sourceCodeId, execContextId })),
 
         targetExecState: (sourceCodeId: string, state: string, id: string): Observable<response.execContext.TargetExecState> =>
-            this.http.get<response.execContext.TargetExecState>(url(`workbook-target-exec-state/${sourceCodeId}/${state}/${id}`))
+            this.http.get<response.execContext.TargetExecState>(url(`exec-context-target-exec-state/${sourceCodeId}/${state}/${id}`))
     };
 }

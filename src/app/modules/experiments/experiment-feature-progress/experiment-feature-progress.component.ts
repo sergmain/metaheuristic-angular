@@ -2,9 +2,10 @@ import { Location } from '@angular/common';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
-import { Experiment, ExperimentsService, MetricsResult, response, Task } from '@app/services/experiments';
+import { ExperimentsService, MetricsResult, response, Task } from '@app/services/experiments';
 import { PlotComponent } from 'angular-plotly.js';
 import { CtWrapBlockComponent } from '../../ct/ct-wrap-block/ct-wrap-block.component';
+import { ExperimentApiData } from '@src/app/services/experiments/ExperimentApiData';
 
 @Component({
     selector: 'experiment-feature-progress',
@@ -28,7 +29,7 @@ export class ExperimentFeatureProgressComponent implements OnInit {
     consolePartResponse: response.experiment.FeatureProgressConsolePart;
     plotDataResponse: response.experiment.FeaturePlotDataPart;
 
-    experiment: Experiment;
+    experiment: ExperimentApiData.ExperimentData;
     experimentId: string;
     featureId: string;
     pickedAxes: (boolean | any)[] = [false, false];

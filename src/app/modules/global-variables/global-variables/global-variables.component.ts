@@ -4,7 +4,7 @@ import { MatDialog, } from '@angular/material/dialog';
 import { MatButton, } from '@angular/material/button';
 import { ConfirmationDialogMethod } from '@app/components/app-dialog-confirmation/app-dialog-confirmation.component';
 import { LoadStates } from '@app/enums/LoadStates';
- import { CtTableComponent } from '@src/app/modules/ct/ct-table/ct-table.component';
+import { CtTableComponent } from '@src/app/modules/ct/ct-table/ct-table.component';
 import { GlobalVariablesService } from '@src/app/services/global-variables/global-variables.service';
 import { GlobalVariable } from '@src/app/services/global-variables/GlobalVariables';
 
@@ -65,7 +65,8 @@ export class GlobalVariablesComponent implements OnInit {
     })
     delete(globalVariable: GlobalVariable) {
         this.deletedRows.push(globalVariable);
-        this.globalVariablesService.variable.delete(globalVariable.id.toString())
+        this.globalVariablesService.variable
+            .globalVariableDeleteCommit(globalVariable.id.toString())
             .subscribe();
     }
 

@@ -1,9 +1,9 @@
 {
 	"app-view.About": "Подробнее",
-	"app-view.Dispatcher": "",
+	"app-view.Dispatcher": "Диспетчер",
 	"app-view.Logout": "Выйти",
 	"batch-add.Cancel": "Отмена",
-	"batch-add.List of Source Codes": "",
+	"batch-add.List of Source Codes": "Список исходных кодов",
 	"batch-add.Only .xml and .zip files are supported": "Только .xml и .zip",
 	"batch-add.STATUS": "СТАТУС",
 	"batch-add.Select File": "Выбрать файл",
@@ -31,12 +31,12 @@
 	"batch.isBatchConsistent.false": "Нет",
 	"batch.isBatchConsistent.true": "Да",
 	"batch.onlyMyBatches": "Только мои пакеты",
-	"dispatcher.Accounts": "",
-	"dispatcher.Atlas": "",
-	"dispatcher.Batch": "",
-	"dispatcher.Experiments": "",
-	"dispatcher.Functions": "",
-	"dispatcher.GlobalVariables": "",
-	"dispatcher.Processors": "",
-	"dispatcher.SourceCodes": ""
+	"dispatcher.Accounts": "Аккаунты",
+	"dispatcher.Atlas": "Атлас",
+	"dispatcher.Batch": "Пакеты",
+	"dispatcher.Experiments": "Эксперименты",
+	"dispatcher.Functions": "Функции",
+	"dispatcher.Variables": "Переменные",
+	"dispatcher.Processors": "Обработчики",
+	"dispatcher.SourceCodes": "Исходный код"
 }

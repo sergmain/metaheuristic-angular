@@ -36,7 +36,7 @@
 	"dispatcher.Batch": "Batch",
 	"dispatcher.Experiments": "Experiments",
 	"dispatcher.Functions": "Functions",
-	"dispatcher.GlobalVariables": "Global Variables",
+	"dispatcher.Variables": "Variables",
 	"dispatcher.Processors": "Processors",
 	"dispatcher.SourceCodes": "Source Codes"
 }

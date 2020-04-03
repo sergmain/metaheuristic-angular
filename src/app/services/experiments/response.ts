@@ -1,7 +1,7 @@
-import { ExperimentInfo } from './ExperimentInfo';
-import { ConsoleResult, Experiment, ExperimentFeature, FeatureProgressConsolePartEntity, HyperParamResult, MetricsResult, TasksResult } from './index';
+import { ConsoleResult,  ExperimentFeature, FeatureProgressConsolePartEntity, HyperParamResult, MetricsResult, TasksResult } from './index';
 import { DefaultResponse } from '@src/app/models/DefaultResponse';
 import { DefaultListOfItems } from '@src/app/models/DefaultListOfItems';
+import { ExperimentApiData } from './ExperimentApiData';
 
 
 export interface ListOfItems extends DefaultListOfItems {
@@ -9,53 +9,11 @@ export interface ListOfItems extends DefaultListOfItems {
 }
 
 export interface ExperimentItem extends DefaultResponse {
-    experiment: Experiment;
-}
-
-export interface SimpleExperiment {
-    id: number;
-    name: string;
-    description: string;
-    code: string;
-    seed: number;
+    experiment: ExperimentApiData.ExperimentData;
 }
 
 
 
-export interface HyperParams {
-    items: HyperParam[];
-}
-
-export interface HyperParam {
-    id?: number;
-    version?: number;
-    key?: string;
-    values?: string;
-    newValues?: string;
-    variants?: number;
-}
-
-export interface SnippetResult {
-    selectOptions: SelectOptionsEntity[];
-    snippets: Snippet[];
-}
-
-export interface Snippet {
-    experimentId: number;
-    id: number;
-    snippetCode: string;
-    type: string;
-    version: number;
-}
-
-export interface SelectOptionsEntity {
-    value: string;
-    desc: string;
-}
-
-//
-//
-//
 export namespace response {
 
     export namespace experiments {
@@ -66,30 +24,20 @@ export namespace response {
 
     export namespace experiment {
         export interface Get extends DefaultResponse {
-            Experiment: Experiment;
+            Experiment: ExperimentApiData.ExperimentData;
         }
         export interface Info extends DefaultResponse {
-            experiment: Experiment;
-            experimentInfo: ExperimentInfo;
+            experiment: ExperimentApiData.ExperimentData;
+            experimentInfo: ExperimentApiData.ExperimentInfoResult;
 
         }
-        export interface Edit {
-            simpleExperiment: SimpleExperiment;
-            hyperParams: HyperParams;
-            snippetResult: SnippetResult;
-        }
+
         export interface AddCommit extends DefaultResponse { }
 
-        // export namespace editCommit {
-        //     export interface Response {
+        export interface EditCommit extends DefaultResponse { }
 
-        //     }
-        // }
-        // export namespace deleteCommit {
-        //     export interface Response {
+        export interface DeleteByTypeCommit extends DefaultResponse { }
 
-        //     }
-        // }
         // export namespace cloneCommit {
         //     export interface Response {
 
@@ -109,7 +57,7 @@ export namespace response {
             metricsResult: MetricsResult;
             hyperParamResult: HyperParamResult;
             tasksResult: TasksResult;
-            experiment: Experiment;
+            experiment: ExperimentApiData.ExperimentData;
             experimentFeature: ExperimentFeature;
             consoleResult: ConsoleResult;
         }
@@ -143,16 +91,6 @@ export namespace response {
         //     }
         // }
         // export namespace metadataDefaultAddCommit {
-        //     export interface Response {
-
-        //     }
-        // }
-        // export namespace snippetAddCommit {
-        //     export interface Response {
-
-        //     }
-        // }
-        // export namespace snippetDeleteCommit {
         //     export interface Response {
 
         //     }

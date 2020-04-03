@@ -47,8 +47,8 @@
                 <ct-section-body>
                     <ct-section-body-row>
                         <ct-section-content>
-                            <p *ngFor="let info of responseSingle.infoMessages; index as i; trackBy: trackByFn">{{info}}</p>
-                            <p *ngFor="let error of responseSingle.errorMessages; index as i; trackBy: trackByFn">{{error}}</p>
+                            <p *ngFor="let info of responseSingle.infoMessages; index as i; ">{{info}}</p>
+                            <p *ngFor="let error of responseSingle.errorMessages; index as i; ">{{error}}</p>
                         </ct-section-content>
                     </ct-section-body-row>
                 </ct-section-body>

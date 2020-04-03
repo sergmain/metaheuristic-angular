@@ -4,6 +4,7 @@ import { environment } from '@src/environments/environment';
 import { Observable } from 'rxjs';
 import { generateFormData as formData } from '@src/app/helpers/generateFormData';
 import { response } from './response';
+import { ExperimentApiData } from './ExperimentApiData';
 
 const url = (s: string): string => `${environment.baseUrl}dispatcher/experiment${s}`;
 
@@ -38,14 +39,14 @@ export class ExperimentsService {
         info: (id: string): Observable<response.experiment.Info> =>
             this.http.get<response.experiment.Info>(url(`/experiment-info/${id}`)),
 
-        edit: (id: string): Observable<any> =>
-            this.http.get(url(`/experiment-edit/${id}`)),
+        edit: (id: string): Observable<ExperimentApiData.ExperimentsEditResult> =>
+            this.http.get<ExperimentApiData.ExperimentsEditResult>(url(`/experiment-edit/${id}`)),
 
-        addCommit: (data: any): Observable<response.experiment.AddCommit> =>
+        addCommit: (data: ExperimentApiData.NewExperimentData): Observable<response.experiment.AddCommit> =>
             this.http.post<response.experiment.AddCommit>(url(`/experiment-add-commit`), data),
 
-        editCommit: (data: any): Observable<any> =>
-            this.http.post(url(`/experiment-edit-commit`), data),
+        editCommit: (simpleExperiment: ExperimentApiData.SimpleExperiment): Observable<response.experiment.EditCommit> =>
+            this.http.post<response.experiment.EditCommit>(url(`/experiment-edit-commit`), simpleExperiment),
 
         metadataAddCommit: (experimentId: string, data: any): Observable<any> =>
             this.http.post(url(`/experiment-metadata-add-commit/${experimentId}`), formData(data)),
@@ -53,8 +54,8 @@ export class ExperimentsService {
         metadataEditCommit: (experimentId: string, data: any): Observable<any> =>
             this.http.post(url(`/experiment-metadata-edit-commit/${experimentId}`), formData(data)),
 
-        snippetAddCommit: (id: string, data: any): Observable<any> =>
-            this.http.post(url(`/experiment-snippet-add-commit/${id}`), formData(data)),
+        functionAddCommit: (id: string, code: string): Observable<response.experiment.AddCommit> =>
+            this.http.post<response.experiment.AddCommit>(url(`/experiment-function-add-commit/${id}`), formData({ code })),
 
         metadataDeleteCommit: (experimentId: string | number, key: string | number): Observable<any> =>
             this.http.get(url(`/experiment-metadata-delete-commit/${experimentId}/${key}`)),
@@ -62,8 +63,8 @@ export class ExperimentsService {
         metadataDefaultAddCommit: (experimentId: string | number): Observable<any> =>
             this.http.get(url(`/experiment-metadata-default-add-commit/${experimentId}`)),
 
-        snippetDeleteByTypeCommit: (experimentId: string, snippetType: string): Observable<any> =>
-            this.http.get(url(`/experiment-snippet-delete-by-type-commit/${experimentId}/${snippetType}`)),
+        functionDeleteByTypeCommit: (experimentId: string, functionType: string): Observable<response.experiment.DeleteByTypeCommit> =>
+            this.http.get<response.experiment.DeleteByTypeCommit>(url(`/experiment-function-delete-by-type-commit/${experimentId}/${functionType}`)),
 
         deleteCommit: (id: string): Observable<any> =>
             this.http.post(url(`/experiment-delete-commit`), formData({ id })),

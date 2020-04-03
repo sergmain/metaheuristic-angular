@@ -14,12 +14,13 @@ issue-1103
 мигрировать на новую версию mh 4.x
 
 - везде заменить Plan на SourceCode
+DONE
 
 - везде заменить Workbook на ExecContext
-
+DONE
 
 - везде заменить Snippet на Function 
-DONE(no)
+DONE
 
 - везде заменить Resource на GlobalVariable
 DONE

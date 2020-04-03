@@ -2,10 +2,10 @@ import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { state } from '@app/helpers/state';
-import { AtlasService, Experiment, Atlas, response } from '@services/atlas';
+import { AtlasService,  Atlas, response } from '@services/atlas';
 import { Subscription } from 'rxjs';
-import { ExperimentInfo } from '@src/app/services/experiments/ExperimentInfo';
 import { ActivatedRoute } from '@angular/router';
+import { ExperimentApiData } from '@src/app/services/experiments/ExperimentApiData';
 
 @Component({
     selector: 'atlas-experiment-info',
@@ -15,8 +15,8 @@ import { ActivatedRoute } from '@angular/router';
 export class AtlasExperimentInfoComponent implements OnInit {
     state = state;
     currentState = this.state.loading;
-    experiment: Experiment;
-    experimentInfo: ExperimentInfo;
+    experiment: ExperimentApiData.ExperimentData;
+    experimentInfo: ExperimentApiData.ExperimentInfoResult;
     atlas: Atlas;
 
     tables = {

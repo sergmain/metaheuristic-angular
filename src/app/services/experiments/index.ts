@@ -1,4 +1,3 @@
-export * from './Experiment';
 export * from './experiments.service';
 export * from './HyperParamResult';
 export * from './MetricsResult';
