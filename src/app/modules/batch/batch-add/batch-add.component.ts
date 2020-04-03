@@ -26,7 +26,7 @@ export class BatchAddComponent implements OnInit {
     sourceCode: SourceCode;
     file: any;
     listOfSourceCodes: SourceCode[] = [];
-    @ViewChild('fileUpload', { static: false }) fileUpload: CtFileUploadComponent;
+    @ViewChild('fileUpload') fileUpload: CtFileUploadComponent;
 
     constructor(
         private batchService: BatchService,

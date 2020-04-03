@@ -69,7 +69,7 @@ export class ExperimentEditComponent implements OnInit {
 
     // newMetadata: Metadata = new Metadata('', '')
     @ViewChild('snippetsBlock', { static: true }) snippetsBlock: CtWrapBlockComponent;
-    @ViewChild('snippetMatSelect', { static: false }) snippetMatSelect: MatSelect;
+    @ViewChild('snippetMatSelect') snippetMatSelect: MatSelect;
 
     @ViewChild('metadataBlock', { static: true }) metadataBlock: CtWrapBlockComponent;
 

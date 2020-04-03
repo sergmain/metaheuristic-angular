@@ -15,8 +15,8 @@ import { CtWrapBlockComponent } from '../../ct/ct-wrap-block/ct-wrap-block.compo
 
 export class AtlasExperimentFeatureProgressComponent implements OnInit {
 
-    @ViewChild(PlotComponent, { static: false })
-    @ViewChild('consoleView', { static: false }) consoleView: CtWrapBlockComponent;
+    @ViewChild(PlotComponent)
+    @ViewChild('consoleView') consoleView: CtWrapBlockComponent;
 
     plotly: PlotComponent;
 

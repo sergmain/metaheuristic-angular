@@ -24,7 +24,7 @@ export class FunctionsComponent implements OnInit {
 
     @ViewChild('nextTable', { static: true }) nextTable: MatButton;
     @ViewChild('prevTable', { static: true }) prevTable: MatButton;
-    @ViewChild('table', { static: false }) table: CtTableComponent;
+    @ViewChild('table') table: CtTableComponent;
 
     constructor(
         private functionService: FuncrionsService,
