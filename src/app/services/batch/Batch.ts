@@ -2,7 +2,7 @@ export interface Batch {
     batch: {
         id: number;
         version: number;
-        planId: number;
+        sourceCodeId: number;
         createdOn: number;
         execState: number;
         params: string;

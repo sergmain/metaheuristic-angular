@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { IAppState } from '../../app.reducers';
+import { AppState } from '../../app.reducers';
 import { defaultSettings, Settings, SettingsTheme } from './Settings';
 
 @Injectable({ providedIn: 'root' })
@@ -11,9 +11,9 @@ export class SettingsService {
     storageDefaultData: Settings = defaultSettings;
 
     constructor(
-        private store: Store < IAppState >
+        private store: Store<AppState>
     ) {
-        this.store.subscribe((state: IAppState) => {
+        this.store.subscribe((state: AppState) => {
             if (state.user && state.user.username) {
                 this.localStorageName = state.user.username + ':settingsService';
             }
@@ -29,7 +29,7 @@ export class SettingsService {
         });
     }
 
-    private updateTheme(state: IAppState) {
+    private updateTheme(state: AppState) {
         const body: HTMLElement = document.querySelector('body');
         let theme = null;
 

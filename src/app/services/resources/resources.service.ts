@@ -13,7 +13,7 @@ export class ResourcesService {
     GET: any;
     formData: any;
     constructor(private http: HttpClient) {
-        const base: any = (url: string): string => `${environment.baseUrl}launchpad/resource${url}`;
+        const base: any = (url: string): string => `${environment.baseUrl}dispatcher/resource${url}`;
         this.POST = (url: string, data: any): Observable < any > => this.http.post(base(url), data);
         this.GET = (url: string): Observable < any > => this.http.get(base(url));
         this.formData = generateFormData;

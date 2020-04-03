@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from '@app/services/authentication/authentication.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
-import { IAppState } from '@src/app/app.reducers';
+import { AppState } from '@src/app/app.reducers';
 import * as authenticationAction from '@src/app/services/authentication/authentication.actions';
 @Component({
     selector: 'login-view',
@@ -21,7 +21,7 @@ export class LoginComponent {
 
     constructor(
         private authenticationService: AuthenticationService,
-        private store: Store < IAppState >
+        private store: Store < AppState >
     ) {}
 
     login() {

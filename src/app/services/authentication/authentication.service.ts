@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { IAppState } from '@src/app/app.reducers';
+import { AppState } from '@src/app/app.reducers';
 import { environment } from '@src/environments/environment';
 import { Observable } from 'rxjs';
 import { Authority, response } from './response';
@@ -23,9 +23,9 @@ export class AuthenticationService {
     constructor(
         private http: HttpClient,
         private router: Router,
-        private store: Store < IAppState >
+        private store: Store<AppState>
     ) {
-        this.store.subscribe((state: IAppState) => {
+        this.store.subscribe((state: AppState) => {
             this.user = state.user;
         });
     }
@@ -49,7 +49,7 @@ export class AuthenticationService {
     }
 
     getUserRole() {
-        const set: Set < Role > = new Set();
+        const set: Set<Role> = new Set();
         if (this.user && this.user.authorities) {
             this.user.authorities.forEach((authority: Authority) => {
                 set.add(authority.authority);

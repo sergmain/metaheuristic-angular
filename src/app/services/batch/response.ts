@@ -1,7 +1,7 @@
 import { DefaultResponse } from '@app/models/DefaultResponse';
-import { IPlan } from '@app/services/plans/IPlan';
 import { Batches } from './Batches';
 import { BatchExecStatus } from './BatchExecStatus';
+import { SourceCode } from '../source-codes/SourceCode';
 
 export namespace response {
     export namespace batches {
@@ -18,7 +18,7 @@ export namespace response {
             ok: boolean;
         }
         export interface Add extends DefaultResponse {
-            items: IPlan[];
+            items: SourceCode[];
         }
         export interface Upload extends DefaultResponse {
 

@@ -1,0 +1,33 @@
+@import '../../../../variables.scss';
+
+:host {
+    display: block;
+    font-weight: bold;
+    margin: 0;
+    padding: 0;
+}
+
+:host[size="xx-large"] {
+    line-height: unit(5);
+    font-size: unit(5);
+}
+
+:host[size="x-large"] {
+    line-height: unit(4);
+    font-size: unit(4);
+}
+
+:host {
+    line-height: unit(3);
+    font-size: unit(3);
+}
+
+:host[size="x-small"] {
+    line-height: unit(2);
+    font-size: unit(2);
+}
+
+:host[size="xx-small"] {
+    line-height: unit(1);
+    font-size: unit(1);
+}

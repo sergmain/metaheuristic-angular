@@ -1,0 +1,111 @@
+<ct-section>
+    <ct-section-header>
+        <ct-section-header-row>
+            <ct-flex justify-content="space-between" align-items="center" gap="unit(1)">
+                <ct-flex-item>
+                    <ct-heading>{{ 'batch.Batch' | translate }} </ct-heading>
+                </ct-flex-item>
+                <ct-flex-item>
+                    <ct-flex justify-content="flex-end" align-items="center" gap="unit(1)">
+                        <ct-flex-item>
+                            <button mat-flat-button="mat-flat-button" color="primary" [disabled]="false" routerLink="/dispatcher/batch/add">
+                                {{ 'batch.Upload files and start processing' | translate }}
+                            </button>
+                        </ct-flex-item>
+                        <ct-flex-item>
+                            <button mat-stroked-button (click)="toggleFilterBatches()" [disabled]="false">
+								<span *ngIf="isFilterBatches" style="vertical-align: baseline;">✓&nbsp;&nbsp;</span>
+                                <span *ngIf="!isFilterBatches" style="vertical-align: baseline;">✗&nbsp;&nbsp;</span>
+                                <span>{{ 'batch.onlyMyBatches' | translate }}</span>
+                            </button>
+                        </ct-flex-item>
+                    </ct-flex>
+                </ct-flex-item>
+            </ct-flex>
+        </ct-section-header-row>
+    </ct-section-header>
+    <ct-section-body>
+        <ct-section-body-row>
+            <ct-table #table>
+                <table class="mat-table" mat-table="mat-table" [dataSource]="dataSource">
+                    <ng-container matColumnDef="id">
+                        <th mat-header-cell="mat-header-cell" *matHeaderCellDef>{{ 'batch.Id' | translate }}</th>
+                        <td mat-cell="mat-cell" *matCellDef="let el">{{el.batch.id}} </td>
+                    </ng-container>
+                    <ng-container matColumnDef="createdOn">
+                        <th mat-header-cell="mat-header-cell" *matHeaderCellDef>{{ 'batch.Created On' | translate }}</th>
+                        <td mat-cell="mat-cell" *matCellDef="let el">{{el.batch.createdOn | date:'MMM d, yyyy, HH:mm:ss'}} </td>
+                    </ng-container>
+                    <ng-container matColumnDef="isBatchConsistent">
+                        <th mat-header-cell="mat-header-cell" *matHeaderCellDef>{{ 'batch.Is Batch Consistent?' | translate }} </th>
+                        <td mat-cell="mat-cell" *matCellDef="let el"> <span *ngIf="el.ok">{{ 'batch.isBatchConsistent.true' | translate }}</span><span *ngIf="!el.ok">{{ 'batch.isBatchConsistent.false' | translate }}</span></td>
+                    </ng-container>
+                    <ng-container matColumnDef="sourceCode">
+                        <th mat-header-cell="mat-header-cell" *matHeaderCellDef>
+                            <div class="no-wrap">{{ 'batch.Source Code' | translate }}</div>
+                            <div class="no-wrap">{{ 'batch.File name' | translate }}</div>
+                        </th>
+                        <td mat-cell="mat-cell" *matCellDef="let el">
+                            <div class="no-wrap">{{el.sourceCode}}</div>
+                            <div class="no-wrap">{{el.uploadedFileName}}</div>
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="execState">
+                        <th mat-header-cell="mat-header-cell" *matHeaderCellDef> {{ 'batch.Exec State' | translate }}</th>
+                        <td mat-cell="mat-cell" *matCellDef="let el"> <span *ngIf="el.execState === -1">{{ 'batch.isBatchConsistent.Error' | translate }}</span>
+                            <span *ngIf="el.execState === 2">{{ 'batch.isBatchConsistent.Preparing' | translate }}</span>
+                            <span *ngIf="el.execState === 3">{{ 'batch.isBatchConsistent.Processing' | translate }}</span>
+                            <span *ngIf="el.execState === 4">{{ 'batch.isBatchConsistent.Finished' | translate }}</span></td>
+                    </ng-container>
+                    <ng-container matColumnDef="bts">
+                        <th mat-header-cell="mat-header-cell" *matHeaderCellDef> </th>
+                        <td mat-cell="mat-cell" *matCellDef="let el">
+                            <ct-flex justify-content="flex-end" gap="9px">
+                                <ct-flex-item>
+                                    <button mat-flat-button="mat-flat-button" size="forTableRow" [routerLink]="['/dispatcher/batch',el.batch.id,'status']" color="primary"> {{ 'batch.Status' | translate }}</button>
+                                </ct-flex-item>
+                                <!-- TODO download file-->
+                                <ct-flex-item>
+                                    <button mat-flat-button="mat-flat-button" size="forTableRow" color="primary" (click)="downloadFile(el.batch.id)"> {{ 'batch.Download Result' | translate }}</button>
+                                </ct-flex-item>
+                                <ct-flex-item>
+                                    <button mat-flat-button="mat-flat-button" color="warn" size="forTableRow" (click)="delete(el)" title="Delete">
+                                        <mat-icon>delete</mat-icon>
+                                    </button>
+                                </ct-flex-item>
+                            </ct-flex>
+                        </td>
+                    </ng-container>
+                    <tr mat-header-row="mat-header-row" *matHeaderRowDef="columnsToDisplay"> </tr>
+                    <tr mat-row="mat-row" *matRowDef="let row; columns: columnsToDisplay;" [class.deleted-table-row]="deletedRows.includes(row)"></tr>
+                </table>
+            </ct-table>
+        </ct-section-body-row>
+        <!-- <ct-section-body-row *ngIf="">
+            <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+        </ct-section-body-row> -->
+    </ct-section-body>
+    <ct-section-footer>
+        <ct-section-footer-row>
+            <ct-flex justify-content="space-between">
+                <ct-flex-item>
+                    <ct-flex justify-content="flex-start" gap="8px">
+                        <ct-flex-item>
+                            <button mat-flat-button="mat-flat-button" color="primary" #prevTable (click)="prev()" disabled="disabled">
+                                <mat-icon>arrow_back_ios</mat-icon>
+                            </button>
+                        </ct-flex-item>
+                        <ct-flex-item>
+                            <button mat-flat-button="mat-flat-button" color="primary" #nextTable (click)="next()" disabled="disabled">
+                                <mat-icon>arrow_forward_ios</mat-icon>
+                            </button>
+                        </ct-flex-item>
+                    </ct-flex>
+                </ct-flex-item>
+                <ct-flex-item>
+                    <button mat-flat-button="mat-flat-button" color="primary" [disabled]="false" routerLink="/dispatcher/batch/add"> {{ 'batch.Upload files and start processing' | translate }}</button>
+                </ct-flex-item>
+            </ct-flex>
+        </ct-section-footer-row>
+    </ct-section-footer>
+</ct-section>

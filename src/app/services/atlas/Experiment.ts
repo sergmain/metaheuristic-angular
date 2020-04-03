@@ -1,7 +1,7 @@
 export interface Experiment {
     id: number;
     version: number;
-    workbookId: number;
+    execContextId: number;
     name: string;
     description: string;
     code: string;

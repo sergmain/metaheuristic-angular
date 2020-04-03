@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { BatchService } from './batch.service';
-import { IAppState } from '@src/app/app.reducers';
+import { AppState } from '@src/app/app.reducers';
 import { Store, select } from '@ngrx/store';
 import { getBatches, getBatchesComplete } from './batch.actions';
 import { mergeMap, concatMap, withLatestFrom, map } from 'rxjs/operators';
@@ -16,7 +16,7 @@ export class BatchEffects {
     constructor(
         private actions: Actions,
         private batchService: BatchService,
-        private store: Store < IAppState >
+        private store: Store < AppState >
     ) {}
 
     getBatches = createEffect(() => this.actions.pipe(

@@ -1,17 +1,6 @@
 @import '~@angular/material/theming';
 
 
-@mixin planCardLayout() {
-    .plan-card {
-        width: 100%;
-
-        .mat-card-header {
-            margin: 0 -16px;
-        }
-    }
-}
-
-
 @mixin section($theme) {
 
     $primary: map-get($theme, primary);

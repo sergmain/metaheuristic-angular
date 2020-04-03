@@ -1,19 +1,8 @@
-import {
-    Snippet,
-    DefaultResponse,
-    DefaultListOfItems,
-} from '@app/models';
+import { ExperimentInfo } from './ExperimentInfo';
+import { ConsoleResult, Experiment, ExperimentFeature, FeatureProgressConsolePartEntity, HyperParamResult, MetricsResult, TasksResult } from './index';
+import { DefaultResponse } from '@src/app/models/DefaultResponse';
+import { DefaultListOfItems } from '@src/app/models/DefaultListOfItems';
 
-import {
-    Task,
-    Experiment,
-    MetricsResult,
-    HyperParamResult,
-    TasksResult,
-    ExperimentFeature,
-    ConsoleResult,
-    FeatureProgressConsolePartEntity
-} from './index';
 
 export interface ListOfItems extends DefaultListOfItems {
     content: ExperimentItem[];
@@ -38,12 +27,12 @@ export interface HyperParams {
 }
 
 export interface HyperParam {
-    id ? : number;
-    version ? : number;
-    key ? : string;
-    values ? : string;
-    newValues ? : string;
-    variants ? : number;
+    id?: number;
+    version?: number;
+    key?: string;
+    values?: string;
+    newValues?: string;
+    variants?: number;
 }
 
 export interface SnippetResult {
@@ -79,21 +68,18 @@ export namespace response {
         export interface Get extends DefaultResponse {
             Experiment: Experiment;
         }
-        // export namespace info {
-        //     export interface Response {
+        export interface Info extends DefaultResponse {
+            experiment: Experiment;
+            experimentInfo: ExperimentInfo;
 
-        //     }
-        // }
+        }
         export interface Edit {
             simpleExperiment: SimpleExperiment;
             hyperParams: HyperParams;
             snippetResult: SnippetResult;
         }
-        // export namespace addCommit {
-        //     export interface Response {
+        export interface AddCommit extends DefaultResponse { }
 
-        //     }
-        // }
         // export namespace editCommit {
         //     export interface Response {
 
@@ -109,11 +95,11 @@ export namespace response {
 
         //     }
         // }
-        // export namespace featurePlotDataPart {
-        //     export interface Response {
-
-        //     }
-        // }
+        export interface FeaturePlotDataPart {
+            x?: (string)[] | null;
+            y?: (string)[] | null;
+            z?: ((number)[] | null)[] | null;
+        }
         // export namespace featureProgressPart {
         //     export interface Response {
 

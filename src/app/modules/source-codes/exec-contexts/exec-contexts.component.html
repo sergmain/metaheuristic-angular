@@ -1,0 +1,98 @@
+<ct-section>
+    <ct-section-header>
+        <ct-section-header-row>
+            <ct-heading>Workbooks in Source Code #{{ sourceCodeId }}</ct-heading>
+        </ct-section-header-row>
+    </ct-section-header>
+    <ct-section-body>
+        <ct-section-body-row *ngIf="response">
+            <ct-table>
+                <table class="mat-table" mat-table="mat-table" [dataSource]="workbooksTableSource">
+                    <ng-container matColumnDef="id">
+                        <th mat-header-cell="mat-header-cell" *matHeaderCellDef>Id</th>
+                        <td mat-cell="mat-cell" *matCellDef="let el">{{el.id}}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="planCode">
+                        <th mat-header-cell="mat-header-cell" *matHeaderCellDef>Plan Code</th>
+                        <td mat-cell="mat-cell" *matCellDef="let el">{{plan.code}}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="inputResourceParam">
+                        <th mat-header-cell="mat-header-cell" *matHeaderCellDef>Input Pool Codes</th>
+                        <td mat-cell="mat-cell" *matCellDef="let el">
+                            <pre>{{el.inputResourceParam}}</pre>
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="createdOn">
+                        <th mat-header-cell="mat-header-cell" *matHeaderCellDef>Created On</th>
+                        <td mat-cell="mat-cell" *matCellDef="let el">{{el.createdOn | date}}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="isPlanValid">
+                        <th mat-header-cell="mat-header-cell" *matHeaderCellDef>Is Plan<br> Valid</th>
+                        <td mat-cell="mat-cell" *matCellDef="let el">{{plan.valid}}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="isWorkbookValid">
+                        <th mat-header-cell="mat-header-cell" *matHeaderCellDef>Is workbook<br> Valid</th>
+                        <td mat-cell="mat-cell" *matCellDef="let el">{{el.valid}}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="execState">
+                        <th mat-header-cell="mat-header-cell" *matHeaderCellDef>ExecState</th>
+                        <td mat-cell="mat-cell" *matCellDef="let el">{{execState[el.execState]}}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="completedOn">
+                        <th mat-header-cell="mat-header-cell" *matHeaderCellDef>Completed on</th>
+                        <td mat-cell="mat-cell" *matCellDef="let el">{{el.completedOn | date}}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="bts">
+                        <th mat-header-cell="mat-header-cell" *matHeaderCellDef></th>
+                        <td mat-cell="mat-cell" *matCellDef="let el">
+                            <ct-flex justify-content="flex-end" gap="9px">
+                                <ct-flex-item *ngIf="(el.execState == execState.NONE) &amp;&amp; (el.valid) &amp;&amp; (plan.valid)">
+                                    <button mat-flat-button="mat-flat-button" size="forTableRow" color="primary" (click)="produce(el,$event)">Produce</button>
+                                </ct-flex-item>
+                                <ct-flex-item *ngIf="(el.execState == execState.PRODUCED) || (el.execState == execState.STOPPED)">
+                                    <button mat-flat-button="mat-flat-button" size="forTableRow" color="primary" (click)="start(el,$event)">Start</button>
+                                </ct-flex-item>
+                                <ct-flex-item *ngIf="(el.execState == execState.STARTED)">
+                                    <button mat-flat-button="mat-flat-button" size="forTableRow" color="primary" (click)="stop(el,$event)">Stop</button>
+                                </ct-flex-item>
+                                <ct-flex-item>
+                                    <button mat-flat-button="mat-flat-button" color="warn" size="forTableRow" [disabled]="el.__deleted" (click)="delete(el)">
+                                        <mat-icon>delete</mat-icon>
+                                    </button>
+                                </ct-flex-item>
+                            </ct-flex>
+                        </td>
+                    </ng-container>
+                    <tr mat-header-row="mat-header-row" *matHeaderRowDef="columnsToDisplay"></tr>
+                    <tr mat-row="mat-row" [class.mat-row--deleted]="row.__deleted" *matRowDef="let row; columns: workbooksColumnsToDisplay;"></tr>
+                </table>
+            </ct-table>
+        </ct-section-body-row>
+        <ct-section-body-row *ngIf="!response">
+            <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+        </ct-section-body-row>
+    </ct-section-body>
+    <ct-section-footer>
+        <ct-section-footer-row>
+            <ct-flex justify-content="space-between">
+                <ct-flex-item>
+                    <ct-flex justify-content="flex-start" gap="8px">
+                        <ct-flex-item>
+                            <button mat-flat-button="mat-flat-button" #prevTable (click)="prev()" disabled="disabled">
+                                <mat-icon>arrow_back_ios</mat-icon>
+                            </button>
+                        </ct-flex-item>
+                        <ct-flex-item>
+                            <button mat-flat-button="mat-flat-button" #nextTable (click)="next()" disabled="disabled">
+                                <mat-icon>arrow_forward_ios</mat-icon>
+                            </button>
+                        </ct-flex-item>
+                    </ct-flex>
+                </ct-flex-item>
+                <ct-flex-item>
+                    <a mat-flat-button="mat-flat-button" color="primary" [disabled]="!response" [routerLink]="['/dispatcher','source-codes',sourceCodeId,'exec-context','add']">Add workbook</a>
+                </ct-flex-item>
+            </ct-flex>
+        </ct-section-footer-row>
+    </ct-section-footer>
+</ct-section>

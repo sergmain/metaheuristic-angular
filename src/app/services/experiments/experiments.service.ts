@@ -2,208 +2,94 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '@src/environments/environment';
 import { Observable } from 'rxjs';
-import { generateFormData } from '@src/app/helpers/generateFormData';
+import { generateFormData as formData } from '@src/app/helpers/generateFormData';
+import { response } from './response';
+
+const url = (s: string): string => `${environment.baseUrl}dispatcher/experiment${s}`;
+
+
 
 @Injectable({ providedIn: 'root' })
 export class ExperimentsService {
-    POST: any;
-    GET: any;
-    formData: any;
 
-    constructor(private http: HttpClient) {
-        const base: any = (url: string): string => `${environment.baseUrl}launchpad/experiment${url}`;
-        const POST: any = (url: string, data: any): Observable < any > => this.http.post(base(url), data);
-        const GET: any = (url: string): Observable < any > => this.http.get(base(url));
-
-        this.POST = (url: string, data: any): Observable < any > => this.http.post(base(url), data);
-        this.GET = (url: string): Observable < any > => this.http.get(base(url));
-        this.formData = generateFormData;
-    }
+    constructor(private http: HttpClient) { }
 
     experiments = {
-        // @GetMapping("/experiments")
-        // public ExperimentApiData.ExperimentsResult getExperiments(@PageableDefault(size = 5) Pageable pageable) {
-        //     return experimentTopLevelService.getExperiments(pageable);
-        // }
         get: (page: string): any =>
-            this.GET(`/experiments?page=${page}`)
+            this.http.get(url(`/experiments`), { params: { page } })
     };
 
     experiment = {
-        // @GetMapping(value = "/experiment/{id}")
-        // public ExperimentApiData.ExperimentResult getExperiment(@PathVariable Long id) {
-        //     return experimentTopLevelService.getExperimentWithoutProcessing(id);
-        // }
-        get: (id: string): Observable < any > =>
-            this.GET(`/experiment/${id}`),
+        get: (id: string): Observable<any> =>
+            this.http.get(url(`/experiment/${id}`)),
 
-        // @PostMapping("/experiment-feature-plot-data-part/{experimentId}/{featureId}/{params}/{paramsAxis}/part")
-        // public @ResponseBody
-        // ExperimentApiData.PlotData getPlotData(
-        //         @PathVariable Long experimentId, @PathVariable Long featureId,
-        //         @PathVariable String[] params, @PathVariable String[] paramsAxis) {
-        //     return experimentTopLevelService.getPlotData(experimentId, featureId, params, paramsAxis);
-        // }
-        featurePlotDataPart: (experimentId: string, featureId: string, params: string, paramsAxis: string): Observable < any > =>
-            this.POST(`/experiment-feature-plot-data-part/${experimentId}/${featureId}/${params}/${paramsAxis}/part`),
+        featurePlotDataPart: (experimentId: string, featureId: string, params: string, paramsAxis: string): Observable<any> =>
+            this.http.post(url(`/experiment-feature-plot-data-part/${experimentId}/${featureId}/${params}/${paramsAxis}/part`), {}),
 
-        // @PostMapping("/experiment-feature-progress-console-part/{taskId}")
-        // public ExperimentApiData.ConsoleResult getTasksConsolePart(@PathVariable(name="taskId") Long taskId) {
-        //     return experimentTopLevelService.getTasksConsolePart(taskId);
-        // }
-        featureProgressConsolePart: (taskId: string): Observable < any > =>
-            this.POST(`/experiment-feature-progress-console-part/${taskId}`),
+        featureProgressConsolePart: (taskId: string): Observable<response.experiment.FeatureProgressConsolePart> =>
+            this.http.post<response.experiment.FeatureProgressConsolePart>(url(`/experiment-feature-progress-console-part/${taskId}`), {}),
 
-        // @PostMapping("/experiment-feature-progress-part/{experimentId}/{featureId}/{params}/part")
-        // public ExperimentApiData.ExperimentFeatureExtendedResult getFeatureProgressPart(@PathVariable Long experimentId, @PathVariable Long featureId, @PathVariable String[] params, @SuppressWarnings("DefaultAnnotationParam") @PageableDefault(size = 10) Pageable pageable) {
-        //     return experimentTopLevelService.getFeatureProgressPart(experimentId, featureId, params, pageable);
-        // }
-        featureProgressPart: (experimentId: string, featureId: string, params: string): Observable < any > =>
-            this.POST(`/experiment-feature-progress-part/${experimentId}/${featureId}/${params}/part`),
+        featureProgressPart: (experimentId: string, featureId: string, params: string): Observable<any> =>
+            this.http.post(url(`/experiment-feature-progress-part/${experimentId}/${featureId}/${params}/part`), {}),
 
-        // @GetMapping(value = "/experiment-feature-progress/{experimentId}/{featureId}")
-        // public ExperimentApiData.ExperimentFeatureExtendedResult getFeatures(@PathVariable Long experimentId, @PathVariable Long featureId) {
-        //     return experimentTopLevelService.getExperimentFeatureExtended(experimentId, featureId);
-        // }
-        featureProgress: (experimentId: string, featureId: string): Observable < any > =>
-            this.GET(`/experiment-feature-progress/${experimentId}/${featureId}`),
+        featureProgress: (experimentId: string, featureId: string): Observable<any> =>
+            this.http.get(url(`/experiment-feature-progress/${experimentId}/${featureId}`)),
 
+        info: (id: string): Observable<response.experiment.Info> =>
+            this.http.get<response.experiment.Info>(url(`/experiment-info/${id}`)),
 
-        // @GetMapping(value = "/experiment-info/{id}")
-        // public ExperimentApiData.ExperimentInfoExtendedResult info(@PathVariable Long id) {
-        //     return experimentTopLevelService.getExperimentInfo(id);
-        // }
-        info: (id: string): Observable < any > =>
-            this.GET(`/experiment-info/${id}`),
+        edit: (id: string): Observable<any> =>
+            this.http.get(url(`/experiment-edit/${id}`)),
 
-        // @GetMapping(value = "/experiment-edit/{id}")
-        // public ExperimentApiData.ExperimentsEditResult edit(@PathVariable Long id) {
-        //     return experimentTopLevelService.editExperiment(id);
-        // }
-        edit: (id: string): Observable < any > =>
-            this.GET(`/experiment-edit/${id}`),
+        addCommit: (data: any): Observable<response.experiment.AddCommit> =>
+            this.http.post<response.experiment.AddCommit>(url(`/experiment-add-commit`), data),
 
-        // @PostMapping("/experiment-add-commit")
-        // public OperationStatusRest addFormCommit(@RequestBody ExperimentApiData.ExperimentData experiment) {
-        //     return experimentTopLevelService.addExperimentCommit(experiment);
-        // }
-        addCommit: (data: any): Observable < any > =>
-            this.POST(`/experiment-add-commit`, data),
+        editCommit: (data: any): Observable<any> =>
+            this.http.post(url(`/experiment-edit-commit`), data),
 
-        // @PostMapping("/experiment-edit-commit")
-        // public OperationStatusRest editFormCommit(@RequestBody ExperimentApiData.SimpleExperiment simpleExperiment) {
-        //     return experimentTopLevelService.editExperimentCommit(simpleExperiment);
-        // }
-        editCommit: (data: any): Observable < any > =>
-            this.POST(`/experiment-edit-commit`, data),
+        metadataAddCommit: (experimentId: string, data: any): Observable<any> =>
+            this.http.post(url(`/experiment-metadata-add-commit/${experimentId}`), formData(data)),
 
+        metadataEditCommit: (experimentId: string, data: any): Observable<any> =>
+            this.http.post(url(`/experiment-metadata-edit-commit/${experimentId}`), formData(data)),
 
-        // @PostMapping("/experiment-metadata-add-commit/{id}")
-        // public OperationStatusRest metadataAddCommit(@PathVariable Long id, String key, String value) {
-        //     return experimentTopLevelService.metadataAddCommit(id, key, value);
-        // }
-        metadataAddCommit: (experimentId: string, data: any): Observable < any > =>
-            this.POST(`/experiment-metadata-add-commit/${experimentId}`, this.formData(data)),
+        snippetAddCommit: (id: string, data: any): Observable<any> =>
+            this.http.post(url(`/experiment-snippet-add-commit/${id}`), formData(data)),
 
+        metadataDeleteCommit: (experimentId: string | number, key: string | number): Observable<any> =>
+            this.http.get(url(`/experiment-metadata-delete-commit/${experimentId}/${key}`)),
 
-        // @PostMapping("/experiment-metadata-edit-commit/{id}")
-        // public OperationStatusRest metadataEditCommit(@PathVariable Long id, String key, String value) {
-        //     return experimentTopLevelService.metadataEditCommit(id, key, value);
-        // }
-        metadataEditCommit: (experimentId: string, data: any): Observable < any > =>
-            this.POST(`/experiment-metadata-edit-commit/${experimentId}`, this.formData(data)),
+        metadataDefaultAddCommit: (experimentId: string | number): Observable<any> =>
+            this.http.get(url(`/experiment-metadata-default-add-commit/${experimentId}`)),
 
+        snippetDeleteByTypeCommit: (experimentId: string, snippetType: string): Observable<any> =>
+            this.http.get(url(`/experiment-snippet-delete-by-type-commit/${experimentId}/${snippetType}`)),
 
-        // @PostMapping("/experiment-snippet-add-commit/{id}")
-        // public OperationStatusRest snippetAddCommit(@PathVariable Long id, String code) {
-        //     return experimentTopLevelService.snippetAddCommit(id, code);
-        // }
-        snippetAddCommit: (id: string, data: any): Observable < any > =>
-            this.POST(`/experiment-snippet-add-commit/${id}`, this.formData(data)),
+        deleteCommit: (id: string): Observable<any> =>
+            this.http.post(url(`/experiment-delete-commit`), formData({ id })),
 
-        // @GetMapping("/experiment-metadata-delete-commit/{experimentId}/{key}")
-        // public OperationStatusRest metadataDeleteCommit(@PathVariable Long experimentId, @PathVariable String key) {
-        //     if (true) throw new IllegalStateException("Need to change this in web(html files) and angular");
-        //     return experimentTopLevelService.metadataDeleteCommit(experimentId, key);
-        // }
-        metadataDeleteCommit: (experimentId: string | number, key: string | number): Observable < any > =>
-            this.GET(`/experiment-metadata-delete-commit/${experimentId}/${key}`),
+        cloneCommit: (id: string | number): Observable<any> =>
+            this.http.post(url(`/experiment-clone-commit`), formData({ id })),
 
-        // @GetMapping("/experiment-metadata-default-add-commit/{experimentId}")
-        // public OperationStatusRest metadataDefaultAddCommit(@PathVariable Long experimentId) {
-        //     return experimentTopLevelService.metadataDefaultAddCommit(experimentId);
-        // }
-        metadataDefaultAddCommit: (experimentId: string | number): Observable < any > =>
-            this.GET(`/experiment-metadata-default-add-commit/${experimentId}`),
+        taskRerun: (taskId: string): Observable<any> =>
+            this.http.post(url(`/task-rerun/${taskId}`), {}),
 
+        uploadFromFile: (file: any): Observable<any> =>
+            this.http.post(url(`/experiment-upload-from-file`), file),
 
-        snippetDeleteByTypeCommit: (experimentId: string, snippetType: string): Observable < any > =>
-            this.GET(`/experiment-snippet-delete-by-type-commit/${experimentId}/${snippetType}`),
+        bindExperimentToPlanWithResource: (experimentCode: string, resourcePoolCode: string): Observable<any> =>
+            this.http.post(url(`/bind-experiment-to-plan-with-resource`), { experimentCode, resourcePoolCode }),
 
+        produceTasks: (experimentCode: string): Observable<any> =>
+            this.http.post(url(`/produce-tasks`), { experimentCode }),
 
-        // @PostMapping("/experiment-delete-commit")
-        // public OperationStatusRest deleteCommit(Long id) {
-        //     return experimentTopLevelService.experimentDeleteCommit(id);
-        // }
-        deleteCommit: (id: string): Observable < any > =>
-            this.POST(`/experiment-delete-commit`, this.formData({ id })),
+        startProcessingOfTasks: (experimentCode: string): Observable<any> =>
+            this.http.post(url(`/start-processing-of-tasks`), { experimentCode }),
 
-        // @PostMapping("/experiment-clone-commit")
-        // public OperationStatusRest experimentCloneCommit(Long id) {
-        //     return experimentTopLevelService.experimentCloneCommit(id);
-        // }
-        cloneCommit: (id: string | number): Observable < any > =>
-            this.POST(`/experiment-clone-commit`, this.formData({ id })),
+        processingStatus: (experimentCode: string): Observable<any> =>
+            this.http.get(url(`/processing-status/${experimentCode}`)),
 
-        // @PostMapping("/task-rerun/{taskId}")
-        // public OperationStatusRest rerunTask(@PathVariable Long taskId) {
-        //     return workbookService.resetTask(taskId);
-        // }
-        taskRerun: (taskId: string): Observable < any > =>
-            this.POST(`/task-rerun/${taskId}`),
-
-
-        // @PostMapping(value = "/experiment-upload-from-file")
-        // public OperationStatusRest uploadSnippet(final MultipartFile file) {
-        //     return experimentTopLevelService.uploadExperiment(file);
-        // }
-        uploadFromFile: (file: any): Observable < any > =>
-            this.POST(`/experiment-upload-from-file`, file),
-
-        // @PostMapping("/bind-experiment-to-plan-with-resource")
-        // public OperationStatusRest bindExperimentToPlanWithResource(String experimentCode, String resourcePoolCode) {
-        //     return experimentTopLevelService.bindExperimentToPlanWithResource(experimentCode, resourcePoolCode);
-        // }
-        bindExperimentToPlanWithResource: (experimentCode: string, resourcePoolCode: string): Observable < any > =>
-            this.POST(`/bind-experiment-to-plan-with-resource`, { experimentCode, resourcePoolCode }),
-
-        // @PostMapping("/produce-tasks")
-        // public OperationStatusRest produceTasks(String experimentCode) {
-        //     return experimentTopLevelService.produceTasks(experimentCode);
-        // }
-        produceTasks: (experimentCode: string): Observable < any > =>
-            this.POST(`/produce-tasks`, { experimentCode }),
-
-        // @PostMapping("/start-processing-of-tasks")
-        // public OperationStatusRest startProcessingOfTasks(String experimentCode) {
-        //     return experimentTopLevelService.startProcessingOfTasks(experimentCode);
-        // }
-        startProcessingOfTasks: (experimentCode: string): Observable < any > =>
-            this.POST(`/start-processing-of-tasks`, { experimentCode }),
-
-
-        // @GetMapping("/processing-status/{experimentCode}")
-        // public EnumsApi.WorkbookExecState getExperimentProcessingStatus(@PathVariable String experimentCode) {
-        //     return experimentTopLevelService.getExperimentProcessingStatus(experimentCode);
-        // }
-        processingStatus: (experimentCode: string): Observable < any > =>
-            this.GET(`/processing-status/${experimentCode}`),
-
-        // @GetMapping(value = "/experiment-to-atlas/{id}")
-        // public OperationStatusRest toAtlas(@PathVariable Long id) {
-        //     return experimentTopLevelService.toAtlas(id);
-        // }
-        toAtlas: (id: string): Observable < any > =>
-            this.GET(`/experiment-to-atlas/${id}`)
+        toAtlas: (id: string): Observable<any> =>
+            this.http.get(url(`/experiment-to-atlas/${id}`))
     };
 }

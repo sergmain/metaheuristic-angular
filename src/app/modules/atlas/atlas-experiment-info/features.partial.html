@@ -1,0 +1,44 @@
+
+<ct-section>
+  <ct-section-header>
+    <ct-section-header-row>
+      <ct-heading>Features</ct-heading>
+    </ct-section-header-row>
+  </ct-section-header>
+  <ct-section-body>
+    <ct-section-body-row>
+      <ct-table>
+        <table mat-table="mat-table" [dataSource]="tables.features.table"> 
+          <ng-container matColumnDef="id"> 
+            <th mat-header-cell="mat-header-cell" *matHeaderCellDef>Id </th>
+            <td mat-cell="mat-cell" *matCellDef="let el">{{el.id}} </td>
+          </ng-container>
+          <ng-container matColumnDef="resourceCodes"> 
+            <th mat-header-cell="mat-header-cell" *matHeaderCellDef>Set of Features </th>
+            <td mat-cell="mat-cell" *matCellDef="let el">{{el.resourceCodes}} </td>
+          </ng-container>
+          <ng-container matColumnDef="execStatus"> 
+            <th mat-header-cell="mat-header-cell" *matHeaderCellDef>Exec Status </th>
+            <td mat-cell="mat-cell" *matCellDef="let el">{{el.execStatusAsString}}</td>
+          </ng-container>
+          <ng-container matColumnDef="maxValue"> 
+            <th mat-header-cell="mat-header-cell" *matHeaderCellDef>Max value</th>
+            <td mat-cell="mat-cell" *matCellDef="let el">{{el.maxValue}}</td>
+          </ng-container>
+          <ng-container matColumnDef="bts"> 
+            <th mat-header-cell="mat-header-cell" *matHeaderCellDef> </th>
+            <td mat-cell="mat-cell" *matCellDef="let el"> 
+              <ct-flex justify-content="flex-end" gap="9px">
+                <ct-flex-item>
+                  <button mat-flat-button="mat-flat-button" [routerLink]="['/dispatcher/atlas/experiment-feature-progress/', atlas.id, experiment.id, el.id]" color="primary" title="">Info        </button>
+                </ct-flex-item>
+              </ct-flex>
+            </td>
+          </ng-container>
+          <tr mat-header-row="mat-header-row" *matHeaderRowDef="tables.features.columnsToDisplay"> </tr>
+          <tr mat-row="mat-row" *matRowDef="let row; columns: tables.features.columnsToDisplay;"> </tr>
+        </table>
+      </ct-table>
+    </ct-section-body-row>
+  </ct-section-body>
+</ct-section>

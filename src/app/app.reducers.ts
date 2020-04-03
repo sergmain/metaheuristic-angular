@@ -1,6 +1,4 @@
 import { ActionReducerMap, ActionReducer, MetaReducer } from '@ngrx/store';
-import { IPlansState } from './services/plans/IPlansState';
-import { plansReducer } from './services/plans/plans.reducer';
 import { Settings } from './services/settings/Settings';
 import { settingsReducer } from './services/settings/settings.reducer';
 import { environment } from '@src/environments/environment';
@@ -9,16 +7,14 @@ import { User } from './services/authentication';
 import { BatchesState } from './services/batch/BatchesState';
 import { batchReducer } from './services/batch/batch.reducer';
 
-export interface IAppState {
+export interface AppState {
     settings: Settings;
-    plans: IPlansState;
     user: User;
     batches: BatchesState;
 }
 
-export const appReducers: ActionReducerMap < IAppState > = {
+export const appReducers: ActionReducerMap < AppState > = {
     settings: settingsReducer,
-    plans: plansReducer,
     user: authenticationReducer,
     batches: batchReducer
 };

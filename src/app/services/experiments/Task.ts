@@ -2,13 +2,13 @@ export interface Task {
     id: number;
     version: number;
     params: string;
-    stationId ? : number | null;
+    processorId ? : number | null;
     assignedOn ? : number | null;
     completedOn ? : number | null;
     isCompleted: boolean;
     metrics ? : string | null;
     order: number;
-    workbookId: number;
+    execContextId: number;
     execState: number;
     processType: number;
     resultReceived: boolean;

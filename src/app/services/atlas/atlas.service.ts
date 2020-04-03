@@ -1,95 +1,51 @@
 import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { generateFormData } from '@src/app/helpers/generateFormData';
+import { generateFormData as formData } from '@src/app/helpers/generateFormData';
 import { environment } from '@src/environments/environment';
+import { response } from './response';
 
-export * from './response';
+const url = (url: string) => `${environment.baseUrl}dispatcher/atlas${url}`;
+
 
 @Injectable({ providedIn: 'root' })
 export class AtlasService {
-    POST: any;
-    GET: any;
-    formData: any;
 
-    constructor(private http: HttpClient) {
-        const base: any = (url: string): string => `${environment.baseUrl}launchpad/atlas${url}`;
-        this.POST = (url: string, data: any): Observable < any > => this.http.post(base(url), data);
-        this.GET = (url: string, options: any = {}): Observable < any > => this.http.get(base(url), options);
-        this.formData = generateFormData;
-    }
+    constructor(private http: HttpClient) { }
 
     experiments = {
-        // @GetMapping("/atlas-experiments")
-        // public AtlasData.AtlasSimpleExperiments init(@PageableDefault(size = 5) Pageable pageable) {
-        //     return atlasService.getAtlasExperiments(pageable);
-        // }
-        get: (page: number | string): Observable < any > =>
-            this.GET(`/atlas-experiments?page=${page}`)
+        get: (page: string): Observable<response.experiments.Get> =>
+            this.http.get<response.experiments.Get>(url(`/atlas-experiments`), { params: { page } })
     };
 
     experiment = {
-        // @GetMapping(value = "/atlas-experiment-info/{id}")
-        // public AtlasData.ExperimentInfoExtended info(@PathVariable Long id) {
-        //     return atlasTopLevelService.getExperimentInfoExtended(id);
-        // }
-        info: (id: string): Observable < any > =>
-            this.GET(`/atlas-experiment-info/${id}`),
+        info: (id: string): Observable<response.experiment.Info> =>
+            this.http.get<response.experiment.Info>(url(`/atlas-experiment-info/${id}`)),
 
-        // @PostMapping("/atlas-experiment-delete-commit")
-        // public OperationStatusRest deleteCommit(Long id) {
-        //     return atlasTopLevelService.atlasDeleteCommit(id);
-        // }
-        deleteCommit: (id: string): Observable < any > =>
-            this.POST(`/atlas-experiment-delete-commit`, this.formData({ id })),
+        deleteCommit: (id: string): Observable<response.experiment.DeleteCommit> =>
+            this.http.post<response.experiment.DeleteCommit>(url(`/atlas-experiment-delete-commit`), formData({ id })),
 
-        // @GetMapping(value = "/atlas-experiment-feature-progress/{atlasId}/{experimentId}/{featureId}")
-        // public AtlasData.ExperimentFeatureExtendedResult getFeatures(
-        //         @PathVariable Long atlasId,@PathVariable Long experimentId, @PathVariable Long featureId) {
-        //     return atlasTopLevelService.getExperimentFeatureExtended(atlasId, experimentId, featureId);
-        // }
-        featureProgress: (atlasId: string, experimentId: string, featureId: string): Observable < any > =>
-            this.GET(`/atlas-experiment-feature-progress/${atlasId}/${experimentId}/${featureId}`),
+        featureProgress: (atlasId: string, experimentId: string, featureId: string): Observable<response.experiment.FeatureProgress> =>
+            this.http.get<response.experiment.FeatureProgress>(url(`/atlas-experiment-feature-progress/${atlasId}/${experimentId}/${featureId}`)),
 
 
-        // @PostMapping("/atlas-experiment-feature-progress-part/{atlasId}/{experimentId}/{featureId}/{params}/part")
-        // public AtlasData.ExperimentFeatureExtendedResult getFeatureProgressPart(@PathVariable Long atlasId, @PathVariable Long experimentId, @PathVariable Long featureId, @PathVariable String[] params, @SuppressWarnings("DefaultAnnotationParam") @PageableDefault(size = 10) Pageable pageable) {
-        //     return atlasTopLevelService.getFeatureProgressPart(atlasId, featureId, params, pageable);
-        // }
-        featureProgressPart: (atlasId: string, experimentId: string, featureId: string, params: any, page: string | number): Observable < any > =>
-            this.POST(`/atlas-experiment-feature-progress-part/${atlasId}/${experimentId}/${featureId}/${params}/part`, this.formData({ page })),
+        featureProgressPart: (atlasId: string, experimentId: string, featureId: string, params: any, page: string | number): Observable<response.experiment.FeatureProgressPart> =>
+            this.http.post<response.experiment.FeatureProgressPart>(url(`/atlas-experiment-feature-progress-part/${atlasId}/${experimentId}/${featureId}/${params}/part`), formData({ page })),
 
-        // @PostMapping("/atlas-experiment-feature-progress-console-part/{atlasId}/{taskId}")
-        // public AtlasData.ConsoleResult getTasksConsolePart(@PathVariable(name = "atlasId") Long atlasId, @PathVariable(name = "taskId") Long taskId ) {
-        //     return atlasTopLevelService.getTasksConsolePart(atlasId, taskId);
-        // }
-        featureProgressConsolePart: (atlasId: string, taskId: string): Observable < any > =>
-            this.POST(`/atlas-experiment-feature-progress-console-part/${atlasId}/${taskId}`),
+        featureProgressConsolePart: (atlasId: string, taskId: string): Observable<response.experiment.FeatureProgressConsolePart> =>
+            this.http.post<response.experiment.FeatureProgressConsolePart>(url(`/atlas-experiment-feature-progress-console-part/${atlasId}/${taskId}`), {}),
 
-        // @PostMapping("/atlas-experiment-feature-plot-data-part/{atlasId}/{experimentId}/{featureId}/{params}/{paramsAxis}/part")
-        // @ResponseBody
-        // public AtlasData.PlotData getPlotData(
-        //         @PathVariable Long atlasId,
-        //         @PathVariable Long experimentId, @PathVariable Long featureId,
-        //         @PathVariable String[] params, @PathVariable String[] paramsAxis) {
-        //     return atlasTopLevelService.getPlotData(atlasId, experimentId, featureId, params, paramsAxis);
-        // }
-        featurePlotDataPart: (atlasId: string, experimentId: string, featureId: string, params: any, paramsAxis: any): Observable < any > =>
-            this.POST(`/atlas-experiment-feature-plot-data-part/${atlasId}/${experimentId}/${featureId}/${params}/${paramsAxis}/part`),
+        featurePlotDataPart: (atlasId: string, experimentId: string, featureId: string, params: any, paramsAxis: any): Observable<response.experiment.FeaturePlotDataPart> =>
+            this.http.post<response.experiment.FeaturePlotDataPart>(url(`/atlas-experiment-feature-plot-data-part/${atlasId}/${experimentId}/${featureId}/${params}/${paramsAxis}/part`), {}),
 
+        uploadFromFile: (file: File): Observable<response.experiment.UploadFromFile> =>
+            this.http.post<response.experiment.UploadFromFile>(url(`/atlas-experiment-upload-from-file`), formData({ file }))
+    };
 
-        // @PostMapping(value = "/atlas-experiment-upload-from-file")
-        // public OperationStatusRest uploadAtlas(final MultipartFile file) {
-        //     return atlasTopLevelService.uploadExperiment(file);
-        // }
-        uploadFromFile: (file: File): Observable < any > =>
-            this.POST(`/atlas-experiment-upload-from-file`, this.formData({ file }))
-    }
-
-    downloadFile(): Observable < HttpResponse < Blob >> {
+    downloadFile(): Observable<HttpResponse<Blob>> {
         let headers: HttpHeaders = new HttpHeaders();
         headers = headers.append('Accept', 'application/octet-stream');
-        return this.GET(`/atlas-experiment-export/none.zip`, {
+        return this.http.get(url(`/atlas-experiment-export/none.zip`), {
             headers,
             observe: 'response',
             responseType: 'blob'

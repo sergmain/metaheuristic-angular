@@ -1,0 +1,58 @@
+<ng-template [ngIf]="!sourceCodeResponse">
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+</ng-template>
+<ng-template [ngIf]="sourceCodeResponse">
+    <ct-section>
+        <ct-section-header>
+            <ct-section-header-row>
+                <ct-heading> Source Code: #{{ sourceCodeResponse.sourceCode.id }}</ct-heading>
+            </ct-section-header-row>
+        </ct-section-header>
+    </ct-section>
+    <ct-cols align-items="flex-start">
+        <ct-col size="6">
+            <ct-section>
+                <ct-section-header>
+                    <ct-section-header-row>
+                        <ct-heading> New execContext with Single Input</ct-heading>
+                    </ct-section-header-row>
+                </ct-section-header>
+                <ct-section-body>
+                    <ct-section-body-row>
+                        <ct-section-content>
+                            <mat-form-field appearance="outline">
+                                <mat-label>Input variable for this source code</mat-label>
+                                <input matInput="matInput" [(ngModel)]="variable" autocomplete="off" />
+                                <mat-hint>This is a required field.</mat-hint>
+                            </mat-form-field>
+                        </ct-section-content>
+                    </ct-section-body-row>
+                </ct-section-body>
+                <ct-section-footer>
+                    <ct-section-footer-row>
+                        <ct-flex justify-content="flex-end" gap="8px">
+                            <ct-flex-item>
+                                <button mat-stroked-button="mat-stroked-button" (click)="cancel()">Back </button>
+                            </ct-flex-item>
+                            <ct-flex-item>
+                                <button mat-flat-button="mat-flat-button" (click)="createWithVariable()" color="primary" [disabled]="currentStates.has(states.loading)">Create </button>
+                            </ct-flex-item>
+                        </ct-flex>
+                    </ct-section-footer-row>
+                </ct-section-footer>
+            </ct-section>
+        </ct-col>
+        <ct-col size="6">
+            <ct-section *ngIf="responseSingle">
+                <ct-section-body>
+                    <ct-section-body-row>
+                        <ct-section-content>
+                            <p *ngFor="let info of responseSingle.infoMessages; index as i; trackBy: trackByFn">{{info}}</p>
+                            <p *ngFor="let error of responseSingle.errorMessages; index as i; trackBy: trackByFn">{{error}}</p>
+                        </ct-section-content>
+                    </ct-section-body-row>
+                </ct-section-body>
+            </ct-section>
+        </ct-col>
+    </ct-cols>
+</ng-template>

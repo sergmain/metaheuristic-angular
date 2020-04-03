@@ -5,7 +5,7 @@ import { AuthenticationService } from '@app/services/authentication/authenticati
 import { Store } from '@ngrx/store';
 import { setOfLanguages, SettingsLanguage, SettingsTheme } from '@src/app/services/settings/Settings';
 import { SettingsService } from '@src/app/services/settings/settings.service';
-import { IAppState } from '@src/app/app.reducers';
+import { AppState } from '@src/app/app.reducers';
 import * as settingsAction from '@src/app/services/settings/settings.actions';
 import { BatchService } from '@src/app/services/batch/batch.service';
 import { AudioNotification } from '@src/app/services/audioNotification/audioNotification.service';
@@ -25,8 +25,8 @@ export class AppViewComponent implements OnInit, OnDestroy {
     sidenavButtonDisable: boolean = false;
     theme: SettingsTheme;
     lang: {
-        list ? : Set < SettingsLanguage > ;
-        current ? : SettingsLanguage;
+        list?: Set<SettingsLanguage>;
+        current?: SettingsLanguage;
     } = {};
     batchFinished: boolean = false;
     brandingTitle: string = environment.brandingTitle;
@@ -41,15 +41,14 @@ export class AppViewComponent implements OnInit, OnDestroy {
         private router: Router,
         private batchService: BatchService,
         private audioNotification: AudioNotification,
-        private store: Store < IAppState > ,
+        private store: Store<AppState>,
         private domSanitizer: DomSanitizer
-    ) {
-        this.htmlContent = domSanitizer.bypassSecurityTrustHtml(environment.brandingMsgIndex);
-        this.lang.list = setOfLanguages;
-    }
+    ) { }
 
     ngOnInit() {
-        this.store.subscribe((state: IAppState) => {
+        this.htmlContent = this.domSanitizer.bypassSecurityTrustHtml(environment.brandingMsgIndex);
+        this.lang.list = setOfLanguages;
+        this.store.subscribe((state: AppState) => {
             this.theme = state.settings.theme;
             this.lang.current = state.settings.language;
         });
@@ -62,7 +61,7 @@ export class AppViewComponent implements OnInit, OnDestroy {
         });
     }
 
-    ngOnDestroy() {}
+    ngOnDestroy() { }
 
     isAuth() {
         return this.authenticationService.isAuth();

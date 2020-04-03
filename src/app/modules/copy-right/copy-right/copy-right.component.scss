@@ -1,0 +1,9 @@
+@import '../../../../variables.scss';
+
+:host{
+    display: block;
+    margin-top: unit(6);
+    opacity: 0.33;
+    font-size: 75%;
+    text-align: center;
+}

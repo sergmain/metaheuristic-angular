@@ -1,16 +1,14 @@
-import {
-    ExperimentInfo,
-    DefaultResponse,
-    DefaultListOfItems
-} from '@app/models';
-
+import { ExperimentInfo } from '../experiments/ExperimentInfo';
 import { Atlas } from './Atlas';
-import { MetricsResult } from './MetricsResult';
-import { HyperParamResult } from './HyperParamResult';
 import { ConsoleResult } from './ConsoleResult';
-import { ExperimentFeature } from './ExperimentFeature';
-import { Tasks } from './Tasks';
 import { Experiment } from './Experiment';
+import { ExperimentFeature } from './ExperimentFeature';
+import { HyperParamResult } from './HyperParamResult';
+import { MetricsResult } from './MetricsResult';
+import { Tasks } from './Tasks';
+import { DefaultListOfItems } from '@src/app/models/DefaultListOfItems';
+import { DefaultResponse } from '@src/app/models/DefaultResponse';
+
 
 export interface ListOfItems extends DefaultListOfItems {
     content: ExperimentItem[];
@@ -34,6 +32,7 @@ export namespace response {
             experimentInfo: ExperimentInfo;
             atlas: Atlas;
         }
+
         export interface FeatureProgress extends DefaultResponse {
             consoleResult: ConsoleResult;
             experimentFeature: ExperimentFeature;
@@ -41,6 +40,7 @@ export namespace response {
             metricsResult: MetricsResult;
             tasks: Tasks;
         }
+
         export interface FeatureProgressConsolePart extends DefaultResponse {
             console: string;
             exitCode: number;
@@ -55,5 +55,16 @@ export namespace response {
             metricsResult: MetricsResult;
             tasks: Tasks;
         }
+
+        export interface FeaturePlotDataPart {
+            x?: (string)[] | null;
+            y?: (string)[] | null;
+            z?: ((number)[] | null)[] | null;
+        }
+
+        export interface UploadFromFile { }
+
+        export interface DeleteCommit { }
+
     }
 }

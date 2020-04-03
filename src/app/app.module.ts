@@ -21,18 +21,17 @@ import { LoremIndexComponent } from './components/lorem-index/lorem-index.compon
 import { NavPilotComponent } from './components/nav-pilot/nav-pilot.component';
 import { PilotComponent } from './components/pilot/pilot.component';
 import { JwtInterceptor } from './jwt.interceptor';
-import { CopyRightModule } from './modules/copy-right.module';
-import { CtAppModule } from './modules/ct.module';
 import { MaterialAppModule } from './ngmaterial.module';
 import { NotificationsInterceptor } from './notifications.interceptor';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { SettingsEffects } from './services/settings/settings.effects';
-import { PlansEffects } from './services/plans/plans.effects';
 import { appReducers, appMetaReducers } from './app.reducers';
 import { AuthenticationEffects } from './services/authentication/authentication.effects';
 import { AppIndexComponent } from './components/app-index/app-index.component';
 import { BatchEffects } from './services/batch/batch.effects';
+import { CtModule } from './modules/ct/ct.module';
+import { CopyRightModule } from './modules/copy-right/copy-right.module';
 
 export function HttpLoaderFactory(http: HttpClient) {
     return new TranslateHttpLoader(http, './assets/i18n/');
@@ -58,7 +57,7 @@ export function HttpLoaderFactory(http: HttpClient) {
         AppRoutingModule,
         BrowserAnimationsModule,
         MaterialAppModule,
-        CtAppModule,
+        CtModule,
         CopyRightModule,
         FormsModule,
         ReactiveFormsModule,
@@ -68,7 +67,6 @@ export function HttpLoaderFactory(http: HttpClient) {
         StoreModule.forRoot(appReducers, { metaReducers: appMetaReducers }),
         EffectsModule.forRoot([
             SettingsEffects,
-            PlansEffects,
             AuthenticationEffects,
             BatchEffects
         ]),
