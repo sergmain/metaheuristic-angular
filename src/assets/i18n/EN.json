@@ -3,7 +3,7 @@
 	"app-view.Dispatcher": "Dispatcher",
 	"app-view.Logout": "Logout",
 	"batch-add.Cancel": "Cancel",
-	"batch-add.List of Source Codes": "",
+	"batch-add.List of Source Codes": "List of Source Codes",
 	"batch-add.Only .xml and .zip files are supported": "Only .xml and .zip files are supported",
 	"batch-add.STATUS": "STATUS",
 	"batch-add.Select File": "Select File",
@@ -36,7 +36,7 @@
 	"dispatcher.Batch": "Batch",
 	"dispatcher.Experiments": "Experiments",
 	"dispatcher.Functions": "Functions",
-	"dispatcher.Variables": "Variables",
 	"dispatcher.Processors": "Processors",
-	"dispatcher.SourceCodes": "Source Codes"
+	"dispatcher.SourceCodes": "Source Codes",
+	"dispatcher.Variables": "Variables"
 }

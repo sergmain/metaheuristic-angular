@@ -18,7 +18,7 @@
 	"batch.File name": "Имя файла",
 	"batch.Id": "id",
 	"batch.Is Batch Consistent?": "Пакет консистен?",
-	"batch.Source Code": "",
+	"batch.Source Code": "Исходный код",
 	"batch.Status": "Статус",
 	"batch.Upload files and start processing": "Загрузить файлы и начать процеcс",
 	"batch.delete-dialog.Cancel": "Отмена",
@@ -36,7 +36,7 @@
 	"dispatcher.Batch": "Пакеты",
 	"dispatcher.Experiments": "Эксперименты",
 	"dispatcher.Functions": "Функции",
-	"dispatcher.Variables": "Переменные",
 	"dispatcher.Processors": "Обработчики",
-	"dispatcher.SourceCodes": "Исходный код"
+	"dispatcher.SourceCodes": "Исходный код",
+	"dispatcher.Variables": "Переменные"
 }
