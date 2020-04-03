@@ -1,12 +1,15 @@
 {
   "extends": "../tsconfig.json",
+  "files": [
+    "main.ts",
+    "polyfills.ts"
+  ],
+  "include": [
+    "src/**/*.d.ts"
+  ],
   "resolveJsonModule": true,
   "compilerOptions": {
     "outDir": "../out-tsc/app",
     "types": []
-  },
-  "exclude": [
-    "test.ts",
-    "**/*.spec.ts"
-  ]
+  }
 }
