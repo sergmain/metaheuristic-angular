@@ -66,6 +66,6 @@ export class SourceCodesService {
             this.http.post<response.execContext.DeleteCommit>(url(`exec-context-delete-commit/`), formData({ sourceCodeId, execContextId })),
 
         targetExecState: (sourceCodeId: string, state: string, id: string): Observable<response.execContext.TargetExecState> =>
-            this.http.get<response.execContext.TargetExecState>(url(`exec-context-target-exec-state/${sourceCodeId}/${state}/${id}`))
+            this.http.get<response.execContext.TargetExecState>(url(`exec-context-target-state/${sourceCodeId}/${state}/${id}`))
     };
 }
