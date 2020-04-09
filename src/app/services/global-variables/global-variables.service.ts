@@ -15,19 +15,16 @@ export class GlobalVariablesService {
 
     variables = {
         get: (page: string): Observable<response.globalVariables.Get> =>
-            this.http.get<response.globalVariables.Get>(url('/resources'), { params: { page } })
+            this.http.get<response.globalVariables.Get>(url('/global-variables'), { params: { page } })
     };
 
     variable = {
 
-        resourceUploadFromFileWithParams: (resourcePoolCode: string, file: File): Observable<any> =>
-            this.http.post(url(`/resource-upload-from-file-with-params/${resourcePoolCode}`), formData({ file })),
+        globalVariableUploadFromFile: (variable: string, file: File): Observable<response.globalVariable.globalVariableUploadFromFile> =>
+            this.http.post<response.globalVariable.globalVariableUploadFromFile>(url(`/global-variable-upload-from-file`), formData({ variable, file })),
 
-        resourceUploadFromFile: (poolCode: string, file: File): Observable<response.globalVariable.resourceUploadFromFile> =>
-            this.http.post<response.globalVariable.resourceUploadFromFile>(url(`/resource-upload-from-file`), formData({ poolCode, file })),
-
-        resourceInExternalStorage: (poolCode: string, storageUrl: string): Observable<response.globalVariable.resourceInExternalStorage> =>
-            this.http.post<response.globalVariable.resourceInExternalStorage>(url(`/resource-in-external-storage`), formData({ poolCode, storageUrl })),
+        globalVariableInExternalStorage: (variable: string, params: string): Observable<response.globalVariable.globalVariableInExternalStorage> =>
+            this.http.post<response.globalVariable.globalVariableInExternalStorage>(url(`/global-variable-in-external-storage`), formData({ variable, params })),
 
         globalVariableDeleteCommit: (id: string): Observable<response.globalVariable.globalVariableDeleteCommit> =>
             this.http.post<response.globalVariable.globalVariableDeleteCommit>(url(`/global-variable-delete-commit`), formData({ id }))

@@ -10,8 +10,8 @@ export namespace response {
     }
     export namespace globalVariable {
         export interface globalVariableDeleteCommit extends DefaultResponse { }
-        export interface resourceUploadFromFile extends DefaultResponse { }
-        export interface resourceInExternalStorage extends DefaultResponse { }
+        export interface globalVariableUploadFromFile extends DefaultResponse { }
+        export interface globalVariableInExternalStorage extends DefaultResponse { }
     }
 }
 
