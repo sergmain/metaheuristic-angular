@@ -40,7 +40,7 @@ export class AddGlobalVariableComponent {
 
     upload() {
         this.globalVariablesService.variable
-            .resourceUploadFromFile(
+            .globalVariableUploadFromFile(
                 this.uploadForm.value.poolCode,
                 this.fileUpload.fileInput.nativeElement.files[0]
             )
@@ -56,7 +56,7 @@ export class AddGlobalVariableComponent {
 
     create() {
         this.globalVariablesService.variable
-            .resourceInExternalStorage(this.urlForm.value.poolCode, this.urlForm.value.storageUrl)
+            .globalVariableInExternalStorage(this.urlForm.value.poolCode, this.urlForm.value.storageUrl)
             .subscribe(
                 (response: DefaultResponse) => {
                     this.urlResponse = response;

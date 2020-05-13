@@ -1,4 +1,4 @@
-<babeledit_project version="1.2">
+<babeledit_project be_version="2.6.1" version="1.2">
     <!--
 
     BabelEdit project file
@@ -11,7 +11,7 @@
     <preset_collections/>
     <framework>ngx-translate</framework>
     <filename>locale.babel</filename>
-    <source_root_dir>../../</source_root_dir>
+    <source_root_dir></source_root_dir>
     <folder_node>
         <name></name>
         <children>
@@ -24,16 +24,16 @@
                 <translations>
                     <translation>
                         <language>en-US</language>
-                        <approved>true</approved>
+                        <approved>false</approved>
                     </translation>
                     <translation>
                         <language>ru-RU</language>
-                        <approved>true</approved>
+                        <approved>false</approved>
                     </translation>
                 </translations>
             </concept_node>
             <concept_node>
-                <name>app-view.Launchpad</name>
+                <name>app-view.Dispatcher</name>
                 <definition_loaded>false</definition_loaded>
                 <description></description>
                 <comment></comment>
@@ -41,11 +41,11 @@
                 <translations>
                     <translation>
                         <language>en-US</language>
-                        <approved>true</approved>
+                        <approved>false</approved>
                     </translation>
                     <translation>
                         <language>ru-RU</language>
-                        <approved>true</approved>
+                        <approved>false</approved>
                     </translation>
                 </translations>
             </concept_node>
@@ -84,7 +84,7 @@
                 </translations>
             </concept_node>
             <concept_node>
-                <name>batch-add.List of Plans</name>
+                <name>batch-add.List of Source Codes</name>
                 <definition_loaded>false</definition_loaded>
                 <description></description>
                 <comment></comment>
@@ -288,6 +288,23 @@
                 </translations>
             </concept_node>
             <concept_node>
+                <name>batch.File name</name>
+                <definition_loaded>false</definition_loaded>
+                <description></description>
+                <comment></comment>
+                <default_text></default_text>
+                <translations>
+                    <translation>
+                        <language>en-US</language>
+                        <approved>false</approved>
+                    </translation>
+                    <translation>
+                        <language>ru-RU</language>
+                        <approved>false</approved>
+                    </translation>
+                </translations>
+            </concept_node>
+            <concept_node>
                 <name>batch.Id</name>
                 <definition_loaded>false</definition_loaded>
                 <description></description>
@@ -322,7 +339,7 @@
                 </translations>
             </concept_node>
             <concept_node>
-                <name>batch.Plan Code</name>
+                <name>batch.Source Code</name>
                 <definition_loaded>false</definition_loaded>
                 <description></description>
                 <comment></comment>
@@ -458,7 +475,7 @@
                 </translations>
             </concept_node>
             <concept_node>
-                <name>batch.isBatchConsistent.Processing</name>
+                <name>batch.isBatchConsistent.Preparing</name>
                 <definition_loaded>false</definition_loaded>
                 <description></description>
                 <comment></comment>
@@ -475,7 +492,7 @@
                 </translations>
             </concept_node>
             <concept_node>
-                <name>batch.isBatchConsistent.Preparing</name>
+                <name>batch.isBatchConsistent.Processing</name>
                 <definition_loaded>false</definition_loaded>
                 <description></description>
                 <comment></comment>
@@ -526,7 +543,7 @@
                 </translations>
             </concept_node>
             <concept_node>
-                <name>nav-launchpad.Accounts</name>
+                <name>batch.onlyMyBatches</name>
                 <definition_loaded>false</definition_loaded>
                 <description></description>
                 <comment></comment>
@@ -543,7 +560,7 @@
                 </translations>
             </concept_node>
             <concept_node>
-                <name>nav-launchpad.Atlas</name>
+                <name>dispatcher.Accounts</name>
                 <definition_loaded>false</definition_loaded>
                 <description></description>
                 <comment></comment>
@@ -560,7 +577,7 @@
                 </translations>
             </concept_node>
             <concept_node>
-                <name>nav-launchpad.Batch</name>
+                <name>dispatcher.Atlas</name>
                 <definition_loaded>false</definition_loaded>
                 <description></description>
                 <comment></comment>
@@ -577,7 +594,7 @@
                 </translations>
             </concept_node>
             <concept_node>
-                <name>nav-launchpad.Experiments</name>
+                <name>dispatcher.Batch</name>
                 <definition_loaded>false</definition_loaded>
                 <description></description>
                 <comment></comment>
@@ -594,7 +611,7 @@
                 </translations>
             </concept_node>
             <concept_node>
-                <name>nav-launchpad.Plans</name>
+                <name>dispatcher.Experiments</name>
                 <definition_loaded>false</definition_loaded>
                 <description></description>
                 <comment></comment>
@@ -611,7 +628,7 @@
                 </translations>
             </concept_node>
             <concept_node>
-                <name>nav-launchpad.Resources</name>
+                <name>dispatcher.Functions</name>
                 <definition_loaded>false</definition_loaded>
                 <description></description>
                 <comment></comment>
@@ -628,7 +645,7 @@
                 </translations>
             </concept_node>
             <concept_node>
-                <name>nav-launchpad.Snippets</name>
+                <name>dispatcher.Processors</name>
                 <definition_loaded>false</definition_loaded>
                 <description></description>
                 <comment></comment>
@@ -645,7 +662,24 @@
                 </translations>
             </concept_node>
             <concept_node>
-                <name>nav-launchpad.Stations</name>
+                <name>dispatcher.SourceCodes</name>
+                <definition_loaded>false</definition_loaded>
+                <description></description>
+                <comment></comment>
+                <default_text></default_text>
+                <translations>
+                    <translation>
+                        <language>en-US</language>
+                        <approved>false</approved>
+                    </translation>
+                    <translation>
+                        <language>ru-RU</language>
+                        <approved>false</approved>
+                    </translation>
+                </translations>
+            </concept_node>
+            <concept_node>
+                <name>dispatcher.Variables</name>
                 <definition_loaded>false</definition_loaded>
                 <description></description>
                 <comment></comment>
@@ -692,9 +726,10 @@
             <copy_template>_('%1')</copy_template>
         </copy_templates>
     </editor_configuration>
-    <primary_language>en-US</primary_language>
+    <primary_language></primary_language>
     <configuration>
         <indent>tab</indent>
         <format>plaintext-json</format>
+        <support_arrays>true</support_arrays>
     </configuration>
 </babeledit_project>
