@@ -1,0 +1,49 @@
+issue-1201
+подтвердить работоспособность интерфейса создания аккаунтов
+урл в стандартном интерфейсе - http://localhost:8080/dispatcher/account/accounts
+
+issue-1202
+подтвердить работоспособность интерфейса управления процессорами (бывшие Station)
+урл в стандартном интерфейсе - http://localhost:8080/dispatcher/processor/processors
+
+issue-1203
+подтвердить работоспособность интерфейса управления функциями (бывшие Snippet)
+урл в стандартном интерфейсе - http://localhost:8080/dispatcher/function/functions
+
+issue-1204
+подтвердить работоспособность интерфейса управления глобальными переменными (бывшие Resources)
+урл в стандартном интерфейсе - http://localhost:8080/dispatcher/global-variable/global-variables
+
+issue-1205
+подтвердить работоспособность интерфейса управления исхоными кодами (бывшие PLans)
+урл в стандартном интерфейсе - http://localhost:8080/dispatcher/source-code/source-codes
+
+issue-1206
+подтвердить работоспособность интерфейса управления контекстами выполнения (бывшие Workbooks)
+урл в стандартном интерфейсе - http://localhost:8080/dispatcher/source-code/exec-contexts/1263
+
+issue-1207
+сделать страницу показа текущего состояния выполнения задач:
+ - кнопка Task states на странице перечисления контекстов выполнения задач
+урл в стандартном интерфейсе - http://localhost:8080/dispatcher/source-code/exec-context-state/1263/1612
+
+issue-1208
+подтвердить работоспособность интерфейса управления пакетами
+урл в стандартном интерфейсе - http://localhost:8080/dispatcher/batch/batches
+
+issue-1209
+переработать страницу создания экспериментов в соответствии со стандартным интерфейсом,
+ урл - http://localhost:8080/dispatcher/ai/experiment/experiments
+
+issue-1210
+перейти на Angular 10 И обхонить все либы для работы на этой версии
+
+
+
+
+
+
+
+
+
+
