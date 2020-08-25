@@ -1,1 +1,6 @@
-{"ngccVersion":"9.1.0","configFileHash":"87c535c3ce0eac2a54c246892e0e21a1","lockFileHash":"a0e027125ac6d40dd0946b6f5b5d3a73","entryPointPaths":[]}
+{
+  "ngccVersion": "9.1.0",
+  "configFileHash": "87c535c3ce0eac2a54c246892e0e21a1",
+  "lockFileHash": "cddc1bbc3655dde26ce0a0a50b509494",
+  "entryPointPaths": []
+}

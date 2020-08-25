@@ -26,7 +26,10 @@ DONE
 DONE
 
 - везде заменить Launchpad на Dispatcher
-DONE
+NOT_YET
+файл \git\metaheuristic-angular\src\assets\i18n\locale.babel
+не доделан
+
 
 - везде заменить Station на Processor
 DONE
