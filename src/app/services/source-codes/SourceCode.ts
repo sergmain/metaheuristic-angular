@@ -4,7 +4,7 @@ export interface SourceCode {
     companyId: number;
     uid: string;
     createdOn: number;
-    params: string;
+    source: string;
     locked: boolean;
     valid: boolean;
 }

@@ -36,7 +36,19 @@ issue-1209
  урл - http://localhost:8080/dispatcher/ai/experiment/experiments
 
 issue-1210
-перейти на Angular 10 И обхонить все либы для работы на этой версии
+перейти на Angular 10 И обновить все либы для работы на этой версии
+
+issue-1211
+http://localhost:4200/#/dispatcher/source-codes/1262/edit
+статус выглядит так: STATUS: [object Object]
+
+issue-1212
+http://localhost:4200/#/dispatcher/source-codes/1262/edit
+текст в окне редактора эскейпится, как результат все переводы строк заменены на \r\n
+
+issue-1213
+
+
 
 
 

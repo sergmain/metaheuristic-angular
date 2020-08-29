@@ -14,7 +14,7 @@ export class AddSourceCodeComponent implements OnInit {
     @ViewChild('submitButton', { static: true }) submitButton: MatButton;
 
     form = new FormGroup({
-        sourceCodeYaml: new FormControl('', [Validators.required, Validators.minLength(1)]),
+        source: new FormControl('', [Validators.required, Validators.minLength(1)]),
     });
 
     constructor(
@@ -32,7 +32,7 @@ export class AddSourceCodeComponent implements OnInit {
         this.response = null;
         this.submitButton.disabled = true;
         this.sourceCodesService.sourceCode
-            .add(this.form.value.sourceCodeYaml)
+            .add(this.form.value.source)
             .subscribe(
                 (v) => {
                     this.response = v;

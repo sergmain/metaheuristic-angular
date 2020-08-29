@@ -49,7 +49,7 @@ export class EditSourceCodeComponent implements OnInit {
     save() {
         this.currentState = this.states.wait;
         this.sourceCodesService.sourceCode
-            .edit(this.sourceCode.id.toString(), this.sourceCode.params)
+            .edit(this.sourceCode.id.toString(), this.sourceCode.source)
             .subscribe(
                 (v) => {
                     if (v.errorMessages) {

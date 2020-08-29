@@ -31,11 +31,11 @@ export class SourceCodesService {
         validate: (id: string): Observable<response.sourceCode.Validate> =>
             this.http.get<response.sourceCode.Validate>(url(`source-code-validate/${id}`)),
 
-        add: (sourceCodeYaml: string): Observable<response.sourceCode.Add> =>
-            this.http.post<response.sourceCode.Add>(url(`source-code-add-commit`), formData({ sourceCodeYaml })),
+        add: (source: string): Observable<response.sourceCode.Add> =>
+            this.http.post<response.sourceCode.Add>(url(`source-code-add-commit`), formData({ source })),
 
-        edit: (sourceCodeId: string, sourceCodeYaml: string): Observable<response.sourceCode.Edit> =>
-            this.http.post<response.sourceCode.Edit>(url(`source-code-edit-commit`), formData({ sourceCodeId, sourceCodeYaml })),
+        edit: (sourceCodeId: string, source: string): Observable<response.sourceCode.Edit> =>
+            this.http.post<response.sourceCode.Edit>(url(`source-code-edit-commit`), formData({ sourceCodeId, source })),
 
         delete: (id: string): Observable<response.sourceCode.Delete> =>
             this.http.post<response.sourceCode.Delete>(url(`source-code-delete-commit`), formData({ id })),
