@@ -22,7 +22,7 @@
                             <mat-label> {{ 'batch-add.List of Source Codes' | translate }}</mat-label>
                             <mat-select [(ngModel)]="sourceCode">
                                 <div *ngFor="let sourceCode of listOfSourceCodes">
-                                    <mat-option [value]="sourceCode">{{sourceCode.code}}</mat-option>
+                                    <mat-option [value]="sourceCode">{{sourceCode.uid}}</mat-option>
                                 </div>
                             </mat-select>
                             <mat-hint>{{ 'batch-add.This is a required field.' | translate }}</mat-hint>

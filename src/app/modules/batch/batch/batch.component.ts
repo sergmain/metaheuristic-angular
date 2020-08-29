@@ -6,7 +6,7 @@ import { marker } from '@biesbjerg/ngx-translate-extract-marker';
 import { Store } from '@ngrx/store';
 import { TranslateService } from '@ngx-translate/core';
 import { AppState } from '@src/app/app.reducers';
- import { CtTableComponent } from '@src/app/modules/ct/ct-table/ct-table.component';
+import { CtTableComponent } from '@src/app/modules/ct/ct-table/ct-table.component';
 import { AuthenticationService } from '@src/app/services/authentication/authentication.service';
 import { Batch } from '@src/app/services/batch/Batch';
 import { getBatches } from '@src/app/services/batch/batch.actions';

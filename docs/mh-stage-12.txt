@@ -44,9 +44,27 @@ http://localhost:4200/#/dispatcher/source-codes/1262/edit
 
 issue-1212
 http://localhost:4200/#/dispatcher/source-codes/1262/edit
-текст в окне редактора эскейпится, как результат все переводы строк заменены на \r\n
+текст в окне редактора не показывается
 
 issue-1213
+http://localhost:4200/#/dispatcher/source-codes/add
+
+после нажатия кнопки 'Add' на экран должно выводиться сообщение о статусе операции - Ок или была ошибка
+фокус должен перемещаться вверх экрана так чтобы было видно сообщение о статусе
+
+
+issue-1214
+http://localhost:4200/#/dispatcher/source-codes/add
+
+Названия кнопок 'Back', 'Add' Должны быть русифицированы
+
+
+issue-1215
+http://localhost:4200/#/dispatcher/batch/add
+http://localhost:4200/#/dispatcher/batch
+
+при повторном создании пакета с тем же самым файлом новый пакет не отображается в списке созданных пакетов
+
 
 
 

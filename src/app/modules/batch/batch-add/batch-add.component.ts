@@ -8,7 +8,8 @@ import { TranslateService } from '@ngx-translate/core';
 import { AppState } from '@src/app/app.reducers';
 import { Subscription } from 'rxjs';
 import { CtFileUploadComponent } from '../../ct/ct-file-upload/ct-file-upload.component';
-import { SourceCode } from '@src/app/services/source-codes/SourceCode';
+import { SourceCode } from '@app/services/source-codes/SourceCode';
+import {SourceCodeUid} from '@app/services/source-codes/SourceCodeUid';
 
 @Component({
     selector: 'batch-add',
@@ -25,7 +26,7 @@ export class BatchAddComponent implements OnInit {
 
     sourceCode: SourceCode;
     file: any;
-    listOfSourceCodes: SourceCode[] = [];
+    listOfSourceCodes: SourceCodeUid[] = [];
     @ViewChild('fileUpload') fileUpload: CtFileUploadComponent;
 
     constructor(
