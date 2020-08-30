@@ -5,7 +5,6 @@ export interface Account {
     updateOn: number;
     enabled: boolean;
     publicName: string;
-    roles: string;
     username: string;
     authorities: Authority[];
 }
