@@ -1,30 +1,17 @@
-{
-    "compileOnSave": false,
-    "compilerOptions": {
-        "baseUrl": "./",
-    "downlevelIteration": true,
-        // "baseUrl": "src",
-        "paths": {
-            "@src/*": ["./src/*"],
-            "@app/*": ["./src/app/*"],
-            "@services/*": ["./src/app/services/*"]
+/*
+  This is a "Solution Style" tsconfig.json file, and is used by editors and TypeScript’s language server to improve development experience.
+  It is not intended to be used to perform a compilation.
 
-        },
-        "outDir": "./dist/out-tsc",
-        "sourceMap": true,
-        "declaration": false,
-        "module": "esnext",
-        "moduleResolution": "node",
-        "emitDecoratorMetadata": true,
-        "experimentalDecorators": true,
-        // "importHelpers": true,
-        "target": "es2015",
-        "typeRoots": [
-            "node_modules/@types"
-        ],
-        "lib": [
-            "es2018",
-            "dom"
-        ]
+  To learn more about this file see: https://angular.io/config/solution-tsconfig.
+*/
+{
+  "files": [],
+  "references": [
+    {
+      "path": "./src/tsconfig.app.json"
+    },
+    {
+      "path": "./e2e/tsconfig.e2e.json"
     }
+  ]
 }

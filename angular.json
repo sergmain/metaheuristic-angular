@@ -3,9 +3,7 @@
     "version": 1,
     "newProjectRoot": "projects",
     "cli": {
-        "warnings": {
-            "typescriptMismatch": false
-        }
+        "warnings": {}
     },
     "projects": {
         "metaheuristic-app": {
@@ -22,7 +20,7 @@
                 "build": {
                     "builder": "@angular-devkit/build-angular:browser",
                     "options": {
-            "aot": true,
+                        "aot": true,
                         "outputPath": "dist/metaheuristic-app",
                         "resourcesOutputPath": "resources",
                         "index": "src/index.html",
@@ -36,8 +34,7 @@
                         "styles": [
                             "src/styles.scss"
                         ],
-                        "scripts": [],
-                        "es5BrowserSupport": true
+                        "scripts": []
                     },
                     "configurations": {
                         "production": {
