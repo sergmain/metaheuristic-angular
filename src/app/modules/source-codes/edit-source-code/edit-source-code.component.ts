@@ -36,7 +36,7 @@ export class EditSourceCodeComponent implements OnInit {
             .get(id)
             .subscribe(v => {
                 this.response = v;
-                this.sourceCode = v.sourceCode;
+                this.sourceCode = v;
                 this.currentState = this.states.show;
             }
             );

@@ -2,6 +2,9 @@ issue-1201
 подтвердить работоспособность интерфейса создания аккаунтов
 урл в стандартном интерфейсе - http://localhost:8080/dispatcher/account/accounts
 
+DONE
+
+
 issue-1202
 подтвердить работоспособность интерфейса управления процессорами (бывшие Station)
 урл в стандартном интерфейсе - http://localhost:8080/dispatcher/processor/processors
@@ -48,6 +51,9 @@ http://localhost:4200/#/dispatcher/source-codes/1262/edit
 issue-1212
 http://localhost:4200/#/dispatcher/source-codes/1262/edit
 текст в окне редактора не показывается
+
+DONE
+
 
 issue-1213
 http://localhost:4200/#/dispatcher/source-codes/add

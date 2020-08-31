@@ -26,9 +26,7 @@ export namespace response {
     }
 
     export namespace sourceCode {
-        export interface Get extends DefaultResponse {
-            sourceCode: SourceCode;
-        }
+        export interface Get extends DefaultResponse, SourceCode { }
         export interface Update extends DefaultResponse { }
         export interface Validate extends DefaultResponse { }
         export interface Delete extends DefaultResponse { }

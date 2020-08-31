@@ -4,6 +4,7 @@ import { generateFormData as formData } from '@src/app/helpers/generateFormData'
 import { environment } from '@src/environments/environment';
 import { Observable } from 'rxjs';
 import { response } from './response';
+import { NewAccount } from './NewAccount';
 
 const url = (s: string): string => `${environment.baseUrl}dispatcher/account${s}`;
 
@@ -25,7 +26,7 @@ export class AccountsService {
         get: (id: string | number): Observable<response.account.Get> =>
             this.http.get<response.account.Get>(url(`/account/${id}`)),
 
-        addCommit: (account: object): Observable<object> =>
+        addCommit: (account: NewAccount): Observable<object> =>
             this.http.post(url(`/account-add-commit`), account),
 
         editCommit: (id: string, publicName: string, enabled: boolean): Observable<object> =>

@@ -23,8 +23,6 @@ export namespace response {
         }
     }
 
-
-
     export namespace account {
         export interface Get extends DefaultResponse {
             account: Account;
