@@ -1,6 +1,10 @@
 <ct-section>
     <ct-section-header>
-        <ct-heading>Accounts</ct-heading>
+        <ct-section-header-row>
+            <ct-heading>
+                Accounts
+            </ct-heading>
+        </ct-section-header-row>
     </ct-section-header>
     <ct-section-body>
         <ct-section-body-row>
@@ -16,7 +20,7 @@
                     </ng-container>
                     <ng-container matColumnDef="login">
                         <th mat-header-cell="mat-header-cell" *matHeaderCellDef>Login </th>
-                        <td mat-cell="mat-cell" *matCellDef="let el">{{el.login}} </td>
+                        <td mat-cell="mat-cell" *matCellDef="let el">{{el.username}} </td>
                     </ng-container>
                     <ng-container matColumnDef="publicName">
                         <th mat-header-cell="mat-header-cell" *matHeaderCellDef>Public name </th>
@@ -24,20 +28,27 @@
                     </ng-container>
                     <ng-container matColumnDef="createdOn">
                         <th mat-header-cell="mat-header-cell" *matHeaderCellDef>Created On </th>
-                        <td mat-cell="mat-cell" *matCellDef="let el">{{el.createdOn | date:'HH:mm:ss, MMM&nbsp;d,&nbsp;yyyy'}} </td>
+                        <td mat-cell="mat-cell" *matCellDef="let el">
+                            {{el.createdOn | date:'HH:mm:ss, MMM&nbsp;d,&nbsp;yyyy'}} </td>
                     </ng-container>
                     <ng-container matColumnDef="bts">
                         <th mat-header-cell="mat-header-cell" *matHeaderCellDef> </th>
                         <td mat-cell="mat-cell" *matCellDef="let el">
                             <ct-flex justify-content="flex-end" gap="9px">
                                 <ct-flex-item>
-                                    <button mat-flat-button="mat-flat-button" size="forTableRow" [routerLink]="['/dispatcher/accounts/edit/',el.id]" color="primary"> Edit</button>
+                                    <button mat-flat-button="mat-flat-button" size="forTableRow"
+                                        [routerLink]="['/dispatcher/accounts/edit/',el.id]" color="primary">
+                                        Edit</button>
                                 </ct-flex-item>
                                 <ct-flex-item>
-                                    <button mat-flat-button="mat-flat-button" size="forTableRow" [routerLink]="['/dispatcher/accounts/access/',el.id]" color="primary"> Access</button>
+                                    <button mat-flat-button="mat-flat-button" size="forTableRow"
+                                        [routerLink]="['/dispatcher/accounts/access/',el.id]" color="primary">
+                                        Access</button>
                                 </ct-flex-item>
                                 <ct-flex-item>
-                                    <button mat-flat-button="mat-flat-button" size="forTableRow" [routerLink]="['/dispatcher/accounts/edit-password/',el.id]" color="primary"> Change Password</button>
+                                    <button mat-flat-button="mat-flat-button" size="forTableRow"
+                                        [routerLink]="['/dispatcher/accounts/edit-password/',el.id]" color="primary">
+                                        Change Password</button>
                                 </ct-flex-item>
                             </ct-flex>
                         </td>
@@ -57,19 +68,23 @@
                 <ct-flex-item>
                     <ct-flex justify-content="flex-start" gap="8px">
                         <ct-flex-item>
-                            <button mat-flat-button="mat-flat-button" color="primary" #prevTable (click)="prev()" disabled="disabled">
+                            <button mat-flat-button="mat-flat-button" color="primary" #prevTable (click)="prev()"
+                                disabled="disabled">
                                 <mat-icon>arrow_back_ios</mat-icon>
                             </button>
                         </ct-flex-item>
                         <ct-flex-item>
-                            <button mat-flat-button="mat-flat-button" color="primary" #nextTable (click)="next()" disabled="disabled">
+                            <button mat-flat-button="mat-flat-button" color="primary" #nextTable (click)="next()"
+                                disabled="disabled">
                                 <mat-icon>arrow_forward_ios</mat-icon>
                             </button>
                         </ct-flex-item>
                     </ct-flex>
                 </ct-flex-item>
                 <ct-flex-item>
-                    <button mat-flat-button="mat-flat-button" color="primary" wide="wide" [disabled]="currentStates.has(states.loading) || currentStates.has(states.firstLoading)" routerLink="/dispatcher/accounts/add/">Add New Account </button>
+                    <button mat-flat-button="mat-flat-button" color="primary" wide="wide"
+                        [disabled]="currentStates.has(states.loading) || currentStates.has(states.firstLoading)"
+                        routerLink="/dispatcher/accounts/add/">Add New Account </button>
                 </ct-flex-item>
             </ct-flex>
         </ct-section-footer-row>

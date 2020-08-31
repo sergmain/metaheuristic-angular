@@ -2,12 +2,13 @@ import { Account } from './Account';
 import { Pageable } from '@src/app/models/Pageable';
 import { Sort } from '@src/app/models/Sort';
 import { DefaultResponse } from '@src/app/models/DefaultResponse';
+import { SimpleAccount } from './SimpleAccount';
 
 export namespace response {
     export namespace accounts {
         export interface Get extends DefaultResponse {
             accounts: {
-                content: Account[];
+                content: SimpleAccount[];
                 pageable: Pageable;
                 totalPages: number;
                 last: boolean;

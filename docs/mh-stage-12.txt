@@ -38,6 +38,9 @@ issue-1209
 issue-1210
 перейти на Angular 10 И обновить все либы для работы на этой версии
 
+DONE
+
+
 issue-1211
 http://localhost:4200/#/dispatcher/source-codes/1262/edit
 статус выглядит так: STATUS: [object Object]
