@@ -6,5 +6,6 @@ export interface Account {
     enabled: boolean;
     publicName: string;
     username: string;
+    roles: string;
     authorities: Authority[];
 }

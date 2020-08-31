@@ -57,7 +57,7 @@ issue-1214
 http://localhost:4200/#/dispatcher/source-codes/add
 
 Названия кнопок 'Back', 'Add' Должны быть русифицированы
-
+POSTPONED
 
 issue-1215
 http://localhost:4200/#/dispatcher/batch/add
