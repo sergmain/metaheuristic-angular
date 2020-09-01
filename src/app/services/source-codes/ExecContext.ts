@@ -1,16 +1,15 @@
 export interface ExecContext {
     id: number;
-    version: number;
-    sourceCodeId: number;
     createdOn: number;
-    completedOn: number;
     valid: boolean;
-    // new
-    execState: number;
-    params: string;
-    // old
-    inputResourceParam: string;
-    producingOrder: number;
+    completedOn: number;
     state: number;
-    __deleted: boolean;
+    execState: number;
+    // old
+    // version: number;
+    // sourceCodeId: number;
+    // params: string;
+    // inputResourceParam: string;
+    // producingOrder: number;
+    // __deleted: boolean;
 }

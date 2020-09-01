@@ -6,7 +6,7 @@ export const environment: IEnvironment = {
     hashLocationStrategy: true,
     userLifeTime: 30 * 60 * 1000, // 30 minutes
     isSslRequired: false,
-    batchInterval: 5 * 1000, // pause between requests in milliseconds, 0 means a disable of any requests
+    batchInterval: 30 * 1000, // pause between requests in milliseconds, 0 means a disable of any requests
     language: 'RU',
     brandingTitle: 'Branding Title',
     brandingMsg: '<p>Lorem ipsum <b>dolor</b>, sit amet consectetur adipisicing elit. Aperiam, ' +

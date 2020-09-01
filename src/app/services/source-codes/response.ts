@@ -49,8 +49,10 @@ export namespace response {
                 last: boolean;
                 empty: boolean;
             };
-            currentSourceCodeId: number;
-            sourceCodes: SourceCode[];
+            sourceCodeId: number;
+            sourceCodeUid: string;
+            sourceCodeValid: boolean;
+            sourceCodeType: string;
         }
     }
 

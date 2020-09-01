@@ -1,5 +1,5 @@
 import { Action, createReducer, on } from '@ngrx/store';
-import { getBatches, getBatchesComplete, newhExecStatus } from './batch.actions';
+import { getBatches, getBatchesComplete, newExecStatus } from './batch.actions';
 import { BatchesState } from './BatchesState';
 import { BatchService } from './batch.service';
 export const initialState: BatchesState = {
@@ -18,12 +18,12 @@ const reducer = createReducer(
     })),
     on(getBatchesComplete, (state: BatchesState, { payload }) => ({
         ...state,
-        list:payload.batches.content,
+        list: payload.batches.content,
         response: payload,
         isLoading: false
     })),
 
-    on(newhExecStatus, (state: BatchesState, { payload }) => {
+    on(newExecStatus, (state: BatchesState, { payload }) => {
         BatchService.updateBatchExecStatus(state.list, payload);
         return { ...state };
     })

@@ -1,55 +1,70 @@
-
 <ct-cols align-items="flex-start">
-  <ct-col size="6">
-    <ct-section>
-      <ct-section-header>
-        <ct-section-header-row>
-          <ct-heading>Edit SourceCode {{sourceCode ? sourceCode.id : ''}}</ct-heading>
-        </ct-section-header-row>
-      </ct-section-header>
-      <ct-section-body *ngIf="currentState == states.firstLoading">
-        <ct-section-body-row>
-          <mat-progress-bar mode="indeterminate"></mat-progress-bar>
-        </ct-section-body-row>
-      </ct-section-body>
-      <ct-section-body *ngIf="[states.wait,states.show].includes(currentState)"> 
-        <ct-section-body-row>
-          <ct-section-content>
-            <mat-form-field appearance="outline">
-              <mat-label>Parameters </mat-label>
-              <textarea matInput="matInput" [(ngModel)]="sourceCode.source" value="" cdkTextareaAutosize="cdkTextareaAutosize" cdkAutosizeMinRows="10"></textarea>
-              <mat-hint>This is a required field.</mat-hint>
-            </mat-form-field>
-          </ct-section-content>
-        </ct-section-body-row>
-      </ct-section-body>
-      <ct-section-footer>
-        <ct-section-footer-row>
-          <ct-flex justify-content="flex-end" gap="8px">
-            <ct-flex-item>
-              <button mat-stroked-button="mat-stroked-button" (click)="cancel()">Cancel</button>
-            </ct-flex-item>
-            <ct-flex-item>
-              <button mat-flat-button="mat-flat-button" (click)="validate()" color="primary" [disabled]="[states.wait,states.firstLoading].includes(currentState)">Validate</button>
-            </ct-flex-item>
-            <ct-flex-item>
-              <button mat-flat-button="mat-flat-button" (click)="save()" color="primary" [disabled]="[states.wait,states.firstLoading].includes(currentState)">Save</button>
-            </ct-flex-item>
-          </ct-flex>
-        </ct-section-footer-row>
-      </ct-section-footer>
-    </ct-section>
-  </ct-col>
-  <ct-col size="6">
-    <ct-section *ngIf="response">
-      <ct-section-body>
-        <ct-section-body-row>
-          <ct-section-content>
-            <p>STATUS: {{response.status}}</p>
-            <p *ngFor="let error of response.errorMessages; index as i;">{{error}}</p>
-          </ct-section-content>
-        </ct-section-body-row>
-      </ct-section-body>
-    </ct-section>
-  </ct-col>
+    <ct-col size="6">
+        <ct-section>
+            <ct-section-header>
+                <ct-section-header-row>
+                    <ct-heading>Edit SourceCode {{sourceCode ? sourceCode.id : ''}}</ct-heading>
+                </ct-section-header-row>
+            </ct-section-header>
+            <ct-section-body *ngIf="currentState == states.firstLoading">
+                <ct-section-body-row>
+                    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+                </ct-section-body-row>
+            </ct-section-body>
+            <ct-section-body *ngIf="[states.wait,states.show].includes(currentState)">
+                <ct-section-body-row>
+                    <ct-section-content>
+                        <mat-form-field appearance="outline">
+                            <mat-label>Parameters </mat-label>
+                            <textarea matInput="matInput" [(ngModel)]="sourceCode.source" value=""
+                                cdkTextareaAutosize="cdkTextareaAutosize" cdkAutosizeMinRows="10"></textarea>
+                            <mat-hint>This is a required field.</mat-hint>
+                        </mat-form-field>
+                    </ct-section-content>
+                </ct-section-body-row>
+            </ct-section-body>
+            <ct-section-footer>
+                <ct-section-footer-row>
+                    <ct-flex justify-content="flex-end" gap="8px">
+                        <ct-flex-item>
+                            <button mat-stroked-button="mat-stroked-button" (click)="cancel()">Cancel</button>
+                        </ct-flex-item>
+                        <ct-flex-item>
+                            <button mat-flat-button="mat-flat-button" (click)="validate()" color="primary"
+                                [disabled]="[states.wait,states.firstLoading].includes(currentState)">Validate</button>
+                        </ct-flex-item>
+                        <ct-flex-item>
+                            <button mat-flat-button="mat-flat-button" (click)="save()" color="primary"
+                                [disabled]="[states.wait,states.firstLoading].includes(currentState)">Save</button>
+                        </ct-flex-item>
+                    </ct-flex>
+                </ct-section-footer-row>
+            </ct-section-footer>
+        </ct-section>
+    </ct-col>
+    <ct-col size="6">
+        <ct-section *ngIf="response">
+            <ct-section-body>
+                <ct-section-body-row>
+                    <ct-section-content>
+                        <div>
+                            <span style="opacity: 0.75; font-size: 75%;">STATUS:</span>
+                            <br>
+                            <div [title]="response.validationResult.status">{{response.validationResult.error}}</div>
+                        </div>
+                    </ct-section-content>
+                </ct-section-body-row>
+                <ct-section-body-row *ngIf="response.errorMessages?.length">
+                    <ct-section-content>
+                        <div>
+                            <span style="opacity: 0.75; font-size: 75%;">ERRORS:</span>
+                            <div *ngFor="let error of response.errorMessages; index as i;">
+                                <div style="margin-bottom: 0.5em;">{{error}}</div>
+                            </div>
+                        </div>
+                    </ct-section-content>
+                </ct-section-body-row>
+            </ct-section-body>
+        </ct-section>
+    </ct-col>
 </ct-cols>

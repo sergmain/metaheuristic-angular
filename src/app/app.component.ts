@@ -15,8 +15,6 @@ import * as settingsActions from './services/settings/settings.actions';
     styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-    title = 'metaheuristic-app';
-
     constructor(
         private translate: TranslateService,
         private store: Store < AppState > ,

@@ -10,7 +10,10 @@ import { Batch } from './Batch';
 import { BatchExecStatus } from './BatchExecStatus';
 import { Store } from '@ngrx/store';
 import { AppState } from '@src/app/app.reducers';
-import { newhExecStatus } from './batch.actions';
+import { newExecStatus } from './batch.actions';
+
+
+const url = (urlString: string): string => `${environment.baseUrl}dispatcher/batch/${urlString}`;
 
 const FINISHED_STATE: number = 4;
 const ERROR_STATE: number = -1;
@@ -23,57 +26,50 @@ export interface GetBatchesParams {
 @Injectable({ providedIn: 'root' })
 export class BatchService {
 
+    private intervalStarted: boolean = false;
+    batchExexStatusComparer: BatchExexStatusComparer;
+    finishedNotification: BehaviorSubject<boolean> = new BehaviorSubject(false);
+
     constructor(
         private http: HttpClient,
         private authenticationService: AuthenticationService,
         private store: Store<AppState>
     ) {
-        const base: any = (url: string): string => `${environment.baseUrl}dispatcher/batch${url}`;
-        this.POST = (url: string, data: any): Observable<any> => this.http.post(base(url), data);
-        this.GET = (url: string, options: any = {}): Observable<any> => this.http.get(base(url), options);
         this.batchExexStatusComparer = new BatchExexStatusComparer([FINISHED_STATE, ERROR_STATE]);
-
         this.batchExexStatusComparer.notification.subscribe((s: boolean) => {
             this.finishedNotification.next(s);
         });
     }
 
-    private intervalStarted: boolean = false;
-    batchExexStatusComparer: BatchExexStatusComparer;
-
-    POST: any;
-    GET: any;
-
-    finishedNotification: BehaviorSubject<boolean> = new BehaviorSubject(false);
-
     batches = {
         get: (params: GetBatchesParams): Observable<response.batches.Get> =>
-            this.GET(`/batches?page=${params.page}${params.filterBatches ? '&filterBatches=true' : ''}`),
+            this.http.get<response.batches.Get>(url(`batches?page=${params.page}${params.filterBatches ? '&filterBatches=true' : ''}`)),
 
-        part: (page: number): Observable<any> =>
-            this.POST(`/batches-part`)
+        part: (page: number) =>
+            this.http.post(url(`batches-part`), {})
     };
 
     batch = {
         add: (): Observable<response.batch.Add> =>
-            this.GET(`/batch-add`),
+            this.http.get<response.batch.Add>(url(`batch-add`)),
 
-        delete: (batchId: string): Observable<any> =>
-            this.GET(`/batch-delete/${batchId}`),
+        delete: (batchId: string) =>
+            this.http.get(url(`batch-delete/${batchId}`)),
 
-        deleteCommit: (batchId: string): Observable<any> =>
-            this.POST(`/batch-delete-commit`, generateFormData({ batchId })),
+        deleteCommit: (batchId: string) =>
+            this.http.post(url(`batch-delete-commit`), generateFormData({ batchId })),
 
         status: (batchId: string): Observable<response.batch.Status> =>
-            this.GET(`/batch-status/${batchId}`),
+            this.http.get<response.batch.Status>(url(`batch-status/${batchId}`)),
 
         upload: (sourceCodeId: string | number, file: File): Observable<response.batch.Upload> =>
-            this.POST(`/batch-upload-from-file`, generateFormData({ file, sourceCodeId })),
+            this.http.post<response.batch.Upload>(url(`batch-upload-from-file`), generateFormData({ file, sourceCodeId })),
 
-        execStatuses: (): Observable<response.batch.ExecStatuses> => this.GET(`/batch-exec-statuses`)
+        execStatuses: (): Observable<response.batch.ExecStatuses> =>
+            this.http.get<response.batch.ExecStatuses>(url(`batch-exec-statuses`))
     };
 
-    static updateBatchExecStatus(batches: Batch[], statuses: BatchExecStatus[]) {
+    static updateBatchExecStatus(batches: Batch[], statuses: BatchExecStatus[]): void {
         statuses.forEach(status => {
             batches
                 .filter(batch => batch.batch.id === status.id)
@@ -87,40 +83,38 @@ export class BatchService {
         let headers: HttpHeaders = new HttpHeaders();
         headers = headers.append('Accept', 'application/octet-stream');
 
-        return this.GET(`/batch-download-result/${batchId}/result.zip`, {
+        return this.http.get(url(`batch-download-result/${batchId}/result.zip`), {
             headers,
             observe: 'response',
             responseType: 'blob'
         });
     }
 
-    stopIntervalRequset() {
+    stopIntervalRequset(): void {
         this.intervalStarted = false;
     }
 
-    startIntervalRequset(interval: number) {
-        if (this.intervalStarted) {
-            return false;
+    startIntervalRequset(interval: number): void {
+        if (!this.intervalStarted) {
+            this.intervalRequset(interval);
+            this.intervalStarted = true;
         }
-        this.intervalRequset(interval);
-        this.intervalStarted = true;
     }
 
-    private intervalRequset(interval: number) {
+    private intervalRequset(interval: number): void {
         const base: BatchService = this;
         fn();
 
-        function fn() {
-            if (!base.authenticationService.isAuth()) {
-                return false;
+        function fn(): void {
+            if (base.authenticationService.isAuth()) {
+                base.batch.execStatuses().subscribe((content: response.batch.ExecStatuses) => {
+                    base.batchExexStatusComparer.takeApart(content.statuses);
+                    if (base.intervalStarted) {
+                        setTimeout(() => { fn(); }, interval);
+                    }
+                    base.store.dispatch(newExecStatus({ payload: content.statuses }));
+                });
             }
-            base.batch.execStatuses().subscribe((content: response.batch.ExecStatuses) => {
-                base.batchExexStatusComparer.takeApart(content.statuses);
-                if (base.intervalStarted) {
-                    setTimeout(() => { fn(); }, interval);
-                }
-                base.store.dispatch(newhExecStatus({ payload: content.statuses }));
-            });
         }
     }
 }

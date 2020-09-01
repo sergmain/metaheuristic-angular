@@ -6,7 +6,7 @@ import { response } from './response';
 import { generateFormData as formData } from '@src/app/helpers/generateFormData';
 
 
-const url = (url): string => `${environment.baseUrl}dispatcher/source-code/${url}`;
+const url = (urlString): string => `${environment.baseUrl}dispatcher/source-code/${urlString}`;
 
 @Injectable({
     providedIn: 'root'

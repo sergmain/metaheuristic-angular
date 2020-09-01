@@ -1,3 +1,4 @@
+import { ValidationResult } from './ValidationResult';
 export interface SourceCode {
     id: number;
     version: number;
@@ -7,4 +8,5 @@ export interface SourceCode {
     source: string;
     locked: boolean;
     valid: boolean;
+    validationResult: ValidationResult;
 }

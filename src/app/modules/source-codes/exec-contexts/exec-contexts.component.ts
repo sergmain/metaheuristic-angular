@@ -10,6 +10,7 @@ import { ExecContext } from '@src/app/services/source-codes/ExecContext';
 import { SourceCodesService } from '@src/app/services/source-codes/source-codes.service';
 import { SourceCode } from '@src/app/services/source-codes/SourceCode';
 import { ExecContextState } from '@src/app/enums/ExecContextState';
+import { response as SourceCodesResponse } from '@src/app/services/source-codes/response';
 
 
 @Component({
@@ -24,15 +25,11 @@ export class ExecContextsComponent implements OnInit {
     @ViewChild('prevTable', { static: true }) prevTable: MatButton;
 
     sourceCodeId: string;
-    sourceCode: SourceCode;
-    response;
+    response: SourceCodesResponse.execContexts.Get;
     execContextTableSource = new MatTableDataSource<ExecContext>([]);
-    execContextColumnsToDisplay = [
+    execContextColumnsToDisplay: string[] = [
         'id',
-        'sourceCode',
-        'inputPoolCodes',
         'createdOn',
-        'isSourceCodeValid',
         'isExecContextValid',
         'execState',
         'completedOn',
@@ -43,18 +40,19 @@ export class ExecContextsComponent implements OnInit {
         private route: ActivatedRoute,
         private dialog: MatDialog,
         private sourceCodesService: SourceCodesService,
-    ) { }
+    ) { 
+        console.log(ExecContextState)
+    }
 
-    ngOnInit() {
+    ngOnInit(): void {
         this.sourceCodeId = this.route.snapshot.paramMap.get('sourceCodeId');
         this.getExecContexts(0);
     }
 
-    getExecContexts(page: number) {
+    getExecContexts(page: number): void {
         this.sourceCodesService.execContexts.get(this.sourceCodeId, page.toString()).subscribe(v => {
             this.response = v;
             if (v) {
-                this.sourceCode = v.sourceCodes[0]
                 this.execContextTableSource = new MatTableDataSource(v.instances.content);
                 this.prevTable.disabled = v.instances.first;
                 this.nextTable.disabled = v.instances.last;
@@ -70,37 +68,37 @@ export class ExecContextsComponent implements OnInit {
         rejectTitle: 'Cancel',
         resolveTitle: 'Delete'
     })
-    delete(execContext: ExecContext) {
+    delete(execContext: ExecContext): void {
         this.sourceCodesService.execContext
             .deleteCommit(this.sourceCodeId, execContext.id?.toString?.())
             .subscribe(v => this.getExecContexts(this.response.instances.number));
     }
 
-    next() {
+    next(): void {
         this.getExecContexts(this.response.instances.number + 1);
     }
 
-    prev() {
+    prev(): void {
         this.getExecContexts(this.response.instances.number - 1);
     }
 
-    runExecState(id, state) {
+    runExecState(id, state): void {
         this.sourceCodesService.execContext
             .targetExecState(this.sourceCodeId, state, id)
             .subscribe(v => this.getExecContexts(this.response.instances.number));
     }
 
-    stop(el, event) {
+    stop(el, event): void {
         event.target.disabled = true;
         this.runExecState(el.id, 'STOPPED');
     }
 
-    start(el, event) {
+    start(el, event): void {
         event.target.disabled = true;
         this.runExecState(el.id, 'STARTED');
     }
 
-    produce(el, event) {
+    produce(el, event): void {
         event.target.disabled = true;
         this.runExecState(el.id, 'PRODUCED');
     }

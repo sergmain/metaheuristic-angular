@@ -1,4 +1,3 @@
-
 <ct-cols>
   <ct-col size="6">
     <ct-section>
@@ -12,7 +11,8 @@
           <ct-section-body-row>
             <mat-form-field appearance="outline">
               <mat-label>Parameters of source code</mat-label>
-              <textarea formControlName="source" matInput="matInput" cdkTextareaAutosize="cdkTextareaAutosize" cdkAutosizeMinRows="10" value="" autocomplete="off"></textarea>
+              <textarea formControlName="source" matInput="matInput" cdkTextareaAutosize="cdkTextareaAutosize"
+                cdkAutosizeMinRows="10" value="" autocomplete="off"></textarea>
               <mat-hint>This is a required field.</mat-hint>
             </mat-form-field>
           </ct-section-body-row>
@@ -25,7 +25,8 @@
               <button mat-stroked-button="mat-stroked-button" (click)="cancel()">Back </button>
             </ct-flex-item>
             <ct-flex-item>
-              <button #submitButton mat-flat-button="mat-flat-button" (click)="create()" color="primary" [disabled]="!form.valid">Add</button>
+              <button #submitButton mat-flat-button="mat-flat-button" (click)="create()" color="primary"
+                [disabled]="!form.valid">Add</button>
             </ct-flex-item>
           </ct-flex>
         </ct-section-footer-row>

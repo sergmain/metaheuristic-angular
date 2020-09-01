@@ -5,38 +5,62 @@ issue-1201
 DONE
 
 
+
 issue-1202
 подтвердить работоспособность интерфейса управления процессорами (бывшие Station)
 урл в стандартном интерфейсе - http://localhost:8080/dispatcher/processor/processors
+
+
 
 issue-1203
 подтвердить работоспособность интерфейса управления функциями (бывшие Snippet)
 урл в стандартном интерфейсе - http://localhost:8080/dispatcher/function/functions
 
+
+
 issue-1204
 подтвердить работоспособность интерфейса управления глобальными переменными (бывшие Resources)
 урл в стандартном интерфейсе - http://localhost:8080/dispatcher/global-variable/global-variables
+
+
 
 issue-1205
 подтвердить работоспособность интерфейса управления исхоными кодами (бывшие PLans)
 урл в стандартном интерфейсе - http://localhost:8080/dispatcher/source-code/source-codes
 
+http://localhost:8080/dispatcher/source-code/source-codes
+http://localhost:8080/dispatcher/source-code/source-code-add
+http://localhost:8080/dispatcher/source-code/source-code-edit/7
+http://localhost:8080/dispatcher/source-code/exec-contexts/5
+http://localhost:8080/dispatcher/source-code/exec-context-add/5
+http://localhost:8080/dispatcher/source-code/exec-context-state/5/5
+
+
+
 issue-1206
 подтвердить работоспособность интерфейса управления контекстами выполнения (бывшие Workbooks)
 урл в стандартном интерфейсе - http://localhost:8080/dispatcher/source-code/exec-contexts/1263
+
+
 
 issue-1207
 сделать страницу показа текущего состояния выполнения задач:
  - кнопка Task states на странице перечисления контекстов выполнения задач
 урл в стандартном интерфейсе - http://localhost:8080/dispatcher/source-code/exec-context-state/1263/1612
 
+
+
 issue-1208
 подтвердить работоспособность интерфейса управления пакетами
 урл в стандартном интерфейсе - http://localhost:8080/dispatcher/batch/batches
 
+
+
 issue-1209
 переработать страницу создания экспериментов в соответствии со стандартным интерфейсом,
  урл - http://localhost:8080/dispatcher/ai/experiment/experiments
+
+
 
 issue-1210
 перейти на Angular 10 И обновить все либы для работы на этой версии
@@ -44,9 +68,14 @@ issue-1210
 DONE
 
 
+
 issue-1211
 http://localhost:4200/#/dispatcher/source-codes/1262/edit
 статус выглядит так: STATUS: [object Object]
+
+DONE
+
+
 
 issue-1212
 http://localhost:4200/#/dispatcher/source-codes/1262/edit
@@ -55,24 +84,35 @@ http://localhost:4200/#/dispatcher/source-codes/1262/edit
 DONE
 
 
+
 issue-1213
 http://localhost:4200/#/dispatcher/source-codes/add
 
 после нажатия кнопки 'Add' на экран должно выводиться сообщение о статусе операции - Ок или была ошибка
 фокус должен перемещаться вверх экрана так чтобы было видно сообщение о статусе
 
+DONE
+
+
 
 issue-1214
 http://localhost:4200/#/dispatcher/source-codes/add
 
 Названия кнопок 'Back', 'Add' Должны быть русифицированы
+
 POSTPONED
+
+
 
 issue-1215
 http://localhost:4200/#/dispatcher/batch/add
 http://localhost:4200/#/dispatcher/batch
 
 при повторном создании пакета с тем же самым файлом новый пакет не отображается в списке созданных пакетов
+
+DONE
+
+
 
 issue-1216
 http://localhost:8080/dispatcher/company/batch/company-batches/2

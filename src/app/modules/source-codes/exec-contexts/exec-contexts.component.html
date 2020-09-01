@@ -3,6 +3,22 @@
         <ct-section-header-row>
             <ct-heading>Exec Contexts in Source Code #{{ sourceCodeId }}</ct-heading>
         </ct-section-header-row>
+        <ct-section-header-row *ngIf="response">
+            <table>
+                <tr>
+                    <td>UID: </td>
+                    <td>{{response.sourceCodeUid}}</td>
+                </tr>
+                <tr>
+                    <td>Is valid:</td>
+                    <td>{{response.sourceCodeValid}}</td>
+                </tr>
+                <tr>
+                    <td>Type: </td>
+                    <td>{{response.sourceCodeType}}</td>
+                </tr>
+            </table>
+        </ct-section-header-row>
     </ct-section-header>
     <ct-section-body>
         <ct-section-body-row *ngIf="response">
@@ -12,23 +28,9 @@
                         <th mat-header-cell="mat-header-cell" *matHeaderCellDef>Id</th>
                         <td mat-cell="mat-cell" *matCellDef="let el">{{el.id}}</td>
                     </ng-container>
-                    <ng-container matColumnDef="sourceCode">
-                        <th mat-header-cell="mat-header-cell" *matHeaderCellDef>UID of sourceCode</th>
-                        <td mat-cell="mat-cell" *matCellDef="let el">{{sourceCode.uid}}</td>
-                    </ng-container>
-                    <ng-container matColumnDef="inputPoolCodes"> 
-                        <th mat-header-cell="mat-header-cell" *matHeaderCellDef>Input Pool Codes</th>
-                        <td mat-cell="mat-cell" *matCellDef="let el">
-                            <pre>{{el.inputResourceParam}}</pre>
-                        </td>
-                    </ng-container>
                     <ng-container matColumnDef="createdOn">
                         <th mat-header-cell="mat-header-cell" *matHeaderCellDef>Created On</th>
                         <td mat-cell="mat-cell" *matCellDef="let el">{{el.createdOn | date}}</td>
-                    </ng-container>
-                    <ng-container matColumnDef="isSourceCodeValid">
-                        <th mat-header-cell="mat-header-cell" *matHeaderCellDef>Is sourceCode<br>Valid</th>
-                        <td mat-cell="mat-cell" *matCellDef="let el">{{sourceCode.valid}}</td>
                     </ng-container>
                     <ng-container matColumnDef="isExecContextValid">
                         <th mat-header-cell="mat-header-cell" *matHeaderCellDef>Is execContext<br>Valid</th>
@@ -40,23 +42,32 @@
                     </ng-container>
                     <ng-container matColumnDef="completedOn">
                         <th mat-header-cell="mat-header-cell" *matHeaderCellDef>Completed on</th>
-                        <td mat-cell="mat-cell" *matCellDef="let el">{{el.completedOn | date}}</td>
+                        <td mat-cell="mat-cell" *matCellDef="let el">
+                            <span *ngIf="el.completedOn !== null">{{el.completedOn | date}}</span>
+                            <span *ngIf="el.completedOn === null">null</span>
+                        </td>
                     </ng-container>
                     <ng-container matColumnDef="bts">
                         <th mat-header-cell="mat-header-cell" *matHeaderCellDef></th>
                         <td mat-cell="mat-cell" *matCellDef="let el">
                             <ct-flex justify-content="flex-end" gap="9px">
-                                <ct-flex-item *ngIf="(el.execState == execState.NONE) &amp;&amp; (el.valid) &amp;&amp; (sourceCode.valid)">
-                                    <button mat-flat-button="mat-flat-button" size="forTableRow" color="primary" (click)="produce(el,$event)">Produce</button>
+                                <ct-flex-item
+                                    *ngIf="(el.execState == execState.NONE) && (el.valid) && (response.sourceCodeValid)">
+                                    <button mat-flat-button="mat-flat-button" size="forTableRow" color="primary"
+                                        (click)="produce(el,$event)">Produce</button>
                                 </ct-flex-item>
-                                <ct-flex-item *ngIf="(el.execState == execState.PRODUCED) || (el.execState == execState.STOPPED)">
-                                    <button mat-flat-button="mat-flat-button" size="forTableRow" color="primary" (click)="start(el,$event)">Start</button>
+                                <ct-flex-item
+                                    *ngIf="(el.execState == execState.PRODUCED) || (el.execState == execState.STOPPED)">
+                                    <button mat-flat-button="mat-flat-button" size="forTableRow" color="primary"
+                                        (click)="start(el,$event)">Start</button>
                                 </ct-flex-item>
                                 <ct-flex-item *ngIf="(el.execState == execState.STARTED)">
-                                    <button mat-flat-button="mat-flat-button" size="forTableRow" color="primary" (click)="stop(el,$event)">Stop</button>
+                                    <button mat-flat-button="mat-flat-button" size="forTableRow" color="primary"
+                                        (click)="stop(el,$event)">Stop</button>
                                 </ct-flex-item>
                                 <ct-flex-item>
-                                    <button mat-flat-button="mat-flat-button" color="warn" size="forTableRow" [disabled]="el.__deleted" (click)="delete(el)">
+                                    <button mat-flat-button="mat-flat-button" color="warn" size="forTableRow"
+                                        [disabled]="el.__deleted" (click)="delete(el)">
                                         <mat-icon>delete</mat-icon>
                                     </button>
                                 </ct-flex-item>
@@ -64,7 +75,8 @@
                         </td>
                     </ng-container>
                     <tr mat-header-row="mat-header-row" *matHeaderRowDef="execContextColumnsToDisplay"></tr>
-                    <tr mat-row="mat-row" [class.mat-row--deleted]="row.__deleted" *matRowDef="let row; columns: execContextColumnsToDisplay;"></tr>
+                    <tr mat-row="mat-row" [class.mat-row--deleted]="row.__deleted"
+                        *matRowDef="let row; columns: execContextColumnsToDisplay;"></tr>
                 </table>
             </ct-table>
         </ct-section-body-row>
@@ -90,7 +102,9 @@
                     </ct-flex>
                 </ct-flex-item>
                 <ct-flex-item>
-                    <a mat-flat-button="mat-flat-button" color="primary" [disabled]="!response" [routerLink]="['/dispatcher','source-codes',sourceCodeId,'exec-context','add']">Add Exec Context</a>
+                    <a mat-flat-button="mat-flat-button" color="primary" [disabled]="!response"
+                        [routerLink]="['/dispatcher','source-codes',sourceCodeId,'exec-context','add']">Add Exec
+                        Context</a>
                 </ct-flex-item>
             </ct-flex>
         </ct-section-footer-row>

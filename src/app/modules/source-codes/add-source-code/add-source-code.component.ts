@@ -1,5 +1,5 @@
 import { Location } from '@angular/common';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatButton } from '@angular/material/button';
 import { SourceCodesService } from '@src/app/services/source-codes/source-codes.service';
@@ -9,20 +9,21 @@ import { SourceCodesService } from '@src/app/services/source-codes/source-codes.
     styleUrls: ['./add-source-code.component.scss']
 })
 
-export class AddSourceCodeComponent implements OnInit {
+export class AddSourceCodeComponent {
     response;
     @ViewChild('submitButton', { static: true }) submitButton: MatButton;
 
     form = new FormGroup({
-        source: new FormControl('', [Validators.required, Validators.minLength(1)]),
+        source: new FormControl('', [
+            Validators.required,
+            Validators.minLength(1)
+        ]),
     });
 
     constructor(
         private sourceCodesService: SourceCodesService,
         private location: Location
     ) { }
-
-    ngOnInit() { }
 
     cancel() {
         this.location.back();
@@ -33,13 +34,22 @@ export class AddSourceCodeComponent implements OnInit {
         this.submitButton.disabled = true;
         this.sourceCodesService.sourceCode
             .add(this.form.value.source)
-            .subscribe(
-                (v) => {
-                    this.response = v;
-                    if (this.response.status.toLowerCase() === 'ok') { this.cancel(); }
-                    this.submitButton.disabled = false;
-                },
-                () => { this.submitButton.disabled = false; }
-            );
+            .subscribe((v) => {
+                this.response = v;
+                if (this.response.status.toLowerCase() === 'ok') {
+                    this.cancel();
+                } else {
+                    this.scrillToTop();
+                }
+                this.submitButton.disabled = false;
+            });
     }
+
+    scrillToTop() {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    }
+
 }
