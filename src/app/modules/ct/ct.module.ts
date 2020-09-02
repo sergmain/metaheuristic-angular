@@ -21,6 +21,7 @@ import { CtFlexItemComponent } from './ct-flex-item/ct-flex-item.component';
 import { CtSectionBodyComponent } from './ct-section-body/ct-section-body.component';
 import { CtHintComponent } from './ct-hint/ct-hint.component';
 import { CtContentComponent } from './ct-content/ct-content.component';
+import { CtRestStatusComponent } from './ct-rest-status/ct-rest-status.component';
 
 @NgModule({
     imports: [
@@ -47,7 +48,8 @@ import { CtContentComponent } from './ct-content/ct-content.component';
         CtFlexItemComponent,
         CtSectionBodyComponent,
         CtHintComponent,
-        CtContentComponent
+        CtContentComponent,
+        CtRestStatusComponent
     ],
     exports: [
         CtSectionContentComponent,
@@ -69,7 +71,8 @@ import { CtContentComponent } from './ct-content/ct-content.component';
         CtFlexItemComponent,
         CtSectionBodyComponent,
         CtHintComponent,
-        CtContentComponent
+        CtContentComponent,
+        CtRestStatusComponent
     ]
 })
 

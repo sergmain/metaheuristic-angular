@@ -1,10 +1,15 @@
-import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { generateFormData as formData } from '@src/app/helpers/generateFormData';
+import { OperationStatusRest } from '@src/app/models/OperationStatusRest';
 import { environment } from '@src/environments/environment';
 import { Observable } from 'rxjs';
-import { response } from './response';
-import { generateFormData as formData } from '@src/app/helpers/generateFormData';
-
+import { ExecContextResult } from './ExecContextResult';
+import { ExecContextsResult } from './ExecContextsResult';
+import { SimpleExecContextAddingResult } from './SimpleExecContextAddingResult';
+import { SourceCodeResult } from './SourceCodeResult';
+import { SourceCodesResult } from './SourceCodesResult';
+import { SourceCodeType } from '@src/app/enums/SourceCodeType';
 
 const url = (urlString): string => `${environment.baseUrl}dispatcher/source-code/${urlString}`;
 
@@ -12,60 +17,99 @@ const url = (urlString): string => `${environment.baseUrl}dispatcher/source-code
     providedIn: 'root'
 })
 export class SourceCodesService {
-
     constructor(
         private http: HttpClient
     ) { }
 
     sourceCodes = {
-        get: (page: string): Observable<response.sourceCodes.Get> =>
-            this.http.get<response.sourceCodes.Get>(url('source-codes'), { params: { page } }),
-        getArchivedOnly: (page: string): Observable<response.sourceCodes.GetArchivedOnly> =>
-            this.http.get<response.sourceCodes.GetArchivedOnly>(url('source-codes-archived-only'), { params: { page } })
+        get: (page: string): Observable<SourceCodesResult> =>
+            this.http.get<SourceCodesResult>(
+                url('source-codes'),
+                { params: { page } }
+            ),
+        getArchivedOnly: (page: string): Observable<SourceCodesResult> =>
+            this.http.get<SourceCodesResult>(
+                url('source-codes-archived-only'),
+                { params: { page } }
+            )
     };
 
     sourceCode = {
-        get: (id: string): Observable<response.sourceCode.Get> =>
-            this.http.get<response.sourceCode.Get>(url(`source-code/${id}`)),
+        get: (id: string): Observable<SourceCodeResult> =>
+            this.http.get<SourceCodeResult>(url(`source-code/${id}`)),
 
-        validate: (id: string): Observable<response.sourceCode.Validate> =>
-            this.http.get<response.sourceCode.Validate>(url(`source-code-validate/${id}`)),
+        validate: (id: string): Observable<SourceCodeResult> =>
+            this.http.get<SourceCodeResult>(url(`source-code-validate/${id}`)),
 
-        add: (source: string): Observable<response.sourceCode.Add> =>
-            this.http.post<response.sourceCode.Add>(url(`source-code-add-commit`), formData({ source })),
+        add: (source: string): Observable<SourceCodeResult> =>
+            this.http.post<SourceCodeResult>(
+                url(`source-code-add-commit`),
+                formData({ source })
+            ),
 
-        edit: (sourceCodeId: string, source: string): Observable<response.sourceCode.Edit> =>
-            this.http.post<response.sourceCode.Edit>(url(`source-code-edit-commit`), formData({ sourceCodeId, source })),
+        edit: (sourceCodeId: string, source: string): Observable<SourceCodeResult> =>
+            this.http.post<SourceCodeResult>(
+                url(`source-code-edit-commit`),
+                formData({ sourceCodeId, source })
+            ),
 
-        delete: (id: string): Observable<response.sourceCode.Delete> =>
-            this.http.post<response.sourceCode.Delete>(url(`source-code-delete-commit`), formData({ id })),
+        delete: (id: string): Observable<OperationStatusRest> =>
+            this.http.post<OperationStatusRest>(
+                url(`source-code-delete-commit`),
+                formData({ id })
+            ),
 
-        archive: (id: string): Observable<response.sourceCode.Archive> =>
-            this.http.post<response.sourceCode.Archive>(url(`source-code-archive-commit`), formData({ id })),
+        archive: (id: string): Observable<OperationStatusRest> =>
+            this.http.post<OperationStatusRest>(
+                url(`source-code-archive-commit`),
+                formData({ id })
+            ),
 
-        uploadFromFile: (file: any): Observable<response.sourceCode.Upload> =>
-            this.http.post<response.sourceCode.Upload>(url(`source-code-upload-from-file`), formData({ file }))
+        uploadFromFile: (file: File): Observable<SourceCodeResult> =>
+            this.http.post<SourceCodeResult>(
+                url(`source-code-upload-from-file`),
+                formData({ file })
+            )
     };
 
     execContexts = {
-        get: (sourceCodeId: string, page: string): Observable<response.execContexts.Get> =>
-            this.http.get<response.execContexts.Get>(url(`exec-contexts/${sourceCodeId}`), { params: { page } }),
+        get: (sourceCodeId: string, page: string): Observable<ExecContextsResult> =>
+            this.http.get<ExecContextsResult>(
+                url(`exec-contexts/${sourceCodeId}`),
+                { params: { page } }
+            ),
     };
 
     execContext = {
-        uidExecContextAddCommit: (uid: string, variable: string): Observable<response.execContext.UidExecContextAddCommit> =>
-            this.http.post<response.execContext.UidExecContextAddCommit>(url(`uid-exec-context-add-commit`), formData({ uid, variable })),
+        uidExecContextAddCommit: (uid: string, variable: string): Observable<SimpleExecContextAddingResult> =>
+            this.http.post<SimpleExecContextAddingResult>(
+                url(`uid-exec-context-add-commit`),
+                formData({ uid, variable })
+            ),
 
-        addCommit: (sourceCodeId: string, variable: string): Observable<response.execContext.AddCommit> =>
-            this.http.post<response.execContext.AddCommit>(url(`exec-context-add-commit`), formData({ sourceCodeId, variable })),
+        addCommit: (sourceCodeId: string, variable: string): Observable<ExecContextResult> =>
+            this.http.post<ExecContextResult>(
+                url(`exec-context-add-commit`),
+                formData({ sourceCodeId, variable })
+            ),
 
-        get: (sourceCodeId: string, execContextId: string): Observable<response.execContext.Get> =>
-            this.http.get<response.execContext.Get>(url(`exec-context/${sourceCodeId}/${execContextId}`)),
+        get: (sourceCodeId: string, execContextId: string): Observable<ExecContextResult> =>
+            this.http.get<ExecContextResult>(url(`exec-context/${sourceCodeId}/${execContextId}`)),
 
-        deleteCommit: (sourceCodeId: string, execContextId: string): Observable<response.execContext.DeleteCommit> =>
-            this.http.post<response.execContext.DeleteCommit>(url(`exec-context-delete-commit/`), formData({ sourceCodeId, execContextId })),
+        deleteCommit: (sourceCodeId: string, execContextId: string): Observable<OperationStatusRest> =>
+            this.http.post<OperationStatusRest>(
+                url(`exec-context-delete-commit/`),
+                formData({ sourceCodeId, execContextId })
+            ),
 
-        targetExecState: (sourceCodeId: string, state: string, id: string): Observable<response.execContext.TargetExecState> =>
-            this.http.get<response.execContext.TargetExecState>(url(`exec-context-target-state/${sourceCodeId}/${state}/${id}`))
+        targetExecState: (sourceCodeId: string, state: string, id: string): Observable<OperationStatusRest> =>
+            this.http.get<OperationStatusRest>(url(`exec-context-target-state/${sourceCodeId}/${state}/${id}`))
     };
+
+    getSourceCodeType(uid: string, result: SourceCodesResult): SourceCodeType {
+        let type: SourceCodeType = SourceCodeType.common;
+        if (result.batches.includes(uid)) { type = SourceCodeType.batch; }
+        if (result.experiments.includes(uid)) { type = SourceCodeType.experiment; }
+        return type;
+    }
 }

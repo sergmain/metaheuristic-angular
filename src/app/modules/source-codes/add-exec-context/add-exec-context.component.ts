@@ -2,8 +2,9 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LoadStates } from '@app/enums/LoadStates';
 import { state } from '@app/helpers/state';
+import { ExecContextResult } from '@src/app/services/source-codes/ExecContextResult';
 import { SourceCodesService } from '@src/app/services/source-codes/source-codes.service';
-import { response as SourceCodesResponse } from '@src/app/services/source-codes/response';
+import { SourceCodeResult } from '@src/app/services/source-codes/SourceCodeResult';
 @Component({
     selector: 'add-exec-context',
     templateUrl: './add-exec-context.component.html',
@@ -16,9 +17,9 @@ export class AddExecContextComponent implements OnInit, OnDestroy {
     state: LoadStates = state;
     currentState: LoadStates = state.show;
     variable: string;
-    responseSingle: SourceCodesResponse.execContext.AddCommit;
+    responseSingle: ExecContextResult;
     sourceCodeId: string;
-    sourceCodeResponse: SourceCodesResponse.sourceCode.Get;
+    sourceCodeResponse: SourceCodeResult;
 
     constructor(
         private route: ActivatedRoute,

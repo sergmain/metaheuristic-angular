@@ -30,7 +30,8 @@
                     </ng-container>
                     <ng-container matColumnDef="createdOn">
                         <th mat-header-cell="mat-header-cell" *matHeaderCellDef>Created On</th>
-                        <td mat-cell="mat-cell" *matCellDef="let el">{{el.createdOn | date}}</td>
+                        <td mat-cell="mat-cell" *matCellDef="let el">{{el.createdOn | date:'MMM d, yy • HH:mm:ss'}}
+                        </td>
                     </ng-container>
                     <ng-container matColumnDef="isExecContextValid">
                         <th mat-header-cell="mat-header-cell" *matHeaderCellDef>Is execContext<br>Valid</th>
@@ -43,7 +44,8 @@
                     <ng-container matColumnDef="completedOn">
                         <th mat-header-cell="mat-header-cell" *matHeaderCellDef>Completed on</th>
                         <td mat-cell="mat-cell" *matCellDef="let el">
-                            <span *ngIf="el.completedOn !== null">{{el.completedOn | date}}</span>
+                            <span
+                                *ngIf="el.completedOn !== null">{{el.completedOn | date:'MMM d, yy • HH:mm:ss'}}</span>
                             <span *ngIf="el.completedOn === null">null</span>
                         </td>
                     </ng-container>
@@ -64,6 +66,12 @@
                                 <ct-flex-item *ngIf="(el.execState == execState.STARTED)">
                                     <button mat-flat-button="mat-flat-button" size="forTableRow" color="primary"
                                         (click)="stop(el,$event)">Stop</button>
+                                </ct-flex-item>
+                                <ct-flex-item>
+                                    <button mat-flat-button="mat-flat-button" color="primary" size="forTableRow"
+                                        [routerLink]="['/dispatcher','source-codes',sourceCodeId,'exec-context',el.id,'state',el.state]">Task
+                                        States
+                                    </button>
                                 </ct-flex-item>
                                 <ct-flex-item>
                                     <button mat-flat-button="mat-flat-button" color="warn" size="forTableRow"

@@ -8,35 +8,31 @@ import { TranslateService } from '@ngx-translate/core';
     styleUrls: ['./ct-file-upload.component.scss']
 })
 export class CtFileUploadComponent implements OnInit, OnChanges {
-    @Output() changed = new EventEmitter < string > ();
+    @Output() changed: EventEmitter<string> = new EventEmitter<string>();
 
     @ViewChild('fileInput', { static: true }) fileInput: ElementRef;
-    @Input('buttonTitle') buttonTitle: string;
-    @Input('acceptTypes') acceptTypes: string;
+    @Input() buttonTitle: string;
+    @Input() acceptTypes: string = '';
 
 
     value: string = '';
     buttonTitleString: string;
     accept: string;
 
-    constructor() {
-        this.accept = this.acceptTypes || '';
-    }
-
-    ngOnInit() {
+    ngOnInit(): void {
         this.buttonTitleString = this.buttonTitle || 'Select File';
     }
 
-    ngOnChanges() {
+    ngOnChanges(): void {
         this.buttonTitleString = this.buttonTitle || 'Select File';
     }
 
-    fileChanged() {
+    fileChanged(): void {
         this.value = this.fileInput.nativeElement.value;
         this.changed.emit('fileChanged');
     }
 
-    removeFile() {
+    removeFile(): void {
         this.fileInput.nativeElement.value = '';
         this.value = '';
         this.changed.emit('fileChanged');

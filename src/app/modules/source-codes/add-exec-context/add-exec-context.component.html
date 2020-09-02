@@ -5,7 +5,8 @@
     <ct-section>
         <ct-section-header>
             <ct-section-header-row>
-                <ct-heading> Source Code: #{{ sourceCodeResponse.id }}</ct-heading>
+                <div>Source Code: #{{ sourceCodeResponse.id }}</div>
+                <ct-heading> {{ sourceCodeResponse.uid }}</ct-heading>
             </ct-section-header-row>
         </ct-section-header>
     </ct-section>
@@ -35,7 +36,8 @@
                                 <button mat-stroked-button="mat-stroked-button" (click)="cancel()">Back </button>
                             </ct-flex-item>
                             <ct-flex-item>
-                                <button mat-flat-button="mat-flat-button" (click)="createWithVariable()" color="primary" [disabled]="currentStates.has(states.loading)">Create </button>
+                                <button mat-flat-button="mat-flat-button" (click)="createWithVariable()" color="primary"
+                                    [disabled]="currentStates.has(states.loading)">Create </button>
                             </ct-flex-item>
                         </ct-flex>
                     </ct-section-footer-row>

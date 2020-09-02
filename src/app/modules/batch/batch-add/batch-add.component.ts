@@ -3,13 +3,14 @@ import { Router } from '@angular/router';
 import { LoadStates } from '@app/enums/LoadStates';
 import { BatchService } from '@app/services/batch/batch.service';
 import { response as batchResponse } from '@app/services/batch/response';
+import { SourceCode } from '@app/services/source-codes/SourceCode';
+import { SourceCodeUid } from '@app/services/source-codes/SourceCodeUid';
 import { Store } from '@ngrx/store';
 import { TranslateService } from '@ngx-translate/core';
 import { AppState } from '@src/app/app.reducers';
+import { OperationStatus } from '@src/app/models/OperationStatus';
 import { Subscription } from 'rxjs';
 import { CtFileUploadComponent } from '../../ct/ct-file-upload/ct-file-upload.component';
-import { SourceCode } from '@app/services/source-codes/SourceCode';
-import { SourceCodeUid } from '@app/services/source-codes/SourceCodeUid';
 
 @Component({
     selector: 'batch-add',
@@ -69,9 +70,9 @@ export class BatchAddComponent implements OnInit {
 
     upload(): void {
         this.batchService.batch
-            .upload(this.sourceCode.id, this.fileUpload.fileInput.nativeElement.files[0])
-            .subscribe((response: batchResponse.batch.Upload) => {
-                if (response.status.toLowerCase() === 'ok') {
+            .upload(this.sourceCode.id.toString(), this.fileUpload.fileInput.nativeElement.files[0])
+            .subscribe((response) => {
+                if (response.status === OperationStatus.OK) {
                     this.back();
                 }
                 this.uploadResponse = response;

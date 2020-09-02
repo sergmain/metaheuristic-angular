@@ -11,7 +11,7 @@ import { CtFileUploadComponent } from '../../ct/ct-file-upload/ct-file-upload.co
 })
 export class AtlasExperimentExportImportComponent {
     readonly states = LoadStates;
-    currentStates = new Set();
+    currentStates: Set<string> = new Set();
     atlasDownloadName: string;
 
     @ViewChild('fileUpload', { static: true }) fileUpload: CtFileUploadComponent;
@@ -24,11 +24,11 @@ export class AtlasExperimentExportImportComponent {
         this.atlasDownloadName = `atlas-${this.route.snapshot.paramMap.get('atlasId')}.yaml`;
     }
 
-    back() {
+    back(): void {
         this.router.navigate(['/dispatcher', 'atlas', 'experiments']);
     }
 
-    upload() {
+    upload(): void {
         this.atlasService.experiment
             .uploadFromFile(this.fileUpload.fileInput.nativeElement.files[0])
             .subscribe(

@@ -28,7 +28,7 @@ issue-1205
 подтвердить работоспособность интерфейса управления исхоными кодами (бывшие PLans)
 урл в стандартном интерфейсе - http://localhost:8080/dispatcher/source-code/source-codes
 
-http://localhost:8080/dispatcher/source-code/source-codes
+http://localhost:8080/dispatcher/source-code/source-codes DONE
 http://localhost:8080/dispatcher/source-code/source-code-add
 http://localhost:8080/dispatcher/source-code/source-code-edit/7
 http://localhost:8080/dispatcher/source-code/exec-contexts/5
@@ -90,8 +90,6 @@ http://localhost:4200/#/dispatcher/source-codes/add
 
 после нажатия кнопки 'Add' на экран должно выводиться сообщение о статусе операции - Ок или была ошибка
 фокус должен перемещаться вверх экрана так чтобы было видно сообщение о статусе
-
-DONE
 
 
 

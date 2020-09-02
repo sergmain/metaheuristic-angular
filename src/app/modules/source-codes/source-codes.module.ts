@@ -7,12 +7,14 @@ import { MaterialAppModule } from '@src/app/ngmaterial.module';
 import { CtModule } from '../ct/ct.module';
 import { AddExecContextComponent } from './add-exec-context/add-exec-context.component';
 import { AddSourceCodeComponent } from './add-source-code/add-source-code.component';
+import { EditExecContextComponent } from './edit-exec-context/edit-exec-context.component';
 import { EditSourceCodeComponent } from './edit-source-code/edit-source-code.component';
+import { ExecContextStates } from './exec-context-states/exec-context-states.component';
 import { ExecContextsComponent } from './exec-contexts/exec-contexts.component';
 import { SourceCodesArchiveComponent } from './source-codes-archive/source-codes-archive.component';
 import { SourceCodesComponent } from './source-codes/source-codes.component';
-import { EditExecContextComponent } from './edit-exec-context/edit-exec-context.component';
-
+import { CardFormUploadSourceCodeComponent } from './card-form-upload-source-code/card-form-upload-source-code.component';
+import { CardFormAddSourceCodeComponent } from './card-form-add-source-code/card-form-add-source-code.component';
 
 const routes: Routes = [
     {
@@ -38,6 +40,10 @@ const routes: Routes = [
     {
         path: ':sourceCodeId/exec-context/:execContextId/edit',
         component: EditExecContextComponent,
+    },
+    {
+        path: ':sourceCodeId/exec-context/:execContextId/state/:stateId',
+        component: ExecContextStates,
     }
 ];
 
@@ -57,7 +63,10 @@ export class SourceCodeRoutingModule { }
         EditSourceCodeComponent,
         ExecContextsComponent,
         AddExecContextComponent,
-        EditExecContextComponent
+        EditExecContextComponent,
+        ExecContextStates,
+        CardFormAddSourceCodeComponent,
+        CardFormUploadSourceCodeComponent
     ],
 
     imports: [
@@ -68,7 +77,6 @@ export class SourceCodeRoutingModule { }
         FormsModule,
         ReactiveFormsModule,
         TranslateModule.forChild({})
-
     ]
 })
 export class SourceCodeModule { }

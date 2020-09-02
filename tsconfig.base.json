@@ -2,13 +2,18 @@
     "compileOnSave": false,
     "compilerOptions": {
         "baseUrl": "./",
-    "downlevelIteration": true,
+        "downlevelIteration": true,
         // "baseUrl": "src",
         "paths": {
-            "@src/*": ["./src/*"],
-            "@app/*": ["./src/app/*"],
-            "@services/*": ["./src/app/services/*"]
-
+            "@src/*": [
+                "./src/*"
+            ],
+            "@app/*": [
+                "./src/app/*"
+            ],
+            "@services/*": [
+                "./src/app/services/*"
+            ]
         },
         "outDir": "./dist/out-tsc",
         "sourceMap": true,

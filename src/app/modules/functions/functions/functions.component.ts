@@ -1,12 +1,12 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatButton } from '@angular/material/button';
+import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
-import { MatDialog, } from '@angular/material/dialog';
-import { MatButton, } from '@angular/material/button';
 import { ConfirmationDialogMethod } from '@app/components/app-dialog-confirmation/app-dialog-confirmation.component';
 import { LoadStates } from '@app/enums/LoadStates';
- import { CtTableComponent } from '@src/app/modules/ct/ct-table/ct-table.component';
-import { FuncrionsService } from '@src/app/services/functions/functions.service';
+import { CtTableComponent } from '@src/app/modules/ct/ct-table/ct-table.component';
 import { FunctionEntity } from '@src/app/services/functions/FunctionEntity';
+import { FuncrionsService } from '@src/app/services/functions/functions.service';
 
 @Component({
     selector: 'functions',
@@ -66,7 +66,7 @@ export class FunctionsComponent implements OnInit {
     delete(functionEntity: FunctionEntity) {
         this.deletedRows.push(functionEntity);
         this.functionService.function
-            .delete(functionEntity.id)
+            .delete(functionEntity.id.toString())
             .subscribe();
     }
 

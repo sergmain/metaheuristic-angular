@@ -1,15 +1,17 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatButton } from '@angular/material/button';
+import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
-import { MatTabGroup, } from '@angular/material/tabs';
-import { MatDialog, } from '@angular/material/dialog';
-import { MatButton, } from '@angular/material/button';
-
+import { MatTabGroup } from '@angular/material/tabs';
 import { ConfirmationDialogInterface, ConfirmationDialogMethod } from '@app/components/app-dialog-confirmation/app-dialog-confirmation.component';
 import { LoadStates } from '@app/enums/LoadStates';
+import { SourceCodeType } from '@src/app/enums/SourceCodeType';
 import { SourceCodesService } from '@src/app/services/source-codes/source-codes.service';
 import { SourceCode } from '@src/app/services/source-codes/SourceCode';
 import { CtTableComponent } from '../../ct/ct-table/ct-table.component';
 import { SourceCodesArchiveComponent } from '../source-codes-archive/source-codes-archive.component';
+import { DispatcherAssetMode } from '@src/app/enums/DispatcherAssetMode'
+
 
 @Component({
     selector: 'source-codes',
@@ -18,13 +20,16 @@ import { SourceCodesArchiveComponent } from '../source-codes-archive/source-code
 })
 
 export class SourceCodesComponent implements OnInit, ConfirmationDialogInterface {
+    readonly dispatcherAssetMode = DispatcherAssetMode
+
+
     TABINDEX: number = 0;
 
     states = LoadStates;
     currentStates = new Set();
     response;
     dataSource = new MatTableDataSource<SourceCode>([]);
-    columnsToDisplay = ['id', 'uid', 'createdOn', 'valid', 'locked', 'bts'];
+    columnsToDisplay = ['id', 'uid', 'type', 'createdOn', 'valid', 'locked', 'bts'];
     deletedSourceCodes: SourceCode[] = [];
     archivedSourceCodes: SourceCode[] = [];
 
@@ -105,4 +110,9 @@ export class SourceCodesComponent implements OnInit, ConfirmationDialogInterface
         this.nextTable.disabled = true;
         this.updateTable(this.response.items.number - 1);
     }
+
+    getType(uid: string): SourceCodeType {
+        return this.sourceCodesService.getSourceCodeType(uid, this.response)
+    }
+
 }

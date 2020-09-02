@@ -1,8 +1,9 @@
 import { Location } from '@angular/common';
-import { Component, ViewChild } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { MatButton } from '@angular/material/button';
-import { SourceCodesService } from '@src/app/services/source-codes/source-codes.service';
+import { Component, ElementRef, ViewChild } from '@angular/core';
+import { OperationStatus } from '@src/app/models/OperationStatus';
+import { SourceCodeResult } from '@src/app/services/source-codes/SourceCodeResult';
+import { CardFormAddSourceCodeComponent } from '../card-form-add-source-code/card-form-add-source-code.component';
+import { CardFormUploadSourceCodeComponent } from '../card-form-upload-source-code/card-form-upload-source-code.component';
 @Component({
     selector: 'add-source-code',
     templateUrl: './add-source-code.component.html',
@@ -10,46 +11,47 @@ import { SourceCodesService } from '@src/app/services/source-codes/source-codes.
 })
 
 export class AddSourceCodeComponent {
-    response;
-    @ViewChild('submitButton', { static: true }) submitButton: MatButton;
+    @ViewChild(CardFormAddSourceCodeComponent) cardFormAddSourceCode: CardFormAddSourceCodeComponent;
+    @ViewChild(CardFormUploadSourceCodeComponent) cardFormUploadSourceCode: CardFormUploadSourceCodeComponent;
 
-    form = new FormGroup({
-        source: new FormControl('', [
-            Validators.required,
-            Validators.minLength(1)
-        ]),
-    });
+    newSourceCodeResponse: SourceCodeResult;
+    uploadSourceCodeResponse: SourceCodeResult;
 
     constructor(
-        private sourceCodesService: SourceCodesService,
-        private location: Location
+        private location: Location,
+        private elRef: ElementRef
     ) { }
 
-    cancel() {
+    afterNewSourceCode(response: SourceCodeResult): void {
+        this.newSourceCodeResponse = response;
+        if (response.status === OperationStatus.OK) {
+            this.back();
+        } else {
+            this.scrollIntoView('.addRestStatus');
+
+        }
+    }
+
+    afterUploadSourceCode(response: SourceCodeResult): void {
+        this.uploadSourceCodeResponse = response;
+        if (response.status === OperationStatus.OK) {
+            this.back();
+        } else {
+            this.scrollIntoView('.uploadRestStatus');
+        }
+    }
+
+    scrollIntoView(selector: string): void {
+        const node: HTMLElement = (this.elRef.nativeElement as HTMLElement).querySelector(selector);
+        if (node) {
+            node.scrollIntoView({
+                block: 'start',
+                behavior: 'smooth'
+            });
+        }
+    }
+
+    back(): void {
         this.location.back();
     }
-
-    create() {
-        this.response = null;
-        this.submitButton.disabled = true;
-        this.sourceCodesService.sourceCode
-            .add(this.form.value.source)
-            .subscribe((v) => {
-                this.response = v;
-                if (this.response.status.toLowerCase() === 'ok') {
-                    this.cancel();
-                } else {
-                    this.scrillToTop();
-                }
-                this.submitButton.disabled = false;
-            });
-    }
-
-    scrillToTop() {
-        window.scrollTo({
-            top: 0,
-            behavior: 'smooth'
-        });
-    }
-
 }

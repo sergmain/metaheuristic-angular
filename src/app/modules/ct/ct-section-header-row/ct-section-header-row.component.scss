@@ -4,6 +4,11 @@
     display: block;
     margin: 0 unit(2);
     margin-bottom: unit(2);
+    
+    &:first-child {
+        margin-top: 0;
+    }
+
     &:last-child {
         margin-bottom: 0;
     }

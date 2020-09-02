@@ -1,9 +1,11 @@
+import { OperationStatus } from './OperationStatus';
+
 export interface DefaultResponse {
-    errorMessages: (null)[] | null;
-    infoMessages: (null)[] | null;
+    errorMessages: string[];
+    infoMessages: string[];
     errorMessagesAsStr: string;
-    status: string;
-    assetMode: string;
+    // TODO: replace
+    status: OperationStatus;
     errorMessagesAsList: string[];
     infoMessagesAsList: string[];
 }

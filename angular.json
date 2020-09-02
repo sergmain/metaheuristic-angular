@@ -20,6 +20,7 @@
                 "build": {
                     "builder": "@angular-devkit/build-angular:browser",
                     "options": {
+                        "allowedCommonJsDependencies": ["file-saver"],
                         "aot": true,
                         "outputPath": "dist/metaheuristic-app",
                         "resourcesOutputPath": "resources",

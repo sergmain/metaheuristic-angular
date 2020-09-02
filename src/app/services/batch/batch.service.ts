@@ -1,17 +1,17 @@
 import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { AppState } from '@src/app/app.reducers';
 import { generateFormData } from '@src/app/helpers/generateFormData';
+import { OperationStatusRest } from '@src/app/models/OperationStatusRest';
 import { environment } from '@src/environments/environment';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { AuthenticationService } from '../authentication';
+import { Batch } from './Batch';
+import { newExecStatus } from './batch.actions';
+import { BatchExecStatus } from './BatchExecStatus';
 import { BatchExexStatusComparer } from './BatchExexStatusComparer';
 import { response } from './response';
-import { Batch } from './Batch';
-import { BatchExecStatus } from './BatchExecStatus';
-import { Store } from '@ngrx/store';
-import { AppState } from '@src/app/app.reducers';
-import { newExecStatus } from './batch.actions';
-
 
 const url = (urlString: string): string => `${environment.baseUrl}dispatcher/batch/${urlString}`;
 
@@ -22,6 +22,7 @@ export interface GetBatchesParams {
     page: number;
     filterBatches: boolean;
 }
+
 
 @Injectable({ providedIn: 'root' })
 export class BatchService {
@@ -62,8 +63,8 @@ export class BatchService {
         status: (batchId: string): Observable<response.batch.Status> =>
             this.http.get<response.batch.Status>(url(`batch-status/${batchId}`)),
 
-        upload: (sourceCodeId: string | number, file: File): Observable<response.batch.Upload> =>
-            this.http.post<response.batch.Upload>(url(`batch-upload-from-file`), generateFormData({ file, sourceCodeId })),
+        upload: (sourceCodeId: string, file: File): Observable<OperationStatusRest> =>
+            this.http.post<OperationStatusRest>(url(`batch-upload-from-file`), generateFormData({ file, sourceCodeId })),
 
         execStatuses: (): Observable<response.batch.ExecStatuses> =>
             this.http.get<response.batch.ExecStatuses>(url(`batch-exec-statuses`))

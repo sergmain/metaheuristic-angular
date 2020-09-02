@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { generateFormData as formData } from '@src/app/helpers/generateFormData';
+import { OperationStatusRest } from '@src/app/models/OperationStatusRest';
 import { environment } from '@src/environments/environment';
 import { Observable } from 'rxjs';
 import { response } from './response';
@@ -21,9 +22,9 @@ export class FuncrionsService {
     };
 
     function = {
-        upload: (file: File): Observable<any> =>
-            this.http.post(url('function-upload-from-file'), formData({ file })),
-        delete: (id: string | number): Observable<any> =>
-            this.http.get(url(`function-delete/${id}`))
+        upload: (file: File): Observable<OperationStatusRest> =>
+            this.http.post<OperationStatusRest>(url('function-upload-from-file'), formData({ file })),
+        delete: (id: string): Observable<OperationStatusRest> =>
+            this.http.get<OperationStatusRest>(url(`function-delete/${id}`))
     };
 }

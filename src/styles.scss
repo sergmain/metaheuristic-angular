@@ -6,6 +6,12 @@
 
 @import "./variables.scss";
 
+* {
+    box-sizing: border-box;
+    // background-color: rgba(black, 0.1);
+}
+
+
 html {
     height: 100%;
     min-height: 100%;
@@ -31,10 +37,15 @@ p {
     margin: unit(2) 0;
 }
 
-* {
-    box-sizing: border-box;
-}
 
+hr {
+    display: block;
+    height: 1px;
+    border: none;
+    margin:unit(4)  0;
+    background-color: rgba(128,128,128,0.5);
+}
+    
 pre {
     margin: 0;
     white-space: pre-wrap;

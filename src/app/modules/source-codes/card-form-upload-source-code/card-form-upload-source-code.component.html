@@ -1,0 +1,22 @@
+<ct-section>
+    <ct-section-header>
+        <ct-section-header-row>
+            <ct-heading>Upload SourceCode from file </ct-heading>
+        </ct-section-header-row>
+    </ct-section-header>
+    <ct-section-body>
+        <ct-section-body-row>
+            <ct-file-upload (changed)="changed($event)" acceptTypes=".yml, .yaml"></ct-file-upload>
+        </ct-section-body-row>
+    </ct-section-body>
+    <ct-section-footer>
+        <ct-section-footer-row>
+            <ct-flex justify-content="flex-end" gap="8px">
+                <ct-flex-item>
+                    <button mat-flat-button="mat-flat-button" disabled color="primary"
+                        (click)="upload()">Upload</button>
+                </ct-flex-item>
+            </ct-flex>
+        </ct-section-footer-row>
+    </ct-section-footer>
+</ct-section>

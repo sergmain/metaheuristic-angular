@@ -1,16 +1,15 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-
+import { MatButton } from '@angular/material/button';
+import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
-import { MatDialog, } from '@angular/material/dialog';
-import { MatButton, } from '@angular/material/button';
-
 import { ActivatedRoute } from '@angular/router';
 import { ConfirmationDialogMethod } from '@src/app/components/app-dialog-confirmation/app-dialog-confirmation.component';
-import { ExecContext } from '@src/app/services/source-codes/ExecContext';
-import { SourceCodesService } from '@src/app/services/source-codes/source-codes.service';
-import { SourceCode } from '@src/app/services/source-codes/SourceCode';
 import { ExecContextState } from '@src/app/enums/ExecContextState';
-import { response as SourceCodesResponse } from '@src/app/services/source-codes/response';
+import { ExecContext } from '@src/app/services/source-codes/ExecContext';
+import { ExecContextsResult } from '@src/app/services/source-codes/ExecContextsResult';
+import { SourceCodesService } from '@src/app/services/source-codes/source-codes.service';
+
+
 
 
 @Component({
@@ -25,8 +24,8 @@ export class ExecContextsComponent implements OnInit {
     @ViewChild('prevTable', { static: true }) prevTable: MatButton;
 
     sourceCodeId: string;
-    response: SourceCodesResponse.execContexts.Get;
-    execContextTableSource = new MatTableDataSource<ExecContext>([]);
+    response: ExecContextsResult;
+    execContextTableSource: MatTableDataSource<ExecContext> = new MatTableDataSource<ExecContext>([]);
     execContextColumnsToDisplay: string[] = [
         'id',
         'createdOn',
@@ -40,9 +39,7 @@ export class ExecContextsComponent implements OnInit {
         private route: ActivatedRoute,
         private dialog: MatDialog,
         private sourceCodesService: SourceCodesService,
-    ) { 
-        console.log(ExecContextState)
-    }
+    ) { }
 
     ngOnInit(): void {
         this.sourceCodeId = this.route.snapshot.paramMap.get('sourceCodeId');
@@ -59,8 +56,6 @@ export class ExecContextsComponent implements OnInit {
             }
         });
     }
-
-
 
     @ConfirmationDialogMethod({
         question: (execContext: ExecContext): string =>

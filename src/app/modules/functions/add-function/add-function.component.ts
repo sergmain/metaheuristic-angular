@@ -2,9 +2,10 @@ import { Location } from '@angular/common';
 import { Component, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { LoadStates } from '@app/enums/LoadStates';
+import { OperationStatus } from '@src/app/models/OperationStatus';
+import { OperationStatusRest } from '@src/app/models/OperationStatusRest';
 import { FuncrionsService } from '@src/app/services/functions/functions.service';
 import { CtFileUploadComponent } from '../../ct/ct-file-upload/ct-file-upload.component';
-import { DefaultResponse } from '@src/app/models/DefaultResponse';
 
 @Component({
     selector: 'add-function',
@@ -15,7 +16,7 @@ import { DefaultResponse } from '@src/app/models/DefaultResponse';
 export class AddFunctionComponent {
     readonly states = LoadStates;
 
-    response: DefaultResponse;
+    response: OperationStatusRest;
 
     @ViewChild('fileUpload', { static: true }) fileUpload: CtFileUploadComponent;
 
@@ -34,13 +35,12 @@ export class AddFunctionComponent {
         formData.append('file', this.fileUpload.fileInput.nativeElement.files[0]);
         this.funcrionsService.function.upload(this.fileUpload.fileInput.nativeElement.files[0])
             .subscribe(
-                (response: DefaultResponse) => {
+                (response) => {
                     this.response = response;
-                    if (response.status.toLowerCase() === 'ok') {
+                    if (response.status === OperationStatus.OK) {
                         this.router.navigate(['/dispatcher', 'functions']);
                     }
                 }
             );
     }
-
 }

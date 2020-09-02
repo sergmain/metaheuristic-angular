@@ -1,74 +1,85 @@
-
 <ct-cols>
-  <ct-col>
-    <ct-section>
-      <ct-section-header>
-        <ct-section-header-row>
-          <ct-heading>Tasks</ct-heading>
-        </ct-section-header-row>
-      </ct-section-header>
-      <ct-section-body>
-        <ct-section-body-row>
-          <ct-table class="tasks">
-            <table mat-table="mat-table" [dataSource]="dataSource"> 
-              <ng-container matColumnDef="id"> 
-                <td mat-cell="mat-cell" *matCellDef="let el">{{el.task.id}}</td>
-              </ng-container>
-              <ng-container matColumnDef="col1"> 
-                <td mat-cell="mat-cell" *matCellDef="let el"> 
-                  <table>
-                    <tr>
-                      <td>type: </td>
-                      <td> <span *ngIf="el.type == 1">FIT</span><span *ngIf="el.type == 2">PREDICT</span></td>
-                    </tr>
-                    <tr>
-                      <td>completed: </td>
-                      <td><span class="completed" [class.completed--on]="el.task.isCompleted">{{el.task.isCompleted}} </span></td>
-                    </tr>
-                    <tr>
-                      <td>assigned: </td>
-                      <td> <span *ngIf="el.task.assignedOn == null">null</span><span>{{el.task.assignedOn | date:'MMM d, yyyy, HH:mm:ss'}} </span></td>
-                    </tr>
-                    <tr>
-                      <td>completed: </td>
-                      <td> <span *ngIf="el.task.completedOn == null">null</span><span>{{el.task.completedOn | date:'MMM d, yyyy, HH:mm:ss'}} </span></td>
-                    </tr>
-                  </table>
-                </td>
-              </ng-container>
-              <ng-container matColumnDef="col2"> 
-                <td mat-cell="mat-cell" *matCellDef="let el"> 
-                  <button mat-stroked-button="mat-stroked-button" (click)="currentTask = el.task; featureProgressConsolePart(el.task.id)" [color]="currentTask == el.task ? 'primary' : ''" [class.mat-flat-button]="currentTask == el.task" [class.mat-stroked-button]="currentTask != el.task">Info</button><br/>
-                  <button mat-stroked-button="mat-stroked-button" (click)="taskRerun(el.task.id)">Re-run</button>
-                </td>
-              </ng-container>
-              <tr mat-row="mat-row" *matRowDef="let row; columns: columnsToDisplay;"> </tr>
-            </table>
-          </ct-table>
-        </ct-section-body-row>
-      </ct-section-body>
-    </ct-section>
-  </ct-col>
-  <ct-col style="flex:1; overflow:auto;">
-    <ct-section>
-      <ct-section-header>
-        <ct-section-header-row>
-          <ct-heading>Console output</ct-heading>
-        </ct-section-header-row>
-      </ct-section-header>
-      <ct-section-body>
-        <ct-section-body-row>
-          <ct-section-content>
-            <ct-wrap-block #consoleView> 
-              <ct-flex justify-content="center" align-items="center" *ngIf="!consolePartResponse">
-                <ct-flex-item>
-                  <div style="min-height: 100px;">No Task Info</div>
-                </ct-flex-item>
-              </ct-flex>
-              <div *ngIf="consolePartResponse">
-                <div *ngFor="let item of consolePartResponse.items;">
-                  <ct-pre overflow-x="auto">
-                    <pre style="white-space:pre;">
+    <ct-col>
+        <ct-section>
+            <ct-section-header>
+                <ct-section-header-row>
+                    <ct-heading>Tasks</ct-heading>
+                </ct-section-header-row>
+            </ct-section-header>
+            <ct-section-body>
+                <ct-section-body-row>
+                    <ct-table class="tasks">
+                        <table mat-table="mat-table" [dataSource]="dataSource">
+                            <ng-container matColumnDef="id">
+                                <td mat-cell="mat-cell" *matCellDef="let el">{{el.task.id}}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="col1">
+                                <td mat-cell="mat-cell" *matCellDef="let el">
+                                    <table>
+                                        <tr>
+                                            <td>type: </td>
+                                            <td> <span *ngIf="el.type == 1">FIT</span><span
+                                                    *ngIf="el.type == 2">PREDICT</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td>completed: </td>
+                                            <td><span class="completed"
+                                                    [class.completed--on]="el.task.isCompleted">{{el.task.isCompleted}}
+                                                </span></td>
+                                        </tr>
+                                        <tr>
+                                            <td>assigned: </td>
+                                            <td> <span
+                                                    *ngIf="el.task.assignedOn == null">null</span><span>{{el.task.assignedOn | date:'MMM d, yyyy, HH:mm:ss'}}
+                                                </span></td>
+                                        </tr>
+                                        <tr>
+                                            <td>completed: </td>
+                                            <td> <span
+                                                    *ngIf="el.task.completedOn == null">null</span><span>{{el.task.completedOn | date:'MMM d, yyyy, HH:mm:ss'}}
+                                                </span></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="col2">
+                                <td mat-cell="mat-cell" *matCellDef="let el">
+                                    <button mat-stroked-button="mat-stroked-button"
+                                        (click)="currentTask = el.task; featureProgressConsolePart(el.task.id)"
+                                        [color]="currentTask == el.task ? 'primary' : undefined"
+                                        [class.mat-flat-button]="currentTask == el.task"
+                                        [class.mat-stroked-button]="currentTask != el.task">Info</button><br />
+                                    <button mat-stroked-button="mat-stroked-button"
+                                        (click)="taskRerun(el.task.id)">Re-run</button>
+                                </td>
+                            </ng-container>
+                            <tr mat-row="mat-row" *matRowDef="let row; columns: columnsToDisplay;"> </tr>
+                        </table>
+                    </ct-table>
+                </ct-section-body-row>
+            </ct-section-body>
+        </ct-section>
+    </ct-col>
+    <ct-col style="flex:1; overflow:auto;">
+        <ct-section>
+            <ct-section-header>
+                <ct-section-header-row>
+                    <ct-heading>Console output</ct-heading>
+                </ct-section-header-row>
+            </ct-section-header>
+            <ct-section-body>
+                <ct-section-body-row>
+                    <ct-section-content>
+                        <ct-wrap-block #consoleView>
+                            <ct-flex justify-content="center" align-items="center" *ngIf="!consolePartResponse">
+                                <ct-flex-item>
+                                    <div style="min-height: 100px;">No Task Info</div>
+                                </ct-flex-item>
+                            </ct-flex>
+                            <div *ngIf="consolePartResponse">
+                                <div *ngFor="let item of consolePartResponse.items;">
+                                    <ct-pre overflow-x="auto">
+                                        <pre style="white-space:pre;">
                       <table>
                         <tr>
                           <td>exitCode:</td>
@@ -79,17 +90,17 @@
                           <td>{{item.isOk}}</td>
                         </tr>
                       </table></pre>
-                  </ct-pre><br/>
-                  <ct-pre overflow-x="auto">
-                    <pre style="white-space:pre;">
+                                    </ct-pre><br />
+                                    <ct-pre overflow-x="auto">
+                                        <pre style="white-space:pre;">
                       <div>{{item.console}}</div></pre>
-                  </ct-pre>
-                </div>
-              </div>
-            </ct-wrap-block>
-          </ct-section-content>
-        </ct-section-body-row>
-      </ct-section-body>
-    </ct-section>
-  </ct-col>
+                                    </ct-pre>
+                                </div>
+                            </div>
+                        </ct-wrap-block>
+                    </ct-section-content>
+                </ct-section-body-row>
+            </ct-section-body>
+        </ct-section>
+    </ct-col>
 </ct-cols>

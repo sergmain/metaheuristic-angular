@@ -1,3 +1,6 @@
+
+$border-color: rgba(128,128,128,0.5);
+
 :host {
     display: block;
     margin-bottom: 0.55em;
@@ -6,10 +9,11 @@
 .file {
     display: flex;
     justify-content: space-between;
-    border: 1px solid rgba(black, 0.05);
+    border: 1px solid $border-color;
     border-radius: 5px;
     line-height: 1;
     align-items: center;
+    height: 36px;
 }
 
 .file__value {
@@ -18,21 +22,26 @@
 
 .file__close {
     flex-shrink: 0;
-    padding: 4px;
-    border-left: 1px solid rgba(black, 0.05);
+    border-left: 1px solid $border-color;
+    width: 48px;
+    height: 32px;
     cursor: pointer;
 
     mat-icon {
-        display: block;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 }
 
 :host-context(.dark-theme) {
     .file {
-        border-color: rgba(white, 0.05);
+        border-color: $border-color;
     }
 
     .file__close {
-        border-color: rgba(black, 0.05);
+        border-color: $border-color;
     }
 }

@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { LoadStates } from '@app/enums/LoadStates';
-import { map } from 'rxjs/operators';
-import { AccountsService } from '@app/services/accounts/accounts.service';
-import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
+import { LoadStates } from '@app/enums/LoadStates';
 import { DefaultResponse } from '@app/models/DefaultResponse';
+import { AccountsService } from '@app/services/accounts/accounts.service';
+import { OperationStatus } from '@src/app/models/OperationStatus';
+import { Subscription } from 'rxjs';
 
 @Component({
     selector: 'account-add',
@@ -13,7 +13,7 @@ import { DefaultResponse } from '@app/models/DefaultResponse';
     styleUrls: ['./account-add.component.scss']
 })
 
-export class AccountAddComponent implements OnInit {
+export class AccountAddComponent {
     readonly states = LoadStates;
     currentStates = new Set();
     response: DefaultResponse;
@@ -39,21 +39,20 @@ export class AccountAddComponent implements OnInit {
     constructor(
         private accountsService: AccountsService,
         private router: Router,
-    ) {}
+    ) { }
 
-    ngOnInit() {}
 
-    create() {
+    create(): void {
         this.currentStates.add(this.states.wait);
         const subscribe: Subscription = this.accountsService.account
             .addCommit(this.form.value)
             .subscribe(
-                (response: DefaultResponse) => {
-                    if (response.status.toLowerCase() === 'ok') {
+                (response) => {
+                    if (response.status === OperationStatus.OK) {
                         this.router.navigate(['/dispatcher', 'accounts']);
                     }
                 },
-                () => {},
+                () => { },
                 () => {
                     this.currentStates.delete(this.states.wait);
                     subscribe.unsubscribe();
