@@ -1,9 +1,9 @@
 import { Location } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { LoadStates } from '@app/enums/LoadStates';
 import { SourceCodesService } from '@src/app/services/source-codes/source-codes.service';
 import { SourceCode } from '@src/app/services/source-codes/SourceCode';
+import { SourceCodeResult } from '@src/app/services/source-codes/SourceCodeResult';
 
 
 @Component({
@@ -13,67 +13,65 @@ import { SourceCode } from '@src/app/services/source-codes/SourceCode';
 })
 
 export class EditSourceCodeComponent implements OnInit {
-    readonly states = LoadStates;
-    currentState: LoadStates = LoadStates.firstLoading;
 
     sourceCode: SourceCode;
-    response;
+    sourceCodeResponse: SourceCodeResult;
 
     constructor(
-        private location: Location,
         private route: ActivatedRoute,
         private sourceCodesService: SourceCodesService,
         private router: Router,
+        private elRef: ElementRef
     ) { }
 
-    ngOnInit() {
+    ngOnInit(): void {
         this.updateResponse();
     }
 
-    updateResponse() {
+    updateResponse(): void {
         const id: string | number = this.route.snapshot.paramMap.get('sourceCodeId');
         this.sourceCodesService.sourceCode
             .get(id)
-            .subscribe(v => {
-                this.response = v;
-                this.sourceCode = v;
-                this.currentState = this.states.show;
-            }
-            );
+            .subscribe(response => {
+                this.sourceCodeResponse = response;
+                this.sourceCode = response;
+            });
     }
 
-    cancel() {
+    back(): void {
         this.router.navigate(['/dispatcher', 'source-codes']);
     }
 
-    save() {
-        this.currentState = this.states.wait;
+    save(): void {
         this.sourceCodesService.sourceCode
             .edit(this.sourceCode.id.toString(), this.sourceCode.source)
-            .subscribe(
-                (v) => {
-                    if (v.errorMessages) {
-                        this.currentState = this.states.show;
-                        this.response = v;
-                    } else {
-                        this.cancel();
-                    }
-                },
-                () => this.currentState = this.states.show
-            );
+            .subscribe((response) => {
+                if (response.errorMessages) {
+                    this.sourceCodeResponse = response;
+                    this.scrollIntoView();
+                } else {
+                    this.back();
+                }
+            });
     }
 
-    validate() {
-        this.currentState = this.states.wait;
+    validate(): void {
         const id: string = this.route.snapshot.paramMap.get('sourceCodeId');
         this.sourceCodesService.sourceCode
             .validate(id)
-            .subscribe(
-                (v) => {
-                    this.response = v;
-                    this.currentState = this.states.show;
-                },
-                () => this.currentState = this.states.show
-            );
+            .subscribe((response) => {
+                this.sourceCodeResponse = response;
+                this.scrollIntoView();
+            });
+    }
+
+    scrollIntoView(): void {
+        const node: HTMLElement = (this.elRef.nativeElement as HTMLElement).querySelector('ct-rest-status');
+        if (node) {
+            node.scrollIntoView({
+                block: 'start',
+                behavior: 'smooth'
+            });
+        }
     }
 }

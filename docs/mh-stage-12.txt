@@ -29,8 +29,8 @@ issue-1205
 урл в стандартном интерфейсе - http://localhost:8080/dispatcher/source-code/source-codes
 
 http://localhost:8080/dispatcher/source-code/source-codes DONE
-http://localhost:8080/dispatcher/source-code/source-code-add
-http://localhost:8080/dispatcher/source-code/source-code-edit/7
+http://localhost:8080/dispatcher/source-code/source-code-add DONE
+http://localhost:8080/dispatcher/source-code/source-code-edit/7 DONE
 http://localhost:8080/dispatcher/source-code/exec-contexts/5
 http://localhost:8080/dispatcher/source-code/exec-context-add/5
 http://localhost:8080/dispatcher/source-code/exec-context-state/5/5
