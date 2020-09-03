@@ -30,7 +30,7 @@
                     </ng-container>
                     <ng-container matColumnDef="createdOn">
                         <th mat-header-cell="mat-header-cell" *matHeaderCellDef>Created On</th>
-                        <td mat-cell="mat-cell" *matCellDef="let el">{{el.createdOn | date:'MMM d, yy • HH:mm:ss'}}
+                        <td mat-cell="mat-cell" *matCellDef="let el">{{el.createdOn | date:'MMM d, yyyy • HH:mm:ss'}}
                         </td>
                     </ng-container>
                     <ng-container matColumnDef="isExecContextValid">
@@ -45,7 +45,7 @@
                         <th mat-header-cell="mat-header-cell" *matHeaderCellDef>Completed on</th>
                         <td mat-cell="mat-cell" *matCellDef="let el">
                             <span
-                                *ngIf="el.completedOn !== null">{{el.completedOn | date:'MMM d, yy • HH:mm:ss'}}</span>
+                                *ngIf="el.completedOn !== null">{{el.completedOn | date:'MMM d, yyyy • HH:mm:ss'}}</span>
                             <span *ngIf="el.completedOn === null">null</span>
                         </td>
                     </ng-container>

@@ -11,7 +11,7 @@ import { CtFileUploadComponent } from '../../ct/ct-file-upload/ct-file-upload.co
 })
 export class AtlasExperimentExportImportComponent {
     readonly states = LoadStates;
-    currentStates: Set<string> = new Set();
+    currentStates: Set<LoadStates> = new Set();
     atlasDownloadName: string;
 
     @ViewChild('fileUpload', { static: true }) fileUpload: CtFileUploadComponent;
