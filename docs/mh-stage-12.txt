@@ -127,6 +127,14 @@ http://localhost:8080/dispatcher/company/batch/company-batches/2
 выполняется запрос к серверу на уделние списка пакетов.
 
 
+issue-1217
+http://localhost:8080/dispatcher/company/companies
+реализовать управление компаниями
+для того, чтобы посмотреть как это работает надо использовать юзера master-admin
+который задается в application.properties
+
+rest url - /rest/v1/dispatcher/company
+
 
 
 
