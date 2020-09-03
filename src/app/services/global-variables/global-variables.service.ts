@@ -3,7 +3,10 @@ import { Injectable } from '@angular/core';
 import { generateFormData as formData } from '@src/app/helpers/generateFormData';
 import { Observable } from 'rxjs';
 import { environment } from '@src/environments/environment';
-import { response } from './response';
+import { GlobalVariableResult } from './GlobalVariableResult';
+import { GlobalVariablesResult } from './GlobalVariablesResult';
+import { OperationStatusRest } from '@src/app/models/OperationStatusRest';
+
 
 const url = (s: string): string => `${environment.baseUrl}dispatcher/global-variable${s}`;
 
@@ -14,19 +17,21 @@ export class GlobalVariablesService {
     ) { }
 
     variables = {
-        get: (page: string): Observable<response.globalVariables.Get> =>
-            this.http.get<response.globalVariables.Get>(url('/global-variables'), { params: { page } })
+        get: (page: string): Observable<GlobalVariablesResult> =>
+            this.http.get<GlobalVariablesResult>(url('/global-variables'), { params: { page } })
     };
 
     variable = {
+        get: (id: string): Observable<GlobalVariableResult> =>
+            this.http.get<GlobalVariableResult>(url('/global-variable/' + id)),
 
-        globalVariableUploadFromFile: (variable: string, file: File): Observable<response.globalVariable.globalVariableUploadFromFile> =>
-            this.http.post<response.globalVariable.globalVariableUploadFromFile>(url(`/global-variable-upload-from-file`), formData({ variable, file })),
+        uploadFromFile: (variable: string, file: File): Observable<OperationStatusRest> =>
+            this.http.post<OperationStatusRest>(url(`/global-variable-upload-from-file`), formData({ variable, file })),
 
-        globalVariableInExternalStorage: (variable: string, params: string): Observable<response.globalVariable.globalVariableInExternalStorage> =>
-            this.http.post<response.globalVariable.globalVariableInExternalStorage>(url(`/global-variable-in-external-storage`), formData({ variable, params })),
+        inExternalStorage: (variable: string, params: string): Observable<OperationStatusRest> =>
+            this.http.post<OperationStatusRest>(url(`/global-variable-in-external-storage`), formData({ variable, params })),
 
-        globalVariableDeleteCommit: (id: string): Observable<response.globalVariable.globalVariableDeleteCommit> =>
-            this.http.post<response.globalVariable.globalVariableDeleteCommit>(url(`/global-variable-delete-commit`), formData({ id }))
+        deleteCommit: (id: string): Observable<OperationStatusRest> =>
+            this.http.post<OperationStatusRest>(url(`/global-variable-delete-commit`), formData({ id }))
     };
 }

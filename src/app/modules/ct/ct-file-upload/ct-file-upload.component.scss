@@ -18,6 +18,11 @@ $border-color: rgba(128,128,128,0.5);
 
 .file__value {
     padding: 4px 16px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    direction: rtl;
+    text-align: left;
 }
 
 .file__close {

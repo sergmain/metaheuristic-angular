@@ -1,0 +1,54 @@
+<ct-section>
+    <ct-section-header>
+        <ct-section-header-row>
+            <ct-heading>Create Variable with Storage URL</ct-heading>
+        </ct-section-header-row>
+    </ct-section-header>
+    <ct-section-body>
+        <form [formGroup]="form" novalidate="novalidate">
+            <ct-section-body-row>
+                <mat-form-field appearance="outline" style="width: 100%;">
+                    <mat-label>Variable</mat-label>
+                    <input autocomplete="off" matInput="matInput" formControlName="poolCode" />
+                    <mat-hint>This is a required field.</mat-hint>
+                </mat-form-field>
+            </ct-section-body-row>
+            <ct-section-body-row>
+                <ct-section-content>
+                    <mat-hint>
+                        <pre style="font-size: 80%; line-height: 1.1;"><b>Example:</b>
+sourcing: disk 
+disk: 
+  code: storage-code 
+  mask: '*'</pre>
+
+                        <br>
+                        <pre style="font-size: 80%; line-height: 1.1;"><b>Example:</b>
+sourcing: git
+git:
+  repo: https://github.com/sergmain/metaheuristic.git
+  branch: master
+  commit: b25331edba72a1a901634212ac55752238fd2dd5</pre>
+                    </mat-hint>
+                </ct-section-content>
+            </ct-section-body-row>
+            <ct-section-body-row>
+                <mat-form-field appearance="outline" style="width: 100%;">
+                    <mat-label>Params of variables</mat-label>
+                    <textarea autocomplete="off" matInput="matInput" formControlName="storageUrl"
+                        cdkTextareaAutosize="cdkTextareaAutosize" style="min-height:5em;overflow: hidden;"></textarea>
+                </mat-form-field>
+            </ct-section-body-row>
+        </form>
+    </ct-section-body>
+    <ct-section-footer>
+        <ct-section-footer-row>
+            <ct-flex justify-content="flex-end" gap="8px">
+                <ct-flex-item>
+                    <button mat-flat-button="mat-flat-button" (click)="create()" color="primary"
+                        [disabled]="form.invalid">Create</button>
+                </ct-flex-item>
+            </ct-flex>
+        </ct-section-footer-row>
+    </ct-section-footer>
+</ct-section>

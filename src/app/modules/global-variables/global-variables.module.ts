@@ -7,28 +7,31 @@ import { MaterialAppModule } from '@src/app/ngmaterial.module';
 import { GlobalVariablesComponent } from './global-variables/global-variables.component';
 import { AddGlobalVariableComponent } from './add-global-variable/add-global-variable.component';
 import { CtModule } from '../ct/ct.module';
+import { CardFormAddVariableComponent } from './card-form-add-variable/card-form-add-variable.component';
+import { CardFormAddVariableWithStorageComponent } from './card-form-add-variable-with-storage/card-form-add-variable-with-storage.component';
 
 
 const routes: Routes = [{
-        path: '',
-        component: GlobalVariablesComponent
-    },
-    {
-        path: 'add',
-        component: AddGlobalVariableComponent
-    },
-    {
-        path: ':id',
-        component: GlobalVariablesComponent
-    },
+    path: '',
+    component: GlobalVariablesComponent
+},
+{
+    path: 'add',
+    component: AddGlobalVariableComponent
+},
+{
+    path: ':id',
+    component: GlobalVariablesComponent
+},
 ];
 
 
 @NgModule({
     imports: [RouterModule.forChild(routes)],
-    exports: [RouterModule]
+    exports: [RouterModule],
+    declarations: []
 })
-export class GlobalVariablesRoutingModule {}
+export class GlobalVariablesRoutingModule { }
 
 
 @NgModule({
@@ -43,7 +46,9 @@ export class GlobalVariablesRoutingModule {}
     ],
     declarations: [
         GlobalVariablesComponent,
-        AddGlobalVariableComponent
+        AddGlobalVariableComponent,
+        CardFormAddVariableComponent,
+        CardFormAddVariableWithStorageComponent
     ]
 })
-export class GlobalVariablesModule {}
+export class GlobalVariablesModule { }

@@ -4,12 +4,12 @@ import { ExperimentFeature } from './ExperimentFeature';
 import { HyperParamResult } from './HyperParamResult';
 import { MetricsResult } from './MetricsResult';
 import { Tasks } from './Tasks';
-import { DefaultListOfItems } from '@src/app/models/DefaultListOfItems';
+import { PageableDefault } from '@src/app/models/PageableDefault';
 import { DefaultResponse } from '@src/app/models/DefaultResponse';
 import { ExperimentApiData } from '../experiments/ExperimentApiData';
 
 
-export interface ListOfItems extends DefaultListOfItems {
+export interface ListOfItems extends PageableDefault {
     content: ExperimentItem[];
 }
 

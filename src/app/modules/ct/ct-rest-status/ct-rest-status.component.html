@@ -1,15 +1,22 @@
 <ct-section *ngIf="content">
     <ct-section-body>
-        <ct-section-body-row>
+        <ct-section-body-row *ngIf="content.status">
             <div style="font-size: 75%; opacity: 0.75;">STATUS:</div>
-            <ct-heading>{{content.status || content.validationResult?.status}}</ct-heading>
+            <ct-heading>{{content.status}}</ct-heading>
         </ct-section-body-row>
+
+        <ct-section-body-row *ngIf="content.validationResult">
+            <div style="font-size: 75%; opacity: 0.75;">STATUS:</div>
+            <ct-heading>{{content.validationResult.status}}</ct-heading>
+        </ct-section-body-row>
+
         <ct-section-body-row *ngIf="content.errorMessages?.length">
             <div style="font-size: 75%; opacity: 0.75;">ERRORS:</div>
             <ul class="code">
                 <li *ngFor="let error of content.errorMessages; index as i; ">{{error}}</li>
             </ul>
         </ct-section-body-row>
+
         <ct-section-body-row *ngIf="content.infoMessages?.length">
             <div style="font-size: 75%; opacity: 0.75;">INFO:</div>
             <ul class="code">

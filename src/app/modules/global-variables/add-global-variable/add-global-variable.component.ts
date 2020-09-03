@@ -1,10 +1,7 @@
-import { Location } from '@angular/common';
-import { Component, ViewChild } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Component } from '@angular/core';
+import { OperationStatusRest } from '@src/app/models/OperationStatusRest';
 import { Router } from '@angular/router';
-import { GlobalVariablesService } from '@src/app/services/global-variables/global-variables.service';
-import { CtFileUploadComponent } from '../../ct/ct-file-upload/ct-file-upload.component';
-import { DefaultResponse } from '@src/app/models/DefaultResponse';
+import { OperationStatus } from '@src/app/models/OperationStatus';
 
 @Component({
     selector: 'add-global-variable',
@@ -13,59 +10,30 @@ import { DefaultResponse } from '@src/app/models/DefaultResponse';
 })
 
 export class AddGlobalVariableComponent {
-
-    urlResponse: DefaultResponse;
-    fileResponse: DefaultResponse;
-
-    uploadForm = new FormGroup({
-        poolCode: new FormControl('', [Validators.required, Validators.minLength(1)]),
-    });
-
-    urlForm = new FormGroup({
-        storageUrl: new FormControl('', [Validators.required, Validators.minLength(1)]),
-        poolCode: new FormControl('', [Validators.required, Validators.minLength(1)]),
-    });
-
-    @ViewChild('fileUpload', { static: true }) fileUpload: CtFileUploadComponent;
+    addVariableResponse: OperationStatusRest;
+    addVariableStorageResponse: OperationStatusRest;
 
     constructor(
-        private location: Location,
-        private globalVariablesService: GlobalVariablesService,
-        private router: Router,
+        private router: Router
     ) { }
 
-    cancel() {
-        this.location.back();
+    updateStatusAfterAddVarible(response: OperationStatusRest): void {
+        if (response.status !== OperationStatus.OK) {
+            this.addVariableResponse = response;
+        } else {
+            this.back();
+        }
     }
 
-    upload() {
-        this.globalVariablesService.variable
-            .globalVariableUploadFromFile(
-                this.uploadForm.value.poolCode,
-                this.fileUpload.fileInput.nativeElement.files[0]
-            )
-            .subscribe((response: DefaultResponse) => {
-                this.fileResponse = response;
-                if (response.errorMessages || response.infoMessages) {
-                    //  ???
-                } else {
-                    this.router.navigate(['/dispatcher', 'global-variables']);
-                }
-            });
+    updateStatusAfterAddVaribleStorage(response: OperationStatusRest): void {
+        if (response.status !== OperationStatus.OK) {
+            this.addVariableStorageResponse = response;
+        } else {
+            this.back();
+        }
     }
 
-    create() {
-        this.globalVariablesService.variable
-            .globalVariableInExternalStorage(this.urlForm.value.poolCode, this.urlForm.value.storageUrl)
-            .subscribe(
-                (response: DefaultResponse) => {
-                    this.urlResponse = response;
-                    if (response.errorMessages || response.infoMessages) {
-                        //  ???
-                    } else {
-                        this.router.navigate(['/dispatcher', 'global-variables']);
-                    }
-                }
-            );
+    back(): void {
+        this.router.navigate(['/dispatcher', 'global-variables']);
     }
 }

@@ -1,0 +1,36 @@
+<ct-section>
+    <ct-section-header>
+        <ct-section-header-row>
+            <ct-heading>Create global variable from file</ct-heading>
+        </ct-section-header-row>
+    </ct-section-header>
+    <ct-section-body>
+        <form [formGroup]="form" novalidate="novalidate">
+            <ct-section-body-row>
+                <ct-file-upload #fileUpload></ct-file-upload>
+                <div class="mat-form-field mat-form-field-appearance-outline" style="width:100%">
+                    <div class="mat-form-field-subscript-wrapper">
+                        <mat-hint>This is a required field.</mat-hint>
+                    </div>
+                </div>
+            </ct-section-body-row>
+            <ct-section-body-row>
+                <mat-form-field appearance="outline" style="width: 100%;">
+                    <mat-label>Variable</mat-label>
+                    <input autocomplete="off" matInput="matInput" formControlName="poolCode" />
+                    <mat-hint>This is a required field.</mat-hint>
+                </mat-form-field>
+            </ct-section-body-row>
+        </form>
+    </ct-section-body>
+    <ct-section-footer>
+        <ct-section-footer-row>
+            <ct-flex justify-content="flex-end" gap="8px">
+                <ct-flex-item>
+                    <button mat-flat-button="mat-flat-button" (click)="upload()" color="primary"
+                        [disabled]="checkDisable()">Create</button>
+                </ct-flex-item>
+            </ct-flex>
+        </ct-section-footer-row>
+    </ct-section-footer>
+</ct-section>

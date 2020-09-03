@@ -1,8 +1,7 @@
 import { Pageable } from './Pageable';
 import { Sort } from './Sort';
-export interface DefaultListOfItems {
-    content: any[];
-    epmty: boolean;
+export interface PageableDefault {
+    empty: boolean;
     first: boolean;
     last: boolean;
     number: number;

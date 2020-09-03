@@ -1,11 +1,9 @@
 import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { LoadStates } from '@app/enums/LoadStates';
-import { Subscription } from 'rxjs';
 import { ProcessorsService } from '@src/app/services/processors/processors.service';
 import { Processor } from '@src/app/services/processors/Processor';
-import { DefaultResponse } from '@src/app/models/DefaultResponse';
+import { ProcessorResult } from '@src/app/services/processors/ProcessorResult';
 
 @Component({
     selector: 'edit-processor',
@@ -14,43 +12,36 @@ import { DefaultResponse } from '@src/app/models/DefaultResponse';
 })
 
 export class EditProcessorComponent implements OnInit {
-    readonly states = LoadStates;
-    currentState: LoadStates = LoadStates.firstLoading;
-
     processor: Processor;
-    // TODO: нетипичный ответ от сервера - нотификейшена не будет
-    response;
-    formResponse: DefaultResponse;
+    processorResponse: ProcessorResult;
     constructor(
-        private location: Location,
         private route: ActivatedRoute,
         private processorsService: ProcessorsService,
         private router: Router,
     ) { }
 
-    ngOnInit() {
+    ngOnInit(): void {
         this.processorsService.processor
             .get(this.route.snapshot.paramMap.get('id'))
-            .subscribe(
-                (data) => {
-                    this.response = data;
-                    this.processor = data.processor;
-                    this.currentState = this.states.show;
-                }
-            );
-    }
-
-    save() {
-        this.currentState = this.states.wait;
-        this.processorsService.processor
-            .form(this.processor)
-            .subscribe((response: DefaultResponse) => {
-                this.formResponse = response;
-                this.router.navigate(['/dispatcher', 'processors']);
+            .subscribe((response) => {
+                this.processorResponse = response;
+                this.processor = response.processor;
             });
     }
 
-    cancel() {
-        this.location.back();
+    save(): void {
+        this.processorsService.processor
+            .form(this.processor)
+            .subscribe((response) => {
+                if (response.errorMessages?.length) {
+                    this.processorResponse = response;
+                } else {
+                    this.back();
+                }
+            });
+    }
+
+    back(): void {
+        this.router.navigate(['/dispatcher', 'processors']);
     }
 }

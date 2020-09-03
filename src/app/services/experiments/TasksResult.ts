@@ -1,8 +1,8 @@
 import { Task } from './Task';
-import { DefaultListOfItems } from '@src/app/models/DefaultListOfItems';
+import { PageableDefault } from '@src/app/models/PageableDefault';
 import { DefaultResponse } from '@src/app/models/DefaultResponse';
 
-interface ItemEntity extends DefaultListOfItems {
+interface ItemEntity extends PageableDefault {
     content: TaskEntity[];
 }
 

@@ -1,7 +1,7 @@
 import { Task } from './Task';
-import { DefaultListOfItems } from '@src/app/models/DefaultListOfItems';
+import { PageableDefault } from '@src/app/models/PageableDefault';
 
 
-export interface Tasks extends DefaultListOfItems {
+export interface Tasks extends PageableDefault {
     content: Task[];
 }

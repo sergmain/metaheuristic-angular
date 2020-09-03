@@ -1,12 +1,12 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog, } from '@angular/material/dialog';
 import { MatButton, } from '@angular/material/button';
 import { ConfirmationDialogMethod } from '@app/components/app-dialog-confirmation/app-dialog-confirmation.component';
-import { LoadStates } from '@app/enums/LoadStates';
 import { CtTableComponent } from '@src/app/modules/ct/ct-table/ct-table.component';
 import { GlobalVariablesService } from '@src/app/services/global-variables/global-variables.service';
 import { GlobalVariable } from '@src/app/services/global-variables/GlobalVariables';
+import { GlobalVariablesResult } from '@src/app/services/global-variables/GlobalVariablesResult';
 
 @Component({
     selector: 'global-variables',
@@ -15,45 +15,34 @@ import { GlobalVariable } from '@src/app/services/global-variables/GlobalVariabl
 })
 
 export class GlobalVariablesComponent implements OnInit {
-    readonly states = LoadStates;
-    currentStates = new Set();
-    response;
+    responseGlobalVariables: GlobalVariablesResult;
     deletedRows: GlobalVariable[] = [];
-    dataSource = new MatTableDataSource<GlobalVariable>([]);
-    columnsToDisplay: (string)[] = [
-        'id',
-        'variable',
-        'uploadTs',
-        'filename',
-        'storageUrl',
-        'bts'
-    ];
+    dataSource: MatTableDataSource<GlobalVariable> = new MatTableDataSource<GlobalVariable>([]);
+    columnsToDisplay: (string)[] = ['id', 'variable', 'uploadTs', 'filename', 'storageUrl', 'bts'];
 
-    @ViewChild('nextTable', { static: true }) nextTable: MatButton;
-    @ViewChild('prevTable', { static: true }) prevTable: MatButton;
-    @ViewChild('table', { static: true }) table: CtTableComponent;
+    @ViewChild('nextTable', { static: false }) nextTable: MatButton;
+    @ViewChild('prevTable', { static: false }) prevTable: MatButton;
+    @ViewChild('table', { static: false }) table: CtTableComponent;
 
     constructor(
         private dialog: MatDialog,
-        private globalVariablesService: GlobalVariablesService
+        private globalVariablesService: GlobalVariablesService,
+        private changeDetectorRef: ChangeDetectorRef
     ) { }
 
-    ngOnInit() {
-        this.currentStates.add(this.states.firstLoading);
+    ngOnInit(): void {
         this.updateTable(0);
     }
 
-    updateTable(page: number) {
-        this.currentStates.add(this.states.loading);
+    updateTable(page: number): void {
         this.globalVariablesService.variables.get(page.toString())
-            .subscribe(v => {
-                this.response = v;
-                this.dataSource = new MatTableDataSource(v.items.content || []);
+            .subscribe(response => {
+                this.responseGlobalVariables = response;
+                this.changeDetectorRef.detectChanges();
+                this.dataSource = new MatTableDataSource(response.items.content || []);
                 this.table.show();
-                this.currentStates.delete(this.states.firstLoading);
-                this.currentStates.delete(this.states.loading);
-                this.prevTable.disabled = this.response.items.first;
-                this.nextTable.disabled = this.response.items.last;
+                this.prevTable.disabled = this.responseGlobalVariables.items.first;
+                this.nextTable.disabled = this.responseGlobalVariables.items.last;
             });
     }
 
@@ -63,24 +52,24 @@ export class GlobalVariablesComponent implements OnInit {
         rejectTitle: 'Cancel',
         resolveTitle: 'Delete'
     })
-    delete(globalVariable: GlobalVariable) {
+    delete(globalVariable: GlobalVariable): void {
         this.deletedRows.push(globalVariable);
         this.globalVariablesService.variable
-            .globalVariableDeleteCommit(globalVariable.id.toString())
+            .deleteCommit(globalVariable.id.toString())
             .subscribe();
     }
 
-    next() {
+    next(): void {
         this.table.wait();
         this.prevTable.disabled = true;
         this.nextTable.disabled = true;
-        this.updateTable(this.response.items.number + 1);
+        this.updateTable(this.responseGlobalVariables.items.number + 1);
     }
 
-    prev() {
+    prev(): void {
         this.table.wait();
         this.prevTable.disabled = true;
         this.nextTable.disabled = true;
-        this.updateTable(this.response.items.number - 1);
+        this.updateTable(this.responseGlobalVariables.items.number - 1);
     }
 }

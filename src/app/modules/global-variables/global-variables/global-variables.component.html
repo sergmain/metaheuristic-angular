@@ -1,83 +1,96 @@
-
-<ct-section> 
-  <ct-section-header>
-    <ct-section-header-row>
-      <ct-flex justify-content="space-between">
-        <ct-flex-item>
-          <ct-heading>Variables</ct-heading>
-        </ct-flex-item>
-        <ct-flex-item>
-          <button mat-flat-button="mat-flat-button" color="primary" [disabled]="currentStates.has(states.loading) || currentStates.has(states.firstLoading)" routerLink="add">Create variable</button>
-        </ct-flex-item>
-      </ct-flex>
-    </ct-section-header-row>
-  </ct-section-header>
-  <ct-section-body>
-    <ct-section-body-row>
-      <ct-table #table>
-        <table class="mat-table" mat-table="mat-table" [dataSource]="dataSource"> 
-          <ng-container matColumnDef="id" sticky="sticky"> 
-            <th mat-header-cell="mat-header-cell" *matHeaderCellDef>id </th>
-            <td mat-cell="mat-cell" *matCellDef="let el">{{el.id}} </td>
-          </ng-container>
-          <ng-container matColumnDef="uploadTs"> 
-            <th mat-header-cell="mat-header-cell" *matHeaderCellDef>Upload Date </th>
-            <td mat-cell="mat-cell" *matCellDef="let el">{{el.uploadTs | date}} </td>
-          </ng-container>
-          <ng-container matColumnDef="variable"> 
-            <th mat-header-cell="mat-header-cell" *matHeaderCellDef>Variable</th>
-            <td mat-cell="mat-cell" *matCellDef="let el">{{el.variable}} </td>
-          </ng-container>
-          <ng-container matColumnDef="filename"> 
-            <th mat-header-cell="mat-header-cell" *matHeaderCellDef>Filename</th>
-            <td mat-cell="mat-cell" *matCellDef="let el">{{el.filename}} </td>
-          </ng-container>
-          <ng-container matColumnDef="storageUrl"> 
-            <th mat-header-cell="mat-header-cell" *matHeaderCellDef>Storage Url </th>
-            <td mat-cell="mat-cell" *matCellDef="let el">{{el.storageUrl}} </td>
-          </ng-container>
-          <ng-container matColumnDef="bts" stickyEnd="stickyEnd"> 
-            <th mat-header-cell="mat-header-cell" *matHeaderCellDef> </th>
-            <td mat-cell="mat-cell" *matCellDef="let el"> 
-              <ct-flex justify-content="flex-end">
-                <ct-flex-item>
-                  <button mat-flat-button="mat-flat-button" color="warn" size="forTableRow" (click)="delete(el)">
-                    <mat-icon>delete </mat-icon>
-                  </button>
-                </ct-flex-item>
-              </ct-flex>
-            </td>
-          </ng-container>
-          <tr mat-header-row="mat-header-row" *matHeaderRowDef="columnsToDisplay;"> </tr>
-          <tr mat-row="mat-row" *matRowDef="let row; columns: columnsToDisplay;" [class.deleted-table-row]="deletedRows.includes(row)"></tr>
-        </table>
-      </ct-table>
-    </ct-section-body-row>
-    <ct-section-body-row *ngIf="currentStates.has(states.firstLoading)">
-      <mat-progress-bar mode="indeterminate"></mat-progress-bar>
-    </ct-section-body-row>
-  </ct-section-body>
-  <ct-section-footer>
-    <ct-section-footer-row>
-      <ct-flex justify-content="space-between">
-        <ct-flex-item>
-          <ct-flex justify-content="flex-end" gap="8px">
-            <ct-flex-item>
-              <button mat-flat-button="mat-flat-button" color="primary" #prevTable disabled="disabled" (click)="prev()">
-                <mat-icon>arrow_back_ios</mat-icon>
-              </button>
-            </ct-flex-item>
-            <ct-flex-item>
-              <button mat-flat-button="mat-flat-button" color="primary" #nextTable disabled="disabled" (click)="next()">
-                <mat-icon>arrow_forward_ios</mat-icon>
-              </button>
-            </ct-flex-item>
-          </ct-flex>
-        </ct-flex-item>
-        <ct-flex-item>
-          <button mat-flat-button="mat-flat-button" color="primary" [disabled]="currentStates.has(states.loading) || currentStates.has(states.firstLoading)" routerLink="add">Create variable</button>
-        </ct-flex-item>
-      </ct-flex>
-    </ct-section-footer-row>
-  </ct-section-footer>
+<ct-section *ngIf="!responseGlobalVariables">
+    <ct-section-body>
+        <ct-section-body-row>
+            <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+        </ct-section-body-row>
+    </ct-section-body>
 </ct-section>
+
+<ct-section *ngIf="responseGlobalVariables">
+    <ct-section-header>
+        <ct-section-header-row>
+            <ct-flex justify-content="space-between">
+                <ct-flex-item>
+                    <ct-heading>Variables</ct-heading>
+                </ct-flex-item>
+                <ct-flex-item>
+                    <ng-container *ngTemplateOutlet="addVariableButton"></ng-container>
+                </ct-flex-item>
+            </ct-flex>
+        </ct-section-header-row>
+    </ct-section-header>
+    <ct-section-body>
+        <ct-section-body-row>
+            <ct-table #table>
+                <table class="mat-table" mat-table="mat-table" [dataSource]="dataSource">
+                    <ng-container matColumnDef="id" sticky="sticky">
+                        <th mat-header-cell="mat-header-cell" *matHeaderCellDef>id </th>
+                        <td mat-cell="mat-cell" *matCellDef="let el">{{el.id}} </td>
+                    </ng-container>
+                    <ng-container matColumnDef="uploadTs">
+                        <th mat-header-cell="mat-header-cell" *matHeaderCellDef>Upload Date </th>
+                        <td mat-cell="mat-cell" *matCellDef="let el">{{el.uploadTs | date}} </td>
+                    </ng-container>
+                    <ng-container matColumnDef="variable">
+                        <th mat-header-cell="mat-header-cell" *matHeaderCellDef>Variable</th>
+                        <td mat-cell="mat-cell" *matCellDef="let el">{{el.variable}} </td>
+                    </ng-container>
+                    <ng-container matColumnDef="filename">
+                        <th mat-header-cell="mat-header-cell" *matHeaderCellDef>Filename</th>
+                        <td mat-cell="mat-cell" *matCellDef="let el">{{el.filename}} </td>
+                    </ng-container>
+                    <ng-container matColumnDef="storageUrl">
+                        <th mat-header-cell="mat-header-cell" *matHeaderCellDef>Storage Url </th>
+                        <td mat-cell="mat-cell" *matCellDef="let el">{{el.storageUrl}} </td>
+                    </ng-container>
+                    <ng-container matColumnDef="bts" stickyEnd="stickyEnd">
+                        <th mat-header-cell="mat-header-cell" *matHeaderCellDef> </th>
+                        <td mat-cell="mat-cell" *matCellDef="let el">
+                            <ct-flex justify-content="flex-end">
+                                <ct-flex-item>
+                                    <button mat-flat-button="mat-flat-button" color="warn" size="forTableRow"
+                                        (click)="delete(el)">
+                                        <mat-icon>delete </mat-icon>
+                                    </button>
+                                </ct-flex-item>
+                            </ct-flex>
+                        </td>
+                    </ng-container>
+                    <tr mat-header-row="mat-header-row" *matHeaderRowDef="columnsToDisplay;"> </tr>
+                    <tr mat-row="mat-row" *matRowDef="let row; columns: columnsToDisplay;"
+                        [class.deleted-table-row]="deletedRows.includes(row)"></tr>
+                </table>
+            </ct-table>
+        </ct-section-body-row>
+    </ct-section-body>
+    <ct-section-footer>
+        <ct-section-footer-row>
+            <ct-flex justify-content="space-between">
+                <ct-flex-item>
+                    <ct-flex justify-content="flex-end" gap="8px">
+                        <ct-flex-item>
+                            <button mat-flat-button="mat-flat-button" color="primary" #prevTable disabled="disabled"
+                                (click)="prev()">
+                                <mat-icon>arrow_back_ios</mat-icon>
+                            </button>
+                        </ct-flex-item>
+                        <ct-flex-item>
+                            <button mat-flat-button="mat-flat-button" color="primary" #nextTable disabled="disabled"
+                                (click)="next()">
+                                <mat-icon>arrow_forward_ios</mat-icon>
+                            </button>
+                        </ct-flex-item>
+                    </ct-flex>
+                </ct-flex-item>
+                <ct-flex-item>
+                    <ng-container *ngTemplateOutlet="addVariableButton"></ng-container>
+                </ct-flex-item>
+            </ct-flex>
+        </ct-section-footer-row>
+    </ct-section-footer>
+</ct-section>
+
+
+<ng-template #addVariableButton>
+    <button mat-flat-button="mat-flat-button" color="primary" routerLink="add">Create variable</button>
+</ng-template>

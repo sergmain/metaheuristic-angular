@@ -10,6 +10,10 @@ issue-1202
 подтвердить работоспособность интерфейса управления процессорами (бывшие Station)
 урл в стандартном интерфейсе - http://localhost:8080/dispatcher/processor/processors
 
+http://localhost:8080/dispatcher/processor/processors DONE
+http://localhost:8080/dispatcher/processor/processors Delete Button
+http://localhost:8080/dispatcher/processor/processor-edit/5 DONE
+
 
 
 issue-1203
@@ -22,6 +26,8 @@ issue-1204
 подтвердить работоспособность интерфейса управления глобальными переменными (бывшие Resources)
 урл в стандартном интерфейсе - http://localhost:8080/dispatcher/global-variable/global-variables
 
+http://localhost:8080/dispatcher/global-variable/global-variables DONE
+
 
 
 issue-1205
@@ -31,15 +37,16 @@ issue-1205
 http://localhost:8080/dispatcher/source-code/source-codes DONE
 http://localhost:8080/dispatcher/source-code/source-code-add DONE
 http://localhost:8080/dispatcher/source-code/source-code-edit/7 DONE
-http://localhost:8080/dispatcher/source-code/exec-contexts/5 DONE
-http://localhost:8080/dispatcher/source-code/exec-context-add/5 DONE
-http://localhost:8080/dispatcher/source-code/exec-context-state/5/5
 
 
 
 issue-1206
 подтвердить работоспособность интерфейса управления контекстами выполнения (бывшие Workbooks)
 урл в стандартном интерфейсе - http://localhost:8080/dispatcher/source-code/exec-contexts/1263
+
+http://localhost:8080/dispatcher/source-code/exec-contexts/5 DONE
+http://localhost:8080/dispatcher/source-code/exec-context-add/5 DONE
+http://localhost:8080/dispatcher/source-code/exec-context-state/5/5
 
 
 

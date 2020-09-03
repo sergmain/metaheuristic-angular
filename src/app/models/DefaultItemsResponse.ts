@@ -1,8 +1,8 @@
-import { DefaultListOfItems } from "./DefaultListOfItems";
-import { DefaultResponse } from "./DefaultResponse";
+import { PageableDefault } from './PageableDefault';
+import { DefaultResponse } from './DefaultResponse';
 
-export namespace DefaultItemsResponse {
+export namespace DefaultItemsResponse123 {
     export interface Response extends DefaultResponse {
-        items: DefaultListOfItems;
+        items: PageableDefault;
     }
 }

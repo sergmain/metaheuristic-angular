@@ -1,10 +1,10 @@
-import { ConsoleResult,  ExperimentFeature, FeatureProgressConsolePartEntity, HyperParamResult, MetricsResult, TasksResult } from './index';
+import { ConsoleResult, ExperimentFeature, FeatureProgressConsolePartEntity, HyperParamResult, MetricsResult, TasksResult } from './index';
 import { DefaultResponse } from '@src/app/models/DefaultResponse';
-import { DefaultListOfItems } from '@src/app/models/DefaultListOfItems';
+import { PageableDefault } from '@src/app/models/PageableDefault';
 import { ExperimentApiData } from './ExperimentApiData';
 
 
-export interface ListOfItems extends DefaultListOfItems {
+export interface ListOfItems extends PageableDefault {
     content: ExperimentItem[];
 }
 
