@@ -9,7 +9,7 @@ import { AddExecContextComponent } from './add-exec-context/add-exec-context.com
 import { AddSourceCodeComponent } from './add-source-code/add-source-code.component';
 import { EditExecContextComponent } from './edit-exec-context/edit-exec-context.component';
 import { EditSourceCodeComponent } from './edit-source-code/edit-source-code.component';
-import { ExecContextStates } from './exec-context-states/exec-context-states.component';
+import { ExecContextStatesComponent } from './exec-context-states/exec-context-states.component';
 import { ExecContextsComponent } from './exec-contexts/exec-contexts.component';
 import { SourceCodesArchiveComponent } from './source-codes-archive/source-codes-archive.component';
 import { SourceCodesComponent } from './source-codes/source-codes.component';
@@ -42,8 +42,8 @@ const routes: Routes = [
         component: EditExecContextComponent,
     },
     {
-        path: ':sourceCodeId/exec-context/:execContextId/state/:stateId',
-        component: ExecContextStates,
+        path: ':sourceCodeId/state/:state/id/:id',
+        component: ExecContextStatesComponent,
     }
 ];
 
@@ -64,7 +64,7 @@ export class SourceCodeRoutingModule { }
         ExecContextsComponent,
         AddExecContextComponent,
         EditExecContextComponent,
-        ExecContextStates,
+        ExecContextStatesComponent,
         CardFormAddSourceCodeComponent,
         CardFormUploadSourceCodeComponent
     ],
