@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { SourceCodesService } from '../../../services/source-codes/source-codes.service';
+import { ExecContextStateResult } from '@src/app/services/source-codes/ExecContextStateResult';
 
 @Component({
     selector: 'exec-context-states',
@@ -8,6 +9,9 @@ import { SourceCodesService } from '../../../services/source-codes/source-codes.
     styleUrls: ['./exec-context-states.component.scss']
 })
 export class ExecContextStatesComponent implements OnInit {
+
+    response: ExecContextStateResult;
+
     constructor(
         private sourceCodesService: SourceCodesService,
         private route: ActivatedRoute,
@@ -15,13 +19,12 @@ export class ExecContextStatesComponent implements OnInit {
 
     ngOnInit(): void {
         this.sourceCodesService.execContext
-            .targetExecState(
+            .execContextState(
                 this.route.snapshot.paramMap.get('sourceCodeId'),
-                this.route.snapshot.paramMap.get('state'),
-                this.route.snapshot.paramMap.get('id')
+                this.route.snapshot.paramMap.get('execContextId')
             )
             .subscribe(response => {
-                console.log(response);
+                this.response = response;
             });
     }
 }

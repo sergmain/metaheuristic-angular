@@ -46,7 +46,7 @@ issue-1206
 
 http://localhost:8080/dispatcher/source-code/exec-contexts/5 DONE
 http://localhost:8080/dispatcher/source-code/exec-context-add/5 DONE
-http://localhost:8080/dispatcher/source-code/exec-context-state/5/5
+http://localhost:8080/dispatcher/source-code/exec-context-state/5/5 DONE
 
 
 
@@ -54,6 +54,8 @@ issue-1207
 сделать страницу показа текущего состояния выполнения задач:
  - кнопка Task states на странице перечисления контекстов выполнения задач
 урл в стандартном интерфейсе - http://localhost:8080/dispatcher/source-code/exec-context-state/1263/1612
+
+DONE
 
 
 
@@ -114,8 +116,6 @@ http://localhost:4200/#/dispatcher/batch/add
 http://localhost:4200/#/dispatcher/batch
 
 при повторном создании пакета с тем же самым файлом новый пакет не отображается в списке созданных пакетов
-
-DONE
 
 
 

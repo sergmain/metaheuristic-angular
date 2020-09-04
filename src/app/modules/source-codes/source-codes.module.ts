@@ -42,7 +42,7 @@ const routes: Routes = [
         component: EditExecContextComponent,
     },
     {
-        path: ':sourceCodeId/state/:state/id/:id',
+        path: ':sourceCodeId/exec-context/:execContextId/state',
         component: ExecContextStatesComponent,
     }
 ];

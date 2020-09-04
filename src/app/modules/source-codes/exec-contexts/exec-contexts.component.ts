@@ -79,7 +79,7 @@ export class ExecContextsComponent implements OnInit {
 
     runExecState(id, state): void {
         this.sourceCodesService.execContext
-            .targetExecState(this.sourceCodeId, state, id)
+            .execContextTargetState(this.sourceCodeId, state, id)
             .subscribe(v => this.getExecContexts(this.response.instances.number));
     }
 

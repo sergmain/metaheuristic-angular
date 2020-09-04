@@ -10,6 +10,7 @@ import { SimpleExecContextAddingResult } from './SimpleExecContextAddingResult';
 import { SourceCodeResult } from './SourceCodeResult';
 import { SourceCodesResult } from './SourceCodesResult';
 import { SourceCodeType } from '@src/app/enums/SourceCodeType';
+import { ExecContextStateResult } from './ExecContextStateResult';
 
 const url = (urlString): string => `${environment.baseUrl}dispatcher/source-code/${urlString}`;
 
@@ -102,7 +103,10 @@ export class SourceCodesService {
                 formData({ sourceCodeId, execContextId })
             ),
 
-        targetExecState: (sourceCodeId: string, state: string, id: string): Observable<OperationStatusRest> =>
+        execContextState: (sourceCodeId: string, execContextId: string): Observable<ExecContextStateResult> =>
+            this.http.get<ExecContextStateResult>(url(`exec-context-state/${sourceCodeId}/${execContextId}`)),
+
+        execContextTargetState: (sourceCodeId: string, state: string, id: string): Observable<OperationStatusRest> =>
             this.http.get<OperationStatusRest>(url(`exec-context-target-state/${sourceCodeId}/${state}/${id}`))
     };
 
