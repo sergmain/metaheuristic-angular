@@ -1,102 +1,6 @@
-issue-1201
-подтвердить работоспособность интерфейса создания аккаунтов
-урл в стандартном интерфейсе - http://localhost:8080/dispatcher/account/accounts
-
-DONE, CONFIRMED
-
-
-
-issue-1202
-подтвердить работоспособность интерфейса управления процессорами (бывшие Station)
-урл в стандартном интерфейсе - http://localhost:8080/dispatcher/processor/processors
-
-http://localhost:8080/dispatcher/processor/processors DONE
-http://localhost:8080/dispatcher/processor/processors Delete Button
-http://localhost:8080/dispatcher/processor/processor-edit/5 DONE
-
-DONE, CONFIRMED
-
-
-issue-1203
-1.
-подтвердить работоспособность интерфейса управления функциями (бывшие Snippet)
-урл в стандартном интерфейсе - http://localhost:8080/dispatcher/function/functions
-DONE, CONFIRMED
-
-
-issue-1204
-подтвердить работоспособность интерфейса управления глобальными переменными (бывшие Resources)
-урл в стандартном интерфейсе - http://localhost:8080/dispatcher/global-variable/global-variables
-
-http://localhost:8080/dispatcher/global-variable/global-variables
-DONE, CONFIRMED
-
-
-
-issue-1205
-подтвердить работоспособность интерфейса управления исходными кодами (бывшие Plans)
-урл в стандартном интерфейсе - http://localhost:8080/dispatcher/source-code/source-codes
-
-http://localhost:8080/dispatcher/source-code/source-codes DONE, CONFIRMED
-http://localhost:8080/dispatcher/source-code/source-code-add DONE, CONFIRMED
-http://localhost:8080/dispatcher/source-code/source-code-edit/7 DONE, CONFIRMED
-
-DONE, CONFIRMED
-
-
-issue-1206
-подтвердить работоспособность интерфейса управления контекстами выполнения (бывшие Workbooks)
-урл в стандартном интерфейсе - http://localhost:8080/dispatcher/source-code/exec-contexts/1263
-
-http://localhost:8080/dispatcher/source-code/exec-contexts/5 DONE, CONFIRMED
-http://localhost:8080/dispatcher/source-code/exec-context-add/5 DONE, CONFIRMED
-http://localhost:8080/dispatcher/source-code/exec-context-state/5/5 DONE, CONFIRMED
-
-DONE, CONFIRMED
-
-
-issue-1207
-сделать страницу показа текущего состояния выполнения задач:
- - кнопка Task states на странице перечисления контекстов выполнения задач
-урл в стандартном интерфейсе - http://localhost:8080/dispatcher/source-code/exec-context-state/1263/1612
-
-DONE, CONFIRMED
-
-
-
-issue-1208
-подтвердить работоспособность интерфейса управления пакетами
-урл в стандартном интерфейсе - http://localhost:8080/dispatcher/batch/batches
-
-DONE, CONFIRMED
-
-
 issue-1209
 переработать страницу создания экспериментов в соответствии со стандартным интерфейсом,
  урл - http://localhost:8080/dispatcher/ai/experiment/experiments
-
-
-
-issue-1210
-перейти на Angular 10 И обновить все либы для работы на этой версии
-
-DONE, CONFIRMED
-
-
-
-issue-1211
-http://localhost:4200/#/dispatcher/source-codes/1262/edit
-статус выглядит так: STATUS: [object Object]
-
-DONE, CONFIRMED
-
-
-issue-1212
-http://localhost:4200/#/dispatcher/source-codes/1262/edit
-текст в окне редактора не показывается
-
-DONE, CONFIRMED
-
 
 
 issue-1213
@@ -104,15 +8,6 @@ http://localhost:4200/#/dispatcher/source-codes/add
 
 после нажатия кнопки 'Add' на экран должно выводиться сообщение о статусе операции - Ок или была ошибка
 фокус должен перемещаться вверх экрана так чтобы было видно сообщение о статусе
-
-
-
-issue-1214
-http://localhost:4200/#/dispatcher/source-codes/add
-
-Названия кнопок 'Back', 'Add' Должны быть русифицированы
-
-POSTPONED
 
 
 
