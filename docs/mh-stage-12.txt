@@ -17,8 +17,20 @@ http://localhost:8080/dispatcher/processor/processor-edit/5 DONE
 
 
 issue-1203
+1.
 подтвердить работоспособность интерфейса управления функциями (бывшие Snippet)
 урл в стандартном интерфейсе - http://localhost:8080/dispatcher/function/functions
+DONE, CONFIRMED
+
+2.
+адрес в ангуларе
+http://localhost:4200/#/dispatcher/functions/add
+переименовать кнопку Add file в Upload function
+
+3.
+адрес в ангуларе
+http://localhost:4200/#/dispatcher/functions/add
+если файл не выбран, то кнопка Upload function (бывшая Add file) должна быть задисаблена
 
 
 
@@ -26,12 +38,13 @@ issue-1204
 подтвердить работоспособность интерфейса управления глобальными переменными (бывшие Resources)
 урл в стандартном интерфейсе - http://localhost:8080/dispatcher/global-variable/global-variables
 
-http://localhost:8080/dispatcher/global-variable/global-variables DONE
+http://localhost:8080/dispatcher/global-variable/global-variables
+DONE, CONFIRMED
 
 
 
 issue-1205
-подтвердить работоспособность интерфейса управления исхоными кодами (бывшие PLans)
+подтвердить работоспособность интерфейса управления исходными кодами (бывшие Plans)
 урл в стандартном интерфейсе - http://localhost:8080/dispatcher/source-code/source-codes
 
 http://localhost:8080/dispatcher/source-code/source-codes DONE
@@ -136,8 +149,74 @@ http://localhost:8080/dispatcher/company/companies
 rest url - /rest/v1/dispatcher/company
 
 
+issue-1220
+1.
+в верхнем меню сделать 2 новых пункта - ИИ(по-англиски - AI) и Пакеты (Batch)
+при нажатии на AI в меню слева должно быть 2 пункта - Эксперименты, Результаты
+при нажатии на Пакеты - просто пункт пакеты
+
+при нажатии на Панель управления (бывшая кнопка Диспетчер) в меню слева
+не должно быть пунктов Эксперименты, Атлас, Пакеты,
 
 
+2.
+в верхнем меню переименовать Диспетчер в Панель управления
+
+3. переименовать Атлас в Результаты экспериментов и перенести в меню Эксперименты
+
+issue-1221
+angular url
+http://localhost:4200/#/dispatcher/batch
+
+при создании нового пакета вновь созданный пакет не отображается среди списка пакетов.
+
+пакет не отображается даже если перейти на другую страницу и вернуться назад
+пакет начинает отображаться только если нажать F5 (полный рефреш страницы)
+
+issue-1222
+angular
+http://localhost:4200/#/dispatcher/source-codes/1350/exec-contexts
+
+в колонках Create on, Completed on заменить символ который разделяет дату и время на пробел - Sep 4, 2020 • 22:17:39
+
+issue-1223
+angular
+http://localhost:4200/#/dispatcher/source-codes/1350/exec-context/1717/state
+добавить кнопку возврата на предыдущий уровень,
+т.е. переход на http://localhost:4200/#/dispatcher/source-codes/1350/exec-contexts
+
+
+
+issue-1224
+angular
+http://localhost:4200/#/dispatcher/global-variables/add
+добавить кнопку Cancel по нажатии на которую переходить в список переменных http://localhost:4200/#/dispatcher/global-variables
+
+
+issue-1225
+angular
+
+при создании переменной в разделе Create Variable with Storage URL
+после нажания кнопки Create страница должна закрываться и делаться редирект на список переменных,
+т.е. точно так же как для Create global variable from file
+
+
+issue-1226
+angular
+http://localhost:4200/#/dispatcher/global-variables
+
+столбец Storage Url должен отображаться точно так же как Params в Funnctions, т.е. с учетом форматирования
+
+issue-1227
+angular
+http://localhost:4200/#/dispatcher/source-codes/add
+добавить кнопку Cancel по нажатии на которую переходить в список исходный кодов  http://localhost:4200/#/dispatcher/source-codes
+
+issue-1228
+angular
+http://localhost:4200/#/dispatcher/source-codes/add
+независимо от наличия ошибок переходить на список исходный кодов http://localhost:4200/#/dispatcher/source-codes
+и отображать ошибки на этой странице
 
 
 
