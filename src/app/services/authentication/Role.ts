@@ -1,13 +1,11 @@
 export enum Role {
-    Admin = 'ROLE_ADMIN',
-        Manager = 'ROLE_MANAGER',
-        Operator = 'ROLE_OPERATOR',
-        Billing = 'ROLE_BILLING',
-        Data = 'ROLE_DATA',
-        ServerRestAccess = 'ROLE_SERVER_REST_ACCESS'
+    ROLE_ADMIN = 'ROLE_ADMIN',
+    ROLE_MANAGER = 'ROLE_MANAGER',
+    ROLE_OPERATOR = 'ROLE_OPERATOR',
+    ROLE_BILLING = 'ROLE_BILLING',
+    ROLE_DATA = 'ROLE_DATA',
+    ROLE_SERVER_REST_ACCESS = 'ROLE_SERVER_REST_ACCESS'
 }
-
-
 
 // -- ROLE_ADMIN - полный доступ ко всем функциям на сайте
 // -- ROLE_MANAGER

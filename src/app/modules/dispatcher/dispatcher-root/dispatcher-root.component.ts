@@ -33,9 +33,9 @@ export class DispatcherRootComponent {
 
 
     accessSourceCodes() {
-        if (this.roles.has(Role.Admin) ||
-            this.roles.has(Role.Manager) ||
-            this.roles.has(Role.Data)
+        if (this.roles.has(Role.ROLE_ADMIN) ||
+            this.roles.has(Role.ROLE_MANAGER) ||
+            this.roles.has(Role.ROLE_DATA)
         ) {
             return true;
         }
@@ -43,9 +43,9 @@ export class DispatcherRootComponent {
     }
 
     accessBatch() {
-        if (this.roles.has(Role.Admin) ||
-            this.roles.has(Role.Manager) ||
-            this.roles.has(Role.Operator)
+        if (this.roles.has(Role.ROLE_ADMIN) ||
+            this.roles.has(Role.ROLE_MANAGER) ||
+            this.roles.has(Role.ROLE_OPERATOR)
         ) {
             return true;
         }
@@ -53,9 +53,9 @@ export class DispatcherRootComponent {
     }
 
     accessFunctions() {
-        if (this.roles.has(Role.Admin) ||
-            this.roles.has(Role.Manager) ||
-            this.roles.has(Role.Data)
+        if (this.roles.has(Role.ROLE_ADMIN) ||
+            this.roles.has(Role.ROLE_MANAGER) ||
+            this.roles.has(Role.ROLE_DATA)
         ) {
             return true;
         }
@@ -63,8 +63,8 @@ export class DispatcherRootComponent {
     }
 
     accessGlobalVariables() {
-        if (this.roles.has(Role.Admin) ||
-            this.roles.has(Role.Data)
+        if (this.roles.has(Role.ROLE_ADMIN) ||
+            this.roles.has(Role.ROLE_DATA)
         ) {
             return true;
         }
@@ -73,9 +73,9 @@ export class DispatcherRootComponent {
 
 
     accessExperiments() {
-        if (this.roles.has(Role.Admin) ||
-            this.roles.has(Role.Manager) ||
-            this.roles.has(Role.Data)
+        if (this.roles.has(Role.ROLE_ADMIN) ||
+            this.roles.has(Role.ROLE_MANAGER) ||
+            this.roles.has(Role.ROLE_DATA)
         ) {
             return true;
         }
@@ -83,8 +83,8 @@ export class DispatcherRootComponent {
     }
 
     accessAtlas() {
-        if (this.roles.has(Role.Admin) ||
-            this.roles.has(Role.Data)
+        if (this.roles.has(Role.ROLE_ADMIN) ||
+            this.roles.has(Role.ROLE_DATA)
         ) {
             return true;
         }
@@ -95,7 +95,7 @@ export class DispatcherRootComponent {
 
 
     accessProcessors() {
-        if (this.roles.has(Role.Admin)
+        if (this.roles.has(Role.ROLE_ADMIN)
 
         ) {
             return true;
@@ -104,7 +104,7 @@ export class DispatcherRootComponent {
     }
 
     accessAccounts() {
-        if (this.roles.has(Role.Admin)
+        if (this.roles.has(Role.ROLE_ADMIN)
 
         ) {
             return true;

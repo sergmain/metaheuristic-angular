@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { OperationStatusRest } from '@src/app/models/OperationStatusRest';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { OperationStatus } from '@src/app/models/OperationStatus';
 
 @Component({
@@ -14,7 +14,8 @@ export class AddGlobalVariableComponent {
     addVariableStorageResponse: OperationStatusRest;
 
     constructor(
-        private router: Router
+        private router: Router,
+        private route: ActivatedRoute
     ) { }
 
     updateStatusAfterAddVarible(response: OperationStatusRest): void {
@@ -34,6 +35,6 @@ export class AddGlobalVariableComponent {
     }
 
     back(): void {
-        this.router.navigate(['/dispatcher', 'global-variables']);
+        this.router.navigate(['../'], { relativeTo: this.route });
     }
 }

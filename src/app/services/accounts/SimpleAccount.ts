@@ -1,11 +1,12 @@
 import { Authority } from './Authoritie';
 export interface SimpleAccount {
     id: number;
+    companyId: number;
+    username: string;
+    publicName: string;
+    enabled: boolean;
     createdOn: number;
     updateOn: number;
-    enabled: boolean;
-    publicName: string;
-    username: string;
     roles: string;
     authorities: Authority[];
 }

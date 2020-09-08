@@ -1,6 +1,7 @@
 <ct-cols>
     <ct-col size="6">
-        <card-form-add-source-code (responseChange)="afterNewSourceCode($event)"></card-form-add-source-code>
+        <card-form-add-source-code (abort)="back()" (responseChange)="afterNewSourceCode($event)">
+        </card-form-add-source-code>
     </ct-col>
     <ct-col size="6">
         <ct-rest-status class="addRestStatus" [content]="newSourceCodeResponse"></ct-rest-status>
@@ -11,7 +12,8 @@
 
 <ct-cols>
     <ct-col size="6">
-        <card-form-upload-source-code (responseChange)="afterUploadSourceCode($event)"></card-form-upload-source-code>
+        <card-form-upload-source-code (abort)="back()" (responseChange)="afterUploadSourceCode($event)">
+        </card-form-upload-source-code>
     </ct-col>
     <ct-col size="6">
         <ct-rest-status class="uploadRestStatus" [content]="uploadSourceCodeResponse"></ct-rest-status>

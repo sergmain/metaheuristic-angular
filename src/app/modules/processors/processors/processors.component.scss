@@ -15,3 +15,13 @@
 .second-row th {
     border: none;
 }
+
+.alert-success {
+    background-color: rgba(green, 0.25);
+    padding: 0 2px;
+}
+
+.alert-danger {
+    background-color: rgba(red, 0.25);
+    padding: 0 2px;
+}

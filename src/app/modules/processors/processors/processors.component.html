@@ -52,22 +52,21 @@
                         </td>
                     </ng-container>
                     <ng-container matColumnDef="reason">
-                        <th mat-header-cell="mat-header-cell" *matHeaderCellDef>Reasons</th>
+                        <th mat-header-cell="mat-header-cell" *matHeaderCellDef>
+                            <div>Is active?</div>
+                            <div>problems with functions?</div>
+                            <div>Is blacklisted?</div>
+                            <div>Reason</div>
+                        </th>
                         <td mat-cell="mat-cell" *matCellDef="let el">
-                            <table>
-                                <tr>
-                                    <td>Is&nbsp;active?</td>
-                                    <td> {{el.active ? 'Yes' : 'No'}} </td>
-                                </tr>
-                                <tr>
-                                    <td>Problems&nbsp;with&nbsp;functions?</td>
-                                    <td> {{el.functionProblem ? 'Yes' : 'No'}} </td>
-                                </tr>
-                                <tr>
-                                    <td>Is&nbsp;blacklisted?</td>
-                                    <td> {{el.blacklisted ? 'Yes' : 'No'}} </td>
-                                </tr>
-                            </table>
+                            <div [class]="el.active ? 'alert-success' : 'alert-danger'"> {{el.active ? 'Yes' : 'No'}}
+                            </div>
+                            <div [class]="el.functionProblem ? 'alert-danger' : 'alert-success'">
+                                {{el.functionProblem ? 'Yes' : 'No'}} </div>
+                            <div [class]="el.blacklisted ? 'alert-danger' : 'alert-success'">
+                                {{el.blacklisted ? 'Yes' : 'No'}} </div>
+                            <div class="alert-danger"> {{el.blacklistReason}}
+                            </div>
                         </td>
                     </ng-container>
                     <ng-container matColumnDef="lastSeen">

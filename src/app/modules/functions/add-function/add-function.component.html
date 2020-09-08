@@ -8,9 +8,7 @@
             </ct-section-header>
             <ct-section-body>
                 <ct-section-body-row>
-                    <ct-section-content>
-                        <ct-file-upload #fileUpload></ct-file-upload>
-                    </ct-section-content>
+                    <ct-file-upload #fileUpload></ct-file-upload>
                 </ct-section-body-row>
             </ct-section-body>
             <ct-section-footer>
@@ -20,7 +18,9 @@
                             <button mat-stroked-button="mat-stroked-button" (click)="cancel()">Cancel </button>
                         </ct-flex-item>
                         <ct-flex-item>
-                            <button mat-flat-button="mat-flat-button" (click)="upload()" color="primary">Add File </button>
+                            <button mat-flat-button="mat-flat-button" (click)="upload()" color="primary"
+                                [disabled]="!fileUpload?.fileInput?.nativeElement?.files?.length">Upload
+                                function</button>
                         </ct-flex-item>
                     </ct-flex>
                 </ct-section-footer-row>
@@ -28,14 +28,6 @@
         </ct-section>
     </ct-col>
     <ct-col size="6" *ngIf="response">
-        <ct-section>
-            <ct-section-body>
-                <ct-section-body-row>
-                    <div>STATUS: {{response.status}}</div>
-                    <p *ngFor="let error of response.errorMessages; index as i; ">{{error}}</p>
-                    <p *ngFor="let info of response.infoMessages; index as i; ">{{info}}</p>
-                </ct-section-body-row>
-            </ct-section-body>
-        </ct-section>
+        <ct-rest-status [content]="response"></ct-rest-status>
     </ct-col>
 </ct-cols>

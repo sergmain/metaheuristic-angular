@@ -26,6 +26,15 @@ const routes: Routes = [
         component: PilotComponent,
     },
     {
+        path: 'ai',
+        loadChildren: () => import('src/app/modules/ai/ai.module').then(m => m.AiModule),
+    },
+
+    {
+        path: 'batch',
+        loadChildren: () => import('src/app/modules/batch/batch.module').then(m => m.BatchModule),
+    },
+    {
         path: 'about',
         loadChildren: () => import('src/app/modules/about/about.module').then(m => m.AboutModule),
     },

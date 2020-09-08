@@ -31,7 +31,9 @@
                 </ct-section-body-row>
                 <ct-section-body-row *ngIf="currentStates.has(states.show)">
                     <ct-section-content>
-                        <ct-file-upload #fileUpload acceptTypes=".zip, .xml" buttonTitle="{{'batch-add.Select File' | translate}}" (changed)="fileUploadChanged()"></ct-file-upload>
+                        <ct-file-upload #fileUpload acceptTypes=".zip, .xml"
+                            buttonTitle="{{'batch-add.Select File' | translate}}" (changed)="fileUploadChanged()">
+                        </ct-file-upload>
                         <ct-hint>{{ 'batch-add.This is a required field.' | translate }}</ct-hint>
                         <ct-hint>{{ 'batch-add.Only .xml and .zip files are supported' | translate }}</ct-hint>
                     </ct-section-content>
@@ -41,10 +43,12 @@
                 <ct-section-footer-row>
                     <ct-flex justify-content="flex-end" gap="8px">
                         <ct-flex-item>
-                            <button mat-stroked-button="mat-stroked-button" (click)="back()"> {{ 'batch-add.Cancel' | translate }}</button>
+                            <button mat-stroked-button="mat-stroked-button" (click)="back()">
+                                {{ 'batch-add.Cancel' | translate }}</button>
                         </ct-flex-item>
                         <ct-flex-item>
-                            <button mat-flat-button="mat-flat-button" color="primary" [disabled]="!sourceCode || !file" (click)="upload()"> {{ 'batch-add.Upload File' | translate }}</button>
+                            <button mat-flat-button="mat-flat-button" color="primary" [disabled]="!sourceCode || !file"
+                                (click)="upload()"> {{ 'batch-add.Upload File' | translate }}</button>
                         </ct-flex-item>
                     </ct-flex>
                 </ct-section-footer-row>

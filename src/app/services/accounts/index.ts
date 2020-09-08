@@ -1,4 +1,3 @@
-export * from './Account';
 export * from './AccountResult';
 export * from './accounts.service';
 export * from './AccountsResult';

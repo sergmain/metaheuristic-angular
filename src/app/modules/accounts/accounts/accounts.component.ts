@@ -4,7 +4,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { AccountsService } from '@app/services/accounts/accounts.service';
 import { LoadStates } from '@app/enums/LoadStates';
 import { CtTableComponent } from '../../ct/ct-table/ct-table.component';
-import { Account } from '@src/app/services/accounts/Account';
+import { SimpleAccount } from '@src/app/services/accounts';
 
 @Component({
     // tslint:disable-next-line: component-selector
@@ -17,7 +17,7 @@ export class AccountsComponent implements OnInit {
     readonly states = LoadStates;
     currentStates = new Set();
 
-    dataSource = new MatTableDataSource<Account>([]);
+    dataSource = new MatTableDataSource<SimpleAccount>([]);
     columnsToDisplay = ['id', 'isEnabled', 'login', 'publicName', 'createdOn', 'bts'];
 
     response;

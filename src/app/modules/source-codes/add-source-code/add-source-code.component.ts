@@ -4,6 +4,7 @@ import { OperationStatus } from '@src/app/models/OperationStatus';
 import { SourceCodeResult } from '@src/app/services/source-codes/SourceCodeResult';
 import { CardFormAddSourceCodeComponent } from '../card-form-add-source-code/card-form-add-source-code.component';
 import { CardFormUploadSourceCodeComponent } from '../card-form-upload-source-code/card-form-upload-source-code.component';
+import { ActivatedRoute, Router } from '@angular/router';
 @Component({
     selector: 'add-source-code',
     templateUrl: './add-source-code.component.html',
@@ -18,7 +19,8 @@ export class AddSourceCodeComponent {
     uploadSourceCodeResponse: SourceCodeResult;
 
     constructor(
-        private location: Location,
+        private router: Router,
+        private route: ActivatedRoute,
         private elRef: ElementRef
     ) { }
 
@@ -52,6 +54,6 @@ export class AddSourceCodeComponent {
     }
 
     back(): void {
-        this.location.back();
+        this.router.navigate(['../'], { relativeTo: this.route });
     }
 }

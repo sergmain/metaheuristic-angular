@@ -32,13 +32,6 @@ const routes: Routes = [
         data: { section: 'source-codes' },
     },
     {
-        path: 'experiments',
-        canActivate: [AuthGuard],
-        component: DispatcherRootComponent,
-        loadChildren: () => import('src/app/modules/experiments/experiments.module').then(m => m.ExperimentsModule),
-        data: { section: 'experiments' }
-    },
-    {
         path: 'global-variables',
         canActivate: [AuthGuard],
         component: DispatcherRootComponent,
@@ -50,7 +43,7 @@ const routes: Routes = [
         canActivate: [AuthGuard],
         component: DispatcherRootComponent,
         loadChildren: () => import('@src/app/modules/functions/functions.module').then(m => m.FunctionsModule),
-        // data: { section: 'functions' }
+        data: { section: 'functions' }
     },
     {
         path: 'processors',
@@ -65,21 +58,6 @@ const routes: Routes = [
         component: DispatcherRootComponent,
         loadChildren: () => import('src/app/modules/accounts/accounts.module').then(m => m.AccountsModule),
         data: { section: 'accounts' }
-    },
-
-    {
-        path: 'batch',
-        canActivate: [AuthGuard],
-        component: DispatcherRootComponent,
-        loadChildren: () => import('@src/app/modules/batch/batch.module').then(m => m.BatchModule),
-        data: { section: 'batch' }
-    },
-    {
-        path: 'atlas',
-        canActivate: [AuthGuard],
-        component: DispatcherRootComponent,
-        loadChildren: () => import('src/app/modules/atlas/atlas.module').then(m => m.AtlasModule),
-        data: { section: 'atlas' }
     }
 ];
 

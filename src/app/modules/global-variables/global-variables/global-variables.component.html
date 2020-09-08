@@ -41,7 +41,9 @@
                     </ng-container>
                     <ng-container matColumnDef="storageUrl">
                         <th mat-header-cell="mat-header-cell" *matHeaderCellDef>Storage Url </th>
-                        <td mat-cell="mat-cell" *matCellDef="let el">{{el.storageUrl}} </td>
+                        <td mat-cell="mat-cell" *matCellDef="let el">
+                            <ct-pre>{{el.storageUrl}}</ct-pre>
+                        </td>
                     </ng-container>
                     <ng-container matColumnDef="bts" stickyEnd="stickyEnd">
                         <th mat-header-cell="mat-header-cell" *matHeaderCellDef> </th>

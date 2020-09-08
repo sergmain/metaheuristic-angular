@@ -11,6 +11,8 @@ import { CtFileUploadComponent } from '../../ct/ct-file-upload/ct-file-upload.co
 })
 export class CardFormAddVariableComponent {
     @Output() afterResponse: EventEmitter<OperationStatusRest> = new EventEmitter<OperationStatusRest>();
+    @Output() abort: EventEmitter<void> = new EventEmitter<void>();
+
     @ViewChild('fileUpload', { static: true }) fileUpload: CtFileUploadComponent;
 
     form: FormGroup = new FormGroup({
@@ -33,6 +35,10 @@ export class CardFormAddVariableComponent {
             .subscribe((response: OperationStatusRest) => {
                 this.afterResponse.emit(response);
             });
+    }
+
+    cancel(): void {
+        this.abort.emit();
     }
 
     checkDisable(): boolean {

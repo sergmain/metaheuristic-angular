@@ -1,6 +1,11 @@
 <ct-section>
     <ct-section-header>
         <ct-section-header-row>
+            <a mat-stroked-button [routerLink]="['../../']">
+                <mat-icon>arrow_back</mat-icon> To Source Codes
+            </a>
+        </ct-section-header-row>
+        <ct-section-header-row>
             <ct-heading>Exec Contexts in Source Code #{{ sourceCodeId }}</ct-heading>
         </ct-section-header-row>
         <ct-section-header-row *ngIf="response">
@@ -30,7 +35,7 @@
                     </ng-container>
                     <ng-container matColumnDef="createdOn">
                         <th mat-header-cell="mat-header-cell" *matHeaderCellDef>Created On</th>
-                        <td mat-cell="mat-cell" *matCellDef="let el">{{el.createdOn | date:'MMM d, yyyy • HH:mm:ss'}}
+                        <td mat-cell="mat-cell" *matCellDef="let el">{{el.createdOn | date:'MMM d, yyyy HH:mm:ss'}}
                         </td>
                     </ng-container>
                     <ng-container matColumnDef="isExecContextValid">
@@ -45,7 +50,7 @@
                         <th mat-header-cell="mat-header-cell" *matHeaderCellDef>Completed on</th>
                         <td mat-cell="mat-cell" *matCellDef="let el">
                             <span
-                                *ngIf="el.completedOn !== null">{{el.completedOn | date:'MMM d, yyyy • HH:mm:ss'}}</span>
+                                *ngIf="el.completedOn !== null">{{el.completedOn | date:'MMM d, yyyy HH:mm:ss'}}</span>
                             <span *ngIf="el.completedOn === null">null</span>
                         </td>
                     </ng-container>
@@ -110,9 +115,10 @@
                     </ct-flex>
                 </ct-flex-item>
                 <ct-flex-item>
-                    <a mat-flat-button="mat-flat-button" color="primary" [disabled]="!response"
+                    <!-- issue-1229 -->
+                    <!-- <a mat-flat-button="mat-flat-button" color="primary" [disabled]="!response"
                         [routerLink]="['/dispatcher','source-codes',sourceCodeId,'exec-context','add']">Add Exec
-                        Context</a>
+                        Context</a> -->
                 </ct-flex-item>
             </ct-flex>
         </ct-section-footer-row>

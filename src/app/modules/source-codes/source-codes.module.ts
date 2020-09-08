@@ -33,10 +33,11 @@ const routes: Routes = [
         path: ':sourceCodeId/exec-contexts',
         component: ExecContextsComponent,
     },
-    {
-        path: ':sourceCodeId/exec-context/add',
-        component: AddExecContextComponent,
-    },
+    // issue-1229
+    // {
+    //     path: ':sourceCodeId/exec-context/add',
+    //     component: AddExecContextComponent,
+    // },
     {
         path: ':sourceCodeId/exec-context/:execContextId/edit',
         component: EditExecContextComponent,

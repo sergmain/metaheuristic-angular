@@ -1,6 +1,7 @@
 <ct-cols>
     <ct-col size="6">
-        <card-form-add-variable (afterResponse)="updateStatusAfterAddVarible($event)"></card-form-add-variable>
+        <card-form-add-variable (abort)="back()" (afterResponse)="updateStatusAfterAddVarible($event)">
+        </card-form-add-variable>
     </ct-col>
     <ct-col size="6">
         <ct-rest-status [content]="addVariableResponse"></ct-rest-status>
@@ -9,7 +10,9 @@
 <hr>
 <ct-cols>
     <ct-col size="6">
-        <card-form-add-variable-with-storage></card-form-add-variable-with-storage>
+        <card-form-add-variable-with-storage (abort)="back()"
+            (afterResponse)="updateStatusAfterAddVaribleStorage($event)">
+        </card-form-add-variable-with-storage>
     </ct-col>
     <ct-col size="6">
         <ct-rest-status [content]="addVariableStorageResponse"></ct-rest-status>

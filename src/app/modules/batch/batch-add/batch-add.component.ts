@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { LoadStates } from '@app/enums/LoadStates';
 import { BatchService } from '@app/services/batch/batch.service';
 import { response as batchResponse } from '@app/services/batch/response';
@@ -33,6 +33,7 @@ export class BatchAddComponent implements OnInit {
     constructor(
         private batchService: BatchService,
         private router: Router,
+        private route: ActivatedRoute,
         private translate: TranslateService,
         private store: Store<AppState>
     ) {
@@ -65,7 +66,7 @@ export class BatchAddComponent implements OnInit {
     }
 
     back(): void {
-        this.router.navigate(['/dispatcher', 'batch']);
+        this.router.navigate(['../'], { relativeTo: this.route });
     }
 
     upload(): void {

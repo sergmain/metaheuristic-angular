@@ -8,25 +8,38 @@ import { BatchComponent } from './batch/batch.component';
 import { BatchStatusComponent } from './batch-status/batch-status.component';
 import { BatchAddComponent } from './batch-add/batch-add.component';
 import { CtModule } from '../ct/ct.module';
+import { BatchRootComponent } from './batch-root/batch-root.component';
+import { CopyRightModule } from '../copy-right/copy-right.module';
 
 
-const routes: Routes = [{
-    path: '',
-    component: BatchComponent
-}, {
-    path: ':id/status',
-    component: BatchStatusComponent
-}, {
-    path: 'add',
-    component: BatchAddComponent
-}];
+const routes: Routes = [
+    {
+        path: '',
+        component: BatchRootComponent,
+        children: [
+            {
+                path: '',
+                component: BatchComponent
+            },
+            {
+                path: ':id/status',
+                component: BatchStatusComponent
+            },
+            {
+                path: 'add',
+                component: BatchAddComponent
+            }
+        ]
+    }
+];
 
 
 @NgModule({
     imports: [RouterModule.forChild(routes)],
-    exports: [RouterModule]
+    exports: [RouterModule],
+    declarations: []
 })
-export class BatchRoutingModule {}
+export class BatchRoutingModule { }
 
 
 @NgModule({
@@ -37,12 +50,14 @@ export class BatchRoutingModule {}
         MaterialAppModule,
         FormsModule,
         ReactiveFormsModule,
+        CopyRightModule,
         TranslateModule.forChild({})
     ],
     declarations: [
+        BatchRootComponent,
         BatchComponent,
         BatchStatusComponent,
         BatchAddComponent
     ]
 })
-export class BatchModule {}
+export class BatchModule { }

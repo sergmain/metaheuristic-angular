@@ -5,6 +5,11 @@
     "cli": {
         "warnings": {}
     },
+    "schematics": {
+        "@schematics/angular:component": {
+            "skipTests": true
+        }
+    },
     "projects": {
         "metaheuristic-app": {
             "root": "",
@@ -20,7 +25,9 @@
                 "build": {
                     "builder": "@angular-devkit/build-angular:browser",
                     "options": {
-                        "allowedCommonJsDependencies": ["file-saver"],
+                        "allowedCommonJsDependencies": [
+                            "file-saver"
+                        ],
                         "aot": true,
                         "outputPath": "dist/metaheuristic-app",
                         "resourcesOutputPath": "resources",

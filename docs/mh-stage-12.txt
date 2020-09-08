@@ -3,6 +3,7 @@ issue-1209
  урл - http://localhost:8080/dispatcher/ai/experiment/experiments
 
 
+
 issue-1213
 http://localhost:4200/#/dispatcher/source-codes/add
 
@@ -27,6 +28,7 @@ http://localhost:8080/dispatcher/company/batch/company-batches/2
 выполняется запрос к серверу на уделние списка пакетов.
 
 
+
 issue-1217
 http://localhost:8080/dispatcher/company/companies
 реализовать управление компаниями
@@ -36,16 +38,22 @@ http://localhost:8080/dispatcher/company/companies
 rest url - /rest/v1/dispatcher/company
 
 
+
 issue-1218
 адрес в ангуларе
 http://localhost:4200/#/dispatcher/functions/add
 переименовать кнопку Add file в Upload function
+
+DONE
+
 
 
 issue-1218
 адрес в ангуларе
 http://localhost:4200/#/dispatcher/functions/add
 если файл не выбран, то кнопка Upload function (бывшая Add file) должна быть задисаблена
+
+DONE
 
 
 
@@ -64,6 +72,8 @@ issue-1220
 
 3. переименовать Атлас в Результаты экспериментов и перенести в меню Эксперименты
 
+
+
 issue-1221
 angular url
 http://localhost:4200/#/dispatcher/batch
@@ -73,11 +83,17 @@ http://localhost:4200/#/dispatcher/batch
 пакет не отображается даже если перейти на другую страницу и вернуться назад
 пакет начинает отображаться только если нажать F5 (полный рефреш страницы)
 
+
+
 issue-1222
 angular
 http://localhost:4200/#/dispatcher/source-codes/1350/exec-contexts
 
 в колонках Create on, Completed on заменить символ который разделяет дату и время на пробел - Sep 4, 2020 • 22:17:39
+
+DONE
+
+
 
 issue-1223
 angular
@@ -85,12 +101,17 @@ http://localhost:4200/#/dispatcher/source-codes/1350/exec-context/1717/state
 добавить кнопку возврата на предыдущий уровень,
 т.е. переход на http://localhost:4200/#/dispatcher/source-codes/1350/exec-contexts
 
+DONE
+
 
 
 issue-1224
 angular
 http://localhost:4200/#/dispatcher/global-variables/add
 добавить кнопку Cancel по нажатии на которую переходить в список переменных http://localhost:4200/#/dispatcher/global-variables
+
+DONE
+
 
 
 issue-1225
@@ -100,6 +121,9 @@ angular
 после нажания кнопки Create страница должна закрываться и делаться редирект на список переменных,
 т.е. точно так же как для Create global variable from file
 
+DONE
+
+
 
 issue-1226
 angular
@@ -107,10 +131,18 @@ http://localhost:4200/#/dispatcher/global-variables
 
 столбец Storage Url должен отображаться точно так же как Params в Funnctions, т.е. с учетом форматирования
 
+DONE
+
+
+
 issue-1227
 angular
 http://localhost:4200/#/dispatcher/source-codes/add
 добавить кнопку Cancel по нажатии на которую переходить в список исходный кодов  http://localhost:4200/#/dispatcher/source-codes
+
+DONE
+
+
 
 issue-1228
 angular
@@ -119,10 +151,14 @@ http://localhost:4200/#/dispatcher/source-codes/add
 и отображать ошибки на этой странице
 
 
+
 issue-1229
 angular
 http://localhost:4200/#/dispatcher/source-codes/1353/exec-contexts
 убрать кнопку создания контекста Add new context
+
+DONE
+
 
 
 issue-1230
@@ -130,11 +166,16 @@ angular
 http://localhost:4200/#/dispatcher/source-codes/1353/exec-contexts
 добавить кнопку Back по нажатии на которую переходить в список переменных http://localhost:4200/#/dispatcher/source-codes
 
+DONE
+
 
 issue-1231
 angular
 http://localhost:4200/#/dispatcher/accounts/access/21
 список ролей работает неправильно, все время выдается одна и та же роль
+
+DONE
+
 
 
 issue-1232
@@ -147,8 +188,14 @@ Is blacklisted?
 
 перенести в заголовок, должно быть так же как в стандартном интерфейсе
 
+DONE
+
+
+
 
 issue-1233
 angular
 http://localhost:4200/#/dispatcher/processors
 состояния в встолбце Reasons должны подсвечиваться цветом так же как сейчас в стандартном интерфейсе
+
+DONE

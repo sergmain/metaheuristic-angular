@@ -13,6 +13,8 @@ export class CardFormUploadSourceCodeComponent {
     @ViewChild(MatButton) button: MatButton;
     @ViewChild(CtFileUploadComponent) file: CtFileUploadComponent;
     @Output() responseChange: EventEmitter<SourceCodeResult> = new EventEmitter<SourceCodeResult>();
+    @Output() abort: EventEmitter<void> = new EventEmitter<void>();
+
 
     constructor(
         private sourceCodesService: SourceCodesService
@@ -24,6 +26,10 @@ export class CardFormUploadSourceCodeComponent {
             .subscribe(response => {
                 this.responseChange.emit(response);
             });
+    }
+
+    cancel(): void {
+        this.abort.emit();
     }
 
     changed(value: string): void {

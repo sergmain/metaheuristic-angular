@@ -20,6 +20,9 @@
         <ct-section-footer-row>
             <ct-flex justify-content="flex-end" gap="8px">
                 <ct-flex-item>
+                    <button mat-stroked-button (click)="cancel()">Cancel</button>
+                </ct-flex-item>
+                <ct-flex-item>
                     <button #button mat-flat-button="mat-flat-button" (click)="create()" color="primary"
                         [disabled]="!form.valid">Add</button>
                 </ct-flex-item>

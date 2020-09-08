@@ -1,6 +1,6 @@
 import { DefaultResponse } from '@src/app/models/DefaultResponse';
-import { Account } from './Account';
+import { SimpleAccount } from './SimpleAccount';
 
 export interface AccountResult extends DefaultResponse {
-    account: Account;
+    account: SimpleAccount;
 }

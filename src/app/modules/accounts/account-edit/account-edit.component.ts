@@ -3,9 +3,8 @@ import { Location } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AccountsService } from '@app/services/accounts/accounts.service';
 import { LoadStates } from '@app/enums/LoadStates';
-import { Account } from '@src/app/services/accounts/Account'
+import { SimpleAccount } from '@src/app/services/accounts';
 @Component({
-    // tslint:disable-next-line: component-selector
     selector: 'account-edit',
     templateUrl: './account-edit.component.html',
     styleUrls: ['./account-edit.component.scss']
@@ -15,7 +14,7 @@ export class AccountEditComponent implements OnInit {
     readonly states = LoadStates;
     currentStates = new Set();
     response;
-    account: Account;
+    account: SimpleAccount;
 
     constructor(
         private route: ActivatedRoute,

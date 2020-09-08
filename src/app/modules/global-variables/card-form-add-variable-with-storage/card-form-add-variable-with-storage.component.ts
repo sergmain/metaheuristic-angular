@@ -3,8 +3,6 @@ import { OperationStatusRest } from '@src/app/models/OperationStatusRest';
 import { CtFileUploadComponent } from '../../ct/ct-file-upload/ct-file-upload.component';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { GlobalVariablesService } from '@src/app/services/global-variables/global-variables.service';
-import { Router } from '@angular/router';
-import { DefaultResponse } from '@src/app/models/DefaultResponse';
 
 @Component({
     selector: 'card-form-add-variable-with-storage',
@@ -15,6 +13,7 @@ export class CardFormAddVariableWithStorageComponent {
 
     @Output() afterResponse: EventEmitter<OperationStatusRest> = new EventEmitter<OperationStatusRest>();
     @ViewChild('fileUpload', { static: true }) fileUpload: CtFileUploadComponent;
+    @Output() abort: EventEmitter<void> = new EventEmitter<void>();
 
     form: FormGroup = new FormGroup({
         storageUrl: new FormControl('', [Validators.required, Validators.minLength(1)]),
@@ -31,5 +30,9 @@ export class CardFormAddVariableWithStorageComponent {
             .subscribe((response) => {
                 this.afterResponse.emit(response);
             });
+    }
+
+    cancel(): void {
+        this.abort.emit();
     }
 }

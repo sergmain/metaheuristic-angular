@@ -28,7 +28,7 @@ export class BatchComponent implements OnInit, OnDestroy {
     storeSubscriber: Subscription;
     batches: BatchesState;
 
-    dataSource = new MatTableDataSource < Batch > ([]);
+    dataSource = new MatTableDataSource<Batch>([]);
     columnsToDisplay = ['id', 'createdOn', 'isBatchConsistent', 'sourceCode', 'execState', 'bts'];
 
     deletedRows: Batch[] = [];
@@ -47,7 +47,7 @@ export class BatchComponent implements OnInit, OnDestroy {
         private dialog: MatDialog,
         private batchService: BatchService,
         private authenticationService: AuthenticationService,
-        private store: Store < AppState >
+        private store: Store<AppState>
     ) {
 
     }
@@ -82,7 +82,7 @@ export class BatchComponent implements OnInit, OnDestroy {
     updateTable() {
         this.batches.isLoading !== true ? this.table.show() : this.table.wait();
         if (this.batches.response) {
-            if (this.authenticationService.getUserRole().has(Role.Operator)) {
+            if (this.authenticationService.getUserRole().has(Role.ROLE_OPERATOR)) {
                 this.columnsToDisplay = ['id', 'createdOn', 'sourceCode', 'execState', 'bts'];
             } else {
                 this.columnsToDisplay = ['id', 'createdOn', 'isBatchConsistent', 'sourceCode', 'execState', 'bts'];
@@ -95,7 +95,7 @@ export class BatchComponent implements OnInit, OnDestroy {
 
     downloadFile(batchId: string) {
         this.batchService.downloadFile(batchId)
-            .subscribe((res: HttpResponse < any > ) => {
+            .subscribe((res: HttpResponse<any>) => {
                 let filename: string = 'result.zip';
                 try {
                     filename = res.headers.get('Content-Disposition').split('\'\'')[1];
@@ -106,7 +106,7 @@ export class BatchComponent implements OnInit, OnDestroy {
             });
     }
 
-    private _saveFile(data: any, filename ? : string) {
+    private _saveFile(data: any, filename?: string) {
         const blob: Blob = new Blob([data], { type: 'application/octet-stream' });
         fileSaver.saveAs(blob, filename);
     }

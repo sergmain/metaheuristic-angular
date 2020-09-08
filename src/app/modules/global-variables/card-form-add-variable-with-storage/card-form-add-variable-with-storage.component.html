@@ -45,8 +45,10 @@ git:
         <ct-section-footer-row>
             <ct-flex justify-content="flex-end" gap="8px">
                 <ct-flex-item>
-                    <button mat-flat-button="mat-flat-button" (click)="create()" color="primary"
-                        [disabled]="form.invalid">Create</button>
+                    <button mat-stroked-button (click)="cancel()">Cancel</button>
+                </ct-flex-item>
+                <ct-flex-item>
+                    <button mat-flat-button (click)="create()" color="primary" [disabled]="form.invalid">Create</button>
                 </ct-flex-item>
             </ct-flex>
         </ct-section-footer-row>

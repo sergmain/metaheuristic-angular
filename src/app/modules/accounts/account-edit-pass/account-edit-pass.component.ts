@@ -2,10 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AccountsService } from '@app/services/accounts/accounts.service';
-import { Account } from '@app/services/accounts/Account';
 import { LoadStates } from '@app/enums/LoadStates';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Subscription } from 'rxjs';
+import { SimpleAccount } from '@src/app/services/accounts';
 
 @Component({
     selector: 'account-edit-pass',
@@ -17,7 +16,7 @@ export class AccountEditPassComponent implements OnInit {
     readonly states = LoadStates;
     currentStates = new Set();
     response;
-    account: Account;
+    account: SimpleAccount;
 
     form = new FormGroup({
         password: new FormControl('', [

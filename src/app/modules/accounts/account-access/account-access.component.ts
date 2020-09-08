@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Account, AccountsService, Authority } from '@app/services/accounts';
+import { AccountsService, Authority, SimpleAccount } from '@app/services/accounts';
 import { Role } from '@app/services/authentication';
 import { AccountResult } from '@src/app/services/accounts/AccountResult';
 
@@ -10,7 +10,6 @@ import { AccountResult } from '@src/app/services/accounts/AccountResult';
     styleUrls: ['./account-access.component.scss'],
 })
 export class AccountAccessComponent implements OnInit {
-    account: Account;
     response: AccountResult;
 
     isManager: boolean = false;
@@ -29,15 +28,14 @@ export class AccountAccessComponent implements OnInit {
     ngOnInit(): void {
         this.accountsService.account.get(this.route.snapshot.paramMap.get('accountId')).subscribe((response) => {
             this.response = response;
-            this.account = response.account;
-            this.account.authorities.forEach((authority: Authority) => {
-                this.isManager = authority.authority === Role.Manager;
-                this.isOperator = authority.authority === Role.Operator;
-                this.isBilling = authority.authority === Role.Billing;
-                this.isData = authority.authority === Role.Data;
-                this.isAdmin = authority.authority === Role.Admin;
-                this.isServerRestAccess = authority.authority === Role.ServerRestAccess;
-            });
+            const roles: Role[] = [];
+            response.account.authorities.forEach((authority: Authority) => roles.push(authority.authority));
+            this.isManager = roles.includes(Role.ROLE_MANAGER);
+            this.isOperator = roles.includes(Role.ROLE_OPERATOR);
+            this.isBilling = roles.includes(Role.ROLE_BILLING);
+            this.isData = roles.includes(Role.ROLE_DATA);
+            this.isAdmin = roles.includes(Role.ROLE_ADMIN);
+            this.isServerRestAccess = roles.includes(Role.ROLE_SERVER_REST_ACCESS);
         });
     }
 
@@ -45,16 +43,16 @@ export class AccountAccessComponent implements OnInit {
         const roles: string[] = [];
         const accountId: string = this.route.snapshot.paramMap.get('accountId');
 
-        if (this.isAdmin) { roles.push(Role.Admin); }
-        if (this.isBilling) { roles.push(Role.Billing); }
-        if (this.isData) { roles.push(Role.Data); }
-        if (this.isManager) { roles.push(Role.Manager); }
-        if (this.isOperator) { roles.push(Role.Operator); }
+        if (this.isAdmin) { roles.push(Role.ROLE_ADMIN); }
+        if (this.isBilling) { roles.push(Role.ROLE_BILLING); }
+        if (this.isData) { roles.push(Role.ROLE_DATA); }
+        if (this.isManager) { roles.push(Role.ROLE_MANAGER); }
+        if (this.isOperator) { roles.push(Role.ROLE_OPERATOR); }
 
         this.accountsService.account.roleCommit(accountId, roles.join(',')).subscribe(() => { });
     }
 
     back(): void {
-        this.router.navigate(['/dispatcher', 'accounts']);
+        this.router.navigate(['../..'], { relativeTo: this.route });
     }
 }
