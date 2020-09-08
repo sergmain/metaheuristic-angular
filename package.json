@@ -17,6 +17,7 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
+    "version": "ng version",
     "review": "ng build --stats-json && webpack-bundle-analyzer dist/metaheuristic-app/stats-es2015.json",
     "review-prod": "ng build --prod=true --stats-json && webpack-bundle-analyzer dist/metaheuristic-app/stats-es2015.json",
     "extract-i18n": "ngx-translate-extract  -p /**/*.html /**/*.ts /**/*.pug --input ./src --output ./src/assets/i18n/EN.json ./src/assets/i18n/RU.json --clean --sort --format json --marker marker"
