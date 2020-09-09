@@ -18,29 +18,47 @@ import { CtModule } from '../ct/ct.module';
 
 PlotlyModule.plotlyjs = PlotlyJS;
 
-const routes: Routes = [{
-    path: '',
-    component: ExperimentsComponent
-}, {
-    path: 'add',
-    component: ExperimentAddComponent
-}, {
-    path: ':experimentId/edit',
-    component: ExperimentEditComponent
-}, {
-    path: ':experimentId/info',
-    component: ExperimentInfoComponent
-}, {
-    path: ':experimentId/feature-progress/:featureId',
-    component: ExperimentFeatureProgressComponent
-}];
+const routes: Routes = [
+    {
+        path: '',
+        component: ExperimentsComponent
+    },
+    {
+        path: 'add',
+        component: ExperimentAddComponent,
+        data: {
+            backConfig: ['../']
+        }
+    },
+    {
+        path: ':experimentId/edit',
+        component: ExperimentEditComponent,
+        data: {
+            backConfig: ['../', '../']
+        }
+    },
+    {
+        path: ':experimentId/info',
+        component: ExperimentInfoComponent,
+        data: {
+            backConfig: ['../', '../']
+        }
+    },
+    {
+        path: ':experimentId/feature-progress/:featureId',
+        component: ExperimentFeatureProgressComponent,
+        data: {
+            backConfig: ['../', '../', '../']
+        }
+    }
+];
 
 
 @NgModule({
     imports: [RouterModule.forChild(routes)],
     exports: [RouterModule]
 })
-export class ExperimentsRoutingModule {}
+export class ExperimentsRoutingModule { }
 
 
 @NgModule({
@@ -64,4 +82,4 @@ export class ExperimentsRoutingModule {}
         ExperimentTasksComponent,
     ]
 })
-export class ExperimentsModule {}
+export class ExperimentsModule { }

@@ -16,26 +16,40 @@ import { CtModule } from '../ct/ct.module';
 
 PlotlyModule.plotlyjs = PlotlyJS;
 
-const routes: Routes = [{
-    path: 'experiments',
-    component: AtlasExperimentsComponent,
-}, {
-    path: 'experiment-export-import/:atlasId',
-    component: AtlasExperimentExportImportComponent,
-}, {
-    path: 'experiment-info/:id',
-    component: AtlasExperimentInfoComponent,
-}, {
-    path: 'experiment-feature-progress/:atlasId/:experimentId/:featureId',
-    component: AtlasExperimentFeatureProgressComponent,
-}];
+const routes: Routes = [
+    {
+        path: 'experiments',
+        component: AtlasExperimentsComponent,
+    },
+    {
+        path: 'experiment-export-import/:atlasId',
+        component: AtlasExperimentExportImportComponent,
+        data: {
+            backConfig: ['../', '../']
+        }
+    },
+    {
+        path: 'experiment-info/:id',
+        component: AtlasExperimentInfoComponent,
+        data: {
+            backConfig: ['../', '../']
+        }
+    },
+    {
+        path: 'experiment-feature-progress/:atlasId/:experimentId/:featureId',
+        component: AtlasExperimentFeatureProgressComponent,
+        data: {
+            backConfig: ['../', '../', '../', '../']
+        }
+    }
+];
 
 
 @NgModule({
     imports: [RouterModule.forChild(routes)],
     exports: [RouterModule]
 })
-export class AtlasRoutingModule {}
+export class AtlasRoutingModule { }
 
 
 @NgModule({
@@ -58,4 +72,4 @@ export class AtlasRoutingModule {}
         AtlasExperimentExportImportComponent,
     ]
 })
-export class AtlasModule {}
+export class AtlasModule { }

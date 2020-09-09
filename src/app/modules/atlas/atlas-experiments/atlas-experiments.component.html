@@ -22,24 +22,28 @@
                     </ng-container>
                     <ng-container matColumnDef="createdOn">
                         <th mat-header-cell="mat-header-cell" *matHeaderCellDef>Created on</th>
-                        <td mat-cell="mat-cell" *matCellDef="let el">{{el.createdOn | date:'HH:mm:ss, MMM d, yyyy'}} </td>
+                        <td mat-cell="mat-cell" *matCellDef="let el">{{el.createdOn | date:'HH:mm:ss, MMM d, yyyy'}}
+                        </td>
                     </ng-container>
                     <ng-container matColumnDef="bts">
                         <th mat-header-cell="mat-header-cell" *matHeaderCellDef> </th>
                         <td mat-cell="mat-cell" *matCellDef="let el">
                             <ct-flex justify-content="flex-end" gap="9px" align-items="center">
                                 <ct-flex-item>
-                                    <a [routerLink]="['/dispatcher/atlas/experiment-info',el.id]">
-                                        <button size="forTableRow" mat-flat-button="mat-flat-button" color="primary">Detail</button>
+                                    <a [routerLink]="['/ai/atlas/experiment-info',el.id]">
+                                        <button size="forTableRow" mat-flat-button="mat-flat-button"
+                                            color="primary">Detail</button>
                                     </a>
                                 </ct-flex-item>
                                 <ct-flex-item>
-                                    <a [routerLink]="['/dispatcher/atlas/experiment-export-import/',el.id]">
-                                        <button size="forTableRow" mat-flat-button="mat-flat-button" color="primary">Export / Import</button>
+                                    <a [routerLink]="['/ai/atlas/experiment-export-import/',el.id]">
+                                        <button size="forTableRow" mat-flat-button="mat-flat-button"
+                                            color="primary">Export / Import</button>
                                     </a>
                                 </ct-flex-item>
                                 <ct-flex-item>
-                                    <button size="forTableRow" mat-flat-button="mat-flat-button" color="warn" (click)="delete(el)">
+                                    <button size="forTableRow" mat-flat-button="mat-flat-button" color="warn"
+                                        (click)="delete(el)">
                                         <mat-icon>delete</mat-icon>
                                     </button>
                                 </ct-flex-item>
@@ -47,7 +51,8 @@
                         </td>
                     </ng-container>
                     <tr mat-header-row="mat-header-row" *matHeaderRowDef="columnsToDisplay"></tr>
-                    <tr mat-row="mat-row" *matRowDef="let row; columns: columnsToDisplay;" [class.deleted-table-row]="deletedExperiments.includes(row)"></tr>
+                    <tr mat-row="mat-row" *matRowDef="let row; columns: columnsToDisplay;"
+                        [class.deleted-table-row]="deletedExperiments.includes(row)"></tr>
                 </table>
             </ct-table>
         </ct-section-body-row>

@@ -11,18 +11,25 @@ import { CardFormAddVariableComponent } from './card-form-add-variable/card-form
 import { CardFormAddVariableWithStorageComponent } from './card-form-add-variable-with-storage/card-form-add-variable-with-storage.component';
 
 
-const routes: Routes = [{
-    path: '',
-    component: GlobalVariablesComponent
-},
-{
-    path: 'add',
-    component: AddGlobalVariableComponent
-},
-{
-    path: ':id',
-    component: GlobalVariablesComponent
-},
+const routes: Routes = [
+    {
+        path: '',
+        component: GlobalVariablesComponent
+    },
+    {
+        path: 'add',
+        component: AddGlobalVariableComponent,
+        data: {
+            backConfig: ['../']
+        }
+    },
+    {
+        path: ':id',
+        component: GlobalVariablesComponent,
+        data: {
+            backConfig: ['../']
+        }
+    },
 ];
 
 

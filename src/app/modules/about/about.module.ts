@@ -17,8 +17,7 @@ const routes: Routes = [{
     children: [{
         path: '',
         component: AboutIndexComponent
-    }],
-    data: {}
+    }]
 }];
 
 
@@ -26,7 +25,7 @@ const routes: Routes = [{
     imports: [RouterModule.forChild(routes)],
     exports: [RouterModule]
 })
-export class AboutRoutingModule {}
+export class AboutRoutingModule { }
 
 
 @NgModule({
@@ -43,4 +42,4 @@ export class AboutRoutingModule {}
         AboutIndexComponent
     ]
 })
-export class AboutModule {}
+export class AboutModule { }

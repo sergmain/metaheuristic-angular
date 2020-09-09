@@ -18,8 +18,7 @@ const routes: Routes = [
         children: [{
             path: '',
             component: AiIndexComponent
-        }],
-        data: {}
+        }]
     },
     {
         path: 'experiments',

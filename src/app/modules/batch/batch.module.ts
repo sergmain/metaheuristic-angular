@@ -23,11 +23,17 @@ const routes: Routes = [
             },
             {
                 path: ':id/status',
-                component: BatchStatusComponent
+                component: BatchStatusComponent,
+                data: {
+                    backConfig: ['../', '../']
+                }
             },
             {
                 path: 'add',
-                component: BatchAddComponent
+                component: BatchAddComponent,
+                data: {
+                    backConfig: ['../']
+                }
             }
         ]
     }

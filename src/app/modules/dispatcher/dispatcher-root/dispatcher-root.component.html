@@ -5,9 +5,6 @@
                 routerLinkActive="active" routerLink="/dispatcher/source-codes">
                 {{ 'dispatcher.SourceCodes' | translate }}</button>
 
-            <button class="mat-button" *ngIf="accessBatch()" mat-button size="forNavigation" routerLinkActive="active"
-                routerLink="/dispatcher/batch">{{ 'dispatcher.Batch' | translate }}</button>
-
             <button class="mat-button" *ngIf="accessGlobalVariables()" mat-button size="forNavigation"
                 routerLinkActive="active"
                 routerLink="/dispatcher/global-variables">{{ 'dispatcher.Variables' | translate }}</button>
@@ -28,6 +25,7 @@
     <mat-sidenav-content>
         <ct-content>
             <router-outlet></router-outlet>
+            <ct-back-button></ct-back-button>
             <copy-right></copy-right>
         </ct-content>
     </mat-sidenav-content>

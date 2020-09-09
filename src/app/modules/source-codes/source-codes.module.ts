@@ -24,14 +24,23 @@ const routes: Routes = [
     {
         path: 'add',
         component: AddSourceCodeComponent,
+        data: {
+            backConfig: ['../']
+        }
     },
     {
         path: ':sourceCodeId/edit',
         component: EditSourceCodeComponent,
+        data: {
+            backConfig: ['../', '../']
+        }
     },
     {
         path: ':sourceCodeId/exec-contexts',
         component: ExecContextsComponent,
+        data: {
+            backConfig: ['../', '../']
+        }
     },
     // issue-1229
     // {
@@ -41,10 +50,16 @@ const routes: Routes = [
     {
         path: ':sourceCodeId/exec-context/:execContextId/edit',
         component: EditExecContextComponent,
+        data: {
+            backConfig: ['../', '../']
+        }
     },
     {
         path: ':sourceCodeId/exec-context/:execContextId/state',
         component: ExecContextStatesComponent,
+        data: {
+            backConfig: ['../', '../', '../', 'exec-contexts']
+        }
     }
 ];
 

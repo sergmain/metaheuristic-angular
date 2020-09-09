@@ -12,29 +12,47 @@ import { MaterialAppModule } from '@src/app/ngmaterial.module';
 import { CtModule } from '../ct/ct.module';
 
 
-const routes: Routes = [{
-    path: '',
-    component: AccountsComponent
-}, {
-    path: 'add',
-    component: AccountAddComponent
-}, {
-    path: 'access/:accountId',
-    component: AccountAccessComponent
-}, {
-    path: 'edit/:id',
-    component: AccountEditComponent
-}, {
-    path: 'edit-password/:id',
-    component: AccountEditPassComponent
-}];
+const routes: Routes = [
+    {
+        path: '',
+        component: AccountsComponent
+    },
+    {
+        path: 'add',
+        component: AccountAddComponent,
+        data: {
+            backConfig: ['../']
+        }
+    },
+    {
+        path: 'access/:accountId',
+        component: AccountAccessComponent,
+        data: {
+            backConfig: ['../', '../']
+        }
+    },
+    {
+        path: 'edit/:id',
+        component: AccountEditComponent,
+        data: {
+            backConfig: ['../', '../']
+        }
+    },
+    {
+        path: 'edit-password/:id',
+        component: AccountEditPassComponent,
+        data: {
+            backConfig: ['../', '../']
+        }
+    }
+];
 
 
 @NgModule({
     imports: [RouterModule.forChild(routes)],
     exports: [RouterModule]
 })
-export class AccountsRoutingModule {}
+export class AccountsRoutingModule { }
 
 
 @NgModule({
@@ -55,4 +73,4 @@ export class AccountsRoutingModule {}
         AccountEditPassComponent
     ]
 })
-export class AccountsModule {}
+export class AccountsModule { }

@@ -9,20 +9,25 @@ import { MaterialAppModule } from '@src/app/ngmaterial.module';
 import { CtModule } from '../ct/ct.module';
 
 
-const routes: Routes = [{
-    path: '',
-    component: FunctionsComponent,
-}, {
-    path: 'add',
-    component: AddFunctionComponent,
-}];
+const routes: Routes = [
+    {
+        path: '',
+        component: FunctionsComponent,
+    }, {
+        path: 'add',
+        component: AddFunctionComponent,
+        data: {
+            backConfig: ['../']
+        }
+    }
+];
 
 
 @NgModule({
     imports: [RouterModule.forChild(routes)],
     exports: [RouterModule]
 })
-export class FunctionsRoutingModule {}
+export class FunctionsRoutingModule { }
 
 
 @NgModule({
@@ -40,4 +45,4 @@ export class FunctionsRoutingModule {}
         FunctionsComponent
     ]
 })
-export class FunctionsModule {}
+export class FunctionsModule { }

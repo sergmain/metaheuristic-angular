@@ -25,7 +25,7 @@ import { MatDialog } from '@angular/material/dialog';
     styleUrls: ['./batch.component.scss']
 })
 export class BatchComponent implements OnInit, OnDestroy {
-    storeSubscriber: Subscription;
+    subs: Subscription[] = [];
     batches: BatchesState;
 
     dataSource = new MatTableDataSource<Batch>([]);
@@ -52,12 +52,14 @@ export class BatchComponent implements OnInit, OnDestroy {
 
     }
 
-    ngOnInit() {
-        this.storeSubscriber = this.store.subscribe((state: AppState) => {
+    ngOnInit(): void {
+        console.log(123);
+        this.subs.push(this.store.subscribe((state: AppState) => {
             this.isFilterBatches = state.settings.filterBatches;
             this.batches = state.batches;
             this.updateTable();
-        });
+            console.log(234);
+        }));
 
         this.store.dispatch(getBatches({
             page: 0,
@@ -65,13 +67,11 @@ export class BatchComponent implements OnInit, OnDestroy {
         }));
     }
 
-    ngOnDestroy() {
-        if (this.storeSubscriber) {
-            this.storeSubscriber.unsubscribe();
-        }
+    ngOnDestroy(): void {
+        this.subs.forEach(sub => sub.unsubscribe());
     }
 
-    toggleFilterBatches() {
+    toggleFilterBatches(): void {
         this.store.dispatch(toggleFilterBatches({ payload: !this.isFilterBatches }));
         this.store.dispatch(getBatches({
             page: 0,
@@ -79,7 +79,7 @@ export class BatchComponent implements OnInit, OnDestroy {
         }));
     }
 
-    updateTable() {
+    updateTable(): void {
         this.batches.isLoading !== true ? this.table.show() : this.table.wait();
         if (this.batches.response) {
             if (this.authenticationService.getUserRole().has(Role.ROLE_OPERATOR)) {
@@ -93,7 +93,7 @@ export class BatchComponent implements OnInit, OnDestroy {
         }
     }
 
-    downloadFile(batchId: string) {
+    downloadFile(batchId: string): void {
         this.batchService.downloadFile(batchId)
             .subscribe((res: HttpResponse<any>) => {
                 let filename: string = 'result.zip';
@@ -106,7 +106,7 @@ export class BatchComponent implements OnInit, OnDestroy {
             });
     }
 
-    private _saveFile(data: any, filename?: string) {
+    private _saveFile(data: any, filename?: string): void {
         const blob: Blob = new Blob([data], { type: 'application/octet-stream' });
         fileSaver.saveAs(blob, filename);
     }
@@ -121,14 +121,14 @@ export class BatchComponent implements OnInit, OnDestroy {
         rejectTitle: `${marker('batch.delete-dialog.Cancel')}`,
         resolveTitle: `${marker('batch.delete-dialog.Delete')}`,
     })
-    delete(batch: Batch) {
+    delete(batch: Batch): void {
         this.deletedRows.push(batch);
         this.batchService.batch
             .deleteCommit(batch.batch.id.toString())
             .subscribe();
     }
 
-    next() {
+    next(): void {
         this.table.wait();
         this.prevTable.disabled = true;
         this.nextTable.disabled = true;
@@ -138,7 +138,7 @@ export class BatchComponent implements OnInit, OnDestroy {
         }));
     }
 
-    prev() {
+    prev(): void {
         this.table.wait();
         this.prevTable.disabled = true;
         this.nextTable.disabled = true;

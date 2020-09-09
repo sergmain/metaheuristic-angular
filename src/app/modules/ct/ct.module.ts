@@ -22,11 +22,15 @@ import { CtSectionBodyComponent } from './ct-section-body/ct-section-body.compon
 import { CtHintComponent } from './ct-hint/ct-hint.component';
 import { CtContentComponent } from './ct-content/ct-content.component';
 import { CtRestStatusComponent } from './ct-rest-status/ct-rest-status.component';
+import { CtBackButtonComponent } from './ct-back-button/ct-back-button.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
     imports: [
         CommonModule,
-        MaterialAppModule
+        MaterialAppModule,
+        TranslateModule.forChild({})
+
     ],
     declarations: [
         CtSectionContentComponent,
@@ -49,7 +53,8 @@ import { CtRestStatusComponent } from './ct-rest-status/ct-rest-status.component
         CtSectionBodyComponent,
         CtHintComponent,
         CtContentComponent,
-        CtRestStatusComponent
+        CtRestStatusComponent,
+        CtBackButtonComponent
     ],
     exports: [
         CtSectionContentComponent,
@@ -72,7 +77,8 @@ import { CtRestStatusComponent } from './ct-rest-status/ct-rest-status.component
         CtSectionBodyComponent,
         CtHintComponent,
         CtContentComponent,
-        CtRestStatusComponent
+        CtRestStatusComponent,
+        CtBackButtonComponent
     ]
 })
 

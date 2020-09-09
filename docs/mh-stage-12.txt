@@ -66,11 +66,16 @@ issue-1220
 при нажатии на Панель управления (бывшая кнопка Диспетчер) в меню слева
 не должно быть пунктов Эксперименты, Атлас, Пакеты,
 
+DONE
 
 2.
 в верхнем меню переименовать Диспетчер в Панель управления
 
+DONE
+
 3. переименовать Атлас в Результаты экспериментов и перенести в меню Эксперименты
+
+DONE
 
 
 
@@ -169,6 +174,7 @@ http://localhost:4200/#/dispatcher/source-codes/1353/exec-contexts
 DONE
 
 
+
 issue-1231
 angular
 http://localhost:4200/#/dispatcher/accounts/access/21
@@ -192,7 +198,6 @@ DONE
 
 
 
-
 issue-1233
 angular
 http://localhost:4200/#/dispatcher/processors
@@ -200,12 +205,16 @@ http://localhost:4200/#/dispatcher/processors
 
 DONE
 
+
+
 issue-1234
 файл
 \metaheuristic-angular\src\environments\environment.production.ts
 
 перестало отображаться значение из brandingMsg
 значение из brandingMsgIndex работает
+
+
 
 issue-1235
 Общая концепция работы с интерфейсом такая - при нажатии на меню слева переходим в какой-то раздел
@@ -217,11 +226,16 @@ issue-1235
 дизайн сделать как у всех кнопок - зеленая с белым текстом
 текст - Back/Назад
 
+DONE
+
+
+
 issue-1236
 ангулар
 http://localhost:4200/#/batch
 после того как пакет обработан, прозвучал звуковой сигнал и в верху отобразился звонок,
 кнопка Выйти/Logout перестает работать. Можно выйти только после рефреша все й страницы по F5
+
 
 
 issue-1237

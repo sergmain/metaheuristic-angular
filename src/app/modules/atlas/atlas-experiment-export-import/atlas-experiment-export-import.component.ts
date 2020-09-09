@@ -25,7 +25,7 @@ export class AtlasExperimentExportImportComponent {
     }
 
     back(): void {
-        this.router.navigate(['/dispatcher', 'atlas', 'experiments']);
+        this.router.navigate(['/ai', 'atlas', 'experiments']);
     }
 
     upload(): void {

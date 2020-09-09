@@ -18,21 +18,26 @@
                     </ng-container>
                     <ng-container matColumnDef="createdOn">
                         <th mat-header-cell="mat-header-cell" *matHeaderCellDef>Created on</th>
-                        <td mat-cell="mat-cell" *matCellDef="let el">{{el.experiment.createdOn | date:'HH:mm:ss, MMM d, yyyy'}} </td>
+                        <td mat-cell="mat-cell" *matCellDef="let el">
+                            {{el.experiment.createdOn | date:'HH:mm:ss, MMM d, yyyy'}} </td>
                     </ng-container>
                     <ng-container matColumnDef="bts">
                         <th mat-header-cell="mat-header-cell" *matHeaderCellDef> </th>
                         <td mat-cell="mat-cell" *matCellDef="let el">
                             <ct-flex justify-content="flex-end" gap="9px">
-                                <ct-flex-item><a [routerLink]="['/dispatcher/experiments',el.experiment.id,'edit']">
-                                        <button mat-flat-button="mat-flat-button" color="primary" size="forTableRow" [disabled]="el.experiment.execContextId">Edit</button></a></ct-flex-item>
-                                <ct-flex-item><a [routerLink]="['/dispatcher/experiments',el.experiment.id,'info']">
-                                        <button mat-flat-button="mat-flat-button" color="primary" size="forTableRow" [disabled]="!el.experiment.execContextId">Info</button></a></ct-flex-item>
+                                <ct-flex-item><a [routerLink]="[el.experiment.id,'edit']">
+                                        <button mat-flat-button="mat-flat-button" color="primary" size="forTableRow"
+                                            [disabled]="el.experiment.execContextId">Edit</button></a></ct-flex-item>
+                                <ct-flex-item><a [routerLink]="[el.experiment.id,'info']">
+                                        <button mat-flat-button="mat-flat-button" color="primary" size="forTableRow"
+                                            [disabled]="!el.experiment.execContextId">Info</button></a></ct-flex-item>
                                 <ct-flex-item>
-                                    <button mat-flat-button="mat-flat-button" size="forTableRow" color="primary" (click)="clone(el)">Clone</button>
+                                    <button mat-flat-button="mat-flat-button" size="forTableRow" color="primary"
+                                        (click)="clone(el)">Clone</button>
                                 </ct-flex-item>
                                 <ct-flex-item>
-                                    <button mat-flat-button="mat-flat-button" size="forTableRow" color="warn" (click)="delete(el)">
+                                    <button mat-flat-button="mat-flat-button" size="forTableRow" color="warn"
+                                        (click)="delete(el)">
                                         <mat-icon>delete</mat-icon>
                                     </button>
                                 </ct-flex-item>
@@ -40,7 +45,8 @@
                         </td>
                     </ng-container>
                     <tr mat-header-row="mat-header-row" *matHeaderRowDef="columnsToDisplay"></tr>
-                    <tr mat-row="mat-row" *matRowDef="let row; columns: columnsToDisplay;" [class.deleted-table-row]="deletedExperiments.includes(row)"></tr>
+                    <tr mat-row="mat-row" *matRowDef="let row; columns: columnsToDisplay;"
+                        [class.deleted-table-row]="deletedExperiments.includes(row)"></tr>
                 </table>
             </ct-table>
         </ct-section-body-row>
@@ -54,19 +60,23 @@
                 <ct-flex-item>
                     <ct-flex justify-content="flex-start" gap="8px">
                         <ct-flex-item>
-                            <button mat-flat-button="mat-flat-button" color="primary" #prevTable disabled="disabled" (click)="prev()">
+                            <button mat-flat-button="mat-flat-button" color="primary" #prevTable disabled="disabled"
+                                (click)="prev()">
                                 <mat-icon>arrow_back_ios</mat-icon>
                             </button>
                         </ct-flex-item>
                         <ct-flex-item>
-                            <button mat-flat-button="mat-flat-button" color="primary" #nextTable disabled="disabled" (click)="next()">
+                            <button mat-flat-button="mat-flat-button" color="primary" #nextTable disabled="disabled"
+                                (click)="next()">
                                 <mat-icon>arrow_forward_ios</mat-icon>
                             </button>
                         </ct-flex-item>
                     </ct-flex>
                 </ct-flex-item>
                 <ct-flex-item>
-                    <button mat-flat-button="mat-flat-button" color="primary" wide="wide" [disabled]="currentStates.has(states.loading) || currentStates.has(states.firstLoading)" routerLink="/dispatcher/experiments/add/">Add Experiment</button>
+                    <button mat-flat-button="mat-flat-button" color="primary" wide="wide"
+                        [disabled]="currentStates.has(states.loading) || currentStates.has(states.firstLoading)"
+                        routerLink="add">Add Experiment</button>
                 </ct-flex-item>
             </ct-flex>
         </ct-section-footer-row>

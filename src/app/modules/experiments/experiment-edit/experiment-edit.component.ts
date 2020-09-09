@@ -86,6 +86,7 @@ export class ExperimentEditComponent implements OnInit {
         private experimentsService: ExperimentsService,
         private location: Location,
         private router: Router,
+        private activatedRoute: ActivatedRoute,
         private dialog: MatDialog
     ) { }
 
@@ -239,13 +240,10 @@ export class ExperimentEditComponent implements OnInit {
         this.back();
     }
 
-    back() {
-        this.router.navigate(['/dispatcher', 'experiments']);
+    back(): void {
+        this.router.navigate(['../'], { relativeTo: this.activatedRoute });
     }
 
-    cancel() {
-        this.back();
-    }
 
     // add() {
     //     let key = this.newMetadata.key.trim()

@@ -1,17 +1,16 @@
 import { Location } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { LoadStates } from '@app/enums/LoadStates';
 import { ExperimentsService } from '@app/services/experiments/experiments.service';
-import { Subscription } from 'rxjs';
 @Component({
     selector: 'experiment-add',
     templateUrl: './experiment-add.component.html',
     styleUrls: ['./experiment-add.component.scss']
 })
 
-export class ExperimentAddComponent implements OnInit {
+export class ExperimentAddComponent {
     readonly states = LoadStates;
     currentState = LoadStates.show;
     response;
@@ -25,33 +24,25 @@ export class ExperimentAddComponent implements OnInit {
 
     constructor(
         private experimentsService: ExperimentsService,
-        private location: Location,
         private router: Router,
-    ) {}
+        private activatedRoute: ActivatedRoute,
+    ) { }
 
-    ngOnInit() {}
-
-    cancel() {
-        this.location.back();
+    cancel(): void {
+        this.router.navigate(['../'], { relativeTo: this.activatedRoute });
     }
 
-    create() {
+    create(): void {
         this.currentState = this.states.wait;
         this.experimentsService.experiment
             .addCommit(this.form.value)
-            .subscribe(
-                (response) => {
-                    this.response = response;
-                    if (response.errorMessages || response.infoMessages) {
+            .subscribe((response) => {
+                this.response = response;
+                if (response.errorMessages || response.infoMessages) {
 
-                    } else {
-                        this.router.navigate(['/dispatcher', 'experiments']);
-                    }
-                },
-                () => {},
-                () => {
-                    this.currentState = this.states.show;
+                } else {
+                    this.cancel();
                 }
-            );
+            });
     }
 }

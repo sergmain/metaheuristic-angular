@@ -9,13 +9,17 @@ import { ProcessorsComponent } from './processors/processors.component';
 import { CtModule } from '../ct/ct.module';
 
 
-const routes: Routes = [{
+const routes: Routes = [
+    {
         path: '',
         component: ProcessorsComponent
     },
     {
         path: ':id/edit',
-        component: EditProcessorComponent
+        component: EditProcessorComponent,
+        data: {
+            backConfig: ['../', '../']
+        }
     }
 ];
 
@@ -24,7 +28,7 @@ const routes: Routes = [{
     imports: [RouterModule.forChild(routes)],
     exports: [RouterModule]
 })
-export class ProcessorsRoutingModule {}
+export class ProcessorsRoutingModule { }
 
 
 @NgModule({
@@ -42,4 +46,4 @@ export class ProcessorsRoutingModule {}
         EditProcessorComponent
     ]
 })
-export class ProcessorsModule {}
+export class ProcessorsModule { }
