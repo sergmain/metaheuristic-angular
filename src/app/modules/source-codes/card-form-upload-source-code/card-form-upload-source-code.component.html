@@ -16,7 +16,8 @@
                     <button mat-stroked-button (click)="cancel()">Cancel</button>
                 </ct-flex-item>
                 <ct-flex-item>
-                    <button mat-flat-button="mat-flat-button" disabled color="primary"
+                    <button mat-flat-button="mat-flat-button"
+                        [disabled]="!file?.fileInput?.nativeElement?.files?.length" color="primary"
                         (click)="upload()">Upload</button>
                 </ct-flex-item>
             </ct-flex>
