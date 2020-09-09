@@ -57,7 +57,6 @@ export class BatchComponent implements OnInit, OnDestroy {
         this.subs.push(this.store.subscribe((state: AppState) => {
             this.isFilterBatches = state.settings.filterBatches;
             this.batches = state.batches;
-            this.changeDetector.detectChanges();
             this.updateTable();
         }));
 
@@ -87,7 +86,7 @@ export class BatchComponent implements OnInit, OnDestroy {
             } else {
                 this.columnsToDisplay = ['id', 'createdOn', 'isBatchConsistent', 'sourceCode', 'execState', 'bts'];
             }
-            this.dataSource = new MatTableDataSource(this.batches.response.batches.content || []);
+            this.dataSource = new MatTableDataSource(this.batches.list || []);
             this.prevTable.disabled = this.batches.response.batches.first;
             this.nextTable.disabled = this.batches.response.batches.last;
         }

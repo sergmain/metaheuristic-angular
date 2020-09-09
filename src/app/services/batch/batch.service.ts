@@ -71,16 +71,6 @@ export class BatchService {
             this.http.get<response.batch.ExecStatuses>(url(`batch-exec-statuses`))
     };
 
-    static updateBatchExecStatus(batches: Batch[], statuses: BatchExecStatus[]): void {
-        statuses.forEach(status => {
-            batches
-                .filter(batch => batch.batch.id === status.id)
-                .forEach(batch => {
-                    return batch.execState = status.state;
-                });
-        });
-    }
-
     downloadFile(batchId: string): Observable<HttpResponse<Blob>> {
         let headers: HttpHeaders = new HttpHeaders();
         headers = headers.append('Accept', 'application/octet-stream');

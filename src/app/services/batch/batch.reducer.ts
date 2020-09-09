@@ -24,8 +24,16 @@ const reducer = createReducer(
     })),
 
     on(newExecStatus, (state: BatchesState, { payload }) => {
-        BatchService.updateBatchExecStatus(state.list, payload);
-        return { ...state };
+        // через JSON потому что всегда execState read-only
+        let _state = JSON.parse(JSON.stringify(state));
+        payload.forEach(status => {
+            _state.list
+                .filter(batch => batch.batch.id === status.id)
+                .forEach(batch => {
+                    batch.execState = status.state;
+                });
+        });
+        return { ..._state };
     })
 
 );
