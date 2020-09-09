@@ -24,6 +24,7 @@ import { CtContentComponent } from './ct-content/ct-content.component';
 import { CtRestStatusComponent } from './ct-rest-status/ct-rest-status.component';
 import { CtBackButtonComponent } from './ct-back-button/ct-back-button.component';
 import { TranslateModule } from '@ngx-translate/core';
+import { CtEnvMsgOuterComponent } from './ct-env-msg-outer/ct-env-msg-outer.component';
 
 @NgModule({
     imports: [
@@ -54,7 +55,8 @@ import { TranslateModule } from '@ngx-translate/core';
         CtHintComponent,
         CtContentComponent,
         CtRestStatusComponent,
-        CtBackButtonComponent
+        CtBackButtonComponent,
+        CtEnvMsgOuterComponent
     ],
     exports: [
         CtSectionContentComponent,
@@ -78,7 +80,8 @@ import { TranslateModule } from '@ngx-translate/core';
         CtHintComponent,
         CtContentComponent,
         CtRestStatusComponent,
-        CtBackButtonComponent
+        CtBackButtonComponent,
+        CtEnvMsgOuterComponent
     ]
 })
 
