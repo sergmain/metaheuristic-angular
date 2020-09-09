@@ -1,70 +1,64 @@
-
 <ct-cols>
-  <ct-col size="6">
-    <ct-section>
-      <ct-section-header>
-        <ct-section-header-row>
-          <ct-heading>New Experiment</ct-heading>
-        </ct-section-header-row>
-      </ct-section-header>
-      <ct-section-body>
-        <ct-section-body-row>
-          <form [formGroup]="form" novalidate="novalidate">
-            <ct-section-content>
-              <mat-form-field appearance="outline">
-                <mat-label>Name</mat-label>
-                <input matInput="matInput" formControlName="name"/>
-                <mat-hint>This is a required field.</mat-hint>
-              </mat-form-field>
-            </ct-section-content>
-            <ct-section-content>
-              <mat-form-field appearance="outline">
-                <mat-label>Description</mat-label>
-                <textarea matInput="matInput" formControlName="description" cdkTextareaAutosize="cdkTextareaAutosize" cdkAutosizeMinRows="5"></textarea>
-                <mat-hint>This is a required field.</mat-hint>
-              </mat-form-field>
-            </ct-section-content>
-            <ct-section-content>
-              <mat-form-field appearance="outline">
-                <mat-label>Experiment code</mat-label>
-                <textarea matInput="matInput" formControlName="code" cdkTextareaAutosize="cdkTextareaAutosize" cdkAutosizeMinRows="5"></textarea>
-                <mat-hint>This is a required field.</mat-hint>
-              </mat-form-field>
-            </ct-section-content>
-            <ct-section-content>
-              <mat-form-field appearance="outline">
-                <mat-label>Seed</mat-label>
-                <input matInput="matInput" formControlName="seed"/>
-                <mat-hint>Default value will be used if not defined. Which is 1. </mat-hint>
-              </mat-form-field>
-            </ct-section-content>
-          </form>
-        </ct-section-body-row>
-      </ct-section-body>
-      <ct-section-footer>
-        <ct-section-footer-row>
-          <ct-flex justify-conetnt="flex-end" gap="8px">
-            <ct-flex-item>
-              <button mat-stroked-button="mat-stroked-button" (click)="cancel()">Cancel</button>
-            </ct-flex-item>
-            <ct-flex-item>
-              <button mat-flat-button="mat-flat-button" (click)="create()" color="primary" [disabled]="[states.wait].includes(currentState) || form.invalid">Create</button>
-            </ct-flex-item>
-          </ct-flex>
-        </ct-section-footer-row>
-      </ct-section-footer>
-    </ct-section>
-  </ct-col>
-  <ct-col size="6">
-    <ct-section *ngIf="response">
-      <ct-section-body>
-        <ct-section-body-row>
-          <div>
-            <p>STATUS: {{response.status}}</p>
-            <p *ngFor="let error of response.errorMessages; index as i; ">{{error}}</p>
-          </div>
-        </ct-section-body-row>
-      </ct-section-body>
-    </ct-section>
-  </ct-col>
+    <ct-col size="6">
+        <ct-section>
+            <ct-section-header>
+                <ct-section-header-row>
+                    <ct-heading>New Experiment</ct-heading>
+                </ct-section-header-row>
+            </ct-section-header>
+            <ct-section-body>
+                <ct-section-body-row>
+                    <form [formGroup]="form" novalidate="novalidate">
+                        <mat-form-field appearance="outline">
+                            <mat-label>List of Uids of source codes</mat-label>
+                            <mat-select formControlName="sourceCodeUID">
+                                <div *ngFor="let sourceCode of listOfSourceCodes">
+                                    <mat-option [value]="sourceCode">{{sourceCode.uid}}</mat-option>
+                                </div>
+                            </mat-select>
+                            <mat-hint>This is a required field.</mat-hint>
+                        </mat-form-field>
+                        <br>
+                        <br>
+                        <mat-form-field appearance="outline">
+                            <mat-label>Name</mat-label>
+                            <input matInput="matInput" formControlName="name" />
+                            <mat-hint>This is a required field.</mat-hint>
+                        </mat-form-field>
+                        <br>
+                        <br>
+                        <mat-form-field appearance="outline">
+                            <mat-label>Description</mat-label>
+                            <textarea matInput="matInput" formControlName="description"
+                                cdkTextareaAutosize="cdkTextareaAutosize" cdkAutosizeMinRows="5"></textarea>
+                            <mat-hint>This is a required field.</mat-hint>
+                        </mat-form-field>
+                        <br>
+                        <br>
+                        <mat-form-field appearance="outline">
+                            <mat-label>Experiment code</mat-label>
+                            <textarea matInput="matInput" formControlName="experimentCode"
+                                cdkTextareaAutosize="cdkTextareaAutosize" cdkAutosizeMinRows="5"></textarea>
+                            <mat-hint>This is a required field.</mat-hint>
+                        </mat-form-field>
+                    </form>
+                </ct-section-body-row>
+            </ct-section-body>
+            <ct-section-footer>
+                <ct-section-footer-row>
+                    <ct-flex justify-content="flex-end" gap="8px">
+                        <ct-flex-item>
+                            <button mat-stroked-button="mat-stroked-button" (click)="cancel()">Cancel</button>
+                        </ct-flex-item>
+                        <ct-flex-item>
+                            <button mat-flat-button="mat-flat-button" (click)="create()" color="primary">Create</button>
+                        </ct-flex-item>
+                    </ct-flex>
+                </ct-section-footer-row>
+            </ct-section-footer>
+        </ct-section>
+    </ct-col>
+    <ct-col size="6">
+        <ct-rest-status [content]="response"></ct-rest-status>
+    </ct-col>
 </ct-cols>

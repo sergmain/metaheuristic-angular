@@ -10,6 +10,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatButton } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
 import { ExperimentApiData } from '@src/app/services/experiments/ExperimentApiData';
+import { ExperimentData } from '@src/app/services/experiments/ExperimentData';
 
 @Component({
     selector: 'atlas-experiments',
@@ -24,7 +25,7 @@ export class AtlasExperimentsComponent implements OnInit {
 
     dataSource = new MatTableDataSource<ExperimentItem>([]);
 
-    deletedExperiments: ExperimentApiData.ExperimentData[] = [];
+    deletedExperiments: ExperimentData[] = [];
 
 
     @ViewChild('nextTable', { static: true }) nextTable: MatButton;
@@ -81,12 +82,12 @@ export class AtlasExperimentsComponent implements OnInit {
     }
 
     @ConfirmationDialogMethod({
-        question: (experiment: ExperimentApiData.ExperimentData): string =>
+        question: (experiment: ExperimentData): string =>
             `Do you want to delete Experiment\xa0#${experiment.id}`,
         rejectTitle: 'Cancel',
         resolveTitle: 'Delete'
     })
-    delete(experiment: ExperimentApiData.ExperimentData) {
+    delete(experiment: ExperimentData) {
         this.deletedExperiments.push(experiment);
         this.atlasService.experiment
             .deleteCommit(experiment.id.toString())

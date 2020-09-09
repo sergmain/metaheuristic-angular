@@ -6,6 +6,7 @@ import { ExperimentsService, MetricsResult, response, Task } from '@app/services
 import { PlotComponent } from 'angular-plotly.js';
 import { CtWrapBlockComponent } from '../../ct/ct-wrap-block/ct-wrap-block.component';
 import { ExperimentApiData } from '@src/app/services/experiments/ExperimentApiData';
+import { ExperimentData } from '@src/app/services/experiments/ExperimentData';
 
 @Component({
     selector: 'experiment-feature-progress',
@@ -29,7 +30,7 @@ export class ExperimentFeatureProgressComponent implements OnInit {
     consolePartResponse: response.experiment.FeatureProgressConsolePart;
     plotDataResponse: response.experiment.FeaturePlotDataPart;
 
-    experiment: ExperimentApiData.ExperimentData;
+    experiment: ExperimentData;
     experimentId: string;
     featureId: string;
     pickedAxes: (boolean | any)[] = [false, false];

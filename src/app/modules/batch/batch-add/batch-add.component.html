@@ -1,4 +1,4 @@
-<ct-section *ngIf="currentStates.has(states.firstLoading)">
+<ct-section *ngIf="!response">
     <ct-section-body>
         <ct-section-body-row>
             <ct-section-content>
@@ -7,7 +7,8 @@
         </ct-section-body-row>
     </ct-section-body>
 </ct-section>
-<ct-cols *ngIf="currentStates.has(states.show)">
+
+<ct-cols *ngIf="response">
     <ct-col size="6">
         <ct-section>
             <ct-section-header>
@@ -16,27 +17,27 @@
                 </ct-section-header-row>
             </ct-section-header>
             <ct-section-body>
-                <ct-section-body-row *ngIf="currentStates.has(states.show)">
-                    <ct-section-content>
-                        <mat-form-field>
-                            <mat-label> {{ 'batch-add.List of Source Codes' | translate }}</mat-label>
-                            <mat-select [(ngModel)]="sourceCode">
-                                <div *ngFor="let sourceCode of listOfSourceCodes">
-                                    <mat-option [value]="sourceCode">{{sourceCode.uid}}</mat-option>
-                                </div>
-                            </mat-select>
-                            <mat-hint>{{ 'batch-add.This is a required field.' | translate }}</mat-hint>
-                        </mat-form-field>
-                    </ct-section-content>
-                </ct-section-body-row>
-                <ct-section-body-row *ngIf="currentStates.has(states.show)">
-                    <ct-section-content>
+                <ct-section-body-row>
+                    <mat-form-field appearance="outline">
+                        <mat-label> {{ 'batch-add.List of Source Codes' | translate }}</mat-label>
+                        <mat-select [(ngModel)]="sourceCode">
+                            <div *ngFor="let sourceCode of listOfSourceCodes">
+                                <mat-option [value]="sourceCode">{{sourceCode.uid}}</mat-option>
+                            </div>
+                        </mat-select>
+                        <mat-hint>{{ 'batch-add.This is a required field.' | translate }}</mat-hint>
+                    </mat-form-field>
+
+                    <br>
+                    <br>
+
+                    <div>
                         <ct-file-upload #fileUpload acceptTypes=".zip, .xml"
                             buttonTitle="{{'batch-add.Select File' | translate}}" (changed)="fileUploadChanged()">
                         </ct-file-upload>
                         <ct-hint>{{ 'batch-add.This is a required field.' | translate }}</ct-hint>
                         <ct-hint>{{ 'batch-add.Only .xml and .zip files are supported' | translate }}</ct-hint>
-                    </ct-section-content>
+                    </div>
                 </ct-section-body-row>
             </ct-section-body>
             <ct-section-footer>
@@ -56,18 +57,6 @@
         </ct-section>
     </ct-col>
     <ct-col size="6">
-        <ct-section *ngIf="uploadResponse">
-            <ct-section-body>
-                <ct-section-body-row>
-                    <ct-section-content>
-                        <div>
-                            <div>{{ 'batch-add.STATUS' | translate }}: {{uploadResponse.status}}</div>
-                            <p *ngFor="let error of uploadResponse.errorMessages; index as i; ">{{error}}</p>
-                            <p *ngFor="let info of uploadResponse.infoMessages; index as i; ">{{info}}</p>
-                        </div>
-                    </ct-section-content>
-                </ct-section-body-row>
-            </ct-section-body>
-        </ct-section>
+        <ct-rest-status [content]="uploadResponse"></ct-rest-status>
     </ct-col>
 </ct-cols>

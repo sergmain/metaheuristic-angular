@@ -2,6 +2,7 @@ import { ConsoleResult, ExperimentFeature, FeatureProgressConsolePartEntity, Hyp
 import { DefaultResponse } from '@src/app/models/DefaultResponse';
 import { PageableDefault } from '@src/app/models/PageableDefault';
 import { ExperimentApiData } from './ExperimentApiData';
+import { ExperimentData } from './ExperimentData';
 
 
 export interface ListOfItems extends PageableDefault {
@@ -9,32 +10,25 @@ export interface ListOfItems extends PageableDefault {
 }
 
 export interface ExperimentItem extends DefaultResponse {
-    experiment: ExperimentApiData.ExperimentData;
+    experiment: ExperimentData;
 }
 
 
 
 export namespace response {
 
-    export namespace experiments {
-        export interface Get extends DefaultResponse {
-            items: ListOfItems;
-        }
-    }
-
     export namespace experiment {
         export interface Get extends DefaultResponse {
-            Experiment: ExperimentApiData.ExperimentData;
+            Experiment: ExperimentData;
         }
         export interface Info extends DefaultResponse {
-            experiment: ExperimentApiData.ExperimentData;
+            experiment: ExperimentData;
             experimentInfo: ExperimentApiData.ExperimentInfoResult;
 
         }
 
         export interface AddCommit extends DefaultResponse { }
 
-        export interface EditCommit extends DefaultResponse { }
 
         export interface DeleteByTypeCommit extends DefaultResponse { }
 
@@ -57,7 +51,7 @@ export namespace response {
             metricsResult: MetricsResult;
             hyperParamResult: HyperParamResult;
             tasksResult: TasksResult;
-            experiment: ExperimentApiData.ExperimentData;
+            experiment: ExperimentData;
             experimentFeature: ExperimentFeature;
             consoleResult: ConsoleResult;
         }

@@ -7,6 +7,7 @@ import { Tasks } from './Tasks';
 import { PageableDefault } from '@src/app/models/PageableDefault';
 import { DefaultResponse } from '@src/app/models/DefaultResponse';
 import { ExperimentApiData } from '../experiments/ExperimentApiData';
+import { ExperimentData } from '../experiments/ExperimentData';
 
 
 export interface ListOfItems extends PageableDefault {
@@ -14,7 +15,7 @@ export interface ListOfItems extends PageableDefault {
 }
 
 export interface ExperimentItem extends DefaultResponse {
-    experiment: ExperimentApiData.ExperimentData;
+    experiment: ExperimentData;
 }
 
 export namespace response {
@@ -27,7 +28,7 @@ export namespace response {
 
     export namespace experiment {
         export interface Info extends DefaultResponse {
-            experiment: ExperimentApiData.ExperimentData;
+            experiment: ExperimentData;
             experimentInfo: ExperimentApiData.ExperimentInfoResult;
             atlas: Atlas;
         }

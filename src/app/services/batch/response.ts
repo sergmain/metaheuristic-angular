@@ -17,9 +17,8 @@ export namespace response {
             console: string;
             ok: boolean;
         }
-        export interface Add extends DefaultResponse {
-            items: SourceCode[];
-        }
+
+
         export interface Upload extends DefaultResponse {
 
         }

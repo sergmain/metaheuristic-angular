@@ -11,6 +11,7 @@ import { AppState } from '@src/app/app.reducers';
 import { OperationStatus } from '@src/app/models/OperationStatus';
 import { Subscription } from 'rxjs';
 import { CtFileUploadComponent } from '../../ct/ct-file-upload/ct-file-upload.component';
+import { SourceCodeUidsForCompany } from '@src/app/services/source-codes/SourceCodeUidsForCompany';
 
 @Component({
     selector: 'batch-add',
@@ -19,10 +20,8 @@ import { CtFileUploadComponent } from '../../ct/ct-file-upload/ct-file-upload.co
 })
 
 export class BatchAddComponent implements OnInit {
-    readonly states = LoadStates;
-
     currentStates: Set<LoadStates> = new Set();
-    response: batchResponse.batch.Add;
+    response: SourceCodeUidsForCompany;
     uploadResponse: batchResponse.batch.Upload;
 
     sourceCode: SourceCode;
@@ -37,7 +36,6 @@ export class BatchAddComponent implements OnInit {
         private translate: TranslateService,
         private store: Store<AppState>
     ) {
-        this.currentStates.add(this.states.firstLoading);
         store.subscribe((data: AppState) => {
             this.translate.use(data.settings.language);
         });
@@ -48,21 +46,12 @@ export class BatchAddComponent implements OnInit {
     }
 
     updateResponse(): void {
-        const subscribe: Subscription = this.batchService.batch
+        this.batchService.batch
             .add()
-            .subscribe(
-                (response: batchResponse.batch.Add) => {
-                    this.response = response;
-                    this.listOfSourceCodes = this.response.items;
-                },
-                () => { },
-                () => {
-                    this.currentStates.delete(this.states.firstLoading);
-                    this.currentStates.delete(this.states.loading);
-                    this.currentStates.add(this.states.show);
-                    subscribe.unsubscribe();
-                }
-            );
+            .subscribe((response) => {
+                this.response = response;
+                this.listOfSourceCodes = this.response.items;
+            });
     }
 
     back(): void {

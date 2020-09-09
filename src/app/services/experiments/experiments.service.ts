@@ -5,6 +5,9 @@ import { Observable } from 'rxjs';
 import { generateFormData as formData } from '@src/app/helpers/generateFormData';
 import { response } from './response';
 import { ExperimentApiData } from './ExperimentApiData';
+import { OperationStatusRest } from '@src/app/models/OperationStatusRest';
+import { SimpleExperiment } from './SimpleExperiment';
+import { ExperimentsResult } from './ExperimentsResult';
 
 const url = (s: string): string => `${environment.baseUrl}dispatcher/experiment${s}`;
 
@@ -16,8 +19,8 @@ export class ExperimentsService {
     constructor(private http: HttpClient) { }
 
     experiments = {
-        get: (page: string): any =>
-            this.http.get(url(`/experiments`), { params: { page } })
+        get: (page: string): Observable<ExperimentsResult> =>
+            this.http.get<ExperimentsResult>(url(`/experiments`), { params: { page } })
     };
 
     experiment = {
@@ -42,11 +45,11 @@ export class ExperimentsService {
         edit: (id: string): Observable<ExperimentApiData.ExperimentsEditResult> =>
             this.http.get<ExperimentApiData.ExperimentsEditResult>(url(`/experiment-edit/${id}`)),
 
-        addCommit: (data: ExperimentApiData.NewExperimentData): Observable<response.experiment.AddCommit> =>
-            this.http.post<response.experiment.AddCommit>(url(`/experiment-add-commit`), data),
+        addCommit: (data: ExperimentApiData.NewExperimentData): Observable<OperationStatusRest> =>
+            this.http.post<OperationStatusRest>(url(`/experiment-add-commit`), data),
 
-        editCommit: (simpleExperiment: ExperimentApiData.SimpleExperiment): Observable<response.experiment.EditCommit> =>
-            this.http.post<response.experiment.EditCommit>(url(`/experiment-edit-commit`), simpleExperiment),
+        editCommit: (simpleExperiment: SimpleExperiment): Observable<OperationStatusRest> =>
+            this.http.post<OperationStatusRest>(url(`/experiment-edit-commit`), simpleExperiment),
 
         metadataAddCommit: (experimentId: string, data: any): Observable<any> =>
             this.http.post(url(`/experiment-metadata-add-commit/${experimentId}`), formData(data)),
@@ -66,31 +69,35 @@ export class ExperimentsService {
         functionDeleteByTypeCommit: (experimentId: string, functionType: string): Observable<response.experiment.DeleteByTypeCommit> =>
             this.http.get<response.experiment.DeleteByTypeCommit>(url(`/experiment-function-delete-by-type-commit/${experimentId}/${functionType}`)),
 
-        deleteCommit: (id: string): Observable<any> =>
-            this.http.post(url(`/experiment-delete-commit`), formData({ id })),
+        deleteCommit: (id: string): Observable<OperationStatusRest> =>
+            this.http.post<OperationStatusRest>(url(`/experiment-delete-commit`), formData({ id })),
 
-        cloneCommit: (id: string | number): Observable<any> =>
-            this.http.post(url(`/experiment-clone-commit`), formData({ id })),
+        cloneCommit: (id: string): Observable<OperationStatusRest> =>
+            this.http.post<OperationStatusRest>(url(`/experiment-clone-commit`), formData({ id })),
 
         taskRerun: (taskId: string): Observable<any> =>
             this.http.post(url(`/task-rerun/${taskId}`), {}),
 
-        uploadFromFile: (file: any): Observable<any> =>
-            this.http.post(url(`/experiment-upload-from-file`), file),
+        uploadFromFile: (file: any): Observable<OperationStatusRest> =>
+            this.http.post<OperationStatusRest>(url(`/experiment-upload-from-file`), file),
 
         bindExperimentToPlanWithResource: (experimentCode: string, resourcePoolCode: string): Observable<any> =>
             this.http.post(url(`/bind-experiment-to-plan-with-resource`), { experimentCode, resourcePoolCode }),
 
-        produceTasks: (experimentCode: string): Observable<any> =>
-            this.http.post(url(`/produce-tasks`), { experimentCode }),
+        produceTasks: (experimentCode: string): Observable<OperationStatusRest> =>
+            this.http.post<OperationStatusRest>(url(`/produce-tasks`), { experimentCode }),
 
-        startProcessingOfTasks: (experimentCode: string): Observable<any> =>
-            this.http.post(url(`/start-processing-of-tasks`), { experimentCode }),
+        startProcessingOfTasks: (experimentCode: string): Observable<OperationStatusRest> =>
+            this.http.post<OperationStatusRest>(url(`/start-processing-of-tasks`), { experimentCode }),
 
         processingStatus: (experimentCode: string): Observable<any> =>
             this.http.get(url(`/processing-status/${experimentCode}`)),
 
         toAtlas: (id: string): Observable<any> =>
-            this.http.get(url(`/experiment-to-atlas/${id}`))
+            this.http.get(url(`/experiment-to-atlas/${id}`)),
+
+        toExperimentResult: (id: string): Observable<OperationStatusRest> =>
+            this.http.get<OperationStatusRest>(url(`/experiment-to-experiment-result/${id}`))
+
     };
 }

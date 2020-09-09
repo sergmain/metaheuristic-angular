@@ -1,32 +1,12 @@
-import { ExperimentParamsYaml } from "./ExperimentParamsYaml";
-import { DefaultResponse } from "@src/app/models/DefaultResponse";
-import { SimpleSelectOption } from "@src/app/models/SimpleSelectOption";
-import { ExecContextState } from "@src/app/enums/ExecContextState";
-import { ExecContext } from "../source-codes/ExecContext";
+import { ExperimentParamsYaml } from './ExperimentParamsYaml';
+import { DefaultResponse } from '@src/app/models/DefaultResponse';
+import { SimpleSelectOption } from '@src/app/models/SimpleSelectOption';
+import { ExecContextState } from '@src/app/enums/ExecContextState';
+import { ExecContext } from '../source-codes/ExecContext';
+import { SimpleExperiment } from './SimpleExperiment';
 
 export namespace ExperimentApiData {
-    export interface ExperimentData {
-        id: number;
-        version: number;
-        execContextId: number;
-        code: string;
-        name: string;
-        description: string;
-        seed: number;
-        isAllTaskProduced: boolean;
-        isFeatureProduced: boolean;
-        createdOn: number;
-        numberOfTask: number;
-        hyperParamsAsMap: {
-            [name: string]: {
-                [name: string]: number
-            }
-        }
-        hyperParams: ExperimentParamsYaml.HyperParam[]
-        // TODO: not exist?
-        featureProduced: boolean;
-        allTaskProduced: boolean;
-    }
+
 
     export interface NewExperimentData {
         code: string;
@@ -59,13 +39,7 @@ export namespace ExperimentApiData {
         functionResult: FunctionResult;
     }
 
-    export interface SimpleExperiment {
-        name: string;
-        description: string;
-        code: string;
-        seed: number;
-        id: number;
-    }
+
 
     export interface FunctionResult {
         selectOptions: SimpleSelectOption[];
@@ -81,7 +55,7 @@ export namespace ExperimentApiData {
     }
 
     export interface HyperParamsResult {
-        items: HyperParamData[]
+        items: HyperParamData[];
     }
 
     export interface HyperParamData {

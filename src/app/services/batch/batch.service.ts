@@ -12,6 +12,7 @@ import { newExecStatus } from './batch.actions';
 import { BatchExecStatus } from './BatchExecStatus';
 import { BatchExexStatusComparer } from './BatchExexStatusComparer';
 import { response } from './response';
+import { SourceCodeUidsForCompany } from '../source-codes/SourceCodeUidsForCompany';
 
 const url = (urlString: string): string => `${environment.baseUrl}dispatcher/batch/${urlString}`;
 
@@ -51,8 +52,8 @@ export class BatchService {
     };
 
     batch = {
-        add: (): Observable<response.batch.Add> =>
-            this.http.get<response.batch.Add>(url(`batch-add`)),
+        add: (): Observable<SourceCodeUidsForCompany> =>
+            this.http.get<SourceCodeUidsForCompany>(url(`batch-add`)),
 
         delete: (batchId: string) =>
             this.http.get(url(`batch-delete/${batchId}`)),

@@ -5,6 +5,7 @@ import { AtlasService, response, Task, Tasks } from '@services/atlas';
 import { ExperimentApiData } from '@src/app/services/experiments/ExperimentApiData';
 import { PlotComponent } from 'angular-plotly.js';
 import { CtWrapBlockComponent } from '../../ct/ct-wrap-block/ct-wrap-block.component';
+import { ExperimentData } from '@src/app/services/experiments/ExperimentData';
 
 
 @Component({
@@ -25,7 +26,7 @@ export class AtlasExperimentFeatureProgressComponent implements OnInit {
     consolePartResponse: response.experiment.FeatureProgressConsolePart;
     plotDataResponse: response.experiment.FeaturePlotDataPart;
 
-    experiment: ExperimentApiData.ExperimentData;
+    experiment: ExperimentData;
 
     //
     experimentId: string;

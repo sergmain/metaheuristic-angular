@@ -4,6 +4,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LoadStates } from '@app/enums/LoadStates';
 import { ExperimentsService } from '@app/services/experiments/experiments.service';
+import { DefaultResponse } from '@src/app/models/DefaultResponse';
 @Component({
     selector: 'experiment-add',
     templateUrl: './experiment-add.component.html',
@@ -11,15 +12,13 @@ import { ExperimentsService } from '@app/services/experiments/experiments.servic
 })
 
 export class ExperimentAddComponent {
-    readonly states = LoadStates;
-    currentState = LoadStates.show;
-    response;
-
-    form = new FormGroup({
+    response: DefaultResponse;
+    listOfSourceCodes: any = [];
+    form: FormGroup = new FormGroup({
+        sourceCodeUID: new FormControl('', [Validators.required, Validators.minLength(1)]),
         name: new FormControl('', [Validators.required, Validators.minLength(3)]),
         description: new FormControl('', [Validators.required, Validators.minLength(3)]),
-        code: new FormControl('', [Validators.required, Validators.minLength(3)]),
-        seed: new FormControl('1', [Validators.required, Validators.minLength(1)]),
+        experimentCode: new FormControl('', [Validators.required, Validators.minLength(3)]),
     });
 
     constructor(
@@ -33,7 +32,6 @@ export class ExperimentAddComponent {
     }
 
     create(): void {
-        this.currentState = this.states.wait;
         this.experimentsService.experiment
             .addCommit(this.form.value)
             .subscribe((response) => {

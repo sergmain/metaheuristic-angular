@@ -7,6 +7,7 @@ import { ExperimentsService } from '@app/services/experiments/experiments.servic
 import { Subscription } from 'rxjs';
 import { DefaultResponse } from '@src/app/models/DefaultResponse';
 import { ExperimentApiData } from '@src/app/services/experiments/ExperimentApiData';
+import { ExperimentData } from '@src/app/services/experiments/ExperimentData';
 
 @Component({
     selector: 'experiment-info',
@@ -19,7 +20,7 @@ export class ExperimentInfoComponent implements OnInit {
     currentState = this.state.loading;
 
     response;
-    experiment: ExperimentApiData.ExperimentData;
+    experiment: ExperimentData;
     experimentInfo: ExperimentApiData.ExperimentInfoResult;
 
     toAtlasResponse: DefaultResponse;

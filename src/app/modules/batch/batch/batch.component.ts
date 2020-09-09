@@ -1,5 +1,5 @@
 import { HttpResponse } from '@angular/common/http';
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { ConfirmationDialogMethod, QuestionData } from '@app/components/app-dialog-confirmation/app-dialog-confirmation.component';
 import { BatchService } from '@app/services/batch/batch.service';
 import { marker } from '@biesbjerg/ngx-translate-extract-marker';
@@ -28,8 +28,8 @@ export class BatchComponent implements OnInit, OnDestroy {
     subs: Subscription[] = [];
     batches: BatchesState;
 
-    dataSource = new MatTableDataSource<Batch>([]);
-    columnsToDisplay = ['id', 'createdOn', 'isBatchConsistent', 'sourceCode', 'execState', 'bts'];
+    dataSource: MatTableDataSource<Batch> = new MatTableDataSource<Batch>([]);
+    columnsToDisplay: string[] = ['id', 'createdOn', 'isBatchConsistent', 'sourceCode', 'execState', 'bts'];
 
     deletedRows: Batch[] = [];
 
@@ -47,18 +47,18 @@ export class BatchComponent implements OnInit, OnDestroy {
         private dialog: MatDialog,
         private batchService: BatchService,
         private authenticationService: AuthenticationService,
-        private store: Store<AppState>
+        private store: Store<AppState>,
+        private changeDetector: ChangeDetectorRef
     ) {
 
     }
 
     ngOnInit(): void {
-        console.log(123);
         this.subs.push(this.store.subscribe((state: AppState) => {
             this.isFilterBatches = state.settings.filterBatches;
             this.batches = state.batches;
+            this.changeDetector.detectChanges();
             this.updateTable();
-            console.log(234);
         }));
 
         this.store.dispatch(getBatches({

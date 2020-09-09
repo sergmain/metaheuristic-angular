@@ -2,10 +2,11 @@ import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { state } from '@app/helpers/state';
-import { AtlasService,  Atlas, response } from '@services/atlas';
+import { AtlasService, Atlas, response } from '@services/atlas';
 import { Subscription } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { ExperimentApiData } from '@src/app/services/experiments/ExperimentApiData';
+import { ExperimentData } from '@src/app/services/experiments/ExperimentData';
 
 @Component({
     selector: 'atlas-experiment-info',
@@ -15,7 +16,7 @@ import { ExperimentApiData } from '@src/app/services/experiments/ExperimentApiDa
 export class AtlasExperimentInfoComponent implements OnInit {
     state = state;
     currentState = this.state.loading;
-    experiment: ExperimentApiData.ExperimentData;
+    experiment: ExperimentData;
     experimentInfo: ExperimentApiData.ExperimentInfoResult;
     atlas: Atlas;
 
@@ -40,7 +41,7 @@ export class AtlasExperimentInfoComponent implements OnInit {
         private route: ActivatedRoute,
         private atlasService: AtlasService,
         private location: Location
-    ) {}
+    ) { }
 
     ngOnInit() {
         this.load();
@@ -58,7 +59,7 @@ export class AtlasExperimentInfoComponent implements OnInit {
                     this.tables.hyperParameters.table = new MatTableDataSource(this.experiment.hyperParams);
                     this.tables.features.table = new MatTableDataSource(this.experimentInfo.features);
                 },
-                () => {},
+                () => { },
                 () => subscribe.unsubscribe()
             );
     }

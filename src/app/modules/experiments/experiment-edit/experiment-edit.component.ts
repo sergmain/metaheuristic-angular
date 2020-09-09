@@ -12,6 +12,8 @@ import { SimpleSelectOption } from '@src/app/models/SimpleSelectOption';
 import { ExperimentApiData } from '@src/app/services/experiments/ExperimentApiData';
 import { CtWrapBlockComponent } from '../../ct/ct-wrap-block/ct-wrap-block.component';
 import { ExperimentParamsYaml } from '@src/app/services/experiments/ExperimentParamsYaml';
+import { SimpleExperiment } from '@src/app/services/experiments/SimpleExperiment';
+import { OperationStatusRest } from '@src/app/models/OperationStatusRest';
 
 @Component({
     selector: 'experiment-edit',
@@ -46,12 +48,12 @@ import { ExperimentParamsYaml } from '@src/app/services/experiments/ExperimentPa
 export class ExperimentEditComponent implements OnInit {
 
     experimentEditResponse: ExperimentApiData.ExperimentsEditResult;
-    simpleExperimentResponse: response.experiment.EditCommit;
+    simpleExperimentResponse: OperationStatusRest;
 
     addHyperParamsResponse: DefaultResponse;
     editHyperParamsResponse: DefaultResponse;
 
-    simpleExperiment: ExperimentApiData.SimpleExperiment;
+    simpleExperiment: SimpleExperiment;
 
     hyperParams: ExperimentApiData.HyperParamsResult;
     newHyperParams: ExperimentParamsYaml.HyperParam = {
