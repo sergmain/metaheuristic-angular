@@ -161,6 +161,7 @@ http://localhost:4200/#/dispatcher/source-codes/add
 добавить кнопку Cancel по нажатии на которую переходить в список исходный кодов  http://localhost:4200/#/dispatcher/source-codes
 
 DONE
+CONFIRMED
 
 
 
@@ -170,6 +171,7 @@ http://localhost:4200/#/dispatcher/source-codes/add
 независимо от наличия ошибок переходить на список исходный кодов http://localhost:4200/#/dispatcher/source-codes
 и отображать ошибки на этой странице(над таблицей)
 
+DECLINED
 
 
 issue-1229
@@ -178,15 +180,17 @@ http://localhost:4200/#/dispatcher/source-codes/1353/exec-contexts
 убрать кнопку создания контекста Add new context
 
 DONE
+CONFIRMED
 
 
 
 issue-1230
 angular
 http://localhost:4200/#/dispatcher/source-codes/1353/exec-contexts
-добавить кнопку Back по нажатии на которую переходить в список переменных http://localhost:4200/#/dispatcher/source-codes
+добавить кнопку Back по нажатии на которую переходить в список исходников http://localhost:4200/#/dispatcher/source-codes
 
 DONE
+CONFIRMED
 
 
 
@@ -196,7 +200,7 @@ http://localhost:4200/#/dispatcher/accounts/access/21
 список ролей работает неправильно, все время выдается одна и та же роль
 
 DONE
-
+CONFIRMED
 
 
 issue-1232
@@ -210,6 +214,7 @@ Is blacklisted?
 перенести в заголовок, должно быть так же как в стандартном интерфейсе
 
 DONE
+CONFIRMED
 
 
 
@@ -219,6 +224,7 @@ http://localhost:4200/#/dispatcher/processors
 состояния в столбце Reasons должны подсвечиваться цветом так же как сейчас в стандартном интерфейсе
 
 DONE
+CONFIRMED
 
 
 
@@ -230,6 +236,7 @@ issue-1234
 значение из brandingMsgIndex работает
 
 DONE
+CONFIRMED
 
 
 
@@ -244,6 +251,7 @@ issue-1235
 текст - Back/Назад
 
 DONE
+CONFIRMED
 
 
 
@@ -255,6 +263,7 @@ http://localhost:4200/#/batch
 
 DONE
 сравнение Exec статусов выкидывало ошибку, боьшенство багов по батчам были связаны и с ней включая и выход 
+CONFIRMED
 
 
 
@@ -264,6 +273,7 @@ http://localhost:4200/#/batch
 пока у пакета не будет статус Finished, кнопки 'Download result' И 'Status' не должны быть доступны
 
 DONE
+CONFIRMED
 
 
 issue-1238
@@ -271,7 +281,7 @@ issue-1238
 http://localhost:4200/#/batch
 сделать кнопку 'Task states' точно такую же как в списке ExecContext
 урл тот же самый но код страницы скопировать или сделать так чтобы он открывался по другому урл.
-т.е. идея в том что урл толжет относиться к Пакетам, а не к Контрольной панели
+т.е. идея в том что урл должен относиться к Пакетам, а не к Контрольной панели
 
 
 issue-1239
@@ -291,3 +301,17 @@ http://localhost:4200/#/batch
 
 сейчас выводится только имя файла
 
+
+issue-1241
+откатить назад issue-1229:
+        angular
+        http://localhost:4200/#/dispatcher/source-codes/1353/exec-contexts
+        убрать кнопку создания контекста Add new context
+
+т.е. вернуть кнопку
+
+
+issue-1242
+angular
+http://localhost:4200/#/dispatcher/accounts/access/21
+измение ролей не работает. после нажатия Save роли не сохраняются
