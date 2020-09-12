@@ -39,10 +39,10 @@
                         <th mat-header-cell="mat-header-cell" *matHeaderCellDef>Filename</th>
                         <td mat-cell="mat-cell" *matCellDef="let el">{{el.filename}} </td>
                     </ng-container>
-                    <ng-container matColumnDef="storageUrl">
-                        <th mat-header-cell="mat-header-cell" *matHeaderCellDef>Storage Url </th>
+                    <ng-container matColumnDef="params">
+                        <th mat-header-cell="mat-header-cell" *matHeaderCellDef>Params</th>
                         <td mat-cell="mat-cell" *matCellDef="let el">
-                            <ct-pre>{{el.storageUrl}}</ct-pre>
+                            <ct-pre>{{el.params}}</ct-pre>
                         </td>
                     </ng-container>
                     <ng-container matColumnDef="bts" stickyEnd="stickyEnd">

@@ -2,6 +2,10 @@ issue-1209
 переработать страницу создания экспериментов в соответствии со стандартным интерфейсом,
  урл - http://localhost:8080/dispatcher/ai/experiment/experiments
 
+результаты экспериментов получать по урл /rest/v1/dispatcher/experiment-result
+страница "Результаты экспериментов" не доллжна содержать слово Atlas
+
+везде в коде вместо ai.Atlas должно быть ai.ExperimentResult
 
 
 issue-1213
@@ -20,6 +24,7 @@ http://localhost:4200/#/dispatcher/batch
 при повторном создании пакета с тем же самым файлом новый пакет не отображается в списке созданных пакетов
 
 DONE
+CONFIRMED
 
 
 
@@ -28,7 +33,7 @@ http://localhost:8080/dispatcher/company/batch/company-batches/2
 при использовании пользователя с ролью MASTER_SUPPORT или MASTER_OPERATOR реализовать возможность удаления пакетов группами. 
 Т.е. сценарий такой - юзер отмечает галками пакеты которые он хочет удалить.
 Затем нажимает кнопку "Удалить отмеченное" (сейчас этой кнопки нет) и после подтверждения удаления выбранных пакетов,
-выполняется запрос к серверу на уделние списка пакетов.
+выполняется запрос к серверу на удалние списка пакетов.
 
 
 
@@ -48,6 +53,7 @@ http://localhost:4200/#/dispatcher/functions/add
 переименовать кнопку Add file в Upload function
 
 DONE
+CONFIRMED
 
 
 
@@ -57,7 +63,7 @@ http://localhost:4200/#/dispatcher/functions/add
 если файл не выбран, то кнопка Upload function (бывшая Add file) должна быть задисаблена
 
 DONE
-
+CONFIRMED
 
 
 issue-1220
@@ -70,16 +76,18 @@ issue-1220
 не должно быть пунктов Эксперименты, Атлас, Пакеты,
 
 DONE
+CONFIRMED
 
 2.
 в верхнем меню переименовать Диспетчер в Панель управления
 
 DONE
+CONFIRMED
 
 3. переименовать Атлас в Результаты экспериментов и перенести в меню Эксперименты
 
 DONE
-
+CONFIRMED
 
 
 issue-1221
@@ -92,7 +100,7 @@ http://localhost:4200/#/dispatcher/batch
 пакет начинает отображаться только если нажать F5 (полный рефреш страницы)
 
 DONE
-
+CONFIRMED
 
 
 issue-1222
@@ -102,7 +110,7 @@ http://localhost:4200/#/dispatcher/source-codes/1350/exec-contexts
 в колонках Create on, Completed on заменить символ который разделяет дату и время на пробел - Sep 4, 2020 • 22:17:39
 
 DONE
-
+CONFIRMED
 
 
 issue-1223
@@ -112,7 +120,7 @@ http://localhost:4200/#/dispatcher/source-codes/1350/exec-context/1717/state
 т.е. переход на http://localhost:4200/#/dispatcher/source-codes/1350/exec-contexts
 
 DONE
-
+CONFIRMED
 
 
 issue-1224
@@ -121,7 +129,7 @@ http://localhost:4200/#/dispatcher/global-variables/add
 добавить кнопку Cancel по нажатии на которую переходить в список переменных http://localhost:4200/#/dispatcher/global-variables
 
 DONE
-
+CONFIRMED
 
 
 issue-1225
@@ -132,6 +140,7 @@ angular
 т.е. точно так же как для Create global variable from file
 
 DONE
+CONFIRMED
 
 
 
@@ -142,6 +151,7 @@ http://localhost:4200/#/dispatcher/global-variables
 столбец Storage Url должен отображаться точно так же как Params в Funnctions, т.е. с учетом форматирования
 
 DONE
+CONFIRMED
 
 
 
@@ -270,3 +280,14 @@ http://localhost:4200/#/experiments
 сделать кнопку 'Task states' точно такую же как в списке ExecContext
 урл тот же самый но код страницы скопировать или сделать так чтобы он открывался по другому урл.
 т.е. идея в том что урл толжет относиться к Пакетам, а не к Контрольной панели
+
+
+issue-1240
+angular
+http://localhost:4200/#/batch
+в столбце "Исходный код          Имя файла" должно выводиться 2 значения:
+- uid SourceCode
+- имя файла
+
+сейчас выводится только имя файла
+

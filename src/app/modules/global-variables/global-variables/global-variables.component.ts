@@ -18,7 +18,7 @@ export class GlobalVariablesComponent implements OnInit {
     responseGlobalVariables: GlobalVariablesResult;
     deletedRows: GlobalVariable[] = [];
     dataSource: MatTableDataSource<GlobalVariable> = new MatTableDataSource<GlobalVariable>([]);
-    columnsToDisplay: (string)[] = ['id', 'variable', 'uploadTs', 'filename', 'storageUrl', 'bts'];
+    columnsToDisplay: (string)[] = ['id', 'variable', 'uploadTs', 'filename', 'params', 'bts'];
 
     @ViewChild('nextTable', { static: false }) nextTable: MatButton;
     @ViewChild('prevTable', { static: false }) prevTable: MatButton;

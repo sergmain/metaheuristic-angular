@@ -4,5 +4,5 @@ export interface GlobalVariable {
     variable: string;
     uploadTs: string;
     filename: string;
-    storageUrl: string;
+    params: string;
 }

@@ -16,7 +16,7 @@ export class CardFormAddVariableWithStorageComponent {
     @Output() abort: EventEmitter<void> = new EventEmitter<void>();
 
     form: FormGroup = new FormGroup({
-        storageUrl: new FormControl('', [Validators.required, Validators.minLength(1)]),
+        params: new FormControl('', [Validators.required, Validators.minLength(1)]),
         poolCode: new FormControl('', [Validators.required, Validators.minLength(1)]),
     });
 
@@ -26,7 +26,7 @@ export class CardFormAddVariableWithStorageComponent {
 
     create(): void {
         this.globalVariablesService.variable
-            .inExternalStorage(this.form.value.poolCode, this.form.value.storageUrl)
+            .inExternalStorage(this.form.value.poolCode, this.form.value.params)
             .subscribe((response) => {
                 this.afterResponse.emit(response);
             });
