@@ -13,7 +13,20 @@ http://localhost:8080/dispatcher/company/batch/company-batches/2
 при использовании пользователя с ролью MASTER_SUPPORT или MASTER_OPERATOR реализовать возможность удаления пакетов группами. 
 Т.е. сценарий такой - юзер отмечает галками пакеты которые он хочет удалить.
 Затем нажимает кнопку "Удалить отмеченное" (сейчас этой кнопки нет) и после подтверждения удаления выбранных пакетов,
-выполняется запрос к серверу на удалние списка пакетов.
+выполняется запрос к серверу на удаление списка пакетов.
+
+вызывать
+ai.metaheuristic.ai.dispatcher.rest.v1.BatchForOperatorRestController#processBatchesBulkDeleteCommit
+
+    /**
+     *
+     * @param batchIds comma-separated list of batchId for deleting
+     * @param companyUniqueId Company.uniqueId
+     * @return
+     */
+    @PostMapping("/company-batch-bulk-delete-commit/{companyUniqueId}")
+    @PreAuthorize("hasAnyRole('MASTER_OPERATOR')")
+    public BatchData.BulkOperations processBatchesBulkDeleteCommit(String batchIds, @PathVariable Long companyUniqueId)
 
 
 
