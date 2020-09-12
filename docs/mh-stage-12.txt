@@ -66,3 +66,18 @@ issue-1242
 angular
 http://localhost:4200/#/dispatcher/accounts/access/21
 изменение ролей не работает. после нажатия Save роли не сохраняются
+
+    /**
+     *
+     * @param accountId Account.id
+     * @param role name of role to set or remove
+     * @param checkbox flag to set a role or to remove it
+     * @param companyId Account.companyId
+     * @return see @ai.metaheuristic.api.data.OperationStatusRest
+     */
+    @PostMapping("/company-account-edit-roles-commit/{companyId}")
+    @PreAuthorize("hasAnyRole('MASTER_ADMIN')")
+    public OperationStatusRest rolesEditFormCommit(Long accountId, String role, @RequestParam(required = false, defaultValue = "false") boolean checkbox,
+                                      @PathVariable Long companyId) 
+
+в отличие от стандартного интерфейса надо передавать название роли, а не ее индекс
