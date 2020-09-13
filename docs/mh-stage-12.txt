@@ -31,6 +31,14 @@ ai.metaheuristic.ai.dispatcher.rest.v1.BatchForOperatorRestController#processBat
     public BatchData.BulkOperations processBatchesBulkDeleteCommit(String batchIds, @PathVariable Long companyUniqueId)
 
 DONE
+NOT YET
+
+роли MASTER_SUPPORT или MASTER_OPERATOR возможны только у юзеров в main company (companyUniqueId==1)
+сейчас если зайти юзером с ролю MASTER_SUPPORT или MASTER_OPERATOR то меню выглядит как для ющера из обычной компании.
+должно выглядеть так же как для MASTER_ADMIN, т.е. кнопок ИИ,  Пакеты не должно быть,
+при нажатии на Панель управления должна быть кнопка Компании в меню слева(завел багу issue-1243 на эту тему)
+
+т.к. списка компаний нет, то дальше проверить возможности нет
 
 
 
@@ -43,7 +51,7 @@ http://localhost:8080/dispatcher/company/companies
 rest url - /rest/v1/dispatcher/company
 
 DONE
-
+CONFIRMED
 
 
 issue-1238
@@ -52,6 +60,7 @@ http://localhost:4200/#/batch
 сделать кнопку 'Task states' точно такую же как в списке ExecContext
 урл тот же самый но код страницы скопировать или сделать так чтобы он открывался по другому урл.
 т.е. идея в том что урл должен относиться к Пакетам, а не к Контрольной панели
+
 
 
 issue-1239
@@ -74,6 +83,7 @@ http://localhost:4200/#/batch
 сейчас выводится только имя файла
 
 DONE
+CONFIRMED
 
 
 
@@ -86,7 +96,7 @@ issue-1241
 т.е. вернуть кнопку
 
 DONE
-
+CONFIRMED
 
 
 issue-1242
@@ -108,3 +118,56 @@ http://localhost:4200/#/dispatcher/accounts/access/21
                                       @PathVariable Long companyId) 
 
 в отличие от стандартного интерфейса надо передавать название роли, а не ее индекс
+
+DECLINED
+
+
+issue-1243
+во всех урл
+если юзер относится к ролям MASTER_ADMIN, MASTER_OPERATOR, MASTER_SUPPORT,
+то в верхнем меню не должно быть пунктов ИИ, Пакеты
+
+в меню Панель управления должен быть доступен только пункт Компании
+
+
+issue-1244
+angular
+http://localhost:4200/#/dispatcher/company/2233/edit
+
+надо использовать companyUniqueId а не Id
+
+
+issue-1245
+angular
+http://localhost:4200/#/dispatcher/company/companies
+в столбце Id надо выводить companyUniqueId а не Id
+столбец переименовывать не надо
+
+
+
+issue-1246
+angular
+http://localhost:4200/#/dispatcher/company/2233/accounts
+
+надо использовать companyUniqueId а не Id
+
+
+
+issue-1247
+angular
+http://localhost:4200/#/dispatcher/source-codes/1519/exec-context/add
+
+убрать поле ввода "INput variable for this SourceCode"
+должна быть просто кнопка Create и Cancel
+
+
+
+issue-1248
+angular
+http://localhost:4200/#/dispatcher/source-codes/1519/exec-contexts
+в столбце Completed on ничего не выводить если занчение null
+сейчас выводится строка 'null'
+
+
+
+

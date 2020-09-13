@@ -95,6 +95,6 @@ export class ExecContextsComponent implements OnInit {
 
     produce(el, event): void {
         event.target.disabled = true;
-        this.runExecState(el.id, 'PRODUCED');
+        this.runExecState(el.id, 'PRODUCING');
     }
 }
