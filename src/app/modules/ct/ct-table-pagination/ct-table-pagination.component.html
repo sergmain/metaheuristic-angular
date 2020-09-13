@@ -1,0 +1,12 @@
+<ct-flex justify-content="flex-start" gap="8px" *ngIf="pageableDefault">
+    <ct-flex-item>
+        <button mat-flat-button color="primary" (click)="_prev()" [disabled]="globalDisable || pageableDefault.first">
+            <mat-icon>arrow_back_ios</mat-icon>
+        </button>
+    </ct-flex-item>
+    <ct-flex-item>
+        <button mat-flat-button color="primary" (click)="_next()" [disabled]="globalDisable || pageableDefault.last">
+            <mat-icon>arrow_forward_ios</mat-icon>
+        </button>
+    </ct-flex-item>
+</ct-flex>

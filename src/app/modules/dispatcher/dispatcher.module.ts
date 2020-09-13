@@ -58,6 +58,13 @@ const routes: Routes = [
         component: DispatcherRootComponent,
         loadChildren: () => import('src/app/modules/accounts/accounts.module').then(m => m.AccountsModule),
         data: { section: 'accounts' }
+    },
+    {
+        path: 'company',
+        canActivate: [AuthGuard],
+        component: DispatcherRootComponent,
+        loadChildren: () => import('src/app/modules/company/company.module').then(m => m.CompnyModule),
+        data: { section: 'company' }
     }
 ];
 

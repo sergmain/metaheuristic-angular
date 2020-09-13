@@ -2,7 +2,9 @@ import {
     Component,
     OnInit,
     OnDestroy,
-    ChangeDetectorRef
+    ChangeDetectorRef,
+    Input,
+    OnChanges
 } from '@angular/core';
 
 @Component({
@@ -11,31 +13,55 @@ import {
     templateUrl: './ct-table.component.html',
     styleUrls: ['./ct-table.component.scss']
 })
-export class CtTableComponent implements OnInit, OnDestroy {
+export class CtTableComponent implements OnInit, OnDestroy, OnChanges {
+    @Input() isWaiting: boolean;
+
     state = {
         wait: false
     };
-    constructor(private changeDetector: ChangeDetectorRef) {}
 
-    ngOnInit() {}
+    isFnMode: boolean;
 
-    ngOnDestroy() {
-        this.changeDetector.detach();
-    }
+    constructor(private changeDetector: ChangeDetectorRef) { }
 
-
-    wait() {
-        this.state.wait = true;
-        // tslint:disable-next-line: no-string-literal
-        if (!this.changeDetector['destroyed']) {
-            this.changeDetector.detectChanges();
+    ngOnInit(): void {
+        if (this.isWaiting === undefined) {
+            this.isFnMode = true;
+        } else {
+            this.isFnMode = false;
+            this.state.wait = this.isWaiting;
         }
     }
-    show() {
-        this.state.wait = false;
-        // tslint:disable-next-line: no-string-literal
-        if (!this.changeDetector['destroyed']) {
-            this.changeDetector.detectChanges();
+
+    ngOnDestroy(): void {
+        this.changeDetector.detach();
+
+    }
+
+    ngOnChanges(): void {
+        if (this.isFnMode) {
+
+        } else {
+            this.state.wait = this.isWaiting;
+        }
+    }
+
+    wait(): void {
+        if (this.isFnMode) {
+            this.state.wait = true;
+            // tslint:disable-next-line: no-string-literal
+            if (!this.changeDetector['destroyed']) {
+                this.changeDetector.detectChanges();
+            }
+        }
+    }
+    show(): void {
+        if (this.isFnMode) {
+            this.state.wait = false;
+            // tslint:disable-next-line: no-string-literal
+            if (!this.changeDetector['destroyed']) {
+                this.changeDetector.detectChanges();
+            }
         }
     }
 }

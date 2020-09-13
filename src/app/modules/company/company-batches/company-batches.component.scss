@@ -1,0 +1,14 @@
+mat-checkbox {
+    position: relative
+}
+
+.check-area {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    top: 50%;
+    left: 50%;
+    margin-top: -20px;
+    margin-left: -20px;
+    background-color: rgba(0, 0, 0, 0);
+}

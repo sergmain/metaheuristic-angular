@@ -1,0 +1,61 @@
+<ct-cols align-items="baseline">
+    <ct-col size="6">
+        <ct-section>
+            <ct-section-header>
+                <ct-section-header-row>
+                    <ct-heading>New Account</ct-heading>
+                </ct-section-header-row>
+            </ct-section-header>
+            <ct-section-body>
+                <ct-section-body-row>
+                    <form [formGroup]="form" novalidate="novalidate" autocomplete="off">
+                        <mat-form-field appearance="outline" style="width: 100%;">
+                            <mat-label>Name</mat-label>
+                            <input matInput="matInput" type="text" autocomplete="name" formControlName="username" />
+                            <mat-hint>This is a required field.</mat-hint>
+                        </mat-form-field>
+                        <br>
+                        <br>
+                        <mat-form-field appearance="outline" style="width: 100%;">
+                            <mat-label>Password</mat-label>
+                            <input matInput="matInput" type="password" autocomplete="new-password"
+                                formControlName="password" />
+                            <mat-hint>This is a required field.</mat-hint>
+                        </mat-form-field>
+                        <br>
+                        <br>
+                        <mat-form-field appearance="outline" style="width: 100%;">
+                            <mat-label>Password again</mat-label>
+                            <input matInput="matInput" type="password" autocomplete="new-password"
+                                formControlName="password2" />
+                            <mat-hint>This is a required field.</mat-hint>
+                        </mat-form-field>
+                        <br>
+                        <br>
+                        <mat-form-field appearance="outline" style="width: 100%;">
+                            <mat-label>Public Name</mat-label>
+                            <input matInput="matInput" type="text" autocomplete="name" formControlName="publicName" />
+                            <mat-hint>This is a required field.</mat-hint>
+                        </mat-form-field>
+                    </form>
+                </ct-section-body-row>
+            </ct-section-body>
+            <ct-section-footer>
+                <ct-section-footer-row>
+                    <ct-flex justify-content="flex-end" gap="8px">
+                        <ct-flex-item>
+                            <button mat-stroked-button="mat-stroked-button" (click)="back()">Cancel</button>
+                        </ct-flex-item>
+                        <ct-flex-item>
+                            <button mat-flat-button="mat-flat-button" (click)="createAccount()" color="primary"
+                                [disabled]="isLoading || form.invalid">Create Account</button>
+                        </ct-flex-item>
+                    </ct-flex>
+                </ct-section-footer-row>
+            </ct-section-footer>
+        </ct-section>
+    </ct-col>
+    <ct-col size="6">
+        <ct-rest-status [content]="operationStatusRest"></ct-rest-status>
+    </ct-col>
+</ct-cols>

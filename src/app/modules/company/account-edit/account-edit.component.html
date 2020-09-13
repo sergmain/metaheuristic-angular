@@ -1,0 +1,48 @@
+<ct-section *ngIf="!accountResult">
+    <ct-section-body>
+        <ct-section-body-row>
+            <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+        </ct-section-body-row>
+    </ct-section-body>
+</ct-section>
+
+<ct-cols align-items="baseline" *ngIf="accountResult">
+    <ct-col size="6">
+        <ct-section>
+            <ct-section-header>
+                <ct-section-header-row>
+                    <ct-heading>Edit Account </ct-heading>
+                </ct-section-header-row>
+            </ct-section-header>
+            <ct-section-body>
+                <ct-section-body-row>
+                    <mat-form-field appearance="outline" style="width: 100%;" disabled>
+                        <mat-label>Username</mat-label>
+                        <input matInput [value]="accountResult.account.username" disabled />
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" style="width: 100%;">
+                        <mat-label>Public Name</mat-label>
+                        <input matInput />
+                    </mat-form-field>
+                    <br>
+                    <mat-checkbox>Is account enabled?</mat-checkbox>
+                </ct-section-body-row>
+            </ct-section-body>
+            <ct-section-footer>
+                <ct-section-footer-row>
+                    <ct-flex justify-content="flex-end" gap="8px">
+                        <ct-flex-item>
+                            <button mat-stroked-button (click)="back()">Cancel</button>
+                        </ct-flex-item>
+                        <ct-flex-item>
+                            <button mat-flat-button (click)="saveChanges()" color="primary">Save Changes</button>
+                        </ct-flex-item>
+                    </ct-flex>
+                </ct-section-footer-row>
+            </ct-section-footer>
+        </ct-section>
+    </ct-col>
+    <ct-col size="6">
+        <ct-rest-status [content]=""></ct-rest-status>
+    </ct-col>
+</ct-cols>

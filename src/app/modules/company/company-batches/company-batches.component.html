@@ -1,0 +1,137 @@
+<ct-section *ngIf="!batchesResult">
+    <ct-section-body>
+        <ct-section-body-row>
+            <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+        </ct-section-body-row>
+    </ct-section-body>
+</ct-section>
+
+
+<ct-section *ngIf="batchesResult">
+    <ct-section-header>
+        <ct-section-header-row>
+            <ct-flex justify-content="space-between">
+                <ct-flex-item>
+                    <ct-heading> Batch </ct-heading>
+                </ct-flex-item>
+                <ct-flex-item>
+                    <ng-container *ngTemplateOutlet="uploadButtonTemplate"></ng-container>
+                </ct-flex-item>
+            </ct-flex>
+        </ct-section-header-row>
+    </ct-section-header>
+    <ct-section-body>
+        <ct-section-body-row>
+            <ct-table [isWaiting]="isLoading">
+                <table class="mat-table" mat-table="mat-table" [dataSource]="dataSource">
+                    <ng-container matColumnDef="check">
+                        <th mat-header-cell *matHeaderCellDef>
+                            <mat-checkbox [indeterminate]="checkIndeterminate()" [checked]="allComplete()"
+                                (change)="setAllChecked($event.checked)">
+                                <div class="check-area"></div>
+                            </mat-checkbox>
+                        </th>
+                        <td mat-cell="mat-cell" *matCellDef="let el">
+                            <mat-checkbox [(ngModel)]="el.checked" *ngIf="el.deleted">
+                                <div class="check-area"></div>
+                            </mat-checkbox>
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="id">
+                        <th mat-header-cell *matHeaderCellDef>ID</th>
+                        <td mat-cell="mat-cell" *matCellDef="let el">{{el.batch.batch.id}} </td>
+                    </ng-container>
+                    <ng-container matColumnDef="createdOn">
+                        <th mat-header-cell *matHeaderCellDef>Created on </th>
+                        <td mat-cell="mat-cell" *matCellDef="let el">
+                            {{el.batch.batch.createdOn | date:'MMM d, yyyy, HH:mm:ss'}} </td>
+                    </ng-container>
+                    <ng-container matColumnDef="isBatchConsistent">
+                        <th mat-header-cell *matHeaderCellDef>Is batch consistent?</th>
+                        <td mat-cell="mat-cell" *matCellDef="let el"> <span
+                                *ngIf="el.batch.ok">{{ 'batch.isBatchConsistent.true' | translate }}</span><span
+                                *ngIf="!el.batch.ok">{{ 'batch.isBatchConsistent.false' | translate }}</span></td>
+                    </ng-container>
+                    <ng-container matColumnDef="isDeleted">
+                        <th mat-header-cell *matHeaderCellDef>Is deleted? </th>
+                        <td mat-cell="mat-cell" *matCellDef="let el">{{ el.batch.batch.deleted }} </td>
+                    </ng-container>
+                    <ng-container matColumnDef="sourceCode">
+                        <th mat-header-cell *matHeaderCellDef>
+                            <div class="no-wrap">Source Code</div>
+                            <div class="no-wrap">File Name</div>
+                        </th>
+                        <td mat-cell="mat-cell" *matCellDef="let el">
+                            <div class="no-wrap">{{el.batch.sourceCodeUid}}</div>
+                            <div class="no-wrap">{{el.batch.uploadedFileName}}</div>
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="execState">
+                        <th mat-header-cell *matHeaderCellDef>Exec State</th>
+                        <td mat-cell="mat-cell" *matCellDef="let el">
+                            <span *ngIf="el.batch.execState === -1">Error</span>
+                            <span *ngIf="el.batch.execState === 2">Preparing</span>
+                            <span *ngIf="el.batch.execState === 3">Processing</span>
+                            <span *ngIf="el.batch.execState === 4">Finished</span>
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="bts">
+                        <th mat-header-cell *matHeaderCellDef> </th>
+                        <td mat-cell="mat-cell" *matCellDef="let el">
+                            <ct-flex justify-content="flex-end" gap="9px">
+                                <ct-flex-item>
+                                    <button mat-flat-button size="forTableRow" color="primary">Status</button>
+                                </ct-flex-item>
+                                <ct-flex-item>
+                                    <button mat-flat-button size="forTableRow" color="primary">
+                                        <mat-icon>archive</mat-icon>
+                                        Result
+                                    </button>
+                                </ct-flex-item>
+                                <ct-flex-item>
+                                    <button mat-flat-button size="forTableRow" color="primary">
+                                        <mat-icon>archive</mat-icon>
+                                        Origin File
+                                    </button>
+                                </ct-flex-item>
+                                <ct-flex-item>
+                                    <button mat-flat-button color="warn" size="forTableRow" (click)="deleteOne(el)"
+                                        title="Delete" [disabled]="!el.deleted">
+                                        <mat-icon>delete</mat-icon>
+                                    </button>
+                                </ct-flex-item>
+                            </ct-flex>
+                        </td>
+                    </ng-container>
+                    <tr mat-header-row="mat-header-row" *matHeaderRowDef="columnsToDisplay"></tr>
+                    <tr mat-row="mat-row" *matRowDef="let row; columns: columnsToDisplay;"></tr>
+                </table>
+            </ct-table>
+        </ct-section-body-row>
+    </ct-section-body>
+    <ct-section-footer>
+        <ct-section-footer-row>
+            <button mat-flat-button color="warn" (click)="deleteMany()" [disabled]="!someChecked()" title="Delete">
+                Delete Many
+            </button>
+        </ct-section-footer-row>
+        <ct-section-footer-row>
+            <ct-flex justify-content="space-between">
+                <ct-flex-item>
+                    <ct-table-pagination (prev)="prevPage()" (next)="nextPage()"
+                        [pageableDefault]="batchesResult.batches"></ct-table-pagination>
+                </ct-flex-item>
+                <ct-flex-item>
+                    <ng-container *ngTemplateOutlet="uploadButtonTemplate"></ng-container>
+                </ct-flex-item>
+            </ct-flex>
+        </ct-section-footer-row>
+    </ct-section-footer>
+</ct-section>
+
+
+<ng-template #uploadButtonTemplate>
+    <button *ngIf="authenticationService.isRoleMasterOperator()" mat-flat-button color="primary"
+        [routerLink]="['../','account','add']">Upload files and start
+        processing</button>
+</ng-template>

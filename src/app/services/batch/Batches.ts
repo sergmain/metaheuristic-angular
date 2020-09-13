@@ -2,7 +2,7 @@ import { Pageable } from '@app/models/Pageable';
 import { Sort } from '@app/models/Sort';
 import { Batch } from './Batch';
 export interface Batches {
-    content ? : Batch[] | null;
+    content?: Batch[] | null;
     pageable: Pageable;
     totalPages: number;
     last: boolean;

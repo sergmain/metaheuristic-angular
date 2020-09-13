@@ -6,4 +6,4 @@ export function generateFormData(params: any): FormData {
         }
     }
     return formData;
-};
+}

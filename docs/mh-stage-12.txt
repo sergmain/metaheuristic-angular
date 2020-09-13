@@ -8,6 +8,8 @@ issue-1209
 везде в коде вместо ai.Atlas должно быть ai.ExperimentResult или ai.Experiment.Result или как-то по другому но без Atlas
 
 
+
+
 issue-1216
 http://localhost:8080/dispatcher/company/batch/company-batches/2
 при использовании пользователя с ролью MASTER_SUPPORT или MASTER_OPERATOR реализовать возможность удаления пакетов группами. 
@@ -28,6 +30,8 @@ ai.metaheuristic.ai.dispatcher.rest.v1.BatchForOperatorRestController#processBat
     @PreAuthorize("hasAnyRole('MASTER_OPERATOR')")
     public BatchData.BulkOperations processBatchesBulkDeleteCommit(String batchIds, @PathVariable Long companyUniqueId)
 
+DONE
+
 
 
 issue-1217
@@ -37,6 +41,8 @@ http://localhost:8080/dispatcher/company/companies
 который задается в application.properties
 
 rest url - /rest/v1/dispatcher/company
+
+
 
 
 

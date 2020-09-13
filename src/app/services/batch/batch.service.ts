@@ -7,12 +7,11 @@ import { OperationStatusRest } from '@src/app/models/OperationStatusRest';
 import { environment } from '@src/environments/environment';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { AuthenticationService } from '../authentication';
-import { Batch } from './Batch';
+import { SourceCodeUidsForCompany } from '../source-codes/SourceCodeUidsForCompany';
 import { newExecStatus } from './batch.actions';
-import { BatchExecStatus } from './BatchExecStatus';
+import { BatchesResult } from './BatchesResult';
 import { BatchExexStatusComparer } from './BatchExexStatusComparer';
 import { response } from './response';
-import { SourceCodeUidsForCompany } from '../source-codes/SourceCodeUidsForCompany';
 
 const url = (urlString: string): string => `${environment.baseUrl}dispatcher/batch/${urlString}`;
 
@@ -44,8 +43,8 @@ export class BatchService {
     }
 
     batches = {
-        get: (params: GetBatchesParams): Observable<response.batches.Get> =>
-            this.http.get<response.batches.Get>(url(`batches?page=${params.page}${params.filterBatches ? '&filterBatches=true' : ''}`)),
+        get: (params: GetBatchesParams): Observable<BatchesResult> =>
+            this.http.get<BatchesResult>(url(`batches?page=${params.page}${params.filterBatches ? '&filterBatches=true' : ''}`)),
 
         part: (page: number) =>
             this.http.post(url(`batches-part`), {})
@@ -99,12 +98,15 @@ export class BatchService {
 
         function fn(): void {
             if (base.authenticationService.isAuth()) {
-                base.batch.execStatuses().subscribe((content: response.batch.ExecStatuses) => {
-                    base.batchExexStatusComparer.takeApart(content.statuses);
-                    if (base.intervalStarted) {
-                        setTimeout(() => { fn(); }, interval);
-                    }
-                    base.store.dispatch(newExecStatus({ payload: content.statuses }));
+                base.batch.execStatuses().subscribe({
+                    next: (content: response.batch.ExecStatuses) => {
+                        base.batchExexStatusComparer.takeApart(content.statuses);
+                        if (base.intervalStarted) {
+                            setTimeout(() => { fn(); }, interval);
+                        }
+                        base.store.dispatch(newExecStatus({ payload: content.statuses }));
+                    },
+                    error: () => { }
                 });
             }
         }

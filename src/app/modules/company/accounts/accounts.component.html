@@ -1,0 +1,108 @@
+<ct-section *ngIf="!accountsResult">
+    <ct-section-body>
+        <ct-section-body-row>
+            <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+        </ct-section-body-row>
+    </ct-section-body>
+</ct-section>
+
+
+<ct-section *ngIf="accountsResult">
+    <ct-section-header>
+        <ct-section-header-row>
+            <ct-flex justify-content="space-between">
+                <ct-flex-item>
+                    <ct-heading> Accounts </ct-heading>
+                </ct-flex-item>
+                <ct-flex-item>
+                    <ng-container *ngTemplateOutlet="addButtonTemplate"></ng-container>
+                </ct-flex-item>
+            </ct-flex>
+        </ct-section-header-row>
+    </ct-section-header>
+    <ct-section-body>
+        <ct-section-body-row>
+            <ct-table [isWaiting]="isLoading">
+                <table mat-table [dataSource]="dataSource">
+                    <ng-container matColumnDef="id">
+                        <th mat-header-cell *matHeaderCellDef>ID </th>
+                        <td mat-cell *matCellDef="let el">{{el.id}} </td>
+                    </ng-container>
+                    <ng-container matColumnDef="isEnabled">
+                        <th mat-header-cell *matHeaderCellDef>Is enabled </th>
+                        <td mat-cell *matCellDef="let el">{{el.enabled ? 'Yes':'No'}} </td>
+                    </ng-container>
+                    <ng-container matColumnDef="login">
+                        <th mat-header-cell *matHeaderCellDef>Login </th>
+                        <td mat-cell *matCellDef="let el">{{el.username}} </td>
+                    </ng-container>
+                    <ng-container matColumnDef="publicName">
+                        <th mat-header-cell *matHeaderCellDef>Public name </th>
+                        <td mat-cell *matCellDef="let el">{{el.publicName}} </td>
+                    </ng-container>
+                    <ng-container matColumnDef="role">
+                        <th mat-header-cell *matHeaderCellDef>Roles</th>
+                        <td mat-cell *matCellDef="let el">{{el.roles}} </td>
+                    </ng-container>
+                    <ng-container matColumnDef="createdOn">
+                        <th mat-header-cell *matHeaderCellDef>Created On </th>
+                        <td mat-cell *matCellDef="let el">
+                            {{el.createdOn | date:'HH:mm:ss, MMM&nbsp;d,&nbsp;yyyy'}} </td>
+                    </ng-container>
+                    <ng-container matColumnDef="bts">
+                        <th mat-header-cell *matHeaderCellDef> </th>
+                        <td mat-cell *matCellDef="let el">
+                            <ct-flex justify-content="flex-end" gap="9px">
+                                <ct-flex-item>
+                                    <a mat-flat-button size="forTableRow" [routerLink]="['../','account',el.id,'edit']"
+                                        color="primary"> Edit</a>
+                                </ct-flex-item>
+                                <ct-flex-item>
+                                    <a mat-flat-button size="forTableRow"
+                                        [routerLink]="['../','account',el.id,'edit-roles']" color="primary">Roles</a>
+                                </ct-flex-item>
+                                <ct-flex-item>
+                                    <a mat-flat-button size="forTableRow"
+                                        [routerLink]="['../','account',el.id,'edit-password']" color="primary">
+                                        Change Password</a>
+                                </ct-flex-item>
+                            </ct-flex>
+                        </td>
+                    </ng-container>
+                    <tr mat-header-row *matHeaderRowDef="columnsToDisplay"> </tr>
+                    <tr mat-row *matRowDef="let row; columns: columnsToDisplay;"> </tr>
+                </table>
+            </ct-table>
+        </ct-section-body-row>
+    </ct-section-body>
+    <ct-section-footer>
+        <ct-section-footer-row>
+            <ct-flex justify-content="space-between">
+                <ct-flex-item>
+                    <ct-flex justify-content="flex-start" gap="8px">
+                        <ct-flex-item>
+                            <button mat-flat-button color="primary" (click)="prevPage()"
+                                [disabled]="isLoading || accountsResult.accounts.first">
+                                <mat-icon>arrow_back_ios</mat-icon>
+                            </button>
+                        </ct-flex-item>
+                        <ct-flex-item>
+                            <button mat-flat-button color="primary" (click)="nextPage()"
+                                [disabled]="isLoading || accountsResult.accounts.last">
+                                <mat-icon>arrow_forward_ios</mat-icon>
+                            </button>
+                        </ct-flex-item>
+                    </ct-flex>
+                </ct-flex-item>
+                <ct-flex-item>
+                    <ng-container *ngTemplateOutlet="addButtonTemplate"></ng-container>
+                </ct-flex-item>
+            </ct-flex>
+        </ct-section-footer-row>
+    </ct-section-footer>
+</ct-section>
+
+
+<ng-template #addButtonTemplate>
+    <button mat-flat-button color="primary" [routerLink]="['../','account','add']">Add New Account</button>
+</ng-template>

@@ -1,0 +1,47 @@
+<ct-section *ngIf="!simpleCompanyResult">
+    <ct-section-body>
+        <ct-section-body-row>
+            <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+        </ct-section-body-row>
+    </ct-section-body>
+</ct-section>
+
+
+<ct-cols *ngIf="simpleCompanyResult">
+    <ct-col size="6">
+        <ct-section>
+            <ct-section-header>
+                <ct-section-header-row>
+                    <ct-heading>Edit Company</ct-heading>
+                </ct-section-header-row>
+            </ct-section-header>
+            <ct-section-body>
+                <ct-section-body-row>
+                    <mat-form-field appearance="outline" style="width: 100%;">
+                        <mat-label>Name of company</mat-label>
+                        <input matInput="matInput" [(ngModel)]="name" />
+                        <mat-hint>This is a required field.</mat-hint>
+                    </mat-form-field>
+                    <br>
+                    <br>
+                    <mat-form-field appearance="outline" style="width: 100%;">
+                        <mat-label>Company's groups</mat-label>
+                        <input matInput="matInput" [(ngModel)]="groups" />
+                    </mat-form-field>
+                    <br>
+                    <ct-flex justify-content="flex-end" gap="unit(1)">
+                        <ct-flex-item>
+                            <a mat-stroked-button [routerLink]="['../../companies']">Cancel</a>
+                        </ct-flex-item>
+                        <ct-flex-item>
+                            <button mat-flat-button color="primary" (click)="saveChanges()">Save Changes</button>
+                        </ct-flex-item>
+                    </ct-flex>
+                </ct-section-body-row>
+            </ct-section-body>
+        </ct-section>
+    </ct-col>
+    <ct-col size="6">
+        <ct-rest-status [content]="operationStatusRest"></ct-rest-status>
+    </ct-col>
+</ct-cols>

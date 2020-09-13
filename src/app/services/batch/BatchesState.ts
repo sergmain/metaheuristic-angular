@@ -1,8 +1,8 @@
 import { Batch } from './Batch';
-import { response } from './response';
+import { BatchesResult } from './BatchesResult';
 
 export interface BatchesState {
     isLoading: boolean;
-    response: response.batches.Get;
+    response: BatchesResult;
     list: Batch[];
 }

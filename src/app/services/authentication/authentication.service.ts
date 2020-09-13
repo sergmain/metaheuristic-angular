@@ -132,4 +132,20 @@ export class AuthenticationService {
             subscriber.complete();
         });
     }
+
+
+
+
+    isRoleManager(): boolean { return this.user.authorities.map(a => a.authority).includes(Role.ROLE_MANAGER); }
+    isRoleOperator(): boolean { return this.user.authorities.map(a => a.authority).includes(Role.ROLE_OPERATOR); }
+    isRoleData(): boolean { return this.user.authorities.map(a => a.authority).includes(Role.ROLE_DATA); }
+
+    isRoleServerRestAccess(): boolean { return this.user.authorities.map(a => a.authority).includes(Role.ROLE_SERVER_REST_ACCESS); }
+    isRoleAssetRestAccess(): boolean { return this.user.authorities.map(a => a.authority).includes(Role.ROLE_ASSET_REST_ACCESS); }
+    isRoleBilling(): boolean { return this.user.authorities.map(a => a.authority).includes(Role.ROLE_BILLING); }
+
+    isRoleMasterAdmin(): boolean { return this.user.authorities.map(a => a.authority).includes(Role.ROLE_MASTER_ADMIN); }
+    isRoleMasterOperator(): boolean { return this.user.authorities.map(a => a.authority).includes(Role.ROLE_MASTER_OPERATOR); }
+    isRoleMasterSupport(): boolean { return this.user.authorities.map(a => a.authority).includes(Role.ROLE_MASTER_SUPPORT); }
+    isRoleAdmin(): boolean { return this.user.authorities.map(a => a.authority).includes(Role.ROLE_ADMIN); }
 }

@@ -20,6 +20,8 @@
             <button class="mat-button" *ngIf="accessAccounts()" mat-button size="forNavigation"
                 routerLinkActive="active"
                 routerLink="/dispatcher/accounts">{{ 'dispatcher.Accounts' | translate }}</button>
+            <button class="mat-button" *ngIf="accessCompany()" mat-button size="forNavigation" routerLinkActive="active"
+                routerLink="/dispatcher/company/companies">{{ 'dispatcher.Company' | translate }}</button>
         </div>
     </mat-sidenav>
     <mat-sidenav-content>
