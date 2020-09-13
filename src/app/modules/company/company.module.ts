@@ -75,11 +75,21 @@ const routes: Routes = [
             backConfig: ['../', '../', '../', 'accounts']
         }
     },
+    //
+    //
+    //
     {
         path: ':companyUniqueId/batches',
         component: CompanyBatchesComponent,
         data: {
             backConfig: ['../', '../', 'companies']
+        }
+    },
+    {
+        path: ':companyUniqueId/batches/upload',
+        component: CompanyComponent,
+        data: {
+            backConfig: ['../']
         }
     }
 ];
