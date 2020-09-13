@@ -34,24 +34,12 @@ DONE
 NOT YET
 
 роли MASTER_SUPPORT или MASTER_OPERATOR возможны только у юзеров в main company (companyUniqueId==1)
-сейчас если зайти юзером с ролю MASTER_SUPPORT или MASTER_OPERATOR то меню выглядит как для ющера из обычной компании.
+сейчас если зайти юзером с ролю MASTER_SUPPORT или MASTER_OPERATOR то меню выглядит как для юзера из обычной компании.
 должно выглядеть так же как для MASTER_ADMIN, т.е. кнопок ИИ,  Пакеты не должно быть,
 при нажатии на Панель управления должна быть кнопка Компании в меню слева(завел багу issue-1243 на эту тему)
 
 т.к. списка компаний нет, то дальше проверить возможности нет
 
-
-
-issue-1217
-http://localhost:8080/dispatcher/company/companies
-реализовать управление компаниями
-для того, чтобы посмотреть как это работает надо использовать юзера master-admin
-который задается в application.properties
-
-rest url - /rest/v1/dispatcher/company
-
-DONE
-CONFIRMED
 
 
 issue-1238
@@ -71,55 +59,6 @@ http://localhost:4200/#/experiments
 т.е. идея в том что урл толжет относиться к Пакетам, а не к Контрольной панели
 
 
-
-
-issue-1240
-angular
-http://localhost:4200/#/batch
-в столбце "Исходный код Имя файла" должно выводиться 2 значения:
-- uid SourceCode
-- имя файла
-
-сейчас выводится только имя файла
-
-DONE
-CONFIRMED
-
-
-
-issue-1241
-откатить назад issue-1229:
-        angular
-        http://localhost:4200/#/dispatcher/source-codes/1353/exec-contexts
-        убрать кнопку создания контекста Add new context
-
-т.е. вернуть кнопку
-
-DONE
-CONFIRMED
-
-
-issue-1242
-angular
-http://localhost:4200/#/dispatcher/accounts/access/21
-изменение ролей не работает. после нажатия Save роли не сохраняются
-
-    /**
-     *
-     * @param accountId Account.id
-     * @param role name of role to set or remove
-     * @param checkbox flag to set a role or to remove it
-     * @param companyId Account.companyId
-     * @return see @ai.metaheuristic.api.data.OperationStatusRest
-     */
-    @PostMapping("/company-account-edit-roles-commit/{companyId}")
-    @PreAuthorize("hasAnyRole('MASTER_ADMIN')")
-    public OperationStatusRest rolesEditFormCommit(Long accountId, String role, @RequestParam(required = false, defaultValue = "false") boolean checkbox,
-                                      @PathVariable Long companyId) 
-
-в отличие от стандартного интерфейса надо передавать название роли, а не ее индекс
-
-DECLINED
 
 
 issue-1243
@@ -169,5 +108,9 @@ http://localhost:4200/#/dispatcher/source-codes/1519/exec-contexts
 сейчас выводится строка 'null'
 
 
+issue-1249
+angular
+со страницы http://localhost:4200/#/dispatcher/accounts кнопку Access надо удалить
 
+функциональность удалять не надо, может в  будущем редактирование ролей и будет делегировано локальным админам
 
