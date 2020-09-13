@@ -26,4 +26,8 @@ export namespace BatchData {
         uploadedFileName: string;
         username: string;
     }
+    export interface UploadingStatus {
+        batchId: number;
+        execContextId: number;
+    }
 }

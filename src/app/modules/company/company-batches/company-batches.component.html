@@ -80,16 +80,19 @@
                         <td mat-cell="mat-cell" *matCellDef="let el">
                             <ct-flex justify-content="flex-end" gap="9px">
                                 <ct-flex-item>
-                                    <button mat-flat-button size="forTableRow" color="primary">Status</button>
+                                    <button mat-flat-button [routerLink]="['../','batch',el.batch.batch.id]"
+                                        size="forTableRow" color="primary">Status</button>
                                 </ct-flex-item>
                                 <ct-flex-item>
-                                    <button mat-flat-button size="forTableRow" color="primary">
+                                    <button mat-flat-button size="forTableRow" color="primary"
+                                        (click)="downloadResult(el)">
                                         <mat-icon>archive</mat-icon>
                                         Result
                                     </button>
                                 </ct-flex-item>
                                 <ct-flex-item>
-                                    <button mat-flat-button size="forTableRow" color="primary">
+                                    <button mat-flat-button size="forTableRow" color="primary"
+                                        (click)="downloadOriginFile(el)">
                                         <mat-icon>archive</mat-icon>
                                         Origin File
                                     </button>

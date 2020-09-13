@@ -42,7 +42,7 @@ http://localhost:8080/dispatcher/company/companies
 
 rest url - /rest/v1/dispatcher/company
 
-
+DONE
 
 
 
@@ -62,6 +62,8 @@ http://localhost:4200/#/experiments
 т.е. идея в том что урл толжет относиться к Пакетам, а не к Контрольной панели
 
 
+
+
 issue-1240
 angular
 http://localhost:4200/#/batch
@@ -71,6 +73,9 @@ http://localhost:4200/#/batch
 
 сейчас выводится только имя файла
 
+DONE
+
+
 
 issue-1241
 откатить назад issue-1229:
@@ -79,6 +84,9 @@ issue-1241
         убрать кнопку создания контекста Add new context
 
 т.е. вернуть кнопку
+
+DONE
+
 
 
 issue-1242

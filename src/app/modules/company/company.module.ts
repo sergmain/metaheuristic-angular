@@ -15,6 +15,8 @@ import { AccountEditComponent } from './account-edit/account-edit.component';
 import { AccountEditPasswordComponent } from './account-edit-password/account-edit-password.component';
 import { AccountEditRolesComponent } from './account-edit-roles/account-edit-roles.component';
 import { CompanyBatchesComponent } from './company-batches/company-batches.component';
+import { CompanyBatchStatusComponent } from './company-batch-status/company-batch-status.component';
+import { CompanyBatchUploadComponent } from './company-batch-upload/company-batch-upload.component';
 
 
 const routes: Routes = [
@@ -87,9 +89,16 @@ const routes: Routes = [
     },
     {
         path: ':companyUniqueId/batches/upload',
-        component: CompanyComponent,
+        component: CompanyBatchUploadComponent,
         data: {
             backConfig: ['../']
+        }
+    },
+    {
+        path: ':companyUniqueId/batch/:batchId',
+        component: CompanyBatchStatusComponent,
+        data: {
+            backConfig: ['../', '../', 'batches']
         }
     }
 ];
@@ -123,7 +132,9 @@ export class CompanyRoutingModule { }
         AccountEditComponent,
         AccountEditPasswordComponent,
         AccountEditRolesComponent,
-        CompanyBatchesComponent
+        CompanyBatchesComponent,
+        CompanyBatchStatusComponent,
+        CompanyBatchUploadComponent
     ]
 })
 export class CompnyModule { }

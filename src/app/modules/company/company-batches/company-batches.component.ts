@@ -10,6 +10,7 @@ import { ConfirmationDialogMethod, QuestionData } from '@src/app/components/app-
 import { MatDialog } from '@angular/material/dialog';
 import { TranslateService } from '@ngx-translate/core';
 import { AuthenticationService } from '@src/app/services/authentication';
+import * as fileSaver from 'file-saver';
 
 @Component({
     selector: 'company-batches',
@@ -142,4 +143,28 @@ export class CompanyBatchesComponent implements OnInit {
         return this.batches.filter(b => b.deleted);
     }
 
+    downloadResult(el: UIBatch): void {
+        this.companyService
+            .downloadProcessingResult(this.companyUniqueId, el.batch.batch.id.toString())
+            .subscribe((res) => {
+                const name: string = res.headers
+                    .get('Content-Disposition')
+                    .replace('filename*=UTF-8\'\'', '') || 'result.zip';
+                fileSaver.saveAs(res.body, name);
+            });
+    }
+    downloadOriginFile(el: UIBatch): void {
+        this.companyService
+            .downloadOriginFile(
+                this.companyUniqueId,
+                el.batch.batch.id.toString(),
+                el.batch.uploadedFileName
+            )
+            .subscribe((res) => {
+                const name: string = res.headers
+                    .get('Content-Disposition')
+                    .replace('filename*=UTF-8\'\'', '') || 'result.zip';
+                fileSaver.saveAs(res.body, name);
+            });
+    }
 }

@@ -48,6 +48,9 @@ export class AccountAccessComponent implements OnInit {
         if (this.isData) { roles.push(Role.ROLE_DATA); }
         if (this.isManager) { roles.push(Role.ROLE_MANAGER); }
         if (this.isOperator) { roles.push(Role.ROLE_OPERATOR); }
+        if (this.isServerRestAccess) { roles.push(Role.ROLE_SERVER_REST_ACCESS); }
+
+        console.log(roles)
 
         this.accountsService.account.roleCommit(accountId, roles.join(',')).subscribe(() => { });
     }
