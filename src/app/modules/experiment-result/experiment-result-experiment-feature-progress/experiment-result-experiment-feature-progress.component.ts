@@ -1,44 +1,41 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
-import { AtlasService, response, Task, Tasks } from '@services/atlas';
-import { ExperimentApiData } from '@src/app/services/experiments/ExperimentApiData';
+import { ExperimentResultService } from '@src/app/services/experiment-result/experiment-result.service';
+import { ExperimentResultData } from '@src/app/services/experiment-result/ExperimentResultData';
+import { ExperimentResultTaskParamsYaml } from '@src/app/services/experiment-result/ExperimentResultTaskParamsYaml';
+import { ExperimentData } from '@src/app/services/experiments/ExperimentData';
 import { PlotComponent } from 'angular-plotly.js';
 import { CtWrapBlockComponent } from '../../ct/ct-wrap-block/ct-wrap-block.component';
-import { ExperimentData } from '@src/app/services/experiments/ExperimentData';
 
 
 @Component({
-    selector: 'atlas-experiment-feature-progress',
-    templateUrl: './atlas-experiment-feature-progress.component.html',
-    styleUrls: ['./atlas-experiment-feature-progress.component.scss']
+    selector: 'experiment-result-experiment-feature-progress',
+    templateUrl: './experiment-result-experiment-feature-progress.component.html',
+    styleUrls: ['./experiment-result-experiment-feature-progress.component.scss']
 })
 
-export class AtlasExperimentFeatureProgressComponent implements OnInit {
+export class ExperimentResultExperimentFeatureProgressComponent implements OnInit {
 
     @ViewChild(PlotComponent) plotComponent;
     @ViewChild('consoleView') consoleView: CtWrapBlockComponent;
 
     plotly: PlotComponent;
-
-    featureProgressResponse: response.experiment.FeatureProgress;
-
-    consolePartResponse: response.experiment.FeatureProgressConsolePart;
-    plotDataResponse: response.experiment.FeaturePlotDataPart;
-
+    experimentFeatureExtendedResult: ExperimentResultData.ExperimentFeatureExtendedResult;
+    consolePartResponse: ExperimentResultData.ConsoleResult;
+    plotData: ExperimentResultData.PlotData;
     experiment: ExperimentData;
 
     //
     experimentId: string;
     atlasId: string;
     featureId: string;
-    tasks: Tasks;
     metricsResult: any;
     lastParams: string = ',';
     canDraw: boolean = false;
     //
     pickedAxes: (boolean | any)[] = [false, false];
-    currentTask: Task;
+    currentTask: ExperimentResultTaskParamsYaml;
 
     tables = {
         hyperParameters: {
@@ -54,7 +51,7 @@ export class AtlasExperimentFeatureProgressComponent implements OnInit {
     dataGraph = {
         show: false,
         initData: (): void => {
-            this.dataGraph.data = [Object.assign({}, this.plotDataResponse || {}, {
+            this.dataGraph.data = [Object.assign({}, this.plotData || {}, {
                 type: 'surface'
             })];
         },
@@ -86,7 +83,7 @@ export class AtlasExperimentFeatureProgressComponent implements OnInit {
 
     constructor(
         private route: ActivatedRoute,
-        private atlasService: AtlasService,
+        private experimentResultService: ExperimentResultService,
     ) { }
 
     ngOnInit() {
@@ -97,25 +94,24 @@ export class AtlasExperimentFeatureProgressComponent implements OnInit {
     }
 
     updateResponse() {
-        this.atlasService.experiment
-            .featureProgress(this.atlasId, this.experimentId, this.featureId)
-            .subscribe((response: response.experiment.FeatureProgress) => {
-                this.featureProgressResponse = response;
+        this.experimentResultService
+            .getFeatures(this.atlasId, this.experimentId, this.featureId)
+            .subscribe(experimentFeatureExtendedResult => {
+                this.experimentFeatureExtendedResult = experimentFeatureExtendedResult;
                 this.tables.features.table = Object
-                    .keys(response.experimentFeature)
+                    .keys(experimentFeatureExtendedResult.experimentFeature)
                     .filter(key => ['resourceCodes', 'id', 'execStatusAsString'].includes(key))
-                    .map(key => [key, response.experimentFeature[key]]);
-                this.tables.hyperParameters.table = new MatTableDataSource(response.hyperParamResult.elements || []);
-                this.metricsResult = response.metricsResult;
-                this.tasks = response.tasks;
+                    .map(key => [key, experimentFeatureExtendedResult.experimentFeature[key]]);
+                this.tables.hyperParameters.table = new MatTableDataSource(experimentFeatureExtendedResult.hyperParamResult.elements || []);
+                this.metricsResult = experimentFeatureExtendedResult.metricsResult;
             });
     }
 
     updateResponsePart(page: number) {
-        this.atlasService.experiment
-            .featureProgressPart(this.atlasId, this.experimentId, this.featureId, this.lastParams, page)
-            .subscribe((response: response.experiment.FeatureProgressPart) => {
-                this.tasks = response.tasks;
+        this.experimentResultService
+            .getFeatureProgressPart(this.atlasId, this.experimentId, this.featureId, this.lastParams, page.toString())
+            .subscribe(experimentFeatureExtendedResult => {
+                this.experimentFeatureExtendedResult.tasks = experimentFeatureExtendedResult.tasks;
             });
     }
 
@@ -149,10 +145,10 @@ export class AtlasExperimentFeatureProgressComponent implements OnInit {
     pickHyperParam(el) {
         el.selected = !el.selected;
         const paramsArr: string[] = [];
-        this.featureProgressResponse.hyperParamResult
+        this.experimentFeatureExtendedResult.hyperParamResult
             .elements.forEach((elem) => {
                 elem.list.forEach((item, i) => {
-                    if (item.selected) {
+                    if (item.isSelected) {
                         paramsArr.push(`${elem.key}-${i}`);
                     }
                 });
@@ -171,20 +167,20 @@ export class AtlasExperimentFeatureProgressComponent implements OnInit {
     }
 
     featurePlotDataPart(params, paramsAxis) {
-        this.atlasService.experiment
-            .featurePlotDataPart(this.atlasId, this.experimentId, this.featureId, params, paramsAxis)
-            .subscribe((response) => {
-                this.plotDataResponse = response;
+        this.experimentResultService
+            .getPlotData(this.atlasId, this.experimentId, this.featureId, params, paramsAxis)
+            .subscribe(plotData => {
+                this.plotData = plotData;
                 this.dataGraph.show = true;
                 this.dataGraph.initData();
             });
     }
 
     nextPage() {
-        this.updateResponsePart(this.tasks.number + 1);
+        this.updateResponsePart(this.experimentFeatureExtendedResult.tasks.number + 1);
     }
 
     prevPage() {
-        this.updateResponsePart(this.tasks.number - 1);
+        this.updateResponsePart(this.experimentFeatureExtendedResult.tasks.number - 1);
     }
 }

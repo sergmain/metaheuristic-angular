@@ -1,15 +1,15 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LoadStates } from '@app/enums/LoadStates';
-import { AtlasService } from '@src/app/services/atlas';
+import { ExperimentResultService } from '@src/app/services/experiment-result/experiment-result.service';
 import { CtFileUploadComponent } from '../../ct/ct-file-upload/ct-file-upload.component';
 
 @Component({
-    selector: 'atlas-experiment-export-import',
-    templateUrl: './atlas-experiment-export-import.component.html',
-    styleUrls: ['./atlas-experiment-export-import.component.scss']
+    selector: 'experiment-result-experiment-export-import',
+    templateUrl: './experiment-result-experiment-export-import.component.html',
+    styleUrls: ['./experiment-result-experiment-export-import.component.scss']
 })
-export class AtlasExperimentExportImportComponent {
+export class ExperimentResultExperimentExportImportComponent {
     readonly states = LoadStates;
     currentStates: Set<LoadStates> = new Set();
     atlasDownloadName: string;
@@ -19,7 +19,7 @@ export class AtlasExperimentExportImportComponent {
     constructor(
         private route: ActivatedRoute,
         private router: Router,
-        private atlasService: AtlasService
+        private experimentResultService: ExperimentResultService
     ) {
         this.atlasDownloadName = `atlas-${this.route.snapshot.paramMap.get('atlasId')}.yaml`;
     }
@@ -29,7 +29,7 @@ export class AtlasExperimentExportImportComponent {
     }
 
     upload(): void {
-        this.atlasService.experiment
+        this.experimentResultService
             .uploadFromFile(this.fileUpload.fileInput.nativeElement.files[0])
             .subscribe(
                 (res: any) => {

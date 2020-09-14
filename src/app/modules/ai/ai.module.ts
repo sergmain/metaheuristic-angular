@@ -31,7 +31,7 @@ const routes: Routes = [
         path: 'atlas',
         canActivate: [AuthGuard],
         component: AiRootComponent,
-        loadChildren: () => import('src/app/modules/atlas/atlas.module').then(m => m.AtlasModule),
+        loadChildren: () => import('@src/app/modules/experiment-result/experiment-result.module').then(m => m.ExperimentResultModule),
         data: { section: 'atlas' }
     }
 

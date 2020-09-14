@@ -55,12 +55,15 @@ export namespace ExperimentApiData {
     }
 
     export interface HyperParamsResult {
-        items: HyperParamData[];
+        items: HyperParam[];
     }
 
-    export interface HyperParamData {
+    export interface HyperParam {
         key: string;
         values: string;
-        variants: string;
+        variants: number;
     }
+
+
+
 }

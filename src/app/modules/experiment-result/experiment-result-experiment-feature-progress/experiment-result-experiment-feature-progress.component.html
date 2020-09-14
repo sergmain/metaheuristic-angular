@@ -1,4 +1,4 @@
-<div *ngIf="featureProgressResponse">
+<div *ngIf="experimentFeatureExtendedResult">
     <ct-section>
         <ct-section-header>
             <ct-section-header-row>
@@ -81,8 +81,9 @@
             </ct-section-body-row>
         </ct-section-body>
     </ct-section>
-    <atlas-experiment-metrics [metricsResult]="metricsResult" [dataGraph]="dataGraph" [canDraw]="canDraw"
-        (draw)="drawPlot()"></atlas-experiment-metrics>
-    <atlas-experiment-tasks (nextPage)="nextPage()" (prevPage)="prevPage()" [tasks]="tasks" [atlasId]="atlasId">
-    </atlas-experiment-tasks>
+    <experiment-result-experiment-metrics [metricsResult]="metricsResult" [dataGraph]="dataGraph" [canDraw]="canDraw"
+        (draw)="drawPlot()"></experiment-result-experiment-metrics>
+    <experiment-result-experiment-tasks (nextPage)="nextPage()" (prevPage)="prevPage()"
+        [tasks]="experimentFeatureExtendedResult.tasks" [atlasId]="atlasId">
+    </experiment-result-experiment-tasks>
 </div>

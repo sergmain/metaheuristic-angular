@@ -1,0 +1,5 @@
+export enum Fitting {
+    UNDERFITTING = 'UNDERFITTING',
+    NORMAL = 'NORMAL',
+    OVERFITTING = 'OVERFITTING'
+}

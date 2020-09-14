@@ -3,27 +3,27 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ConfirmationDialogMethod } from '@app/components/app-dialog-confirmation/app-dialog-confirmation.component';
 import { LoadStates } from '@app/enums/LoadStates';
-import { AtlasService, response, ExperimentItem } from '@services/atlas/';
+import { ExperimentResultService } from '@src/app/services/experiment-result/experiment-result.service';
 import { CtTableComponent } from '@src/app/modules/ct/ct-table/ct-table.component';
 import { Subscription } from 'rxjs';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatButton } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
-import { ExperimentApiData } from '@src/app/services/experiments/ExperimentApiData';
 import { ExperimentData } from '@src/app/services/experiments/ExperimentData';
+import { ExperimentResultData } from '@src/app/services/experiment-result/ExperimentResultData';
+import { ExperimentResultSimple } from '@src/app/services/experiment-result/ExperimentResultSimple';
 
 @Component({
-    selector: 'atlas-experiments',
-    templateUrl: './atlas-experiments.component.html',
-    styleUrls: ['./atlas-experiments.component.scss']
+    selector: 'experiment-result-experiments',
+    templateUrl: './experiment-result-experiments.component.html',
+    styleUrls: ['./experiment-result-experiments.component.scss']
 })
 
-export class AtlasExperimentsComponent implements OnInit {
+export class ExperimentResultExperimentsComponent implements OnInit {
     readonly states = LoadStates;
     currentStates = new Set();
-    response: response.experiments.Get;
-
-    dataSource = new MatTableDataSource<ExperimentItem>([]);
+    response: ExperimentResultData.ExperimentResultSimpleList;
+    dataSource = new MatTableDataSource<ExperimentResultSimple>([]);
 
     deletedExperiments: ExperimentData[] = [];
 
@@ -52,7 +52,7 @@ export class AtlasExperimentsComponent implements OnInit {
 
     constructor(
         private route: ActivatedRoute,
-        private atlasService: AtlasService,
+        private experimentResultService: ExperimentResultService,
         private location: Location,
         private dialog: MatDialog
     ) { }
@@ -64,10 +64,10 @@ export class AtlasExperimentsComponent implements OnInit {
 
     updateTable(page: number) {
         this.currentStates.add(this.states.loading);
-        const subscribe: Subscription = this.atlasService.experiments
-            .get(page.toString())
-            .subscribe(
-                (response: response.experiments.Get) => {
+        const subscribe: Subscription = this.experimentResultService
+            .init(page.toString())
+            .subscribe({
+                next: (response) => {
                     this.response = response;
                     this.dataSource = new MatTableDataSource(response.items.content || []);
                     this.prevTable.disabled = response.items.first;
@@ -75,10 +75,9 @@ export class AtlasExperimentsComponent implements OnInit {
                     this.currentStates.delete(this.states.firstLoading);
                     this.currentStates.delete(this.states.loading);
                     this.table.show();
-                },
-                () => { },
-                () => subscribe.unsubscribe()
-            );
+                }
+            });
+
     }
 
     @ConfirmationDialogMethod({
@@ -89,7 +88,7 @@ export class AtlasExperimentsComponent implements OnInit {
     })
     delete(experiment: ExperimentData) {
         this.deletedExperiments.push(experiment);
-        this.atlasService.experiment
+        this.experimentResultService
             .deleteCommit(experiment.id.toString())
             .subscribe();
     }

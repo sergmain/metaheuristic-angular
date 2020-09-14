@@ -1,22 +1,22 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
-import { MetricsResult, MetricsEntity } from '@services/atlas';
+import { ExperimentResultData } from '@src/app/services/experiment-result/ExperimentResultData';
 @Component({
-    selector: 'atlas-experiment-metrics',
-    templateUrl: './atlas-experiment-metrics.component.html',
-    styleUrls: ['./atlas-experiment-metrics.component.scss']
+    selector: 'experiment-result-experiment-metrics',
+    templateUrl: './experiment-result-experiment-metrics.component.html',
+    styleUrls: ['./experiment-result-experiment-metrics.component.scss']
 })
-export class AtlasExperimentMetricsComponent implements OnInit, OnChanges {
-    @Output() draw = new EventEmitter < string > ();
+export class ExperimentResultExperimentMetricsComponent implements OnInit, OnChanges {
+    @Output() draw = new EventEmitter<string>();
 
-    @Input() metricsResult: MetricsResult;
+    @Input() metricsResult: ExperimentResultData.MetricsResult;
     @Input() dataGraph: any;
     @Input() canDraw: boolean;
 
-    dataSource = new MatTableDataSource < any > ([]);
+    dataSource = new MatTableDataSource<any>([]);
     columnsToDisplay: string[] = [];
 
-    constructor() {}
+    constructor() { }
 
     ngOnInit() {
         if (this.metricsResult) { this.update(); }
@@ -25,12 +25,12 @@ export class AtlasExperimentMetricsComponent implements OnInit, OnChanges {
     ngOnChanges() {
         if (this.metricsResult) { this.update(); }
     }
-    
+
     private update() {
         const newColumnsToDisplay: string[] = [].concat(this.metricsResult.metricNames, ['params']);
         const newDataSource: any = [];
 
-        this.metricsResult.metrics.forEach((item: MetricsEntity) => {
+        this.metricsResult.metrics.forEach((item: ExperimentResultData.MetricElement) => {
             const values: string[] = [].concat(item.values, [item.params]);
             const row: any = {};
             values.forEach((elem: string, index: number) => {

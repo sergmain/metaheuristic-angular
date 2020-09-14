@@ -1,7 +1,7 @@
 <div *ngIf="experimentInfo">
     <div> <br />
         <div>Exec Context State </div>
-        <div style="font-size:48px;letter-spacing: 0.1em;">{{experimentInfo.execContextState}}</div><br />
+        <div style="font-size:48px;letter-spacing: 0.1em;">{{experimentInfoExtended.experiment.state}}</div><br />
     </div>
     <ct-section>
         <ct-section-header>
@@ -92,7 +92,7 @@
                                 <ct-flex justify-content="flex-end" gap="9px">
                                     <ct-flex-item>
                                         <button mat-flat-button="mat-flat-button"
-                                            [routerLink]="['/ai/atlas/experiment-feature-progress/', atlas.id, experiment.id, el.id]"
+                                            [routerLink]="['/ai/atlas/experiment-feature-progress/', experimentResult.id, experiment.id, el.id]"
                                             color="primary" title="">Info </button>
                                     </ct-flex-item>
                                 </ct-flex>
