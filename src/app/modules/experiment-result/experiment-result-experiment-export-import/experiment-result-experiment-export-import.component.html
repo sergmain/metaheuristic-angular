@@ -3,7 +3,7 @@
         <ct-section>
             <ct-section-header>
                 <ct-section-header-row>
-                    <ct-heading>Export an Experiment from Atlas </ct-heading>
+                    <ct-heading>Export an Experiment from Experiment Result </ct-heading>
                 </ct-section-header-row>
             </ct-section-header>
             <ct-section-body> </ct-section-body>
@@ -14,8 +14,9 @@
                             <button mat-stroked-button="mat-stroked-button" (click)="back()">Cancel</button>
                         </ct-flex-item>
                         <ct-flex-item>
-                            <a target="_self" href="{{'/ai/atlas/atlas-experiment-export/' + atlasDownloadName}}"
-                                [download]="atlasDownloadName">
+                            <a target="_self"
+                                href="{{'/ai/experiment-result/experiment-result-experiment-export/' + downloadName}}"
+                                [download]="downloadName">
                                 <button mat-flat-button="mat-flat-button" color="primary">Export</button>
                             </a>
                         </ct-flex-item>
@@ -30,7 +31,7 @@
         <ct-section>
             <ct-section-header>
                 <ct-section-header-row>
-                    <ct-heading>Import an Experiment to Atlas from File</ct-heading>
+                    <ct-heading>Import an Experiment to Experiment Result from File</ct-heading>
                 </ct-section-header-row>
             </ct-section-header>
             <ct-section-body>

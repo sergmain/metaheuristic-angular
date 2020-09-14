@@ -1,7 +1,7 @@
 <ct-section>
     <ct-section-header>
         <ct-section-header-row>
-            <ct-heading>Atlas Experiments</ct-heading>
+            <ct-heading>Experiment result</ct-heading>
         </ct-section-header-row>
     </ct-section-header>
     <ct-section-body>
@@ -30,13 +30,13 @@
                         <td mat-cell="mat-cell" *matCellDef="let el">
                             <ct-flex justify-content="flex-end" gap="9px" align-items="center">
                                 <ct-flex-item>
-                                    <a [routerLink]="['/ai/atlas/experiment-info',el.id]">
+                                    <a [routerLink]="['/ai/experiment-result/experiment-info',el.id]">
                                         <button size="forTableRow" mat-flat-button="mat-flat-button"
                                             color="primary">Detail</button>
                                     </a>
                                 </ct-flex-item>
                                 <ct-flex-item>
-                                    <a [routerLink]="['/ai/atlas/experiment-export-import/',el.id]">
+                                    <a [routerLink]="['/ai/experiment-result/experiment-export-import/',el.id]">
                                         <button size="forTableRow" mat-flat-button="mat-flat-button"
                                             color="primary">Export / Import</button>
                                     </a>

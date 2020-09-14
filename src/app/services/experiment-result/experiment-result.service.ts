@@ -55,7 +55,7 @@ export class ExperimentResultService {
 
     getFeatures(experimentResultId: string, experimentId: string, featureId: string): Observable<ExperimentResultData.ExperimentFeatureExtendedResult> {
         return this.http.get<ExperimentResultData.ExperimentFeatureExtendedResult>(
-            url(`atlas-experiment-feature-progress/${experimentResultId}/${experimentId}/${featureId}`));
+            url(`experiment-result-feature-progress/${experimentResultId}/${experimentId}/${featureId}`));
     }
 
     deleteCommit(id: string): Observable<OperationStatusRest> {
@@ -84,7 +84,7 @@ export class ExperimentResultService {
     downloadFile(): Observable<HttpResponse<Blob>> {
         let headers: HttpHeaders = new HttpHeaders();
         headers = headers.append('Accept', 'application/octet-stream');
-        return this.http.get(url(`/atlas-experiment-export/none.zip`), {
+        return this.http.get(url(`/experiment-result-experiment-export/none.zip`), {
             headers,
             observe: 'response',
             responseType: 'blob'

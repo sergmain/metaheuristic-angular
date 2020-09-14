@@ -4,7 +4,8 @@
             <ct-section-header-row>
                 <ct-flex justify-content="flex-start" align-items="center" gap="8px">
                     <ct-flex-item>
-                        <button mat-fab="mat-fab" color="primary" routerLink="/ai/atlas/experiment-info/{{atlasId}}">
+                        <button mat-fab="mat-fab" color="primary"
+                            routerLink="/ai/experiment-result/experiment-info/{{experimentResultId}}">
                             <mat-icon>navigate_before</mat-icon>
                         </button>
                     </ct-flex-item>
@@ -84,6 +85,6 @@
     <experiment-result-experiment-metrics [metricsResult]="metricsResult" [dataGraph]="dataGraph" [canDraw]="canDraw"
         (draw)="drawPlot()"></experiment-result-experiment-metrics>
     <experiment-result-experiment-tasks (nextPage)="nextPage()" (prevPage)="prevPage()"
-        [tasks]="experimentFeatureExtendedResult.tasks" [atlasId]="atlasId">
+        [tasks]="experimentFeatureExtendedResult.tasks" [experimentResultId]="experimentResultId">
     </experiment-result-experiment-tasks>
 </div>

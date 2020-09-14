@@ -12,7 +12,7 @@ import { CtFileUploadComponent } from '../../ct/ct-file-upload/ct-file-upload.co
 export class ExperimentResultExperimentExportImportComponent {
     readonly states = LoadStates;
     currentStates: Set<LoadStates> = new Set();
-    atlasDownloadName: string;
+    downloadName: string;
 
     @ViewChild('fileUpload', { static: true }) fileUpload: CtFileUploadComponent;
 
@@ -21,11 +21,11 @@ export class ExperimentResultExperimentExportImportComponent {
         private router: Router,
         private experimentResultService: ExperimentResultService
     ) {
-        this.atlasDownloadName = `atlas-${this.route.snapshot.paramMap.get('atlasId')}.yaml`;
+        this.downloadName = `experiment-result-${this.route.snapshot.paramMap.get('experimentResultId')}.yaml`;
     }
 
     back(): void {
-        this.router.navigate(['/ai', 'atlas', 'experiments']);
+        this.router.navigate(['/ai', 'experiment-result', 'experiments']);
     }
 
     upload(): void {

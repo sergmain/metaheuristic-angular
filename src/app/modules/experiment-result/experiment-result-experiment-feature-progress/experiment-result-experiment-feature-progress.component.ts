@@ -28,7 +28,7 @@ export class ExperimentResultExperimentFeatureProgressComponent implements OnIni
 
     //
     experimentId: string;
-    atlasId: string;
+    experimentResultId: string;
     featureId: string;
     metricsResult: any;
     lastParams: string = ',';
@@ -87,7 +87,7 @@ export class ExperimentResultExperimentFeatureProgressComponent implements OnIni
     ) { }
 
     ngOnInit() {
-        this.atlasId = this.route.snapshot.paramMap.get('atlasId');
+        this.experimentResultId = this.route.snapshot.paramMap.get('experimentResultId');
         this.experimentId = this.route.snapshot.paramMap.get('experimentId');
         this.featureId = this.route.snapshot.paramMap.get('featureId');
         this.updateResponse();
@@ -95,7 +95,7 @@ export class ExperimentResultExperimentFeatureProgressComponent implements OnIni
 
     updateResponse() {
         this.experimentResultService
-            .getFeatures(this.atlasId, this.experimentId, this.featureId)
+            .getFeatures(this.experimentResultId, this.experimentId, this.featureId)
             .subscribe(experimentFeatureExtendedResult => {
                 this.experimentFeatureExtendedResult = experimentFeatureExtendedResult;
                 this.tables.features.table = Object
@@ -109,7 +109,7 @@ export class ExperimentResultExperimentFeatureProgressComponent implements OnIni
 
     updateResponsePart(page: number) {
         this.experimentResultService
-            .getFeatureProgressPart(this.atlasId, this.experimentId, this.featureId, this.lastParams, page.toString())
+            .getFeatureProgressPart(this.experimentResultId, this.experimentId, this.featureId, this.lastParams, page.toString())
             .subscribe(experimentFeatureExtendedResult => {
                 this.experimentFeatureExtendedResult.tasks = experimentFeatureExtendedResult.tasks;
             });
@@ -168,7 +168,7 @@ export class ExperimentResultExperimentFeatureProgressComponent implements OnIni
 
     featurePlotDataPart(params, paramsAxis) {
         this.experimentResultService
-            .getPlotData(this.atlasId, this.experimentId, this.featureId, params, paramsAxis)
+            .getPlotData(this.experimentResultId, this.experimentId, this.featureId, params, paramsAxis)
             .subscribe(plotData => {
                 this.plotData = plotData;
                 this.dataGraph.show = true;

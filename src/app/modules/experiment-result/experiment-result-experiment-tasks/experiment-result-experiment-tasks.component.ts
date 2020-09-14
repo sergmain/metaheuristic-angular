@@ -20,7 +20,7 @@ export class ExperimentResultExperimentTasksComponent implements OnInit, OnChang
         content: ExperimentResultTaskParamsYaml[]
     } & PageableDefault;
 
-    @Input() atlasId: string;
+    @Input() experimentResultId: string;
 
     @Output() nextPage = new EventEmitter<string>();
     @Output() prevPage = new EventEmitter<string>();
@@ -54,7 +54,7 @@ export class ExperimentResultExperimentTasksComponent implements OnInit, OnChang
     featureProgressConsolePart(taskId: string) {
         this.consoleView.wait();
         const subscribe: Subscription = this.experimentResultService
-            .getTasksConsolePart(this.atlasId, taskId)
+            .getTasksConsolePart(this.experimentResultId, taskId)
             .subscribe(
                 (response) => {
                     this.consolePartResponse = response;

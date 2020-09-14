@@ -22,7 +22,7 @@ const routes: Routes = [
         component: ExperimentResultExperimentsComponent,
     },
     {
-        path: 'experiment-export-import/:atlasId',
+        path: 'experiment-export-import/:experimentResultId',
         component: ExperimentResultExperimentExportImportComponent,
         data: {
             backConfig: ['../', '../']
@@ -36,7 +36,7 @@ const routes: Routes = [
         }
     },
     {
-        path: 'experiment-feature-progress/:atlasId/:experimentId/:featureId',
+        path: 'experiment-feature-progress/:experimentResultId/:experimentId/:featureId',
         component: ExperimentResultExperimentFeatureProgressComponent,
         data: {
             backConfig: ['../', '../', '../', '../']
