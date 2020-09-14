@@ -7,7 +7,17 @@ issue-1209
 
 везде в коде вместо ai.Atlas должно быть ai.ExperimentResult или ai.Experiment.Result или как-то по другому но без Atlas
 
+UPD1
+урл для результатов содержит atlas
+http://localhost:4200/#/ai/atlas/experiments
 
+UPD2
+http://localhost:4200/#/ai/atlas/experiments
+при нажатии на Details происходит редирект на http://localhost:4200/#/
+
+UPD3
+http://localhost:4200/#/ai/atlas/experiments
+копка Export / Import должна быть Export только. Кнопка Import Должна быть только одна на всю страницу
 
 
 issue-1216
