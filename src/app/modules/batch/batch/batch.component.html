@@ -105,7 +105,7 @@
                     </ng-container>
                     <tr mat-header-row="mat-header-row" *matHeaderRowDef="columnsToDisplay"> </tr>
                     <tr mat-row="mat-row" *matRowDef="let row; columns: columnsToDisplay;"
-                        [class.deleted-table-row]="deletedRows.includes(row)"></tr>
+                        [class.deleted-table-row]="isDeleted(row)"></tr>
                 </table>
             </ct-table>
         </ct-section-body-row>

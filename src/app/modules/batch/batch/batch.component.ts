@@ -92,6 +92,10 @@ export class BatchComponent implements OnInit, OnDestroy {
         }
     }
 
+    isDeleted(b: Batch): boolean {
+        return !!this.deletedRows.filter(db => db.batch.id === b.batch.id).length;
+    }
+
     downloadFile(batchId: string): void {
         this.batchService.downloadFile(batchId)
             .subscribe((res: HttpResponse<any>) => {
