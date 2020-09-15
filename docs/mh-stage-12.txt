@@ -57,21 +57,6 @@ NOT YET
 
 
 
-
-
-
-issue-1238
-ангулар
-http://localhost:4200/#/batch
-сделать кнопку 'Task states' точно такую же как в списке ExecContext
-урл тот же самый но код страницы скопировать или сделать так чтобы он открывался по другому урл.
-т.е. идея в том что урл должен относиться к Пакетам, а не к Контрольной панели
-
-DONE
-CONFIRMED
-
-
-
 issue-1239
 ангулар
 http://localhost:4200/#/experiments
@@ -98,37 +83,6 @@ NOT YET
 
 
 
-issue-1244
-angular
-http://localhost:4200/#/dispatcher/company/2233/edit
-
-надо использовать companyUniqueId а не Id
-
-DONE
-CONFIRMED
-
-
-issue-1245
-angular
-http://localhost:4200/#/dispatcher/company/companies
-в столбце Id надо выводить companyUniqueId а не Id
-столбец переименовывать не надо
-
-DONE конкретно companyUniqueId не существует, взял uniqueId
-CONFIRMED
-
-
-
-issue-1246
-angular
-http://localhost:4200/#/dispatcher/company/2233/accounts
-
-надо использовать companyUniqueId а не Id
-
-DONE конкретно companyUniqueId не существует, взял uniqueId
-CONFIRMED
-
-
 
 issue-1246.1
 http://localhost:4200/#/dispatcher/company/2/batches
@@ -140,55 +94,6 @@ NOT YET
 т.к пакеты доступны только юзерам с ролями MASTER_OPERATOR MASTER_SUPPORT
 и бага issue-1243 пока не пофиксена проверить нет возможности
 
-
-
-
-issue-1247
-angular
-http://localhost:4200/#/dispatcher/source-codes/1519/exec-context/add
-
-убрать поле ввода "INput variable for this SourceCode"
-должна быть просто кнопка Create и Cancel
-
-DONE
-CONFIRMED
-
-
-
-
-issue-1248
-angular
-http://localhost:4200/#/dispatcher/source-codes/1519/exec-contexts
-в столбце Completed on ничего не выводить если занчение null
-сейчас выводится строка 'null'
-
-DONE
-CONFIRMED
-
-
-
-issue-1249
-angular
-со страницы http://localhost:4200/#/dispatcher/accounts кнопку Access надо удалить
-
-функциональность удалять не надо, может в  будущем редактирование ролей и будет делегировано локальным админам
-
-DONE
-CONFIRMED
-
-
-
-issue-1250
-ангулар
-http://localhost:4200/#/batch
-при удалении пакетов один за одним серая отметка сбрасывается
-для воспроизведения:
-- создать 2 пакета
-- удалить первый пакет
-- удалить второй пакета сразу же
-
-DONE
-CONFIRMED
 
 
 issue-1251
