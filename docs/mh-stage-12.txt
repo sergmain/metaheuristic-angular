@@ -100,7 +100,7 @@ issue-1251
 angular
 http://localhost:4200/#/dispatcher/company/2233/edit
 
-начение поля Company's groups не отображается
+значение поля Company's groups не отображается
 поле ai.metaheuristic.ai.dispatcher.data.CompanyData.SimpleCompanyResult#companyAccessControl
 
 
