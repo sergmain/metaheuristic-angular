@@ -1,27 +1,43 @@
 <mat-sidenav-container>
     <mat-sidenav mode="side" [opened]="sidenavOpened">
         <div class="navigation">
-            <button class="mat-button" *ngIf="accessSourceCodes()" mat-button size="forNavigation"
-                routerLinkActive="active" routerLink="/dispatcher/source-codes">
-                {{ 'dispatcher.SourceCodes' | translate }}</button>
 
-            <button class="mat-button" *ngIf="accessGlobalVariables()" mat-button size="forNavigation"
-                routerLinkActive="active"
-                routerLink="/dispatcher/global-variables">{{ 'dispatcher.Variables' | translate }}</button>
+            <ng-template
+                [ngIf]="authenticationService.isRoleMasterAdmin() || authenticationService.isRoleMasterOperator() || authenticationService.isRoleMasterSupport()">
+                <button class="mat-button" *ngIf="accessCompany()" mat-button size="forNavigation"
+                    routerLinkActive="active"
+                    routerLink="/dispatcher/company/companies">{{ 'dispatcher.Company' | translate }}
+                </button>
+            </ng-template>
+            <ng-template
+                [ngIf]="!authenticationService.isRoleMasterAdmin() && !authenticationService.isRoleMasterOperator() && !authenticationService.isRoleMasterSupport()">
+                <button class="mat-button" *ngIf="accessSourceCodes()" mat-button size="forNavigation"
+                    routerLinkActive="active" routerLink="/dispatcher/source-codes">
+                    {{ 'dispatcher.SourceCodes' | translate }}
+                </button>
+                <button class="mat-button" *ngIf="accessGlobalVariables()" mat-button size="forNavigation"
+                    routerLinkActive="active"
+                    routerLink="/dispatcher/global-variables">{{ 'dispatcher.Variables' | translate }}
+                </button>
+                <button class="mat-button" *ngIf="accessFunctions()" mat-button size="forNavigation"
+                    routerLinkActive="active"
+                    routerLink="/dispatcher/functions">{{ 'dispatcher.Functions' | translate }}
+                </button>
+                <button class="mat-button" *ngIf="accessProcessors()" mat-button size="forNavigation"
+                    routerLinkActive="active"
+                    routerLink="/dispatcher/processors">{{ 'dispatcher.Processors' | translate }}
+                </button>
+                <button class="mat-button" *ngIf="accessAccounts()" mat-button size="forNavigation"
+                    routerLinkActive="active" routerLink="/dispatcher/accounts">{{ 'dispatcher.Accounts' | translate }}
+                </button>
+                <!-- <button class="mat-button" *ngIf="accessCompany()" mat-button size="forNavigation"
+                    routerLinkActive="active"
+                    routerLink="/dispatcher/company/companies">{{ 'dispatcher.Company' | translate }}
+                </button> -->
+            </ng-template>
 
-            <button class="mat-button" *ngIf="accessFunctions()" mat-button size="forNavigation"
-                routerLinkActive="active"
-                routerLink="/dispatcher/functions">{{ 'dispatcher.Functions' | translate }}</button>
 
-            <button class="mat-button" *ngIf="accessProcessors()" mat-button size="forNavigation"
-                routerLinkActive="active"
-                routerLink="/dispatcher/processors">{{ 'dispatcher.Processors' | translate }}</button>
 
-            <button class="mat-button" *ngIf="accessAccounts()" mat-button size="forNavigation"
-                routerLinkActive="active"
-                routerLink="/dispatcher/accounts">{{ 'dispatcher.Accounts' | translate }}</button>
-            <button class="mat-button" *ngIf="accessCompany()" mat-button size="forNavigation" routerLinkActive="active"
-                routerLink="/dispatcher/company/companies">{{ 'dispatcher.Company' | translate }}</button>
         </div>
     </mat-sidenav>
     <mat-sidenav-content>

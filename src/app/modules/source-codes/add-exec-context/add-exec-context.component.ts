@@ -22,13 +22,13 @@ export class AddExecContextComponent implements OnInit, OnDestroy {
     sourceCodeResponse: SourceCodeResult;
 
     constructor(
-        private route: ActivatedRoute,
+        private activatedRoute: ActivatedRoute,
         private router: Router,
         private sourceCodesService: SourceCodesService,
     ) { }
 
     ngOnInit(): void {
-        this.sourceCodeId = this.route.snapshot.paramMap.get('sourceCodeId');
+        this.sourceCodeId = this.activatedRoute.snapshot.paramMap.get('sourceCodeId');
         this.sourceCodesService.sourceCode.get(this.sourceCodeId).subscribe(v => {
             this.sourceCodeResponse = v;
         });
@@ -37,7 +37,7 @@ export class AddExecContextComponent implements OnInit, OnDestroy {
     ngOnDestroy(): void { }
 
     cancel(): void {
-        this.router.navigate(['/dispatcher', 'source-codes', this.route.snapshot.paramMap.get('sourceCodeId'), 'exec-contexts']);
+        this.router.navigate(['../../', 'exec-contexts'], { relativeTo: this.activatedRoute });
     }
 
     createWithVariable(): void {

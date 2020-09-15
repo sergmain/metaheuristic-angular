@@ -38,7 +38,7 @@ export class AppViewComponent implements OnInit, OnDestroy {
     @ViewChild('matSelectLanguage') matSelectLanguage: MatSelect;
 
     constructor(
-        private authenticationService: AuthenticationService,
+        public authenticationService: AuthenticationService,
         private settingsService: SettingsService,
         private router: Router,
         private batchService: BatchService,

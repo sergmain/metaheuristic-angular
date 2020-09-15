@@ -10,6 +10,7 @@ import { BatchAddComponent } from './batch-add/batch-add.component';
 import { CtModule } from '../ct/ct.module';
 import { BatchRootComponent } from './batch-root/batch-root.component';
 import { CopyRightModule } from '../copy-right/copy-right.module';
+import { BatchStateComponent } from './batch-state/batch-state.component';
 
 
 const routes: Routes = [
@@ -22,7 +23,7 @@ const routes: Routes = [
                 component: BatchComponent
             },
             {
-                path: ':id/status',
+                path: ':batchId/status',
                 component: BatchStatusComponent,
                 data: {
                     backConfig: ['../', '../']
@@ -33,6 +34,14 @@ const routes: Routes = [
                 component: BatchAddComponent,
                 data: {
                     backConfig: ['../']
+                }
+            },
+            {
+
+                path: ':batchId/source-code/:sourceCodeId/exec-context/:execContextId/state',
+                component: BatchStateComponent,
+                data: {
+                    backConfig: ['../', '../', '../', '../', '../', '../']
                 }
             }
         ]
@@ -63,7 +72,8 @@ export class BatchRoutingModule { }
         BatchRootComponent,
         BatchComponent,
         BatchStatusComponent,
-        BatchAddComponent
+        BatchAddComponent,
+        BatchStateComponent
     ]
 })
 export class BatchModule { }

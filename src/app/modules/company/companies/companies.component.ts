@@ -17,7 +17,7 @@ export class CompaniesComponent implements OnInit {
     @ViewChild('prevPageButton', { static: false }) prevTable: MatButton;
     @ViewChild('table', { static: false }) table: CtTableComponent;
 
-    columnsToDisplay: string[] = ['id', 'name', 'bts'];
+    columnsToDisplay: string[] = ['uniqueId', 'name', 'bts'];
     simpleCompaniesResult: SimpleCompaniesResult;
     dataSource: MatTableDataSource<SimpleCompany> = new MatTableDataSource([]);
 

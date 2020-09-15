@@ -1,6 +1,6 @@
 {
-	"ai.Results": "Results",
 	"ai.Experiments": "Experiments",
+	"ai.Results": "Results",
 	"app-view.About": "About",
 	"app-view.Ai": "AI",
 	"app-view.Batch": "Batch",
@@ -27,6 +27,7 @@
 	"batch.Is Batch Consistent?": "Is Batch Consistent?",
 	"batch.Source Code": "Source Code",
 	"batch.Status": "Status",
+	"batch.Task states": "Task States",
 	"batch.Upload files and start processing": "Upload files and start processing",
 	"batch.delete-dialog.Cancel": "Cancel",
 	"batch.delete-dialog.Delete": "Delete",

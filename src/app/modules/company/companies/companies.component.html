@@ -24,32 +24,32 @@
         <ct-section-body-row>
             <ct-table #table>
                 <table class="mat-table" mat-table="mat-table" [dataSource]="dataSource">
-                    <ng-container matColumnDef="id">
-                        <th mat-header-cell="mat-header-cell" *matHeaderCellDef>Id</th>
-                        <td mat-cell="mat-cell" *matCellDef="let el">{{el.id}} </td>
+                    <ng-container matColumnDef="uniqueId">
+                        <th mat-header-cell *matHeaderCellDef>Id</th>
+                        <td mat-cell="mat-cell" *matCellDef="let el">{{el.uniqueId}} </td>
                     </ng-container>
                     <ng-container matColumnDef="name">
-                        <th mat-header-cell="mat-header-cell" *matHeaderCellDef>Name</th>
+                        <th mat-header-cell *matHeaderCellDef>Name</th>
                         <td mat-cell="mat-cell" *matCellDef="let el">{{el.name}} </td>
                     </ng-container>
                     <ng-container matColumnDef="bts">
-                        <th mat-header-cell="mat-header-cell" *matHeaderCellDef> </th>
+                        <th mat-header-cell *matHeaderCellDef> </th>
                         <td mat-cell="mat-cell" *matCellDef="let el">
                             <ct-flex justify-content="flex-end" gap="9px">
                                 <ct-flex-item *ngIf="authenticationService.isRoleMasterAdmin()">
                                     <a mat-flat-button color="primary" size="forTableRow"
-                                        [routerLink]="['../',el.id,'edit']">Edit</a>
+                                        [routerLink]="['../',el.uniqueId,'edit']">Edit</a>
                                 </ct-flex-item>
                                 <ct-flex-item *ngIf="authenticationService.isRoleMasterAdmin()">
                                     <a mat-flat-button color="primary" size="forTableRow"
-                                        [routerLink]="['../',el.id,'accounts']">Accounts</a>
+                                        [routerLink]="['../',el.uniqueId,'accounts']">Accounts</a>
                                 </ct-flex-item>
                                 <ct-flex-item>
                                     <div
                                         *ngIf="authenticationService.isRoleMasterOperator() || authenticationService.isRoleMasterSupport()">
                                         <div *ngIf="el.id !== 1">
                                             <a mat-flat-button color="primary" size="forTableRow"
-                                                [routerLink]="['../',el.id,'batches']">Batches</a>
+                                                [routerLink]="['../',el.uniqueId,'batches']">Batches</a>
 
                                         </div>
                                     </div>
@@ -57,8 +57,8 @@
                             </ct-flex>
                         </td>
                     </ng-container>
-                    <tr mat-header-row="mat-header-row" *matHeaderRowDef="columnsToDisplay"></tr>
-                    <tr mat-row="mat-row" *matRowDef="let row; columns: columnsToDisplay;"></tr>
+                    <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+                    <tr mat-row *matRowDef="let row; columns: columnsToDisplay;"></tr>
                 </table>
             </ct-table>
         </ct-section-body-row>
@@ -69,14 +69,14 @@
                 <ct-flex-item>
                     <ct-flex justify-content="flex-start" gap="unit(1)">
                         <ct-flex-item>
-                            <button mat-flat-button="mat-flat-button" color="primary" #prevPageButton
-                                (click)="prevPage()" [disabled]="simpleCompaniesResult.companies.first">
+                            <button mat-flat-button color="primary" #prevPageButton (click)="prevPage()"
+                                [disabled]="simpleCompaniesResult.companies.first">
                                 <mat-icon>arrow_back_ios</mat-icon>
                             </button>
                         </ct-flex-item>
                         <ct-flex-item>
-                            <button mat-flat-button="mat-flat-button" color="primary" #nextPageButton
-                                (click)="nextPage()" [disabled]="simpleCompaniesResult.companies.last">
+                            <button mat-flat-button color="primary" #nextPageButton (click)="nextPage()"
+                                [disabled]="simpleCompaniesResult.companies.last">
                                 <mat-icon>arrow_forward_ios</mat-icon>
                             </button>
                         </ct-flex-item>
@@ -92,5 +92,5 @@
 
 
 <ng-template #addButtonTemplate>
-    <button mat-flat-button="mat-flat-button" color="primary" routerLink="../add">Add New Company</button>
+    <button mat-flat-button color="primary" routerLink="../add">Add New Company</button>
 </ng-template>

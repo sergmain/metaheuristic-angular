@@ -1,6 +1,6 @@
 {
-	"ai.Results": "Результаты",
 	"ai.Experiments": "Эксперименты",
+	"ai.Results": "Результаты",
 	"app-view.About": "Подробнее",
 	"app-view.Ai": "ИИ",
 	"app-view.Batch": "Пакеты",
@@ -27,6 +27,7 @@
 	"batch.Is Batch Consistent?": "Пакет консистен?",
 	"batch.Source Code": "Исходный код",
 	"batch.Status": "Статус",
+	"batch.Task states": "Состояние",
 	"batch.Upload files and start processing": "Загрузить файлы и начать процеcс",
 	"batch.delete-dialog.Cancel": "Отмена",
 	"batch.delete-dialog.Delete": "Удалить",

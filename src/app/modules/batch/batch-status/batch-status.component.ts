@@ -17,27 +17,27 @@ export class BatchStatusComponent implements OnInit {
     currentState: LoadStates = LoadStates.firstLoading;
 
     response: response.batch.Status;
-    batchId: string
+    batchId: string;
 
     constructor(
         private route: ActivatedRoute,
         private batchService: BatchService,
         private router: Router
-    ) {}
+    ) { }
 
     ngOnInit() {
-        this.batchId = this.route.snapshot.paramMap.get('id');
+        this.batchId = this.route.snapshot.paramMap.get('batchId');
         this.updateResponse();
     }
     updateResponse() {
         const subscribe: Subscription = this.batchService.batch
-            .status(this.batchId )
+            .status(this.batchId)
             .subscribe(
                 (response: response.batch.Status) => {
                     this.response = response;
                     this.currentState = this.states.show;
                 },
-                () => {},
+                () => { },
                 () => {
                     subscribe.unsubscribe();
                 },

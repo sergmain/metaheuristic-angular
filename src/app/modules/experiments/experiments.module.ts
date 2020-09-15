@@ -14,6 +14,7 @@ import { ExperimentMetricsComponent } from './experiment-metrics/experiment-metr
 import { ExperimentTasksComponent } from './experiment-tasks/experiment-tasks.component';
 import { ExperimentsComponent } from './experiments/experiments.component';
 import { CtModule } from '../ct/ct.module';
+import { ExperimentTaskStatesComponent } from './experiment-task-states/experiment-task-states.component';
 
 
 PlotlyModule.plotlyjs = PlotlyJS;
@@ -50,13 +51,22 @@ const routes: Routes = [
         data: {
             backConfig: ['../', '../', '../']
         }
+    },
+    {
+        path: ':experimentId/source-code/:sourceCodeId/exec-context/:execContextId/states',
+        component: ExperimentTaskStatesComponent,
+        data: {
+            backConfig: ['../', '../', '../', '../', '../', '../']
+        }
     }
+
 ];
 
 
 @NgModule({
     imports: [RouterModule.forChild(routes)],
-    exports: [RouterModule]
+    exports: [RouterModule],
+    declarations: []
 })
 export class ExperimentsRoutingModule { }
 
@@ -80,6 +90,7 @@ export class ExperimentsRoutingModule { }
         ExperimentFeatureProgressComponent,
         ExperimentMetricsComponent,
         ExperimentTasksComponent,
+        ExperimentTaskStatesComponent
     ]
 })
 export class ExperimentsModule { }

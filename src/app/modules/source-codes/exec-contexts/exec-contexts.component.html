@@ -44,9 +44,9 @@
                     <ng-container matColumnDef="completedOn">
                         <th mat-header-cell="mat-header-cell" *matHeaderCellDef>Completed on</th>
                         <td mat-cell="mat-cell" *matCellDef="let el">
-                            <span
-                                *ngIf="el.completedOn !== null">{{el.completedOn | date:'MMM d, yyyy HH:mm:ss'}}</span>
-                            <span *ngIf="el.completedOn === null">null</span>
+                            <span *ngIf="el.completedOn !== null">
+                                {{el.completedOn | date:'MMM d, yyyy HH:mm:ss'}}
+                            </span>
                         </td>
                     </ng-container>
                     <ng-container matColumnDef="bts">

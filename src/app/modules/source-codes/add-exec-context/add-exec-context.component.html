@@ -2,32 +2,26 @@
     <mat-progress-bar mode="indeterminate"></mat-progress-bar>
 </ng-template>
 <ng-template [ngIf]="sourceCodeResponse">
-    <ct-section>
-        <ct-section-header>
-            <ct-section-header-row>
-                <div>Source Code: #{{ sourceCodeResponse.id }}</div>
-                <ct-heading> {{ sourceCodeResponse.uid }}</ct-heading>
-            </ct-section-header-row>
-        </ct-section-header>
-    </ct-section>
     <ct-cols align-items="flex-start">
         <ct-col size="6">
             <ct-section>
                 <ct-section-header>
                     <ct-section-header-row>
-                        <ct-heading> New execContext with Single Input</ct-heading>
+                        <div>Source Code: #{{ sourceCodeResponse.id }}</div>
+                        <ct-heading> {{ sourceCodeResponse.uid }}</ct-heading>
                     </ct-section-header-row>
                 </ct-section-header>
                 <ct-section-body>
                     <ct-section-body-row>
-                        <ct-section-content>
+                        <p>New execContext with Single Input</p>
+                    </ct-section-body-row>
+                    <!-- <ct-section-body-row>
                             <mat-form-field appearance="outline">
                                 <mat-label>Input variable for this source code</mat-label>
                                 <input matInput="matInput" [(ngModel)]="variable" autocomplete="off" />
                                 <mat-hint>This is a required field.</mat-hint>
                             </mat-form-field>
-                        </ct-section-content>
-                    </ct-section-body-row>
+                    </ct-section-body-row> -->
                 </ct-section-body>
                 <ct-section-footer>
                     <ct-section-footer-row>

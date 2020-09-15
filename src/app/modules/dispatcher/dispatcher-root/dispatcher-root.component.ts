@@ -19,7 +19,7 @@ export class DispatcherRootComponent {
 
     constructor(
         private store: Store<AppState>,
-        private authenticationService: AuthenticationService,
+        public authenticationService: AuthenticationService,
         private router: Router,
     ) {
         this.store.subscribe(data => {

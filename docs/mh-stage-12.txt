@@ -20,6 +20,10 @@ http://localhost:4200/#/ai/atlas/experiments
 копка Export / Import должна быть Export только. Кнопка Import Должна быть только одна на всю страницу
 
 
+
+
+
+
 issue-1216
 http://localhost:8080/dispatcher/company/batch/company-batches/2
 при использовании пользователя с ролью MASTER_SUPPORT или MASTER_OPERATOR реализовать возможность удаления пакетов группами. 
@@ -52,12 +56,19 @@ NOT YET
 
 
 
+
+
+
+
 issue-1238
 ангулар
 http://localhost:4200/#/batch
 сделать кнопку 'Task states' точно такую же как в списке ExecContext
 урл тот же самый но код страницы скопировать или сделать так чтобы он открывался по другому урл.
 т.е. идея в том что урл должен относиться к Пакетам, а не к Контрольной панели
+
+DONE
+
 
 
 
@@ -78,12 +89,19 @@ issue-1243
 
 в меню Панель управления должен быть доступен только пункт Компании
 
+DONE
+
+
+
 
 issue-1244
 angular
 http://localhost:4200/#/dispatcher/company/2233/edit
 
 надо использовать companyUniqueId а не Id
+
+DONE
+
 
 
 issue-1245
@@ -92,6 +110,8 @@ http://localhost:4200/#/dispatcher/company/companies
 в столбце Id надо выводить companyUniqueId а не Id
 столбец переименовывать не надо
 
+DONE конкретно companyUniqueId не существует, взял uniqueId
+
 
 
 issue-1246
@@ -99,6 +119,19 @@ angular
 http://localhost:4200/#/dispatcher/company/2233/accounts
 
 надо использовать companyUniqueId а не Id
+
+DONE конкретно companyUniqueId не существует, взял uniqueId
+
+
+
+issue-1246.1
+http://localhost:4200/#/dispatcher/company/2/batches
+тут тоже просто id
+исправил на uniqueId
+
+DONE
+
+
 
 
 
@@ -109,6 +142,9 @@ http://localhost:4200/#/dispatcher/source-codes/1519/exec-context/add
 убрать поле ввода "INput variable for this SourceCode"
 должна быть просто кнопка Create и Cancel
 
+DONE
+
+
 
 
 issue-1248
@@ -117,6 +153,9 @@ http://localhost:4200/#/dispatcher/source-codes/1519/exec-contexts
 в столбце Completed on ничего не выводить если занчение null
 сейчас выводится строка 'null'
 
+DONE
+
+
 
 issue-1249
 angular
@@ -124,3 +163,4 @@ angular
 
 функциональность удалять не надо, может в  будущем редактирование ролей и будет делегировано локальным админам
 
+DONE

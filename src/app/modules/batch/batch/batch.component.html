@@ -76,6 +76,13 @@
                         <td mat-cell="mat-cell" *matCellDef="let el">
                             <ct-flex justify-content="flex-end" gap="9px">
                                 <ct-flex-item>
+                                    <a mat-flat-button="mat-flat-button" size="forTableRow"
+                                        [routerLink]="['/batch',el.batch.id,'source-code',el.batch.sourceCodeId,'exec-context',el.batch.execContextId, 'state']"
+                                        color="primary">
+                                        {{ 'batch.Task states' | translate }}</a>
+                                </ct-flex-item>
+
+                                <ct-flex-item>
                                     <button mat-flat-button="mat-flat-button" size="forTableRow"
                                         [disabled]="el.execState !== 4" [routerLink]="['/batch',el.batch.id,'status']"
                                         color="primary">
