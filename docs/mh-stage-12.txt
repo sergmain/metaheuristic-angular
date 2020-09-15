@@ -68,7 +68,7 @@ http://localhost:4200/#/batch
 т.е. идея в том что урл должен относиться к Пакетам, а не к Контрольной панели
 
 DONE
-
+CONFIRMED
 
 
 
@@ -91,6 +91,10 @@ issue-1243
 
 DONE
 
+NOT YET
+при заходе юзером с ролью MASTER_OPERATOR слева в меню пункта Компании нет
+
+при заходе юзером с ролью MASTER_SUPPORT слева в меню пункта Компании нет
 
 
 
@@ -101,7 +105,7 @@ http://localhost:4200/#/dispatcher/company/2233/edit
 надо использовать companyUniqueId а не Id
 
 DONE
-
+CONFIRMED
 
 
 issue-1245
@@ -111,6 +115,7 @@ http://localhost:4200/#/dispatcher/company/companies
 столбец переименовывать не надо
 
 DONE конкретно companyUniqueId не существует, взял uniqueId
+CONFIRMED
 
 
 
@@ -121,6 +126,7 @@ http://localhost:4200/#/dispatcher/company/2233/accounts
 надо использовать companyUniqueId а не Id
 
 DONE конкретно companyUniqueId не существует, взял uniqueId
+CONFIRMED
 
 
 
@@ -130,7 +136,9 @@ http://localhost:4200/#/dispatcher/company/2/batches
 исправил на uniqueId
 
 DONE
-
+NOT YET
+т.к пакеты доступны только юзерам с ролями MASTER_OPERATOR MASTER_SUPPORT
+и бага issue-1243 пока не пофиксена проверить нет возможности
 
 
 
@@ -143,6 +151,7 @@ http://localhost:4200/#/dispatcher/source-codes/1519/exec-context/add
 должна быть просто кнопка Create и Cancel
 
 DONE
+CONFIRMED
 
 
 
@@ -154,6 +163,7 @@ http://localhost:4200/#/dispatcher/source-codes/1519/exec-contexts
 сейчас выводится строка 'null'
 
 DONE
+CONFIRMED
 
 
 
@@ -164,15 +174,36 @@ angular
 функциональность удалять не надо, может в  будущем редактирование ролей и будет делегировано локальным админам
 
 DONE
+CONFIRMED
+
 
 
 issue-1250
 ангулар
 http://localhost:4200/#/batch
 при удалении пакетов один за одним серая отметка сбрасывается
-для восроизведения:
+для воспроизведения:
 - создать 2 пакета
 - удалить первый пакет
 - удалить второй пакета сразу же
 
 DONE
+CONFIRMED
+
+
+issue-1251
+angular
+http://localhost:4200/#/dispatcher/company/2233/edit
+
+начение поля Company's groups не отображается
+поле ai.metaheuristic.ai.dispatcher.data.CompanyData.SimpleCompanyResult#companyAccessControl
+
+
+
+issue-1252
+http://localhost:4200/#/dispatcher/company/15905/account/add
+после успешного создания акка надо дисаблить кнопку Create
+
+
+
+
