@@ -111,4 +111,7 @@ http://localhost:4200/#/dispatcher/company/15905/account/add
 
 
 
+issue-1253
+привести доступ в соответствие с ролевой матрицей
+https://github.com/sergmain/metaheuristic/blob/master/docs-dev/role-matrix.txt
 
