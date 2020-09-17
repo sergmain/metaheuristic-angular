@@ -55,6 +55,8 @@ NOT YET
 т.к. списка компаний нет, то дальше проверить возможности нет
 
 DONE
+CONFIRMED
+
 
 
 issue-1239
@@ -82,6 +84,7 @@ NOT YET
 при заходе юзером с ролью MASTER_SUPPORT слева в меню пункта Компании нет
 
 DONE
+CONFIRMED
 
 
 issue-1246.1
@@ -93,6 +96,7 @@ DONE
 NOT YET
 т.к пакеты доступны только юзерам с ролями MASTER_OPERATOR MASTER_SUPPORT
 и бага issue-1243 пока не пофиксена проверить нет возможности
+CONFIRMED
 
 
 
@@ -104,6 +108,7 @@ http://localhost:4200/#/dispatcher/company/2233/edit
 поле ai.metaheuristic.ai.dispatcher.data.CompanyData.SimpleCompanyResult#companyAccessControl
 
 DONE
+CONFIRMED
 
 
 
@@ -112,7 +117,8 @@ http://localhost:4200/#/dispatcher/company/15905/account/add
 после успешного создания акка надо дисаблить кнопку Create
 
 DONE
-
+NOT YET
+будет проверено после фикса issue-1255
 
 
 issue-1253
@@ -120,3 +126,26 @@ issue-1253
 https://github.com/sergmain/metaheuristic/blob/master/docs-dev/role-matrix.txt
 
 DONE
+CONFIRMED
+
+
+
+issue-1254
+http://localhost:4200/#/dispatcher/company/2/batches
+если зайти под ролью MASTER_SUPPORT и попробовать удалить пакет, то будет выдана ошибка 403,
+что правильно т.к. кнопка Удалить не должна быть доступна этой роли. Но эта бага про другое.
+в ходе удаления всплывает красная плашка 403, но на экране продолжает крутиться целеное кольцо
+
+после получения 403 интерфейс не должен зависать
+
+
+issue-1255
+http://localhost:4200/#/dispatcher/company/15905/account/add
+если во время создания акка возникла ошибка, то поля не сбрасывать
+
+
+
+issue-1256
+http://localhost:4200/#/batch
+Отсутствует столбец 'Owner's username'
+в нем отображать поле ai.metaheuristic.ai.dispatcher.data.BatchData.BatchExecInfo#username
