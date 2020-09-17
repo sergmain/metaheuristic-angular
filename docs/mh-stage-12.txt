@@ -24,41 +24,6 @@ http://localhost:4200/#/ai/atlas/experiments
 
 
 
-issue-1216
-http://localhost:8080/dispatcher/company/batch/company-batches/2
-при использовании пользователя с ролью MASTER_SUPPORT или MASTER_OPERATOR реализовать возможность удаления пакетов группами. 
-Т.е. сценарий такой - юзер отмечает галками пакеты которые он хочет удалить.
-Затем нажимает кнопку "Удалить отмеченное" (сейчас этой кнопки нет) и после подтверждения удаления выбранных пакетов,
-выполняется запрос к серверу на удаление списка пакетов.
-
-вызывать
-ai.metaheuristic.ai.dispatcher.rest.v1.BatchForOperatorRestController#processBatchesBulkDeleteCommit
-
-    /**
-     *
-     * @param batchIds comma-separated list of batchId for deleting
-     * @param companyUniqueId Company.uniqueId
-     * @return
-     */
-    @PostMapping("/company-batch-bulk-delete-commit/{companyUniqueId}")
-    @PreAuthorize("hasAnyRole('MASTER_OPERATOR')")
-    public BatchData.BulkOperations processBatchesBulkDeleteCommit(String batchIds, @PathVariable Long companyUniqueId)
-
-DONE
-NOT YET
-
-роли MASTER_SUPPORT или MASTER_OPERATOR возможны только у юзеров в main company (companyUniqueId==1)
-сейчас если зайти юзером с ролю MASTER_SUPPORT или MASTER_OPERATOR то меню выглядит как для юзера из обычной компании.
-должно выглядеть так же как для MASTER_ADMIN, т.е. кнопок ИИ,  Пакеты не должно быть,
-при нажатии на Панель управления должна быть кнопка Компании в меню слева(завел багу issue-1243 на эту тему)
-
-т.к. списка компаний нет, то дальше проверить возможности нет
-
-DONE
-CONFIRMED
-
-
-
 issue-1239
 ангулар
 http://localhost:4200/#/experiments
@@ -69,49 +34,6 @@ http://localhost:4200/#/experiments
 
 
 
-issue-1243
-во всех урл
-если юзер относится к ролям MASTER_ADMIN, MASTER_OPERATOR, MASTER_SUPPORT,
-то в верхнем меню не должно быть пунктов ИИ, Пакеты
-
-в меню Панель управления должен быть доступен только пункт Компании
-
-DONE
-
-NOT YET
-при заходе юзером с ролью MASTER_OPERATOR слева в меню пункта Компании нет
-
-при заходе юзером с ролью MASTER_SUPPORT слева в меню пункта Компании нет
-
-DONE
-CONFIRMED
-
-
-issue-1246.1
-http://localhost:4200/#/dispatcher/company/2/batches
-тут тоже просто id
-исправил на uniqueId
-
-DONE
-NOT YET
-т.к пакеты доступны только юзерам с ролями MASTER_OPERATOR MASTER_SUPPORT
-и бага issue-1243 пока не пофиксена проверить нет возможности
-CONFIRMED
-
-
-
-issue-1251
-angular
-http://localhost:4200/#/dispatcher/company/2233/edit
-
-значение поля Company's groups не отображается
-поле ai.metaheuristic.ai.dispatcher.data.CompanyData.SimpleCompanyResult#companyAccessControl
-
-DONE
-CONFIRMED
-
-
-
 issue-1252
 http://localhost:4200/#/dispatcher/company/15905/account/add
 после успешного создания акка надо дисаблить кнопку Create
@@ -119,14 +41,6 @@ http://localhost:4200/#/dispatcher/company/15905/account/add
 DONE
 NOT YET
 будет проверено после фикса issue-1255
-
-
-issue-1253
-привести доступ в соответствие с ролевой матрицей
-https://github.com/sergmain/metaheuristic/blob/master/docs-dev/role-matrix.txt
-
-DONE
-CONFIRMED
 
 
 
