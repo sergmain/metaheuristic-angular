@@ -31,6 +31,7 @@ export class CompanyEditComponent implements OnInit {
             .subscribe(simpleCompanyResult => {
                 this.simpleCompanyResult = simpleCompanyResult;
                 this.name = simpleCompanyResult.company.name;
+                this.groups = simpleCompanyResult.companyAccessControl.groups;
             });
     }
 

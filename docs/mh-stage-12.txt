@@ -103,11 +103,15 @@ http://localhost:4200/#/dispatcher/company/2233/edit
 значение поля Company's groups не отображается
 поле ai.metaheuristic.ai.dispatcher.data.CompanyData.SimpleCompanyResult#companyAccessControl
 
+DONE
+
 
 
 issue-1252
 http://localhost:4200/#/dispatcher/company/15905/account/add
 после успешного создания акка надо дисаблить кнопку Create
+
+DONE
 
 
 
@@ -115,3 +119,4 @@ issue-1253
 привести доступ в соответствие с ролевой матрицей
 https://github.com/sergmain/metaheuristic/blob/master/docs-dev/role-matrix.txt
 
+DONE

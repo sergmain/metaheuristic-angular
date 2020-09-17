@@ -1,4 +1,5 @@
 import { Batch } from '../beans/Batch';
+import { DefaultResponse } from '../DefaultResponse';
 import { OperationStatusRest } from '../OperationStatusRest';
 
 export namespace BatchData {
@@ -26,7 +27,7 @@ export namespace BatchData {
         uploadedFileName: string;
         username: string;
     }
-    export interface UploadingStatus {
+    export interface UploadingStatus extends DefaultResponse {
         batchId: number;
         execContextId: number;
     }

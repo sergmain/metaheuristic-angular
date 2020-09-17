@@ -10,6 +10,7 @@ import { NewAccount, AccountsResult, AccountResult } from '../accounts';
 import { AccountWithRoleResult } from './AccountWithRoleResult';
 import { BatchesResult } from '../batch/BatchesResult';
 import { BatchData } from '@src/app/models/data/BatchData';
+import { SourceCodesForCompany } from '../source-codes/SourceCodesForCompany';
 
 const url = (s: string): string => `${environment.baseUrl}dispatcher/company/${s}`;
 
@@ -104,8 +105,14 @@ export class CompanyService {
             generateFormData({ batchIds })
         )
 
-    uploadFile = (companyUniqueId: string): Observable<BatchData.UploadingStatus> =>
-        this.http.get<BatchData.UploadingStatus>(url(`batch/company-batch-upload-from-file/${companyUniqueId}`))
+    uploadFile = (companyUniqueId: string, file: File): Observable<BatchData.UploadingStatus> =>
+        this.http.post<BatchData.UploadingStatus>(
+            url(`batch/company-batch-upload-from-file/${companyUniqueId}`),
+            generateFormData({
+                companyUniqueId,
+                file
+            })
+        )
 
     getProcessingResourceStatus = (companyUniqueId: string, batchId: string): Observable<BatchData.Status> =>
         this.http.get<BatchData.Status>(url(`batch/company-batch-status/${companyUniqueId}/${batchId}`))
@@ -129,4 +136,10 @@ export class CompanyService {
             responseType: 'blob'
         });
     }
+
+    sourceCodesForCompany = (companyUniqueId: string): Observable<SourceCodesForCompany> =>
+        this.http.get<SourceCodesForCompany>(
+            url(`batch/company-batch-source-codes/${companyUniqueId}`)
+        )
+
 }

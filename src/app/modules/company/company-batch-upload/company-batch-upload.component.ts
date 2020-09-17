@@ -3,6 +3,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { BatchData } from '@src/app/models/data/BatchData';
 import { BatchService } from '@src/app/services/batch/batch.service';
 import { CompanyService } from '@src/app/services/company/company.service';
+import { SourceCode } from '@src/app/services/source-codes/SourceCode';
+import { SourceCodesForCompany } from '@src/app/services/source-codes/SourceCodesForCompany';
 import { SourceCodeUidsForCompany } from '@src/app/services/source-codes/SourceCodeUidsForCompany';
 import { CtFileUploadComponent } from '../../ct/ct-file-upload/ct-file-upload.component';
 
@@ -16,13 +18,12 @@ export class CompanyBatchUploadComponent implements OnInit {
 
     batchId: string;
     companyUniqueId: string;
-    sourceCodeUidsForCompany: SourceCodeUidsForCompany;
-    sourceCode: string;
+    sourceCodesForCompany: SourceCodesForCompany;
+    sourceCode: SourceCode;
     file: File;
     batchDataUploadingStatus: BatchData.UploadingStatus;
     constructor(
         private companyService: CompanyService,
-        private batchService: BatchService,
         private activatedRoute: ActivatedRoute,
         private router: Router
     ) { }
@@ -31,10 +32,10 @@ export class CompanyBatchUploadComponent implements OnInit {
         this.batchId = this.activatedRoute.snapshot.paramMap.get('batchId');
         this.companyUniqueId = this.activatedRoute.snapshot.paramMap.get('companyUniqueId');
 
-        this.batchService.batch
-            .add()
-            .subscribe((sourceCodeUidsForCompany: SourceCodeUidsForCompany) => {
-                this.sourceCodeUidsForCompany = sourceCodeUidsForCompany;
+        this.companyService
+            .sourceCodesForCompany(this.companyUniqueId)
+            .subscribe(sourceCodesForCompany => {
+                this.sourceCodesForCompany = sourceCodesForCompany;
             });
     }
 
@@ -44,7 +45,7 @@ export class CompanyBatchUploadComponent implements OnInit {
 
     upload(): void {
         this.companyService
-            .uploadFile(this.companyUniqueId)
+            .uploadFile(this.sourceCode.id.toString(), this.file)
             .subscribe(batchDataUploadingStatus => {
                 this.batchDataUploadingStatus = batchDataUploadingStatus;
             });

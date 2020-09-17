@@ -72,7 +72,10 @@ export class AccountAddComponent implements OnInit {
             }, this.companyUniqueId)
             .subscribe({
                 next: (operationStatusRest) => this.operationStatusRest = operationStatusRest,
-                complete: () => this.isLoading = false
+                complete: () => {
+                    this.form.reset();
+                    this.isLoading = false;
+                }
             });
     }
 }

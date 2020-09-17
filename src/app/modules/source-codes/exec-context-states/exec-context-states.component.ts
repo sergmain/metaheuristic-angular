@@ -10,21 +10,15 @@ import { ExecContextStateResult } from '@src/app/services/source-codes/ExecConte
 })
 export class ExecContextStatesComponent implements OnInit {
 
-    response: ExecContextStateResult;
+    sourceCodeId: string;
+    execContextId: string;
 
     constructor(
-        private sourceCodesService: SourceCodesService,
         private route: ActivatedRoute,
-    ) { }
-
-    ngOnInit(): void {
-        this.sourceCodesService.execContext
-            .execContextState(
-                this.route.snapshot.paramMap.get('sourceCodeId'),
-                this.route.snapshot.paramMap.get('execContextId')
-            )
-            .subscribe(response => {
-                this.response = response;
-            });
+    ) {
+        this.sourceCodeId = this.route.snapshot.paramMap.get('sourceCodeId');
+        this.execContextId = this.route.snapshot.paramMap.get('execContextId');
     }
+
+    ngOnInit(): void { }
 }

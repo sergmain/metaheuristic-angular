@@ -27,7 +27,7 @@
                     <ng-container matColumnDef="check">
                         <th mat-header-cell *matHeaderCellDef>
                             <mat-checkbox [indeterminate]="checkIndeterminate()" [checked]="allComplete()"
-                                (change)="setAllChecked($event.checked)">
+                                *ngIf="dataSource.data.length" (change)="setAllChecked($event.checked)">
                                 <div class="check-area"></div>
                             </mat-checkbox>
                         </th>
