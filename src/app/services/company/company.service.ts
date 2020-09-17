@@ -105,11 +105,11 @@ export class CompanyService {
             generateFormData({ batchIds })
         )
 
-    uploadFile = (companyUniqueId: string, file: File): Observable<BatchData.UploadingStatus> =>
+    uploadFile = (companyUniqueId: string, sourceCodeId: string, file: File): Observable<BatchData.UploadingStatus> =>
         this.http.post<BatchData.UploadingStatus>(
             url(`batch/company-batch-upload-from-file/${companyUniqueId}`),
             generateFormData({
-                companyUniqueId,
+                sourceCodeId,
                 file
             })
         )

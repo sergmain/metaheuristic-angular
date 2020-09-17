@@ -45,7 +45,7 @@ export class CompanyBatchUploadComponent implements OnInit {
 
     upload(): void {
         this.companyService
-            .uploadFile(this.sourceCode.id.toString(), this.file)
+            .uploadFile(this.companyUniqueId, this.sourceCode.id.toString(), this.file)
             .subscribe(batchDataUploadingStatus => {
                 this.batchDataUploadingStatus = batchDataUploadingStatus;
             });
