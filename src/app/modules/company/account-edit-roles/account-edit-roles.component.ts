@@ -37,8 +37,8 @@ export class AccountEditRolesComponent implements OnInit {
                     if (this.roleModel.has(a.authority)) {
                         this.roleModel.set(a.authority, true);
                     }
-                    this.isLoading = false;
                 });
+                this.isLoading = false;
             });
     }
 
