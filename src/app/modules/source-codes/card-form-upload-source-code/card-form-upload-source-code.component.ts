@@ -21,8 +21,8 @@ export class CardFormUploadSourceCodeComponent {
     ) { }
 
     upload(): void {
-        this.sourceCodesService.sourceCode
-            .uploadFromFile(this.file.fileInput.nativeElement.files[0])
+        this.sourceCodesService
+            .uploadSourceCode(this.file.fileInput.nativeElement.files[0])
             .subscribe(response => {
                 this.responseChange.emit(response);
             });

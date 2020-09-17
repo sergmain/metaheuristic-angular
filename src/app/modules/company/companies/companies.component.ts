@@ -37,17 +37,12 @@ export class CompaniesComponent implements OnInit {
         });
     }
 
-    nextPage(): void {
-        this.table.wait();
-        this.prevTable.disabled = true;
-        this.nextTable.disabled = true;
-        this.updateTable(this.simpleCompaniesResult.companies.number + 1);
-    }
 
     prevPage(): void {
-        this.table.wait();
-        this.prevTable.disabled = true;
-        this.nextTable.disabled = true;
-        this.updateTable(this.simpleCompaniesResult.companies.number - 1);
+        this.updateTable((this.simpleCompaniesResult.companies.number - 1));
+    }
+
+    nextPage(): void {
+        this.updateTable((this.simpleCompaniesResult.companies.number + 1));
     }
 }

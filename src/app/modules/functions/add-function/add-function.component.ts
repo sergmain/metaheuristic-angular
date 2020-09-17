@@ -27,7 +27,8 @@ export class AddFunctionComponent {
     }
 
     upload(): void {
-        this.funcrionsService.function.upload(this.fileUpload.fileInput.nativeElement.files[0])
+        this.funcrionsService
+            .uploadFunction(this.fileUpload.fileInput.nativeElement.files[0])
             .subscribe(
                 (response) => {
                     this.response = response;

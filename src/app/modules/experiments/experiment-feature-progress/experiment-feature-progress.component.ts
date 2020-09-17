@@ -2,11 +2,13 @@ import { Location } from '@angular/common';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
-import { ExperimentsService, MetricsResult, response, Task } from '@app/services/experiments';
 import { PlotComponent } from 'angular-plotly.js';
 import { CtWrapBlockComponent } from '../../ct/ct-wrap-block/ct-wrap-block.component';
 import { ExperimentApiData } from '@src/app/services/experiments/ExperimentApiData';
-import { ExperimentData } from '@src/app/services/experiments/ExperimentData';
+import { response } from '@src/app/services/experiments/response';
+import { ExperimentsService } from '@src/app/services/experiments/experiments.service';
+import { MetricsResult } from '@src/app/services/experiments/MetricsResult';
+import { Task } from '@src/app/services/experiments/Task';
 
 @Component({
     selector: 'experiment-feature-progress',
@@ -30,7 +32,7 @@ export class ExperimentFeatureProgressComponent implements OnInit {
     consolePartResponse: response.experiment.FeatureProgressConsolePart;
     plotDataResponse: response.experiment.FeaturePlotDataPart;
 
-    experiment: ExperimentData;
+    experiment: ExperimentApiData.ExperimentData;
     experimentId: string;
     featureId: string;
     pickedAxes: (boolean | any)[] = [false, false];
@@ -143,8 +145,8 @@ export class ExperimentFeatureProgressComponent implements OnInit {
     }
 
     taskRerun(taskId) {
-        this.experimentsService.experiment
-            .taskRerun(taskId)
+        this.experimentsService
+            .rerunTask(taskId)
             .subscribe((response) => this.updateResponse());
     }
 

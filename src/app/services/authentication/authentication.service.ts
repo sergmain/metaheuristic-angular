@@ -5,10 +5,10 @@ import { Store } from '@ngrx/store';
 import { AppState } from '@src/app/app.reducers';
 import { environment } from '@src/environments/environment';
 import { Observable } from 'rxjs';
-import { Authority, response } from './response';
 import { Role } from './Role';
 import { User } from './User';
 import * as settingsActions from '@src/app/services/settings/settings.actions';
+import { Authority } from './Authority';
 
 @Injectable({
     providedIn: 'root'
@@ -73,7 +73,7 @@ export class AuthenticationService {
         return new Observable(subscriber => {
             this.http
                 .post(url, { username, password }, { headers })
-                .subscribe((resultUser: response.User) => {
+                .subscribe((resultUser: User) => {
                     console.log('username: ' + (resultUser ? resultUser.username : 'resultUser is null'));
                     if (resultUser.username) {
                         const data: User = Object.assign({}, resultUser, { token });

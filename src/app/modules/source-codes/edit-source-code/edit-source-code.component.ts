@@ -30,11 +30,11 @@ export class EditSourceCodeComponent implements OnInit {
 
     updateResponse(): void {
         const id: string | number = this.route.snapshot.paramMap.get('sourceCodeId');
-        this.sourceCodesService.sourceCode
-            .get(id)
-            .subscribe(response => {
-                this.sourceCodeResponse = response;
-                this.sourceCode = response;
+        this.sourceCodesService
+            .edit(id)
+            .subscribe(sourceCodeResult => {
+                this.sourceCodeResponse = sourceCodeResult;
+                this.sourceCode = sourceCodeResult;
             });
     }
 
@@ -43,8 +43,8 @@ export class EditSourceCodeComponent implements OnInit {
     }
 
     save(): void {
-        this.sourceCodesService.sourceCode
-            .edit(this.sourceCode.id.toString(), this.sourceCode.source)
+        this.sourceCodesService
+            .editFormCommit(this.sourceCode.id.toString(), this.sourceCode.source)
             .subscribe((response) => {
                 if (response.errorMessages) {
                     this.sourceCodeResponse = response;
@@ -57,10 +57,10 @@ export class EditSourceCodeComponent implements OnInit {
 
     validate(): void {
         const id: string = this.route.snapshot.paramMap.get('sourceCodeId');
-        this.sourceCodesService.sourceCode
+        this.sourceCodesService
             .validate(id)
-            .subscribe((response) => {
-                this.sourceCodeResponse = response;
+            .subscribe(sourceCodeResult => {
+                this.sourceCodeResponse = sourceCodeResult;
                 this.scrollIntoView();
             });
     }

@@ -27,8 +27,8 @@ export class CardFormAddVariableComponent {
     ) { }
 
     upload(): void {
-        this.globalVariablesService.variable
-            .uploadFromFile(
+        this.globalVariablesService
+            .createResourceFromFile(
                 this.form.value.poolCode,
                 this.fileUpload.fileInput.nativeElement.files[0]
             )

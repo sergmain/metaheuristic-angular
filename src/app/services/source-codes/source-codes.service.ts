@@ -12,7 +12,7 @@ import { SourceCodesResult } from './SourceCodesResult';
 import { SourceCodeType } from '@src/app/enums/SourceCodeType';
 import { ExecContextStateResult } from './ExecContextStateResult';
 
-const url = (urlString): string => `${environment.baseUrl}dispatcher/source-code/${urlString}`;
+const url = (s: string): string => `${environment.baseUrl}dispatcher/source-code/${s}`;
 
 @Injectable({
     providedIn: 'root'
@@ -22,94 +22,67 @@ export class SourceCodesService {
         private http: HttpClient
     ) { }
 
-    sourceCodes = {
-        get: (page: string): Observable<SourceCodesResult> =>
-            this.http.get<SourceCodesResult>(
-                url('source-codes'),
-                { params: { page } }
-            ),
-        getArchivedOnly: (page: string): Observable<SourceCodesResult> =>
-            this.http.get<SourceCodesResult>(
-                url('source-codes-archived-only'),
-                { params: { page } }
-            )
-    };
+    sourceCodes(page: string): Observable<SourceCodesResult> {
+        return this.http.get<SourceCodesResult>(
+            url('source-codes'),
+            { params: { page } }
+        );
+    }
 
-    sourceCode = {
-        get: (id: string): Observable<SourceCodeResult> =>
-            this.http.get<SourceCodeResult>(url(`source-code/${id}`)),
+    sourceCodeArchivedOnly(page: string): Observable<SourceCodesResult> {
+        return this.http.get<SourceCodesResult>(
+            url('source-codes-archived-only'),
+            { params: { page } }
+        );
+    }
 
-        validate: (id: string): Observable<SourceCodeResult> =>
-            this.http.get<SourceCodeResult>(url(`source-code-validate/${id}`)),
+    edit(id: string): Observable<SourceCodeResult> {
+        return this.http.get<SourceCodeResult>(url(`source-code/${id}`));
+    }
 
-        add: (source: string): Observable<SourceCodeResult> =>
-            this.http.post<SourceCodeResult>(
-                url(`source-code-add-commit`),
-                formData({ source })
-            ),
+    validate(id: string): Observable<SourceCodeResult> {
+        return this.http.get<SourceCodeResult>(url(`source-code-validate/${id}`));
+    }
 
-        edit: (sourceCodeId: string, source: string): Observable<SourceCodeResult> =>
-            this.http.post<SourceCodeResult>(
-                url(`source-code-edit-commit`),
-                formData({ sourceCodeId, source })
-            ),
+    addFormCommit(source: string): Observable<SourceCodeResult> {
+        return this.http.post<SourceCodeResult>(
+            url(`source-code-add-commit`),
+            formData({ source })
+        );
+    }
 
-        delete: (id: string): Observable<OperationStatusRest> =>
-            this.http.post<OperationStatusRest>(
-                url(`source-code-delete-commit`),
-                formData({ id })
-            ),
+    editFormCommit(sourceCodeId: string, source: string): Observable<SourceCodeResult> {
+        return this.http.post<SourceCodeResult>(
+            url(`source-code-edit-commit`),
+            formData({ sourceCodeId, source })
+        );
+    }
 
-        archive: (id: string): Observable<OperationStatusRest> =>
-            this.http.post<OperationStatusRest>(
-                url(`source-code-archive-commit`),
-                formData({ id })
-            ),
+    deleteCommit(id: string): Observable<OperationStatusRest> {
+        return this.http.post<OperationStatusRest>(
+            url(`source-code-delete-commit`),
+            formData({ id })
+        );
+    }
 
-        uploadFromFile: (file: File): Observable<SourceCodeResult> =>
-            this.http.post<SourceCodeResult>(
-                url(`source-code-upload-from-file`),
-                formData({ file })
-            )
-    };
+    archiveCommit(id: string): Observable<OperationStatusRest> {
+        return this.http.post<OperationStatusRest>(
+            url(`source-code-archive-commit`),
+            formData({ id })
+        );
+    }
 
-    execContexts = {
-        get: (sourceCodeId: string, page: string): Observable<ExecContextsResult> =>
-            this.http.get<ExecContextsResult>(
-                url(`exec-contexts/${sourceCodeId}`),
-                { params: { page } }
-            ),
-    };
+    uploadSourceCode(file: File): Observable<SourceCodeResult> {
+        return this.http.post<SourceCodeResult>(
+            url(`source-code-upload-from-file`),
+            formData({ file })
+        );
+    }
 
-    execContext = {
-        uidExecContextAddCommit: (uid: string, variable: string): Observable<SimpleExecContextAddingResult> =>
-            this.http.post<SimpleExecContextAddingResult>(
-                url(`uid-exec-context-add-commit`),
-                formData({ uid, variable })
-            ),
 
-        addCommit: (sourceCodeId: string, variable: string): Observable<ExecContextResult> =>
-            this.http.post<ExecContextResult>(
-                url(`exec-context-add-commit`),
-                formData({ sourceCodeId, variable })
-            ),
-
-        get: (sourceCodeId: string, execContextId: string): Observable<ExecContextResult> =>
-            this.http.get<ExecContextResult>(url(`exec-context/${sourceCodeId}/${execContextId}`)),
-
-        deleteCommit: (sourceCodeId: string, execContextId: string): Observable<OperationStatusRest> =>
-            this.http.post<OperationStatusRest>(
-                url(`exec-context-delete-commit/`),
-                formData({ sourceCodeId, execContextId })
-            ),
-
-        execContextState: (sourceCodeId: string, execContextId: string): Observable<ExecContextStateResult> =>
-            this.http.get<ExecContextStateResult>(url(`exec-context-state/${sourceCodeId}/${execContextId}`)),
-
-        execContextTargetState: (sourceCodeId: string, state: string, id: string): Observable<OperationStatusRest> =>
-            this.http.get<OperationStatusRest>(url(`exec-context-target-state/${sourceCodeId}/${state}/${id}`))
-    };
-
+    //
+    //
+    //
     getSourceCodeType(uid: string, result: SourceCodesResult): SourceCodeType {
         let type: SourceCodeType = SourceCodeType.common;
         if (result.batches.includes(uid)) { type = SourceCodeType.batch; }

@@ -4,7 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { ExperimentResultService } from '@src/app/services/experiment-result/experiment-result.service';
 import { ExperimentResultData } from '@src/app/services/experiment-result/ExperimentResultData';
 import { ExperimentResultTaskParamsYaml } from '@src/app/services/experiment-result/ExperimentResultTaskParamsYaml';
-import { ExperimentData } from '@src/app/services/experiments/ExperimentData';
+import { ExperimentApiData } from '@src/app/services/experiments/ExperimentApiData';
 import { PlotComponent } from 'angular-plotly.js';
 import { CtWrapBlockComponent } from '../../ct/ct-wrap-block/ct-wrap-block.component';
 
@@ -24,7 +24,7 @@ export class ExperimentResultExperimentFeatureProgressComponent implements OnIni
     experimentFeatureExtendedResult: ExperimentResultData.ExperimentFeatureExtendedResult;
     consolePartResponse: ExperimentResultData.ConsoleResult;
     plotData: ExperimentResultData.PlotData;
-    experiment: ExperimentData;
+    experiment: ExperimentApiData.ExperimentData;
 
     //
     experimentId: string;

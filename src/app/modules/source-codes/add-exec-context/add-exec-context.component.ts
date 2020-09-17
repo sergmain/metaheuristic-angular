@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LoadStates } from '@app/enums/LoadStates';
 import { state } from '@app/helpers/state';
+import { ExecContextService } from '@src/app/services/exec-context/exec-context.service';
 import { ExecContextResult } from '@src/app/services/source-codes/ExecContextResult';
 import { SourceCodesService } from '@src/app/services/source-codes/source-codes.service';
 import { SourceCodeResult } from '@src/app/services/source-codes/SourceCodeResult';
@@ -25,13 +26,16 @@ export class AddExecContextComponent implements OnInit, OnDestroy {
         private activatedRoute: ActivatedRoute,
         private router: Router,
         private sourceCodesService: SourceCodesService,
+        private execContextService: ExecContextService
     ) { }
 
     ngOnInit(): void {
         this.sourceCodeId = this.activatedRoute.snapshot.paramMap.get('sourceCodeId');
-        this.sourceCodesService.sourceCode.get(this.sourceCodeId).subscribe(v => {
-            this.sourceCodeResponse = v;
-        });
+        this.sourceCodesService
+            .edit(this.sourceCodeId)
+            .subscribe(sourceCodeResult => {
+                this.sourceCodeResponse = sourceCodeResult;
+            });
     }
 
     ngOnDestroy(): void { }
@@ -42,8 +46,8 @@ export class AddExecContextComponent implements OnInit, OnDestroy {
 
     createWithVariable(): void {
         this.currentStates.add(this.states.loading);
-        this.sourceCodesService.execContext
-            .addCommit(this.sourceCodeId, this.variable)
+        this.execContextService
+            .execContextAddCommit(this.sourceCodeId, this.variable)
             .subscribe(response => {
                 if (response.errorMessages) {
                     this.responseSingle = response;

@@ -1,4 +1,14 @@
-<ct-section>
+<ct-section *ngIf="!experimentsResult">
+    <ct-section-body>
+        <ct-section-body-row>
+            <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+        </ct-section-body-row>
+    </ct-section-body>
+</ct-section>
+
+
+
+<ct-section *ngIf="experimentsResult">
     <ct-section-header>
         <ct-section-header-row>
             <ct-heading>Experiments</ct-heading>
@@ -6,7 +16,7 @@
     </ct-section-header>
     <ct-section-body>
         <ct-section-body-row>
-            <ct-table #table>
+            <ct-table [isWaiting]="isLoading">
                 <table class="mat-table" mat-table="mat-table" [dataSource]="dataSource">
                     <ng-container matColumnDef="id">
                         <th mat-header-cell *matHeaderCellDef>Id</th>
@@ -63,31 +73,17 @@
                 </table>
             </ct-table>
         </ct-section-body-row>
-        <ct-section-body-row *ngIf="currentStates.has(states.firstLoading)">
-            <mat-progress-bar mode="indeterminate"></mat-progress-bar>
-        </ct-section-body-row>
     </ct-section-body>
     <ct-section-footer>
         <ct-section-footer-row>
             <ct-flex justify-content="space-between">
                 <ct-flex-item>
-                    <ct-flex justify-content="flex-start" gap="8px">
-                        <ct-flex-item>
-                            <button mat-flat-button color="primary" #prevTable disabled="disabled" (click)="prev()">
-                                <mat-icon>arrow_back_ios</mat-icon>
-                            </button>
-                        </ct-flex-item>
-                        <ct-flex-item>
-                            <button mat-flat-button color="primary" #nextTable disabled="disabled" (click)="next()">
-                                <mat-icon>arrow_forward_ios</mat-icon>
-                            </button>
-                        </ct-flex-item>
-                    </ct-flex>
+                    <ct-table-pagination [pageableDefault]="experimentsResult.items" [globalDisable]="false"
+                        (next)="nextPage()" (prev)="prevPage()"></ct-table-pagination>
                 </ct-flex-item>
                 <ct-flex-item>
-                    <button mat-flat-button color="primary" wide="wide"
-                        [disabled]="currentStates.has(states.loading) || currentStates.has(states.firstLoading)"
-                        routerLink="add">Add Experiment</button>
+                    <button mat-flat-button color="primary" wide="wide" [disabled]="isLoading" routerLink="add">Add
+                        Experiment</button>
                 </ct-flex-item>
             </ct-flex>
         </ct-section-footer-row>

@@ -1,4 +1,4 @@
-<ct-section *ngIf="!responseGlobalVariables">
+<ct-section *ngIf="!globalVariablesResult">
     <ct-section-body>
         <ct-section-body-row>
             <mat-progress-bar mode="indeterminate"></mat-progress-bar>
@@ -6,7 +6,7 @@
     </ct-section-body>
 </ct-section>
 
-<ct-section *ngIf="responseGlobalVariables">
+<ct-section *ngIf="globalVariablesResult">
     <ct-section-header>
         <ct-section-header-row>
             <ct-flex justify-content="space-between">
@@ -21,7 +21,7 @@
     </ct-section-header>
     <ct-section-body>
         <ct-section-body-row>
-            <ct-table #table>
+            <ct-table [isWaiting]="isLoading">
                 <table class="mat-table" mat-table="mat-table" [dataSource]="dataSource">
                     <ng-container matColumnDef="id" sticky="sticky">
                         <th mat-header-cell="mat-header-cell" *matHeaderCellDef>id </th>
@@ -69,20 +69,9 @@
         <ct-section-footer-row>
             <ct-flex justify-content="space-between">
                 <ct-flex-item>
-                    <ct-flex justify-content="flex-end" gap="8px">
-                        <ct-flex-item>
-                            <button mat-flat-button="mat-flat-button" color="primary" #prevTable disabled="disabled"
-                                (click)="prev()">
-                                <mat-icon>arrow_back_ios</mat-icon>
-                            </button>
-                        </ct-flex-item>
-                        <ct-flex-item>
-                            <button mat-flat-button="mat-flat-button" color="primary" #nextTable disabled="disabled"
-                                (click)="next()">
-                                <mat-icon>arrow_forward_ios</mat-icon>
-                            </button>
-                        </ct-flex-item>
-                    </ct-flex>
+                    <ct-table-pagination (next)="nextPage()" (prev)="prevPage()"
+                        [pageableDefault]="globalVariablesResult.items" [globalDisable]="isLoading">
+                    </ct-table-pagination>
                 </ct-flex-item>
                 <ct-flex-item>
                     <ng-container *ngTemplateOutlet="addVariableButton"></ng-container>

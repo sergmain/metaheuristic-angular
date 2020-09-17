@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
-import { MetricsResult, MetricsEntity } from '@services/experiments'
+import { MetricsEntity, MetricsResult } from '@src/app/services/experiments/MetricsResult';
 
 @Component({
     selector: 'experiment-metrics',
@@ -9,16 +9,16 @@ import { MetricsResult, MetricsEntity } from '@services/experiments'
 })
 export class ExperimentMetricsComponent implements OnInit {
 
-    @Output() draw = new EventEmitter < string > ();
+    @Output() draw = new EventEmitter<string>();
 
     @Input() metricsResult: MetricsResult;
     @Input() dataGraph: any;
     @Input() canDraw: boolean;
 
-    dataSource = new MatTableDataSource < any > ([]);
+    dataSource = new MatTableDataSource<any>([]);
     columnsToDisplay: string[] = [];
 
-    constructor() {}
+    constructor() { }
 
     ngOnInit() {
         if (this.metricsResult) { this.update(); }

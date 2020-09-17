@@ -5,6 +5,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
 import { ConfirmationDialogMethod } from '@src/app/components/app-dialog-confirmation/app-dialog-confirmation.component';
 import { ExecContextState } from '@src/app/enums/ExecContextState';
+import { ExecContextService } from '@src/app/services/exec-context/exec-context.service';
 import { ExecContext } from '@src/app/services/source-codes/ExecContext';
 import { ExecContextsResult } from '@src/app/services/source-codes/ExecContextsResult';
 import { SourceCodesService } from '@src/app/services/source-codes/source-codes.service';
@@ -38,6 +39,7 @@ export class ExecContextsComponent implements OnInit {
     constructor(
         private route: ActivatedRoute,
         private dialog: MatDialog,
+        private execContextService: ExecContextService,
         private sourceCodesService: SourceCodesService,
     ) { }
 
@@ -47,14 +49,16 @@ export class ExecContextsComponent implements OnInit {
     }
 
     getExecContexts(page: number): void {
-        this.sourceCodesService.execContexts.get(this.sourceCodeId, page.toString()).subscribe(v => {
-            this.response = v;
-            if (v) {
-                this.execContextTableSource = new MatTableDataSource(v.instances.content);
-                this.prevTable.disabled = v.instances.first;
-                this.nextTable.disabled = v.instances.last;
-            }
-        });
+        this.execContextService
+            .execContexts(this.sourceCodeId, page.toString())
+            .subscribe(execContextsResult => {
+                this.response = execContextsResult;
+                if (execContextsResult) {
+                    this.execContextTableSource = new MatTableDataSource(execContextsResult.instances.content);
+                    this.prevTable.disabled = execContextsResult.instances.first;
+                    this.nextTable.disabled = execContextsResult.instances.last;
+                }
+            });
     }
 
     @ConfirmationDialogMethod({
@@ -64,8 +68,8 @@ export class ExecContextsComponent implements OnInit {
         resolveTitle: 'Delete'
     })
     delete(execContext: ExecContext): void {
-        this.sourceCodesService.execContext
-            .deleteCommit(this.sourceCodeId, execContext.id?.toString?.())
+        this.execContextService
+            .execContextDeleteCommit(this.sourceCodeId, execContext.id?.toString?.())
             .subscribe(v => this.getExecContexts(this.response.instances.number));
     }
 
@@ -78,7 +82,7 @@ export class ExecContextsComponent implements OnInit {
     }
 
     runExecState(id, state): void {
-        this.sourceCodesService.execContext
+        this.execContextService
             .execContextTargetState(this.sourceCodeId, state, id)
             .subscribe(v => this.getExecContexts(this.response.instances.number));
     }

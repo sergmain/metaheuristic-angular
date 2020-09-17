@@ -4,9 +4,42 @@ import { SimpleSelectOption } from '@src/app/models/SimpleSelectOption';
 import { ExecContextState } from '@src/app/enums/ExecContextState';
 import { ExecContext } from '../source-codes/ExecContext';
 import { SimpleExperiment } from './SimpleExperiment';
+import { PageableDefault } from '@src/app/models/PageableDefault';
 
 export namespace ExperimentApiData {
 
+    export interface ExperimentsResult extends DefaultResponse {
+        items: {
+            content: ExperimentApiData.ExperimentResult[];
+        } & PageableDefault;
+    }
+
+    export interface ExperimentData {
+        id: number;
+        version: number;
+        execContextId: number;
+        code: string;
+        name: string;
+        description: string;
+        createdOn: number;
+        numberOfTask: number;
+        state: number;
+
+
+        // TODO: not exist?
+
+        seed: number;
+        isAllTaskProduced: boolean;
+        isFeatureProduced: boolean;
+        hyperParamsAsMap: {
+            [name: string]: {
+                [name: string]: number
+            }
+        };
+        hyperParams: ExperimentParamsYaml.HyperParam[];
+        featureProduced: boolean;
+        allTaskProduced: boolean;
+    }
 
     export interface NewExperimentData {
         code: string;
@@ -15,13 +48,7 @@ export namespace ExperimentApiData {
         seed: number;
     }
 
-    export interface ExperimentInfoResult {
-        allDatasetOptions: SimpleSelectOption[];
-        features: ExperimentFeatureData[];
-        execContext: ExecContext;
-        execContextState: ExecContextState;
 
-    }
     export interface ExperimentFeatureData {
         id: number;
         version: number;
@@ -33,17 +60,15 @@ export namespace ExperimentApiData {
         maxValue: number;
     }
 
-    export interface ExperimentsEditResult extends DefaultResponse {
-        hyperParams: HyperParamsResult;
-        simpleExperiment: SimpleExperiment;
-        functionResult: FunctionResult;
-    }
-
-
-
-    export interface FunctionResult {
-        selectOptions: SimpleSelectOption[];
-        functions: ExperimentFunctionResult[];
+    export interface ExperimentFeature {
+        id: number;
+        version: number;
+        resourceCodes: string;
+        checksumIdCodes: string;
+        execStatus: number;
+        experimentId: number;
+        maxValue: number;
+        execStatusAsString: string;
     }
 
     export interface ExperimentFunctionResult {
@@ -53,6 +78,34 @@ export namespace ExperimentApiData {
         type: string;
         experimentId: number;
     }
+
+
+    export interface ExperimentInfoResult {
+        allDatasetOptions: SimpleSelectOption[];
+        features: ExperimentFeatureData[];
+        execContext: ExecContext;
+        execContextState: ExecContextState;
+    }
+
+
+
+    export interface ExperimentResult {
+        experiment: ExperimentData;
+    }
+
+
+    export interface ExperimentsEditResult extends DefaultResponse {
+        hyperParams: HyperParamsResult;
+        simpleExperiment: SimpleExperiment;
+        functionResult: FunctionResult;
+    }
+
+
+    export interface FunctionResult {
+        selectOptions: SimpleSelectOption[];
+        functions: ExperimentFunctionResult[];
+    }
+
 
     export interface HyperParamsResult {
         items: HyperParam[];
@@ -65,5 +118,9 @@ export namespace ExperimentApiData {
     }
 
 
-
 }
+
+
+
+
+

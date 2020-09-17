@@ -9,7 +9,7 @@ import { Subscription } from 'rxjs';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatButton } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
-import { ExperimentData } from '@src/app/services/experiments/ExperimentData';
+import { ExperimentApiData } from '@src/app/services/experiments/ExperimentApiData';
 import { ExperimentResultData } from '@src/app/services/experiment-result/ExperimentResultData';
 import { ExperimentResultSimple } from '@src/app/services/experiment-result/ExperimentResultSimple';
 
@@ -25,7 +25,7 @@ export class ExperimentResultExperimentsComponent implements OnInit {
     response: ExperimentResultData.ExperimentResultSimpleList;
     dataSource = new MatTableDataSource<ExperimentResultSimple>([]);
 
-    deletedExperiments: ExperimentData[] = [];
+    deletedExperiments: ExperimentApiData.ExperimentData[] = [];
 
 
     @ViewChild('nextTable', { static: true }) nextTable: MatButton;
@@ -81,12 +81,12 @@ export class ExperimentResultExperimentsComponent implements OnInit {
     }
 
     @ConfirmationDialogMethod({
-        question: (experiment: ExperimentData): string =>
+        question: (experiment: ExperimentApiData.ExperimentData): string =>
             `Do you want to delete Experiment\xa0#${experiment.id}`,
         rejectTitle: 'Cancel',
         resolveTitle: 'Delete'
     })
-    delete(experiment: ExperimentData) {
+    delete(experiment: ExperimentApiData.ExperimentData) {
         this.deletedExperiments.push(experiment);
         this.experimentResultService
             .deleteCommit(experiment.id.toString())

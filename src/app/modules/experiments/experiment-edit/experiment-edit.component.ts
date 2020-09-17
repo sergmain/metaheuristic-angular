@@ -6,7 +6,6 @@ import { MatSelect } from '@angular/material/select';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ConfirmationDialogMethod } from '@app/components/app-dialog-confirmation/app-dialog-confirmation.component';
-import { ExperimentsService, response } from '@app/services/experiments/';
 import { DefaultResponse } from '@src/app/models/DefaultResponse';
 import { SimpleSelectOption } from '@src/app/models/SimpleSelectOption';
 import { ExperimentApiData } from '@src/app/services/experiments/ExperimentApiData';
@@ -14,6 +13,7 @@ import { CtWrapBlockComponent } from '../../ct/ct-wrap-block/ct-wrap-block.compo
 import { ExperimentParamsYaml } from '@src/app/services/experiments/ExperimentParamsYaml';
 import { SimpleExperiment } from '@src/app/services/experiments/SimpleExperiment';
 import { OperationStatusRest } from '@src/app/models/OperationStatusRest';
+import { ExperimentsService } from '@src/app/services/experiments/experiments.service';
 
 @Component({
     selector: 'experiment-edit',
@@ -98,7 +98,8 @@ export class ExperimentEditComponent implements OnInit {
 
     loadExperimet() {
         const id: string = this.route.snapshot.paramMap.get('experimentId');
-        this.experimentsService.experiment.edit(id)
+        this.experimentsService
+            .edit(id)
             .subscribe(
                 (response) => {
                     this.experimentEditResponse = response;
@@ -127,8 +128,8 @@ export class ExperimentEditComponent implements OnInit {
     updateSimpleExperiment(event: Event) {
         const button = event.target as HTMLButtonElement;
         button.disabled = true;
-        this.experimentsService.experiment
-            .editCommit(this.simpleExperiment)
+        this.experimentsService
+            .editFormCommit(this.simpleExperiment)
             .subscribe(
                 (response) => {
                     this.simpleExperimentResponse = response;
