@@ -25,8 +25,8 @@ export class CardFormAddVariableWithStorageComponent {
     ) { }
 
     create(): void {
-        this.globalVariablesService.variable
-            .inExternalStorage(this.form.value.poolCode, this.form.value.params)
+        this.globalVariablesService
+            .registerResourceInExternalStorage(this.form.value.poolCode, this.form.value.params)
             .subscribe((response) => {
                 this.afterResponse.emit(response);
             });

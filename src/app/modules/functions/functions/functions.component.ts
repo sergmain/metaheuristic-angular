@@ -42,7 +42,8 @@ export class FunctionsComponent implements OnInit {
     updateTable(page: number) {
         // TODO: response не содержит pageable
         // TODO: листание
-        this.functionService.functions.get(page.toString())
+        this.functionService
+            .getFunctions(page.toString())
             .subscribe(v => {
                 this.response = v;
                 const items = v.functions || [];
@@ -65,8 +66,8 @@ export class FunctionsComponent implements OnInit {
     })
     delete(functionEntity: FunctionEntity) {
         this.deletedRows.push(functionEntity);
-        this.functionService.function
-            .delete(functionEntity.id.toString())
+        this.functionService
+            .deleteCommit(functionEntity.id.toString())
             .subscribe();
     }
 

@@ -126,8 +126,8 @@ export class BatchComponent implements OnInit, OnDestroy {
     })
     delete(batch: Batch): void {
         this.deletedRows.push(batch);
-        this.batchService.batch
-            .deleteCommit(batch.batch.id.toString())
+        this.batchService
+            .processResourceDeleteCommit(batch.batch.id.toString())
             .subscribe();
     }
 

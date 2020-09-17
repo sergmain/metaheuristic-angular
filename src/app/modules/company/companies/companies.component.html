@@ -67,20 +67,8 @@
         <ct-section-footer-row>
             <ct-flex justify-content="space-between">
                 <ct-flex-item>
-                    <ct-flex justify-content="flex-start" gap="unit(1)">
-                        <ct-flex-item>
-                            <button mat-flat-button color="primary" #prevPageButton (click)="prevPage()"
-                                [disabled]="simpleCompaniesResult.companies.first">
-                                <mat-icon>arrow_back_ios</mat-icon>
-                            </button>
-                        </ct-flex-item>
-                        <ct-flex-item>
-                            <button mat-flat-button color="primary" #nextPageButton (click)="nextPage()"
-                                [disabled]="simpleCompaniesResult.companies.last">
-                                <mat-icon>arrow_forward_ios</mat-icon>
-                            </button>
-                        </ct-flex-item>
-                    </ct-flex>
+                    <ct-table-pagination (prev)="prevPage()" (next)="nextPage()"
+                        [pageableDefault]="simpleCompaniesResult.companies"></ct-table-pagination>
                 </ct-flex-item>
                 <ct-flex-item>
                     <ng-container *ngTemplateOutlet="addButtonTemplate"></ng-container>

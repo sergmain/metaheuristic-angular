@@ -10,7 +10,7 @@ import { SourceCodesService } from '@src/app/services/source-codes/source-codes.
 import { SourceCode } from '@src/app/services/source-codes/SourceCode';
 import { CtTableComponent } from '../../ct/ct-table/ct-table.component';
 import { SourceCodesArchiveComponent } from '../source-codes-archive/source-codes-archive.component';
-import { DispatcherAssetMode } from '@src/app/enums/DispatcherAssetMode'
+import { DispatcherAssetMode } from '@src/app/enums/DispatcherAssetMode';
 
 
 @Component({
@@ -20,7 +20,7 @@ import { DispatcherAssetMode } from '@src/app/enums/DispatcherAssetMode'
 })
 
 export class SourceCodesComponent implements OnInit, ConfirmationDialogInterface {
-    readonly dispatcherAssetMode = DispatcherAssetMode
+    readonly dispatcherAssetMode = DispatcherAssetMode;
 
 
     TABINDEX: number = 0;
@@ -52,8 +52,8 @@ export class SourceCodesComponent implements OnInit, ConfirmationDialogInterface
 
     updateTable(page: number) {
         this.currentStates.add(this.states.loading);
-        this.sourceCodesService.sourceCodes
-            .get(page.toString())
+        this.sourceCodesService
+            .sourceCodes(page.toString())
             .subscribe(response => {
                 this.response = response;
                 this.dataSource = new MatTableDataSource(response.items.content || []);
@@ -73,8 +73,8 @@ export class SourceCodesComponent implements OnInit, ConfirmationDialogInterface
     })
     delete(sourceCode: SourceCode) {
         this.deletedSourceCodes.push(sourceCode);
-        this.sourceCodesService.sourceCode
-            .delete(sourceCode.id.toString())
+        this.sourceCodesService
+            .deleteCommit(sourceCode.id.toString())
             .subscribe();
     }
 
@@ -86,14 +86,14 @@ export class SourceCodesComponent implements OnInit, ConfirmationDialogInterface
     })
     archive(sourceCode: SourceCode) {
         this.archivedSourceCodes.push(sourceCode);
-        this.sourceCodesService.sourceCode
-            .archive(sourceCode.id.toString())
+        this.sourceCodesService
+            .archiveCommit(sourceCode.id.toString())
             .subscribe();
     }
 
     tabChange() {
         if (this.matTabGroup.selectedIndex === 1) {
-            this.sourceCodesArchive.updateTable(0)
+            this.sourceCodesArchive.updateTable(0);
         }
     }
 
@@ -112,7 +112,7 @@ export class SourceCodesComponent implements OnInit, ConfirmationDialogInterface
     }
 
     getType(uid: string): SourceCodeType {
-        return this.sourceCodesService.getSourceCodeType(uid, this.response)
+        return this.sourceCodesService.getSourceCodeType(uid, this.response);
     }
 
 }

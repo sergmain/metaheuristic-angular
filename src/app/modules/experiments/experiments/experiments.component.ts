@@ -4,13 +4,12 @@ import { MatDialog, } from '@angular/material/dialog';
 import { MatButton, } from '@angular/material/button';
 import { ConfirmationDialogMethod } from '@app/components/app-dialog-confirmation/app-dialog-confirmation.component';
 import { LoadStates } from '@app/enums/LoadStates';
-import { ExperimentItem, ExperimentsService, response } from '@services/experiments';
 import { CtTableComponent } from '@src/app/modules/ct/ct-table/ct-table.component';
 import { Subscription } from 'rxjs';
 import { DefaultResponse } from '@src/app/models/DefaultResponse';
-import { ExperimentsResult } from '@src/app/services/experiments/ExperimentsResult';
-import { ExperimentResult } from '@src/app/services/experiments/ExperimentResult';
-import { OperationStatusRest } from '@src/app/models/OperationStatusRest';
+import { ExperimentsService } from '@src/app/services/experiments/experiments.service';
+import { ExperimentItem } from '@src/app/services/experiments/response';
+import { ExperimentApiData } from '@src/app/services/experiments/ExperimentApiData';
 
 
 @Component({
@@ -20,18 +19,15 @@ import { OperationStatusRest } from '@src/app/models/OperationStatusRest';
 })
 
 export class ExperimentsComponent implements OnInit {
-    readonly states = LoadStates;
-    currentStates: Set<LoadStates> = new Set();
-    experimentsResponse: ExperimentsResult;
-    dataSource: MatTableDataSource<ExperimentResult> = new MatTableDataSource<ExperimentResult>([]);
+    isLoading: boolean;
+
+    experimentsResult: ExperimentApiData.ExperimentsResult;
+
+    dataSource: MatTableDataSource<ExperimentApiData.ExperimentResult> = new MatTableDataSource<ExperimentApiData.ExperimentResult>([]);
     columnsToDisplay: string[] = ['id', 'name', 'createdOn', 'bts'];
 
     deletedExperiments: ExperimentItem[] = [];
     deleteCommitResponse: DefaultResponse;
-
-    @ViewChild('nextTable', { static: true }) nextTable: MatButton;
-    @ViewChild('prevTable', { static: true }) prevTable: MatButton;
-    @ViewChild('table', { static: true }) table: CtTableComponent;
 
     constructor(
         private dialog: MatDialog,
@@ -39,27 +35,22 @@ export class ExperimentsComponent implements OnInit {
     ) { }
 
     ngOnInit(): void {
-        this.currentStates.add(this.states.firstLoading);
         this.updateTable(0);
     }
 
     updateTable(page: number): void {
-        this.currentStates.add(this.states.loading);
-        const subscribe: Subscription = this.experimentsService.experiments
-            .get(page.toString())
-            .subscribe(
-                (experimentsResult) => {
-                    this.experimentsResponse = experimentsResult;
+        this.isLoading = true;
+        this.experimentsService
+            .getExperiments(page.toString())
+            .subscribe({
+                next: experimentsResult => {
+                    this.experimentsResult = experimentsResult;
                     this.dataSource = new MatTableDataSource(experimentsResult.items.content || []);
-                    this.prevTable.disabled = experimentsResult.items.first;
-                    this.nextTable.disabled = experimentsResult.items.last;
-                    this.table.show();
-                    this.currentStates.delete(this.states.firstLoading);
-                    this.currentStates.delete(this.states.loading);
                 },
-                () => { },
-                () => subscribe.unsubscribe()
-            );
+                complete: () => {
+                    this.isLoading = false;
+                }
+            });
     }
 
     @ConfirmationDialogMethod({
@@ -70,7 +61,7 @@ export class ExperimentsComponent implements OnInit {
     })
     delete(experiment: ExperimentItem): void {
         this.deletedExperiments.push(experiment);
-        const subscribe: Subscription = this.experimentsService.experiment
+        const subscribe: Subscription = this.experimentsService
             .deleteCommit(experiment.experiment.id.toString())
             .subscribe(
                 (operationStatusRest) => {
@@ -82,28 +73,18 @@ export class ExperimentsComponent implements OnInit {
     }
     // TODO: delete ExperimentsResponse
     clone(element: ExperimentItem): void {
-        this.currentStates.add(this.states.loading);
-        this.table.wait();
-        const subscribe: Subscription = this.experimentsService.experiment
-            .cloneCommit(element.experiment.id?.toString())
+        this.isLoading = true;
+        const subscribe: Subscription = this.experimentsService
+            .experimentCloneCommit(element.experiment.id?.toString())
             .subscribe(
-                () => this.updateTable(this.experimentsResponse.items.number),
-                () => this.updateTable(this.experimentsResponse.items.number),
+                () => this.updateTable(this.experimentsResult.items.number),
+                () => this.updateTable(this.experimentsResult.items.number),
                 () => subscribe.unsubscribe()
             );
     }
 
-    next(): void {
-        this.prevTable.disabled = true;
-        this.nextTable.disabled = true;
-        this.updateTable(this.experimentsResponse.items.number + 1);
-        this.table.wait();
-    }
+    nextPage(): void { this.updateTable(this.experimentsResult.items.number + 1); }
 
-    prev(): void {
-        this.prevTable.disabled = true;
-        this.nextTable.disabled = true;
-        this.updateTable(this.experimentsResponse.items.number - 1);
-        this.table.wait();
-    }
+    prevPage(): void { this.updateTable(this.experimentsResult.items.number - 1); }
+
 }

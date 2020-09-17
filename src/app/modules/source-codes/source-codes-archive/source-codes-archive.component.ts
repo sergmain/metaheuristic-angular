@@ -39,7 +39,8 @@ export class SourceCodesArchiveComponent implements OnInit {
 
     updateTable(page: number): void {
         this.currentStates.add(this.states.loading);
-        this.sourceCodesService.sourceCodes.getArchivedOnly(page.toString())
+        this.sourceCodesService
+            .sourceCodeArchivedOnly(page.toString())
             .subscribe(
                 (response) => {
                     this.response = response;
@@ -61,8 +62,8 @@ export class SourceCodesArchiveComponent implements OnInit {
     })
     delete(sourceCode: SourceCode): void {
         this.deletedRows.push(sourceCode);
-        this.sourceCodesService.sourceCode
-            .delete(sourceCode.id.toString())
+        this.sourceCodesService
+            .deleteCommit(sourceCode.id.toString())
             .subscribe();
     }
 

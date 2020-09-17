@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { ExecContextService } from '@src/app/services/exec-context/exec-context.service';
 import { ExecContextStateResult } from '@src/app/services/source-codes/ExecContextStateResult';
-import { SourceCodesService } from '@src/app/services/source-codes/source-codes.service';
 
 @Component({
   selector: 'ct-state-of-tasks',
@@ -13,12 +13,14 @@ export class CtStateOfTasksComponent implements OnInit {
 
   response: ExecContextStateResult;
 
-  constructor(private sourceCodesService: SourceCodesService) { }
+  constructor(
+    private execContextService: ExecContextService
+  ) { }
 
   ngOnInit(): void {
     if (this.sourceCodeId && this.execContextId) {
-      this.sourceCodesService.execContext
-        .execContextState(this.sourceCodeId, this.execContextId)
+      this.execContextService
+        .execContextsState(this.sourceCodeId, this.execContextId)
         .subscribe(response => {
           this.response = response;
         });

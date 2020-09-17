@@ -1,9 +1,7 @@
 import { Component, OnInit, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog, } from '@angular/material/dialog';
-import { MatButton, } from '@angular/material/button';
 import { ConfirmationDialogMethod } from '@app/components/app-dialog-confirmation/app-dialog-confirmation.component';
-import { CtTableComponent } from '@src/app/modules/ct/ct-table/ct-table.component';
 import { GlobalVariablesService } from '@src/app/services/global-variables/global-variables.service';
 import { GlobalVariable } from '@src/app/services/global-variables/GlobalVariables';
 import { GlobalVariablesResult } from '@src/app/services/global-variables/GlobalVariablesResult';
@@ -15,14 +13,12 @@ import { GlobalVariablesResult } from '@src/app/services/global-variables/Global
 })
 
 export class GlobalVariablesComponent implements OnInit {
-    responseGlobalVariables: GlobalVariablesResult;
+    isLoading: boolean;
+
+    globalVariablesResult: GlobalVariablesResult;
     deletedRows: GlobalVariable[] = [];
     dataSource: MatTableDataSource<GlobalVariable> = new MatTableDataSource<GlobalVariable>([]);
     columnsToDisplay: (string)[] = ['id', 'variable', 'uploadTs', 'filename', 'params', 'bts'];
-
-    @ViewChild('nextTable', { static: false }) nextTable: MatButton;
-    @ViewChild('prevTable', { static: false }) prevTable: MatButton;
-    @ViewChild('table', { static: false }) table: CtTableComponent;
 
     constructor(
         private dialog: MatDialog,
@@ -35,14 +31,14 @@ export class GlobalVariablesComponent implements OnInit {
     }
 
     updateTable(page: number): void {
-        this.globalVariablesService.variables.get(page.toString())
-            .subscribe(response => {
-                this.responseGlobalVariables = response;
+        this.isLoading = true;
+        this.globalVariablesService
+            .getResources(page.toString())
+            .subscribe(globalVariablesResult => {
+                this.globalVariablesResult = globalVariablesResult;
                 this.changeDetectorRef.detectChanges();
-                this.dataSource = new MatTableDataSource(response.items.content || []);
-                this.table.show();
-                this.prevTable.disabled = this.responseGlobalVariables.items.first;
-                this.nextTable.disabled = this.responseGlobalVariables.items.last;
+                this.dataSource = new MatTableDataSource(globalVariablesResult.items.content || []);
+                this.isLoading = false;
             });
     }
 
@@ -54,22 +50,16 @@ export class GlobalVariablesComponent implements OnInit {
     })
     delete(globalVariable: GlobalVariable): void {
         this.deletedRows.push(globalVariable);
-        this.globalVariablesService.variable
-            .deleteCommit(globalVariable.id.toString())
+        this.globalVariablesService
+            .deleteResource(globalVariable.id.toString())
             .subscribe();
     }
 
-    next(): void {
-        this.table.wait();
-        this.prevTable.disabled = true;
-        this.nextTable.disabled = true;
-        this.updateTable(this.responseGlobalVariables.items.number + 1);
+    nextPage(): void {
+        this.updateTable(this.globalVariablesResult.items.number + 1);
     }
 
-    prev(): void {
-        this.table.wait();
-        this.prevTable.disabled = true;
-        this.nextTable.disabled = true;
-        this.updateTable(this.responseGlobalVariables.items.number - 1);
+    prevPage(): void {
+        this.updateTable(this.globalVariablesResult.items.number - 1);
     }
 }

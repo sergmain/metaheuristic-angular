@@ -1,8 +1,6 @@
-import { Location } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { LoadStates } from '@app/enums/LoadStates';
 import { ExperimentsService } from '@app/services/experiments/experiments.service';
 import { DefaultResponse } from '@src/app/models/DefaultResponse';
 @Component({
@@ -32,8 +30,8 @@ export class ExperimentAddComponent {
     }
 
     create(): void {
-        this.experimentsService.experiment
-            .addCommit(this.form.value)
+        this.experimentsService
+            .addFormCommit(this.form.value)
             .subscribe((response) => {
                 this.response = response;
                 if (response.errorMessages || response.infoMessages) {

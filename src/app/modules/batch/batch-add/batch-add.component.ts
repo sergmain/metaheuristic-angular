@@ -2,7 +2,6 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { LoadStates } from '@app/enums/LoadStates';
 import { BatchService } from '@app/services/batch/batch.service';
-import { response as batchResponse } from '@app/services/batch/response';
 import { SourceCode } from '@app/services/source-codes/SourceCode';
 import { SourceCodeUid } from '@app/services/source-codes/SourceCodeUid';
 import { Store } from '@ngrx/store';
@@ -12,6 +11,7 @@ import { OperationStatus } from '@src/app/models/OperationStatus';
 import { Subscription } from 'rxjs';
 import { CtFileUploadComponent } from '../../ct/ct-file-upload/ct-file-upload.component';
 import { SourceCodeUidsForCompany } from '@src/app/services/source-codes/SourceCodeUidsForCompany';
+import { OperationStatusRest } from '@src/app/models/OperationStatusRest';
 
 @Component({
     selector: 'batch-add',
@@ -22,7 +22,7 @@ import { SourceCodeUidsForCompany } from '@src/app/services/source-codes/SourceC
 export class BatchAddComponent implements OnInit {
     currentStates: Set<LoadStates> = new Set();
     response: SourceCodeUidsForCompany;
-    uploadResponse: batchResponse.batch.Upload;
+    uploadResponse: OperationStatusRest;
 
     sourceCode: SourceCode;
     file: File;
@@ -46,8 +46,8 @@ export class BatchAddComponent implements OnInit {
     }
 
     updateResponse(): void {
-        this.batchService.batch
-            .add()
+        this.batchService
+            .batchAdd()
             .subscribe((response) => {
                 this.response = response;
                 this.listOfSourceCodes = this.response.items;
@@ -59,8 +59,8 @@ export class BatchAddComponent implements OnInit {
     }
 
     upload(): void {
-        this.batchService.batch
-            .upload(this.sourceCode.id.toString(), this.fileUpload.fileInput.nativeElement.files[0])
+        this.batchService
+            .uploadFile(this.sourceCode.id.toString(), this.fileUpload.fileInput.nativeElement.files[0])
             .subscribe((response) => {
                 if (response.status === OperationStatus.OK) {
                     this.back();

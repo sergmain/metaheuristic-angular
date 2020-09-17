@@ -1,9 +1,12 @@
 import { Component, OnInit, Input, ViewChild, OnChanges } from '@angular/core';
-import { TasksResult, Task, ExperimentsService, response } from '@app/services/experiments/';
 import { CtTableComponent } from '../../ct/ct-table/ct-table.component';
 import { CtWrapBlockComponent } from '../../ct/ct-wrap-block/ct-wrap-block.component';
 import { MatButton } from '@angular/material/button';
 import { MatTableDataSource } from '@angular/material/table';
+import { ExperimentsService } from '@src/app/services/experiments/experiments.service';
+import { Task } from '@src/app/services/experiments/Task';
+import { TasksResult } from '@src/app/services/experiments/TasksResult';
+import { response } from '@src/app/services/experiments/response';
 
 @Component({
     selector: 'experiment-tasks',
@@ -21,12 +24,12 @@ export class ExperimentTasksComponent implements OnInit, OnChanges {
     consolePartResponse: response.experiment.FeatureProgressConsolePart;
 
     currentTask: Task;
-    dataSource = new MatTableDataSource < any > ([]);
+    dataSource = new MatTableDataSource<any>([]);
     columnsToDisplay: string[] = ['id', 'col1', 'col2'];
 
-    constructor(private experimentsService: ExperimentsService) {}
+    constructor(private experimentsService: ExperimentsService) { }
 
-    ngOnInit() {}
+    ngOnInit() { }
 
     ngOnChanges() {
         this.dataSource = new MatTableDataSource(this.tasks.items.content || []);
@@ -45,6 +48,6 @@ export class ExperimentTasksComponent implements OnInit, OnChanges {
     }
 
     taskRerun(taskId: string) {
-        this.experimentsService.experiment.taskRerun(taskId)
+        this.experimentsService.rerunTask(taskId);
     }
 }

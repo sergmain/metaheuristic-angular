@@ -16,27 +16,25 @@ export class BatchEffects {
     constructor(
         private actions: Actions,
         private batchService: BatchService,
-        private store: Store < AppState >
-    ) {}
+        private store: Store<AppState>
+    ) { }
 
     getBatches = createEffect(() => this.actions.pipe(
         ofType(getBatches),
 
-        concatMap(action => of (action).pipe(
+        concatMap(action => of(action).pipe(
             withLatestFrom(this.store.pipe(select(state => state)))
         )),
 
         mergeMap(([action, state]) => {
-            return this.batchService.batches
-                .get({ page: action.page, filterBatches: action.filterBatches })
+            return this.batchService
+                .batches(action.page.toString(), action.filterBatches)
                 .pipe(map(state => {
                     return {
                         type: getBatchesComplete.type,
                         payload: state
-                    }
-                }))
+                    };
+                }));
         })
-
     ));
-
 }
