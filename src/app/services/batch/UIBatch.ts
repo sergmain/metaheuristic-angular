@@ -1,8 +1,7 @@
-import { Batch } from './Batch';
-import { BatchExecInfo } from './BatchExecInfo';
+import { BatchData } from './BatchData';
 
 export interface UIBatch {
-    batch: BatchExecInfo;
+    batch: BatchData.BatchExecInfo;
     checked: boolean;
     deleted: boolean;
 }

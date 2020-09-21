@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { BatchData } from '@src/app/models/data/BatchData';
+import { BatchData } from '@src/app/services/batch/BatchData';
 import { CompanyService } from '@src/app/services/company/company.service';
 
 @Component({

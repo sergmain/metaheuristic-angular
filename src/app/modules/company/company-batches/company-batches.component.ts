@@ -3,7 +3,6 @@ import { CompanyService } from '@src/app/services/company/company.service';
 import { ActivatedRoute } from '@angular/router';
 import { BatchesResult } from '@src/app/services/batch/BatchesResult';
 import { MatTableDataSource } from '@angular/material/table';
-import { Batch } from '@src/app/services/batch/Batch';
 import { UIBatch } from '@src/app/services/batch/UIBatch';
 import { marker } from '@biesbjerg/ngx-translate-extract-marker';
 import { ConfirmationDialogMethod, QuestionData } from '@src/app/components/app-dialog-confirmation/app-dialog-confirmation.component';
@@ -12,7 +11,6 @@ import { TranslateService } from '@ngx-translate/core';
 import { AuthenticationService } from '@src/app/services/authentication';
 import * as fileSaver from 'file-saver';
 import { BatchExecState } from '@src/app/enums/BatchExecState';
-import { BatchExecInfo } from '@src/app/services/batch/BatchExecInfo';
 
 @Component({
     selector: 'company-batches',

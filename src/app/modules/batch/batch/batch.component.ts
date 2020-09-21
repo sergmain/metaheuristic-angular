@@ -18,7 +18,7 @@ import { Role } from '@src/app/services/authentication';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatButton } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
-import { BatchExecInfo } from '@src/app/services/batch/BatchExecInfo';
+import { BatchData } from '@src/app/services/batch/BatchData';
 
 @Component({
     selector: 'batch',
@@ -29,7 +29,7 @@ export class BatchComponent implements OnInit, OnDestroy {
     subs: Subscription[] = [];
     batches: BatchesState;
 
-    dataSource: MatTableDataSource<BatchExecInfo> = new MatTableDataSource<BatchExecInfo>([]);
+    dataSource: MatTableDataSource<BatchData.BatchExecInfo> = new MatTableDataSource<BatchData.BatchExecInfo>([]);
     columnsToDisplay: string[] = ['id', 'createdOn', 'Owner', 'isBatchConsistent', 'sourceCode', 'execState', 'bts'];
 
     deletedRows: Batch[] = [];
@@ -94,7 +94,7 @@ export class BatchComponent implements OnInit, OnDestroy {
     }
 
     isDeleted(b: Batch): boolean {
-        return !!this.deletedRows.filter(db => db.batch.id === b.batch.id).length;
+        return !!this.deletedRows.filter(db => db.id === b.id).length;
     }
 
     downloadFile(batchId: string): void {
@@ -119,7 +119,7 @@ export class BatchComponent implements OnInit, OnDestroy {
         question: (batch: Batch): QuestionData => {
             return {
                 text: marker('batch.delete-dialog.Do you want to delete Batch _batchId_'),
-                params: { batchId: batch.batch.id }
+                params: { batchId: batch.id }
             };
         },
         rejectTitle: `${marker('batch.delete-dialog.Cancel')}`,
@@ -128,7 +128,7 @@ export class BatchComponent implements OnInit, OnDestroy {
     delete(batch: Batch): void {
         this.deletedRows.push(batch);
         this.batchService
-            .processResourceDeleteCommit(batch.batch.id.toString())
+            .processResourceDeleteCommit(batch.id.toString())
             .subscribe();
     }
 

@@ -1,9 +1,8 @@
-import { Batch } from './Batch';
+import { BatchData } from './BatchData';
 import { BatchesResult } from './BatchesResult';
-import { BatchExecInfo } from './BatchExecInfo';
 
 export interface BatchesState {
     isLoading: boolean;
     response: BatchesResult;
-    list: BatchExecInfo[];
+    list: BatchData.BatchExecInfo[];
 }

@@ -9,7 +9,7 @@ import { SimpleCompanyResult } from './SimpleCompanyResult';
 import { NewAccount, AccountsResult, AccountResult } from '../accounts';
 import { AccountWithRoleResult } from './AccountWithRoleResult';
 import { BatchesResult } from '../batch/BatchesResult';
-import { BatchData } from '@src/app/models/data/BatchData';
+import { BatchData } from '@src/app/services/batch/BatchData';
 import { SourceCodesForCompany } from '../source-codes/SourceCodesForCompany';
 
 const url = (s: string): string => `${environment.baseUrl}dispatcher/company/${s}`;

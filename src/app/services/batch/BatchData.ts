@@ -1,6 +1,6 @@
-import { Batch } from '../beans/Batch';
-import { DefaultResponse } from '../DefaultResponse';
-import { OperationStatusRest } from '../OperationStatusRest';
+import { DefaultResponse } from '../../models/DefaultResponse';
+import { OperationStatusRest } from '../../models/OperationStatusRest';
+import { Batch } from './Batch';
 
 export namespace BatchData {
     export interface Status {
