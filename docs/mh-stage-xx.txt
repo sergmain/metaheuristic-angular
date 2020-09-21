@@ -50,3 +50,21 @@ issue-xxxx
 
 
 
+
+
+issue-xxxx
+http://localhost:4200/#/dispatcher/company/2/batches
+
+для эмуляции необходимо убрать роль из описания
+ai.metaheuristic.ai.dispatcher.rest.v1.BatchForOperatorRestController#getBatchStatus
+те должно стать
+    @PreAuthorize("hasAnyRole('MASTER_OPERATOR')")
+    public BatchData.Status getBatchStatus(@PathVariable Long companyUniqueId, @PathVariable("batchId") Long batchId) {
+
+
+зайти под ролью MASTER_SUPPORT и нажать Status у какого нибудь пакета,
+выдается 403 но при этом зеленая продолжает бежать по экрану.
+т.к. эта зеленая линия показывает что выполняется операция, то по получении любого кода (500, 401, 401, 200)
+она должна убираться с экрана т.к. операция завершена
+
+
