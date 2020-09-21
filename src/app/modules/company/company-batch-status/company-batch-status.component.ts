@@ -9,7 +9,7 @@ import { CompanyService } from '@src/app/services/company/company.service';
     styleUrls: ['./company-batch-status.component.sass']
 })
 export class CompanyBatchStatusComponent implements OnInit {
-
+    isLoading: boolean;
     companyUniqueId: string;
     batchId: string;
     batchDataStatus: BatchData.Status;
@@ -20,11 +20,14 @@ export class CompanyBatchStatusComponent implements OnInit {
     ) { }
 
     ngOnInit(): void {
+        this.isLoading = true;
         this.companyUniqueId = this.activatedRoute.snapshot.paramMap.get('companyUniqueId');
         this.batchId = this.activatedRoute.snapshot.paramMap.get('batchId');
-
         this.companyService
-            .getProcessingResourceStatus(this.companyUniqueId, this.batchId)
-            .subscribe(batchDataStatus => this.batchDataStatus = batchDataStatus);
+            .getBatchStatus(this.companyUniqueId, this.batchId)
+            .subscribe({
+                next: (batchDataStatus) => this.batchDataStatus = batchDataStatus,
+                complete: () => this.isLoading = false
+            });
     }
 }

@@ -1,4 +1,4 @@
-<ct-section *ngIf="!batchDataStatus">
+<ct-section *ngIf="isLoading">
     <ct-section-body>
         <ct-section-body-row>
             <mat-progress-bar mode="indeterminate"></mat-progress-bar>
@@ -6,15 +6,15 @@
     </ct-section-body>
 </ct-section>
 
-<ct-section *ngIf="batchDataStatus">
+<ct-section *ngIf="!isLoading">
     <ct-section-header>
         <ct-section-header-row>
-            <ct-heading>Batch #{{batchDataStatus.batchId}}</ct-heading>
+            <ct-heading>Batch #{{batchDataStatus?.batchId}}</ct-heading>
         </ct-section-header-row>
     </ct-section-header>
     <ct-section-body>
         <ct-section-body-row>
-            <ct-pre>{{batchDataStatus.console}}</ct-pre>
+            <ct-pre>{{batchDataStatus?.console}}</ct-pre>
         </ct-section-body-row>
     </ct-section-body>
 </ct-section>

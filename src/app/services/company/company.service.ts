@@ -114,7 +114,7 @@ export class CompanyService {
             })
         )
 
-    getProcessingResourceStatus = (companyUniqueId: string, batchId: string): Observable<BatchData.Status> =>
+    getBatchStatus = (companyUniqueId: string, batchId: string): Observable<BatchData.Status> =>
         this.http.get<BatchData.Status>(url(`batch/company-batch-status/${companyUniqueId}/${batchId}`))
 
     downloadProcessingResult = (companyUniqueId: string, batchId: string): Observable<HttpResponse<Blob>> => {
