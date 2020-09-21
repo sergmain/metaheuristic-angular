@@ -11,6 +11,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { TranslateService } from '@ngx-translate/core';
 import { AuthenticationService } from '@src/app/services/authentication';
 import * as fileSaver from 'file-saver';
+import { BatchExecState } from '@src/app/enums/BatchExecState';
+import { BatchExecInfo } from '@src/app/services/batch/BatchExecInfo';
 
 @Component({
     selector: 'company-batches',
@@ -57,6 +59,15 @@ export class CompanyBatchesComponent implements OnInit {
             });
     }
 
+    isFinished(b: UIBatch): boolean {
+        if (b.batch.execState === BatchExecState.Finished ||
+            b.batch.execState === BatchExecState.Error ||
+            b.batch.execState === BatchExecState.Archived) {
+            return true;
+        }
+        return false;
+    }
+
     prevPage(): void {
         this.updateTable((this.batchesResult.batches.number - 1).toString());
     }
@@ -81,9 +92,6 @@ export class CompanyBatchesComponent implements OnInit {
         this.companyService
             .processBatchDeleteCommit(this.companyUniqueId, batch.batch.batch.id.toString())
             .subscribe({
-                next: () => {
-
-                },
                 complete: () => {
                     this.updateTable(this.batchesResult.batches.number.toString());
                 }

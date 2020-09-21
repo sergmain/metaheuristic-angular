@@ -81,11 +81,11 @@
                             <ct-flex justify-content="flex-end" gap="9px">
                                 <ct-flex-item>
                                     <button mat-flat-button [routerLink]="['../','batch',el.batch.batch.id]"
-                                        size="forTableRow" color="primary">Status</button>
+                                        [disabled]="!isFinished(el)" size="forTableRow" color="primary">Status</button>
                                 </ct-flex-item>
                                 <ct-flex-item>
                                     <button mat-flat-button size="forTableRow" color="primary"
-                                        (click)="downloadResult(el)">
+                                        [disabled]="!isFinished(el)" (click)="downloadResult(el)">
                                         <mat-icon>archive</mat-icon>
                                         Result
                                     </button>
@@ -97,9 +97,9 @@
                                         Origin File
                                     </button>
                                 </ct-flex-item>
-                                <ct-flex-item>
+                                <ct-flex-item *ngIf="authenticationService.isRoleMasterOperator()">
                                     <button mat-flat-button color="warn" size="forTableRow" (click)="deleteOne(el)"
-                                        title="Delete" [disabled]="!el.deleted">
+                                        title="Delete" [disabled]="!(el.deleted && isFinished(el))">
                                         <mat-icon>delete</mat-icon>
                                     </button>
                                 </ct-flex-item>

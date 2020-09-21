@@ -42,6 +42,8 @@ DONE
 NOT YET
 будет проверено после фикса issue-1255
 
+DONE
+
 
 
 issue-1254
@@ -52,10 +54,15 @@ http://localhost:4200/#/dispatcher/company/2/batches
 
 после получения 403 интерфейс не должен зависать
 
+DONE
+
+
 
 issue-1255
 http://localhost:4200/#/dispatcher/company/15905/account/add
 если во время создания акка возникла ошибка, то поля не сбрасывать
+
+DONE
 
 
 
@@ -63,3 +70,5 @@ issue-1256
 http://localhost:4200/#/batch
 Отсутствует столбец 'Owner's username'
 в нем отображать поле ai.metaheuristic.ai.dispatcher.data.BatchData.BatchExecInfo#username
+
+DONE

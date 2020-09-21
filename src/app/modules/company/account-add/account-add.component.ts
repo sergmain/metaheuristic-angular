@@ -4,6 +4,7 @@ import { OperationStatusRest } from '@src/app/models/OperationStatusRest';
 import { FormGroup, FormControl, Validators, ValidationErrors } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CompanyService } from '@src/app/services/company/company.service';
+import { OperationStatus } from '@src/app/models/OperationStatus';
 
 @Component({
     selector: 'account-add',
@@ -15,6 +16,7 @@ export class AccountAddComponent implements OnInit {
     companyUniqueId: string;
     operationStatusRest: OperationStatusRest;
     isLoading: boolean;
+    isDone: boolean;
 
     form = new FormGroup({
         publicName: new FormControl('', [
@@ -51,6 +53,7 @@ export class AccountAddComponent implements OnInit {
     ) { }
 
     ngOnInit(): void {
+        this.isDone = false;
         this.isLoading = true;
         this.companyUniqueId = this.activatedRoute.snapshot.paramMap.get('companyUniqueId');
         this.isLoading = false;
@@ -73,7 +76,10 @@ export class AccountAddComponent implements OnInit {
             .subscribe({
                 next: (operationStatusRest) => this.operationStatusRest = operationStatusRest,
                 complete: () => {
-                    this.form.reset();
+                    if (this.operationStatusRest.status === OperationStatus.OK) {
+                        this.isDone = true;
+                        this.form.reset();
+                    }
                     this.isLoading = false;
                 }
             });

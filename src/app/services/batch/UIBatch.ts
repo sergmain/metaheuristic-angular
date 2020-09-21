@@ -1,7 +1,8 @@
 import { Batch } from './Batch';
+import { BatchExecInfo } from './BatchExecInfo';
 
 export interface UIBatch {
-    batch: Batch;
+    batch: BatchExecInfo;
     checked: boolean;
     deleted: boolean;
 }

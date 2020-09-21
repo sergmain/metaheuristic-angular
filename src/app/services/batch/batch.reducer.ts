@@ -2,6 +2,7 @@ import { Action, createReducer, on } from '@ngrx/store';
 import { getBatches, getBatchesComplete, newExecStatus } from './batch.actions';
 import { BatchesState } from './BatchesState';
 import { BatchService } from './batch.service';
+
 export const initialState: BatchesState = {
     isLoading: false,
     response: null,

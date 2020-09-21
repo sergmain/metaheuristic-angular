@@ -1,7 +1,7 @@
 import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { NotificationsService } from 'angular2-notifications';
-import { Observable, throwError } from 'rxjs';
+import { EMPTY, Observable, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { DefaultResponse } from './models/DefaultResponse';
 import { OperationStatus } from './models/OperationStatus';
@@ -43,7 +43,8 @@ export class NotificationsInterceptor implements HttpInterceptor {
                         });
                     }
                 }
-                return throwError(error);
+                return EMPTY;
+                // return throwError(error);
             })
         );
     }

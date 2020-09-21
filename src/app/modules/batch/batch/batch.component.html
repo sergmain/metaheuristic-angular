@@ -25,38 +25,43 @@
     <ct-section-body>
         <ct-section-body-row>
             <ct-table #table>
-                <table class="mat-table" mat-table="mat-table" [dataSource]="dataSource">
+                <table mat-table [dataSource]="dataSource">
                     <ng-container matColumnDef="id">
-                        <th mat-header-cell="mat-header-cell" *matHeaderCellDef>{{ 'batch.Id' | translate }}</th>
-                        <td mat-cell="mat-cell" *matCellDef="let el">{{el.batch.id}} </td>
+                        <th mat-header-cell *matHeaderCellDef>{{ 'batch.Id' | translate }}</th>
+                        <td mat-cell *matCellDef="let el">{{el.batch.id}} </td>
                     </ng-container>
                     <ng-container matColumnDef="createdOn">
-                        <th mat-header-cell="mat-header-cell" *matHeaderCellDef>{{ 'batch.Created On' | translate }}
+                        <th mat-header-cell *matHeaderCellDef>{{ 'batch.Created On' | translate }}
                         </th>
-                        <td mat-cell="mat-cell" *matCellDef="let el">
+                        <td mat-cell *matCellDef="let el">
                             {{el.batch.createdOn | date:'MMM d, yyyy, HH:mm:ss'}} </td>
                     </ng-container>
+                    <ng-container matColumnDef="Owner">
+                        <th mat-header-cell *matHeaderCellDef>{{ 'batch.Owner\'s username' | translate }}
+                        </th>
+                        <td mat-cell *matCellDef="let el">{{el.username}}</td>
+                    </ng-container>
                     <ng-container matColumnDef="isBatchConsistent">
-                        <th mat-header-cell="mat-header-cell" *matHeaderCellDef>
+                        <th mat-header-cell *matHeaderCellDef>
                             {{ 'batch.Is Batch Consistent?' | translate }} </th>
-                        <td mat-cell="mat-cell" *matCellDef="let el"> <span
+                        <td mat-cell *matCellDef="let el"> <span
                                 *ngIf="el.ok">{{ 'batch.isBatchConsistent.true' | translate }}</span><span
                                 *ngIf="!el.ok">{{ 'batch.isBatchConsistent.false' | translate }}</span></td>
                     </ng-container>
                     <ng-container matColumnDef="sourceCode">
-                        <th mat-header-cell="mat-header-cell" *matHeaderCellDef>
+                        <th mat-header-cell *matHeaderCellDef>
                             <div class="no-wrap">{{ 'batch.Source Code' | translate }}</div>
                             <div class="no-wrap">{{ 'batch.File name' | translate }}</div>
                         </th>
-                        <td mat-cell="mat-cell" *matCellDef="let el">
+                        <td mat-cell *matCellDef="let el">
                             <div class="no-wrap">{{el.sourceCodeUid}}</div>
                             <div class="no-wrap">{{el.uploadedFileName}}</div>
                         </td>
                     </ng-container>
                     <ng-container matColumnDef="execState">
-                        <th mat-header-cell="mat-header-cell" *matHeaderCellDef> {{ 'batch.Exec State' | translate }}
+                        <th mat-header-cell *matHeaderCellDef> {{ 'batch.Exec State' | translate }}
                         </th>
-                        <td mat-cell="mat-cell" *matCellDef="let el">
+                        <td mat-cell *matCellDef="let el">
                             <span *ngIf="el.execState === -1">
                                 {{ 'batch.isBatchConsistent.Error' | translate }}
                             </span>
@@ -72,39 +77,38 @@
                         </td>
                     </ng-container>
                     <ng-container matColumnDef="bts">
-                        <th mat-header-cell="mat-header-cell" *matHeaderCellDef> </th>
-                        <td mat-cell="mat-cell" *matCellDef="let el">
+                        <th mat-header-cell *matHeaderCellDef> </th>
+                        <td mat-cell *matCellDef="let el">
                             <ct-flex justify-content="flex-end" gap="9px">
                                 <ct-flex-item>
-                                    <a mat-flat-button="mat-flat-button" size="forTableRow"
+                                    <a mat-flat-button size="forTableRow"
                                         [routerLink]="['/batch',el.batch.id,'source-code',el.batch.sourceCodeId,'exec-context',el.batch.execContextId, 'state']"
                                         color="primary">
                                         {{ 'batch.Task states' | translate }}</a>
                                 </ct-flex-item>
 
                                 <ct-flex-item>
-                                    <button mat-flat-button="mat-flat-button" size="forTableRow"
-                                        [disabled]="el.execState !== 4" [routerLink]="['/batch',el.batch.id,'status']"
-                                        color="primary">
+                                    <button mat-flat-button size="forTableRow" [disabled]="el.execState !== 4"
+                                        [routerLink]="['/batch',el.batch.id,'status']" color="primary">
                                         {{ 'batch.Status' | translate }}</button>
                                 </ct-flex-item>
                                 <!-- TODO download file-->
                                 <ct-flex-item>
-                                    <button mat-flat-button="mat-flat-button" size="forTableRow" color="primary"
+                                    <button mat-flat-button size="forTableRow" color="primary"
                                         [disabled]="el.execState !== 4" (click)="downloadFile(el.batch.id)">
                                         {{ 'batch.Download Result' | translate }}</button>
                                 </ct-flex-item>
                                 <ct-flex-item>
-                                    <button mat-flat-button="mat-flat-button" color="warn" size="forTableRow"
-                                        (click)="delete(el)" title="Delete">
+                                    <button mat-flat-button color="warn" size="forTableRow" (click)="delete(el)"
+                                        title="Delete">
                                         <mat-icon>delete</mat-icon>
                                     </button>
                                 </ct-flex-item>
                             </ct-flex>
                         </td>
                     </ng-container>
-                    <tr mat-header-row="mat-header-row" *matHeaderRowDef="columnsToDisplay"> </tr>
-                    <tr mat-row="mat-row" *matRowDef="let row; columns: columnsToDisplay;"
+                    <tr mat-header-row *matHeaderRowDef="columnsToDisplay"> </tr>
+                    <tr mat-row *matRowDef="let row; columns: columnsToDisplay;"
                         [class.deleted-table-row]="isDeleted(row)"></tr>
                 </table>
             </ct-table>
@@ -119,14 +123,12 @@
                 <ct-flex-item>
                     <ct-flex justify-content="flex-start" gap="8px">
                         <ct-flex-item>
-                            <button mat-flat-button="mat-flat-button" color="primary" #prevTable (click)="prev()"
-                                disabled="disabled">
+                            <button mat-flat-button color="primary" #prevTable (click)="prev()" disabled="disabled">
                                 <mat-icon>arrow_back_ios</mat-icon>
                             </button>
                         </ct-flex-item>
                         <ct-flex-item>
-                            <button mat-flat-button="mat-flat-button" color="primary" #nextTable (click)="next()"
-                                disabled="disabled">
+                            <button mat-flat-button color="primary" #nextTable (click)="next()" disabled="disabled">
                                 <mat-icon>arrow_forward_ios</mat-icon>
                             </button>
                         </ct-flex-item>
@@ -143,6 +145,6 @@
 
 
 <ng-template #uploadFilesButton>
-    <button mat-flat-button="mat-flat-button" color="primary" [disabled]="false" routerLink="/batch/add">
+    <button mat-flat-button color="primary" [disabled]="false" routerLink="/batch/add">
         {{ 'batch.Upload files and start processing' | translate }}</button>
 </ng-template>

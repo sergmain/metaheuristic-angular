@@ -48,7 +48,7 @@
                         </ct-flex-item>
                         <ct-flex-item>
                             <button mat-flat-button="mat-flat-button" (click)="createAccount()" color="primary"
-                                [disabled]="isLoading || form.invalid">Create Account</button>
+                                [disabled]="isDone || isLoading || form.invalid">Create Account</button>
                         </ct-flex-item>
                     </ct-flex>
                 </ct-section-footer-row>

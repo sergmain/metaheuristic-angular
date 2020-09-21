@@ -18,6 +18,7 @@ import { Role } from '@src/app/services/authentication';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatButton } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
+import { BatchExecInfo } from '@src/app/services/batch/BatchExecInfo';
 
 @Component({
     selector: 'batch',
@@ -28,8 +29,8 @@ export class BatchComponent implements OnInit, OnDestroy {
     subs: Subscription[] = [];
     batches: BatchesState;
 
-    dataSource: MatTableDataSource<Batch> = new MatTableDataSource<Batch>([]);
-    columnsToDisplay: string[] = ['id', 'createdOn', 'isBatchConsistent', 'sourceCode', 'execState', 'bts'];
+    dataSource: MatTableDataSource<BatchExecInfo> = new MatTableDataSource<BatchExecInfo>([]);
+    columnsToDisplay: string[] = ['id', 'createdOn', 'Owner', 'isBatchConsistent', 'sourceCode', 'execState', 'bts'];
 
     deletedRows: Batch[] = [];
 
@@ -82,9 +83,9 @@ export class BatchComponent implements OnInit, OnDestroy {
         this.batches.isLoading !== true ? this.table.show() : this.table.wait();
         if (this.batches.response) {
             if (this.authenticationService.getUserRole().has(Role.ROLE_OPERATOR)) {
-                this.columnsToDisplay = ['id', 'createdOn', 'sourceCode', 'execState', 'bts'];
+                this.columnsToDisplay = ['id', 'createdOn', 'Owner', 'sourceCode', 'execState', 'bts'];
             } else {
-                this.columnsToDisplay = ['id', 'createdOn', 'isBatchConsistent', 'sourceCode', 'execState', 'bts'];
+                this.columnsToDisplay = ['id', 'createdOn', 'Owner', 'isBatchConsistent', 'sourceCode', 'execState', 'bts'];
             }
             this.dataSource = new MatTableDataSource(this.batches.list || []);
             this.prevTable.disabled = this.batches.response.batches.first;
