@@ -1,0 +1,38 @@
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { OperationStatus } from '@src/app/models/OperationStatus';
+import { OperationStatusRest } from '@src/app/models/OperationStatusRest';
+import { ExperimentResultService } from '@src/app/services/experiment-result/experiment-result.service';
+import { CtFileUploadComponent } from '../../ct/ct-file-upload/ct-file-upload.component';
+
+@Component({
+    selector: 'experiment-result-import',
+    templateUrl: './experiment-result-import.component.html',
+    styleUrls: ['./experiment-result-import.component.sass']
+})
+export class ExperimentResultImportComponent implements OnInit {
+    @ViewChild('fileUpload') fileUpload: CtFileUploadComponent;
+
+    operationStatusRest: OperationStatusRest;
+
+    constructor(
+        private experimentResultService: ExperimentResultService
+    ) { }
+
+    ngOnInit(): void {
+    }
+
+
+    importFile(): void {
+        this.experimentResultService
+            .uploadFromFile(this.fileUpload.fileInput.nativeElement.files[0])
+            .subscribe({
+                next: (operationStatusRest) => {
+                    if (operationStatusRest.status === OperationStatus.OK) {
+                        this.fileUpload.removeFile();
+                    }
+                    this.operationStatusRest = operationStatusRest;
+                }
+            });
+    }
+
+}

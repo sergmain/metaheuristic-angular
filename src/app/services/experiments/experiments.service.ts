@@ -8,6 +8,7 @@ import { ExperimentApiData } from './ExperimentApiData';
 import { OperationStatusRest } from '@src/app/models/OperationStatusRest';
 import { SimpleExperiment } from './SimpleExperiment';
 import { ExecContextState } from '@src/app/enums/ExecContextState';
+import { SourceCodeUidsForCompany } from '../source-codes/SourceCodeUidsForCompany';
 
 const url = (s: string): string => `${environment.baseUrl}dispatcher/experiment${s}`;
 
@@ -19,7 +20,6 @@ export class ExperimentsService {
     constructor(private http: HttpClient) { }
 
     experiment = {
-
         featurePlotDataPart: (experimentId: string, featureId: string, params: string, paramsAxis: string): Observable<any> =>
             this.http.post(url(`/experiment-feature-plot-data-part/${experimentId}/${featureId}/${params}/${paramsAxis}/part`), {}),
 
@@ -34,8 +34,6 @@ export class ExperimentsService {
 
         info: (id: string): Observable<response.experiment.Info> =>
             this.http.get<response.experiment.Info>(url(`/experiment-info/${id}`)),
-
-
 
         metadataAddCommit: (experimentId: string, data: any): Observable<any> =>
             this.http.post(url(`/experiment-metadata-add-commit/${experimentId}`), generateFormData(data)),
@@ -55,30 +53,16 @@ export class ExperimentsService {
         functionDeleteByTypeCommit: (experimentId: string, functionType: string): Observable<response.experiment.DeleteByTypeCommit> =>
             this.http.get<response.experiment.DeleteByTypeCommit>(url(`/experiment-function-delete-by-type-commit/${experimentId}/${functionType}`)),
 
-
-
-
-
-
-
         uploadFromFile: (file: any): Observable<OperationStatusRest> =>
             this.http.post<OperationStatusRest>(url(`/experiment-upload-from-file`), file),
 
         bindExperimentToPlanWithResource: (experimentCode: string, resourcePoolCode: string): Observable<any> =>
             this.http.post(url(`/bind-experiment-to-plan-with-resource`), { experimentCode, resourcePoolCode }),
 
-
-
-
-
-
-
         toAtlas: (id: string): Observable<any> =>
             this.http.get(url(`/experiment-to-atlas/${id}`)),
-
-
-
     };
+
 
     // @GetMapping("/experiments")
     // public ExperimentApiData.ExperimentsResult getExperiments(@PageableDefault(size = 5) Pageable pageable) {
@@ -98,6 +82,19 @@ export class ExperimentsService {
     }
 
 
+    // @GetMapping(value = "/experiment-add")
+    // public SourceCodeData.SourceCodeUidsForCompany experimentAdd(Authentication authentication) {
+    //     DispatcherContext context = userContextService.getContext(authentication);
+    //     SourceCodeData.SourceCodeUidsForCompany codes = new SourceCodeData.SourceCodeUidsForCompany();
+    //     List<String> uids = dispatcherParamsService.getExperiments();
+    //     codes.items = sourceCodeSelectorService.filterSourceCodes(context, uids);
+    //     return codes;
+    // }
+    experimentAdd(): Observable<SourceCodeUidsForCompany> {
+        return this.http.get<SourceCodeUidsForCompany>(url(`/experiment-add`));
+    }
+
+
     // @GetMapping(value = "/experiment-edit/{id}")
     // public ExperimentApiData.ExperimentsEditResult edit(@PathVariable Long id) {
     //     return experimentTopLevelService.editExperiment(id);
@@ -112,8 +109,13 @@ export class ExperimentsService {
     //     DispatcherContext context = userContextService.getContext(authentication);
     //     return experimentTopLevelService.addExperimentCommit(sourceCodeUid, name, code, description, context);
     // }
-    addFormCommit(data: ExperimentApiData.NewExperimentData): Observable<OperationStatusRest> {
-        return this.http.post<OperationStatusRest>(url(`/experiment-add-commit`), data);
+    addFormCommit(sourceCodeUid: string, name: string, code: string, description: string): Observable<OperationStatusRest> {
+        return this.http.post<OperationStatusRest>(
+            url(`/experiment-add-commit`),
+            generateFormData({
+                sourceCodeUid, name, code, description
+            })
+        );
     }
 
 

@@ -13,6 +13,7 @@ import { ExperimentResultExperimentMetricsComponent } from './experiment-result-
 import { ExperimentResultExperimentTasksComponent } from './experiment-result-experiment-tasks/experiment-result-experiment-tasks.component';
 import { ExperimentResultExperimentsComponent } from './experiment-result-experiments/experiment-result-experiments.component';
 import { CtModule } from '../ct/ct.module';
+import { ExperimentResultImportComponent } from './experiment-result-import/experiment-result-import.component';
 
 PlotlyModule.plotlyjs = PlotlyJS;
 
@@ -26,6 +27,13 @@ const routes: Routes = [
         component: ExperimentResultExperimentExportImportComponent,
         data: {
             backConfig: ['../', '../']
+        }
+    },
+    {
+        path: 'experiment/import',
+        component: ExperimentResultImportComponent,
+        data: {
+            backConfig: ['../', '../', 'experiments']
         }
     },
     {
@@ -70,6 +78,7 @@ export class ExperimentResultRoutingModule { }
         ExperimentResultExperimentTasksComponent,
         ExperimentResultExperimentMetricsComponent,
         ExperimentResultExperimentExportImportComponent,
+        ExperimentResultImportComponent
     ]
 })
 export class ExperimentResultModule { }

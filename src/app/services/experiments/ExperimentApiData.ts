@@ -41,13 +41,6 @@ export namespace ExperimentApiData {
         allTaskProduced: boolean;
     }
 
-    export interface NewExperimentData {
-        code: string;
-        name: string;
-        description: string;
-        seed: number;
-    }
-
 
     export interface ExperimentFeatureData {
         id: number;

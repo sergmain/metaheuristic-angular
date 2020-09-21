@@ -28,11 +28,11 @@ const routes: Routes = [
         data: { section: 'experiments' }
     },
     {
-        path: 'atlas',
+        path: 'experiment-result',
         canActivate: [AuthGuard],
         component: AiRootComponent,
         loadChildren: () => import('@src/app/modules/experiment-result/experiment-result.module').then(m => m.ExperimentResultModule),
-        data: { section: 'atlas' }
+        data: { section: 'experiment-result' }
     }
 
 ];

@@ -10,6 +10,7 @@ import { DefaultResponse } from '@src/app/models/DefaultResponse';
 import { ExperimentsService } from '@src/app/services/experiments/experiments.service';
 import { ExperimentItem } from '@src/app/services/experiments/response';
 import { ExperimentApiData } from '@src/app/services/experiments/ExperimentApiData';
+import { ExecContextState } from '@src/app/enums/ExecContextState';
 
 
 @Component({
@@ -19,12 +20,13 @@ import { ExperimentApiData } from '@src/app/services/experiments/ExperimentApiDa
 })
 
 export class ExperimentsComponent implements OnInit {
+    execContextState = ExecContextState;
     isLoading: boolean;
 
     experimentsResult: ExperimentApiData.ExperimentsResult;
 
     dataSource: MatTableDataSource<ExperimentApiData.ExperimentResult> = new MatTableDataSource<ExperimentApiData.ExperimentResult>([]);
-    columnsToDisplay: string[] = ['id', 'name', 'createdOn', 'bts'];
+    columnsToDisplay: string[] = ['id', 'name', 'createdOn', 'execState', 'bts'];
 
     deletedExperiments: ExperimentItem[] = [];
     deleteCommitResponse: DefaultResponse;
@@ -81,6 +83,18 @@ export class ExperimentsComponent implements OnInit {
                 () => this.updateTable(this.experimentsResult.items.number),
                 () => subscribe.unsubscribe()
             );
+    }
+
+    produce(exp) {
+        console.log(exp);
+    }
+
+    start(exp) {
+
+    }
+
+    stop(exp) {
+
     }
 
     nextPage(): void { this.updateTable(this.experimentsResult.items.number + 1); }

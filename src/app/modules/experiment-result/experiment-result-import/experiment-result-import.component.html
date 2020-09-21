@@ -1,0 +1,32 @@
+<ct-cols>
+    <ct-col size=6>
+        <ct-section>
+            <ct-section-header>
+                <ct-section-header-row>
+                    <ct-heading>Import an experiment to ExperimentResult from file</ct-heading>
+                </ct-section-header-row>
+            </ct-section-header>
+            <ct-section-body>
+                <ct-section-body-row>
+                    <ct-file-upload #fileUpload acceptTypes=".zip"></ct-file-upload>
+                </ct-section-body-row>
+            </ct-section-body>
+            <ct-section-footer>
+                <ct-section-footer-row>
+                    <ct-flex justify-content="flex-end" gap="unit(1)">
+                        <ct-flex-item>
+                            <button mat-stroked-button>Cancel</button>
+                        </ct-flex-item>
+                        <ct-flex-item>
+                            <button mat-flat-button color="primary" (click)="importFile()"
+                                [disabled]="!fileUpload?.fileInput?.nativeElement?.files[0]">Import</button>
+                        </ct-flex-item>
+                    </ct-flex>
+                </ct-section-footer-row>
+            </ct-section-footer>
+        </ct-section>
+    </ct-col>
+    <ct-col size=6>
+        <ct-rest-status [content]="operationStatusRest"></ct-rest-status>
+    </ct-col>
+</ct-cols>

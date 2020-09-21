@@ -32,7 +32,7 @@ export class BatchComponent implements OnInit, OnDestroy {
     dataSource: MatTableDataSource<BatchData.BatchExecInfo> = new MatTableDataSource<BatchData.BatchExecInfo>([]);
     columnsToDisplay: string[] = ['id', 'createdOn', 'Owner', 'isBatchConsistent', 'sourceCode', 'execState', 'bts'];
 
-    deletedRows: Batch[] = [];
+    deletedRows: BatchData.BatchExecInfo[] = [];
 
     fileSystemName: string;
     classpathFileName: string;
@@ -93,8 +93,8 @@ export class BatchComponent implements OnInit, OnDestroy {
         }
     }
 
-    isDeleted(b: Batch): boolean {
-        return !!this.deletedRows.filter(db => db.id === b.id).length;
+    isDeleted(b: BatchData.BatchExecInfo): boolean {
+        return !!this.deletedRows.filter(db => db.batch.id === b.batch.id).length;
     }
 
     downloadFile(batchId: string): void {
@@ -116,19 +116,19 @@ export class BatchComponent implements OnInit, OnDestroy {
     }
 
     @ConfirmationDialogMethod({
-        question: (batch: Batch): QuestionData => {
+        question: (batch: BatchData.BatchExecInfo): QuestionData => {
             return {
                 text: marker('batch.delete-dialog.Do you want to delete Batch _batchId_'),
-                params: { batchId: batch.id }
+                params: { batchId: batch.batch.id }
             };
         },
         rejectTitle: `${marker('batch.delete-dialog.Cancel')}`,
         resolveTitle: `${marker('batch.delete-dialog.Delete')}`,
     })
-    delete(batch: Batch): void {
+    delete(batch: BatchData.BatchExecInfo): void {
         this.deletedRows.push(batch);
         this.batchService
-            .processResourceDeleteCommit(batch.id.toString())
+            .processResourceDeleteCommit(batch.batch.id.toString())
             .subscribe();
     }
 

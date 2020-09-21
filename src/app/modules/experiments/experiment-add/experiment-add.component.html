@@ -12,8 +12,8 @@
                         <mat-form-field appearance="outline">
                             <mat-label>List of Uids of source codes</mat-label>
                             <mat-select formControlName="sourceCodeUID">
-                                <div *ngFor="let sourceCode of listOfSourceCodes">
-                                    <mat-option [value]="sourceCode">{{sourceCode.uid}}</mat-option>
+                                <div *ngFor="let sourceCode of sourceCodeUidsForCompany?.items">
+                                    <mat-option [value]="sourceCode.uid">{{sourceCode.uid}}</mat-option>
                                 </div>
                             </mat-select>
                             <mat-hint>This is a required field.</mat-hint>
@@ -51,7 +51,8 @@
                             <button mat-stroked-button="mat-stroked-button" (click)="cancel()">Cancel</button>
                         </ct-flex-item>
                         <ct-flex-item>
-                            <button mat-flat-button="mat-flat-button" (click)="create()" color="primary">Create</button>
+                            <button mat-flat-button="mat-flat-button" (click)="create()" color="primary"
+                                [disabled]="form.invalid">Create</button>
                         </ct-flex-item>
                     </ct-flex>
                 </ct-section-footer-row>
@@ -59,6 +60,6 @@
         </ct-section>
     </ct-col>
     <ct-col size="6">
-        <ct-rest-status [content]="response"></ct-rest-status>
+        <ct-rest-status [content]="operationStatusRest"></ct-rest-status>
     </ct-col>
 </ct-cols>

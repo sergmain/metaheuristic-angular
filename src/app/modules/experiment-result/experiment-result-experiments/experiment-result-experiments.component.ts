@@ -20,18 +20,12 @@ import { ExperimentResultSimple } from '@src/app/services/experiment-result/Expe
 })
 
 export class ExperimentResultExperimentsComponent implements OnInit {
-    readonly states = LoadStates;
-    currentStates = new Set();
-    response: ExperimentResultData.ExperimentResultSimpleList;
+
+    isLoading: boolean;
+    experimentResultSimpleList: ExperimentResultData.ExperimentResultSimpleList;
     dataSource = new MatTableDataSource<ExperimentResultSimple>([]);
 
     deletedExperiments: ExperimentApiData.ExperimentData[] = [];
-
-
-    @ViewChild('nextTable', { static: true }) nextTable: MatButton;
-    @ViewChild('prevTable', { static: true }) prevTable: MatButton;
-    @ViewChild('table', { static: true }) table: CtTableComponent;
-
 
     tables = {
         generalInfo: {
@@ -51,30 +45,23 @@ export class ExperimentResultExperimentsComponent implements OnInit {
     columnsToDisplay = ['id', 'name', 'description', 'createdOn', 'bts'];
 
     constructor(
-        private route: ActivatedRoute,
+        private activatedRoute: ActivatedRoute,
         private experimentResultService: ExperimentResultService,
         private location: Location,
         private dialog: MatDialog
     ) { }
 
-    ngOnInit() {
-        this.currentStates.add(this.states.firstLoading);
+    ngOnInit(): void {
         this.updateTable(0);
     }
 
-    updateTable(page: number) {
-        this.currentStates.add(this.states.loading);
-        const subscribe: Subscription = this.experimentResultService
+    updateTable(page: number): void {
+        this.experimentResultService
             .init(page.toString())
             .subscribe({
-                next: (response) => {
-                    this.response = response;
-                    this.dataSource = new MatTableDataSource(response.items.content || []);
-                    this.prevTable.disabled = response.items.first;
-                    this.nextTable.disabled = response.items.last;
-                    this.currentStates.delete(this.states.firstLoading);
-                    this.currentStates.delete(this.states.loading);
-                    this.table.show();
+                next: (experimentResultSimpleList) => {
+                    this.experimentResultSimpleList = experimentResultSimpleList;
+                    this.dataSource = new MatTableDataSource(experimentResultSimpleList.items.content || []);
                 }
             });
 
@@ -86,24 +73,18 @@ export class ExperimentResultExperimentsComponent implements OnInit {
         rejectTitle: 'Cancel',
         resolveTitle: 'Delete'
     })
-    delete(experiment: ExperimentApiData.ExperimentData) {
+    delete(experiment: ExperimentApiData.ExperimentData): void {
         this.deletedExperiments.push(experiment);
         this.experimentResultService
             .deleteCommit(experiment.id.toString())
             .subscribe();
     }
 
-    next() {
-        this.prevTable.disabled = true;
-        this.nextTable.disabled = true;
-        this.updateTable(this.response.items.number + 1);
-        this.table.wait();
+    nextPage(): void {
+        this.updateTable(this.experimentResultSimpleList.items.number + 1);
     }
 
-    prev() {
-        this.prevTable.disabled = true;
-        this.nextTable.disabled = true;
-        this.updateTable(this.response.items.number - 1);
-        this.table.wait();
+    prevPage(): void {
+        this.updateTable(this.experimentResultSimpleList.items.number - 1);
     }
 }

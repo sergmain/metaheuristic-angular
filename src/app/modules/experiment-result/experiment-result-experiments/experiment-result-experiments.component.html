@@ -1,33 +1,49 @@
-<ct-section>
+<ct-section *ngIf="!experimentResultSimpleList">
+    <ct-section-body>
+        <ct-section-body-row>
+            <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+        </ct-section-body-row>
+    </ct-section-body>
+</ct-section>
+
+
+<ct-section *ngIf="experimentResultSimpleList">
     <ct-section-header>
         <ct-section-header-row>
-            <ct-heading>Experiment result</ct-heading>
+            <ct-flex justify-content="space-between">
+                <ct-flex-item>
+                    <ct-heading>Experiment result</ct-heading>
+                </ct-flex-item>
+                <ct-flex-item>
+                    <ng-container *ngTemplateOutlet="addButtonTemplate"></ng-container>
+                </ct-flex-item>
+            </ct-flex>
         </ct-section-header-row>
     </ct-section-header>
     <ct-section-body>
         <ct-section-body-row>
-            <ct-table #table>
-                <table class="mat-table" mat-table="mat-table" [dataSource]="dataSource">
+            <ct-table>
+                <table mat-table [dataSource]="dataSource">
                     <ng-container matColumnDef="id">
-                        <th mat-header-cell="mat-header-cell" *matHeaderCellDef>Id</th>
-                        <td mat-cell="mat-cell" *matCellDef="let el">{{el.id}} </td>
+                        <th mat-header-cell *matHeaderCellDef>Id</th>
+                        <td mat-cell *matCellDef="let el">{{el.id}} </td>
                     </ng-container>
                     <ng-container matColumnDef="name">
-                        <th mat-header-cell="mat-header-cell" *matHeaderCellDef>Name</th>
-                        <td mat-cell="mat-cell" *matCellDef="let el">{{el.name}} </td>
+                        <th mat-header-cell *matHeaderCellDef>Name</th>
+                        <td mat-cell *matCellDef="let el">{{el.name}} </td>
                     </ng-container>
                     <ng-container matColumnDef="description">
-                        <th mat-header-cell="mat-header-cell" *matHeaderCellDef>Description</th>
-                        <td mat-cell="mat-cell" *matCellDef="let el">{{el.description}} </td>
+                        <th mat-header-cell *matHeaderCellDef>Description</th>
+                        <td mat-cell *matCellDef="let el">{{el.description}} </td>
                     </ng-container>
                     <ng-container matColumnDef="createdOn">
-                        <th mat-header-cell="mat-header-cell" *matHeaderCellDef>Created on</th>
-                        <td mat-cell="mat-cell" *matCellDef="let el">{{el.createdOn | date:'HH:mm:ss, MMM d, yyyy'}}
+                        <th mat-header-cell *matHeaderCellDef>Created on</th>
+                        <td mat-cell *matCellDef="let el">{{el.createdOn | date:'HH:mm:ss, MMM d, yyyy'}}
                         </td>
                     </ng-container>
                     <ng-container matColumnDef="bts">
-                        <th mat-header-cell="mat-header-cell" *matHeaderCellDef> </th>
-                        <td mat-cell="mat-cell" *matCellDef="let el">
+                        <th mat-header-cell *matHeaderCellDef> </th>
+                        <td mat-cell *matCellDef="let el">
                             <ct-flex justify-content="flex-end" gap="9px" align-items="center">
                                 <ct-flex-item>
                                     <a [routerLink]="['/ai/experiment-result/experiment-info',el.id]">
@@ -50,30 +66,33 @@
                             </ct-flex>
                         </td>
                     </ng-container>
-                    <tr mat-header-row="mat-header-row" *matHeaderRowDef="columnsToDisplay"></tr>
-                    <tr mat-row="mat-row" *matRowDef="let row; columns: columnsToDisplay;"
+                    <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+                    <tr mat-row *matRowDef="let row; columns: columnsToDisplay;"
                         [class.deleted-table-row]="deletedExperiments.includes(row)"></tr>
                 </table>
             </ct-table>
         </ct-section-body-row>
-        <ct-section-body-row *ngIf="currentStates.has(states.firstLoading)">
-            <mat-progress-bar mode="indeterminate"></mat-progress-bar>
-        </ct-section-body-row>
     </ct-section-body>
     <ct-section-footer>
         <ct-section-footer-row>
-            <ct-flex justify-content="flex-start" gap="8px">
+            <ct-flex justify-content="space-between">
                 <ct-flex-item>
-                    <button mat-flat-button="mat-flat-button" #prevTable (click)="prev()" disabled="disabled">
-                        <mat-icon>arrow_back_ios</mat-icon>
-                    </button>
+                    <ct-table-pagination (prev)="prevPage()" (next)="nextPage()"
+                        [pageableDefault]="experimentResultSimpleList?.items" [globalDisable]="isLoading">
+                    </ct-table-pagination>
                 </ct-flex-item>
                 <ct-flex-item>
-                    <button mat-flat-button="mat-flat-button" #nextTable (click)="next()" disabled="disabled">
-                        <mat-icon>arrow_forward_ios</mat-icon>
-                    </button>
+                    <ng-container *ngTemplateOutlet="addButtonTemplate"></ng-container>
                 </ct-flex-item>
             </ct-flex>
         </ct-section-footer-row>
     </ct-section-footer>
 </ct-section>
+
+
+
+
+
+<ng-template #addButtonTemplate>
+    <button mat-flat-button color="primary" [routerLink]="['../','experiment','import']">Import Experiment</button>
+</ng-template>
