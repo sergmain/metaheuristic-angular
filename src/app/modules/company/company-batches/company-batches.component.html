@@ -97,10 +97,9 @@
                                         Origin File
                                     </button>
                                 </ct-flex-item>
-                                <ct-flex-item>
-                                    <!-- <ct-flex-item *ngIf="authenticationService.isRoleMasterOperator()"> -->
+                                <ct-flex-item *ngIf="authenticationService.isRoleMasterOperator()">
                                     <button mat-flat-button color="warn" size="forTableRow" (click)="deleteOne(el)"
-                                        title="Delete">
+                                        title="Delete" [disabled]="!(el.deleted && isFinished(el))">
                                         <mat-icon>delete</mat-icon>
                                     </button>
                                 </ct-flex-item>
