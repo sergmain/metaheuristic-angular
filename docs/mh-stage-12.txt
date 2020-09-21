@@ -43,6 +43,7 @@ NOT YET
 будет проверено после фикса issue-1255
 
 DONE
+CONFIRMED
 
 
 
@@ -55,6 +56,7 @@ http://localhost:4200/#/dispatcher/company/2/batches
 после получения 403 интерфейс не должен зависать
 
 DONE
+CONFIRMED
 
 
 
@@ -63,6 +65,7 @@ http://localhost:4200/#/dispatcher/company/15905/account/add
 если во время создания акка возникла ошибка, то поля не сбрасывать
 
 DONE
+CONFIRMED
 
 
 
@@ -72,3 +75,24 @@ http://localhost:4200/#/batch
 в нем отображать поле ai.metaheuristic.ai.dispatcher.data.BatchData.BatchExecInfo#username
 
 DONE
+NOT YET
+Столбец должен быть русифицирован и называться 'Owner's username' /  'Владелец'
+сейчас - batch.Owner's username
+
+
+
+issue-1257
+http://localhost:4200/#/dispatcher/company/2/batches
+
+для эмуляции необходимо убрать роль из описания
+ai.metaheuristic.ai.dispatcher.rest.v1.BatchForOperatorRestController#getBatchStatus
+те должно стать
+    @PreAuthorize("hasAnyRole('MASTER_OPERATOR')")
+    public BatchData.Status getBatchStatus(@PathVariable Long companyUniqueId, @PathVariable("batchId") Long batchId) {
+
+
+зайти под ролью MASTER_SUPPORT и нажать Status у какого нибудь пакета,
+выдается 403 но при этом зеленая продолжает бежать по экрану.
+т.к. эта зеленая линия показывает что выполняется операция, то по получении любого кода (500, 401, 401, 200)
+она должна убираться с экрана т.к. операция завершена
+
