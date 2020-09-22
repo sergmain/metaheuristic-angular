@@ -24,9 +24,11 @@ export namespace ExperimentApiData {
         createdOn: number;
         numberOfTask: number;
         state: number;
+        sourceCodeUid: string;
 
 
         // TODO: not exist?
+        //  2020-09-22 yep, it was removed in mh, so should be removed here as well
 
         seed: number;
         isAllTaskProduced: boolean;
