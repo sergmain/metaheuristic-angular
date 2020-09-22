@@ -147,41 +147,15 @@ export class ExperimentsService {
     }
 
 
-    // @PostMapping("/produce-tasks")
-    // public OperationStatusRest produceTasks(String experimentCode, Authentication authentication) {
+    // @PostMapping("/experiment-target-state/{state}/{experimentId}")
+    // public OperationStatusRest execContextTargetExecState(
+    //         @PathVariable Long experimentId, @PathVariable String state, Authentication authentication) {
     //     DispatcherContext context = userContextService.getContext(authentication);
-    //     return experimentTopLevelService.produceTasks(experimentCode, context.getCompanyId());
+    //     OperationStatusRest operationStatusRest = experimentTopLevelService.changeExecContextState(state, experimentId, context);
+    //     return operationStatusRest;
     // }
-    produceTasks(experimentCode: string): Observable<OperationStatusRest> {
-        return this.http.post<OperationStatusRest>(url(`/produce-tasks`), { experimentCode });
+    execContextTargetExecState(experimentId: string, state: string): Observable<OperationStatusRest> {
+        return this.http.post<OperationStatusRest>(url(`/experiment-target-state/${state}/${experimentId}`), {});
     }
-
-
-    // @PostMapping("/start-processing-of-tasks")
-    // public OperationStatusRest startProcessingOfTasks(String experimentCode, Authentication authentication) {
-    //     DispatcherContext context = userContextService.getContext(authentication);
-    //     return experimentTopLevelService.startProcessingOfTasks(experimentCode, context.getCompanyId());
-    // }
-    startProcessingOfTasks(experimentCode: string): Observable<OperationStatusRest> {
-        return this.http.post<OperationStatusRest>(url(`/start-processing-of-tasks`), { experimentCode });
-    }
-
-
-    // @GetMapping("/processing-status/{experimentCode}")
-    // public EnumsApi.ExecContextState getExperimentProcessingStatus(@PathVariable String experimentCode) {
-    //     return experimentTopLevelService.getExperimentProcessingStatus(experimentCode);
-    // }
-    getExperimentProcessingStatus(experimentCode: string): Observable<ExecContextState> {
-        return this.http.get<ExecContextState>(url(`/processing-status/${experimentCode}`));
-    }
-
-    // @GetMapping(value = "/experiment-to-experiment-result/{id}")
-    // public OperationStatusRest toExperimentResult(@PathVariable Long id) {
-    //     return experimentTopLevelService.toExperimentResult(id);
-    // }
-    toExperimentResult(id: string): Observable<OperationStatusRest> {
-        return this.http.get<OperationStatusRest>(url(`/experiment-to-experiment-result/${id}`));
-    }
-
 
 }
