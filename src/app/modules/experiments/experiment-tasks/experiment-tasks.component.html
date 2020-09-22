@@ -49,8 +49,6 @@
                                         [color]="currentTask == el.task ? 'primary' : undefined"
                                         [class.mat-flat-button]="currentTask == el.task"
                                         [class.mat-stroked-button]="currentTask != el.task">Info</button><br />
-                                    <button mat-stroked-button="mat-stroked-button"
-                                        (click)="taskRerun(el.task.id)">Re-run</button>
                                 </td>
                             </ng-container>
                             <tr mat-row="mat-row" *matRowDef="let row; columns: columnsToDisplay;"> </tr>

@@ -40,7 +40,6 @@
                 <td mat-cell="mat-cell" *matCellDef="let el"> 
                   <div class="flex flex--fd_c flex--ai_s">
                     <button mat-stroked-button="mat-stroked-button" (click)="currentTask = el.task; featureProgressConsolePart(el.task.id)" [color]="currentTask == el.task ? 'primary' : ''" [class.mat-flat-button]="currentTask == el.task" [class.mat-stroked-button]="currentTask != el.task">Info</button>
-                    <button mat-stroked-button="mat-stroked-button" (click)="taskRerun(el.task.id)">Re-run</button>
                   </div>
                 </td>
               </ng-container>

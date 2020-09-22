@@ -46,8 +46,4 @@ export class ExperimentTasksComponent implements OnInit, OnChanges {
                 }
             );
     }
-
-    taskRerun(taskId: string) {
-        this.experimentsService.rerunTask(taskId);
-    }
 }

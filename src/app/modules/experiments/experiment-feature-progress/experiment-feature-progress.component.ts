@@ -144,12 +144,6 @@ export class ExperimentFeatureProgressComponent implements OnInit {
             );
     }
 
-    taskRerun(taskId) {
-        this.experimentsService
-            .rerunTask(taskId)
-            .subscribe((response) => this.updateResponse());
-    }
-
     pickHyperParam(el) {
         el.selected = !el.selected;
         let paramsArr = [];

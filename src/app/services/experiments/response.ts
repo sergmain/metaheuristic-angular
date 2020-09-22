@@ -68,11 +68,6 @@ export namespace response {
             items: FeatureProgressConsolePartEntity[];
 
         }
-        // export namespace taskRerun {
-        //     export interface Response {
-
-        //     }
-        // }
         // export namespace metadataAddCommit {
         //     export interface Response {
 

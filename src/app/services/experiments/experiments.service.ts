@@ -147,15 +147,6 @@ export class ExperimentsService {
     }
 
 
-    // @PostMapping("/task-rerun/{taskId}")
-    // public OperationStatusRest rerunTask(@PathVariable Long taskId) {
-    //     return execContextService.resetTask(taskId);
-    // }
-    rerunTask(taskId: string): Observable<OperationStatusRest> {
-        return this.http.post<OperationStatusRest>(url(`/task-rerun/${taskId}`), {});
-    }
-
-
     // @PostMapping("/produce-tasks")
     // public OperationStatusRest produceTasks(String experimentCode, Authentication authentication) {
     //     DispatcherContext context = userContextService.getContext(authentication);
