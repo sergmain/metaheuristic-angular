@@ -19,8 +19,14 @@ UPD3
 http://localhost:4200/#/ai/atlas/experiments
 копка Export / Import должна быть Export только. Кнопка Import Должна быть только одна на всю страницу
 
+урл для экспорта
+    @GetMapping(value= "/experiment-result-export/{experimentResultId}", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
 
+ai.metaheuristic.ai.dispatcher.rest.v1.ExperimentResultRestController#downloadExperimentResult
 
+при нажатии на Экспорт делать переход на страницу с кнопкой экспрорт не надо. Надо начинать сразу запрашивать с сервера
+файл с результатами, точно так же как и для Пакетов
+т.е. страница по урл http://localhost:4200/#/ai/experiment-result/experiment-export-import/84 лишняя
 
 
 
