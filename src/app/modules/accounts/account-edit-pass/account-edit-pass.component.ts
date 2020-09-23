@@ -56,7 +56,8 @@ export class AccountEditPassComponent implements OnInit {
 
     getAccount(): void {
         const id = this.route.snapshot.paramMap.get('id');
-        this.accountsService.account.get(id)
+        this.accountsService
+            .getAccount(id)
             .subscribe(
                 (response) => {
                     this.account = response.account;
@@ -70,8 +71,8 @@ export class AccountEditPassComponent implements OnInit {
 
     save() {
         this.currentStates.add(this.states.wait);
-        this.accountsService.account
-            .passwordEditCommit(this.account.id.toString(), this.form.value.password, this.form.value.password2)
+        this.accountsService
+            .passwordEditFormCommit(this.account.id.toString(), this.form.value.password, this.form.value.password2)
             .subscribe(
                 (response: any) => {
                     this.router.navigate(['/dispatcher', 'accounts']);

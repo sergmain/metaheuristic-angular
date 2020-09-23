@@ -17,19 +17,19 @@ const url = (s: string): string => `${environment.baseUrl}dispatcher${s}`;
 export class ProcessorsService {
     constructor(private http: HttpClient) { }
 
-    processors = {
-        get: (page: string): Observable<ProcessorsResult> =>
-            this.http.get<ProcessorsResult>(url(`/processors`), { params: { page } })
-    };
+    init(page: string): Observable<ProcessorsResult> {
+        return this.http.get<ProcessorsResult>(url(`/processors`), { params: { page } });
+    }
 
-    processor = {
-        get: (id: string): Observable<ProcessorResult> =>
-            this.http.get<ProcessorResult>(url(`/processor/${id}`)),
+    getProcessor(id: string): Observable<ProcessorResult> {
+        return this.http.get<ProcessorResult>(url(`/processor/${id}`));
+    }
 
-        form: (station: Processor): Observable<ProcessorResult> =>
-            this.http.post<ProcessorResult>(url(`/processor-form-commit/`), station),
+    formCommit(station: Processor): Observable<ProcessorResult> {
+        return this.http.post<ProcessorResult>(url(`/processor-form-commit/`), station);
+    }
 
-        delete: (id: string): Observable<OperationStatusRest> =>
-            this.http.post<OperationStatusRest>(url(`/processor-delete-commit`), formData({ id }))
-    };
+    deleteProcessorCommit(id: string): Observable<OperationStatusRest> {
+        return this.http.post<OperationStatusRest>(url(`/processor-delete-commit`), formData({ id }));
+    }
 }

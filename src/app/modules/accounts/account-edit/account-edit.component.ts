@@ -31,7 +31,8 @@ export class AccountEditComponent implements OnInit {
 
     getAccount(): void {
         const id = this.route.snapshot.paramMap.get('id');
-        this.accountsService.account.get(id)
+        this.accountsService
+            .getAccount(id)
             .subscribe(
                 (response) => {
                     this.account = response.account;
@@ -49,8 +50,8 @@ export class AccountEditComponent implements OnInit {
 
     save() {
         this.currentStates.add(this.states.wait);
-        this.accountsService.account
-            .editCommit(this.account.id.toString(), this.account.publicName, this.account.enabled)
+        this.accountsService
+            .editFormCommit(this.account.id.toString(), this.account.publicName, this.account.enabled)
             .subscribe(
                 (response) => {
                     this.router.navigate(['/dispatcher', 'accounts']);

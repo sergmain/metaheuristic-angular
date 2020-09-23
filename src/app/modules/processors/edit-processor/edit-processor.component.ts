@@ -21,8 +21,8 @@ export class EditProcessorComponent implements OnInit {
     ) { }
 
     ngOnInit(): void {
-        this.processorsService.processor
-            .get(this.route.snapshot.paramMap.get('id'))
+        this.processorsService
+            .getProcessor(this.route.snapshot.paramMap.get('id'))
             .subscribe((response) => {
                 this.processorResponse = response;
                 this.processor = response.processor;
@@ -30,8 +30,8 @@ export class EditProcessorComponent implements OnInit {
     }
 
     save(): void {
-        this.processorsService.processor
-            .form(this.processor)
+        this.processorsService
+            .formCommit(this.processor)
             .subscribe((response) => {
                 if (response.errorMessages?.length) {
                     this.processorResponse = response;

@@ -37,8 +37,8 @@ export class AccountsComponent implements OnInit {
 
     updateTable(page: number) {
         this.currentStates.add(this.states.loading);
-        this.accountsService.accounts
-            .get(page.toString())
+        this.accountsService
+            .accounts(page.toString())
             .subscribe(response => {
                 this.response = response;
                 this.dataSource = new MatTableDataSource(this.response.accounts.content || []);

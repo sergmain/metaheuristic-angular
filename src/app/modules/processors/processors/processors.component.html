@@ -1,4 +1,4 @@
-<ct-section *ngIf="!processorsResponse">
+<ct-section *ngIf="!processorResult">
     <ct-section-body>
         <ct-section-body-row>
             <mat-progress-bar mode="indeterminate"></mat-progress-bar>
@@ -7,7 +7,7 @@
 </ct-section>
 
 
-<ct-section *ngIf="processorsResponse">
+<ct-section *ngIf="processorResult">
     <ct-section-header>
         <ct-section-header-row>
             <ct-flex justify-content="space-between" align-items="center">
@@ -100,16 +100,17 @@
     </ct-section-body>
     <ct-section-footer>
         <ct-section-footer-row>
+            <!-- TODO: replace -->
             <ct-flex justify-content="flex-start" gap="8px">
                 <ct-flex-item>
                     <button mat-flat-button="mat-flat-button" color="primary" (click)="prev()"
-                        [disabled]="processorsResponse.items.first">
+                        [disabled]="processorResult.items.first">
                         <mat-icon>arrow_back_ios</mat-icon>
                     </button>
                 </ct-flex-item>
                 <ct-flex-item>
                     <button mat-flat-button="mat-flat-button" color="primary" (click)="next()"
-                        [disabled]="processorsResponse.items.last">
+                        [disabled]="processorResult.items.last">
                         <mat-icon>arrow_forward_ios</mat-icon>
                     </button>
                 </ct-flex-item>

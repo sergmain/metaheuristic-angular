@@ -14,27 +14,27 @@ const url = (urlString: string): string => `${environment.baseUrl}dispatcher/acc
 export class AccountsService {
     constructor(private http: HttpClient) { }
 
-    accounts = {
-        get: (page: string): Observable<AccountsResult> =>
-            this.http.get<AccountsResult>(url(`accounts`), {
-                params: { page },
-            }),
-    };
+    accounts(page: string): Observable<AccountsResult> {
+        return this.http.get<AccountsResult>(url(`accounts`), { params: { page } });
+    }
 
-    account = {
-        get: (id: string): Observable<AccountResult> =>
-            this.http.get<AccountResult>(url(`account/${id}`)),
+    addFormCommit(account: NewAccount): Observable<OperationStatusRest> {
+        return this.http.post<OperationStatusRest>(url(`account-add-commit`), account);
+    }
 
-        addCommit: (account: NewAccount): Observable<OperationStatusRest> =>
-            this.http.post<OperationStatusRest>(url(`account-add-commit`), account),
+    getAccount(id: string): Observable<AccountResult> {
+        return this.http.get<AccountResult>(url(`account/${id}`));
+    }
 
-        editCommit: (id: string, publicName: string, enabled: boolean): Observable<OperationStatusRest> =>
-            this.http.post<OperationStatusRest>(url(`account-edit-commit`), formData({ id, publicName, enabled })),
+    editFormCommit(id: string, publicName: string, enabled: boolean): Observable<OperationStatusRest> {
+        return this.http.post<OperationStatusRest>(url(`account-edit-commit`), formData({ id, publicName, enabled }));
+    }
 
-        passwordEditCommit: (id: string, password: string, password2: string): Observable<OperationStatusRest> =>
-            this.http.post<OperationStatusRest>(url(`account-password-edit-commit`), formData({ id, password, password2 })),
+    roleFormCommit(accountId: string, roles: string): Observable<OperationStatusRest> {
+        return this.http.post<OperationStatusRest>(url(`account-role-commit`), formData({ accountId, roles }));
+    }
 
-        roleCommit: (accountId: string, roles: string): Observable<OperationStatusRest> =>
-            this.http.post<OperationStatusRest>(url(`account-role-commit`), formData({ accountId, roles })),
-    };
+    passwordEditFormCommit(id: string, password: string, password2: string): Observable<OperationStatusRest> {
+        return this.http.post<OperationStatusRest>(url(`account-password-edit-commit`), formData({ id, password, password2 }));
+    }
 }

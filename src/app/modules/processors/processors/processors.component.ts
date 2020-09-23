@@ -14,7 +14,7 @@ import { ProcessorStatus } from '@src/app/services/processors/ProcessorStatus';
 })
 
 export class ProcessorsComponent implements OnInit, ConfirmationDialogInterface {
-    processorsResponse: ProcessorsResult;
+    processorResult: ProcessorsResult;
     showStatusOfProcessor: boolean = false;
     dataSource: MatTableDataSource<ProcessorStatus> = new MatTableDataSource<ProcessorStatus>([]);
     columnsToDisplay: string[] = ['id', 'ip', 'description', 'reason', 'lastSeen', 'bts'];
@@ -34,19 +34,19 @@ export class ProcessorsComponent implements OnInit, ConfirmationDialogInterface 
     }
 
     next(): void {
-        this.getProcessors(this.processorsResponse.items.number + 1);
+        this.getProcessors(this.processorResult.items.number + 1);
     }
 
     prev(): void {
-        this.getProcessors(this.processorsResponse.items.number - 1);
+        this.getProcessors(this.processorResult.items.number - 1);
     }
 
     getProcessors(page: number): void {
-        this.processorsService.processors
-            .get(page.toString())
-            .subscribe((response) => {
-                this.processorsResponse = response;
-                const items: ProcessorStatus[] = response.items.content || [];
+        this.processorsService
+            .init(page.toString())
+            .subscribe(processorResult => {
+                this.processorResult = processorResult;
+                const items: ProcessorStatus[] = processorResult.items.content || [];
                 if (items.length) {
                     this.dataSource = new MatTableDataSource(items);
                 }
@@ -61,8 +61,8 @@ export class ProcessorsComponent implements OnInit, ConfirmationDialogInterface 
         resolveTitle: 'Delete'
     })
     delete(processor: ProcessorStatus): void {
-        this.processorsService.processor
-            .delete(processor.processor.id.toString())
+        this.processorsService
+            .deleteProcessorCommit(processor.processor.id.toString())
             .subscribe(() => this.getProcessors(0));
     }
 }

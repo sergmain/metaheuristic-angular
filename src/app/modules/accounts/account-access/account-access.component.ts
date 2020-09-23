@@ -26,17 +26,19 @@ export class AccountAccessComponent implements OnInit {
     ) { }
 
     ngOnInit(): void {
-        this.accountsService.account.get(this.route.snapshot.paramMap.get('accountId')).subscribe((response) => {
-            this.response = response;
-            const roles: Role[] = [];
-            response.account.authorities.forEach((authority: Authority) => roles.push(authority.authority));
-            this.isManager = roles.includes(Role.ROLE_MANAGER);
-            this.isOperator = roles.includes(Role.ROLE_OPERATOR);
-            this.isBilling = roles.includes(Role.ROLE_BILLING);
-            this.isData = roles.includes(Role.ROLE_DATA);
-            this.isAdmin = roles.includes(Role.ROLE_ADMIN);
-            this.isServerRestAccess = roles.includes(Role.ROLE_SERVER_REST_ACCESS);
-        });
+        this.accountsService
+            .getAccount(this.route.snapshot.paramMap.get('accountId'))
+            .subscribe((response) => {
+                this.response = response;
+                const roles: Role[] = [];
+                response.account.authorities.forEach((authority: Authority) => roles.push(authority.authority));
+                this.isManager = roles.includes(Role.ROLE_MANAGER);
+                this.isOperator = roles.includes(Role.ROLE_OPERATOR);
+                this.isBilling = roles.includes(Role.ROLE_BILLING);
+                this.isData = roles.includes(Role.ROLE_DATA);
+                this.isAdmin = roles.includes(Role.ROLE_ADMIN);
+                this.isServerRestAccess = roles.includes(Role.ROLE_SERVER_REST_ACCESS);
+            });
     }
 
     save(): void {
@@ -50,9 +52,9 @@ export class AccountAccessComponent implements OnInit {
         if (this.isOperator) { roles.push(Role.ROLE_OPERATOR); }
         if (this.isServerRestAccess) { roles.push(Role.ROLE_SERVER_REST_ACCESS); }
 
-        console.log(roles)
-
-        this.accountsService.account.roleCommit(accountId, roles.join(',')).subscribe(() => { });
+        this.accountsService
+            .roleFormCommit(accountId, roles.join(','))
+            .subscribe(() => { });
     }
 
     back(): void {

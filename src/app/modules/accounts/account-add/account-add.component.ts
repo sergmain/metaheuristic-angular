@@ -44,8 +44,8 @@ export class AccountAddComponent {
 
     create(): void {
         this.currentStates.add(this.states.wait);
-        const subscribe: Subscription = this.accountsService.account
-            .addCommit(this.form.value)
+        const subscribe: Subscription = this.accountsService
+            .addFormCommit(this.form.value)
             .subscribe(
                 (response) => {
                     if (response.status === OperationStatus.OK) {
