@@ -40,16 +40,5 @@ http://localhost:4200/#/experiments
 
 
 
-
-issue-1256
-http://localhost:4200/#/batch
-Отсутствует столбец 'Owner's username'
-в нем отображать поле ai.metaheuristic.ai.dispatcher.data.BatchData.BatchExecInfo#username
-
-DONE
-NOT YET
-Столбец должен быть русифицирован и называться 'Owner's username' /  'Владелец'
-сейчас - batch.Owner's username
-
-DONE
-CONFIRMED
+issue-1257
+....
