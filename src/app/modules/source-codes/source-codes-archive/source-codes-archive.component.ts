@@ -4,6 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { ConfirmationDialogMethod } from '@app/components/app-dialog-confirmation/app-dialog-confirmation.component';
 import { LoadStates } from '@app/enums/LoadStates';
+import { UIStateComponent } from '@src/app/models/UIStateComponent';
 import { SourceCodesService } from '@src/app/services/source-codes/source-codes.service';
 import { SourceCode } from '@src/app/services/source-codes/SourceCode';
 import { SourceCodesResult } from '@src/app/services/source-codes/SourceCodesResult';
@@ -15,43 +16,36 @@ import { CtTableComponent } from '../../ct/ct-table/ct-table.component';
     templateUrl: './source-codes-archive.component.html',
     styleUrls: ['./source-codes-archive.component.sass']
 })
-export class SourceCodesArchiveComponent implements OnInit {
-    readonly states = LoadStates;
-    currentStates = new Set();
-    response: SourceCodesResult;
+export class SourceCodesArchiveComponent extends UIStateComponent implements OnInit {
+    sourceCodesResult: SourceCodesResult;
     dataSource = new MatTableDataSource<SourceCode>([]);
     columnsToDisplay = ['id', 'uid', 'createdOn', 'valid', 'locked', 'bts'];
     deletedRows: SourceCode[] = [];
 
-    @ViewChild('nextTable', { static: true }) nextTable: MatButton;
-    @ViewChild('prevTable', { static: true }) prevTable: MatButton;
-    @ViewChild('table', { static: true }) table: CtTableComponent;
-
     constructor(
         private dialog: MatDialog,
         private sourceCodesService: SourceCodesService
-    ) { }
+    ) {
+        super();
+    }
 
     ngOnInit(): void {
-        this.currentStates.add(this.states.firstLoading);
         this.updateTable(0);
     }
 
     updateTable(page: number): void {
-        this.currentStates.add(this.states.loading);
+        this.setIsLoadingStart();
         this.sourceCodesService
             .sourceCodeArchivedOnly(page.toString())
-            .subscribe(
-                (response) => {
-                    this.response = response;
-                    this.dataSource = new MatTableDataSource(response.items.content || []);
-                    this.table.show();
-                    this.currentStates.delete(this.states.firstLoading);
-                    this.currentStates.delete(this.states.loading);
-                    this.prevTable.disabled = this.response.items.first;
-                    this.nextTable.disabled = this.response.items.last;
-                }
-            );
+            .subscribe({
+                next: sourceCodesResult => {
+                    this.sourceCodesResult = sourceCodesResult;
+                    this.dataSource = new MatTableDataSource(sourceCodesResult.items.content || []);
+                },
+                complete: () => {
+                    this.setIsLoadingEnd();
+                },
+            });
     }
 
     @ConfirmationDialogMethod({
@@ -67,18 +61,12 @@ export class SourceCodesArchiveComponent implements OnInit {
             .subscribe();
     }
 
-    next(): void {
-        this.table.wait();
-        this.prevTable.disabled = true;
-        this.nextTable.disabled = true;
-        this.updateTable(this.response.items.number + 1);
+    nextPage(): void {
+        this.updateTable(this.sourceCodesResult.items.number + 1);
     }
 
-    prev(): void {
-        this.table.wait();
-        this.prevTable.disabled = true;
-        this.nextTable.disabled = true;
-        this.updateTable(this.response.items.number - 1);
+    prevPage(): void {
+        this.updateTable(this.sourceCodesResult.items.number - 1);
     }
 
 }

@@ -1,8 +1,17 @@
 <mat-tab-group #matTabGroup mat-stretch-tabs dynamicHeight (selectedIndexChange)="tabChange()">
     <mat-tab label="CURRENT"><br />
-        <ct-section>
-            <ct-section-header>
 
+        <ct-section *ngIf="!sourceCodesResult">
+            <ct-section-body>
+                <ct-section-body-row>
+                    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+                </ct-section-body-row>
+            </ct-section-body>
+        </ct-section>
+
+
+        <ct-section *ngIf="sourceCodesResult">
+            <ct-section-header>
                 <ct-section-header-row>
                     <ct-flex justify-content="space-between">
                         <ct-flex-item>
@@ -16,16 +25,15 @@
                     </ct-flex>
                 </ct-section-header-row>
 
-                <ct-section-header-row *ngIf="response && response.assetMode == dispatcherAssetMode.replicated">
+                <ct-section-header-row
+                    *ngIf="sourceCodesResult && sourceCodesResult.assetMode == dispatcherAssetMode.replicated">
                     Creation of sourceCodes is disabled, assetMode is 'replicated'.
                 </ct-section-header-row>
-
             </ct-section-header>
 
             <ct-section-body>
-
                 <ct-section-body-row>
-                    <ct-table #table>
+                    <ct-table [isWaiting]="isLoading">
                         <table class="mat-table" mat-table="mat-table" [dataSource]="dataSource">
                             <ng-container matColumnDef="id">
                                 <th mat-header-cell="mat-header-cell" *matHeaderCellDef>Id </th>
@@ -86,31 +94,17 @@
                         </table>
                     </ct-table>
                 </ct-section-body-row>
-
-                <ct-section-body-row *ngIf="currentStates.has(states.firstLoading)">
-                    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
-                </ct-section-body-row>
-
             </ct-section-body>
 
             <ct-section-footer>
                 <ct-section-footer-row>
                     <ct-flex justify-content="space-between">
                         <ct-flex-item>
-                            <ct-flex justify-content="flex-start" gap="8px">
-                                <ct-flex-item>
-                                    <button mat-flat-button="mat-flat-button" color="primary" #prevTable
-                                        (click)="prev()" disabled="disabled">
-                                        <mat-icon>arrow_back_ios</mat-icon>
-                                    </button>
-                                </ct-flex-item>
-                                <ct-flex-item>
-                                    <button mat-flat-button="mat-flat-button" color="primary" #nextTable
-                                        (click)="next()" disabled="disabled">
-                                        <mat-icon>arrow_forward_ios</mat-icon>
-                                    </button>
-                                </ct-flex-item>
-                            </ct-flex>
+
+                            <ct-table-pagination [pageableDefault]="sourceCodesResult?.items"
+                                [globalDisable]="isLoading" (next)="nextPage()" (prev)="prevPage()">
+                            </ct-table-pagination>
+
                         </ct-flex-item>
                         <ct-flex-item>
                             <ng-container *ngTemplateOutlet="addSourceCodeButton"></ng-container>
@@ -130,7 +124,7 @@
 
 <ng-template #addSourceCodeButton>
     <button mat-flat-button="mat-flat-button" color="primary"
-        *ngIf="response && response.assetMode != dispatcherAssetMode.replicated"
-        [disabled]="currentStates.has(states.loading) || currentStates.has(states.firstLoading)" routerLink="add">Add
+        *ngIf="sourceCodesResult && sourceCodesResult.assetMode != dispatcherAssetMode.replicated"
+        [disabled]="isLoading" routerLink="add">Add
         Source Code</button>
 </ng-template>

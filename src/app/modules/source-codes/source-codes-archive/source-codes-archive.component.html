@@ -1,4 +1,12 @@
-<ct-section>
+<ct-section *ngIf="!sourceCodesResult">
+    <ct-section-body>
+        <ct-section-body-row>
+            <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+        </ct-section-body-row>
+    </ct-section-body>
+</ct-section>
+
+<ct-section *ngIf="sourceCodesResult">
     <ct-section-header>
         <ct-section-header-row>
             <ct-heading>Source Codes</ct-heading>
@@ -6,7 +14,7 @@
     </ct-section-header>
     <ct-section-body>
         <ct-section-body-row>
-            <ct-table #table>
+            <ct-table [isWaiting]="isLoading">
                 <table class="mat-table" mat-table="mat-table" [dataSource]="dataSource">
                     <ng-container matColumnDef="id">
                         <th mat-header-cell="mat-header-cell" *matHeaderCellDef>Id </th>
@@ -18,7 +26,8 @@
                     </ng-container>
                     <ng-container matColumnDef="createdOn">
                         <th mat-header-cell="mat-header-cell" *matHeaderCellDef> Created on </th>
-                        <td mat-cell="mat-cell" *matCellDef="let el">{{el.createdOn | date:'MMM d, yyyy, HH:mm:ss'}} </td>
+                        <td mat-cell="mat-cell" *matCellDef="let el">{{el.createdOn | date:'MMM d, yyyy, HH:mm:ss'}}
+                        </td>
                     </ng-container>
                     <ng-container matColumnDef="valid">
                         <th mat-header-cell="mat-header-cell" *matHeaderCellDef>Is valid? </th>
@@ -33,7 +42,8 @@
                         <td mat-cell="mat-cell" *matCellDef="let el">
                             <ct-flex justify-content="flex-end" gap="9px">
                                 <ct-flex-item>
-                                    <button mat-flat-button="mat-flat-button" color="warn" size="forTableRow" (click)="delete(el)" title="Delete">
+                                    <button mat-flat-button="mat-flat-button" color="warn" size="forTableRow"
+                                        (click)="delete(el)" title="Delete">
                                         <mat-icon>delete</mat-icon>
                                     </button>
                                 </ct-flex-item>
@@ -41,28 +51,16 @@
                         </td>
                     </ng-container>
                     <tr mat-header-row="mat-header-row" *matHeaderRowDef="columnsToDisplay"> </tr>
-                    <tr mat-row="mat-row" *matRowDef="let row; columns: columnsToDisplay;" [class.deleted-table-row]="deletedRows.includes(row)"></tr>
+                    <tr mat-row="mat-row" *matRowDef="let row; columns: columnsToDisplay;"
+                        [class.deleted-table-row]="deletedRows.includes(row)"></tr>
                 </table>
             </ct-table>
-            <ct-section-body-row *ngIf="currentStates.has(states.firstLoading)">
-                <mat-progress-bar mode="indeterminate"></mat-progress-bar>
-            </ct-section-body-row>
         </ct-section-body-row>
     </ct-section-body>
     <ct-section-footer>
         <ct-section-footer-row>
-            <ct-flex justify-content="flex-start" gap="8px">
-                <ct-flex-item>
-                    <button mat-flat-button="mat-flat-button" #prevTable (click)="prev()" disabled="disabled">
-                        <mat-icon>arrow_back_ios</mat-icon>
-                    </button>
-                </ct-flex-item>
-                <ct-flex-item>
-                    <button mat-flat-button="mat-flat-button" #nextTable (click)="next()" disabled="disabled">
-                        <mat-icon>arrow_forward_ios</mat-icon>
-                    </button>
-                </ct-flex-item>
-            </ct-flex>
+            <ct-table-pagination [pageableDefault]="sourceCodesResult?.items" [globalDisable]="isLoading"
+                (next)="nextPage()" (prev)="prevPage()"></ct-table-pagination>
         </ct-section-footer-row>
     </ct-section-footer>
 </ct-section>
