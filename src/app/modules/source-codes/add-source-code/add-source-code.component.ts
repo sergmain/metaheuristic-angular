@@ -1,6 +1,6 @@
 import { Location } from '@angular/common';
 import { Component, ElementRef, ViewChild } from '@angular/core';
-import { OperationStatus } from '@src/app/models/OperationStatus';
+import { OperationStatus } from '@src/app/enums/OperationStatus';
 import { SourceCodeResult } from '@src/app/services/source-codes/SourceCodeResult';
 import { CardFormAddSourceCodeComponent } from '../card-form-add-source-code/card-form-add-source-code.component';
 import { CardFormUploadSourceCodeComponent } from '../card-form-upload-source-code/card-form-upload-source-code.component';

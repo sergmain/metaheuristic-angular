@@ -1,5 +1,5 @@
 import { DefaultResponse } from './DefaultResponse';
-import { OperationStatus } from './OperationStatus';
+import { OperationStatus } from '../enums/OperationStatus';
 
 export interface OperationStatusRest extends DefaultResponse {
     status: OperationStatus;

@@ -1,7 +1,7 @@
 import { ExperimentResultApiData } from '@src/app/services/experiment-result/ExperimentResultApiData';
 import { ExperimentResultSimple } from '@src/app/services/experiment-result/ExperimentResultSimple';
 import { ExperimentApiData } from '@src/app/services/experiments/ExperimentApiData';
-import { ExperimentResult } from '../../models/beans/ExperimentResult';
+import { ExperimentResult } from './ExperimentResult';
 import { DefaultResponse } from '../../models/DefaultResponse';
 import { PageableDefault } from '../../models/PageableDefault';
 import { SimpleSelectOption } from '../../models/SimpleSelectOption';

@@ -4,7 +4,7 @@ import { OperationStatusRest } from '@src/app/models/OperationStatusRest';
 import { FormGroup, FormControl, Validators, ValidationErrors } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CompanyService } from '@src/app/services/company/company.service';
-import { OperationStatus } from '@src/app/models/OperationStatus';
+import { OperationStatus } from '@src/app/enums/OperationStatus';
 
 @Component({
     selector: 'account-add',

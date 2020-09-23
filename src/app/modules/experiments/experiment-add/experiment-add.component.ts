@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ExperimentsService } from '@app/services/experiments/experiments.service';
-import { OperationStatus } from '@src/app/models/OperationStatus';
+import { OperationStatus } from '@src/app/enums/OperationStatus';
 import { OperationStatusRest } from '@src/app/models/OperationStatusRest';
 import { SourceCodeUidsForCompany } from '@src/app/services/source-codes/SourceCodeUidsForCompany';
 @Component({

@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { OperationStatus } from '@src/app/models/OperationStatus';
+import { OperationStatus } from '@src/app/enums/OperationStatus';
 import { OperationStatusRest } from '@src/app/models/OperationStatusRest';
 import { ExperimentResultService } from '@src/app/services/experiment-result/experiment-result.service';
 import { CtFileUploadComponent } from '../../ct/ct-file-upload/ct-file-upload.component';

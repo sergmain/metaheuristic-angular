@@ -1,4 +1,4 @@
-import { OperationStatus } from './OperationStatus';
+import { OperationStatus } from '../enums/OperationStatus';
 import { ValidationResult } from '../services/source-codes/ValidationResult';
 
 export interface DefaultResponse {

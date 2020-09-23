@@ -7,7 +7,7 @@ import { SourceCodeUid } from '@app/services/source-codes/SourceCodeUid';
 import { Store } from '@ngrx/store';
 import { TranslateService } from '@ngx-translate/core';
 import { AppState } from '@src/app/app.reducers';
-import { OperationStatus } from '@src/app/models/OperationStatus';
+import { OperationStatus } from '@src/app/enums/OperationStatus';
 import { Subscription } from 'rxjs';
 import { CtFileUploadComponent } from '../../ct/ct-file-upload/ct-file-upload.component';
 import { SourceCodeUidsForCompany } from '@src/app/services/source-codes/SourceCodeUidsForCompany';

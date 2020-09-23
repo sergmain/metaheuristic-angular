@@ -3,7 +3,7 @@ import { CompanyService } from '@src/app/services/company/company.service';
 import { OperationStatusRest } from '@src/app/models/OperationStatusRest';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
-import { OperationStatus } from '@src/app/models/OperationStatus';
+import { OperationStatus } from '@src/app/enums/OperationStatus';
 
 @Component({
     selector: 'company-add',

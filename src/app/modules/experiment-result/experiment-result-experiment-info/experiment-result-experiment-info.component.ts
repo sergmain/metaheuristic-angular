@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
 import { state } from '@app/helpers/state';
-import { ExperimentResult } from '@src/app/models/beans/ExperimentResult';
+import { ExperimentResult } from '@src/app/services/experiment-result/ExperimentResult';
 import { ExperimentResultService } from '@src/app/services/experiment-result/experiment-result.service';
 import { ExperimentResultApiData } from '@src/app/services/experiment-result/ExperimentResultApiData';
 import { ExperimentResultData } from '@src/app/services/experiment-result/ExperimentResultData';
