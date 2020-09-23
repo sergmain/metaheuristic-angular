@@ -52,3 +52,4 @@ NOT YET
 сейчас - batch.Owner's username
 
 DONE
+CONFIRMED
