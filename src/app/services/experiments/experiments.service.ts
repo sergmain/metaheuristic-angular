@@ -19,51 +19,6 @@ export class ExperimentsService {
 
     constructor(private http: HttpClient) { }
 
-    experiment = {
-        featurePlotDataPart: (experimentId: string, featureId: string, params: string, paramsAxis: string): Observable<any> =>
-            this.http.post(url(`/experiment-feature-plot-data-part/${experimentId}/${featureId}/${params}/${paramsAxis}/part`), {}),
-
-        featureProgressConsolePart: (taskId: string): Observable<response.experiment.FeatureProgressConsolePart> =>
-            this.http.post<response.experiment.FeatureProgressConsolePart>(url(`/experiment-feature-progress-console-part/${taskId}`), {}),
-
-        featureProgressPart: (experimentId: string, featureId: string, params: string): Observable<any> =>
-            this.http.post(url(`/experiment-feature-progress-part/${experimentId}/${featureId}/${params}/part`), {}),
-
-        featureProgress: (experimentId: string, featureId: string): Observable<any> =>
-            this.http.get(url(`/experiment-feature-progress/${experimentId}/${featureId}`)),
-
-        info: (id: string): Observable<response.experiment.Info> =>
-            this.http.get<response.experiment.Info>(url(`/experiment-info/${id}`)),
-
-        metadataAddCommit: (experimentId: string, data: any): Observable<any> =>
-            this.http.post(url(`/experiment-metadata-add-commit/${experimentId}`), generateFormData(data)),
-
-        metadataEditCommit: (experimentId: string, data: any): Observable<any> =>
-            this.http.post(url(`/experiment-metadata-edit-commit/${experimentId}`), generateFormData(data)),
-
-        functionAddCommit: (id: string, code: string): Observable<response.experiment.AddCommit> =>
-            this.http.post<response.experiment.AddCommit>(url(`/experiment-function-add-commit/${id}`), generateFormData({ code })),
-
-        metadataDeleteCommit: (experimentId: string | number, key: string | number): Observable<any> =>
-            this.http.get(url(`/experiment-metadata-delete-commit/${experimentId}/${key}`)),
-
-        metadataDefaultAddCommit: (experimentId: string | number): Observable<any> =>
-            this.http.get(url(`/experiment-metadata-default-add-commit/${experimentId}`)),
-
-        functionDeleteByTypeCommit: (experimentId: string, functionType: string): Observable<response.experiment.DeleteByTypeCommit> =>
-            this.http.get<response.experiment.DeleteByTypeCommit>(url(`/experiment-function-delete-by-type-commit/${experimentId}/${functionType}`)),
-
-        uploadFromFile: (file: any): Observable<OperationStatusRest> =>
-            this.http.post<OperationStatusRest>(url(`/experiment-upload-from-file`), file),
-
-        bindExperimentToPlanWithResource: (experimentCode: string, resourcePoolCode: string): Observable<any> =>
-            this.http.post(url(`/bind-experiment-to-plan-with-resource`), { experimentCode, resourcePoolCode }),
-
-        toAtlas: (id: string): Observable<any> =>
-            this.http.get(url(`/experiment-to-atlas/${id}`)),
-    };
-
-
     // @GetMapping("/experiments")
     // public ExperimentApiData.ExperimentsResult getExperiments(@PageableDefault(size = 5) Pageable pageable) {
     //     return experimentTopLevelService.getExperiments(pageable);

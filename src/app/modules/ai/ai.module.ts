@@ -28,7 +28,7 @@ const routes: Routes = [
         data: { section: 'experiments' }
     },
     {
-        path: 'experiment-result',
+        path: 'experiment-results',
         canActivate: [AuthGuard],
         component: AiRootComponent,
         loadChildren: () => import('@src/app/modules/experiment-result/experiment-result.module').then(m => m.ExperimentResultModule),

@@ -50,16 +50,19 @@ export class ExperimentResultExperimentInfoComponent implements OnInit {
         this.load();
     }
 
-    load() {
-        const id: string = this.route.snapshot.paramMap.get('id');
-        const subscribe: Subscription = this.experimentResultService
-            .info(id)
+    load(): void {
+        this.experimentResultService
+            .info(this.route.snapshot.paramMap.get('id'))
             .subscribe(experimentInfoExtended => {
                 this.experimentInfoExtended = experimentInfoExtended;
                 this.experiment = experimentInfoExtended.experiment;
                 this.experimentInfo = experimentInfoExtended.experimentInfo;
                 this.experimentResult = experimentInfoExtended.experimentResult;
-                this.tables.generalInfo.table = Object.keys(this.experiment).map(key => [key, this.experiment[key]]);
+                this.tables.generalInfo.table = Object
+                    .keys(this.experiment)
+                    .map(key => [key, this.experiment[key]])
+                    .filter(o => ['id', 'createdOn', 'name', 'description', 'numberOfTask'].includes(o[0]));
+
                 this.tables.hyperParameters.table = new MatTableDataSource(this.experiment.hyperParams);
                 this.tables.features.table = new MatTableDataSource(this.experimentInfo.features);
             });

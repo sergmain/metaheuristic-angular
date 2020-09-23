@@ -37,7 +37,6 @@ const routes: Routes = [
                 }
             },
             {
-
                 path: ':batchId/source-code/:sourceCodeId/exec-context/:execContextId/state',
                 component: BatchStateComponent,
                 data: {

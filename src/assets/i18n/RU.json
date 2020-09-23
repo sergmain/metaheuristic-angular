@@ -25,6 +25,7 @@
 	"batch.File name": "Имя файла",
 	"batch.Id": "id",
 	"batch.Is Batch Consistent?": "Пакет консистен?",
+	"batch.Owner's username": "Владелец",
 	"batch.Source Code": "Исходный код",
 	"batch.Status": "Статус",
 	"batch.Task states": "Состояние",

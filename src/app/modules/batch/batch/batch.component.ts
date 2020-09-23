@@ -1,5 +1,8 @@
 import { HttpResponse } from '@angular/common/http';
-import { Component, OnDestroy, OnInit, ViewChild, ChangeDetectorRef } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { MatButton } from '@angular/material/button';
+import { MatDialog } from '@angular/material/dialog';
+import { MatTableDataSource } from '@angular/material/table';
 import { ConfirmationDialogMethod, QuestionData } from '@app/components/app-dialog-confirmation/app-dialog-confirmation.component';
 import { BatchService } from '@app/services/batch/batch.service';
 import { marker } from '@biesbjerg/ngx-translate-extract-marker';
@@ -7,18 +10,14 @@ import { Store } from '@ngrx/store';
 import { TranslateService } from '@ngx-translate/core';
 import { AppState } from '@src/app/app.reducers';
 import { CtTableComponent } from '@src/app/modules/ct/ct-table/ct-table.component';
+import { Role } from '@src/app/services/authentication';
 import { AuthenticationService } from '@src/app/services/authentication/authentication.service';
-import { Batch } from '@src/app/services/batch/Batch';
 import { getBatches } from '@src/app/services/batch/batch.actions';
+import { BatchData } from '@src/app/services/batch/BatchData';
 import { BatchesState } from '@src/app/services/batch/BatchesState';
 import { toggleFilterBatches } from '@src/app/services/settings/settings.actions';
 import * as fileSaver from 'file-saver';
 import { Subscription } from 'rxjs';
-import { Role } from '@src/app/services/authentication';
-import { MatTableDataSource } from '@angular/material/table';
-import { MatButton } from '@angular/material/button';
-import { MatDialog } from '@angular/material/dialog';
-import { BatchData } from '@src/app/services/batch/BatchData';
 
 @Component({
     selector: 'batch',

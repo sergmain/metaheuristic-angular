@@ -42,7 +42,11 @@
     }
 
     &[gap="unit(2)"] {
-        margin: (unit(2) / -2);
+        margin: (unit(2) / -2); 
+    }
+
+    &[gap="unit(3)"] {
+        margin: (unit(3) / -2);
     }
 
     &[gap="18px"] {

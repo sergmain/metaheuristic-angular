@@ -12,5 +12,6 @@ export namespace ExperimentResultApiData {
         numberOfTask: number;
         hyperParams: ExperimentApiData.HyperParam[];
         state: number;
+        execState: string;
     }
 }

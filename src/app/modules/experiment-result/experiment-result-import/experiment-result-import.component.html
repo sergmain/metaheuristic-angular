@@ -15,7 +15,7 @@
                 <ct-section-footer-row>
                     <ct-flex justify-content="flex-end" gap="unit(1)">
                         <ct-flex-item>
-                            <button mat-stroked-button>Cancel</button>
+                            <button mat-stroked-button (click)="back()">Cancel</button>
                         </ct-flex-item>
                         <ct-flex-item>
                             <button mat-flat-button color="primary" (click)="importFile()"

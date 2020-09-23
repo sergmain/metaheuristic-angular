@@ -1,90 +1,126 @@
+<ct-section *ngIf="!experimentFeatureExtendedResult">
+    <ct-section-body>
+        <ct-section-body-row>
+            <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+        </ct-section-body-row>
+    </ct-section-body>
+</ct-section>
+
 <div *ngIf="experimentFeatureExtendedResult">
-    <ct-section>
-        <ct-section-header>
-            <ct-section-header-row>
-                <ct-flex justify-content="flex-start" align-items="center" gap="8px">
-                    <ct-flex-item>
-                        <button mat-fab="mat-fab" color="primary"
-                            routerLink="/ai/experiment-result/experiment-info/{{experimentResultId}}">
-                            <mat-icon>navigate_before</mat-icon>
-                        </button>
-                    </ct-flex-item>
-                    <ct-flex-item>
-                        <ct-heading>The Experiment Info</ct-heading>
-                    </ct-flex-item>
-                </ct-flex>
-            </ct-section-header-row>
-        </ct-section-header>
-    </ct-section>
-    <ct-section>
-        <ct-section-header>
-            <ct-section-header-row>
-                <ct-heading>General info</ct-heading>
-            </ct-section-header-row>
-        </ct-section-header>
-        <ct-section-body>
-            <ct-section-body-row>
-                <ct-cols>
-                    <ct-col size="6">
-                        <ct-table>
-                            <table mat-table="mat-table" [dataSource]="tables.features.table">
-                                <ng-container matColumnDef="key">
-                                    <th mat-header-cell="mat-header-cell" *matHeaderCellDef>Key</th>
-                                    <td mat-cell="mat-cell" *matCellDef="let el"> <span
-                                            *ngIf="el[0] === 'id'">id</span><span
-                                            *ngIf="el[0] === 'resourceCodes'">Feature ids</span><span
-                                            *ngIf="el[0] === 'execStatusAsString'">Exec Status</span></td>
-                                </ng-container>
-                                <ng-container matColumnDef="value">
-                                    <th mat-header-cell="mat-header-cell" *matHeaderCellDef>Value</th>
-                                    <td mat-cell="mat-cell" *matCellDef="let el">{{el[1]}}</td>
-                                </ng-container>
-                                <tr mat-row="mat-row" *matRowDef="let row; columns: tables.features.columnsToDisplay;">
-                                </tr>
-                            </table>
-                        </ct-table>
-                    </ct-col>
-                    <ct-col size="6">
-                        <ct-table class="general-info">
-                            <table mat-table="mat-table" [dataSource]="tables.hyperParameters.table">
-                                <ng-container matColumnDef="key">
-                                    <th mat-header-cell="mat-header-cell" *matHeaderCellDef>Hyper Param Name</th>
-                                    <td mat-cell="mat-cell" *matCellDef="let el">{{el.key}}</td>
-                                </ng-container>
-                                <ng-container matColumnDef="values">
-                                    <th mat-header-cell="mat-header-cell" *matHeaderCellDef>Hyper Param Values</th>
-                                    <td mat-cell="mat-cell" *matCellDef="let el">
-                                        <button mat-stroked-button="mat-stroked-button" *ngFor="let button of el.list;"
-                                            [disabled]="!el.selectable" [class.mat-flat-button]="button.selected"
-                                            [class.mat-stroked-button]="!button.selected"
-                                            (click)="pickHyperParam(button)"
-                                            [color]="button.selected ? 'primary' : undefined">{{button.param}}</button>
-                                    </td>
-                                </ng-container>
-                                <ng-container matColumnDef="axes">
-                                    <th mat-header-cell="mat-header-cell" *matHeaderCellDef>X, Y axes for plotting</th>
-                                    <td mat-cell="mat-cell" *matCellDef="let el">
-                                        <button mat-stroked-button="mat-stroked-button"
-                                            [class.mat-flat-button]="pickedAxes.includes(el)"
-                                            [class.mat-stroked-button]="!pickedAxes.includes(el)"
-                                            [color]="pickedAxes.includes(el) ? 'primary' : undefined"
-                                            [disabled]="!el.selectable" (click)="pickAxis(el)">Axis </button>
-                                    </td>
-                                </ng-container>
-                                <tr mat-header-row="mat-header-row"
-                                    *matHeaderRowDef="tables.hyperParameters.columnsToDisplay"></tr>
-                                <tr mat-row="mat-row"
-                                    *matRowDef="let row; columns: tables.hyperParameters.columnsToDisplay;"></tr>
-                            </table>
-                        </ct-table>
-                    </ct-col>
-                </ct-cols>
-            </ct-section-body-row>
-        </ct-section-body>
-    </ct-section>
+    <div>
+        <ct-section>
+            <ct-section-body>
+                <ct-section-body-row>
+                    <ct-flex justify-content="flex-start" align-items="center" gap="unit(3)">
+                        <ct-flex-item>
+                            <button mat-fab="mat-fab" color="primary" [routerLink]="['../../../','info']">
+                                <mat-icon>navigate_before</mat-icon>
+                            </button>
+                        </ct-flex-item>
+                        <ct-flex-item>
+                            <ct-heading>The Experiment Info</ct-heading>
+                        </ct-flex-item>
+                    </ct-flex>
+                </ct-section-body-row>
+            </ct-section-body>
+        </ct-section>
+    </div>
+
+    <br>
+
+    <div>
+        <ct-section>
+            <ct-section-header>
+                <ct-section-header-row>
+                    <ct-heading>General info</ct-heading>
+                </ct-section-header-row>
+            </ct-section-header>
+            <ct-section-body>
+                <ct-section-body-row>
+                    <ct-cols>
+                        <ct-col size="5">
+                            <ng-container *ngTemplateOutlet="generalInfoATemplate"></ng-container>
+                        </ct-col>
+                        <ct-col size="1"> </ct-col>
+                        <ct-col size="6">
+                            <ng-container *ngTemplateOutlet="generalInfoBTemplate"></ng-container>
+                        </ct-col>
+                    </ct-cols>
+                </ct-section-body-row>
+            </ct-section-body>
+        </ct-section>
+    </div>
+
+    <br>
+
     <experiment-result-experiment-metrics [metricsResult]="metricsResult" [dataGraph]="dataGraph" [canDraw]="canDraw"
         (draw)="drawPlot()"></experiment-result-experiment-metrics>
+
+    <br>
+
     <experiment-result-experiment-tasks (nextPage)="nextPage()" (prevPage)="prevPage()"
         [tasks]="experimentFeatureExtendedResult.tasks" [experimentResultId]="experimentResultId">
     </experiment-result-experiment-tasks>
 </div>
+
+
+
+
+
+
+
+
+<ng-template #generalInfoATemplate>
+    <ct-table>
+        <table mat-table="mat-table" [dataSource]="tables.features.table">
+            <ng-container matColumnDef="key">
+                <th mat-header-cell="mat-header-cell" *matHeaderCellDef>Key</th>
+                <td mat-cell="mat-cell" *matCellDef="let el">
+                    <span *ngIf="el[0] === 'id'">id</span>
+                    <span *ngIf="el[0] === 'variables'">Feature ids</span>
+                    <span *ngIf="el[0] === 'execStatusAsString'">Exec Status</span>
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="value">
+                <th mat-header-cell="mat-header-cell" *matHeaderCellDef>Value</th>
+                <td mat-cell="mat-cell" *matCellDef="let el">{{el[1]}}</td>
+            </ng-container>
+            <tr mat-row="mat-row" *matRowDef="let row; columns: tables.features.columnsToDisplay;">
+            </tr>
+        </table>
+    </ct-table>
+</ng-template>
+
+
+<ng-template #generalInfoBTemplate>
+    <ct-table class="general-info">
+        <table mat-table="mat-table" [dataSource]="tables.hyperParameters.table">
+            <ng-container matColumnDef="key">
+                <th mat-header-cell="mat-header-cell" *matHeaderCellDef>Hyper Param Name</th>
+                <td mat-cell="mat-cell" *matCellDef="let el">{{el.key}}</td>
+            </ng-container>
+            <ng-container matColumnDef="values">
+                <th mat-header-cell="mat-header-cell" *matHeaderCellDef>Hyper Param Values</th>
+                <td mat-cell="mat-cell" *matCellDef="let el">
+                    <button mat-stroked-button *ngFor="let button of el.list;" [disabled]="!el.selectable"
+                        size="forTableRow" [class.mat-flat-button]="button.selected"
+                        [class.mat-stroked-button]="!button.selected" (click)="pickHyperParam(button)"
+                        [color]="button.selected ? 'primary' : undefined">{{button.param}}
+                    </button>
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="axes">
+                <th mat-header-cell="mat-header-cell" *matHeaderCellDef>X, Y axes for plotting</th>
+                <td mat-cell="mat-cell" *matCellDef="let el">
+                    <button mat-stroked-button size="forTableRow" [class.mat-flat-button]="pickedAxes.includes(el)"
+                        [class.mat-stroked-button]="!pickedAxes.includes(el)"
+                        [color]="pickedAxes.includes(el) ? 'primary' : undefined" [disabled]="!el.selectable"
+                        (click)="pickAxis(el)">Axis
+                    </button>
+                </td>
+            </ng-container>
+            <tr mat-header-row="mat-header-row" *matHeaderRowDef="tables.hyperParameters.columnsToDisplay"></tr>
+            <tr mat-row="mat-row" *matRowDef="let row; columns: tables.hyperParameters.columnsToDisplay;"></tr>
+        </table>
+    </ct-table>
+</ng-template>

@@ -1,8 +1,23 @@
+<ct-section *ngIf="!experimentInfo">
+    <ct-section-body>
+        <ct-section-body-row>
+            <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+        </ct-section-body-row>
+    </ct-section-body>
+</ct-section>
+
 <div *ngIf="experimentInfo">
-    <div> <br />
-        <div>Exec Context State </div>
-        <div style="font-size:48px;letter-spacing: 0.1em;">{{experimentInfoExtended.experiment.state}}</div><br />
+
+    <div>
+        <br>
+        <div style="font-size:36px;letter-spacing: 0.05em;line-height: 1;">
+            {{experimentInfoExtended.experiment.name}}
+            <span>&nbsp;&nbsp;&nbsp;</span>
+            {{experimentInfoExtended.experiment.execState}}
+        </div>
+        <br>
     </div>
+
     <ct-section>
         <ct-section-header>
             <ct-section-header-row>
@@ -16,10 +31,16 @@
                         <ng-container matColumnDef="key">
                             <th mat-header-cell="mat-header-cell" *matHeaderCellDef>Key</th>
                             <td mat-cell="mat-cell" *matCellDef="let el">{{ el[0] }}</td>
+
                         </ng-container>
                         <ng-container matColumnDef="value">
                             <th mat-header-cell="mat-header-cell" *matHeaderCellDef>Value</th>
-                            <td mat-cell="mat-cell" *matCellDef="let el">{{ el[1] }}</td>
+                            <td mat-cell="mat-cell" *matCellDef="let el">
+                                <span *ngIf="el[0] !== 'createdOn'">{{ el[1] }}</span>
+                                <span *ngIf="el[0] === 'createdOn'">
+                                    {{ el[1] | date:'HH:mm:ss, MMM&nbsp;d,&nbsp;yyyy'}}
+                                </span>
+                            </td>
                         </ng-container>
                         <tr mat-header-row="mat-header-row" *matHeaderRowDef="tables.generalInfo.columnsToDisplay">
                         </tr>
@@ -28,7 +49,10 @@
                 </ct-table>
             </ct-section-body-row>
         </ct-section-body>
-    </ct-section><br />
+    </ct-section>
+
+
+
     <ct-section>
         <ct-section-header>
             <ct-section-header-row>
@@ -59,7 +83,10 @@
                 </ct-table>
             </ct-section-body-row>
         </ct-section-body>
-    </ct-section><br />
+    </ct-section>
+
+
+
     <ct-section>
         <ct-section-header>
             <ct-section-header-row>
@@ -76,24 +103,28 @@
                         </ng-container>
                         <ng-container matColumnDef="resourceCodes">
                             <th mat-header-cell="mat-header-cell" *matHeaderCellDef>Set of Features </th>
-                            <td mat-cell="mat-cell" *matCellDef="let el">{{el.resourceCodes}} </td>
+                            <td mat-cell="mat-cell" *matCellDef="let el">{{el.variables}} </td>
                         </ng-container>
                         <ng-container matColumnDef="execStatus">
                             <th mat-header-cell="mat-header-cell" *matHeaderCellDef>Exec Status </th>
                             <td mat-cell="mat-cell" *matCellDef="let el">{{el.execStatusAsString}}</td>
                         </ng-container>
                         <ng-container matColumnDef="maxValue">
-                            <th mat-header-cell="mat-header-cell" *matHeaderCellDef>Max value</th>
-                            <td mat-cell="mat-cell" *matCellDef="let el">{{el.maxValue}}</td>
+                            <th mat-header-cell="mat-header-cell" *matHeaderCellDef>Max values</th>
+                            <td mat-cell="mat-cell" *matCellDef="let el">
+                                <div *ngFor="let v of el.maxValues | keyvalue">
+                                    {{v.key}} - {{v.value}}
+                                </div>
+                            </td>
                         </ng-container>
                         <ng-container matColumnDef="bts">
                             <th mat-header-cell="mat-header-cell" *matHeaderCellDef> </th>
                             <td mat-cell="mat-cell" *matCellDef="let el">
                                 <ct-flex justify-content="flex-end" gap="9px">
                                     <ct-flex-item>
-                                        <button mat-flat-button="mat-flat-button"
-                                            [routerLink]="['/ai/experiment-result/experiment-feature-progress/', experimentResult.id, experiment.id, el.id]"
-                                            color="primary" title="">Info </button>
+                                        <a mat-flat-button="mat-flat-button"
+                                            [routerLink]="['../../../','experiment',experimentResult.id,'feature-progress', experiment.id, el.id]"
+                                            color="primary" title="">Info </a>
                                     </ct-flex-item>
                                 </ct-flex>
                             </td>

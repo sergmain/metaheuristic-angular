@@ -22,9 +22,7 @@ export interface ExperimentItem extends DefaultResponse {
 export namespace response {
 
     export namespace experiment {
-        export interface Get extends DefaultResponse {
-            Experiment: ExperimentApiData.ExperimentData;
-        }
+
         export interface Info extends DefaultResponse {
             experiment: ExperimentApiData.ExperimentData;
             experimentInfo: ExperimentApiData.ExperimentInfoResult;
@@ -36,21 +34,13 @@ export namespace response {
 
         export interface DeleteByTypeCommit extends DefaultResponse { }
 
-        // export namespace cloneCommit {
-        //     export interface Response {
 
-        //     }
-        // }
         export interface FeaturePlotDataPart {
             x?: (string)[] | null;
             y?: (string)[] | null;
             z?: ((number)[] | null)[] | null;
         }
-        // export namespace featureProgressPart {
-        //     export interface Response {
 
-        //     }
-        // }
         export interface FeatureProgress extends DefaultResponse {
             metricsResult: MetricsResult;
             hyperParamResult: HyperParamResult;
@@ -59,34 +49,11 @@ export namespace response {
             experimentFeature: ExperimentApiData.ExperimentFeature;
             consoleResult: ConsoleResult;
         }
-        // export namespace featureProgressConsole {
-        //     export interface Response {
 
-        //     }
-        // }
         export interface FeatureProgressConsolePart {
             items: FeatureProgressConsolePartEntity[];
 
         }
-        // export namespace metadataAddCommit {
-        //     export interface Response {
 
-        //     }
-        // }
-        // export namespace metadataEditCommit {
-        //     export interface Response {
-
-        //     }
-        // }
-        // export namespace metadataDeleteCommit {
-        //     export interface Response {
-
-        //     }
-        // }
-        // export namespace metadataDefaultAddCommit {
-        //     export interface Response {
-
-        //     }
-        // }
     }
 }

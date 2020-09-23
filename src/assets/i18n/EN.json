@@ -25,6 +25,7 @@
 	"batch.File name": "File name",
 	"batch.Id": "Id",
 	"batch.Is Batch Consistent?": "Is Batch Consistent?",
+	"batch.Owner's username": "Owner's username",
 	"batch.Source Code": "Source Code",
 	"batch.Status": "Status",
 	"batch.Task states": "Task States",

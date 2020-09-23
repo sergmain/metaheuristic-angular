@@ -8,6 +8,10 @@
     margin: (unit(2) / 2);
 }
 
+:host-context([gap="unit(3)"]) {
+    margin: (unit(3) / 2);
+}
+
 :host-context([gap="18px"]) {
     margin: (18px / 2);
 }

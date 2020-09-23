@@ -77,6 +77,29 @@ export class ExperimentResultService {
             { params: { page } }
         );
     }
+
+
+    // @GetMapping(value= "/experiment-result-export/{experimentResultId}", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
+    // public ResponseEntity<AbstractResource> downloadExperimentResult(
+    //         HttpServletRequest request,
+    //         @PathVariable("experimentResultId") Long experimentResultId) {
+    //     CleanerInfo resource = experimentResultTopLevelService.exportExperimentResultToFile(experimentResultId);
+    //     if (resource==null) {
+    //         return new ResponseEntity<>(Consts.ZERO_BYTE_ARRAY_RESOURCE, HttpStatus.GONE);
+    //     }
+    //     request.setAttribute(Consts.RESOURCES_TO_CLEAN, resource.toClean);
+    //     return resource.entity == null ? new ResponseEntity<>(Consts.ZERO_BYTE_ARRAY_RESOURCE, HttpStatus.GONE) : resource.entity;
+    // }
+    downloadExperimentResult(experimentResultId: string): Observable<HttpResponse<Blob>> {
+        let headers: HttpHeaders = new HttpHeaders();
+        headers = headers.append('Accept', 'application/octet-stream');
+        return this.http.get(url(`experiment-result-export/${experimentResultId}`), {
+            headers,
+            observe: 'response',
+            responseType: 'blob'
+        });
+    }
+
     //
     //
     //
@@ -84,7 +107,7 @@ export class ExperimentResultService {
     downloadFile(): Observable<HttpResponse<Blob>> {
         let headers: HttpHeaders = new HttpHeaders();
         headers = headers.append('Accept', 'application/octet-stream');
-        return this.http.get(url(`/experiment-result-experiment-export/none.zip`), {
+        return this.http.get(url(`experiment-result-experiment-export/none.zip`), {
             headers,
             observe: 'response',
             responseType: 'blob'

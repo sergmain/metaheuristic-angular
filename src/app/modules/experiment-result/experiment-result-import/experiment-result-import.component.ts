@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { OperationStatus } from '@src/app/models/OperationStatus';
 import { OperationStatusRest } from '@src/app/models/OperationStatusRest';
 import { ExperimentResultService } from '@src/app/services/experiment-result/experiment-result.service';
@@ -15,12 +16,13 @@ export class ExperimentResultImportComponent implements OnInit {
     operationStatusRest: OperationStatusRest;
 
     constructor(
-        private experimentResultService: ExperimentResultService
+        private experimentResultService: ExperimentResultService,
+        private router: Router,
+        private activatedRoute: ActivatedRoute
     ) { }
 
     ngOnInit(): void {
     }
-
 
     importFile(): void {
         this.experimentResultService
@@ -33,6 +35,10 @@ export class ExperimentResultImportComponent implements OnInit {
                     this.operationStatusRest = operationStatusRest;
                 }
             });
+    }
+
+    back(): void {
+        this.router.navigate(['../../', 'experiments'], { relativeTo: this.activatedRoute });
     }
 
 }

@@ -100,7 +100,7 @@ export class ExperimentResultExperimentFeatureProgressComponent implements OnIni
                 this.experimentFeatureExtendedResult = experimentFeatureExtendedResult;
                 this.tables.features.table = Object
                     .keys(experimentFeatureExtendedResult.experimentFeature)
-                    .filter(key => ['resourceCodes', 'id', 'execStatusAsString'].includes(key))
+                    .filter(key => ['variables', 'id', 'execStatusAsString'].includes(key))
                     .map(key => [key, experimentFeatureExtendedResult.experimentFeature[key]]);
                 this.tables.hyperParameters.table = new MatTableDataSource(experimentFeatureExtendedResult.hyperParamResult.elements || []);
                 this.metricsResult = experimentFeatureExtendedResult.metricsResult;

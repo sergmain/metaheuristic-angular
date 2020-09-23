@@ -15,6 +15,13 @@
     }
 }
 
+:host([inline]){
+    display: inline-block;
+    vertical-align: top;
+    margin-right: unit(3);
+
+}
+
 :host:last-child {
     margin-bottom: 0;
 }

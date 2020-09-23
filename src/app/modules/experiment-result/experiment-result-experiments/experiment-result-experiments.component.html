@@ -22,7 +22,7 @@
     </ct-section-header>
     <ct-section-body>
         <ct-section-body-row>
-            <ct-table>
+            <ct-table [isWaiting]="isLoading">
                 <table mat-table [dataSource]="dataSource">
                     <ng-container matColumnDef="id">
                         <th mat-header-cell *matHeaderCellDef>Id</th>
@@ -44,31 +44,12 @@
                     <ng-container matColumnDef="bts">
                         <th mat-header-cell *matHeaderCellDef> </th>
                         <td mat-cell *matCellDef="let el">
-                            <ct-flex justify-content="flex-end" gap="9px" align-items="center">
-                                <ct-flex-item>
-                                    <a [routerLink]="['/ai/experiment-result/experiment-info',el.id]">
-                                        <button size="forTableRow" mat-flat-button="mat-flat-button"
-                                            color="primary">Detail</button>
-                                    </a>
-                                </ct-flex-item>
-                                <ct-flex-item>
-                                    <a [routerLink]="['/ai/experiment-result/experiment-export-import/',el.id]">
-                                        <button size="forTableRow" mat-flat-button="mat-flat-button"
-                                            color="primary">Export / Import</button>
-                                    </a>
-                                </ct-flex-item>
-                                <ct-flex-item>
-                                    <button size="forTableRow" mat-flat-button="mat-flat-button" color="warn"
-                                        (click)="delete(el)">
-                                        <mat-icon>delete</mat-icon>
-                                    </button>
-                                </ct-flex-item>
-                            </ct-flex>
+                            <ng-container [ngTemplateOutlet]="actionButtonsTemplate"
+                                [ngTemplateOutletContext]="{element:el}"></ng-container>
                         </td>
                     </ng-container>
                     <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
-                    <tr mat-row *matRowDef="let row; columns: columnsToDisplay;"
-                        [class.deleted-table-row]="deletedExperiments.includes(row)"></tr>
+                    <tr mat-row *matRowDef="let row; columns: columnsToDisplay;"></tr>
                 </table>
             </ct-table>
         </ct-section-body-row>
@@ -91,8 +72,26 @@
 
 
 
+<ng-template #actionButtonsTemplate let-el="element">
+    <ct-flex justify-content="flex-end" gap="9px" align-items="center">
+        <ct-flex-item>
+            <a [routerLink]="['experiment',el.id,'info']" size="forTableRow" mat-flat-button color="primary">Detail
+            </a>
+        </ct-flex-item>
+        <ct-flex-item>
+            <button size="forTableRow" mat-flat-button color="primary" (click)="exportExperiment(el)">Export
+            </button>
+        </ct-flex-item>
+        <ct-flex-item>
+            <button size="forTableRow" mat-flat-button color="warn" (click)="deleteExperiment(el)">
+                <mat-icon>delete</mat-icon>
+            </button>
+        </ct-flex-item>
+    </ct-flex>
+</ng-template>
+
 
 
 <ng-template #addButtonTemplate>
-    <button mat-flat-button color="primary" [routerLink]="['../','experiment','import']">Import Experiment</button>
+    <button mat-flat-button color="primary" [routerLink]="['experiment','import']">Import Experiment</button>
 </ng-template>

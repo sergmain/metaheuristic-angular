@@ -1,17 +1,14 @@
-import { Location } from '@angular/common';
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { ConfirmationDialogMethod } from '@app/components/app-dialog-confirmation/app-dialog-confirmation.component';
-import { LoadStates } from '@app/enums/LoadStates';
-import { ExperimentResultService } from '@src/app/services/experiment-result/experiment-result.service';
-import { CtTableComponent } from '@src/app/modules/ct/ct-table/ct-table.component';
-import { Subscription } from 'rxjs';
-import { MatTableDataSource } from '@angular/material/table';
-import { MatButton } from '@angular/material/button';
+import { HttpResponse } from '@angular/common/http';
+import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { ExperimentApiData } from '@src/app/services/experiments/ExperimentApiData';
+import { MatTableDataSource } from '@angular/material/table';
+import { ConfirmationDialogMethod } from '@app/components/app-dialog-confirmation/app-dialog-confirmation.component';
+import { UIStateComponent } from '@src/app/models/UIStateComponent';
+import { ExperimentResultService } from '@src/app/services/experiment-result/experiment-result.service';
 import { ExperimentResultData } from '@src/app/services/experiment-result/ExperimentResultData';
 import { ExperimentResultSimple } from '@src/app/services/experiment-result/ExperimentResultSimple';
+import { ExperimentApiData } from '@src/app/services/experiments/ExperimentApiData';
+import * as fileSaver from 'file-saver';
 
 @Component({
     selector: 'experiment-result-experiments',
@@ -19,52 +16,33 @@ import { ExperimentResultSimple } from '@src/app/services/experiment-result/Expe
     styleUrls: ['./experiment-result-experiments.component.scss']
 })
 
-export class ExperimentResultExperimentsComponent implements OnInit {
-
-    isLoading: boolean;
+export class ExperimentResultExperimentsComponent extends UIStateComponent implements OnInit {
     experimentResultSimpleList: ExperimentResultData.ExperimentResultSimpleList;
-    dataSource = new MatTableDataSource<ExperimentResultSimple>([]);
-
-    deletedExperiments: ExperimentApiData.ExperimentData[] = [];
-
-    tables = {
-        generalInfo: {
-            table: [],
-            columnsToDisplay: ['key', 'value'],
-        },
-        hyperParameters: {
-            table: new MatTableDataSource([]),
-            columnsToDisplay: ['key', 'value', 'variants'],
-        },
-        features: {
-            table: new MatTableDataSource([]),
-            columnsToDisplay: ['id', 'resourceCodes', 'execStatus', 'maxValue', 'bts'],
-        },
-    };
-
-    columnsToDisplay = ['id', 'name', 'description', 'createdOn', 'bts'];
+    dataSource: MatTableDataSource<ExperimentResultSimple> = new MatTableDataSource<ExperimentResultSimple>([]);
+    columnsToDisplay: string[] = ['id', 'name', 'description', 'createdOn', 'bts'];
 
     constructor(
-        private activatedRoute: ActivatedRoute,
         private experimentResultService: ExperimentResultService,
-        private location: Location,
         private dialog: MatDialog
-    ) { }
+    ) {
+        super();
+    }
 
     ngOnInit(): void {
         this.updateTable(0);
     }
 
     updateTable(page: number): void {
+        this.setIsLoadingStart();
         this.experimentResultService
             .init(page.toString())
             .subscribe({
-                next: (experimentResultSimpleList) => {
+                next: experimentResultSimpleList => {
                     this.experimentResultSimpleList = experimentResultSimpleList;
                     this.dataSource = new MatTableDataSource(experimentResultSimpleList.items.content || []);
-                }
+                },
+                complete: () => this.setIsLoadingEnd()
             });
-
     }
 
     @ConfirmationDialogMethod({
@@ -73,11 +51,23 @@ export class ExperimentResultExperimentsComponent implements OnInit {
         rejectTitle: 'Cancel',
         resolveTitle: 'Delete'
     })
-    delete(experiment: ExperimentApiData.ExperimentData): void {
-        this.deletedExperiments.push(experiment);
+    deleteExperiment(experiment: ExperimentApiData.ExperimentData): void {
         this.experimentResultService
             .deleteCommit(experiment.id.toString())
-            .subscribe();
+            .subscribe({
+                complete: () => this.updateTable(this.experimentResultSimpleList.items.number)
+            });
+    }
+
+    exportExperiment(experiment: ExperimentApiData.ExperimentData): void {
+        this.experimentResultService
+            .downloadExperimentResult(experiment.id.toString())
+            .subscribe((res: HttpResponse<Blob>) => {
+                fileSaver.saveAs(
+                    new Blob([res.body], { type: 'application/octet-stream' }),
+                    decodeURIComponent(`experiment-result-${experiment.id}.zip`)
+                );
+            });
     }
 
     nextPage(): void {
