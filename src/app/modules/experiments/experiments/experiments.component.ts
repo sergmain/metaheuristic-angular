@@ -6,7 +6,6 @@ import { ExecContextState } from '@src/app/enums/ExecContextState';
 import { UIStateComponent } from '@src/app/models/UIStateComponent';
 import { ExperimentApiData } from '@src/app/services/experiments/ExperimentApiData';
 import { ExperimentsService } from '@src/app/services/experiments/experiments.service';
-import { ExperimentItem } from '@src/app/services/experiments/response';
 
 @Component({
     selector: 'experiments-view',
@@ -45,12 +44,12 @@ export class ExperimentsComponent extends UIStateComponent implements OnInit {
     }
 
     @ConfirmationDialogMethod({
-        question: (experiment: ExperimentItem): string =>
+        question: (experiment: ExperimentApiData.ExperimentResult): string =>
             `Do you want to delete Experiment\xa0#${experiment.experiment.id}`,
         rejectTitle: 'Cancel',
         resolveTitle: 'Delete'
     })
-    delete(experiment: ExperimentItem): void {
+    delete(experiment: ExperimentApiData.ExperimentResult): void {
         this.experimentsService
             .deleteCommit(experiment.experiment.id.toString())
             .subscribe({
@@ -58,7 +57,7 @@ export class ExperimentsComponent extends UIStateComponent implements OnInit {
             });
     }
 
-    clone(element: ExperimentItem): void {
+    clone(element: ExperimentApiData.ExperimentResult): void {
         this.experimentsService
             .experimentCloneCommit(element.experiment.id?.toString())
             .subscribe({

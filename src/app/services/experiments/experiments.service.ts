@@ -3,11 +3,9 @@ import { Injectable } from '@angular/core';
 import { environment } from '@src/environments/environment';
 import { Observable } from 'rxjs';
 import { generateFormData } from '@src/app/helpers/generateFormData';
-import { response } from './response';
 import { ExperimentApiData } from './ExperimentApiData';
 import { OperationStatusRest } from '@src/app/models/OperationStatusRest';
 import { SimpleExperiment } from './SimpleExperiment';
-import { ExecContextState } from '@src/app/enums/ExecContextState';
 import { SourceCodeUidsForCompany } from '../source-codes/SourceCodeUidsForCompany';
 
 const url = (s: string): string => `${environment.baseUrl}dispatcher/experiment${s}`;
