@@ -1,3 +1,4 @@
+import { PageableDefault } from '@src/app/models/PageableDefault';
 import { DispatcherAssetMode } from '../../enums/DispatcherAssetMode';
 import { DefaultResponse } from '../../models/DefaultResponse';
 import { Pageable } from '../../models/Pageable';
@@ -7,15 +8,7 @@ import { SourceCode } from './SourceCode';
 export interface SourceCodesResult extends DefaultResponse {
     items: {
         content: SourceCode[];
-        pageable: Pageable;
-        size: number;
-        number: number;
-        sort: Sort;
-        numberOfElements: number;
-        first: boolean;
-        last: boolean;
-        empty: boolean;
-    };
+    } & PageableDefault;
     assetMode: DispatcherAssetMode;
     experiments: string[];
     batches: string[];

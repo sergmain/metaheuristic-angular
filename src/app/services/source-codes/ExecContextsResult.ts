@@ -1,20 +1,11 @@
+import { PageableDefault } from '@src/app/models/PageableDefault';
 import { DefaultResponse } from '../../models/DefaultResponse';
-import { Pageable } from '../../models/Pageable';
-import { Sort } from '../../models/Sort';
 import { ExecContext } from './ExecContext';
 
 export interface ExecContextsResult extends DefaultResponse {
     instances: {
         content: ExecContext[];
-        pageable: Pageable;
-        size: number;
-        number: number;
-        sort: Sort;
-        numberOfElements: number;
-        first: boolean;
-        last: boolean;
-        empty: boolean;
-    };
+    } & PageableDefault;
     sourceCodeId: number;
     sourceCodeUid: string;
     sourceCodeValid: boolean;
