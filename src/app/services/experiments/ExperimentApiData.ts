@@ -24,6 +24,7 @@ export namespace ExperimentApiData {
         createdOn: number;
         numberOfTask: number;
         state: number;
+        sourceCodeId: string;
         sourceCodeUid: string;
 
 
