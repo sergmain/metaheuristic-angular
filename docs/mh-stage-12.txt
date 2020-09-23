@@ -50,3 +50,5 @@ DONE
 NOT YET
 Столбец должен быть русифицирован и называться 'Owner's username' /  'Владелец'
 сейчас - batch.Owner's username
+
+DONE
