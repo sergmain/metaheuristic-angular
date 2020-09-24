@@ -26,22 +26,6 @@ export namespace ExperimentApiData {
         state: number;
         sourceCodeId: string;
         sourceCodeUid: string;
-
-
-        // TODO: not exist?
-        //  2020-09-22 yep, it was removed in mh, so should be removed here as well
-
-        seed: number;
-        isAllTaskProduced: boolean;
-        isFeatureProduced: boolean;
-        hyperParamsAsMap: {
-            [name: string]: {
-                [name: string]: number
-            }
-        };
-        hyperParams: ExperimentParamsYaml.HyperParam[];
-        featureProduced: boolean;
-        allTaskProduced: boolean;
     }
 
 
