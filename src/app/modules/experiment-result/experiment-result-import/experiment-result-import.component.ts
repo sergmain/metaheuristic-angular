@@ -38,7 +38,7 @@ export class ExperimentResultImportComponent implements OnInit {
     }
 
     back(): void {
-        this.router.navigate(['../../', 'experiments'], { relativeTo: this.activatedRoute });
+        this.router.navigate(['../../'], { relativeTo: this.activatedRoute });
     }
 
 }

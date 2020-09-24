@@ -29,6 +29,8 @@ ai.metaheuristic.ai.dispatcher.rest.v1.ExperimentResultRestController#downloadEx
 т.е. страница по урл http://localhost:4200/#/ai/experiment-result/experiment-export-import/84 лишняя
 
 
+DONE
+
 
 issue-1239
 ангулар
@@ -37,7 +39,7 @@ http://localhost:4200/#/experiments
 урл тот же самый но код страницы скопировать или сделать так чтобы он открывался по другому урл.
 т.е. идея в том что урл должен относиться к Экспериментам, а не к Контекстам выполнения (exec-context)
 
-
+DONE
 
 
 issue-1257
