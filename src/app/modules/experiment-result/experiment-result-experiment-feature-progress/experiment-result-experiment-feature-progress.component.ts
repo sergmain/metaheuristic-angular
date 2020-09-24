@@ -183,4 +183,14 @@ export class ExperimentResultExperimentFeatureProgressComponent implements OnIni
     prevPage() {
         this.updateResponsePart(this.experimentFeatureExtendedResult.tasks.number - 1);
     }
+
+    useAllHyperParamsInPlot(): boolean {
+        let count: number = 0;
+        this.tables.hyperParameters.table.data.forEach((hyperParamList: ExperimentResultData.HyperParamList) => {
+            if (hyperParamList.list.length > 1) {
+                count++;
+            }
+        });
+        return count < 2;
+    }
 }

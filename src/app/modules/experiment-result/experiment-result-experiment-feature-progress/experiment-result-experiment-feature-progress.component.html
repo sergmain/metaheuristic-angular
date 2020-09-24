@@ -102,20 +102,23 @@
             <ng-container matColumnDef="values">
                 <th mat-header-cell="mat-header-cell" *matHeaderCellDef>Hyper Param Values</th>
                 <td mat-cell="mat-cell" *matCellDef="let el">
-                    <button mat-stroked-button *ngFor="let button of el.list;" [disabled]="!el.selectable"
-                        size="forTableRow" [class.mat-flat-button]="button.selected"
-                        [class.mat-stroked-button]="!button.selected" (click)="pickHyperParam(button)"
-                        [color]="button.selected ? 'primary' : undefined">{{button.param}}
-                    </button>
+                    <ng-template ngFor let-button [ngForOf]="el.list">
+                        <div *ngIf="!el.selectable">{{button.param}}</div>
+                        <button *ngIf="el.selectable" mat-stroked-button size="forTableRow"
+                            [class.mat-flat-button]="button.selected" [class.mat-stroked-button]="!button.selected"
+                            (click)="pickHyperParam(button)" [color]="button.selected ? 'primary' : undefined">
+                            {{button.param}}
+                        </button>
+                    </ng-template>
                 </td>
             </ng-container>
             <ng-container matColumnDef="axes">
                 <th mat-header-cell="mat-header-cell" *matHeaderCellDef>X, Y axes for plotting</th>
                 <td mat-cell="mat-cell" *matCellDef="let el">
-                    <button mat-stroked-button size="forTableRow" [class.mat-flat-button]="pickedAxes.includes(el)"
+                    <button *ngIf="useAllHyperParamsInPlot() || (el.list.length > 1)" mat-stroked-button
+                        size="forTableRow" [class.mat-flat-button]="pickedAxes.includes(el)"
                         [class.mat-stroked-button]="!pickedAxes.includes(el)"
-                        [color]="pickedAxes.includes(el) ? 'primary' : undefined" [disabled]="!el.selectable"
-                        (click)="pickAxis(el)">Axis
+                        [color]="pickedAxes.includes(el) ? 'primary' : undefined" (click)="pickAxis(el)">Axis
                     </button>
                 </td>
             </ng-container>
