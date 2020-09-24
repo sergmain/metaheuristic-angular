@@ -30,7 +30,7 @@ ai.metaheuristic.ai.dispatcher.rest.v1.ExperimentResultRestController#downloadEx
 
 
 DONE
-
+CONFIRMED
 
 issue-1239
 ангулар
@@ -40,6 +40,7 @@ http://localhost:4200/#/experiments
 т.е. идея в том что урл должен относиться к Экспериментам, а не к Контекстам выполнения (exec-context)
 
 DONE
+CONFIRMED
 
 
 issue-1257
