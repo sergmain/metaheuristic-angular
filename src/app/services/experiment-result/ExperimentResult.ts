@@ -7,4 +7,4 @@ export interface ExperimentResult {
     description: string;
     code: string;
     createdOn: number;
-}
+} 

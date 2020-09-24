@@ -1,4 +1,3 @@
-import { ExperimentParamsYaml } from './ExperimentParamsYaml';
 import { DefaultResponse } from '@src/app/models/DefaultResponse';
 import { SimpleSelectOption } from '@src/app/models/SimpleSelectOption';
 import { ExecContextState } from '@src/app/enums/ExecContextState';
