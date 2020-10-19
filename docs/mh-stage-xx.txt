@@ -102,3 +102,23 @@ issue-xxxx
 issue-xxxx
 https://srv2a.stp-baikal.ru/#/dispatcher/company/2/batches
 после нажатия кнопки "Delete checked" и подтверждения удаления эту кнопку дисаблить до окончания операции
+
+
+issue-xxxx
+урл в стандартном интерфейсе
+https://srv2.stp-baikal.ru/dispatcher/source-code/source-codes
+если сервер настроен на репликацию, то выдается следующее сообщение:
+Creation of sourceCodes is disabled, assetMode is 'replicated'.
+
+на ангуларе это сообщение не выдается.
+
+в Html версии проверка следующая:
+result.assetMode==T(ai.metaheuristic.api.EnumsApi.DispatcherAssetMode).replicated
+
+это сообщение должно выдаваться на следующих страницах (их аналог в ангуларе)
+https://srv2.stp-baikal.ru/dispatcher/account/accounts
+https://srv2.stp-baikal.ru/dispatcher/function/functions
+https://srv2.stp-baikal.ru/dispatcher/source-code/source-codes
+https://srv2.stp-baikal.ru/dispatcher/company/companies
+https://srv2.stp-baikal.ru/dispatcher/company/company-accounts
+
