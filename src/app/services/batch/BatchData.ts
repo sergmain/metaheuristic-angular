@@ -26,7 +26,9 @@ export namespace BatchData {
         ok: boolean;
         uploadedFileName: string;
         username: string;
+        execContextDeleted: boolean;
     }
+
     export interface UploadingStatus extends DefaultResponse {
         batchId: number;
         execContextId: number;

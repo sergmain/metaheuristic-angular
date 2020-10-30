@@ -81,11 +81,11 @@
                             <ct-flex justify-content="flex-end" gap="9px">
                                 <ct-flex-item>
                                     <button mat-flat-button [routerLink]="['../','batch',el.batch.batch.id]"
-                                        [disabled]="!isFinished(el)" size="forTableRow" color="primary">Status</button>
+                                        [disabled]="!isFinished(el) || isExecContextDeleted(el)" size="forTableRow" color="primary">Status</button>
                                 </ct-flex-item>
                                 <ct-flex-item>
                                     <button mat-flat-button size="forTableRow" color="primary"
-                                        [disabled]="!isFinished(el)" (click)="downloadResult(el)">
+                                        [disabled]="!isFinished(el) || isExecContextDeleted(el)" (click)="downloadResult(el)">
                                         <mat-icon>archive</mat-icon>
                                         Result
                                     </button>

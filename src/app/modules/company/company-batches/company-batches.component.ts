@@ -66,6 +66,10 @@ export class CompanyBatchesComponent implements OnInit {
         return false;
     }
 
+    isExecContextDeleted(b: UIBatch): boolean {
+        return b.batch.execContextDeleted;
+    }
+
     prevPage(): void {
         this.updateTable((this.batchesResult.batches.number - 1).toString());
     }

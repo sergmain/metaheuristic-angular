@@ -18,6 +18,7 @@ import { BatchesState } from '@src/app/services/batch/BatchesState';
 import { toggleFilterBatches } from '@src/app/services/settings/settings.actions';
 import * as fileSaver from 'file-saver';
 import { Subscription } from 'rxjs';
+import {UIBatch} from '@services/batch/UIBatch';
 
 @Component({
     selector: 'batch',
