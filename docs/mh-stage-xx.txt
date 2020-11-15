@@ -122,3 +122,7 @@ https://srv2.stp-baikal.ru/dispatcher/source-code/source-codes
 https://srv2.stp-baikal.ru/dispatcher/company/companies
 https://srv2.stp-baikal.ru/dispatcher/company/company-accounts
 
+issue-xxxx
+если rest-сервер в дауне, то при попытке залогиниться просто ничего не происходит.
+должно вызаваться какое-то сообщение о том что сервер недоступен
+
