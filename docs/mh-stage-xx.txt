@@ -91,6 +91,12 @@ https://srv2a.stp-baikal.ru/#/dispatcher/company/1/batches
 
 
 issue-xxxx
+https://srv1a.stp-baikal.ru/#/dispatcher
+для компании #1 кнопка пакеты в верхней панели должна быть запрещена.
+в компании #1 пакеты нельзя создавать
+
+
+issue-xxxx
 реализовать групповое удаление записей из таблицы mh_processor
 на подобии того как сейчас сделано удаление пакетов в компании
 
