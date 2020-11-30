@@ -1,9 +1,15 @@
+issue-1300
+портировать код на nodejs 14
+возможно, что и так все будет работать, надо подтвердить что работает
+
+
 issue-1301
 при выводе списка функций учитывать поле assetMode
 если значение replicated, то выводить сообщение "Upload and deletion of functions are disabled, assetMode is 'replicated'."
 кнопки управления (загрузка удаление) должны быть скрыты
 
 т.е. должно работать так же как и SourceCode, Company, Account
+
 
 issue-1302
 http://localhost:4200/#/dispatcher/source-codes/add
@@ -97,6 +103,7 @@ issue-1311
 issue-1312
 везде отключить глюкало в виде бегущей зеленой полоски
 можно увидеть при открытии, например, https://srv2a.stp-baikal.ru/#/dispatcher/company/4/batch/115
+
 
 issue-1313
 https://srv2a.stp-baikal.ru/#/dispatcher/company/2/batches
