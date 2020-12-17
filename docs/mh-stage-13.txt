@@ -11,6 +11,7 @@ issue-1301
 кнопки управления (загрузка удаление) должны быть скрыты
 
 т.е. должно работать так же как и SourceCode, Company, Account
+DONE
 
 
 
@@ -32,6 +33,7 @@ issue-1304
 http://localhost:4200/#/dispatcher/company/2/batches
 
 для роли MASTER_SUPPORT убрать кнопки удаления пакетов и группового удаления
+DONE
 
 
 
@@ -139,8 +141,9 @@ DONE
 https://srv2.stp-baikal.ru/dispatcher/source-code/source-codes
 DONE
 https://srv2.stp-baikal.ru/dispatcher/company/companies
+DONE
 https://srv2.stp-baikal.ru/dispatcher/company/company-accounts
-
+DONE
 
 
 issue-1315

@@ -48,9 +48,9 @@
                     </ng-container>
                     <ng-container matColumnDef="isBatchConsistent">
                         <th mat-header-cell *matHeaderCellDef>Is batch consistent?</th>
-                        <td mat-cell="mat-cell" *matCellDef="let el"> <span
-                                *ngIf="el.batch.ok">{{ 'batch.isBatchConsistent.true' | translate }}</span><span
-                                *ngIf="!el.batch.ok">{{ 'batch.isBatchConsistent.false' | translate }}</span></td>
+                        <td mat-cell="mat-cell" *matCellDef="let el"> <span *ngIf="el.batch.ok">{{
+                                'batch.isBatchConsistent.true' | translate }}</span><span *ngIf="!el.batch.ok">{{
+                                'batch.isBatchConsistent.false' | translate }}</span></td>
                     </ng-container>
                     <ng-container matColumnDef="isDeleted">
                         <th mat-header-cell *matHeaderCellDef>Is deleted? </th>
@@ -81,11 +81,13 @@
                             <ct-flex justify-content="flex-end" gap="9px">
                                 <ct-flex-item>
                                     <button mat-flat-button [routerLink]="['../','batch',el.batch.batch.id]"
-                                        [disabled]="!isFinished(el) || isExecContextDeleted(el)" size="forTableRow" color="primary">Status</button>
+                                        [disabled]="!isFinished(el) || isExecContextDeleted(el)" size="forTableRow"
+                                        color="primary">Status</button>
                                 </ct-flex-item>
                                 <ct-flex-item>
                                     <button mat-flat-button size="forTableRow" color="primary"
-                                        [disabled]="!isFinished(el) || isExecContextDeleted(el)" (click)="downloadResult(el)">
+                                        [disabled]="!isFinished(el) || isExecContextDeleted(el)"
+                                        (click)="downloadResult(el)">
                                         <mat-icon>archive</mat-icon>
                                         Result
                                     </button>
@@ -97,12 +99,17 @@
                                         Origin File
                                     </button>
                                 </ct-flex-item>
-                                <ct-flex-item *ngIf="authenticationService.isRoleMasterOperator()">
-                                    <button mat-flat-button color="warn" size="forTableRow" (click)="deleteOne(el)"
-                                        title="Delete" [disabled]="!(el.deleted && isFinished(el))">
-                                        <mat-icon>delete</mat-icon>
-                                    </button>
-                                </ct-flex-item>
+                                <ng-container *ngIf="authenticationService.isRoleMasterOperator()">
+                                    <ng-container *ngIf="!authenticationService.isRoleMasterSupport()">
+                                        <ct-flex-item>
+                                            <button mat-flat-button color="warn" size="forTableRow"
+                                                (click)="deleteOne(el)" title="Delete"
+                                                [disabled]="!(el.deleted && isFinished(el))">
+                                                <mat-icon>delete</mat-icon>
+                                            </button>
+                                        </ct-flex-item>
+                                    </ng-container>
+                                </ng-container>
                             </ct-flex>
                         </td>
                     </ng-container>
@@ -113,8 +120,9 @@
         </ct-section-body-row>
     </ct-section-body>
     <ct-section-footer>
-        <ct-section-footer-row>
-            <button mat-flat-button color="warn" (click)="deleteMany()" [disabled]="!someChecked() || isLoading" title="Delete Checked">
+        <ct-section-footer-row *ngIf="!authenticationService.isRoleMasterSupport()">
+            <button mat-flat-button color="warn" (click)="deleteMany()" [disabled]="!someChecked() || isLoading"
+                title="Delete Checked">
                 Delete Checked
             </button>
         </ct-section-footer-row>
