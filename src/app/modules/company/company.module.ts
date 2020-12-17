@@ -81,6 +81,10 @@ const routes: Routes = [
     //
     //
     {
+        path: '1/batches',
+        redirectTo: 'companies'
+    },
+    {
         path: ':companyUniqueId/batches',
         component: CompanyBatchesComponent,
         data: {
