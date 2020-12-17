@@ -1,0 +1,24 @@
+@import "../ct";
+
+:host {
+    display: block;
+    padding: unit(1.5) unit(1.75) unit(1.25);
+    line-height: 1.2;
+    border-radius: unit(0.5);
+}
+
+:host[theme="info"] {
+    background-color: rgba(0, 128, 255, 0.1);
+}
+
+:host[theme="warning"] {
+    background-color: rgba(255, 128, 0, 0.3);
+}
+
+:host[theme="danger"] {
+    background-color: rgba(255, 0, 0, 0.5);
+}
+
+:host[theme="success"] {
+    background-color: rgba(128, 255, 0, 0.3);
+}

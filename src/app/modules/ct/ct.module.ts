@@ -27,6 +27,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { CtEnvMsgOuterComponent } from './ct-env-msg-outer/ct-env-msg-outer.component';
 import { CtTablePaginationComponent } from './ct-table-pagination/ct-table-pagination.component';
 import { CtStateOfTasksComponent } from './ct-state-of-tasks/ct-state-of-tasks.component';
+import { CtAlertComponent } from './ct-alert/ct-alert.component';
 
 @NgModule({
     imports: [
@@ -60,7 +61,8 @@ import { CtStateOfTasksComponent } from './ct-state-of-tasks/ct-state-of-tasks.c
         CtBackButtonComponent,
         CtEnvMsgOuterComponent,
         CtTablePaginationComponent,
-        CtStateOfTasksComponent
+        CtStateOfTasksComponent,
+        CtAlertComponent
     ],
     exports: [
         CtSectionContentComponent,
@@ -87,7 +89,8 @@ import { CtStateOfTasksComponent } from './ct-state-of-tasks/ct-state-of-tasks.c
         CtBackButtonComponent,
         CtEnvMsgOuterComponent,
         CtTablePaginationComponent,
-        CtStateOfTasksComponent
+        CtStateOfTasksComponent,
+        CtAlertComponent
     ]
 })
 

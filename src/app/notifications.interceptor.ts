@@ -43,8 +43,19 @@ export class NotificationsInterceptor implements HttpInterceptor {
                         });
                     }
                 }
-                return EMPTY;
-                // return throwError(error);
+                if (error.status === 0) {
+                    this.notificationsService.error(
+                        'Server offline', 
+                        '',
+                        {
+                            // timeOut: 10000,
+                            // showProgressBar: true,
+                            pauseOnHover: true,
+                            clickToClose: true,
+                        });
+                }
+                // return EMPTY;
+                return throwError(error);
             })
         );
     }

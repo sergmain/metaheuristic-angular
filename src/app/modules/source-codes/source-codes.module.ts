@@ -8,13 +8,13 @@ import { CtModule } from '../ct/ct.module';
 import { AddExecContextComponent } from './add-exec-context/add-exec-context.component';
 import { AddSourceCodeComponent } from './add-source-code/add-source-code.component';
 import { EditExecContextComponent } from './edit-exec-context/edit-exec-context.component';
-import { EditSourceCodeComponent } from './edit-source-code/edit-source-code.component';
 import { ExecContextStatesComponent } from './exec-context-states/exec-context-states.component';
 import { ExecContextsComponent } from './exec-contexts/exec-contexts.component';
 import { SourceCodesArchiveComponent } from './source-codes-archive/source-codes-archive.component';
 import { SourceCodesComponent } from './source-codes/source-codes.component';
 import { CardFormUploadSourceCodeComponent } from './card-form-upload-source-code/card-form-upload-source-code.component';
 import { CardFormAddSourceCodeComponent } from './card-form-add-source-code/card-form-add-source-code.component';
+import { ViewSourceCodeComponent } from './view-source-code/view-source-code.component';
 
 const routes: Routes = [
     {
@@ -29,8 +29,8 @@ const routes: Routes = [
         }
     },
     {
-        path: ':sourceCodeId/edit',
-        component: EditSourceCodeComponent,
+        path: ':sourceCodeId/view',
+        component: ViewSourceCodeComponent,
         data: {
             backConfig: ['../', '../']
         }
@@ -75,7 +75,7 @@ export class SourceCodeRoutingModule { }
         SourceCodesComponent,
         SourceCodesArchiveComponent,
         AddSourceCodeComponent,
-        EditSourceCodeComponent,
+        ViewSourceCodeComponent,
         ExecContextsComponent,
         AddExecContextComponent,
         EditExecContextComponent,

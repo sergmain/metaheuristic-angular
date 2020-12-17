@@ -6,6 +6,7 @@ import { ConfirmationDialogInterface, ConfirmationDialogMethod } from '@app/comp
 import { DispatcherAssetMode } from '@src/app/enums/DispatcherAssetMode';
 import { SourceCodeType } from '@src/app/enums/SourceCodeType';
 import { UIStateComponent } from '@src/app/models/UIStateComponent';
+import { DispatcherAssetModeService } from '@src/app/services/dispatcher-asset-mode/dispatcher-asset-mode.service';
 import { SourceCodesService } from '@src/app/services/source-codes/source-codes.service';
 import { SourceCode } from '@src/app/services/source-codes/SourceCode';
 import { SourceCodesResult } from '@src/app/services/source-codes/SourceCodesResult';
@@ -17,7 +18,6 @@ import { SourceCodesArchiveComponent } from '../source-codes-archive/source-code
     styleUrls: ['./source-codes.component.sass']
 })
 export class SourceCodesComponent extends UIStateComponent implements OnInit, ConfirmationDialogInterface {
-    readonly dispatcherAssetMode: typeof DispatcherAssetMode = DispatcherAssetMode;
 
     TABINDEX: number = 0;
 
@@ -32,7 +32,8 @@ export class SourceCodesComponent extends UIStateComponent implements OnInit, Co
 
     constructor(
         readonly dialog: MatDialog,
-        private sourceCodesService: SourceCodesService
+        private sourceCodesService: SourceCodesService,
+        public dispatcherAssetModeService: DispatcherAssetModeService
     ) {
         super();
     }

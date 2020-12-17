@@ -111,6 +111,7 @@ export class CompanyBatchesComponent implements OnInit {
         resolveTitle: `${marker('batch-company.delete-dialog.Delete')}`,
     })
     deleteMany(): void {
+        this.isLoading = true;
         this.companyService
             .processBatchesBulkDeleteCommit(
                 this.companyUniqueId,

@@ -19,80 +19,20 @@
                                 <ct-heading>Source Codes</ct-heading>
                             </ct-flex>
                         </ct-flex-item>
-                        <ct-flex-item>
-                            <ng-container *ngTemplateOutlet="addSourceCodeButton"></ng-container>
+                        <ct-flex-item *ngIf="!dispatcherAssetModeService.isReplicated(sourceCodesResult.assetMode)">
+                            <ng-container *ngTemplateOutlet="addSourceCodeButtonTemplate"></ng-container>
                         </ct-flex-item>
                     </ct-flex>
                 </ct-section-header-row>
 
-                <ct-section-header-row
-                    *ngIf="sourceCodesResult && sourceCodesResult.assetMode == dispatcherAssetMode.replicated">
-                    Creation of sourceCodes is disabled, assetMode is 'replicated'.
+                <ct-section-header-row *ngIf="dispatcherAssetModeService.isReplicated(sourceCodesResult.assetMode)">
+                    <ct-alert theme="info">Creation of sourceCodes is disabled, assetMode is 'replicated'. </ct-alert>
                 </ct-section-header-row>
             </ct-section-header>
 
             <ct-section-body>
                 <ct-section-body-row>
-                    <ct-table [isWaiting]="isLoading">
-                        <table class="mat-table" mat-table="mat-table" [dataSource]="dataSource">
-                            <ng-container matColumnDef="id">
-                                <th mat-header-cell="mat-header-cell" *matHeaderCellDef>Id </th>
-                                <td mat-cell="mat-cell" *matCellDef="let el">{{el.id}} </td>
-                            </ng-container>
-                            <ng-container matColumnDef="uid">
-                                <th mat-header-cell="mat-header-cell" *matHeaderCellDef>UID of sourceCode</th>
-                                <td mat-cell="mat-cell" *matCellDef="let el">{{el.uid}} </td>
-                            </ng-container>
-                            <ng-container matColumnDef="type">
-                                <th mat-header-cell="mat-header-cell" *matHeaderCellDef>Type</th>
-                                <td mat-cell="mat-cell" *matCellDef="let el">{{getType(el.uid)}} </td>
-                            </ng-container>
-                            <ng-container matColumnDef="createdOn">
-                                <th mat-header-cell="mat-header-cell" *matHeaderCellDef> Created on </th>
-                                <td mat-cell="mat-cell" *matCellDef="let el">
-                                    {{el.createdOn | date:'MMM d, yyyy, HH:mm:ss'}} </td>
-                            </ng-container>
-                            <ng-container matColumnDef="valid">
-                                <th mat-header-cell="mat-header-cell" *matHeaderCellDef>Is valid? </th>
-                                <td mat-cell="mat-cell" *matCellDef="let el">{{el.valid}} </td>
-                            </ng-container>
-                            <ng-container matColumnDef="locked">
-                                <th mat-header-cell="mat-header-cell" *matHeaderCellDef>Is locked? </th>
-                                <td mat-cell="mat-cell" *matCellDef="let el">{{el.locked}} </td>
-                            </ng-container>
-                            <ng-container matColumnDef="bts">
-                                <th mat-header-cell="mat-header-cell" *matHeaderCellDef> </th>
-                                <td mat-cell="mat-cell" *matCellDef="let el">
-                                    <ct-flex justify-content="flex-end" gap="9px">
-                                        <ct-flex-item>
-                                            <button mat-flat-button="mat-flat-button" size="forTableRow" color="primary"
-                                                [routerLink]="[el.id,'edit']" title="Edit"
-                                                [disabled]="el.locked">Edit</button>
-                                        </ct-flex-item>
-                                        <ct-flex-item>
-                                            <button mat-flat-button="mat-flat-button" size="forTableRow" color="primary"
-                                                [routerLink]="[el.id,'exec-contexts']">Exec Contexts</button>
-                                        </ct-flex-item>
-                                        <ct-flex-item>
-                                            <button mat-flat-button="mat-flat-button" size="forTableRow"
-                                                [disabled]="el.locked" color="warn" (click)="archive(el)"
-                                                title="Archive">To Archive</button>
-                                        </ct-flex-item>
-                                        <ct-flex-item>
-                                            <button mat-flat-button="mat-flat-button" size="forTableRow" color="warn"
-                                                (click)="delete(el)" title="Delete">
-                                                <mat-icon>delete</mat-icon>
-                                            </button>
-                                        </ct-flex-item>
-                                    </ct-flex>
-                                </td>
-                            </ng-container>
-                            <tr mat-header-row="mat-header-row" *matHeaderRowDef="columnsToDisplay"> </tr>
-                            <tr mat-row="mat-row" *matRowDef="let row; columns: columnsToDisplay;"
-                                [class.deleted-table-row]="deletedSourceCodes.includes(row) || archivedSourceCodes.includes(row)">
-                            </tr>
-                        </table>
-                    </ct-table>
+                    <ng-container *ngTemplateOutlet="mainTableTemplate"></ng-container>
                 </ct-section-body-row>
             </ct-section-body>
 
@@ -100,14 +40,12 @@
                 <ct-section-footer-row>
                     <ct-flex justify-content="space-between">
                         <ct-flex-item>
-
                             <ct-table-pagination [pageableDefault]="sourceCodesResult?.items"
                                 [globalDisable]="isLoading" (next)="nextPage()" (prev)="prevPage()">
                             </ct-table-pagination>
-
                         </ct-flex-item>
-                        <ct-flex-item>
-                            <ng-container *ngTemplateOutlet="addSourceCodeButton"></ng-container>
+                        <ct-flex-item *ngIf="!dispatcherAssetModeService.isReplicated(sourceCodesResult.assetMode)">
+                            <ng-container *ngTemplateOutlet="addSourceCodeButtonTemplate"></ng-container>
                         </ct-flex-item>
                     </ct-flex>
                 </ct-section-footer-row>
@@ -122,9 +60,74 @@
 </mat-tab-group>
 
 
-<ng-template #addSourceCodeButton>
-    <button mat-flat-button="mat-flat-button" color="primary"
-        *ngIf="sourceCodesResult && sourceCodesResult.assetMode != dispatcherAssetMode.replicated"
-        [disabled]="isLoading" routerLink="add">Add
-        Source Code</button>
+
+
+<ng-template #mainTableTemplate>
+    <ct-table [isWaiting]="isLoading">
+        <table class="mat-table" mat-table [dataSource]="dataSource">
+            <ng-container matColumnDef="id">
+                <th mat-header-cell *matHeaderCellDef>Id </th>
+                <td mat-cell *matCellDef="let el">{{el.id}} </td>
+            </ng-container>
+            <ng-container matColumnDef="uid">
+                <th mat-header-cell *matHeaderCellDef>UID of sourceCode</th>
+                <td mat-cell *matCellDef="let el">{{el.uid}} </td>
+            </ng-container>
+            <ng-container matColumnDef="type">
+                <th mat-header-cell *matHeaderCellDef>Type</th>
+                <td mat-cell *matCellDef="let el">{{getType(el.uid)}} </td>
+            </ng-container>
+            <ng-container matColumnDef="createdOn">
+                <th mat-header-cell *matHeaderCellDef> Created on </th>
+                <td mat-cell *matCellDef="let el">
+                    {{el.createdOn | date:'MMM d, yyyy, HH:mm:ss'}} </td>
+            </ng-container>
+            <ng-container matColumnDef="valid">
+                <th mat-header-cell *matHeaderCellDef>Is valid? </th>
+                <td mat-cell *matCellDef="let el">{{el.valid}} </td>
+            </ng-container>
+            <ng-container matColumnDef="locked">
+                <th mat-header-cell *matHeaderCellDef>Is locked? </th>
+                <td mat-cell *matCellDef="let el">{{el.locked}} </td>
+            </ng-container>
+            <ng-container matColumnDef="bts">
+                <th mat-header-cell *matHeaderCellDef> </th>
+                <td mat-cell *matCellDef="let el">
+                    <ct-flex justify-content="flex-end" gap="9px">
+                        <ct-flex-item>
+                            <button mat-flat-button="mat-flat-button" size="forTableRow" color="primary"
+                                [routerLink]="[el.id,'view']" title="View" [disabled]="el.locked">View</button>
+                        </ct-flex-item>
+                        <ct-flex-item>
+                            <button mat-flat-button="mat-flat-button" size="forTableRow" color="primary"
+                                [routerLink]="[el.id,'exec-contexts']">Exec Contexts</button>
+                        </ct-flex-item>
+                        <ct-flex-item *ngIf="!dispatcherAssetModeService.isReplicated(sourceCodesResult.assetMode)">
+                            <button mat-flat-button="mat-flat-button" size="forTableRow" [disabled]="el.locked"
+                                color="warn" (click)="archive(el)" title="Archive">To Archive</button>
+                        </ct-flex-item>
+                        <ct-flex-item *ngIf="!dispatcherAssetModeService.isReplicated(sourceCodesResult.assetMode)">
+                            <button mat-flat-button="mat-flat-button" size="forTableRow" color="warn"
+                                (click)="delete(el)" title="Delete">
+                                <mat-icon>delete</mat-icon>
+                            </button>
+                        </ct-flex-item>
+                    </ct-flex>
+                </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="columnsToDisplay"> </tr>
+            <tr mat-row *matRowDef="let row; columns: columnsToDisplay;"
+                [class.deleted-table-row]="deletedSourceCodes.includes(row) || archivedSourceCodes.includes(row)">
+            </tr>
+        </table>
+    </ct-table>
+</ng-template>
+
+
+
+
+
+
+<ng-template #addSourceCodeButtonTemplate>
+    <button mat-flat-button="mat-flat-button" color="primary" routerLink="add">Add Source Code</button>
 </ng-template>

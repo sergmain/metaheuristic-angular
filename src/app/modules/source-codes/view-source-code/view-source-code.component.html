@@ -17,12 +17,7 @@
             <ct-section-body>
                 <ct-section-body-row>
                     <ct-section-content>
-                        <mat-form-field appearance="outline">
-                            <mat-label>Parameters </mat-label>
-                            <textarea matInput="matInput" [(ngModel)]="sourceCode.source" value=""
-                                cdkTextareaAutosize="cdkTextareaAutosize" cdkAutosizeMinRows="10"></textarea>
-                            <mat-hint>This is a required field.</mat-hint>
-                        </mat-form-field>
+                        <ct-pre>{{sourceCode.source}}</ct-pre>
                     </ct-section-content>
                 </ct-section-body-row>
             </ct-section-body>
@@ -35,9 +30,6 @@
                         <ct-flex-item>
                             <button mat-flat-button="mat-flat-button" (click)="validate()"
                                 color="primary">Validate</button>
-                        </ct-flex-item>
-                        <ct-flex-item>
-                            <button mat-flat-button="mat-flat-button" (click)="save()" color="primary">Save</button>
                         </ct-flex-item>
                     </ct-flex>
                 </ct-section-footer-row>

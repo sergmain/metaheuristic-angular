@@ -7,17 +7,23 @@
 </ct-section>
 
 
+
 <ct-section *ngIf="accountsResult">
     <ct-section-header>
         <ct-section-header-row>
             <ct-flex justify-content="space-between">
                 <ct-flex-item>
-                    <ct-heading> Accounts </ct-heading>
+                    <ct-heading>Accounts</ct-heading>
                 </ct-flex-item>
-                <ct-flex-item>
+                <ct-flex-item *ngIf="!dispatcherAssetModeService.isReplicated(accountsResult.assetMode)">
                     <ng-container *ngTemplateOutlet="addButtonTemplate"></ng-container>
                 </ct-flex-item>
             </ct-flex>
+        </ct-section-header-row>
+        <ct-section-header-row *ngIf="dispatcherAssetModeService.isReplicated(accountsResult.assetMode)">
+            <ct-alert theme="info">
+                Management of accounts are disabled, assetMode is 'replicated'.
+            </ct-alert>
         </ct-section-header-row>
     </ct-section-header>
     <ct-section-body>
@@ -52,7 +58,8 @@
                     <ng-container matColumnDef="bts">
                         <th mat-header-cell *matHeaderCellDef> </th>
                         <td mat-cell *matCellDef="let el">
-                            <ct-flex justify-content="flex-end" gap="9px">
+                            <ct-flex justify-content="flex-end" gap="9px"
+                                *ngIf="!dispatcherAssetModeService.isReplicated(accountsResult.assetMode)">
                                 <ct-flex-item>
                                     <a mat-flat-button size="forTableRow" [routerLink]="['../','account',el.id,'edit']"
                                         color="primary"> Edit</a>
@@ -80,21 +87,11 @@
             <ct-flex justify-content="space-between">
                 <ct-flex-item>
                     <ct-flex justify-content="flex-start" gap="8px">
-                        <ct-flex-item>
-                            <button mat-flat-button color="primary" (click)="prevPage()"
-                                [disabled]="isLoading || accountsResult.accounts.first">
-                                <mat-icon>arrow_back_ios</mat-icon>
-                            </button>
-                        </ct-flex-item>
-                        <ct-flex-item>
-                            <button mat-flat-button color="primary" (click)="nextPage()"
-                                [disabled]="isLoading || accountsResult.accounts.last">
-                                <mat-icon>arrow_forward_ios</mat-icon>
-                            </button>
-                        </ct-flex-item>
+                        <ct-table-pagination (prev)="prevPage()" (next)="nextPage()"
+                            [pageableDefault]="accountsResult.accounts"></ct-table-pagination>
                     </ct-flex>
                 </ct-flex-item>
-                <ct-flex-item>
+                <ct-flex-item *ngIf="!dispatcherAssetModeService.isReplicated(accountsResult.assetMode)">
                     <ng-container *ngTemplateOutlet="addButtonTemplate"></ng-container>
                 </ct-flex-item>
             </ct-flex>
@@ -104,5 +101,7 @@
 
 
 <ng-template #addButtonTemplate>
-    <button mat-flat-button color="primary" [routerLink]="['../','account','add']">Add New Account</button>
+    <button mat-flat-button color="primary" [routerLink]="['../','account','add']">
+        Add New Account
+    </button>
 </ng-template>

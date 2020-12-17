@@ -114,7 +114,7 @@
     </ct-section-body>
     <ct-section-footer>
         <ct-section-footer-row>
-            <button mat-flat-button color="warn" (click)="deleteMany()" [disabled]="!someChecked()" title="Delete">
+            <button mat-flat-button color="warn" (click)="deleteMany()" [disabled]="!someChecked() || isLoading" title="Delete Checked">
                 Delete Checked
             </button>
         </ct-section-footer-row>

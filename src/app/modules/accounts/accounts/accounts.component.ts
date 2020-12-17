@@ -1,10 +1,10 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatButton } from '@angular/material/button';
+import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { AccountsService } from '@app/services/accounts/accounts.service';
-import { LoadStates } from '@app/enums/LoadStates';
-import { CtTableComponent } from '../../ct/ct-table/ct-table.component';
-import { SimpleAccount } from '@src/app/services/accounts';
+import { DispatcherAssetMode } from '@src/app/enums/DispatcherAssetMode';
+import { UIStateComponent } from '@src/app/models/UIStateComponent';
+import { AccountsResult, SimpleAccount } from '@src/app/services/accounts';
+import { DispatcherAssetModeService } from '@src/app/services/dispatcher-asset-mode/dispatcher-asset-mode.service';
 
 @Component({
     // tslint:disable-next-line: component-selector
@@ -13,55 +13,43 @@ import { SimpleAccount } from '@src/app/services/accounts';
     styleUrls: ['./accounts.component.scss']
 })
 
-export class AccountsComponent implements OnInit {
-    readonly states = LoadStates;
-    currentStates = new Set();
-
+export class AccountsComponent extends UIStateComponent implements OnInit {
     dataSource = new MatTableDataSource<SimpleAccount>([]);
     columnsToDisplay = ['id', 'isEnabled', 'login', 'publicName', 'createdOn', 'bts'];
-
-    response;
-
-    @ViewChild('nextTable', { static: true }) nextTable: MatButton;
-    @ViewChild('prevTable', { static: true }) prevTable: MatButton;
-    @ViewChild('table', { static: true }) table: CtTableComponent;
+    accountsResult: AccountsResult;
 
     constructor(
-        private accountsService: AccountsService
-    ) { }
+        private accountsService: AccountsService,
+        public dispatcherAssetModeService: DispatcherAssetModeService
+    ) {
+        super()
+    }
 
     ngOnInit() {
-        this.currentStates.add(this.states.firstLoading);
         this.updateTable(0);
     }
 
     updateTable(page: number) {
-        this.currentStates.add(this.states.loading);
+        this.setIsLoadingStart()
         this.accountsService
             .accounts(page.toString())
-            .subscribe(response => {
-                this.response = response;
-                this.dataSource = new MatTableDataSource(this.response.accounts.content || []);
-                this.prevTable.disabled = this.response.accounts.first;
-                this.nextTable.disabled = this.response.accounts.last;
-                this.table.show();
-                this.currentStates.delete(this.states.firstLoading);
-                this.currentStates.delete(this.states.loading);
-            });
+            .subscribe({
+                next: accountsResult => {
+                    this.accountsResult = accountsResult;
+                    this.dataSource = new MatTableDataSource(this.accountsResult.accounts.content || []);
+                },
+                complete: () => {
+                    this.setIsLoadingEnd()
+                }
+            })
     }
 
-    next() {
-        this.prevTable.disabled = true;
-        this.nextTable.disabled = true;
-        this.updateTable(this.response.accounts.number + 1);
-        this.table.wait();
+    nextPage() {
+        this.updateTable(this.accountsResult.accounts.number + 1);
     }
 
-    prev() {
-        this.prevTable.disabled = true;
-        this.nextTable.disabled = true;
-        this.updateTable(this.response.accounts.number - 1);
-        this.table.wait();
+    prevPage() {
+        this.updateTable(this.accountsResult.accounts.number - 1);
     }
 
 }
