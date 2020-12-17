@@ -27,6 +27,7 @@ export class CompanyBatchStatusComponent implements OnInit {
             .getBatchStatus(this.companyUniqueId, this.batchId)
             .subscribe({
                 next: (batchDataStatus) => this.batchDataStatus = batchDataStatus,
+                error: () => this.isLoading = false,
                 complete: () => this.isLoading = false
             });
     }
