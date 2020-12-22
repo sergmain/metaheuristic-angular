@@ -46,10 +46,10 @@ export class CompanyBatchesComponent implements OnInit {
             .subscribe({
                 next: (batchesResult) => {
                     this.batchesResult = batchesResult;
-                    if (this.authenticationService.isRoleMasterSupport) {
-                        this.columnsToDisplay = ['id', 'createdOn', 'isBatchConsistent', 'isDeleted', 'sourceCode', 'execState', 'bts'];
-                    } else {
+                    if (this.authenticationService.isRoleMasterOperator) {
                         this.columnsToDisplay = ['check', 'id', 'createdOn', 'isBatchConsistent', 'isDeleted', 'sourceCode', 'execState', 'bts'];
+                    } else {
+                        this.columnsToDisplay = ['id', 'createdOn', 'isBatchConsistent', 'isDeleted', 'sourceCode', 'execState', 'bts'];
                     }
                     this.batches = this.batchesResult.batches.content.map(b => ({
                         batch: b,
