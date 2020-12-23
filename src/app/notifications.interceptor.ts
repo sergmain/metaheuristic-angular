@@ -35,7 +35,9 @@ export class NotificationsInterceptor implements HttpInterceptor {
             catchError((error: HttpErrorResponse) => {
                 if (error.status >= 400) {
                     if (error.error) {
-                        this.notificationsService.error(error.error.status, error.error.message, {
+                        const title = error.error.status ? error.error.status : error.status
+                        const content = error.error.message ? error.error.message : error.message
+                        this.notificationsService.error(title, content, {
                             // timeOut: 10000,
                             // showProgressBar: true,
                             pauseOnHover: true,
@@ -44,17 +46,15 @@ export class NotificationsInterceptor implements HttpInterceptor {
                     }
                 }
                 if (error.status === 0) {
-                    this.notificationsService.error(
-                        'Server offline', 
-                        '',
-                        {
-                            // timeOut: 10000,
-                            // showProgressBar: true,
-                            pauseOnHover: true,
-                            clickToClose: true,
-                        });
+                    const title = 'Server offline'
+                    const content = ''
+                    this.notificationsService.error(title, content, {
+                        // timeOut: 10000,
+                        // showProgressBar: true,
+                        pauseOnHover: true,
+                        clickToClose: true,
+                    });
                 }
-                // return EMPTY;
                 return throwError(error);
             })
         );

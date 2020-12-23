@@ -9,6 +9,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { AuthenticationService } from '../authentication';
 import { SourceCodeUidsForCompany } from '../source-codes/SourceCodeUidsForCompany';
 import { newExecStatus } from './batch.actions';
+import { BatchDownloader } from './BatchDownloader';
 import { BatchesResult } from './BatchesResult';
 import { BatchExexStatusComparer } from './BatchExexStatusComparer';
 import { ExecStatuses } from './ExecStatuses';
@@ -24,10 +25,9 @@ export interface GetBatchesParams {
     filterBatches: boolean;
 }
 
-
 @Injectable({ providedIn: 'root' })
 export class BatchService {
-
+    batchDownloader: BatchDownloader
     private intervalStarted: boolean = false;
     batchExexStatusComparer: BatchExexStatusComparer;
     finishedNotification: BehaviorSubject<boolean> = new BehaviorSubject(false);
@@ -37,6 +37,7 @@ export class BatchService {
         private authenticationService: AuthenticationService,
         private store: Store<AppState>
     ) {
+        this.batchDownloader = new BatchDownloader(http, url)
         this.batchExexStatusComparer = new BatchExexStatusComparer([FINISHED_STATE, ERROR_STATE]);
         this.batchExexStatusComparer.notification.subscribe((s: boolean) => {
             this.finishedNotification.next(s);
