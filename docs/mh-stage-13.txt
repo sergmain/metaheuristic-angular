@@ -5,22 +5,6 @@ npm до 7.0.15
 
 
 
-issue-1301
-при выводе списка функций учитывать поле assetMode
-если значение replicated, то выводить сообщение "Upload and deletion of functions are disabled, assetMode is 'replicated'."
-кнопки управления (загрузка удаление) должны быть скрыты
-
-т.е. должно работать так же как и SourceCode, Company, Account
-DONE
-CONFIRMED
-
-
-
-issue-1302
-http://localhost:4200/#/dispatcher/source-codes/add
-Названия кнопок 'Back', 'Add' Должны быть русифицированы
-POSTPONED
-
 issue-1303
 при входе в приложение звучит звуковой сигнал постоянно
 если выйти и снова зайти, то звуковой сигнал опять звучит
@@ -40,11 +24,6 @@ NOT YET
 
 для роли MASTER_OPERATOR исчезла кнопка удаления отмеченных пакетов
 
-
-
-
-issue-1305
-DONE
 
 
 
@@ -74,31 +53,6 @@ NOT YET
 или я не понял как это реализовано или это не работает
 
 
-issue-1307
-http://localhost:4200/#/dispatcher/company/2/batches
-
-для эмуляции необходимо убрать роль из описания
-ai.metaheuristic.ai.dispatcher.rest.v1.BatchForOperatorRestController#getBatchStatus
-те должно стать
-    @PreAuthorize("hasAnyRole('MASTER_OPERATOR')")
-    public BatchData.Status getBatchStatus(@PathVariable Long companyUniqueId, @PathVariable("batchId") Long batchId) {
-
-
-зайти под ролью MASTER_SUPPORT и нажать Status у какого нибудь пакета,
-выдается 403 но при этом зеленая продолжает бежать по экрану.
-т.к. эта зеленая линия показывает что выполняется операция, то по получении любого кода (500, 401, 401, 200)
-она должна убираться с экрана т.к. операция завершена
-DONE
-DECLINED
-
-
-issue-1308
-https://srv2a.stp-baikal.ru/#/batch/add
-в поле выбора файла заменит Close на Change/Изменить , т.у должно быть русифицировано
-
-как я понимаю этот Close часть materials так что достаточно будет просто локализации
-POSTPONED
-
 
 issue-1309
 https://srv2a.stp-baikal.ru/#/dispatcher/company/1/batches
@@ -122,11 +76,6 @@ issue-1311
 
 
 
-issue-1312
-DONE
-
-
-
 issue-1313
 https://srv2a.stp-baikal.ru/#/dispatcher/company/2/batches
 после нажатия кнопки "Delete checked" и подтверждения удаления эту кнопку дисаблить до окончания операции
@@ -134,47 +83,6 @@ DONE
 
 NOT YET
 т.к для роли MASTER_OPERATOR исчезла кнопка удаления отмеченных пакетов проверить невозможно
-
-
-issue-1314
-урл в стандартном интерфейсе
-https://srv2.stp-baikal.ru/dispatcher/source-code/source-codes
-если сервер настроен на репликацию, то выдается следующее сообщение:
-Creation of sourceCodes is disabled, assetMode is 'replicated'.
-
-на ангуларе это сообщение не выдается.
-
-в Html версии проверка следующая:
-result.assetMode==T(ai.metaheuristic.api.EnumsApi.DispatcherAssetMode).replicated
-
-это сообщение должно выдаваться на следующих страницах (их аналог в ангуларе)
-https://srv2.stp-baikal.ru/dispatcher/account/accounts
-DONE
-https://srv2.stp-baikal.ru/dispatcher/function/functions
-DONE
-https://srv2.stp-baikal.ru/dispatcher/source-code/source-codes
-DONE
-https://srv2.stp-baikal.ru/dispatcher/company/companies
-DONE
-https://srv2.stp-baikal.ru/dispatcher/company/company-accounts
-DONE
-CONFIRMED
-
-
-issue-1315
-если rest-сервер в дауне, то при попытке залогиниться просто ничего не происходит.
-должно вызываться какое-то сообщение о том что сервер недоступен
-DONE
-CONFIRMED
-
-
-
-issue-1316
-урл в стандартном интерфейсе
-https://srv2.stp-baikal.ru/dispatcher/source-code/source-codes
-заменить кнопку "Edit" на кнопку "View" / "Просмотр". зерактирования Исходников больше не будет
-DONE
-CONFIRMED
 
 
 
