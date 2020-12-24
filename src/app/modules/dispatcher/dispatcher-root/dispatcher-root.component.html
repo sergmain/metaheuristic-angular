@@ -3,6 +3,7 @@
         <div class="navigation">
 
             <button *ngIf="
+                authenticationService.isRoleMasterAssetManager() ||
                 authenticationService.isRoleAdmin() ||
                 authenticationService.isRoleData() ||
                 authenticationService.isRoleManager()
@@ -18,6 +19,7 @@
             </button>
 
             <button *ngIf="
+                authenticationService.isRoleMasterAssetManager() ||
                 authenticationService.isRoleAdmin() ||
                 authenticationService.isRoleData()
                 " mat-button size="forNavigation" routerLinkActive="active"

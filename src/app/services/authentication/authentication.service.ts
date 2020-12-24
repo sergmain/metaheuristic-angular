@@ -147,5 +147,7 @@ export class AuthenticationService {
     isRoleMasterAdmin(): boolean { return this.user.authorities.map(a => a.authority).includes(Role.ROLE_MASTER_ADMIN); }
     isRoleMasterOperator(): boolean { return this.user.authorities.map(a => a.authority).includes(Role.ROLE_MASTER_OPERATOR); }
     isRoleMasterSupport(): boolean { return this.user.authorities.map(a => a.authority).includes(Role.ROLE_MASTER_SUPPORT); }
+    isRoleMasterAssetManager(): boolean { return this.user.authorities.map(a => a.authority).includes(Role.ROLE_MASTER_ASSET_MANAGER); }
+
     isRoleAdmin(): boolean { return this.user.authorities.map(a => a.authority).includes(Role.ROLE_ADMIN); }
 }
