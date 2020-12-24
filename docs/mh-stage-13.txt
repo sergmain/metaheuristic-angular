@@ -206,7 +206,7 @@ http://localhost:4200/#/dispatcher/source-codes
 
 issue-1321
 http://localhost:4200/#/dispatcher/source-codes
-кнопка view должна быть доступна всегда
+кнопка view должна быть доступна всегда. т.е. ее не надо дисаблить
 
 
 issue-1322
