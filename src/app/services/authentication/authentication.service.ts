@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { AppState } from '@src/app/app.reducers';
 import { environment } from '@src/environments/environment';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { Role } from './Role';
 import { User } from './User';
 import * as settingsActions from '@src/app/services/settings/settings.actions';
@@ -17,8 +17,10 @@ import { Authority } from './Authority';
 export class AuthenticationService {
 
     localStorageName = 'authenticationService';
-    userLifeTimeExpiredName = '__last';
+    private userLifeTimeExpiredName = '__last';
     user: User;
+
+    getUserData = new BehaviorSubject<User>(null);
 
     constructor(
         private http: HttpClient,
@@ -29,6 +31,7 @@ export class AuthenticationService {
             this.user = state.user;
         });
     }
+
 
     getData() {
         return new Observable(subscriber => {
@@ -79,6 +82,7 @@ export class AuthenticationService {
                         const data: User = Object.assign({}, resultUser, { token });
                         this.setLocalStorageData(data);
                         subscriber.next(data);
+                        this.getUserData.next(data)
                     } else {
                         subscriber.next(null);
                     }
@@ -127,6 +131,7 @@ export class AuthenticationService {
             localStorage.removeItem(this.userLifeTimeExpiredName);
             sessionStorage.clear();
             this.user = null;
+            this.getUserData.next(this.user)
             this.router.navigate(['/']);
             subscriber.next();
             subscriber.complete();

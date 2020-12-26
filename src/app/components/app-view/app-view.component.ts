@@ -1,18 +1,18 @@
-import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatSelect, MatSelectChange } from '@angular/material/select';
 import { MatSidenav } from '@angular/material/sidenav';
 import { MatSlideToggle, MatSlideToggleChange } from '@angular/material/slide-toggle';
-import { MatSelect, MatSelectChange } from '@angular/material/select';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { AuthenticationService } from '@app/services/authentication/authentication.service';
 import { Store } from '@ngrx/store';
-import { setOfLanguages, SettingsLanguage, SettingsTheme } from '@src/app/services/settings/Settings';
-import { SettingsService } from '@src/app/services/settings/settings.service';
 import { AppState } from '@src/app/app.reducers';
-import * as settingsAction from '@src/app/services/settings/settings.actions';
-import { BatchService } from '@src/app/services/batch/batch.service';
-import { AudioNotification } from '@src/app/services/audioNotification/audioNotification.service';
 import * as authenticationAction from '@src/app/services/authentication/authentication.actions';
-import { SafeHtml, DomSanitizer } from '@angular/platform-browser';
+import { BatchService } from '@src/app/services/batch/batch.service';
+import { BatchExexStatusService } from '@src/app/services/batch/BatchExecStatusService';
+import { setOfLanguages, SettingsLanguage, SettingsTheme } from '@src/app/services/settings/Settings';
+import * as settingsAction from '@src/app/services/settings/settings.actions';
+import { SettingsService } from '@src/app/services/settings/settings.service';
 import { environment } from '@src/environments/environment';
 
 
@@ -22,7 +22,7 @@ import { environment } from '@src/environments/environment';
     styleUrls: ['./app-view.component.scss']
 })
 
-export class AppViewComponent implements OnInit, OnDestroy {
+export class AppViewComponent implements OnInit {
     htmlContent: SafeHtml;
     sidenavButtonDisable: boolean = false;
     theme: SettingsTheme;
@@ -30,7 +30,6 @@ export class AppViewComponent implements OnInit, OnDestroy {
         list?: Set<SettingsLanguage>;
         current?: SettingsLanguage;
     } = {};
-    batchFinished: boolean = false;
     brandingTitle: string = environment.brandingTitle;
 
     @ViewChild(MatSidenav) sidenav: MatSidenav;
@@ -41,10 +40,8 @@ export class AppViewComponent implements OnInit, OnDestroy {
         public authenticationService: AuthenticationService,
         private settingsService: SettingsService,
         private router: Router,
-        private batchService: BatchService,
-        private audioNotification: AudioNotification,
         private store: Store<AppState>,
-        private domSanitizer: DomSanitizer
+        private domSanitizer: DomSanitizer,
     ) { }
 
     ngOnInit() {
@@ -55,22 +52,10 @@ export class AppViewComponent implements OnInit, OnDestroy {
             this.lang.current = state.settings.language;
         });
 
-        this.batchService.finishedNotification.subscribe((exist: boolean) => {
-            if (exist) {
-                this.audioNotification.play();
-                this.batchFinished = true;
-            }
-        });
     }
-
-    ngOnDestroy() { }
 
     isAuth() {
         return this.authenticationService.isAuth();
-    }
-
-    hideBatchNotification() {
-        this.batchFinished = false;
     }
 
     toggleSideNav() {

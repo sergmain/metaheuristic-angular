@@ -32,6 +32,7 @@ import { AppIndexComponent } from './components/app-index/app-index.component';
 import { BatchEffects } from './services/batch/batch.effects';
 import { CtModule } from './modules/ct/ct.module';
 import { CopyRightModule } from './modules/copy-right/copy-right.module';
+import { BatchChangeNotificationComponent } from './components/batch-change-notification/batch-change-notification.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
     return new TranslateHttpLoader(http, './assets/i18n/');
@@ -47,7 +48,7 @@ export function HttpLoaderFactory(http: HttpClient) {
         NavPilotComponent,
         LoginComponent,
         BillingComponent,
-
+        BatchChangeNotificationComponent,
         LoremIndexComponent,
         AppDialogConfirmationComponent,
     ],

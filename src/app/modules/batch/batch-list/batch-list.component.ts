@@ -1,5 +1,5 @@
 import { HttpResponse } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { marker } from '@biesbjerg/ngx-translate-extract-marker';
 import { ConfirmationDialogMethod, QuestionData } from '@src/app/components/app-dialog-confirmation/app-dialog-confirmation.component';
@@ -12,6 +12,8 @@ import * as fileSaver from 'file-saver';
 import { MatDialog } from '@angular/material/dialog';
 import { TranslateService } from '@ngx-translate/core';
 import { BatchExecState } from '@src/app/enums/BatchExecState';
+import { BatchExexStatusService } from '@src/app/services/batch/BatchExecStatusService';
+import { Subscription } from 'rxjs';
 
 
 @Component({
@@ -19,7 +21,8 @@ import { BatchExecState } from '@src/app/enums/BatchExecState';
     templateUrl: './batch-list.component.html',
     styleUrls: ['./batch-list.component.scss']
 })
-export class BatchListComponent extends UIStateComponent implements OnInit {
+export class BatchListComponent extends UIStateComponent implements OnInit, OnDestroy {
+    subs: Subscription[] = []
     batchesResult: BatchesResult
     isFiltered: boolean
     dataSource: MatTableDataSource<BatchData.BatchExecInfo> = new MatTableDataSource([]);
@@ -29,13 +32,23 @@ export class BatchListComponent extends UIStateComponent implements OnInit {
         private batchService: BatchService,
         private authenticationService: AuthenticationService,
         private dialog: MatDialog,
-        private translate: TranslateService
+        private translate: TranslateService,
+        private batchExexStatusService: BatchExexStatusService
     ) {
         super();
     }
 
     ngOnInit(): void {
         this.updateTable('0', this.isFiltered)
+        this.subs.push(this.batchExexStatusService.getStatuses.subscribe({
+            next: statuses => {
+                this.batchExexStatusService.updateBatchesResultByStatuses(this.batchesResult, statuses)
+            }
+        }))
+    }
+
+    ngOnDestroy() {
+        this.subs.forEach(s => s.unsubscribe())
     }
 
     updateTable(pageNumbder: string, isFiltered: boolean) {

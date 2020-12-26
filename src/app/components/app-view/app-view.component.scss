@@ -1,12 +1,10 @@
 @import '../../../variables.scss';
-
 :host {
     .app-view {
         height: 100%;
         display: flex;
         flex-direction: column;
     }
-
     .app-view__header {
         height: unit(6);
         position: fixed;
@@ -15,27 +13,20 @@
         top: 0;
         z-index: 900;
     }
-
     .app-view__body {
         flex: 1;
         margin-top: unit(6);
         position: relative;
     }
-    .app-view__footer {
-        
-    }
-
     mat-toolbar {
         height: unit(6);
         min-height: unit(6);
     }
-
     mat-toolbar-row {
         height: unit(6);
         min-height: unit(6);
         padding: 0 unit(1);
     }
-
     mat-select {
         text-transform: uppercase;
         letter-spacing: 0.1em;
@@ -48,12 +39,10 @@
         padding-right: unit(1);
         min-width: (45px + unit(1) + unit(1));
     }
-
     mat-slide-toggle {
         padding-left: unit(1);
         padding-right: unit(1);
     }
-
     button {
         min-width: auto;
         text-transform: uppercase;
@@ -61,16 +50,13 @@
         font-family: 'Roboto Condensed';
         padding-left: unit(1);
         padding-right: unit(1);
-
         mat-icon {
             margin-top: -4px;
         }
     }
-
 }
 
 // TODO theme palette
-
 :host-context(.light-theme) {
     .app-view {
         background-color: #fafafa;

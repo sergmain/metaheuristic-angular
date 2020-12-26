@@ -63,23 +63,20 @@
             <ct-flex justify-content="flex-start" gap="9px" align-items="center">
 
                 <ct-flex-item>
-                    <button class="mat-button mat-button--sidenav" mat-button [disabled]="sidenavButtonDisable"
-                        (click)="toggleSideNav()">
+                    <button class="mat-button mat-button--sidenav" mat-button [disabled]="sidenavButtonDisable" (click)="toggleSideNav()">
                         <mat-icon class="mat-icon">menu</mat-icon>
                     </button>
                 </ct-flex-item>
 
                 <ct-flex-item>
-                    <button class="mat-button mat-button--menu-item" mat-button routerLinkActive="active"
-                        [routerLinkActiveOptions]="{ exact: true }" routerLink="">{{brandingTitle}}</button>
+                    <button class="mat-button mat-button--menu-item" mat-button routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" routerLink="">{{brandingTitle}}</button>
                 </ct-flex-item>
 
                 <ct-flex-item *ngIf="
                     authenticationService.isRoleAdmin() ||
                     authenticationService.isRoleData() ||
                     authenticationService.isRoleManager() ">
-                    <button class="mat-button mat-button--menu-item" mat-button routerLinkActive="active"
-                        routerLink="/ai">{{ 'app-view.Ai' | translate }}</button>
+                    <button class="mat-button mat-button--menu-item" mat-button routerLinkActive="active" routerLink="/ai">{{ 'app-view.Ai' | translate }}</button>
                 </ct-flex-item>
 
                 <ct-flex-item *ngIf="
@@ -87,8 +84,7 @@
                     authenticationService.isRoleData() ||
                     authenticationService.isRoleManager() ||
                     authenticationService.isRoleOperator() ">
-                    <button class="mat-button mat-button--menu-item" mat-button routerLinkActive="active"
-                        routerLink="/batch">{{ 'app-view.Batch' | translate }}</button>
+                    <button class="mat-button mat-button--menu-item" mat-button routerLinkActive="active" routerLink="/batch">{{ 'app-view.Batch' | translate }}</button>
                 </ct-flex-item>
 
                 <ct-flex-item *ngIf="
@@ -99,20 +95,16 @@
                     authenticationService.isRoleAdmin() ||
                     authenticationService.isRoleData() || 
                     authenticationService.isRoleManager() ">
-                    <button class="mat-button mat-button--menu-item" mat-button routerLinkActive="active"
-                        routerLink="/dispatcher">{{ 'app-view.Dispatcher' | translate }}</button>
+                    <button class="mat-button mat-button--menu-item" mat-button routerLinkActive="active" routerLink="/dispatcher">{{ 'app-view.Dispatcher' | translate }}</button>
                 </ct-flex-item>
 
             </ct-flex>
         </ct-flex-item>
+
         <ct-flex-item>
-            <ct-flex justify-content="space-between" align-items="center">
-                <mat-icon class="mat-icon" style="transform: scale(1.25); user-select: none;" aria-hidden="true"
-                    *ngIf="batchFinished" (click)="hideBatchNotification()">
-                    check_circle_outline
-                </mat-icon>
-            </ct-flex>
+            <batch-change-notification></batch-change-notification>
         </ct-flex-item>
+
         <ct-flex-item>
             <ct-flex justify-content="flex-end" gap="9px" align-items="center">
                 <ct-flex-item>
@@ -126,12 +118,10 @@
                     </mat-select>
                 </ct-flex-item>
                 <ct-flex-item>
-                    <button class="mat-button mat-button--menu-item" mat-button routerLinkActive="active"
-                        routerLink="/about">{{ 'app-view.About' | translate }}</button>
+                    <button class="mat-button mat-button--menu-item" mat-button routerLinkActive="active" routerLink="/about">{{ 'app-view.About' | translate }}</button>
                 </ct-flex-item>
                 <ct-flex-item>
-                    <button class="mat-button mat-button--menu-item" mat-button
-                        (click)="logout()">{{ 'app-view.Logout' | translate }}</button>
+                    <button class="mat-button mat-button--menu-item" mat-button (click)="logout()">{{ 'app-view.Logout' | translate }}</button>
                 </ct-flex-item>
             </ct-flex>
         </ct-flex-item>
