@@ -28,8 +28,7 @@
                             <button mat-stroked-button="mat-stroked-button" (click)="back()">Back</button>
                         </ct-flex-item>
                         <ct-flex-item>
-                            <button mat-flat-button="mat-flat-button" (click)="validate()"
-                                color="primary">Validate</button>
+                            <button mat-flat-button="mat-flat-button" (click)="validate()" color="primary">Validate</button>
                         </ct-flex-item>
                     </ct-flex>
                 </ct-section-footer-row>
@@ -37,6 +36,6 @@
         </ct-section>
     </ct-col>
     <ct-col size="6">
-        <ct-rest-status class="uploadRestStatus" [content]="sourceCodeResponse"></ct-rest-status>
+        <ct-rest-status class="uploadRestStatus" [content]="sourceCodeResponseForValidate"></ct-rest-status>
     </ct-col>
 </ct-cols>

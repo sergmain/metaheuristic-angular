@@ -112,11 +112,15 @@ issue-1319
 issue-1320
 http://localhost:4200/#/dispatcher/source-codes
 удалить столбец Is locked?
+DONE
+
 
 
 issue-1321
 http://localhost:4200/#/dispatcher/source-codes
 кнопка view должна быть доступна всегда. т.е. ее не надо дисаблить
+DONE
+
 
 
 issue-1322
@@ -126,7 +130,7 @@ STATUS:
 NOT_VERIFIED_YET
 
 т.к. это вводит в заблуждение, потому что исходник может быть уже провалидирован
-
+DONE
 
 
 

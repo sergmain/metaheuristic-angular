@@ -23,7 +23,7 @@ export class SourceCodesComponent extends UIStateComponent implements OnInit, Co
 
     sourceCodesResult: SourceCodesResult;
     dataSource: MatTableDataSource<SourceCode> = new MatTableDataSource<SourceCode>([]);
-    columnsToDisplay: string[] = ['id', 'uid', 'type', 'createdOn', 'valid', 'locked', 'bts'];
+    columnsToDisplay: string[] = ['id', 'uid', 'type', 'createdOn', 'valid', 'bts'];
     deletedSourceCodes: SourceCode[] = [];
     archivedSourceCodes: SourceCode[] = [];
 

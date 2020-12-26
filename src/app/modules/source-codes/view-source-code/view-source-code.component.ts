@@ -13,6 +13,8 @@ export class ViewSourceCodeComponent implements OnInit {
 
     sourceCode: SourceCode;
     sourceCodeResponse: SourceCodeResult;
+    sourceCodeResponseForValidate: SourceCodeResult;
+
 
     constructor(
         private route: ActivatedRoute,
@@ -45,6 +47,7 @@ export class ViewSourceCodeComponent implements OnInit {
             .validate(id)
             .subscribe(sourceCodeResult => {
                 this.sourceCodeResponse = sourceCodeResult;
+                this.sourceCodeResponseForValidate = sourceCodeResult;
                 this.scrollIntoView();
             });
     }
