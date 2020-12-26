@@ -7,6 +7,7 @@ import { Processor } from './Processor';
 import { ProcessorResult } from './ProcessorResult';
 import { ProcessorsResult } from './ProcessorsResult';
 import { OperationStatusRest } from '@src/app/models/OperationStatusRest';
+import { ProcessorBulkDeleteCommitResult } from './ProcessorBulkDeleteCommitResult';
 
 
 const url = (s: string): string => `${environment.baseUrl}dispatcher${s}`;
@@ -32,4 +33,18 @@ export class ProcessorsService {
     deleteProcessorCommit(id: string): Observable<OperationStatusRest> {
         return this.http.post<OperationStatusRest>(url(`/processor-delete-commit`), formData({ id }));
     }
+
+
+    // @PostMapping("/processor-bulk-delete-commit")
+    // @PreAuthorize("hasAnyRole('MASTER_OPERATOR')")
+    // public ProcessorData.BulkOperations  processProcessorBulkDeleteCommit(String processorIds) {
+    //     ProcessorData.BulkOperations  r = processorTopLevelService.processProcessorBulkDeleteCommit(processorIds);
+    //     return r;
+    // }
+    processProcessorBulkDeleteCommit(processorIds: string[]): Observable<ProcessorBulkDeleteCommitResult> {
+        return this.http.post<ProcessorBulkDeleteCommitResult>(url('/processor-bulk-delete-commit'), formData({
+            processorIds: processorIds.join()
+        }))
+    }
+
 }

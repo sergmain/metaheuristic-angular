@@ -5,6 +5,8 @@ import { ConfirmationDialogMethod, ConfirmationDialogInterface } from '@app/comp
 import { ProcessorsService } from '@src/app/services/processors/processors.service';
 import { ProcessorsResult } from '@src/app/services/processors/ProcessorsResult';
 import { ProcessorStatus } from '@src/app/services/processors/ProcessorStatus';
+import { SelectionModel } from '@angular/cdk/collections';
+import { UIStateComponent } from '@src/app/models/UIStateComponent';
 
 
 @Component({
@@ -13,35 +15,25 @@ import { ProcessorStatus } from '@src/app/services/processors/ProcessorStatus';
     styleUrls: ['./processors.component.scss']
 })
 
-export class ProcessorsComponent implements OnInit, ConfirmationDialogInterface {
+export class ProcessorsComponent extends UIStateComponent implements OnInit, ConfirmationDialogInterface {
     processorResult: ProcessorsResult;
     showStatusOfProcessor: boolean = false;
-    dataSource: MatTableDataSource<ProcessorStatus> = new MatTableDataSource<ProcessorStatus>([]);
-    columnsToDisplay: string[] = ['id', 'ip', 'description', 'reason', 'lastSeen', 'bts'];
+    dataSource = new MatTableDataSource<ProcessorStatus>([]);
+    selection = new SelectionModel<ProcessorStatus>(true, []);
+    columnsToDisplay: string[] = ['check', 'id', 'ip', 'description', 'reason', 'lastSeen', 'bts'];
     secondColumnsToDisplay: string[] = ['empty', 'env'];
 
     constructor(
         readonly dialog: MatDialog,
         private processorsService: ProcessorsService
-    ) { }
-
-    applyFilter(filterValue: string): void {
-        this.dataSource.filter = filterValue.trim().toLowerCase();
-    }
+    ) { super() }
 
     ngOnInit(): void {
-        this.getProcessors(0);
+        this.updateTable(0);
     }
 
-    next(): void {
-        this.getProcessors(this.processorResult.items.number + 1);
-    }
-
-    prev(): void {
-        this.getProcessors(this.processorResult.items.number - 1);
-    }
-
-    getProcessors(page: number): void {
+    updateTable(page: number): void {
+        this.isLoading = true
         this.processorsService
             .init(page.toString())
             .subscribe(processorResult => {
@@ -50,9 +42,33 @@ export class ProcessorsComponent implements OnInit, ConfirmationDialogInterface 
                 if (items.length) {
                     this.dataSource = new MatTableDataSource(items);
                 }
+                this.isLoading = false
             });
     }
-    // TODO: визуально не удаляются
+
+    applyFilter(filterValue: string): void {
+        this.dataSource.filter = filterValue.trim().toLowerCase();
+    }
+
+    isAllSelected() {
+        const numSelected = this.selection.selected.length;
+        const numRows = this.dataSource.data.length;
+        return numSelected === numRows;
+    }
+
+    masterToggle() {
+        this.isAllSelected() ?
+            this.selection.clear() :
+            this.dataSource.data.forEach(row => this.selection.select(row));
+    }
+
+    nextPage(): void {
+        this.updateTable(this.processorResult.items.number + 1);
+    }
+
+    prevPage(): void {
+        this.updateTable(this.processorResult.items.number - 1);
+    }
 
     @ConfirmationDialogMethod({
         question: (processor: ProcessorStatus): string =>
@@ -63,6 +79,17 @@ export class ProcessorsComponent implements OnInit, ConfirmationDialogInterface 
     delete(processor: ProcessorStatus): void {
         this.processorsService
             .deleteProcessorCommit(processor.processor.id.toString())
-            .subscribe(() => this.getProcessors(0));
+            .subscribe(() => this.updateTable(this.processorResult.items.number))
+    }
+
+    @ConfirmationDialogMethod({
+        question: (): string => `Do you want to delete Processors`,
+        rejectTitle: 'Cancel',
+        resolveTitle: 'Delete'
+    })
+    deleteMany(): void {
+        this.processorsService
+            .processProcessorBulkDeleteCommit(this.selection.selected.map(v => v.processor.id.toString()))
+            .subscribe(() => this.updateTable(this.processorResult.items.number))
     }
 }
