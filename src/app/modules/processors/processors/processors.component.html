@@ -6,7 +6,8 @@
                     <ct-heading>Processors</ct-heading>
                 </ct-flex-item>
                 <ct-flex-item>
-                    <mat-slide-toggle [(ngModel)]="showStatusOfProcessor">Show current status of processor
+                    <mat-slide-toggle [(ngModel)]="showStatusOfProcessor">
+                        Show current status of processor
                     </mat-slide-toggle>
                 </ct-flex-item>
             </ct-flex>
@@ -15,14 +16,22 @@
     <ct-section-body>
         <ct-section-body-row>
             <ct-table [isWaiting]="isLoading">
-                <table class="mat-table" mat-table [dataSource]="dataSource" multiTemplateDataRows="multiTemplateDataRows">
+                <table mat-table [dataSource]="dataSource" multiTemplateDataRows="multiTemplateDataRows">
                     <ng-container matColumnDef="check">
                         <th mat-header-cell *matHeaderCellDef>
-                            <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="selection.hasValue() && isAllSelected()" [indeterminate]="selection.hasValue() && !isAllSelected()">
+                            <mat-checkbox 
+                                color="warn"
+                                (change)="$event ? masterToggle() : null" 
+                                [checked]="selection.hasValue() && isAllSelected()" 
+                                [indeterminate]="selection.hasValue() && !isAllSelected()">
                             </mat-checkbox>
                         </th>
                         <td mat-cell *matCellDef="let el">
-                            <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(el) : null" [checked]="selection.isSelected(el)">
+                            <mat-checkbox 
+                                color="warn"
+                                (click)="$event.stopPropagation()" 
+                                (change)="$event ? selection.toggle(el) : null" 
+                                [checked]="selection.isSelected(el)">
                             </mat-checkbox>
                         </td>
                     </ng-container>
@@ -58,13 +67,15 @@
                             <div>Reason</div>
                         </th>
                         <td mat-cell *matCellDef="let el">
-                            <div [class]="el.active ? 'alert-success' : 'alert-danger'"> {{el.active ? 'Yes' : 'No'}}
+                            <div [class]="el.active ? 'alert-success' : 'alert-danger'"> 
+                                {{el.active ? 'Yes' : 'No'}}
                             </div>
                             <div [class]="el.functionProblem ? 'alert-danger' : 'alert-success'">
                                 {{el.functionProblem ? 'Yes' : 'No'}} </div>
                             <div [class]="el.blacklisted ? 'alert-danger' : 'alert-success'">
                                 {{el.blacklisted ? 'Yes' : 'No'}} </div>
-                            <div class="alert-danger"> {{el.blacklistReason}}
+                            <div class="alert-danger"> 
+                                {{el.blacklistReason}}
                             </div>
                         </td>
                     </ng-container>
@@ -77,10 +88,17 @@
                         <td mat-cell *matCellDef="let el">
                             <ct-flex justify-content="flex-end" gap="unit(1)">
                                 <ct-flex-item>
-                                    <button mat-flat-button="mat-flat-button" size="forTableRow" color="primary" [routerLink]="['/dispatcher/processors',el.processor.id,'edit']">Edit</button>
+                                    <button mat-flat-button
+                                        size="forTableRow" color="primary" 
+                                        [routerLink]="['/dispatcher/processors',el.processor.id,'edit']">
+                                            Edit
+                                    </button>
                                 </ct-flex-item>
                                 <ct-flex-item>
-                                    <button mat-flat-button="mat-flat-button" size="forTableRow" color="warn" (click)="delete(el)">
+                                    <button mat-flat-button
+                                        size="forTableRow" 
+                                        color="warn" 
+                                        (click)="delete(el)">
                                         <mat-icon>delete</mat-icon>
                                     </button>
                                 </ct-flex-item>
@@ -96,13 +114,20 @@
     </ct-section-body>
     <ct-section-footer>
         <ct-section-footer-row>
-            <button mat-flat-button color="warn" (click)="deleteMany()" [disabled]="isLoading || !selection.selected.length" title="Delete Checked">
-                Delete Checked
+            <button mat-flat-button 
+                color="warn" 
+                (click)="deleteMany()" 
+                [disabled]="isLoading || !selection.selected.length" 
+                title="Delete Checked">
+                    Delete Checked
             </button>
         </ct-section-footer-row>
         <ct-section-footer-row>
             <ct-flex-item>
-                <ct-table-pagination (prev)="prevPage()" (next)="nextPage()" [pageableDefault]="processorResult.items">
+                <ct-table-pagination 
+                    (prev)="prevPage()" 
+                    (next)="nextPage()" 
+                    [pageableDefault]="processorResult.items">
                 </ct-table-pagination>
             </ct-flex-item>
         </ct-section-footer-row>

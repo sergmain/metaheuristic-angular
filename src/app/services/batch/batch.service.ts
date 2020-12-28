@@ -178,34 +178,34 @@ export class BatchService {
         });
     }
 
-    stopIntervalRequset(): void {
-        this.intervalStarted = false;
-    }
+    // stopIntervalRequset(): void {
+    //     this.intervalStarted = false;
+    // }
 
-    startIntervalRequset(interval: number): void {
-        if (!this.intervalStarted) {
-            this.intervalRequset(interval);
-            this.intervalStarted = true;
-        }
-    }
+    // startIntervalRequset(interval: number): void {
+    //     if (!this.intervalStarted) {
+    //         this.intervalRequset(interval);
+    //         this.intervalStarted = true;
+    //     }
+    // }
 
-    private intervalRequset(interval: number): void {
-        const base: BatchService = this;
-        fn();
+    // private intervalRequset(interval: number): void {
+    //     const base: BatchService = this;
+    //     fn();
 
-        function fn(): void {
-            if (base.authenticationService.isAuth()) {
-                base.batchExecStatuses().subscribe({
-                    next: content => {
-                        base.batchExexStatusComparer.takeApart(content.statuses);
-                        if (base.intervalStarted) {
-                            setTimeout(() => { fn(); }, interval);
-                        }
-                        base.store.dispatch(newExecStatus({ payload: content.statuses }));
-                    },
-                    error: () => { }
-                });
-            }
-        }
-    }
+    //     function fn(): void {
+    //         if (base.authenticationService.isAuth()) {
+    //             base.batchExecStatuses().subscribe({
+    //                 next: content => {
+    //                     base.batchExexStatusComparer.takeApart(content.statuses);
+    //                     if (base.intervalStarted) {
+    //                         setTimeout(() => { fn(); }, interval);
+    //                     }
+    //                     base.store.dispatch(newExecStatus({ payload: content.statuses }));
+    //                 },
+    //                 error: () => { }
+    //             });
+    //         }
+    //     }
+    // }
 }

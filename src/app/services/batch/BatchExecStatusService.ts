@@ -1,9 +1,9 @@
-import { Injectable } from "@angular/core";
-import { environment } from "@src/environments/environment";
-import { BehaviorSubject } from "rxjs";
-import { BatchService } from "./batch.service";
-import { BatchesResult } from "./BatchesResult";
-import { ExecStatuses } from "./ExecStatuses";
+import { Injectable } from '@angular/core';
+import { environment } from '@src/environments/environment';
+import { BehaviorSubject } from 'rxjs';
+import { BatchService } from './batch.service';
+import { BatchesResult } from './BatchesResult';
+import { ExecStatuses } from './ExecStatuses';
 
 export interface BatchExexStatusChangesResult {
     isNew: boolean;
@@ -15,66 +15,68 @@ const FINISHED_STATE: number = 4;
 const ERROR_STATE: number = -1;
 
 class StatusChecker {
-    private records: ExecStatuses[] = []
-    write(execStatuses: ExecStatuses) {
-        this.records.push(execStatuses)
+    private records: ExecStatuses[] = [];
+
+    write(execStatuses: ExecStatuses): void {
+        this.records.push(execStatuses);
     }
-    masterCheck(callback: (result: BatchExexStatusChangesResult) => void) {
-        const next = this.records[this.records.length - 1]
-        const prev = this.records[this.records.length - 2]
+
+    masterCheck(callback: (result: BatchExexStatusChangesResult) => void): void {
+        const next: ExecStatuses = this.records[this.records.length - 1];
+        const prev: ExecStatuses = this.records[this.records.length - 2];
         if (next && prev) {
-            const nextExecStatusMap = new Map(next.statuses.map(v => [v.id, v.state]))
-            const prevExecStatusMap = new Map(prev.statuses.map(v => [v.id, v.state]))
+            const nextExecStatusMap: Map<number, number> = new Map(next.statuses.map(v => [v.id, v.state]));
+            const prevExecStatusMap: Map<number, number> = new Map(prev.statuses.map(v => [v.id, v.state]));
 
-            const isNew = this.isNew(prevExecStatusMap, nextExecStatusMap)
-            const isFinished = this.checkState(prevExecStatusMap, nextExecStatusMap, FINISHED_STATE)
-            const isError = this.checkState(prevExecStatusMap, nextExecStatusMap, ERROR_STATE)
+            const isNew: boolean = this.isNew(prevExecStatusMap, nextExecStatusMap);
+            const isFinished: boolean = this.checkState(prevExecStatusMap, nextExecStatusMap, FINISHED_STATE);
+            const isError: boolean = this.checkState(prevExecStatusMap, nextExecStatusMap, ERROR_STATE);
 
-            this.records = [next]
-            callback ? callback({ isNew, isFinished, isError }) : null
+            this.records = [next];
+            if (callback) { callback({ isNew, isFinished, isError }); }
         }
     }
 
     private isNew(prevMap: Map<number, number>, nextMap: Map<number, number>): boolean {
-        const checks = []
+        const checks: boolean[] = [];
         nextMap.forEach((value, key) => {
             if (prevMap.has(key)) {
-                checks.push(false)
+                checks.push(false);
             } else {
-                checks.push(true)
+                checks.push(true);
             }
-        })
+        });
         if (checks.indexOf(true) > -1) {
-            return true
+            return true;
         }
-        return false
+        return false;
     }
 
     checkState(
         prevMap: Map<number, number>,
         nextMap: Map<number, number>,
         state: number
-    ) {
-        let checks = []
+    ): boolean {
+        const checks: boolean[] = [];
         prevMap.forEach((value, key) => {
             if (prevMap.has(key) && nextMap.has(key)) {
                 if (nextMap.get(key) === state) {
                     if (prevMap.get(key) !== state) {
-                        checks.push(true)
+                        checks.push(true);
                     } else {
-                        checks.push(false)
+                        checks.push(false);
                     }
                 } else {
-                    checks.push(false)
+                    checks.push(false);
                 }
             } else {
-                checks.push(false)
+                checks.push(false);
             }
-        })
+        });
         if (checks.indexOf(true) > -1) {
-            return true
+            return true;
         }
-        return false
+        return false;
     }
 }
 
@@ -82,8 +84,8 @@ class StatusChecker {
 @Injectable({ providedIn: 'root' })
 export class BatchExexStatusService {
     private isIntervalStarted: boolean = false;
-    private interval: number = environment.batchInterval || 15000
-    private statusChecker = new StatusChecker()
+    private interval: number = environment.batchInterval || 15000;
+    private statusChecker: StatusChecker = new StatusChecker();
 
     getStatuses: BehaviorSubject<ExecStatuses> = new BehaviorSubject(null);
     getChanges: BehaviorSubject<BatchExexStatusChangesResult> = new BehaviorSubject(null);
@@ -106,30 +108,30 @@ export class BatchExexStatusService {
         if (this.isIntervalStarted) {
             this.batchService.batchExecStatuses().subscribe({
                 next: result => {
-                    this.statusChecker.write(result)
-                    this.statusChecker.masterCheck(result => this.getChanges.next(result))
-                    this.getStatuses.next(result)
-                    this.repeatRequest()
+                    this.statusChecker.write(result);
+                    this.statusChecker.masterCheck(r => this.getChanges.next(r));
+                    this.getStatuses.next(result);
+                    this.repeatRequest();
                 },
                 error: () => { }
             });
         }
     }
 
-    private repeatRequest() {
+    private repeatRequest(): void {
         if (this.isIntervalStarted) {
-            setTimeout(() => this.intervalRequset(), this.interval)
+            setTimeout(() => this.intervalRequset(), this.interval);
         }
     }
 
-    updateBatchesResultByStatuses(batchesResult: BatchesResult, statuses: ExecStatuses) {
+    updateBatchesResultByStatuses(batchesResult: BatchesResult, statuses: ExecStatuses): void {
         batchesResult?.batches.content.forEach(batch => {
             statuses?.statuses.forEach(status => {
                 if (batch.batch.id === status.id) {
-                    batch.execState = status.state
-                    batch.batch.execState = status.state
+                    batch.execState = status.state;
+                    batch.batch.execState = status.state;
                 }
-            })
-        })
+            });
+        });
     }
 }

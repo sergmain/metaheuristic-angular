@@ -1,3 +1,5 @@
+@import "../company.sass";
+
 mat-checkbox {
     position: relative
 }
@@ -11,4 +13,14 @@ mat-checkbox {
     margin-top: -20px;
     margin-left: -20px;
     background-color: rgba(0, 0, 0, 0);
+}
+
+.selected-color {
+    background-color: $color-table-row-selected;
+}
+
+.selected-count {
+    background: $color-table-row-selected;
+    border-radius: 4px;
+    padding: 10px 20px 8px;
 }

@@ -1,68 +1,39 @@
-import { HttpClient, HttpHeaders, HttpResponse } from "@angular/common/http"
-import { BatchData } from "./BatchData"
-import * as JSZip from "jszip"
+import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
+import { BatchData } from './BatchData';
+import * as JSZip from 'jszip';
 import * as fileSaver from 'file-saver';
-import { from, Observable, of } from "rxjs";
-import { catchError, concatMap, delay, tap } from "rxjs/operators";
+import { from, Observable, of, Subscription } from 'rxjs';
+import { catchError, concatMap } from 'rxjs/operators';
+import { BatchSelector } from './BatchSelector';
 
 interface ProcessableItem {
     id: number;
     response: HttpResponse<Blob>;
-    fileName: string
+    fileName: string;
 }
 
-export class BatchDownloader {
+export class BatchDownloader extends BatchSelector {
     constructor(
         private http: HttpClient,
-        private url: Function
-    ) { }
+        private url: (s: string) => string
+    ) { super(); }
 
-    private list: number[] = []
 
-    private getId(batchData: BatchData.BatchExecInfo): number {
-        return batchData.batch.id
-    }
-
-    toggle(batchData: BatchData.BatchExecInfo) {
-        if (this.isSelected(batchData)) {
-            this.list.splice(this.list.indexOf(this.getId(batchData)), 1)
-        } else {
-            this.list.push(this.getId(batchData))
-        }
-        this.list.sort((a, z) => a - z)
-    }
-
-    isSelected(batchData: BatchData.BatchExecInfo) {
-        if (this.list.indexOf(this.getId(batchData)) === -1) {
-            return false
-        } else {
-            return true
-        }
-    }
-
-    clear() {
-        this.list = []
-    }
-
-    size() {
-        return this.list.length
-    }
-
-    download() {
-        const zipFileName = 'result ' + this.list.toString() + '.zip'
-        const zip = new JSZip()
+    download(): void {
+        const zipFileName: string = 'result ' + this.list.toString() + '.zip';
+        const zip: JSZip = new JSZip();
         const processable: ProcessableItem[] = this.list.map(el => ({
             id: el,
             fileName: 'empty',
             response: null,
-        }))
+        }));
 
         from(processable)
             .pipe(
                 concatMap(item => this.downloadBatch(item.id.toString())
                     .pipe(
                         catchError(err => of(err)),
-                        this.parseRrocessableItemOperator(item),
+                        this.parseProcessableItemOperator(item),
                     )
                 )
             )
@@ -71,33 +42,33 @@ export class BatchDownloader {
                 error: error => { },
                 complete: () => {
                     processable.forEach(item => {
-                        zip.file(item.fileName, item.response.body)
-                    })
-                    zip.generateAsync({ type: "blob" }).then((blob: Blob) => {
-                        fileSaver.saveAs(blob, zipFileName)
-                    })
+                        zip.file(item.fileName, item.response.body);
+                    });
+                    zip.generateAsync({ type: 'blob' }).then((blob: Blob) => {
+                        fileSaver.saveAs(blob, zipFileName);
+                    });
                 }
-            })
+            });
 
     }
 
-    private parseRrocessableItemOperator(item: ProcessableItem) {
+    private parseProcessableItemOperator(item: ProcessableItem): (source: Observable<HttpResponse<Blob>>) => Observable<Subscription> {
         return (source: Observable<HttpResponse<Blob>>) =>
-            new Observable(observer => {
+            new Observable<Subscription>(observer => {
                 return source.subscribe(
                     {
                         next: response => {
-                            item.response = response
+                            item.response = response;
                             item.fileName = response.ok ?
                                 `${item.id}.zip` :
-                                `${item.id} error`
-                            observer.next()
+                                `${item.id} error`;
+                            observer.next();
                         },
                         error: error => observer.error(error),
                         complete: () => observer.complete(),
                     }
-                )
-            })
+                );
+            });
     }
 
     private downloadBatch(batchId: string): Observable<HttpResponse<Blob>> {

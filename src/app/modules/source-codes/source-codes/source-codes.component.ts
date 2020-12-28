@@ -17,7 +17,7 @@ import { SourceCodesArchiveComponent } from '../source-codes-archive/source-code
     templateUrl: './source-codes.component.html',
     styleUrls: ['./source-codes.component.sass']
 })
-export class SourceCodesComponent extends UIStateComponent implements OnInit, ConfirmationDialogInterface {
+export class SourceCodesComponent extends UIStateComponent implements OnInit {
 
     TABINDEX: number = 0;
 

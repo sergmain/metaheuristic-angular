@@ -18,22 +18,24 @@ import { UIStateComponent } from '@src/app/models/UIStateComponent';
 export class ProcessorsComponent extends UIStateComponent implements OnInit, ConfirmationDialogInterface {
     processorResult: ProcessorsResult;
     showStatusOfProcessor: boolean = false;
-    dataSource = new MatTableDataSource<ProcessorStatus>([]);
-    selection = new SelectionModel<ProcessorStatus>(true, []);
+    dataSource: MatTableDataSource<ProcessorStatus> = new MatTableDataSource<ProcessorStatus>([]);
+    selection: SelectionModel<ProcessorStatus> = new SelectionModel<ProcessorStatus>(true, []);
     columnsToDisplay: string[] = ['check', 'id', 'ip', 'description', 'reason', 'lastSeen', 'bts'];
     secondColumnsToDisplay: string[] = ['empty', 'env'];
 
     constructor(
         readonly dialog: MatDialog,
         private processorsService: ProcessorsService
-    ) { super() }
+    ) {
+        super();
+    }
 
     ngOnInit(): void {
         this.updateTable(0);
     }
 
     updateTable(page: number): void {
-        this.isLoading = true
+        this.isLoading = true;
         this.processorsService
             .init(page.toString())
             .subscribe(processorResult => {
@@ -42,7 +44,7 @@ export class ProcessorsComponent extends UIStateComponent implements OnInit, Con
                 if (items.length) {
                     this.dataSource = new MatTableDataSource(items);
                 }
-                this.isLoading = false
+                this.isLoading = false;
             });
     }
 
@@ -50,13 +52,11 @@ export class ProcessorsComponent extends UIStateComponent implements OnInit, Con
         this.dataSource.filter = filterValue.trim().toLowerCase();
     }
 
-    isAllSelected() {
-        const numSelected = this.selection.selected.length;
-        const numRows = this.dataSource.data.length;
-        return numSelected === numRows;
+    isAllSelected(): boolean {
+        return this.selection.selected.length === this.dataSource.data.length;
     }
 
-    masterToggle() {
+    masterToggle(): void {
         this.isAllSelected() ?
             this.selection.clear() :
             this.dataSource.data.forEach(row => this.selection.select(row));
@@ -79,7 +79,7 @@ export class ProcessorsComponent extends UIStateComponent implements OnInit, Con
     delete(processor: ProcessorStatus): void {
         this.processorsService
             .deleteProcessorCommit(processor.processor.id.toString())
-            .subscribe(() => this.updateTable(this.processorResult.items.number))
+            .subscribe(() => this.updateTable(this.processorResult.items.number));
     }
 
     @ConfirmationDialogMethod({
@@ -90,6 +90,6 @@ export class ProcessorsComponent extends UIStateComponent implements OnInit, Con
     deleteMany(): void {
         this.processorsService
             .processProcessorBulkDeleteCommit(this.selection.selected.map(v => v.processor.id.toString()))
-            .subscribe(() => this.updateTable(this.processorResult.items.number))
+            .subscribe(() => this.updateTable(this.processorResult.items.number));
     }
 }

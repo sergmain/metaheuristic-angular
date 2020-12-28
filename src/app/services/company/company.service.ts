@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { generateFormData } from '@src/app/helpers/generateFormData';
 import { OperationStatusRest } from '@src/app/models/OperationStatusRest';
 import { environment } from '@src/environments/environment';
-import { Observable } from 'rxjs';
+import { from, Observable, of, Subscription } from 'rxjs';
 import { SimpleCompaniesResult } from './SimpleCompaniesResult';
 import { SimpleCompanyResult } from './SimpleCompanyResult';
 import { NewAccount, AccountsResult, AccountResult } from '../accounts';
@@ -11,8 +11,18 @@ import { AccountWithRoleResult } from './AccountWithRoleResult';
 import { BatchesResult } from '../batch/BatchesResult';
 import { BatchData } from '@src/app/services/batch/BatchData';
 import { SourceCodesForCompany } from '../source-codes/SourceCodesForCompany';
+import * as JSZip from 'jszip';
+import { catchError, concatMap } from 'rxjs/operators';
+import * as fileSaver from 'file-saver';
 
 const url = (s: string): string => `${environment.baseUrl}dispatcher/company/${s}`;
+
+interface ProcessableItem {
+    id: string;
+    companyId: string;
+    response: HttpResponse<Blob>;
+    fileName: string;
+}
 
 @Injectable({ providedIn: 'root' })
 export class CompanyService {
@@ -142,4 +152,58 @@ export class CompanyService {
             url(`batch/company-batch-source-codes/${companyUniqueId}`)
         )
 
+    downloadProcessingResults(list: number[], companyId: string): Observable<boolean> {
+        const zipFileName: string = 'result ' + list.toString() + '.zip';
+        const zip: JSZip = new JSZip();
+        const processable: ProcessableItem[] = list.map(el => ({
+            id: el.toString(),
+            fileName: 'empty',
+            response: null,
+            companyId
+        }));
+        return new Observable<boolean>(sub => {
+            from(processable)
+                .pipe(
+                    concatMap(item => this.downloadProcessingResult(item.companyId, item.id)
+                        .pipe(
+                            catchError(err => of(err)),
+                            this.parseProcessableItemOperator(item),
+                        )
+                    )
+                )
+                .subscribe({
+                    next: e => { },
+                    error: error => sub.error(error),
+                    complete: () => {
+                        processable.forEach(item => {
+                            zip.file(item.fileName, item.response.body);
+                        });
+                        zip.generateAsync({ type: 'blob' }).then((blob: Blob) => {
+                            fileSaver.saveAs(blob, zipFileName);
+                        });
+                        sub.next(true);
+                        sub.complete();
+                    }
+                });
+        });
+    }
+
+    private parseProcessableItemOperator(item: ProcessableItem): (source: Observable<HttpResponse<Blob>>) => Observable<Subscription> {
+        return (source: Observable<HttpResponse<Blob>>) =>
+            new Observable<Subscription>(observer => {
+                return source.subscribe(
+                    {
+                        next: response => {
+                            item.response = response;
+                            item.fileName = response.ok ?
+                                `${item.id}.zip` :
+                                `${item.id} error`;
+                            observer.next();
+                        },
+                        error: error => observer.error(error),
+                        complete: () => observer.complete(),
+                    }
+                );
+            });
+    }
 }

@@ -29,13 +29,13 @@ export class AppComponent implements OnInit {
         this.store.dispatch(settingsActions.getAll());
     }
 
-    ngOnInit() {
-        this.authenticationService.getUserData.subscribe(user => {
+    ngOnInit(): void {
+        this.authenticationService.userDataChanges.subscribe(user => {
             if (user && user.username) {
-                this.batchExexStatusService.startIntervalRequset()
+                this.batchExexStatusService.startIntervalRequset();
             } else {
                 this.batchExexStatusService.stopIntervalRequset();
             }
-        })
+        });
     }
 }

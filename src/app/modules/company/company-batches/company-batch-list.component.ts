@@ -3,7 +3,6 @@ import { CompanyService } from '@src/app/services/company/company.service';
 import { ActivatedRoute } from '@angular/router';
 import { BatchesResult } from '@src/app/services/batch/BatchesResult';
 import { MatTableDataSource } from '@angular/material/table';
-import { UIBatch } from '@src/app/services/batch/UIBatch';
 import { marker } from '@biesbjerg/ngx-translate-extract-marker';
 import { ConfirmationDialogMethod, QuestionData } from '@src/app/components/app-dialog-confirmation/app-dialog-confirmation.component';
 import { MatDialog } from '@angular/material/dialog';
@@ -11,32 +10,87 @@ import { TranslateService } from '@ngx-translate/core';
 import { AuthenticationService } from '@src/app/services/authentication';
 import * as fileSaver from 'file-saver';
 import { BatchExecState } from '@src/app/enums/BatchExecState';
+import { UIStateComponent } from '@src/app/models/UIStateComponent';
+import { SelectionModel } from '@angular/cdk/collections';
+import { BatchData } from '@src/app/services/batch/BatchData';
+import { BatchSelector } from '@src/app/services/batch/BatchSelector';
+import { BatchService } from '@src/app/services/batch/batch.service';
+
+
+
+
 
 @Component({
-    selector: 'company-batches',
-    templateUrl: './company-batches.component.html',
-    styleUrls: ['./company-batches.component.scss']
+    selector: 'company-batch-list',
+    templateUrl: './company-batch-list.component.html',
+    styleUrls: ['./company-batch-list.component.scss']
 })
-export class CompanyBatchesComponent implements OnInit {
+export class CompanyBatchListComponent extends UIStateComponent implements OnInit {
+    companyUniqueId: string;
+    batchesResult: BatchesResult;
+    batches: BatchData.BatchExecInfo[];
+    dataSource: MatTableDataSource<BatchData.BatchExecInfo> = new MatTableDataSource([]);
+    selection: SelectionModel<BatchData.BatchExecInfo> = new SelectionModel<BatchData.BatchExecInfo>(true, []);
+
+    downloadSelector: BatchSelector = new BatchSelector();
 
     constructor(
         public authenticationService: AuthenticationService,
         private companyService: CompanyService,
         private activatedRoute: ActivatedRoute,
-        private dialog: MatDialog,
-        private translate: TranslateService
-    ) { }
+        readonly dialog: MatDialog,
+        readonly translate: TranslateService,
+        private batchService: BatchService
+    ) {
+        super();
+    }
 
-    isLoading: boolean;
-    companyUniqueId: string;
-    batchesResult: BatchesResult;
-    batches: UIBatch[];
-    dataSource: MatTableDataSource<UIBatch> = new MatTableDataSource([]);
-    columnsToDisplay: string[] = ['check', 'id', 'createdOn', 'isBatchConsistent', 'isDeleted', 'sourceCode', 'execState', 'bts'];
+    checkAndToggleRowSeletion(batch: BatchData.BatchExecInfo): void {
+        if (
+            this.isFinished(batch) &&
+            !this.isExecContextDeleted(batch)
+        ) {
+            this.downloadSelector.toggle(batch);
+        }
+    }
 
     ngOnInit(): void {
         this.companyUniqueId = this.activatedRoute.snapshot.paramMap.get('companyUniqueId');
         this.updateTable('0');
+    }
+
+    isAllSelected(): boolean {
+        return this.selection.selected.length === this.dataSource.data.filter(b => b.batch.deleted).length;
+    }
+
+    masterToggle(): void {
+        this.isAllSelected() ?
+            this.selection.clear() :
+            this.dataSource.data.filter(b => b.batch.deleted).forEach(row => this.selection.select(row));
+    }
+
+    get columnsToDisplay(): string[] {
+        if (this.authenticationService.isRoleMasterOperator) {
+            return [
+                'check',
+                'id',
+                'createdOn',
+                'isBatchConsistent',
+                'isDeleted',
+                'sourceCode',
+                'execState',
+                'bts'
+            ];
+        } else {
+            return ['id',
+                'createdOn',
+                'isBatchConsistent',
+                'isDeleted',
+                'sourceCode',
+                'execState',
+                'bts'
+            ];
+        }
     }
 
     updateTable(pageNumber: string): void {
@@ -46,23 +100,15 @@ export class CompanyBatchesComponent implements OnInit {
             .subscribe({
                 next: (batchesResult) => {
                     this.batchesResult = batchesResult;
-                    if (this.authenticationService.isRoleMasterOperator) {
-                        this.columnsToDisplay = ['check', 'id', 'createdOn', 'isBatchConsistent', 'isDeleted', 'sourceCode', 'execState', 'bts'];
-                    } else {
-                        this.columnsToDisplay = ['id', 'createdOn', 'isBatchConsistent', 'isDeleted', 'sourceCode', 'execState', 'bts'];
-                    }
-                    this.batches = this.batchesResult.batches.content.map(b => ({
-                        batch: b,
-                        checked: false,
-                        deleted: b.batch.deleted
-                    }));
+                    this.batches = this.batchesResult.batches.content;
                     this.dataSource = new MatTableDataSource(this.batches);
+                    this.selection.clear();
                 },
                 complete: () => this.isLoading = false,
             });
     }
 
-    isFinished(b: UIBatch): boolean {
+    isFinished(b: BatchData.BatchExecInfo): boolean {
         if (b.batch.execState === BatchExecState.Finished ||
             b.batch.execState === BatchExecState.Error ||
             b.batch.execState === BatchExecState.Archived) {
@@ -71,8 +117,8 @@ export class CompanyBatchesComponent implements OnInit {
         return false;
     }
 
-    isExecContextDeleted(b: UIBatch): boolean {
-        return b.batch.execContextDeleted;
+    isExecContextDeleted(b: BatchData.BatchExecInfo): boolean {
+        return b.execContextDeleted;
     }
 
     prevPage(): void {
@@ -84,20 +130,20 @@ export class CompanyBatchesComponent implements OnInit {
     }
 
     @ConfirmationDialogMethod({
-        question: (batch: UIBatch): QuestionData => {
+        question: (batch: BatchData.BatchExecInfo): QuestionData => {
             return {
                 text: marker('batch-company.delete-dialog.Do you want to delete Batch _batchId_'),
-                params: { batchId: batch.batch.batch.id }
+                params: { batchId: batch.batch.id }
             };
         },
         rejectTitle: `${marker('batch-company.delete-dialog.Cancel')}`,
         resolveTitle: `${marker('batch-company.delete-dialog.Delete')}`,
     })
 
-    deleteOne(batch: UIBatch): void {
+    deleteOne(batch: BatchData.BatchExecInfo): void {
         this.isLoading = true;
         this.companyService
-            .processBatchDeleteCommit(this.companyUniqueId, batch.batch.batch.id.toString())
+            .processBatchDeleteCommit(this.companyUniqueId, batch.batch.id.toString())
             .subscribe({
                 complete: () => {
                     this.updateTable(this.batchesResult.batches.number.toString());
@@ -120,48 +166,19 @@ export class CompanyBatchesComponent implements OnInit {
         this.companyService
             .processBatchesBulkDeleteCommit(
                 this.companyUniqueId,
-                this.onlyDeleted()
-                    .filter(b => b.checked)
-                    .map(b => b.batch.batch.id).toString()
+                this.selection.selected
+                    .map(b => b.batch.id).toString()
             )
             .subscribe({
                 next: () => {
-
-                },
-                complete: () => {
                     this.updateTable(this.batchesResult.batches.number.toString());
                 }
             });
     }
 
-    checkIndeterminate(): boolean {
-        if (this.onlyDeleted().filter(b => b.checked).length &&
-            this.onlyDeleted().filter(b => b.checked).length < this.onlyDeleted().length
-        ) {
-            return true;
-        }
-        return false;
-    }
-
-    allComplete(): boolean {
-        return this.onlyDeleted().length === this.onlyDeleted().filter(b => b.checked).length;
-    }
-
-    setAllChecked(bool: boolean): void {
-        this.onlyDeleted().forEach(b => b.checked = bool);
-    }
-
-    someChecked(): boolean {
-        return !!this.onlyDeleted().filter(b => b.checked).length;
-    }
-
-    private onlyDeleted(): UIBatch[] {
-        return this.batches.filter(b => b.deleted);
-    }
-
-    downloadResult(el: UIBatch): void {
+    downloadResult(el: BatchData.BatchExecInfo): void {
         this.companyService
-            .downloadProcessingResult(this.companyUniqueId, el.batch.batch.id.toString())
+            .downloadProcessingResult(this.companyUniqueId, el.batch.id.toString())
             .subscribe((res) => {
                 const name: string = res.headers
                     .get('Content-Disposition')
@@ -169,12 +186,12 @@ export class CompanyBatchesComponent implements OnInit {
                 fileSaver.saveAs(res.body, name);
             });
     }
-    downloadOriginFile(el: UIBatch): void {
+    downloadOriginFile(el: BatchData.BatchExecInfo): void {
         this.companyService
             .downloadOriginFile(
                 this.companyUniqueId,
-                el.batch.batch.id.toString(),
-                el.batch.uploadedFileName
+                el.batch.id.toString(),
+                el.uploadedFileName
             )
             .subscribe((res) => {
                 const name: string = res.headers
@@ -182,5 +199,16 @@ export class CompanyBatchesComponent implements OnInit {
                     .replace('filename*=UTF-8\'\'', '') || 'result.zip';
                 fileSaver.saveAs(res.body, name);
             });
+    }
+
+    downloadResults(): void {
+        this.isLoading = true;
+        this.companyService.downloadProcessingResults(
+            this.downloadSelector.getList(),
+            this.companyUniqueId
+        ).subscribe(() => {
+            this.isLoading = false;
+            this.downloadSelector.clear();
+        });
     }
 }

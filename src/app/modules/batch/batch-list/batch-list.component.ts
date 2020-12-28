@@ -22,54 +22,54 @@ import { Subscription } from 'rxjs';
     styleUrls: ['./batch-list.component.scss']
 })
 export class BatchListComponent extends UIStateComponent implements OnInit, OnDestroy {
-    subs: Subscription[] = []
-    batchesResult: BatchesResult
-    isFiltered: boolean
+    subs: Subscription[] = [];
+    batchesResult: BatchesResult;
+    isFiltered: boolean;
     dataSource: MatTableDataSource<BatchData.BatchExecInfo> = new MatTableDataSource([]);
     columnsToDisplay: string[] = ['id', 'createdOn', 'Owner', 'isBatchConsistent', 'sourceCode', 'execState', 'bts'];
 
     constructor(
         private batchService: BatchService,
         private authenticationService: AuthenticationService,
-        private dialog: MatDialog,
-        private translate: TranslateService,
+        readonly dialog: MatDialog,
+        readonly translate: TranslateService,
         private batchExexStatusService: BatchExexStatusService
     ) {
         super();
     }
 
     ngOnInit(): void {
-        this.updateTable('0', this.isFiltered)
+        this.updateTable('0', this.isFiltered);
         this.subs.push(this.batchExexStatusService.getStatuses.subscribe({
             next: statuses => {
-                this.batchExexStatusService.updateBatchesResultByStatuses(this.batchesResult, statuses)
+                this.batchExexStatusService.updateBatchesResultByStatuses(this.batchesResult, statuses);
             }
-        }))
+        }));
     }
 
-    ngOnDestroy() {
-        this.subs.forEach(s => s.unsubscribe())
+    ngOnDestroy(): void {
+        this.subs.forEach(s => s.unsubscribe());
     }
 
-    updateTable(pageNumbder: string, isFiltered: boolean) {
-        this.isLoading = true
+    updateTable(pageNumbder: string, isFiltered: boolean): void {
+        this.isLoading = true;
         this.batchService
             .batches(pageNumbder, isFiltered)
             .subscribe({
                 next: batchesResult => {
-                    this.batchesResult = batchesResult
+                    this.batchesResult = batchesResult;
                     this.columnsToDisplay = this.authenticationService.isRoleOperator() ?
                         ['id', 'createdOn', 'Owner', 'sourceCode', 'execState', 'bts'] :
                         ['id', 'createdOn', 'Owner', 'isBatchConsistent', 'sourceCode', 'execState', 'bts'];
                     this.dataSource = new MatTableDataSource(batchesResult.batches.content || []);
-                    this.isLoading = false
+                    this.isLoading = false;
                 }
-            })
+            });
     }
 
-    toggleFilter() {
-        this.isFiltered = !this.isFiltered
-        this.updateTable('0', this.isFiltered)
+    toggleFilter(): void {
+        this.isFiltered = !this.isFiltered;
+        this.updateTable('0', this.isFiltered);
     }
 
     isDeletedRow(b: BatchData.BatchExecInfo): boolean {
@@ -79,7 +79,7 @@ export class BatchListComponent extends UIStateComponent implements OnInit, OnDe
 
     @ConfirmationDialogMethod({
         question: (event: Event, batchData: BatchData.BatchExecInfo): QuestionData => {
-            event.stopPropagation()
+            event.stopPropagation();
             return {
                 text: marker('batch.delete-dialog.Do you want to delete Batch _batchId_'),
                 params: { batchId: batchData.batch.id }
@@ -93,49 +93,49 @@ export class BatchListComponent extends UIStateComponent implements OnInit, OnDe
             .processResourceDeleteCommit(batchData.batch.id.toString())
             .subscribe({
                 next: () => {
-                    this.updateTable((this.batchesResult.batches.number).toString(), this.isFiltered)
+                    this.updateTable((this.batchesResult.batches.number).toString(), this.isFiltered);
                 }
             });
     }
 
     downloadFile(event: Event, batchId: string): void {
-        event.stopPropagation()
+        event.stopPropagation();
         this.batchService.downloadFile(batchId)
             .subscribe((res: HttpResponse<Blob>) => {
-                const tryname = res.headers.get('Content-Disposition')?.split?.('\'\'')?.[1]
+                const tryname: string = res.headers.get('Content-Disposition')?.split?.('\'\'')?.[1];
                 fileSaver.saveAs(res.body, tryname ? tryname : 'result.zip');
             });
     }
 
-    downloadSelectedRows() {
-        this.batchService.batchDownloader.download()
+    downloadSelectedRows(): void {
+        this.batchService.batchDownloader.download();
     }
 
-    discardSelectedRows() {
-        this.batchService.batchDownloader.clear()
+    discardSelectedRows(): void {
+        this.batchService.batchDownloader.clear();
     }
 
     isSelectedRow(batchData: BatchData.BatchExecInfo): boolean {
-        return this.batchService.batchDownloader.isSelected(batchData)
+        return this.batchService.batchDownloader.isSelected(batchData);
     }
 
-    selectRow(event: Event, batchData: BatchData.BatchExecInfo) {
-        event.stopPropagation()
+    selectRow(event: Event, batchData: BatchData.BatchExecInfo): void {
+        event.stopPropagation();
         if (batchData.ok &&
-            batchData.execState == BatchExecState.Finished) {
-            this.batchService.batchDownloader.toggle(batchData)
+            batchData.execState === BatchExecState.Finished) {
+            this.batchService.batchDownloader.toggle(batchData);
         }
     }
 
-    countOfSelectedRows() {
-        return this.batchService.batchDownloader.size()
+    countOfSelectedRows(): number {
+        return this.batchService.batchDownloader.size;
     }
 
-    nextPage() {
-        this.updateTable((this.batchesResult.batches.number + 1).toString(), this.isFiltered)
+    nextPage(): void {
+        this.updateTable((this.batchesResult.batches.number + 1).toString(), this.isFiltered);
     }
 
-    prevPage() {
-        this.updateTable((this.batchesResult.batches.number - 1).toString(), this.isFiltered)
+    prevPage(): void {
+        this.updateTable((this.batchesResult.batches.number - 1).toString(), this.isFiltered);
     }
 }

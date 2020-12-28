@@ -1,11 +1,12 @@
+@import "../batch.scss";
 
 
-.selected-color{
-    background: rgba(255, 193, 7, 0.18);
+.selected-color {
+    background: $color-table-row-selected;
 }
 
-.seleted-count {
-    background: rgba(255, 193, 7, 0.18);
+.selected-count {
+    background: $color-table-row-selected;
     border-radius: 4px;
-    padding: 10px 20px;
+    padding: 10px 20px 8px;
 }

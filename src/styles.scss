@@ -3,14 +3,11 @@
 @import "./fonts/robotocondensed/robotocondensed.css";
 @import "./fonts/robotomono/robotomono.css";
 @import "./fonts/material-design-icons/material-icons.css";
-
 @import "./variables.scss";
-
 * {
     box-sizing: border-box;
     // background-color: rgba(black, 0.1);
 }
-
 
 html {
     height: 100%;
@@ -25,7 +22,7 @@ body {
     line-height: unit(3);
 }
 
-h1{
+h1 {
     line-height: unit(5);
     font-size: unit(4);
     font-weight: normal;
@@ -37,15 +34,14 @@ p {
     margin: unit(2) 0;
 }
 
-
 hr {
     display: block;
     height: 1px;
     border: none;
-    margin:unit(4)  0;
-    background-color: rgba(128,128,128,0.5);
+    margin: unit(4) 0;
+    background-color: rgba(128, 128, 128, 0.5);
 }
-    
+
 pre {
     margin: 0;
     white-space: pre-wrap;
@@ -68,4 +64,5 @@ button * {
 }
 
 @import "./overrided-slyles/mat-button.scss";
+@import "./overrided-slyles/mat-checkbox.scss";
 @import './styles-theme.scss';

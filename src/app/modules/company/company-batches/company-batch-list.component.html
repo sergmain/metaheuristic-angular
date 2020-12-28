@@ -1,12 +1,3 @@
-<ct-section *ngIf="!batchesResult">
-    <ct-section-body>
-        <ct-section-body-row>
-            <mat-progress-bar mode="indeterminate"></mat-progress-bar>
-        </ct-section-body-row>
-    </ct-section-body>
-</ct-section>
-
-
 <ct-section *ngIf="batchesResult">
     <ct-section-header>
         <ct-section-header-row>
@@ -27,111 +18,154 @@
                     <ng-container matColumnDef="check">
                         <th mat-header-cell *matHeaderCellDef>
                             <mat-checkbox 
-                                [indeterminate]="checkIndeterminate()" 
-                                [checked]="allComplete()"
-                                *ngIf="dataSource.data.length" 
-                                (change)="setAllChecked($event.checked)">
-                                    <div class="check-area"></div>
+                                color="warn"
+                                (change)="masterToggle()"
+                                [checked]="selection.hasValue() && isAllSelected()"
+                                [indeterminate]="selection.hasValue() && !isAllSelected()">
+                                <div class="check-area"></div>
                             </mat-checkbox>
                         </th>
                         <td mat-cell *matCellDef="let el">
-                            <mat-checkbox [(ngModel)]="el.checked" *ngIf="el.deleted">
-                                <div class="check-area"></div>
-                            </mat-checkbox>
+                            <ng-container *ngIf="el.batch.deleted">
+                                <mat-checkbox 
+                                    color="warn"
+                                    (click)="$event.stopPropagation()"
+                                    (change)="selection.toggle(el)"
+                                    [checked]="selection.isSelected(el)">
+                                    <div class="check-area"></div>
+                                </mat-checkbox>
+                            </ng-container>
+                   
+                            <ng-container *ngIf="!el.batch.deleted">
+                                <mat-checkbox disabled>
+                                    <div class="check-area"></div>
+                                </mat-checkbox>
+                            </ng-container>
+                   
                         </td>
                     </ng-container>
+                   
                     <ng-container matColumnDef="id">
                         <th mat-header-cell *matHeaderCellDef>ID</th>
-                        <td mat-cell *matCellDef="let el">{{el.batch.batch.id}} </td>
+                        <td mat-cell *matCellDef="let el">{{el.batch.id}} </td>
                     </ng-container>
+                   
                     <ng-container matColumnDef="createdOn">
                         <th mat-header-cell *matHeaderCellDef>Created on </th>
                         <td mat-cell *matCellDef="let el">
-                            {{el.batch.batch.createdOn | date:'MMM d, yyyy, HH:mm:ss'}} </td>
+                            {{el.batch.createdOn | date:'MMM d, yyyy, HH:mm:ss'}} </td>
                     </ng-container>
+                   
                     <ng-container matColumnDef="isBatchConsistent">
                         <th mat-header-cell *matHeaderCellDef>Is batch consistent?</th>
-                        <td mat-cell *matCellDef="let el"> <span *ngIf="el.batch.ok">{{
-                                'batch.isBatchConsistent.true' | translate }}</span><span *ngIf="!el.batch.ok">{{
+                        <td mat-cell *matCellDef="let el"> <span *ngIf="el.ok">{{
+                                'batch.isBatchConsistent.true' | translate }}</span><span *ngIf="!el.ok">{{
                                 'batch.isBatchConsistent.false' | translate }}</span></td>
                     </ng-container>
+                   
                     <ng-container matColumnDef="isDeleted">
                         <th mat-header-cell *matHeaderCellDef>Is deleted? </th>
-                        <td mat-cell *matCellDef="let el">{{ el.batch.batch.deleted }} </td>
+                        <td mat-cell *matCellDef="let el">{{ el.batch.deleted }} </td>
                     </ng-container>
+                   
                     <ng-container matColumnDef="sourceCode">
                         <th mat-header-cell *matHeaderCellDef>
                             <div class="no-wrap">Source Code</div>
                             <div class="no-wrap">File Name</div>
                         </th>
                         <td mat-cell *matCellDef="let el">
-                            <div class="no-wrap">{{el.batch.sourceCodeUid}}</div>
-                            <div class="no-wrap">{{el.batch.uploadedFileName}}</div>
+                            <div class="no-wrap">{{el.sourceCodeUid}}</div>
+                            <div class="no-wrap">{{el.uploadedFileName}}</div>
                         </td>
                     </ng-container>
+                   
                     <ng-container matColumnDef="execState">
                         <th mat-header-cell *matHeaderCellDef>Exec State</th>
                         <td mat-cell *matCellDef="let el">
-                            <span *ngIf="el.batch.execState === -1">Error</span>
-                            <span *ngIf="el.batch.execState === 2">Preparing</span>
-                            <span *ngIf="el.batch.execState === 3">Processing</span>
-                            <span *ngIf="el.batch.execState === 4">Finished</span>
+                            <span *ngIf="el.execState === -1">Error</span>
+                            <span *ngIf="el.execState === 2">Preparing</span>
+                            <span *ngIf="el.execState === 3">Processing</span>
+                            <span *ngIf="el.execState === 4">Finished</span>
                         </td>
                     </ng-container>
+                   
                     <ng-container matColumnDef="bts">
                         <th mat-header-cell *matHeaderCellDef> </th>
                         <td mat-cell *matCellDef="let el">
                             <ct-flex justify-content="flex-end" gap="9px">
                                 <ct-flex-item>
-                                    <button mat-flat-button [routerLink]="['../','batch',el.batch.batch.id]"
+                                    <button mat-flat-button 
+                                        [routerLink]="['../','batch',el.batch.id]"
                                         [disabled]="!isFinished(el) || isExecContextDeleted(el)" size="forTableRow"
                                         color="primary">Status</button>
                                 </ct-flex-item>
                                 <ct-flex-item>
-                                    <button mat-flat-button size="forTableRow" color="primary"
+                                    <button mat-flat-button 
+                                        size="forTableRow" 
+                                        color="primary"
                                         [disabled]="!isFinished(el) || isExecContextDeleted(el)"
                                         (click)="downloadResult(el)">
-                                        <mat-icon>archive</mat-icon>
                                         Result
                                     </button>
                                 </ct-flex-item>
                                 <ct-flex-item>
                                     <button mat-flat-button size="forTableRow" color="primary"
                                         (click)="downloadOriginFile(el)">
-                                        <mat-icon>archive</mat-icon>
                                         Origin File
                                     </button>
                                 </ct-flex-item>
                                 <ng-container *ngIf="authenticationService.isRoleMasterOperator()">
                                     <ct-flex-item>
-                                        <button mat-flat-button color="warn" size="forTableRow" (click)="deleteOne(el)"
-                                            title="Delete" [disabled]="!(el.deleted && isFinished(el))">
+                                        <button mat-flat-button 
+                                            color="warn" 
+                                            size="forTableRow" 
+                                            (click)="deleteOne(el)"
+                                            title="Delete" 
+                                            [disabled]="!(el.batch.deleted && isFinished(el))">
                                             <mat-icon>delete</mat-icon>
                                         </button>
                                     </ct-flex-item>
                                 </ng-container>
+                   
                             </ct-flex>
                         </td>
                     </ng-container>
+                   
                     <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
-                    <tr mat-row *matRowDef="let row; columns: columnsToDisplay;"></tr>
+                    <tr mat-row 
+                        *matRowDef="let row; columns: columnsToDisplay;"
+                        (click)="checkAndToggleRowSeletion(row)"
+                        [class.selected-color]="downloadSelector.isSelected(row)"
+                        ></tr>
                 </table>
             </ct-table>
         </ct-section-body-row>
     </ct-section-body>
     <ct-section-footer>
-        <ct-section-footer-row *ngIf="!authenticationService.isRoleMasterOperator()">
-            <button mat-flat-button color="warn" (click)="deleteMany()" [disabled]="!someChecked() || isLoading"
-                title="Delete Checked">
-                Delete Checked
-            </button>
-        </ct-section-footer-row>
+        <ng-container *ngIf="authenticationService.isRoleMasterOperator()">
+            <ct-section-footer-row>
+                <button mat-flat-button 
+                    color="warn" 
+                    (click)="deleteMany()" 
+                    [disabled]="isLoading || selection.selected.length === 0"
+                    title="Delete Checked">
+                    Delete Checked
+                </button>
+            </ct-section-footer-row>
+        </ng-container>
         <ct-section-footer-row>
             <ct-flex justify-content="space-between">
                 <ct-flex-item>
                     <ct-table-pagination (prev)="prevPage()" (next)="nextPage()"
                         [pageableDefault]="batchesResult.batches"></ct-table-pagination>
                 </ct-flex-item>
+
+                <ng-container *ngIf="downloadSelector.size > 0">
+                    <ct-flex-item>
+                        <ng-container *ngTemplateOutlet="downloadButtonsTemplate"></ng-container>
+                    </ct-flex-item>
+                </ng-container>
+
                 <ct-flex-item>
                     <ng-container *ngTemplateOutlet="uploadButtonTemplate"></ng-container>
                 </ct-flex-item>
@@ -141,8 +175,38 @@
 </ct-section>
 
 
+
+<ng-template #downloadButtonsTemplate>
+    <ct-flex justify-content="center" gap="unit(1)" align-items="center">
+        <ct-flex-item>
+            <div class="selected-count">
+                Selected × {{downloadSelector.size}}
+            </div>
+        </ct-flex-item>
+        <ct-flex-item>
+            <button mat-flat-button 
+                color="primary" 
+                (click)="downloadResults()" 
+                [disabled]="isLoading">
+                Download
+            </button>
+        </ct-flex-item>
+        <ct-flex-item>
+            <button mat-flat-button 
+                [disabled]="isLoading"
+                (click)="downloadSelector.clear()"
+                color="primary">
+                Discard
+            </button>
+        </ct-flex-item>
+    </ct-flex>
+</ng-template>
+
+
+
 <ng-template #uploadButtonTemplate>
-    <button *ngIf="authenticationService.isRoleMasterOperator()" mat-flat-button color="primary"
-        [routerLink]="['upload']">Upload files and start
-        processing</button>
+    <ng-container *ngIf="authenticationService.isRoleMasterOperator()">
+        <button mat-flat-button color="primary" [routerLink]="['upload']">Upload files and start
+            processing</button>
+    </ng-container>
 </ng-template>
