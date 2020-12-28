@@ -1,15 +1,6 @@
 <mat-tab-group #matTabGroup mat-stretch-tabs dynamicHeight (selectedIndexChange)="tabChange()">
     <mat-tab label="CURRENT"><br />
 
-        <ct-section *ngIf="!sourceCodesResult">
-            <ct-section-body>
-                <ct-section-body-row>
-                    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
-                </ct-section-body-row>
-            </ct-section-body>
-        </ct-section>
-
-
         <ct-section *ngIf="sourceCodesResult">
             <ct-section-header>
                 <ct-section-header-row>
