@@ -68,32 +68,6 @@ issue-1317
 возвращается ai.metaheuristic.api.data.exec_context.ExecContextApiData.TaskExecInfo
 
 
-issue-1318
-везде отключить глюкало в виде бегущей зеленой полоски
-можно увидеть при открытии, например, https://srv2a.stp-baikal.ru/#/dispatcher/company/4/batch/115
-DONE
-CONFIRMED
-
-
-issue-1319
-Отвалилось групповое удаление пакетов
-зайдя под ролью MASTER_OPERATOR удалить пакеты невозможно т.к. нет кнопок выбора пакетов
-кнопка удалить выбранное есть, но т.к. нет созможности выбрать пакеты, эта кнопка все время неактивна
-
-UPD, выбрать пакеты теперь можно, но кнопки удаления выбранного усчезла
-DONE
-CONFIRMED
-
-
-issue-1323
-реализовать групповое скачивание пакетов для роли MASTER_OPERATOR по урл
-http://localhost:4200/#/dispatcher/company/2/batches
-
-функциональность точно такая же как и для урл http://localhost:4200/#/batch
-DONE
-CONFIRMED
-
-
 
 
 
