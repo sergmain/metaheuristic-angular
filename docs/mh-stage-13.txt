@@ -56,19 +56,3 @@ NOT YET
 
 
 
-issue-1317
-на странице статуса выполнения контекстов для каждой задачи, законченной со статусом OK,
-выводить список ссылок для скачивания выходных переменных.
-вся необходимая инфа передается в json
-
-для законченных задач с ERROR выводить ссылку для открытия модального окна с информацией об ошибке
-для других статусов ничего не выводить.
-урл для плучения инфы об выполнении задачи:
-/rest/v1/dispatcher/source-code/exec-context-task-exec-info/{sourceCodeId}/{execContextId}/{taskId}"
-возвращается ai.metaheuristic.api.data.exec_context.ExecContextApiData.TaskExecInfo
-DONE
-CONFIRMED
-
-
-
-
