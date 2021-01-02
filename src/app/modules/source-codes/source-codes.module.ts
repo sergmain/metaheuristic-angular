@@ -15,6 +15,7 @@ import { SourceCodesComponent } from './source-codes/source-codes.component';
 import { CardFormUploadSourceCodeComponent } from './card-form-upload-source-code/card-form-upload-source-code.component';
 import { CardFormAddSourceCodeComponent } from './card-form-add-source-code/card-form-add-source-code.component';
 import { ViewSourceCodeComponent } from './view-source-code/view-source-code.component';
+import { StateOfTasksComponent } from './state-of-tasks/state-of-tasks.component';
 
 const routes: Routes = [
     {
@@ -81,7 +82,8 @@ export class SourceCodeRoutingModule { }
         EditExecContextComponent,
         ExecContextStatesComponent,
         CardFormAddSourceCodeComponent,
-        CardFormUploadSourceCodeComponent
+        CardFormUploadSourceCodeComponent,
+        StateOfTasksComponent
     ],
 
     imports: [

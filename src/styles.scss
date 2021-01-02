@@ -63,6 +63,15 @@ button * {
     user-select: none;
 }
 
+.link {
+    color: $color-link;
+    cursor: pointer;
+}
+.link:hover {
+    color: $color-link-hover;
+}
+
+
 @import "./overrided-slyles/mat-button.scss";
 @import "./overrided-slyles/mat-checkbox.scss";
 @import './styles-theme.scss';

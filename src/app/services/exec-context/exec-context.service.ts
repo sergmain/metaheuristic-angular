@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { generateFormData } from '@src/app/helpers/generateFormData';
 import { OperationStatusRest } from '@src/app/models/OperationStatusRest';
@@ -8,6 +8,7 @@ import { ExecContextResult } from '../source-codes/ExecContextResult';
 import { ExecContextsResult } from '../source-codes/ExecContextsResult';
 import { ExecContextStateResult } from '../source-codes/ExecContextStateResult';
 import { SimpleExecContextAddingResult } from '../source-codes/SimpleExecContextAddingResult';
+import { TaskExecInfo } from './TaskExecInfo';
 
 
 const url = (s: string): string => `${environment.baseUrl}dispatcher/source-code/${s}`;
@@ -59,5 +60,29 @@ export class ExecContextService {
 
     execContextsState(sourceCodeId: string, execContextId: string): Observable<ExecContextStateResult> {
         return this.http.get<ExecContextStateResult>(url(`exec-context-state/${sourceCodeId}/${execContextId}`));
+    }
+
+
+
+    // @GetMapping("/exec-context-task-exec-info/{sourceCodeId}/{execContextId}/{taskId}")
+    // @PreAuthorize("hasAnyRole('ADMIN', 'DATA', 'MANAGER', 'OPERATOR')")
+    // public ExecContextApiData.TaskExecInfo taskExecInfo(@PathVariable Long sourceCodeId, @PathVariable Long execContextId, @PathVariable Long taskId, Authentication authentication) {
+    //     DispatcherContext context = userContextService.getContext(authentication);
+    //     ExecContextApiData.TaskExecInfo execContextState = execContextTopLevelService.getTaskExecInfo(sourceCodeId, execContextId, taskId);
+    //     return execContextState;
+    // }
+    taskExecInfo(sourceCodeId: string, execContextId: string, taskId: string): Observable<TaskExecInfo> {
+        return this.http.get<TaskExecInfo>(url(`exec-context-task-exec-info/${sourceCodeId}/${execContextId}/${taskId}`));
+    }
+
+
+    downloadVariable(execContextId: string, variableId: string): Observable<HttpResponse<Blob>> {
+        let headers: HttpHeaders = new HttpHeaders();
+        headers = headers.append('Accept', 'application/octet-stream');
+        return this.http.get(url(`exec-context/${execContextId}/download-variable/${variableId}`), {
+            headers,
+            observe: 'response',
+            responseType: 'blob'
+        });
     }
 }

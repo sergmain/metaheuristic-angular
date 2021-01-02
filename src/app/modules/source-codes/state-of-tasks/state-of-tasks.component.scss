@@ -1,0 +1,37 @@
+@import '../source-codes.sass';
+
+:host{
+    font-family: $font-family-monospace
+}
+
+.info-table {
+    td {
+        padding-right: unit(2);
+        line-height: 1.2;
+        vertical-align: baseline;
+    }
+}
+
+.state-table {
+
+    border-collapse: collapse;
+
+    td {
+        background-color: rgba(128,128,128,0.05);
+        vertical-align: baseline;
+        white-space: nowrap; 
+        padding: unit(0.75) unit(1);
+        font-size: 80%;
+        line-height: 1.2;
+    }
+    thead {
+        td{
+        border-bottom: 1px solid rgba(128,128,128,0.66);
+        }
+    }
+    tbody {
+        td{
+        border-bottom: 1px solid rgba(128,128,128,0.33);
+        }
+    }
+}

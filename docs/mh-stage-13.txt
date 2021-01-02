@@ -66,7 +66,7 @@ issue-1317
 урл для плучения инфы об выполнении задачи:
 /rest/v1/dispatcher/source-code/exec-context-task-exec-info/{sourceCodeId}/{execContextId}/{taskId}"
 возвращается ai.metaheuristic.api.data.exec_context.ExecContextApiData.TaskExecInfo
-
+DONE
 
 
 

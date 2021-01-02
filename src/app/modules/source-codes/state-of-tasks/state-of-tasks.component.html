@@ -1,0 +1,75 @@
+<div *ngIf="response">
+    <table class="info-table">
+        <tr>
+            <td>UID: </td>
+            <td>{{response.sourceCodeUid}}</td>
+        </tr>
+        <tr>
+            <td>Is valid:</td>
+            <td>{{response.sourceCodeValid}}</td>
+        </tr>
+        <tr>
+            <td>Type: </td>
+            <td>{{response.sourceCodeType}}</td>
+        </tr>
+    </table>
+    <br>
+    <table class="state-table">
+        <thead>
+            <tr>
+                <td></td>
+                <td *ngFor="let elem of response.header">
+                    <div>{{elem.process}}</div>
+                    <div>{{elem.functionCode}}</div>
+                </td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let row of response.lines">
+                <td>{{row.context}}</td>
+                <td *ngFor="let cell of row.cells">
+                    <div *ngIf="!cell.empty">
+                        <div>{{cell.taskId}}</div>
+                        <div>{{cell.state}}</div>
+                        <ng-container *ngTemplateOutlet="stateOkTemplate; context:{cell:cell}"></ng-container>
+                        <ng-container *ngTemplateOutlet="stateErrorTemplate; context:{cell:cell}"></ng-container>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+
+<ng-template #stateOkTemplate let-cell="cell">
+    <ng-container *ngIf="cell.state === TaskExecState.OK">
+        <ng-container *ngFor="let out of cell.outs">
+            <div>
+                <span class="link" (click)="downloadFile(out)">{{out.id}}, {{out.nm}}</span>
+            </div>
+        </ng-container>
+    </ng-container>
+</ng-template>
+
+<ng-template #stateErrorTemplate let-cell="cell">
+    <ng-container *ngIf="cell.state === TaskExecState.ERROR">
+        <span class="link" (click)="openError(cell.taskId)">Task exec info</span>
+    </ng-container>
+</ng-template>
+
+
+<ng-template #errorDialogTemplate>
+    <ng-container *ngIf="taskExecInfo">
+        <div> <b>Task Exec Info</b> </div>
+        <div> taskId: {{taskExecInfo.taskId}} </div>
+        <div> execState: {{taskExecInfo.execState}} </div>
+        <mat-dialog-content>
+            <ct-pre style="font-size: 80%;">
+{{taskExecInfo.console}}
+            </ct-pre>
+        </mat-dialog-content>
+        <mat-dialog-actions align="end">
+            <button mat-flat-button color="primary" mat-dialog-close>Close</button>
+        </mat-dialog-actions>
+    </ng-container>
+</ng-template>
