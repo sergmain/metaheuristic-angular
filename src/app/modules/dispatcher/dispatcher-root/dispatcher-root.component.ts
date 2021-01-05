@@ -1,39 +1,37 @@
-import { Component, OnInit } from '@angular/core';
-import { AppState } from '@src/app/app.reducers';
-import { Store } from '@ngrx/store';
-import { Settings } from '@src/app/services/settings/Settings';
-import { Role, AuthenticationService } from '@src/app/services/authentication';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { UIStateComponent } from '@src/app/models/UIStateComponent';
+import { AuthenticationService } from '@src/app/services/authentication';
+import { Settings } from '@src/app/services/settings/Settings';
+import { SettingsService } from '@src/app/services/settings/settings.service';
 
 @Component({
     selector: 'dispatcher-root',
     templateUrl: './dispatcher-root.component.html',
     styleUrls: ['./dispatcher-root.component.sass']
 })
-export class DispatcherRootComponent {
-
+export class DispatcherRootComponent extends UIStateComponent implements OnInit, OnDestroy {
     settings: Settings;
     sidenavOpened: boolean;
 
-    roles: Set<Role>;
-
     constructor(
-        private store: Store<AppState>,
         public authenticationService: AuthenticationService,
         private router: Router,
+        private settingsService: SettingsService
     ) {
-        this.store.subscribe(data => {
-            this.settings = data.settings;
-            this.updateSidenavState();
-        });
+        super(authenticationService);
+        // повторным кликом перезагружаем страницу
         this.router.routeReuseStrategy.shouldReuseRoute = () => false;
-        this.roles = this.authenticationService.getUserRole();
     }
 
-    private updateSidenavState(): void {
-        this.sidenavOpened = false;
-        if (this.settings.sidenav === true) {
-            this.sidenavOpened = true;
-        }
+    ngOnInit(): void {
+        this.subs.push(this.settingsService.data.subscribe(settings => {
+            this.settings = settings;
+            this.sidenavOpened = this.settings.sidenav;
+        }));
+    }
+
+    ngOnDestroy(): void {
+        this.subs.forEach(s => s.unsubscribe());
     }
 }

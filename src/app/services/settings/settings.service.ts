@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { AppState } from '../../app.reducers';
 import { defaultSettings, Settings, SettingsTheme } from './Settings';
 
@@ -9,6 +9,8 @@ export class SettingsService {
     localStorageName: string = 'settingsService';
 
     storageDefaultData: Settings = defaultSettings;
+
+    data: BehaviorSubject<Settings> = new BehaviorSubject<Settings>(defaultSettings);
 
     constructor(
         private store: Store<AppState>
@@ -21,17 +23,18 @@ export class SettingsService {
         });
     }
 
-    update(newStorageData: any) {
+    update(newStorageData: any): Observable<Settings> {
         return new Observable(subscriber => {
             this.saveToLocalStore(newStorageData);
+            this.data.next(this.getFromLocalStore());
             subscriber.next(this.getFromLocalStore());
             subscriber.complete();
         });
     }
 
-    private updateTheme(state: AppState) {
+    private updateTheme(state: AppState): void {
         const body: HTMLElement = document.querySelector('body');
-        let theme = null;
+        let theme: string = null;
 
         if (state.settings) {
             theme = state.settings.theme;
@@ -52,15 +55,19 @@ export class SettingsService {
         }
     }
 
-    getAll() {
+    getAll(): Observable<Settings> {
         return new Observable(subscriber => {
+            this.data.next(this.getFromLocalStore());
             subscriber.next(this.getFromLocalStore());
             subscriber.complete();
         });
     }
 
     private saveToLocalStore(newStorageData: Settings): void {
-        localStorage.setItem(this.localStorageName, JSON.stringify(Object.assign({}, this.storageDefaultData, newStorageData)));
+        localStorage.setItem(
+            this.localStorageName,
+            JSON.stringify(Object.assign({}, this.storageDefaultData, newStorageData))
+        );
     }
 
     private getFromLocalStore(): Settings {

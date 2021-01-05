@@ -3,48 +3,71 @@
         <div class="navigation">
 
             <button *ngIf="
-                authenticationService.isRoleMasterAssetManager() ||
-                authenticationService.isRoleAdmin() ||
-                authenticationService.isRoleData() ||
-                authenticationService.isRoleManager()
-                " mat-button size="forNavigation" routerLinkActive="active" routerLink="/dispatcher/source-codes">
-                {{ 'dispatcher.SourceCodes' | translate }}
+                    isRole.MasterAssetManager ||
+                    isRole.Admin ||
+                    isRole.Data ||
+                    isRole.Manager
+                " 
+                mat-button size="forNavigation" 
+                routerLinkActive="active" 
+                routerLink="/dispatcher/source-codes">
+                    {{ 'dispatcher.SourceCodes' | translate }}
             </button>
 
             <button *ngIf="
-                authenticationService.isRoleAdmin() || 
-                authenticationService.isRoleData()
-                " mat-button size="forNavigation" routerLinkActive="active"
-                routerLink="/dispatcher/global-variables">{{ 'dispatcher.Variables' | translate }}
+                    isRole.Admin || 
+                    isRole.Data
+                " 
+                mat-button 
+                size="forNavigation" 
+                routerLinkActive="active"
+                routerLink="/dispatcher/global-variables">
+                    {{ 'dispatcher.Variables' | translate }}
             </button>
 
             <button *ngIf="
-                authenticationService.isRoleMasterAssetManager() ||
-                authenticationService.isRoleAdmin() ||
-                authenticationService.isRoleData()
-                " mat-button size="forNavigation" routerLinkActive="active"
-                routerLink="/dispatcher/functions">{{ 'dispatcher.Functions' | translate }}
+                    isRole.MasterAssetManager ||
+                    isRole.Admin ||
+                    isRole.Data
+                " 
+                mat-button 
+                size="forNavigation" 
+                routerLinkActive="active"
+                routerLink="/dispatcher/functions">
+                    {{ 'dispatcher.Functions' | translate }}
             </button>
 
             <button *ngIf="
-                authenticationService.isRoleAdmin() ||
-                authenticationService.isRoleData()
-                " mat-button size="forNavigation" routerLinkActive="active"
-                routerLink="/dispatcher/processors">{{ 'dispatcher.Processors' | translate }}
+                    isRole.Admin ||
+                    isRole.Data
+                " 
+                mat-button 
+                size="forNavigation" 
+                routerLinkActive="active"
+                routerLink="/dispatcher/processors">
+                    {{ 'dispatcher.Processors' | translate }}
             </button>
 
             <button *ngIf="
-                authenticationService.isRoleAdmin()
-                " mat-button size="forNavigation" routerLinkActive="active"
-                routerLink="/dispatcher/accounts">{{ 'dispatcher.Accounts' | translate }}
+                    isRole.Admin
+                " 
+                mat-button 
+                size="forNavigation" 
+                routerLinkActive="active"
+                routerLink="/dispatcher/accounts">
+                    {{ 'dispatcher.Accounts' | translate }}
             </button>
 
             <button *ngIf="
-                authenticationService.isRoleMasterAdmin() ||
-                authenticationService.isRoleMasterOperator() ||
-                authenticationService.isRoleMasterSupport()
-                " mat-button size="forNavigation" routerLinkActive="active"
-                routerLink="/dispatcher/company/companies">{{ 'dispatcher.Company' | translate }}
+                    isRole.MasterAdmin ||
+                    isRole.MasterOperator ||
+                    isRole.MasterSupport
+                " 
+                mat-button 
+                size="forNavigation" 
+                routerLinkActive="active"
+                routerLink="/dispatcher/company/companies">
+                    {{ 'dispatcher.Company' | translate }}
             </button>
 
         </div>

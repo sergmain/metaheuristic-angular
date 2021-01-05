@@ -16,22 +16,22 @@ export class RoleRouteGuard implements CanActivate {
         route: ActivatedRouteSnapshot,
         state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
 
-        // if (!environment.production) {
-        //     console.log('');
-        //     console.log('%c%s', 'color:orange;', state.url);
-        //     console.log('%c%s', 'color:blue;',
-        //         'requiredRoles: ',
-        //         this.authenticationService.convertRolesToString(route.data.requiredRoles)
-        //     );
-        //     console.log(
-        //         '%c%s', 'color:blue;',
-        //         this.authenticationService.user.username + ': ',
-        //         this.authenticationService.convertRolesToString(
-        //             this.authenticationService.user.authorities.map(v => v.authority)
-        //         )
-        //     );
-        //     console.log('');
-        // }
+        if (!environment.production) {
+            console.log('');
+            console.log('%c%s', 'color:orange;', state.url);
+            console.log('%c%s', 'color:blue;',
+                'requiredRoles: ',
+                this.authenticationService.convertRolesToString(route.data.requiredRoles)
+            );
+            console.log(
+                '%c%s', 'color:blue;',
+                this.authenticationService.user.username + ': ',
+                this.authenticationService.convertRolesToString(
+                    this.authenticationService.user?.authorities?.map(v => v.authority)
+                )
+            );
+            console.log('');
+        }
 
         let check: boolean = false;
         const roles: Set<Role> = this.authenticationService.getUserRole();

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { LoadStates } from '@app/enums/LoadStates';
 import { BatchService } from '@app/services/batch/batch.service';
@@ -12,6 +12,9 @@ import { Subscription } from 'rxjs';
 import { CtFileUploadComponent } from '../../ct/ct-file-upload/ct-file-upload.component';
 import { SourceCodeUidsForCompany } from '@src/app/services/source-codes/SourceCodeUidsForCompany';
 import { OperationStatusRest } from '@src/app/models/OperationStatusRest';
+import { SettingsService } from '@src/app/services/settings/settings.service';
+import { UIStateComponent } from '@src/app/models/UIStateComponent';
+import { AuthenticationService } from '@src/app/services/authentication';
 
 @Component({
     selector: 'batch-add',
@@ -19,7 +22,7 @@ import { OperationStatusRest } from '@src/app/models/OperationStatusRest';
     styleUrls: ['./batch-add.component.scss']
 })
 
-export class BatchAddComponent implements OnInit {
+export class BatchAddComponent extends UIStateComponent implements OnInit, OnDestroy {
     currentStates: Set<LoadStates> = new Set();
     response: SourceCodeUidsForCompany;
     uploadResponse: OperationStatusRest;
@@ -34,15 +37,21 @@ export class BatchAddComponent implements OnInit {
         private router: Router,
         private route: ActivatedRoute,
         private translate: TranslateService,
-        private store: Store<AppState>
+        private settingsService: SettingsService,
+        readonly authenticationService: AuthenticationService,
     ) {
-        store.subscribe((data: AppState) => {
-            this.translate.use(data.settings.language);
-        });
+        super(authenticationService);
     }
 
     ngOnInit(): void {
+        this.subs.push(this.settingsService.data.subscribe(settings => {
+            this.translate.use(settings.language);
+        }));
         this.updateResponse();
+    }
+
+    ngOnDestroy(): void {
+        this.subs.forEach(s => s.unsubscribe());
     }
 
     updateResponse(): void {

@@ -1,36 +1,36 @@
-import { Component, OnInit } from '@angular/core';
-import { Store } from '@ngrx/store';
-import { AppState } from '@src/app/app.reducers';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { UIStateComponent } from '@src/app/models/UIStateComponent';
+import { AuthenticationService } from '@src/app/services/authentication';
 import { Settings } from '@src/app/services/settings/Settings';
+import { SettingsService } from '@src/app/services/settings/settings.service';
 
 @Component({
     selector: 'ai-root',
     templateUrl: './ai-root.component.html',
     styleUrls: ['./ai-root.component.sass']
 })
-export class AiRootComponent implements OnInit {
-
+export class AiRootComponent extends UIStateComponent implements OnInit, OnDestroy {
     settings: Settings;
     sidenavOpened: boolean;
 
     constructor(
-        private store: Store<AppState>,
         private router: Router,
+        private settingsService: SettingsService,
+        readonly authenticationService: AuthenticationService
     ) {
-        this.store.subscribe(data => {
-            this.settings = data.settings;
-            this.updateSidenavState();
-        });
+        super(authenticationService);
         this.router.routeReuseStrategy.shouldReuseRoute = () => false;
     }
 
-    ngOnInit(): void { }
+    ngOnInit(): void {
+        this.subs.push(this.settingsService.data.subscribe(settings => {
+            this.settings = settings;
+            this.sidenavOpened = this.settings.sidenav;
+        }));
+    }
 
-    private updateSidenavState(): void {
-        this.sidenavOpened = false;
-        if (this.settings.sidenav === true) {
-            this.sidenavOpened = true;
-        }
+    ngOnDestroy(): void {
+        this.subs.forEach(s => s.unsubscribe());
     }
 }
