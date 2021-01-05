@@ -33,6 +33,19 @@ export class AuthenticationService {
         });
     }
 
+    convertRolesToString(roles?: Role[]): string {
+        return roles.map(role => {
+            let s = role.replace('ROLE_', '')
+                .toLowerCase()
+                .split('_')
+                .map(v => {
+                    let ss = [...v];
+                    ss[0] = ss[0].toUpperCase();
+                    return ss.join('');
+                });
+            return s.join('');
+        }).join(', ');
+    }
 
     getData(): Observable<User> {
         return new Observable<User>(subscriber => {
@@ -136,20 +149,18 @@ export class AuthenticationService {
         });
     }
 
-    private aboutUser(user?: User): { aboutStr: string, roles: string[], log: () => void } {
-        user = user ? user : this.user;
-        const roles: string[] = user?.authorities?.map(v =>
-            (v.authority as string)
-                .replace('ROLE_', '')
-                .toLowerCase()
-        ) || [];
-        const aboutStr: string = `${user?.username}: ${roles.join(', ')}`;
+    private aboutUser(user?: User): { aboutStr: string, log: () => void } {
+        user = user || this.user;
+        const usernameAsString: string = user.username ? user.username : '';
+        const rolesAsString: string = user.authorities ?
+            this.convertRolesToString(user.authorities.map(v => v.authority)) : '';
+        const aboutStr: string = `${usernameAsString}: ${rolesAsString}`;
         const log = () => {
             if (user && user.username) {
                 console.log('%c%s', 'color:blue; font-size:125%', aboutStr);
             }
         };
-        return { aboutStr, roles, log };
+        return { aboutStr, log };
     }
 
     isRoleManager(): boolean { return this.user.authorities.map(a => a.authority).includes(Role.ROLE_MANAGER); }

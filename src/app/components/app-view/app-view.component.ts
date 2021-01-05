@@ -3,16 +3,13 @@ import { MatSelect, MatSelectChange } from '@angular/material/select';
 import { MatSidenav } from '@angular/material/sidenav';
 import { MatSlideToggle, MatSlideToggleChange } from '@angular/material/slide-toggle';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
-import { Router } from '@angular/router';
 import { AuthenticationService } from '@app/services/authentication/authentication.service';
 import { Store } from '@ngrx/store';
 import { AppState } from '@src/app/app.reducers';
+import { UIStateComponent } from '@src/app/models/UIStateComponent';
 import * as authenticationAction from '@src/app/services/authentication/authentication.actions';
-import { BatchService } from '@src/app/services/batch/batch.service';
-import { BatchExexStatusService } from '@src/app/services/batch/BatchExecStatusService';
 import { setOfLanguages, SettingsLanguage, SettingsTheme } from '@src/app/services/settings/Settings';
 import * as settingsAction from '@src/app/services/settings/settings.actions';
-import { SettingsService } from '@src/app/services/settings/settings.service';
 import { environment } from '@src/environments/environment';
 
 
@@ -22,7 +19,7 @@ import { environment } from '@src/environments/environment';
     styleUrls: ['./app-view.component.scss']
 })
 
-export class AppViewComponent implements OnInit {
+export class AppViewComponent extends UIStateComponent implements OnInit {
     htmlContent: SafeHtml;
     sidenavButtonDisable: boolean = false;
     theme: SettingsTheme;
@@ -37,14 +34,14 @@ export class AppViewComponent implements OnInit {
     @ViewChild('matSelectLanguage') matSelectLanguage: MatSelect;
 
     constructor(
-        public authenticationService: AuthenticationService,
-        private settingsService: SettingsService,
-        private router: Router,
+        readonly authenticationService: AuthenticationService,
         private store: Store<AppState>,
         private domSanitizer: DomSanitizer,
-    ) { }
+    ) {
+        super(authenticationService);
+    }
 
-    ngOnInit() {
+    ngOnInit(): void {
         this.htmlContent = this.domSanitizer.bypassSecurityTrustHtml(environment.brandingMsgIndex);
         this.lang.list = setOfLanguages;
         this.store.subscribe((state: AppState) => {
@@ -54,15 +51,15 @@ export class AppViewComponent implements OnInit {
 
     }
 
-    isAuth() {
+    isAuth(): boolean {
         return this.authenticationService.isAuth();
     }
 
-    toggleSideNav() {
+    toggleSideNav(): void {
         this.store.dispatch(settingsAction.toggleSideNav());
     }
 
-    toggleTheme(event: MatSlideToggleChange) {
+    toggleTheme(event: MatSlideToggleChange): void {
         if (event.checked) {
             this.store.dispatch(settingsAction.setDarkTheme());
         } else {
@@ -71,11 +68,11 @@ export class AppViewComponent implements OnInit {
 
     }
 
-    toggleLanguage(event: MatSelectChange) {
+    toggleLanguage(event: MatSelectChange): void {
         this.store.dispatch(settingsAction.toggleLanguage({ language: event.value }));
     }
 
-    logout() {
+    logout(): void {
         this.store.dispatch(authenticationAction.logout());
     }
 }

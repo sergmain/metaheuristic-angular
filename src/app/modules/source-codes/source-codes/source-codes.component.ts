@@ -6,6 +6,7 @@ import { ConfirmationDialogInterface, ConfirmationDialogMethod } from '@app/comp
 import { DispatcherAssetMode } from '@src/app/enums/DispatcherAssetMode';
 import { SourceCodeType } from '@src/app/enums/SourceCodeType';
 import { UIStateComponent } from '@src/app/models/UIStateComponent';
+import { AuthenticationService } from '@src/app/services/authentication';
 import { DispatcherAssetModeService } from '@src/app/services/dispatcher-asset-mode/dispatcher-asset-mode.service';
 import { SourceCodesService } from '@src/app/services/source-codes/source-codes.service';
 import { SourceCode } from '@src/app/services/source-codes/SourceCode';
@@ -33,9 +34,10 @@ export class SourceCodesComponent extends UIStateComponent implements OnInit {
     constructor(
         readonly dialog: MatDialog,
         private sourceCodesService: SourceCodesService,
-        public dispatcherAssetModeService: DispatcherAssetModeService
+        public dispatcherAssetModeService: DispatcherAssetModeService,
+        readonly authenticationService: AuthenticationService
     ) {
-        super();
+        super(authenticationService);
     }
 
     ngOnInit(): void {

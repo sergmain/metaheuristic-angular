@@ -4,6 +4,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { ConfirmationDialogMethod } from '@app/components/app-dialog-confirmation/app-dialog-confirmation.component';
 import { ExecContextState } from '@src/app/enums/ExecContextState';
 import { UIStateComponent } from '@src/app/models/UIStateComponent';
+import { AuthenticationService } from '@src/app/services/authentication';
 import { ExperimentApiData } from '@src/app/services/experiments/ExperimentApiData';
 import { ExperimentsService } from '@src/app/services/experiments/experiments.service';
 
@@ -20,9 +21,13 @@ export class ExperimentsComponent extends UIStateComponent implements OnInit {
     columnsToDisplay: string[] = ['id', 'name', 'createdOn', 'code', 'description', 'execState', 'bts'];
 
     constructor(
-        private dialog: MatDialog,
-        private experimentsService: ExperimentsService
-    ) { super(); }
+        readonly dialog: MatDialog,
+        private experimentsService: ExperimentsService,
+        readonly authenticationService: AuthenticationService
+
+    ) {
+        super(authenticationService);
+    }
 
     ngOnInit(): void {
         this.updateTable(0);

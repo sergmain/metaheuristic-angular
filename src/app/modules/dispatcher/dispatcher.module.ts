@@ -5,19 +5,32 @@ import { DispatcherIndexComponent } from './dispatcher-index/dispatcher-index.co
 import { DispatcherRootComponent } from './dispatcher-root/dispatcher-root.component';
 import { MaterialAppModule } from '@src/app/ngmaterial.module';
 import { TranslateModule } from '@ngx-translate/core';
-import { AuthGuard } from '@src/app/guards/auth/auth.guard';
 import { CtModule } from '../ct/ct.module';
 import { CopyRightModule } from '../copy-right/copy-right.module';
+import { Role } from '@src/app/services/authentication';
+import { RoleRouteGuard } from '@src/app/guards/role-route.guard';
 
 
+const commonRequiredRoles: Role[] = [
+    Role.MasterAssetManager,
+    Role.MasterAdmin,
+    Role.MasterOpertator,
+    Role.MasterSupport,
+    Role.Admin,
+    Role.Data,
+    Role.Manager,
+];
 
 
 
 const routes: Routes = [
     {
         path: '',
-        canActivate: [AuthGuard],
+        canActivate: [RoleRouteGuard],
         component: DispatcherRootComponent,
+        data: {
+            requiredRoles: commonRequiredRoles
+        },
         children: [
             {
                 path: '',
@@ -26,45 +39,63 @@ const routes: Routes = [
     },
     {
         path: 'source-codes',
-        canActivate: [AuthGuard],
+        canActivate: [RoleRouteGuard],
         component: DispatcherRootComponent,
         loadChildren: () => import('@src/app/modules/source-codes/source-codes.module').then(m => m.SourceCodeModule),
-        data: { section: 'source-codes' },
+        data: {
+            requiredRoles: [Role.MasterAssetManager, Role.Admin, Role.Data, Role.Manager],
+            section: 'source-codes'
+        },
     },
     {
         path: 'global-variables',
-        canActivate: [AuthGuard],
+        canActivate: [RoleRouteGuard],
         component: DispatcherRootComponent,
         loadChildren: () => import('@src/app/modules/global-variables/global-variables.module').then(m => m.GlobalVariablesModule),
-        data: { section: 'global-variables' }
+        data: {
+            requiredRoles: [Role.Admin, Role.Data],
+            section: 'global-variables'
+        }
     },
     {
         path: 'functions',
-        canActivate: [AuthGuard],
+        canActivate: [RoleRouteGuard],
         component: DispatcherRootComponent,
         loadChildren: () => import('@src/app/modules/functions/functions.module').then(m => m.FunctionsModule),
-        data: { section: 'functions' }
+        data: {
+            requiredRoles: [Role.MasterAssetManager, Role.Admin, Role.Data],
+            section: 'functions'
+        }
     },
     {
         path: 'processors',
-        canActivate: [AuthGuard],
+        canActivate: [RoleRouteGuard],
         component: DispatcherRootComponent,
         loadChildren: () => import('src/app/modules/processors/processors.module').then(m => m.ProcessorsModule),
-        data: { section: 'processors' }
+        data: {
+            requiredRoles: [Role.Admin, Role.Data],
+            section: 'processors'
+        }
     },
     {
         path: 'accounts',
-        canActivate: [AuthGuard],
+        canActivate: [RoleRouteGuard],
         component: DispatcherRootComponent,
         loadChildren: () => import('src/app/modules/accounts/accounts.module').then(m => m.AccountsModule),
-        data: { section: 'accounts' }
+        data: {
+            requiredRoles: [Role.Admin],
+            section: 'accounts'
+        }
     },
     {
         path: 'company',
-        canActivate: [AuthGuard],
+        canActivate: [RoleRouteGuard],
         component: DispatcherRootComponent,
         loadChildren: () => import('src/app/modules/company/company.module').then(m => m.CompnyModule),
-        data: { section: 'company' }
+        data: {
+            requiredRoles: [Role.MasterAdmin, Role.MasterOpertator, Role.MasterSupport],
+            section: 'company'
+        }
     }
 ];
 

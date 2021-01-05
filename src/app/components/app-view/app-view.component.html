@@ -73,28 +73,28 @@
                 </ct-flex-item>
 
                 <ct-flex-item *ngIf="
-                    authenticationService.isRoleAdmin() ||
-                    authenticationService.isRoleData() ||
-                    authenticationService.isRoleManager() ">
+                    isRole.Admin ||
+                    isRole.Data ||
+                    isRole.Manager ">
                     <button class="mat-button mat-button--menu-item" mat-button routerLinkActive="active" routerLink="/ai">{{ 'app-view.Ai' | translate }}</button>
                 </ct-flex-item>
 
                 <ct-flex-item *ngIf="
-                    authenticationService.isRoleAdmin() ||
-                    authenticationService.isRoleData() ||
-                    authenticationService.isRoleManager() ||
-                    authenticationService.isRoleOperator() ">
+                    isRole.Admin ||
+                    isRole.Data ||
+                    isRole.Manager ||
+                    isRole.Operator ">
                     <button class="mat-button mat-button--menu-item" mat-button routerLinkActive="active" routerLink="/batch">{{ 'app-view.Batch' | translate }}</button>
                 </ct-flex-item>
 
                 <ct-flex-item *ngIf="
-                    authenticationService.isRoleMasterAdmin() ||
-                    authenticationService.isRoleMasterOperator() ||
-                    authenticationService.isRoleMasterSupport() ||
-                    authenticationService.isRoleMasterAssetManager() ||
-                    authenticationService.isRoleAdmin() ||
-                    authenticationService.isRoleData() || 
-                    authenticationService.isRoleManager() ">
+                    isRole.MasterAdmin ||
+                    isRole.MasterOperator ||
+                    isRole.MasterSupport ||
+                    isRole.MasterAssetManager ||
+                    isRole.Admin ||
+                    isRole.Data || 
+                    isRole.Manager ">
                     <button class="mat-button mat-button--menu-item" mat-button routerLinkActive="active" routerLink="/dispatcher">{{ 'app-view.Dispatcher' | translate }}</button>
                 </ct-flex-item>
 

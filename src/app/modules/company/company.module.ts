@@ -17,6 +17,8 @@ import { AccountEditRolesComponent } from './account-edit-roles/account-edit-rol
 import { CompanyBatchStatusComponent } from './company-batch-status/company-batch-status.component';
 import { CompanyBatchUploadComponent } from './company-batch-upload/company-batch-upload.component';
 import { CompanyBatchListComponent } from './company-batches/company-batch-list.component';
+import { Role } from '@src/app/services/authentication';
+import { RoleRouteGuard } from '@src/app/guards/role-route.guard';
 
 
 const routes: Routes = [
@@ -30,9 +32,11 @@ const routes: Routes = [
     },
     {
         path: ':companyUniqueId/edit',
+        canActivate: [RoleRouteGuard],
         component: CompanyEditComponent,
         data: {
-            backConfig: ['../', '../', 'companies']
+            backConfig: ['../', '../', 'companies'],
+            requiredRoles: [Role.MasterAdmin]
         }
     },
     {
@@ -45,8 +49,10 @@ const routes: Routes = [
     {
         path: ':companyUniqueId/accounts',
         component: AccountsComponent,
+        canActivate: [RoleRouteGuard],
         data: {
-            backConfig: ['../', '../', 'companies']
+            backConfig: ['../', '../', 'companies'],
+            requiredRoles: [Role.MasterAdmin]
         }
     },
     {
@@ -87,22 +93,28 @@ const routes: Routes = [
     {
         path: ':companyUniqueId/batches',
         component: CompanyBatchListComponent,
+        canActivate: [RoleRouteGuard],
         data: {
-            backConfig: ['../', '../', 'companies']
+            backConfig: ['../', '../', 'companies'],
+            requiredRoles: [Role.MasterSupport, Role.MasterOpertator]
         }
     },
     {
         path: ':companyUniqueId/batches/upload',
         component: CompanyBatchUploadComponent,
+        canActivate: [RoleRouteGuard],
         data: {
-            backConfig: ['../']
+            backConfig: ['../'],
+            requiredRoles: [Role.MasterSupport, Role.MasterOpertator]
         }
     },
     {
         path: ':companyUniqueId/batch/:batchId',
         component: CompanyBatchStatusComponent,
+        canActivate: [RoleRouteGuard],
         data: {
-            backConfig: ['../', '../', 'batches']
+            backConfig: ['../', '../', 'batches'],
+            requiredRoles: [Role.MasterSupport, Role.MasterOpertator]
         }
     }
 ];

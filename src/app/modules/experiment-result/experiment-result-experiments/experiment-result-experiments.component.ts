@@ -4,6 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { ConfirmationDialogMethod } from '@app/components/app-dialog-confirmation/app-dialog-confirmation.component';
 import { UIStateComponent } from '@src/app/models/UIStateComponent';
+import { AuthenticationService } from '@src/app/services/authentication';
 import { ExperimentResultService } from '@src/app/services/experiment-result/experiment-result.service';
 import { ExperimentResultData } from '@src/app/services/experiment-result/ExperimentResultData';
 import { ExperimentResultSimple } from '@src/app/services/experiment-result/ExperimentResultSimple';
@@ -23,9 +24,10 @@ export class ExperimentResultExperimentsComponent extends UIStateComponent imple
 
     constructor(
         private experimentResultService: ExperimentResultService,
-        private dialog: MatDialog
+        readonly dialog: MatDialog,
+        readonly authenticationService: AuthenticationService
     ) {
-        super();
+        super(authenticationService);
     }
 
     ngOnInit(): void {

@@ -5,6 +5,7 @@ import { ExperimentApiData } from '@src/app/services/experiments/ExperimentApiDa
 import { ExperimentsService } from '@src/app/services/experiments/experiments.service';
 import { SimpleExperiment } from '@src/app/services/experiments/SimpleExperiment';
 import { UIStateComponent } from '@src/app/models/UIStateComponent';
+import { AuthenticationService } from '@src/app/services/authentication';
 
 @Component({
     selector: 'experiment-edit',
@@ -29,8 +30,9 @@ export class ExperimentEditComponent extends UIStateComponent implements OnInit 
         private experimentsService: ExperimentsService,
         private router: Router,
         private activatedRoute: ActivatedRoute,
+        readonly authenticationService: AuthenticationService
     ) {
-        super();
+        super(authenticationService);
     }
 
     ngOnInit(): void {

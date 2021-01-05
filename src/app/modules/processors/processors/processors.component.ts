@@ -7,6 +7,7 @@ import { ProcessorsResult } from '@src/app/services/processors/ProcessorsResult'
 import { ProcessorStatus } from '@src/app/services/processors/ProcessorStatus';
 import { SelectionModel } from '@angular/cdk/collections';
 import { UIStateComponent } from '@src/app/models/UIStateComponent';
+import { AuthenticationService } from '@src/app/services/authentication';
 
 
 @Component({
@@ -25,9 +26,10 @@ export class ProcessorsComponent extends UIStateComponent implements OnInit, Con
 
     constructor(
         readonly dialog: MatDialog,
-        private processorsService: ProcessorsService
+        private processorsService: ProcessorsService,
+        readonly authenticationService: AuthenticationService
     ) {
-        super();
+        super(authenticationService);
     }
 
     ngOnInit(): void {

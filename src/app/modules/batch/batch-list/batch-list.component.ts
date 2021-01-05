@@ -30,12 +30,12 @@ export class BatchListComponent extends UIStateComponent implements OnInit, OnDe
 
     constructor(
         private batchService: BatchService,
-        private authenticationService: AuthenticationService,
+        readonly authenticationService: AuthenticationService,
         readonly dialog: MatDialog,
         readonly translate: TranslateService,
         private batchExexStatusService: BatchExexStatusService
     ) {
-        super();
+        super(authenticationService);
     }
 
     ngOnInit(): void {

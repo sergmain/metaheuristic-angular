@@ -1,14 +1,11 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { MatTableDataSource } from '@angular/material/table';
+import { UIStateComponent } from '@src/app/models/UIStateComponent';
+import { AuthenticationService } from '@src/app/services/authentication';
 import { CompanyService } from '@src/app/services/company/company.service';
 import { SimpleCompaniesResult } from '@src/app/services/company/SimpleCompaniesResult';
-import { MatTableDataSource } from '@angular/material/table';
 import { SimpleCompany } from '@src/app/services/company/SimpleCompany';
-import { MatButton } from '@angular/material/button';
-import { CtTableComponent } from '../../ct/ct-table/ct-table.component';
-import { AuthenticationService } from '@src/app/services/authentication';
 import { DispatcherAssetModeService } from '@src/app/services/dispatcher-asset-mode/dispatcher-asset-mode.service';
-import { DispatcherAssetMode } from '@src/app/enums/DispatcherAssetMode';
-import { UIStateComponent } from '@src/app/models/UIStateComponent';
 
 @Component({
     selector: 'companies',
@@ -21,19 +18,19 @@ export class CompaniesComponent extends UIStateComponent implements OnInit {
     dataSource: MatTableDataSource<SimpleCompany> = new MatTableDataSource([]);
 
     constructor(
-        public authenticationService: AuthenticationService,
+        readonly authenticationService: AuthenticationService,
         private companyService: CompanyService,
         public dispatcherAssetModeService: DispatcherAssetModeService
     ) {
-        super()
-     }
+        super(authenticationService);
+    }
 
     ngOnInit(): void {
         this.updateTable(0);
     }
 
     updateTable(pageNumber: number): void {
-        this.setIsLoadingStart()
+        this.setIsLoadingStart();
         this.companyService
             .companies(pageNumber.toString())
             .subscribe({
@@ -41,10 +38,10 @@ export class CompaniesComponent extends UIStateComponent implements OnInit {
                     this.simpleCompaniesResult = simpleCompaniesResult;
                     this.dataSource = new MatTableDataSource(this.simpleCompaniesResult.companies.content);
                 },
-                complete: () => { 
-                    this.setIsLoadingEnd()
+                complete: () => {
+                    this.setIsLoadingEnd();
                 }
-            })
+            });
     }
 
 

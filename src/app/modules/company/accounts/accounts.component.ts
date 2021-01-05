@@ -5,6 +5,7 @@ import { DispatcherAssetMode } from '@src/app/enums/DispatcherAssetMode';
 import { UIStateComponent } from '@src/app/models/UIStateComponent';
 import { AccountsResult } from '@src/app/services/accounts/AccountsResult';
 import { SimpleAccount } from '@src/app/services/accounts/SimpleAccount';
+import { AuthenticationService } from '@src/app/services/authentication';
 import { CompanyService } from '@src/app/services/company/company.service';
 import { DispatcherAssetModeService } from '@src/app/services/dispatcher-asset-mode/dispatcher-asset-mode.service';
 
@@ -22,9 +23,10 @@ export class AccountsComponent extends UIStateComponent implements OnInit {
     constructor(
         private companyService: CompanyService,
         private activatedRoute: ActivatedRoute,
-        public dispatcherAssetModeService: DispatcherAssetModeService
+        public dispatcherAssetModeService: DispatcherAssetModeService,
+        readonly authenticationService: AuthenticationService
     ) {
-        super()
+        super(authenticationService);
     }
 
     ngOnInit(): void {
@@ -33,7 +35,7 @@ export class AccountsComponent extends UIStateComponent implements OnInit {
     }
 
     updateTable(page: number): void {
-        this.setIsLoadingStart()
+        this.setIsLoadingStart();
         this.companyService
             .accounts(page.toString(), this.companyUniqueId)
             .subscribe({
@@ -42,9 +44,9 @@ export class AccountsComponent extends UIStateComponent implements OnInit {
                     this.dataSource = new MatTableDataSource(this.accountsResult.accounts.content || []);
                 },
                 complete: () => {
-                    this.setIsLoadingEnd()
+                    this.setIsLoadingEnd();
                 }
-            })
+            });
     }
 
     nextPage(): void {

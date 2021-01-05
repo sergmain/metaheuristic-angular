@@ -1,38 +1,52 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AuthGuard } from '@app/guards/auth/auth.guard';
 import { TranslateModule } from '@ngx-translate/core';
 import { CtModule } from '../ct/ct.module';
 import { MaterialAppModule } from '@src/app/ngmaterial.module';
 import { CopyRightModule } from '../copy-right/copy-right.module';
 import { AiIndexComponent } from './ai-index/ai-index.component';
 import { AiRootComponent } from './ai-root/ai-root.component';
+import { RoleRouteGuard } from '@src/app/guards/role-route.guard';
+import { Role } from '@src/app/services/authentication';
 
+const commonRequiredRoles: Role[] = [Role.Admin, Role.Data, Role.Manager];
 
 const routes: Routes = [
     {
         path: '',
-        canActivate: [AuthGuard],
+        canActivate: [RoleRouteGuard],
         component: AiRootComponent,
+        data: {
+            requiredRoles: commonRequiredRoles
+        },
         children: [{
             path: '',
-            component: AiIndexComponent
+            component: AiIndexComponent,
+            data: {
+                requiredRoles: commonRequiredRoles
+            },
         }]
     },
     {
         path: 'experiments',
-        canActivate: [AuthGuard],
+        canActivate: [RoleRouteGuard],
         component: AiRootComponent,
         loadChildren: () => import('src/app/modules/experiments/experiments.module').then(m => m.ExperimentsModule),
-        data: { section: 'experiments' }
+        data: {
+            section: 'experiments',
+            requiredRoles: commonRequiredRoles
+        }
     },
     {
         path: 'experiment-results',
-        canActivate: [AuthGuard],
+        canActivate: [RoleRouteGuard],
         component: AiRootComponent,
         loadChildren: () => import('@src/app/modules/experiment-result/experiment-result.module').then(m => m.ExperimentResultModule),
-        data: { section: 'experiment-result' }
+        data: {
+            section: 'experiment-result',
+            requiredRoles: commonRequiredRoles
+        }
     }
 
 ];

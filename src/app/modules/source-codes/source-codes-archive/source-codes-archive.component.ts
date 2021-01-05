@@ -5,6 +5,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { ConfirmationDialogMethod } from '@app/components/app-dialog-confirmation/app-dialog-confirmation.component';
 import { LoadStates } from '@app/enums/LoadStates';
 import { UIStateComponent } from '@src/app/models/UIStateComponent';
+import { AuthenticationService } from '@src/app/services/authentication';
 import { SourceCodesService } from '@src/app/services/source-codes/source-codes.service';
 import { SourceCode } from '@src/app/services/source-codes/SourceCode';
 import { SourceCodesResult } from '@src/app/services/source-codes/SourceCodesResult';
@@ -23,10 +24,11 @@ export class SourceCodesArchiveComponent extends UIStateComponent implements OnI
     deletedRows: SourceCode[] = [];
 
     constructor(
-        private dialog: MatDialog,
-        private sourceCodesService: SourceCodesService
+        readonly dialog: MatDialog,
+        private sourceCodesService: SourceCodesService,
+        readonly authenticationService: AuthenticationService
     ) {
-        super();
+        super(authenticationService);
     }
 
     ngOnInit(): void {

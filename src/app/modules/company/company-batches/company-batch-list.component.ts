@@ -35,14 +35,13 @@ export class CompanyBatchListComponent extends UIStateComponent implements OnIni
     downloadSelector: BatchSelector = new BatchSelector();
 
     constructor(
-        public authenticationService: AuthenticationService,
+        readonly authenticationService: AuthenticationService,
         private companyService: CompanyService,
         private activatedRoute: ActivatedRoute,
         readonly dialog: MatDialog,
         readonly translate: TranslateService,
-        private batchService: BatchService
     ) {
-        super();
+        super(authenticationService);
     }
 
     checkAndToggleRowSeletion(batch: BatchData.BatchExecInfo): void {
@@ -70,7 +69,7 @@ export class CompanyBatchListComponent extends UIStateComponent implements OnIni
     }
 
     get columnsToDisplay(): string[] {
-        if (this.authenticationService.isRoleMasterOperator) {
+        if (this.isRole.MasterOperator) {
             return [
                 'check',
                 'id',
