@@ -1,10 +1,13 @@
+import { Subscription } from 'rxjs';
 import { AuthenticationService } from '../services/authentication';
 
 export class UIStateComponent {
+    isLoading: boolean = false;
+    subs: Subscription[] = [];
 
     constructor(readonly authenticationService: AuthenticationService) { }
 
-    isRole: {
+    get isRole(): {
         Admin: boolean;
         Manager: boolean;
         Operator: boolean;
@@ -13,7 +16,8 @@ export class UIStateComponent {
         MasterOperator: boolean;
         MasterSupport: boolean;
         MasterAssetManager: boolean;
-    } = {
+    } {
+        return {
             Admin: this.authenticationService.isRoleAdmin(),
             Manager: this.authenticationService.isRoleManager(),
             Operator: this.authenticationService.isRoleOperator(),
@@ -23,8 +27,7 @@ export class UIStateComponent {
             MasterSupport: this.authenticationService.isRoleMasterSupport(),
             MasterAssetManager: this.authenticationService.isRoleMasterAssetManager()
         };
-
-    isLoading: boolean = false;
+    }
 
     setIsLoadingStart(): void {
         this.isLoading = true;
