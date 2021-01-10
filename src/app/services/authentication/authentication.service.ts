@@ -1,45 +1,53 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { Store } from '@ngrx/store';
-import { AppState } from '@src/app/app.reducers';
 import { environment } from '@src/environments/environment';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { Authority } from './Authority';
 import { Role } from './Role';
 import { User } from './User';
-import * as settingsActions from '@src/app/services/settings/settings.actions';
-import { Authority } from './Authority';
+
+export class AuthenticationServiceEventLogin { }
+export class AuthenticationServiceEventLogout { }
+export class AuthenticationServiceEventChange {
+    user: User;
+    constructor(user: User) { this.user = JSON.parse(JSON.stringify(user)); }
+}
+export type AuthenticationServiceEvent = AuthenticationServiceEventLogin | AuthenticationServiceEventLogout | AuthenticationServiceEventChange;
+
 
 @Injectable({
     providedIn: 'root'
 })
-
 export class AuthenticationService {
-    localStorageName: string = 'authenticationService';
+    private localStorageName: string = 'authenticationService';
     private userLifeTimeExpiredName: string = '__last';
     user: User;
-
-    userDataChanges: BehaviorSubject<User> = new BehaviorSubject<User>(null);
+    events: BehaviorSubject<AuthenticationServiceEvent> = new BehaviorSubject(null);
 
     constructor(
         private http: HttpClient,
         private router: Router,
-        private store: Store<AppState>
     ) {
-        this.store.subscribe((state: AppState) => {
-            if (this.user && !this.user.username) { this.aboutUser(state.user).log(); }
-            this.user = state.user;
-            this.userDataChanges.next(this.user);
-        });
+        this.user = this.getLocalStorageData();
+        this.events.next(new AuthenticationServiceEventChange(this.user));
+
     }
+
+    private updateData(user: User): void {
+        this.user = user;
+        this.setLocalStorageData(user);
+        this.events.next(new AuthenticationServiceEventChange(user));
+    }
+
 
     convertRolesToString(roles?: Role[]): string {
         return roles.map(role => {
-            let s = role.replace('ROLE_', '')
+            const s: string[] = role.replace('ROLE_', '')
                 .toLowerCase()
                 .split('_')
                 .map(v => {
-                    let ss = [...v];
+                    const ss: string[] = [...v];
                     ss[0] = ss[0].toUpperCase();
                     return ss.join('');
                 });
@@ -56,7 +64,7 @@ export class AuthenticationService {
 
     isAuth(): boolean {
         if (this.user && this.user.token) {
-            if (this.userLifeTimeExpired()) {
+            if (this.isUserLifeTimeExpired()) {
                 this.logout();
                 return false;
             }
@@ -76,43 +84,38 @@ export class AuthenticationService {
     }
 
     getToken(): string {
-        if (this.user) {
-            return this.user.token;
-        }
-        return null;
+        return this.user?.token;
     }
 
-    login(username: string, password: string): Observable<User> {
+    login(username: string, password: string): void {
         const url: string = environment.baseUrl + 'user';
-        const token: string = 'Basic ' + btoa(username + ':' + password);
+        const token: string = this.generateUserToken(username, password);
         const headers: HttpHeaders = new HttpHeaders({ Authorization: token });
-
-        return new Observable(subscriber => {
-            this.http
-                .post(url, { username, password }, { headers })
-                .subscribe((resultUser: User) => {
-                    if (resultUser.username) {
-                        const data: User = Object.assign({}, resultUser, { token });
-                        this.setLocalStorageData(data);
-                        subscriber.next(data);
-                    } else {
-                        subscriber.next(null);
-                    }
-                    subscriber.complete();
-                });
-        });
+        this.http
+            .post(url, { username, password }, { headers })
+            .subscribe((user: User) => {
+                if (user.username) {
+                    this.events.next(new AuthenticationServiceEventLogin());
+                    this.updateData(Object.assign({}, user, { token }));
+                    this.aboutUser().log();
+                }
+            });
     }
 
-    getLocalStorageData(): User {
+    private generateUserToken(username: string, password: string): string {
+        return 'Basic ' + btoa(username + ':' + password);
+    }
+
+    private getLocalStorageData(): User {
         return JSON.parse(localStorage.getItem(this.localStorageName)) as User;
     }
 
-    setLocalStorageData(content: User): void {
+    private setLocalStorageData(content: User): void {
         localStorage.setItem(this.localStorageName, JSON.stringify(content));
     }
 
 
-    userLifeTimeExpired(): boolean {
+    isUserLifeTimeExpired(): boolean {
         if (environment.userLifeTime) {
             const userLifeTime: number = environment.userLifeTime;
             const last: number = parseInt(localStorage.getItem(this.userLifeTimeExpiredName), 10) || 0;
@@ -137,11 +140,11 @@ export class AuthenticationService {
     }
 
     logout(): Observable<null> {
-        this.store.dispatch(settingsActions.setDefault());
         return new Observable(subscriber => {
             localStorage.removeItem(this.localStorageName);
             localStorage.removeItem(this.userLifeTimeExpiredName);
             sessionStorage.clear();
+            this.events.next(new AuthenticationServiceEventLogout());
             this.user = null;
             this.router.navigate(['/']);
             subscriber.next();

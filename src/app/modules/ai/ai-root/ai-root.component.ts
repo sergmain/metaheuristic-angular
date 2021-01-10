@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { UIStateComponent } from '@src/app/models/UIStateComponent';
 import { AuthenticationService } from '@src/app/services/authentication';
 import { Settings } from '@src/app/services/settings/Settings';
-import { SettingsService } from '@src/app/services/settings/settings.service';
+import { SettingsService, SettingsServiceEventChange } from '@src/app/services/settings/settings.service';
 
 @Component({
     selector: 'ai-root',
@@ -24,13 +24,15 @@ export class AiRootComponent extends UIStateComponent implements OnInit, OnDestr
     }
 
     ngOnInit(): void {
-        this.subs.push(this.settingsService.data.subscribe(settings => {
-            this.settings = settings;
-            this.sidenavOpened = this.settings.sidenav;
+        this.subscribeSubscription(this.settingsService.events.subscribe(event => {
+            if (event instanceof SettingsServiceEventChange) {
+                this.settings = event.settings;
+                this.sidenavOpened = event.settings.sidenav;
+            }
         }));
     }
 
     ngOnDestroy(): void {
-        this.subs.forEach(s => s.unsubscribe());
+        this.unsubscribeSubscriptions();
     }
 }

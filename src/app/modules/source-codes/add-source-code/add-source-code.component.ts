@@ -20,7 +20,7 @@ export class AddSourceCodeComponent {
 
     constructor(
         private router: Router,
-        private route: ActivatedRoute,
+        private activatedRoute: ActivatedRoute,
         private elRef: ElementRef
     ) { }
 
@@ -54,6 +54,6 @@ export class AddSourceCodeComponent {
     }
 
     back(): void {
-        this.router.navigate(['../'], { relativeTo: this.route });
+        this.router.navigate(['../'], { relativeTo: this.activatedRoute });
     }
 }

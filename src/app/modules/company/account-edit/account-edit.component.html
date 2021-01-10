@@ -14,10 +14,10 @@
                     </mat-form-field>
                     <mat-form-field appearance="outline" style="width: 100%;">
                         <mat-label>Public Name</mat-label>
-                        <input matInput />
+                        <input matInput [(ngModel)]="publicName" />
                     </mat-form-field>
                     <br>
-                    <mat-checkbox>Is account enabled?</mat-checkbox>
+                    <mat-checkbox [(ngModel)]="isEnabled">Is account enabled?</mat-checkbox>
                 </ct-section-body-row>
             </ct-section-body>
             <ct-section-footer>

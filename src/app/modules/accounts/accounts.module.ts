@@ -12,7 +12,7 @@ import { MaterialAppModule } from '@src/app/ngmaterial.module';
 import { CtModule } from '../ct/ct.module';
 
 
-const routes: Routes = [
+export const AccountsRoutes: Routes = [
     {
         path: '',
         component: AccountsComponent
@@ -49,7 +49,7 @@ const routes: Routes = [
 
 
 @NgModule({
-    imports: [RouterModule.forChild(routes)],
+    imports: [RouterModule.forChild(AccountsRoutes)],
     exports: [RouterModule]
 })
 export class AccountsRoutingModule { }

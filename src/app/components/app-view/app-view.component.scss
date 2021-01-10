@@ -56,6 +56,12 @@
     }
 }
 
+
+.active[disabled] {
+    background-color: initial;
+}
+
+
 // TODO theme palette
 :host-context(.light-theme) {
     .app-view {

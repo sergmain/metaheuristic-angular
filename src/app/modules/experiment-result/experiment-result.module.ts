@@ -16,7 +16,7 @@ import { ExperimentResultImportComponent } from './experiment-result-import/expe
 
 PlotlyModule.plotlyjs = PlotlyJS;
 
-const routes: Routes = [
+export const ExperimentResultRoutes: Routes = [
     {
         path: '',
         component: ExperimentResultExperimentsComponent,
@@ -46,7 +46,7 @@ const routes: Routes = [
 
 
 @NgModule({
-    imports: [RouterModule.forChild(routes)],
+    imports: [RouterModule.forChild(ExperimentResultRoutes)],
     exports: [RouterModule]
 })
 export class ExperimentResultRoutingModule { }

@@ -1,76 +1,65 @@
 @import "../variables.scss";
 
 body {
-    .mat-button {
-        border: 1px solid transparent;
-    }
-    .mat-button,
-    .mat-flat-button,
-    .mat-icon-button,
-    .mat-stroked-button {
-        font-family: inherit;
-        letter-spacing: 0.5px;
-        padding: 0 unit(2);
-        line-height: unit(4);
-        height: unit(4);
-        .mat-button-wrapper {
-            display: block;
-            font-weight: 500;
-            font-size: unit(1.5);
-            line-height: inherit;
-        }
-    }
+    // .mat-button {
+    //     border: 1px solid transparent;
+    // }
+    // .mat-button,
+    // .mat-flat-button,
+    // .mat-icon-button,
+    // .mat-stroked-button {
+    //     font-family: inherit;
+    //     letter-spacing: 0.5px;
+    //     padding: 0 unit(2);
+    //     line-height: unit(4);
+    //     height: unit(4);
+    //     .mat-button-wrapper {
+    //         display: block;
+    //         font-weight: 500;
+    //         font-size: unit(1.5);
+    //         line-height: inherit;
+    //     }
+    // }
 
-    .mat-button[wide],
-    .mat-flat-button[wide],
-    .mat-icon-button[wide],
-    .mat-stroked-button[wide] {
-        padding: 0 unit(5)
-    }
+    // .mat-button[wide],
+    // .mat-flat-button[wide],
+    // .mat-icon-button[wide],
+    // .mat-stroked-button[wide] {
+    //     padding: 0 unit(5)
+    // }
 
-    .mat-button[size=forTableRow],
-    .mat-flat-button[size=forTableRow],
-    .mat-icon-button[size=forTableRow],
-    .mat-stroked-button[size=forTableRow] {
-        min-width: auto;
-        padding-left: unit(1);
-        padding-right: unit(1);
-        border-radius: unit(0.3333);
-        line-height: unit(3);
-        height: unit(3);
-        .mat-button-wrapper {
-            font-size: unit(1.5)
-        }
+    // .mat-button[size=forTableRow],
+    // .mat-flat-button[size=forTableRow],
+    // .mat-icon-button[size=forTableRow],
+    // .mat-stroked-button[size=forTableRow] {
+    //     min-width: auto;
+    //     padding-left: unit(1);
+    //     padding-right: unit(1);
+    //     border-radius: unit(0.3333);
+    //     line-height: unit(3);
+    //     height: unit(3);
+    //     .mat-button-wrapper {
+    //         font-size: unit(1.5)
+    //     }
 
-        .mat-icon {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 18px;
-            width: 20px;
-            height: 20px;
-            margin-top: -2px;
-        }
-    }
+    //     .mat-icon {
+    //         display: inline-flex;
+    //         align-items: center;
+    //         justify-content: center;
+    //         font-size: 18px;
+    //         width: 20px;
+    //         height: 20px;
+    //         margin-top: -2px;
+    //     }
+    // }
+}
 
-    .mat-button[size=forNavigation],
-    .mat-flat-button[size=forNavigation],
-    .mat-icon-button[size=forNavigation],
-    .mat-stroked-button[size=forNavigation] {
-        padding-left: unit(1);
-        padding-right: unit(1);
-        border-radius: unit(0.5);
-        line-height: unit(4);
-        height: unit(4);
-        text-align: left;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        &.active {
-            background: rgba(128, 128, 128, 0.175);
-        }
 
-        .mat-button-wrapper {
-            font-size: unit(1.5);
-        }
+
+
+
+body {
+    .mat-button.active {
+        background-color: rgba(0,0,0,0.1);
     }
 }

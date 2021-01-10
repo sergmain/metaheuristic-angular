@@ -17,10 +17,10 @@ import { CardFormAddSourceCodeComponent } from './card-form-add-source-code/card
 import { ViewSourceCodeComponent } from './view-source-code/view-source-code.component';
 import { StateOfTasksComponent } from './state-of-tasks/state-of-tasks.component';
 
-const routes: Routes = [
+export const SourceCodesRoutes: Routes = [
     {
         path: '',
-        component: SourceCodesComponent
+        component: SourceCodesComponent,
     },
     {
         path: 'add',
@@ -64,7 +64,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-    imports: [RouterModule.forChild(routes)],
+    imports: [RouterModule.forChild(SourceCodesRoutes)],
     exports: [RouterModule],
     declarations: [],
 })

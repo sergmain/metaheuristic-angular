@@ -4,7 +4,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { MaterialAppModule } from '../../ngmaterial.module';
-import { BatchComponent } from './batch/batch.component';
 import { BatchStatusComponent } from './batch-status/batch-status.component';
 import { BatchAddComponent } from './batch-add/batch-add.component';
 import { CtModule } from '../ct/ct.module';
@@ -17,19 +16,13 @@ import { Role } from '@src/app/services/authentication';
 
 const commonRequiredRoles: Role[] = [Role.Admin, Role.Data, Role.Manager, Role.Operator];
 
-const routes: Routes = [
+export const BatchRoutes: Routes = [
     {
         path: '',
         component: BatchRootComponent,
         canActivate: [RoleRouteGuard],
         data: { requiredRoles: commonRequiredRoles },
         children: [
-            {
-                path: 'old-list',
-                component: BatchComponent,
-                canActivate: [RoleRouteGuard],
-                data: { requiredRoles: commonRequiredRoles },
-            },
             {
                 path: '',
                 component: BatchListComponent,
@@ -69,7 +62,7 @@ const routes: Routes = [
 
 
 @NgModule({
-    imports: [RouterModule.forChild(routes)],
+    imports: [RouterModule.forChild(BatchRoutes)],
     exports: [RouterModule],
     declarations: []
 })
@@ -89,7 +82,6 @@ export class BatchRoutingModule { }
     ],
     declarations: [
         BatchRootComponent,
-        BatchComponent,
         BatchStatusComponent,
         BatchAddComponent,
         BatchStateComponent,

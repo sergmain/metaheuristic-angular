@@ -14,7 +14,7 @@ const routes: Routes = [
         path: 'dispatcher',
         canActivate: [AuthGuard],
         loadChildren: () => import('src/app/modules/dispatcher/dispatcher.module').then(m => m.DispatcherModule),
-        data: { sidenav: true }
+        data: { sidenavExist: true }
     },
     {
         path: 'billing',
@@ -28,6 +28,7 @@ const routes: Routes = [
     {
         path: 'ai',
         loadChildren: () => import('src/app/modules/ai/ai.module').then(m => m.AiModule),
+        data: { sidenavExist: true }
     },
 
     {

@@ -1,45 +1,85 @@
 import { Injectable } from '@angular/core';
-import { Store } from '@ngrx/store';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { AppState } from '../../app.reducers';
-import { defaultSettings, Settings, SettingsTheme } from './Settings';
+import { BehaviorSubject } from 'rxjs';
+import { AuthenticationService, AuthenticationServiceEventChange, AuthenticationServiceEventLogin } from '../authentication';
+import { defaultSettings, Settings, SettingsLanguage, SettingsTheme } from './Settings';
+
+export class SettingsServiceEventChange {
+    settings: Settings;
+    constructor(settings: Settings) { this.settings = JSON.parse(JSON.stringify(settings)); }
+}
+export type SettingsServiceEvent = SettingsServiceEventChange;
 
 @Injectable({ providedIn: 'root' })
 export class SettingsService {
-    localStorageName: string = 'settingsService';
+    private localStorageName: string = 'settingsService';
+    private storageDefaultData: Settings = defaultSettings;
 
-    storageDefaultData: Settings = defaultSettings;
-
-    data: BehaviorSubject<Settings> = new BehaviorSubject<Settings>(defaultSettings);
+    events: BehaviorSubject<SettingsServiceEvent> = new BehaviorSubject<SettingsServiceEvent>(null);
 
     constructor(
-        private store: Store<AppState>
+        private authenticationService: AuthenticationService
     ) {
-        this.store.subscribe((state: AppState) => {
-            if (state.user && state.user.username) {
-                this.localStorageName = state.user.username + ':settingsService';
+        this.authenticationService.events.subscribe(event => {
+            if (event instanceof AuthenticationServiceEventChange) {
+                if (event.user && event.user.username) {
+                    this.localStorageName = event.user.username + ':' + 'settingsService';
+                    this.getSettings(settings => {
+                        this.updateTheme(settings.theme);
+                        this.update(settings);
+                    });
+                } else {
+                    this.localStorageName = 'settingsService';
+                    this.getSettings(settings => {
+                        this.updateTheme(settings.theme);
+                        this.update({ ...settings, ...defaultSettings });
+                    });
+                }
             }
-            this.updateTheme(state);
+
+            if (event instanceof AuthenticationServiceEventLogin) {
+                this.getSettings(settings => this.update({
+                    ...settings,
+                    sidenav: true
+                }));
+            }
         });
     }
 
-    update(newStorageData: any): Observable<Settings> {
-        return new Observable(subscriber => {
-            this.saveToLocalStore(newStorageData);
-            this.data.next(this.getFromLocalStore());
-            subscriber.next(this.getFromLocalStore());
-            subscriber.complete();
+    private update(newStorageData: Settings): void {
+        this.setToLocalStorage(newStorageData);
+        this.events.next(new SettingsServiceEventChange(newStorageData));
+    }
+
+    toggleSidenav(): void {
+        this.getSettings(settings => this.update({
+            ...settings,
+            sidenav: !settings.sidenav
+        }));
+    }
+
+    toggleLanguage(value: SettingsLanguage): void {
+        this.getSettings(settings => this.update({
+            ...settings,
+            language: value
+        }));
+    }
+
+    toggleTheme(): void {
+        this.getSettings(settings => {
+            const theme: SettingsTheme = (settings.theme === SettingsTheme.Dark) ?
+                SettingsTheme.Light : SettingsTheme.Dark;
+            this.updateTheme(theme);
+            this.update({ ...settings, theme });
         });
     }
 
-    private updateTheme(state: AppState): void {
+    private getSettings(callback: (settings: Settings) => void): void {
+        const settings: Settings = this.getFromLocalStorage();
+        callback(settings as Settings);
+    }
+
+    private updateTheme(theme: SettingsTheme): void {
         const body: HTMLElement = document.querySelector('body');
-        let theme: string = null;
-
-        if (state.settings) {
-            theme = state.settings.theme;
-        }
-
         body.classList.remove('dark-theme');
         body.classList.remove('light-theme');
         switch (theme) {
@@ -55,22 +95,25 @@ export class SettingsService {
         }
     }
 
-    getAll(): Observable<Settings> {
-        return new Observable(subscriber => {
-            this.data.next(this.getFromLocalStore());
-            subscriber.next(this.getFromLocalStore());
-            subscriber.complete();
-        });
+    clearLocalStorage(): void {
+        localStorage.removeItem(this.localStorageName);
     }
 
-    private saveToLocalStore(newStorageData: Settings): void {
-        localStorage.setItem(
-            this.localStorageName,
-            JSON.stringify(Object.assign({}, this.storageDefaultData, newStorageData))
+    private setToLocalStorage(newStorageData: Settings): void {
+        localStorage.setItem(this.localStorageName,
+            JSON.stringify(Object.assign(
+                {},
+                this.storageDefaultData,
+                newStorageData)
+            )
         );
     }
 
-    private getFromLocalStore(): Settings {
-        return Object.assign({}, JSON.parse(localStorage.getItem(this.localStorageName)));
+    private getFromLocalStorage(): Settings {
+        return Object.assign(
+            {},
+            this.storageDefaultData,
+            JSON.parse(localStorage.getItem(this.localStorageName))
+        );
     }
 }

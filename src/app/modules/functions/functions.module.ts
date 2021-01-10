@@ -9,7 +9,7 @@ import { MaterialAppModule } from '@src/app/ngmaterial.module';
 import { CtModule } from '../ct/ct.module';
 
 
-const routes: Routes = [
+export const FunctionsRoutes: Routes = [
     {
         path: '',
         component: FunctionsComponent,
@@ -24,7 +24,7 @@ const routes: Routes = [
 
 
 @NgModule({
-    imports: [RouterModule.forChild(routes)],
+    imports: [RouterModule.forChild(FunctionsRoutes)],
     exports: [RouterModule]
 })
 export class FunctionsRoutingModule { }

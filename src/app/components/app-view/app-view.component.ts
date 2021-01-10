@@ -1,15 +1,12 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatSelect, MatSelectChange } from '@angular/material/select';
-import { MatSidenav } from '@angular/material/sidenav';
 import { MatSlideToggle, MatSlideToggleChange } from '@angular/material/slide-toggle';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { ActivationEnd, Router } from '@angular/router';
 import { AuthenticationService } from '@app/services/authentication/authentication.service';
-import { Store } from '@ngrx/store';
-import { AppState } from '@src/app/app.reducers';
 import { UIStateComponent } from '@src/app/models/UIStateComponent';
-import * as authenticationAction from '@src/app/services/authentication/authentication.actions';
 import { setOfLanguages, SettingsLanguage, SettingsTheme } from '@src/app/services/settings/Settings';
-import * as settingsAction from '@src/app/services/settings/settings.actions';
+import { SettingsService, SettingsServiceEventChange } from '@src/app/services/settings/settings.service';
 import { environment } from '@src/environments/environment';
 
 
@@ -19,9 +16,10 @@ import { environment } from '@src/environments/environment';
     styleUrls: ['./app-view.component.scss']
 })
 
-export class AppViewComponent extends UIStateComponent implements OnInit {
+export class AppViewComponent extends UIStateComponent implements OnInit, OnDestroy {
     htmlContent: SafeHtml;
     sidenavButtonDisable: boolean = false;
+    sidenav: boolean = false;
     theme: SettingsTheme;
     lang: {
         list?: Set<SettingsLanguage>;
@@ -29,26 +27,41 @@ export class AppViewComponent extends UIStateComponent implements OnInit {
     } = {};
     brandingTitle: string = environment.brandingTitle;
 
-    @ViewChild(MatSidenav) sidenav: MatSidenav;
     @ViewChild('matSlideToggleTheme') matSlideToggleTheme: MatSlideToggle;
     @ViewChild('matSelectLanguage') matSelectLanguage: MatSelect;
 
     constructor(
         readonly authenticationService: AuthenticationService,
-        private store: Store<AppState>,
         private domSanitizer: DomSanitizer,
+        private settingsService: SettingsService,
+        private router: Router
     ) {
         super(authenticationService);
     }
 
     ngOnInit(): void {
-        this.htmlContent = this.domSanitizer.bypassSecurityTrustHtml(environment.brandingMsgIndex);
+        this.htmlContent = this.domSanitizer.bypassSecurityTrustHtml(
+            environment.brandingMsgIndex
+        );
         this.lang.list = setOfLanguages;
-        this.store.subscribe((state: AppState) => {
-            this.theme = state.settings.theme;
-            this.lang.current = state.settings.language;
-        });
+        this.subscribeSubscription(this.router.events.subscribe((event) => {
+            if (event instanceof ActivationEnd) {
+                this.sidenavButtonDisable = !event.snapshot?.data?.sidenavExist;
+            }
+        }));
+        this.subscribeSubscription(
+            this.settingsService.events.subscribe(event => {
+                if (event instanceof SettingsServiceEventChange) {
+                    this.theme = event.settings.theme;
+                    this.lang.current = event.settings.language;
+                    this.sidenav = event.settings.sidenav;
+                }
+            })
+        );
+    }
 
+    ngOnDestroy(): void {
+        this.unsubscribeSubscriptions();
     }
 
     isAuth(): boolean {
@@ -56,23 +69,18 @@ export class AppViewComponent extends UIStateComponent implements OnInit {
     }
 
     toggleSideNav(): void {
-        this.store.dispatch(settingsAction.toggleSideNav());
+        this.settingsService.toggleSidenav();
     }
 
     toggleTheme(event: MatSlideToggleChange): void {
-        if (event.checked) {
-            this.store.dispatch(settingsAction.setDarkTheme());
-        } else {
-            this.store.dispatch(settingsAction.setLightTheme());
-        }
-
+        this.settingsService.toggleTheme();
     }
 
     toggleLanguage(event: MatSelectChange): void {
-        this.store.dispatch(settingsAction.toggleLanguage({ language: event.value }));
+        this.settingsService.toggleLanguage(event.value);
     }
 
     logout(): void {
-        this.store.dispatch(authenticationAction.logout());
+        this.authenticationService.logout().subscribe();
     }
 }

@@ -17,8 +17,7 @@ export class RoleRouteGuard implements CanActivate {
         state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
 
         if (!environment.production) {
-            console.log('');
-            console.log('%c%s', 'color:orange;', state.url);
+            console.groupCollapsed('%c%s', 'color:orange;', state.url);
             console.log('%c%s', 'color:blue;',
                 'requiredRoles: ',
                 this.authenticationService.convertRolesToString(route.data.requiredRoles)
@@ -30,7 +29,7 @@ export class RoleRouteGuard implements CanActivate {
                     this.authenticationService.user?.authorities?.map(v => v.authority)
                 )
             );
-            console.log('');
+            console.groupEnd();
         }
 
         let check: boolean = false;

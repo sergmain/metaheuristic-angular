@@ -62,11 +62,20 @@ export class CompanyService {
     edit = (companyUniqueId: string, id: string): Observable<AccountResult> =>
         this.http.get<AccountResult>(url(`company-account-edit/${companyUniqueId}/${id}`))
 
-    editFormCommitAccount = (id: string, publicName: string, enabled: boolean, companyUniqueId: string): Observable<OperationStatusRest> =>
+
+
+    // @PostMapping("/company-account-edit-commit/{companyUniqueId}")
+    // @PreAuthorize("hasAnyRole('MASTER_ADMIN')")
+    // public OperationStatusRest editFormCommit(Long id, String publicName, boolean enabled, @PathVariable Long companyUniqueId) {
+    //     OperationStatusRest operationStatusRest = companyAccountTopLevelService.editFormCommit(id, publicName, enabled, companyUniqueId);
+    //     return operationStatusRest;
+    // }
+
+    editFormCommit = (id: string, publicName: string, enabled: boolean, companyUniqueId: string): Observable<OperationStatusRest> =>
         this.http.post<OperationStatusRest>(
             url(`company-account-edit-commit/${companyUniqueId}`),
             generateFormData({
-
+                id, publicName, enabled, companyUniqueId
             }))
 
     passwordEdit = (accountId: string, companyUniqueId: string): Observable<AccountResult> =>
@@ -76,7 +85,7 @@ export class CompanyService {
         this.http.post<OperationStatusRest>(
             url(`company-account-password-edit-commit/${companyUniqueId}`),
             generateFormData({
-
+                id, password, password2, companyUniqueId
             }))
 
     editRoles = (accountId: string, companyUniqueId: string): Observable<AccountWithRoleResult> =>
@@ -86,10 +95,7 @@ export class CompanyService {
         this.http.post<OperationStatusRest>(
             url(`company-account-edit-roles-commit/${companyId}`),
             generateFormData({
-                accountId,
-                role,
-                checkbox,
-                companyId
+                accountId, role, checkbox, companyId
             }))
 
     //

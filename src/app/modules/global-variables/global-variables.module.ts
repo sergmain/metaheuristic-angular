@@ -11,7 +11,7 @@ import { CardFormAddVariableComponent } from './card-form-add-variable/card-form
 import { CardFormAddVariableWithStorageComponent } from './card-form-add-variable-with-storage/card-form-add-variable-with-storage.component';
 
 
-const routes: Routes = [
+export const GlobalVariablesRoutes: Routes = [
     {
         path: '',
         component: GlobalVariablesComponent
@@ -34,7 +34,7 @@ const routes: Routes = [
 
 
 @NgModule({
-    imports: [RouterModule.forChild(routes)],
+    imports: [RouterModule.forChild(GlobalVariablesRoutes)],
     exports: [RouterModule],
     declarations: []
 })

@@ -9,7 +9,7 @@ import { ProcessorsComponent } from './processors/processors.component';
 import { CtModule } from '../ct/ct.module';
 
 
-const routes: Routes = [
+export const ProcessorsRoutes: Routes = [
     {
         path: '',
         component: ProcessorsComponent
@@ -25,7 +25,7 @@ const routes: Routes = [
 
 
 @NgModule({
-    imports: [RouterModule.forChild(routes)],
+    imports: [RouterModule.forChild(ProcessorsRoutes)],
     exports: [RouterModule]
 })
 export class ProcessorsRoutingModule { }

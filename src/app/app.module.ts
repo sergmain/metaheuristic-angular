@@ -14,27 +14,21 @@ import { NgxJsonViewerModule } from 'ngx-json-viewer';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app.routing.module';
 import { AppDialogConfirmationComponent } from './components/app-dialog-confirmation/app-dialog-confirmation.component';
+import { AppIndexComponent } from './components/app-index/app-index.component';
 import { AppViewComponent } from './components/app-view/app-view.component';
+import { BatchChangeNotificationComponent } from './components/batch-change-notification/batch-change-notification.component';
 import { BillingComponent } from './components/billing/billing.component';
 import { LoginComponent } from './components/login/login.component';
 import { LoremIndexComponent } from './components/lorem-index/lorem-index.component';
 import { NavPilotComponent } from './components/nav-pilot/nav-pilot.component';
 import { PilotComponent } from './components/pilot/pilot.component';
 import { JwtInterceptor } from './jwt.interceptor';
+import { CopyRightModule } from './modules/copy-right/copy-right.module';
+import { CtModule } from './modules/ct/ct.module';
 import { MaterialAppModule } from './ngmaterial.module';
 import { NotificationsInterceptor } from './notifications.interceptor';
-import { StoreModule } from '@ngrx/store';
-import { EffectsModule } from '@ngrx/effects';
-import { SettingsEffects } from './services/settings/settings.effects';
-import { appReducers, appMetaReducers } from './app.reducers';
-import { AuthenticationEffects } from './services/authentication/authentication.effects';
-import { AppIndexComponent } from './components/app-index/app-index.component';
-import { BatchEffects } from './services/batch/batch.effects';
-import { CtModule } from './modules/ct/ct.module';
-import { CopyRightModule } from './modules/copy-right/copy-right.module';
-import { BatchChangeNotificationComponent } from './components/batch-change-notification/batch-change-notification.component';
 
-export function HttpLoaderFactory(http: HttpClient) {
+export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
     return new TranslateHttpLoader(http, './assets/i18n/');
 }
 
@@ -64,13 +58,6 @@ export function HttpLoaderFactory(http: HttpClient) {
         ReactiveFormsModule,
         NgxJsonViewerModule,
         HttpClientModule,
-
-        StoreModule.forRoot(appReducers, { metaReducers: appMetaReducers }),
-        EffectsModule.forRoot([
-            SettingsEffects,
-            AuthenticationEffects,
-            BatchEffects
-        ]),
 
         TranslateModule.forRoot({
             loader: {

@@ -12,7 +12,7 @@ import { Role } from '@src/app/services/authentication';
 
 const commonRequiredRoles: Role[] = [Role.Admin, Role.Data, Role.Manager];
 
-const routes: Routes = [
+export const AiRoutes: Routes = [
     {
         path: '',
         canActivate: [RoleRouteGuard],
@@ -53,7 +53,7 @@ const routes: Routes = [
 
 
 @NgModule({
-    imports: [RouterModule.forChild(routes)],
+    imports: [RouterModule.forChild(AiRoutes)],
     exports: [RouterModule],
     declarations: []
 })

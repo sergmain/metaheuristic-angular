@@ -16,8 +16,9 @@ export class AccountEditComponent implements OnInit {
     accountId: string;
     accountResult: AccountResult;
     operationStatusRest: OperationStatusRest;
-    enabled;
-    publicName;
+    isEnabled: boolean;
+    publicName: string;
+    username: string;
 
     constructor(
         private companyService: CompanyService,
@@ -32,6 +33,9 @@ export class AccountEditComponent implements OnInit {
             .edit(this.companyUniqueId, this.accountId)
             .subscribe(accountResult => {
                 this.accountResult = accountResult;
+                this.username = accountResult.account.username;
+                this.publicName = accountResult.account.publicName;
+                this.isEnabled = accountResult.account.enabled;
             });
     }
 
@@ -41,7 +45,7 @@ export class AccountEditComponent implements OnInit {
 
     saveChanges(): void {
         this.companyService
-            .editFormCommitAccount(this.accountId, this.publicName, this.enabled, this.companyUniqueId)
+            .editFormCommit(this.accountId, this.publicName, this.isEnabled, this.companyUniqueId)
             .subscribe((operationStatusRest: OperationStatusRest) => {
                 if (operationStatusRest.status === OperationStatus.OK) {
                     this.back();

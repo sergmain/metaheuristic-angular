@@ -29,6 +29,15 @@ export class UIStateComponent {
         };
     }
 
+    subscribeSubscription(s: Subscription): void {
+        this.subs.push(s);
+    }
+
+    unsubscribeSubscriptions(): void {
+        // console.log(this.subs.length);
+        this.subs.forEach(s => s.unsubscribe());
+    }
+
     setIsLoadingStart(): void {
         this.isLoading = true;
     }

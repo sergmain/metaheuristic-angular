@@ -21,7 +21,7 @@ import { Role } from '@src/app/services/authentication';
 import { RoleRouteGuard } from '@src/app/guards/role-route.guard';
 
 
-const routes: Routes = [
+export const CompanyRoutes: Routes = [
     {
         path: '',
         component: CompanyComponent,
@@ -121,7 +121,7 @@ const routes: Routes = [
 
 
 @NgModule({
-    imports: [RouterModule.forChild(routes)],
+    imports: [RouterModule.forChild(CompanyRoutes)],
     exports: [RouterModule],
     declarations: []
 })

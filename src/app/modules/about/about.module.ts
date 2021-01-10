@@ -10,7 +10,7 @@ import { MaterialAppModule } from '@src/app/ngmaterial.module';
 import { CopyRightModule } from '../copy-right/copy-right.module';
 
 
-const routes: Routes = [{
+export const AboutRoutes: Routes = [{
     path: '',
     canActivate: [AuthGuard],
     component: AboutRootComponent,
@@ -22,7 +22,7 @@ const routes: Routes = [{
 
 
 @NgModule({
-    imports: [RouterModule.forChild(routes)],
+    imports: [RouterModule.forChild(AboutRoutes)],
     exports: [RouterModule]
 })
 export class AboutRoutingModule { }

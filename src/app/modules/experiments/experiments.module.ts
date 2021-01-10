@@ -12,7 +12,7 @@ import { ExperimentStateComponent } from './experiment-state/experiment-state.co
 
 
 
-const routes: Routes = [
+export const ExperimentsRoutes: Routes = [
     {
         path: '',
         component: ExperimentsComponent
@@ -41,7 +41,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-    imports: [RouterModule.forChild(routes)],
+    imports: [RouterModule.forChild(ExperimentsRoutes)],
     exports: [RouterModule],
     declarations: []
 })

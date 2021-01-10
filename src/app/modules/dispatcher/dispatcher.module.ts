@@ -23,7 +23,7 @@ const commonRequiredRoles: Role[] = [
 
 
 
-const routes: Routes = [
+export const DispatcherRoutes: Routes = [
     {
         path: '',
         canActivate: [RoleRouteGuard],
@@ -101,7 +101,7 @@ const routes: Routes = [
 
 
 @NgModule({
-    imports: [RouterModule.forChild(routes)],
+    imports: [RouterModule.forChild(DispatcherRoutes)],
     exports: [RouterModule],
 })
 export class DispatcherRoutingModule { }
