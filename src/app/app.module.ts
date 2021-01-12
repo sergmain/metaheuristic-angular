@@ -10,7 +10,6 @@ import { AuthenticationService } from '@app/services/authentication/authenticati
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { SimpleNotificationsModule } from 'angular2-notifications';
-import { NgxJsonViewerModule } from 'ngx-json-viewer';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app.routing.module';
 import { AppDialogConfirmationComponent } from './components/app-dialog-confirmation/app-dialog-confirmation.component';
@@ -56,7 +55,6 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
         CopyRightModule,
         FormsModule,
         ReactiveFormsModule,
-        NgxJsonViewerModule,
         HttpClientModule,
 
         TranslateModule.forRoot({
