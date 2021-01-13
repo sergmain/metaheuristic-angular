@@ -3,5 +3,8 @@ issue-1300
 nodejs до 14.15,
 npm до 7.0.15
 
+DONE
+CONFIRMED
+
 
 
