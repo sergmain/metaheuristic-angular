@@ -1,10 +1,10 @@
 import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { NotificationsService } from 'angular2-notifications';
 import { EMPTY, Observable, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { DefaultResponse } from './models/DefaultResponse';
 import { OperationStatus } from './enums/OperationStatus';
+import { NotificationsService } from './modules/angular2-notifications/services/notifications.service';
 
 @Injectable()
 

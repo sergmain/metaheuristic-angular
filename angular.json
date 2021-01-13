@@ -26,7 +26,8 @@
                     "builder": "@angular-devkit/build-angular:browser",
                     "options": {
                         "allowedCommonJsDependencies": [
-                            "file-saver"
+                            "file-saver",
+                            "hammerjs"
                         ],
                         "aot": true,
                         "outputPath": "dist/metaheuristic-app",

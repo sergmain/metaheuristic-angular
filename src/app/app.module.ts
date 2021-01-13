@@ -9,8 +9,6 @@ import { AccountsService } from '@app/services/accounts/accounts.service';
 import { AuthenticationService } from '@app/services/authentication/authentication.service';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-import { SimpleNotificationsModule } from 'angular2-notifications';
-import { NgxJsonViewerModule } from 'ngx-json-viewer';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app.routing.module';
 import { AppDialogConfirmationComponent } from './components/app-dialog-confirmation/app-dialog-confirmation.component';
@@ -23,6 +21,7 @@ import { LoremIndexComponent } from './components/lorem-index/lorem-index.compon
 import { NavPilotComponent } from './components/nav-pilot/nav-pilot.component';
 import { PilotComponent } from './components/pilot/pilot.component';
 import { JwtInterceptor } from './jwt.interceptor';
+import { SimpleNotificationsModule } from './modules/angular2-notifications/simple-notifications.module';
 import { CopyRightModule } from './modules/copy-right/copy-right.module';
 import { CtModule } from './modules/ct/ct.module';
 import { MaterialAppModule } from './ngmaterial.module';
@@ -56,7 +55,6 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
         CopyRightModule,
         FormsModule,
         ReactiveFormsModule,
-        NgxJsonViewerModule,
         HttpClientModule,
 
         TranslateModule.forRoot({

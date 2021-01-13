@@ -5,7 +5,7 @@ import { ExperimentResultService } from '@src/app/services/experiment-result/exp
 import { ExperimentResultData } from '@src/app/services/experiment-result/ExperimentResultData';
 import { ExperimentResultTaskParamsYaml } from '@src/app/services/experiment-result/ExperimentResultTaskParamsYaml';
 import { ExperimentApiData } from '@src/app/services/experiments/ExperimentApiData';
-import { PlotComponent } from 'angular-plotly.js';
+import { PlotlyComponent } from 'angular-plotly.js';
 import { CtWrapBlockComponent } from '../../ct/ct-wrap-block/ct-wrap-block.component';
 
 
@@ -17,10 +17,10 @@ import { CtWrapBlockComponent } from '../../ct/ct-wrap-block/ct-wrap-block.compo
 
 export class ExperimentResultExperimentFeatureProgressComponent implements OnInit {
 
-    @ViewChild(PlotComponent) plotComponent;
+    @ViewChild(PlotlyComponent) plotComponent: PlotlyComponent;
     @ViewChild('consoleView') consoleView: CtWrapBlockComponent;
 
-    plotly: PlotComponent;
+    plotly: PlotlyComponent;
     experimentFeatureExtendedResult: ExperimentResultData.ExperimentFeatureExtendedResult;
     consolePartResponse: ExperimentResultData.ConsoleResult;
     plotData: ExperimentResultData.PlotData;
