@@ -42,3 +42,11 @@ issue-xxxx
 
 ----
 
+issue-xxxx
+выпилить модуль angular2-notifications и заменить его на ng-bootstrap или ngx-toastr.
+какую конкретно либу использовать определить позднее
+https://openbase.com/categories/js/best-angular-toast-libraries?orderBy=RECOMMENDED&
+
+
+----
+
