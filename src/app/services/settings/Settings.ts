@@ -15,7 +15,7 @@ export interface Settings {
     sidenav: boolean;
     sidenavButton: boolean;
     language: SettingsLanguage;
-    filterBatches: boolean;
+    batchFilter: boolean;
 }
 
 export const setOfLanguages: Set < SettingsLanguage > = new Set([
@@ -25,7 +25,7 @@ export const setOfLanguages: Set < SettingsLanguage > = new Set([
 
 export const defaultSettings: Settings = {
     theme: SettingsTheme.Light,
-    filterBatches: false,
+    batchFilter: false,
     sidenav: true,
     sidenavButton: true,
     language: setOfLanguages.has(environment.language as SettingsLanguage) ?

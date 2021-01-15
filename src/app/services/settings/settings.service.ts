@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { settings } from 'cluster';
 import { BehaviorSubject } from 'rxjs';
 import { AuthenticationService, AuthenticationServiceEventChange, AuthenticationServiceEventLogin } from '../authentication';
 import { defaultSettings, Settings, SettingsLanguage, SettingsTheme } from './Settings';
@@ -71,6 +72,13 @@ export class SettingsService {
             this.updateTheme(theme);
             this.update({ ...settings, theme });
         });
+    }
+
+    toggleBatchFilter(value: boolean): void {
+        this.getSettings(settings => this.update({
+            ...settings,
+            batchFilter: value
+        }));
     }
 
     private getSettings(callback: (settings: Settings) => void): void {

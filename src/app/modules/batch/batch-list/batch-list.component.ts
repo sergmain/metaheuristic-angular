@@ -1,19 +1,19 @@
 import { HttpResponse } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { marker } from '@biesbjerg/ngx-translate-extract-marker';
+import { TranslateService } from '@ngx-translate/core';
 import { ConfirmationDialogMethod, QuestionData } from '@src/app/components/app-dialog-confirmation/app-dialog-confirmation.component';
+import { BatchExecState } from '@src/app/enums/BatchExecState';
 import { UIStateComponent } from '@src/app/models/UIStateComponent';
 import { AuthenticationService } from '@src/app/services/authentication';
 import { BatchService } from '@src/app/services/batch/batch.service';
 import { BatchData } from '@src/app/services/batch/BatchData';
 import { BatchesResult } from '@src/app/services/batch/BatchesResult';
-import * as fileSaver from 'file-saver';
-import { MatDialog } from '@angular/material/dialog';
-import { TranslateService } from '@ngx-translate/core';
-import { BatchExecState } from '@src/app/enums/BatchExecState';
 import { BatchExexStatusService } from '@src/app/services/batch/BatchExecStatusService';
-import { Subscription } from 'rxjs';
+import { SettingsService } from '@src/app/services/settings/settings.service';
+import * as fileSaver from 'file-saver';
 
 
 @Component({
@@ -22,7 +22,6 @@ import { Subscription } from 'rxjs';
     styleUrls: ['./batch-list.component.scss']
 })
 export class BatchListComponent extends UIStateComponent implements OnInit, OnDestroy {
-    subs: Subscription[] = [];
     batchesResult: BatchesResult;
     isFiltered: boolean;
     dataSource: MatTableDataSource<BatchData.BatchExecInfo> = new MatTableDataSource([]);
@@ -33,14 +32,16 @@ export class BatchListComponent extends UIStateComponent implements OnInit, OnDe
         readonly authenticationService: AuthenticationService,
         readonly dialog: MatDialog,
         readonly translate: TranslateService,
-        private batchExexStatusService: BatchExexStatusService
+        private batchExexStatusService: BatchExexStatusService,
+        private settingsService: SettingsService
     ) {
         super(authenticationService);
     }
 
     ngOnInit(): void {
+        this.isFiltered = this.settingsService.events.value.settings.batchFilter;
         this.updateTable('0', this.isFiltered);
-        this.subs.push(this.batchExexStatusService.getStatuses.subscribe({
+        this.subscribeSubscription(this.batchExexStatusService.getStatuses.subscribe({
             next: statuses => {
                 this.batchExexStatusService.updateBatchesResultByStatuses(this.batchesResult, statuses);
             }
@@ -48,7 +49,7 @@ export class BatchListComponent extends UIStateComponent implements OnInit, OnDe
     }
 
     ngOnDestroy(): void {
-        this.subs.forEach(s => s.unsubscribe());
+        this.unsubscribeSubscriptions();
     }
 
     updateTable(pageNumbder: string, isFiltered: boolean): void {
@@ -69,13 +70,13 @@ export class BatchListComponent extends UIStateComponent implements OnInit, OnDe
 
     toggleFilter(): void {
         this.isFiltered = !this.isFiltered;
+        this.settingsService.toggleBatchFilter(this.isFiltered);
         this.updateTable('0', this.isFiltered);
     }
 
     isDeletedRow(b: BatchData.BatchExecInfo): boolean {
         return false;
     }
-
 
     @ConfirmationDialogMethod({
         question: (event: Event, batchData: BatchData.BatchExecInfo): QuestionData => {
