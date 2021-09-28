@@ -33,7 +33,7 @@
     "@angular/router": "11.2.14",
     "@biesbjerg/ngx-translate-extract-marker": "1.0.0",
     "@ngx-translate/core": "11.0.1",
-    "@ngx-translate/http-loader": "4.0.0",
+    "@ngx-translate/http-loader": "6.0.0",
     "angular-plotly.js": "3.0.0",
     "core-js": "2.6.9",
     "file-saver": "2.0.5",
