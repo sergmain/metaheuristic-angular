@@ -9,7 +9,7 @@
     "build3": "ng build --prod=true",
     "build4": "ng build --aot --prod=true",
     "build5": "ng build --aot",
-    "build6": "ng update @angular/core@11 @angular/cli@11",
+    "build6": "ng update @angular/core@12 @angular/cli@12",
     "build7": "ng update @angular/material@11",
     "npm-install": "npm i",
     "npm-install2": "npm install -g npm",
