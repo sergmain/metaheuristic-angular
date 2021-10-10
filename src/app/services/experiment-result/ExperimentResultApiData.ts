@@ -1,4 +1,4 @@
-import { ExperimentApiData } from '../experiments/ExperimentApiData';
+import { ExperimentApiData } from '@services/experiments/ExperimentApiData';
 
 export namespace ExperimentResultApiData {
     export interface ExperimentResultData {

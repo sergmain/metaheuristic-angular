@@ -1,5 +1,5 @@
-import { OperationStatus } from '../enums/OperationStatus';
-import { ValidationResult } from '../services/source-codes/ValidationResult';
+import { OperationStatus } from '@app/enums/OperationStatus';
+import { ValidationResult } from '@services/source-codes/ValidationResult';
 
 export interface DefaultResponse {
     errorMessages: string[];

@@ -1,4 +1,4 @@
-import { Role } from '../authentication';
+import { Role } from '@services/authentication';
 
 export interface Authority {
     authority: Role;

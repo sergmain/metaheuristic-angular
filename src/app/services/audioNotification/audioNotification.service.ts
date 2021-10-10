@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 @Injectable({
     providedIn: 'root'
 })
+
 export class AudioNotification {
     track: HTMLAudioElement = new Audio();
     constructor() {
@@ -10,7 +11,7 @@ export class AudioNotification {
         this.track.volume = 0.75;
         this.track.load();
     }
-    play() {
+    play(): void {
         this.track.play();
     }
 }

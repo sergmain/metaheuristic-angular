@@ -11,7 +11,7 @@ import { AuthenticationService } from '@src/app/services/authentication';
 import { BatchService } from '@src/app/services/batch/batch.service';
 import { BatchData } from '@src/app/services/batch/BatchData';
 import { BatchesResult } from '@src/app/services/batch/BatchesResult';
-import { BatchExexStatusService } from '@src/app/services/batch/BatchExecStatusService';
+import { BatchExecStatusService } from '@src/app/services/batch/BatchExecStatusService';
 import { SettingsService } from '@src/app/services/settings/settings.service';
 import * as fileSaver from 'file-saver';
 
@@ -32,7 +32,7 @@ export class BatchListComponent extends UIStateComponent implements OnInit, OnDe
         readonly authenticationService: AuthenticationService,
         readonly dialog: MatDialog,
         readonly translate: TranslateService,
-        private batchExexStatusService: BatchExexStatusService,
+        private batchExexStatusService: BatchExecStatusService,
         private settingsService: SettingsService
     ) {
         super(authenticationService);

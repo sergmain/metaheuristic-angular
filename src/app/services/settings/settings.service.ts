@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { settings } from 'cluster';
 import { BehaviorSubject } from 'rxjs';
 import { AuthenticationService, AuthenticationServiceEventChange, AuthenticationServiceEventLogin } from '../authentication';
 import { defaultSettings, Settings, SettingsLanguage, SettingsTheme } from './Settings';

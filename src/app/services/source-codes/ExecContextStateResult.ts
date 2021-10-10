@@ -1,5 +1,5 @@
-import { DefaultResponse } from '../../models/DefaultResponse';
-import { SourceCodeType } from '../../enums/SourceCodeType';
+import { DefaultResponse } from '@app/models/DefaultResponse';
+import { SourceCodeType } from '@app/enums/SourceCodeType';
 
 export interface StateCell {
     empty: boolean;

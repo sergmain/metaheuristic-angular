@@ -42,12 +42,12 @@ describe('Routers: (NOT TEST, ONLY INFO)', () => {
         describe('◼️ ' + LIST.name, () => {
             routeList.forEach(route => {
                 const isExistTogether: boolean = (route.isRoleRouteGuard === true) && (!!route.roles?.length === true);
-                const existTtogether = `\xa0\xa0\xa0🟩 canActivate and requiredRoles exist together`;
-                const NOTExistTogether = `\xa0\xa0\xa0🟦 NOT exist together`;
-                const roles = `\xa0\xa0\xa0🧑×${route.roles.length} ${convertRolesToString(route.roles)}`
+                const existTogether: string = `\xa0\xa0\xa0🟩 canActivate and requiredRoles exist together`;
+                const NOTExistTogether: string = `\xa0\xa0\xa0🟦 NOT exist together`;
+                const roles: string = `\xa0\xa0\xa0🧑×${route.roles.length} ${convertRolesToString(route.roles)}`;
 
                 if (isExistTogether) {
-                    it(route.path + roles + existTtogether, () => {
+                    it(route.path + roles + existTogether, () => {
                         expect(isExistTogether).toBeTruthy();
                     });
                 }

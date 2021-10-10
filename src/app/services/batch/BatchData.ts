@@ -1,5 +1,5 @@
-import { DefaultResponse } from '../../models/DefaultResponse';
-import { OperationStatusRest } from '../../models/OperationStatusRest';
+import { DefaultResponse } from '@app/models/DefaultResponse';
+import { OperationStatusRest } from '@app/models/OperationStatusRest';
 import { Batch } from './Batch';
 
 export namespace BatchData {

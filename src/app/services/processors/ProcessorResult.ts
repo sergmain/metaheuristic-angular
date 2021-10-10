@@ -1,4 +1,4 @@
-import { DefaultResponse } from '../../models/DefaultResponse';
+import { DefaultResponse } from '@app/models/DefaultResponse';
 import { Processor } from './Processor';
 
 export interface ProcessorResult extends DefaultResponse {

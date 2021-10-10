@@ -8,16 +8,16 @@ export class DispatcherAssetModeService {
 
     constructor() { }
 
-    isLocal(value: DispatcherAssetMode) {
-        if (value === DispatcherAssetMode.local) { return true }
+    isLocal(value: DispatcherAssetMode): boolean {
+        if (value === DispatcherAssetMode.local) { return true; }
         return false;
     }
-    isReplicated(value: DispatcherAssetMode) {
-        if (value === DispatcherAssetMode.replicated) { return true }
+    isReplicated(value: DispatcherAssetMode): boolean {
+        if (value === DispatcherAssetMode.replicated) { return true; }
         return false;
     }
-    isSource(value: DispatcherAssetMode) {
-        if (value === DispatcherAssetMode.source) { return true }
+    isSource(value: DispatcherAssetMode): boolean {
+        if (value === DispatcherAssetMode.source) { return true; }
         return false;
     }
 }

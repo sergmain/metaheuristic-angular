@@ -1,5 +1,5 @@
 import { Subscription } from 'rxjs';
-import { AuthenticationService } from '../services/authentication';
+import { AuthenticationService } from '@services/authentication';
 
 export class UIStateComponent {
     isLoading: boolean = false;

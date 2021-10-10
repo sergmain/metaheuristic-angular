@@ -10,7 +10,7 @@ import { NotificationsService } from './modules/angular2-notifications/services/
 
 export class NotificationsInterceptor implements HttpInterceptor {
 
-    options = {
+    options: { showProgressBar: boolean; pauseOnHover: boolean; timeOut: number; clickToClose: boolean } = {
         timeOut: 10000,
         showProgressBar: true,
         pauseOnHover: true,
@@ -35,8 +35,8 @@ export class NotificationsInterceptor implements HttpInterceptor {
             catchError((error: HttpErrorResponse) => {
                 if (error.status >= 400) {
                     if (error.error) {
-                        const title = error.error.status ? error.error.status : error.status
-                        const content = error.error.message ? error.error.message : error.message
+                        const title: string = error.error.status ? error.error.status : error.status;
+                        const content: string = error.error.message ? error.error.message : error.message;
                         this.notificationsService.error(title, content, {
                             // timeOut: 10000,
                             // showProgressBar: true,
@@ -46,8 +46,8 @@ export class NotificationsInterceptor implements HttpInterceptor {
                     }
                 }
                 if (error.status === 0) {
-                    const title = 'Server offline'
-                    const content = ''
+                    const title: string = 'Server offline';
+                    const content: string = '';
                     this.notificationsService.error(title, content, {
                         // timeOut: 10000,
                         // showProgressBar: true,

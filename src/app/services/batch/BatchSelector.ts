@@ -19,11 +19,7 @@ export class BatchSelector {
     }
 
     isSelected(batchData: BatchData.BatchExecInfo): boolean {
-        if (this.list.indexOf(this.getId(batchData)) === -1) {
-            return false;
-        } else {
-            return true;
-        }
+        return this.list.indexOf(this.getId(batchData)) !== -1;
     }
 
     clear(): void {

@@ -1,5 +1,5 @@
-import { PageableDefault } from '@src/app/models/PageableDefault';
-import { DefaultResponse } from '../../models/DefaultResponse';
+import { PageableDefault } from '@app/models/PageableDefault';
+import { DefaultResponse } from '@app/models/DefaultResponse';
 import { ExecContext } from './ExecContext';
 
 export interface ExecContextsResult extends DefaultResponse {

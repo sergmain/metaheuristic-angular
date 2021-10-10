@@ -2,9 +2,9 @@ import { ExperimentResultApiData } from '@src/app/services/experiment-result/Exp
 import { ExperimentResultSimple } from '@src/app/services/experiment-result/ExperimentResultSimple';
 import { ExperimentApiData } from '@src/app/services/experiments/ExperimentApiData';
 import { ExperimentResult } from './ExperimentResult';
-import { DefaultResponse } from '../../models/DefaultResponse';
-import { PageableDefault } from '../../models/PageableDefault';
-import { SimpleSelectOption } from '../../models/SimpleSelectOption';
+import { DefaultResponse } from '@app/models/DefaultResponse';
+import { PageableDefault } from '@app/models/PageableDefault';
+import { SimpleSelectOption } from '@app/models/SimpleSelectOption';
 import { ExperimentResultTaskParamsYaml } from './ExperimentResultTaskParamsYaml';
 
 export namespace ExperimentResultData {
