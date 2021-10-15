@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { DispatcherAssetMode } from '@src/app/enums/DispatcherAssetMode';
+import { DispatcherAssetMode } from '@app/enums/DispatcherAssetMode';
 
 @Injectable({
     providedIn: 'root'

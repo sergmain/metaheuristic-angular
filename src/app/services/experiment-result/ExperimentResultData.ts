@@ -1,7 +1,7 @@
-import { ExperimentResultApiData } from '@src/app/services/experiment-result/ExperimentResultApiData';
-import { ExperimentResultSimple } from '@src/app/services/experiment-result/ExperimentResultSimple';
-import { ExperimentApiData } from '@src/app/services/experiments/ExperimentApiData';
-import { ExperimentResult } from './ExperimentResult';
+import { ExperimentResultApiData } from '@app/services/experiment-result/ExperimentResultApiData';
+import { ExperimentResultSimple } from '@app/services/experiment-result/ExperimentResultSimple';
+import { ExperimentApiData } from '@app/services/experiments/ExperimentApiData';
+import { ExperimentResult } from '@app/services/experiment-result/ExperimentResult';
 import { DefaultResponse } from '@app/models/DefaultResponse';
 import { PageableDefault } from '@app/models/PageableDefault';
 import { SimpleSelectOption } from '@app/models/SimpleSelectOption';

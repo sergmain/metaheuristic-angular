@@ -1,4 +1,4 @@
-import { TaskExecState } from '@src/app/enums/TaskExecState';
+import { TaskExecState } from '@app/enums/TaskExecState';
 
 export interface TaskExecInfo {
     sourceCodeId: number;
