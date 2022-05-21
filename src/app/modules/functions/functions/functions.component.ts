@@ -6,7 +6,7 @@ import { UIStateComponent } from '@src/app/models/UIStateComponent';
 import { AuthenticationService } from '@src/app/services/authentication';
 import { DispatcherAssetModeService } from '@src/app/services/dispatcher-asset-mode/dispatcher-asset-mode.service';
 import { FunctionEntity } from '@src/app/services/functions/FunctionEntity';
-import { FuncrionsService } from '@src/app/services/functions/functions.service';
+import { FunctionsService } from '@src/app/services/functions/functions.service';
 import { FunctionsResult } from '@src/app/services/functions/FunctionsResult';
 
 @Component({
@@ -22,7 +22,7 @@ export class FunctionsComponent extends UIStateComponent implements OnInit {
     showParams: boolean = false;
 
     constructor(
-        private functionService: FuncrionsService,
+        private functionService: FunctionsService,
         public dispatcherAssetModeService: DispatcherAssetModeService,
         readonly dialog: MatDialog,
         readonly authenticationService: AuthenticationService
