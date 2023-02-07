@@ -2,12 +2,12 @@ import { environment } from '@src/environments/environment';
 
 export enum SettingsTheme {
     Dark = 'dark',
-        Light = 'light'
+    Light = 'light'
 }
 
 export enum SettingsLanguage {
     RU = 'RU',
-        EN = 'EN'
+    EN = 'EN'
 }
 
 export interface Settings {
@@ -28,6 +28,7 @@ export const defaultSettings: Settings = {
     batchFilter: false,
     sidenav: true,
     sidenavButton: true,
-    language: setOfLanguages.has(environment.language as SettingsLanguage) ?
-        (environment.language as SettingsLanguage) : SettingsLanguage.EN
+    language: setOfLanguages.has(environment.language as SettingsLanguage)
+        ? (environment.language as SettingsLanguage)
+        : SettingsLanguage.EN
 };

@@ -2,8 +2,8 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { UIStateComponent } from './models/UIStateComponent';
 import { AuthenticationService, AuthenticationServiceEventChange, AuthenticationServiceEventLogin, AuthenticationServiceEventLogout } from './services/authentication';
-import { BatchExexStatusService } from './services/batch/BatchExecStatusService';
-import { SettingsService, SettingsServiceEventChange } from './services/settings/settings.service';
+import { BatchExecStatusService } from '@services/batch/BatchExecStatusService';
+import { SettingsService, SettingsServiceEventChange } from '@services/settings/settings.service';
 
 @Component({
     selector: 'app-root',
@@ -13,7 +13,7 @@ import { SettingsService, SettingsServiceEventChange } from './services/settings
 export class AppComponent extends UIStateComponent implements OnInit, OnDestroy {
     constructor(
         private translate: TranslateService,
-        private batchExexStatusService: BatchExexStatusService,
+        private batchExexStatusService: BatchExecStatusService,
         readonly authenticationService: AuthenticationService,
         private settingsService: SettingsService
     ) {

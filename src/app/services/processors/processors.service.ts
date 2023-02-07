@@ -44,7 +44,7 @@ export class ProcessorsService {
     processProcessorBulkDeleteCommit(processorIds: string[]): Observable<ProcessorBulkDeleteCommitResult> {
         return this.http.post<ProcessorBulkDeleteCommitResult>(url('/processor-bulk-delete-commit'), formData({
             processorIds: processorIds.join()
-        }))
+        }));
     }
 
 }

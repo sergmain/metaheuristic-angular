@@ -14,7 +14,7 @@ export enum Role {
 
     ROLE_ADMIN = 'ROLE_ADMIN',
 
-    // 
+    // --
 
     Manager = 'ROLE_MANAGER',
     Operator = 'ROLE_OPERATOR',

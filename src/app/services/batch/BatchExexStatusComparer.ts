@@ -15,7 +15,7 @@ export class BatchExexStatusComparer {
         this.statuses = statuses;
     }
 
-    takeApart(newList: BatchExecStatus[]) {
+    takeApart(newList: BatchExecStatus[]): void {
         if (this.isFirstBacth) {
             this.isFirstBacth = false;
         } else {
@@ -39,7 +39,7 @@ export class BatchExexStatusComparer {
         this.list = Array.from(newList);
     }
 
-    private checkStatus(list: BatchExecStatus[]) {
+    private checkStatus(list: BatchExecStatus[]): void {
         let exist: boolean = false;
         list.forEach( (elem: BatchExecStatus) => {
             const index: number = this.statuses.findIndex((i: number) => i === elem.state) + 1;

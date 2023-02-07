@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AudioNotification } from '@src/app/services/audioNotification/audioNotification.service';
-import { BatchExexStatusService } from '@src/app/services/batch/BatchExecStatusService';
+import { BatchExecStatusService } from '@src/app/services/batch/BatchExecStatusService';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -10,27 +10,27 @@ import { Subscription } from 'rxjs';
 })
 export class BatchChangeNotificationComponent implements OnInit, OnDestroy {
     isActive: boolean = false;
-    subs: Subscription[] = []
+    subs: Subscription[] = [];
 
     constructor(
-        private batchExexStatusService: BatchExexStatusService,
+        private batchExecStatusService: BatchExecStatusService,
         private audioNotification: AudioNotification,
     ) { }
 
     ngOnInit(): void {
-        this.batchExexStatusService.getChanges.subscribe(result => {
+        this.batchExecStatusService.getChanges.subscribe(result => {
             if (result?.isFinished) {
                 this.audioNotification.play();
                 this.isActive = true;
             }
-        })
+        });
     }
 
-    ngOnDestroy() {
-        this.subs.forEach(s => s.unsubscribe())
+    ngOnDestroy(): void {
+        this.subs.forEach(s => s.unsubscribe());
     }
-    
-    hide() {
+
+    hide(): void {
         this.isActive = false;
     }
 }

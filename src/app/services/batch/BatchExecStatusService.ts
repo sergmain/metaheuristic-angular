@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { environment } from '@src/environments/environment';
 import { BehaviorSubject } from 'rxjs';
-import { BatchService } from './batch.service';
-import { BatchesResult } from './BatchesResult';
-import { ExecStatuses } from './ExecStatuses';
+import { BatchService } from '@services/batch/batch.service';
+import { BatchesResult } from '@services/batch/BatchesResult';
+import { ExecStatuses } from '@services/batch/ExecStatuses';
 
-export interface BatchExexStatusChangesResult {
+export interface BatchExecStatusChangesResult {
     isNew: boolean;
     isFinished: boolean;
     isError: boolean;
@@ -21,7 +21,7 @@ class StatusChecker {
         this.records.push(execStatuses);
     }
 
-    masterCheck(callback: (result: BatchExexStatusChangesResult) => void): void {
+    masterCheck(callback: (result: BatchExecStatusChangesResult) => void): void {
         const next: ExecStatuses = this.records[this.records.length - 1];
         const prev: ExecStatuses = this.records[this.records.length - 2];
         if (next && prev) {
@@ -46,10 +46,7 @@ class StatusChecker {
                 checks.push(true);
             }
         });
-        if (checks.indexOf(true) > -1) {
-            return true;
-        }
-        return false;
+        return checks.indexOf(true) > -1;
     }
 
     checkState(
@@ -73,22 +70,19 @@ class StatusChecker {
                 checks.push(false);
             }
         });
-        if (checks.indexOf(true) > -1) {
-            return true;
-        }
-        return false;
+        return checks.indexOf(true) > -1;
     }
 }
 
 
 @Injectable({ providedIn: 'root' })
-export class BatchExexStatusService {
+export class BatchExecStatusService {
     private isIntervalStarted: boolean = false;
     private interval: number = environment.batchInterval || 15000;
     private statusChecker: StatusChecker = new StatusChecker();
 
     getStatuses: BehaviorSubject<ExecStatuses> = new BehaviorSubject(null);
-    getChanges: BehaviorSubject<BatchExexStatusChangesResult> = new BehaviorSubject(null);
+    getChanges: BehaviorSubject<BatchExecStatusChangesResult> = new BehaviorSubject(null);
 
     constructor(private batchService: BatchService) { }
 

@@ -1,9 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { generateFormData as formData } from '@src/app/helpers/generateFormData';
+import { generateFormData as formData } from '@app/helpers/generateFormData';
 import { environment } from '@src/environments/environment';
 import { Observable } from 'rxjs';
-import { OperationStatusRest } from '../../models/OperationStatusRest';
+import { OperationStatusRest } from '@app/models/OperationStatusRest';
 import { AccountResult } from './AccountResult';
 import { AccountsResult } from './AccountsResult';
 import { NewAccount } from './NewAccount';

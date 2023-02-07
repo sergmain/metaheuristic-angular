@@ -11,7 +11,7 @@ const url = (s: string): string => `${environment.baseUrl}dispatcher/function/${
 
 
 @Injectable({ providedIn: 'root' })
-export class FuncrionsService {
+export class FunctionsService {
     constructor(private http: HttpClient) { }
 
 

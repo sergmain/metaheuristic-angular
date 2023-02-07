@@ -25,6 +25,10 @@ export class AuthenticationService {
     user: User;
     events: BehaviorSubject<AuthenticationServiceEvent> = new BehaviorSubject(null);
 
+    private static generateUserToken(username: string, password: string): string {
+        return 'Basic ' + btoa(username + ':' + password);
+    }
+
     constructor(
         private http: HttpClient,
         private router: Router,
@@ -89,7 +93,7 @@ export class AuthenticationService {
 
     login(username: string, password: string): void {
         const url: string = environment.baseUrl + 'user';
-        const token: string = this.generateUserToken(username, password);
+        const token: string = AuthenticationService.generateUserToken(username, password);
         const headers: HttpHeaders = new HttpHeaders({ Authorization: token });
         this.http
             .post(url, { username, password }, { headers })
@@ -100,10 +104,6 @@ export class AuthenticationService {
                     this.aboutUser().log();
                 }
             });
-    }
-
-    private generateUserToken(username: string, password: string): string {
-        return 'Basic ' + btoa(username + ':' + password);
     }
 
     private getLocalStorageData(): User {

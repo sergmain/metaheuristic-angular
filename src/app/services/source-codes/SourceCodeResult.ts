@@ -1,5 +1,5 @@
-import { SourceCodeLang } from '../../enums/SourceCodeLang';
-import { DefaultResponse } from '../../models/DefaultResponse';
+import { SourceCodeLang } from '@app/enums/SourceCodeLang';
+import { DefaultResponse } from '@app/models/DefaultResponse';
 import { ValidationResult } from './ValidationResult';
 
 export interface SourceCodeResult extends DefaultResponse {

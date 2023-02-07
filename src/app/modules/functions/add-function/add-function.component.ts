@@ -2,8 +2,8 @@ import { Component, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { OperationStatus } from '@src/app/enums/OperationStatus';
 import { OperationStatusRest } from '@src/app/models/OperationStatusRest';
-import { FuncrionsService } from '@src/app/services/functions/functions.service';
-import { CtFileUploadComponent } from '../../ct/ct-file-upload/ct-file-upload.component';
+import { FunctionsService } from '@src/app/services/functions/functions.service';
+import { CtFileUploadComponent } from '@src/app/modules/ct/ct-file-upload/ct-file-upload.component';
 
 @Component({
     selector: 'add-function',
@@ -18,7 +18,7 @@ export class AddFunctionComponent {
     @ViewChild('fileUpload', { static: true }) fileUpload: CtFileUploadComponent;
 
     constructor(
-        private funcrionsService: FuncrionsService,
+        private functionsService: FunctionsService,
         private router: Router,
     ) { }
 
@@ -27,7 +27,7 @@ export class AddFunctionComponent {
     }
 
     upload(): void {
-        this.funcrionsService
+        this.functionsService
             .uploadFunction(this.fileUpload.fileInput.nativeElement.files[0])
             .subscribe(
                 (response) => {

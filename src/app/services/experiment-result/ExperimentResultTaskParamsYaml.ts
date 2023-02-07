@@ -1,5 +1,5 @@
-import { Fitting } from '@src/app/enums/Fitting';
-import { MetricsStatus } from '@src/app/enums/MetricsStatus';
+import { Fitting } from '@app/enums/Fitting';
+import { MetricsStatus } from '@app/enums/MetricsStatus';
 
 export interface ExperimentResultTaskParamsYaml {
     version: number;

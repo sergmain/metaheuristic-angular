@@ -6,7 +6,7 @@ import { generateFormData } from '@src/app/helpers/generateFormData';
 import { ExperimentApiData } from './ExperimentApiData';
 import { OperationStatusRest } from '@src/app/models/OperationStatusRest';
 import { SimpleExperiment } from './SimpleExperiment';
-import { SourceCodeUidsForCompany } from '../source-codes/SourceCodeUidsForCompany';
+import { SourceCodeUidsForCompany } from '@services/source-codes/SourceCodeUidsForCompany';
 
 const url = (s: string): string => `${environment.baseUrl}dispatcher/experiment${s}`;
 

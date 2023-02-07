@@ -1,14 +1,14 @@
 import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { generateFormData } from '@src/app/helpers/generateFormData';
-import { OperationStatusRest } from '@src/app/models/OperationStatusRest';
+import { generateFormData } from '@app/helpers/generateFormData';
+import { OperationStatusRest } from '@app/models/OperationStatusRest';
 import { environment } from '@src/environments/environment';
 import { Observable } from 'rxjs';
-import { ExecContextResult } from '../source-codes/ExecContextResult';
-import { ExecContextsResult } from '../source-codes/ExecContextsResult';
-import { ExecContextStateResult } from '../source-codes/ExecContextStateResult';
-import { SimpleExecContextAddingResult } from '../source-codes/SimpleExecContextAddingResult';
-import { TaskExecInfo } from './TaskExecInfo';
+import { ExecContextResult } from '@app/services/source-codes/ExecContextResult';
+import { ExecContextsResult } from '@app/services/source-codes/ExecContextsResult';
+import { ExecContextStateResult } from '@app/services/source-codes/ExecContextStateResult';
+import { SimpleExecContextAddingResult } from '@app/services/source-codes/SimpleExecContextAddingResult';
+import { TaskExecInfo } from '@app/services/exec-context/TaskExecInfo';
 
 
 const url = (s: string): string => `${environment.baseUrl}dispatcher/source-code/${s}`;

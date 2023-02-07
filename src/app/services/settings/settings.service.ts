@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { settings } from 'cluster';
 import { BehaviorSubject } from 'rxjs';
 import { AuthenticationService, AuthenticationServiceEventChange, AuthenticationServiceEventLogin } from '../authentication';
 import { defaultSettings, Settings, SettingsLanguage, SettingsTheme } from './Settings';
@@ -25,13 +24,13 @@ export class SettingsService {
                 if (event.user && event.user.username) {
                     this.localStorageName = event.user.username + ':' + 'settingsService';
                     this.getSettings(settings => {
-                        this.updateTheme(settings.theme);
+                        SettingsService.updateTheme(settings.theme);
                         this.update(settings);
                     });
                 } else {
                     this.localStorageName = 'settingsService';
                     this.getSettings(settings => {
-                        this.updateTheme(settings.theme);
+                        SettingsService.updateTheme(settings.theme);
                         this.update({ ...settings, ...defaultSettings });
                     });
                 }
@@ -44,6 +43,23 @@ export class SettingsService {
                 }));
             }
         });
+    }
+
+    private static updateTheme(theme: SettingsTheme): void {
+        const body: HTMLElement = document.querySelector('body');
+        body.classList.remove('dark-theme');
+        body.classList.remove('light-theme');
+        switch (theme) {
+            case SettingsTheme.Dark:
+                body.classList.add('dark-theme');
+                break;
+            case SettingsTheme.Light:
+                body.classList.add('light-theme');
+                break;
+            default:
+                body.classList.add('light-theme');
+                break;
+        }
     }
 
     private update(newStorageData: Settings): void {
@@ -69,7 +85,7 @@ export class SettingsService {
         this.getSettings(settings => {
             const theme: SettingsTheme = (settings.theme === SettingsTheme.Dark) ?
                 SettingsTheme.Light : SettingsTheme.Dark;
-            this.updateTheme(theme);
+            SettingsService.updateTheme(theme);
             this.update({ ...settings, theme });
         });
     }
@@ -84,23 +100,6 @@ export class SettingsService {
     private getSettings(callback: (settings: Settings) => void): void {
         const settings: Settings = this.getFromLocalStorage();
         callback(settings as Settings);
-    }
-
-    private updateTheme(theme: SettingsTheme): void {
-        const body: HTMLElement = document.querySelector('body');
-        body.classList.remove('dark-theme');
-        body.classList.remove('light-theme');
-        switch (theme) {
-            case SettingsTheme.Dark:
-                body.classList.add('dark-theme');
-                break;
-            case SettingsTheme.Light:
-                body.classList.add('light-theme');
-                break;
-            default:
-                body.classList.add('light-theme');
-                break;
-        }
     }
 
     clearLocalStorage(): void {

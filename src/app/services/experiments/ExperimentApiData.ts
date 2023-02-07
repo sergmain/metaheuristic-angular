@@ -1,7 +1,7 @@
 import { DefaultResponse } from '@src/app/models/DefaultResponse';
 import { SimpleSelectOption } from '@src/app/models/SimpleSelectOption';
 import { ExecContextState } from '@src/app/enums/ExecContextState';
-import { ExecContext } from '../source-codes/ExecContext';
+import { ExecContext } from '@services/source-codes/ExecContext';
 import { SimpleExperiment } from './SimpleExperiment';
 import { PageableDefault } from '@src/app/models/PageableDefault';
 

@@ -1,4 +1,4 @@
-import { DefaultResponse } from '@src/app/models/DefaultResponse';
+import { DefaultResponse } from '@app/models/DefaultResponse';
 
 export interface Status extends DefaultResponse {
     batchId: number;

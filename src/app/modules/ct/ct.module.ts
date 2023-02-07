@@ -28,6 +28,7 @@ import { CtEnvMsgOuterComponent } from './ct-env-msg-outer/ct-env-msg-outer.comp
 import { CtTablePaginationComponent } from './ct-table-pagination/ct-table-pagination.component';
 import { CtStateOfTasksComponent } from './ct-state-of-tasks/ct-state-of-tasks.component';
 import { CtAlertComponent } from './ct-alert/ct-alert.component';
+import { CtPre10pxComponent } from './ct-pre-10px/ct-pre-10px.component';
 
 @NgModule({
     imports: [
@@ -39,6 +40,7 @@ import { CtAlertComponent } from './ct-alert/ct-alert.component';
     declarations: [
         CtSectionContentComponent,
         CtPreComponent,
+        CtPre10pxComponent,
         CtHeadingComponent,
         CtSectionBodyRowComponent,
         CtSectionFooterRowComponent,
@@ -67,6 +69,7 @@ import { CtAlertComponent } from './ct-alert/ct-alert.component';
     exports: [
         CtSectionContentComponent,
         CtPreComponent,
+        CtPre10pxComponent,
         CtHeadingComponent,
         CtSectionBodyRowComponent,
         CtSectionFooterRowComponent,

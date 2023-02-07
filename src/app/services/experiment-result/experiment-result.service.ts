@@ -1,10 +1,10 @@
 import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { generateFormData as formData } from '@src/app/helpers/generateFormData';
+import { generateFormData as formData } from '@app/helpers/generateFormData';
 import { environment } from '@src/environments/environment';
-import { ExperimentResultData } from '@src/app/services/experiment-result/ExperimentResultData';
-import { OperationStatusRest } from '@src/app/models/OperationStatusRest';
+import { ExperimentResultData } from '@app/services/experiment-result/ExperimentResultData';
+import { OperationStatusRest } from '@app/models/OperationStatusRest';
 
 const url = (s: string) => `${environment.baseUrl}dispatcher/experiment-result/${s}`;
 

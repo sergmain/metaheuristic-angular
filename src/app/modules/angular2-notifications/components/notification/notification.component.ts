@@ -166,7 +166,7 @@ export class NotificationComponent implements OnInit, OnDestroy {
     this.safeInputHtml = this.domSanitizer.bypassSecurityTrustHtml(this.item.html);
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     clearTimeout(this.timer);
     this.cd.detach();
   }
@@ -178,14 +178,14 @@ export class NotificationComponent implements OnInit, OnDestroy {
     this.zone.runOutsideAngular(() => this.timer = setTimeout(this.instance, this.sleepTime));
   }
 
-  onEnter() {
+  onEnter(): void {
     if (this.pauseOnHover) {
       this.stopTime = true;
       this.pauseStart = new Date().getTime();
     }
   }
 
-  onLeave() {
+  onLeave(): void {
     if (this.pauseOnHover) {
       this.stopTime = false;
       this.startTime += (new Date().getTime() - this.pauseStart);
@@ -194,7 +194,7 @@ export class NotificationComponent implements OnInit, OnDestroy {
     }
   }
 
-  onClick(event: MouseEvent) {
+  onClick(event: MouseEvent): void {
     this.item.click!.emit(event);
 
     if (this.clickToClose) {
@@ -202,7 +202,7 @@ export class NotificationComponent implements OnInit, OnDestroy {
     }
   }
 
-  onClickIcon(event: MouseEvent) {
+  onClickIcon(event: MouseEvent): void {
     this.item.clickIcon!.emit(event);
 
     if (this.clickIconToClose) {
@@ -211,7 +211,7 @@ export class NotificationComponent implements OnInit, OnDestroy {
   }
 
   // Attach all the overrides
-  attachOverrides() {
+  attachOverrides(): void {
     Object.keys(this.item.override).forEach(a => {
       if (this.hasOwnProperty(a)) {
         (this as any)[a] = this.item.override[a];
@@ -220,7 +220,7 @@ export class NotificationComponent implements OnInit, OnDestroy {
   }
 
   private instance = () => {
-    const now = new Date().getTime();
+    const now : number = new Date().getTime();
 
     if (this.endTime < now) {
       this.remove();
