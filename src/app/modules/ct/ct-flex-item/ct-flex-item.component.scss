@@ -1,39 +1,40 @@
+@use "sass:math";
 @import '../../../../variables.scss';
 
 :host-context([gap="unit(1)"]) {
-    margin: (unit(1) / 2);
+    margin: math.div(unit(1), 2);
 }
 
 :host-context([gap="unit(2)"]) {
-    margin: (unit(2) / 2);
+    margin: math.div(unit(2), 2);
 }
 
 :host-context([gap="unit(3)"]) {
-    margin: (unit(3) / 2);
+    margin: math.div(unit(3), 2);
 }
 
 :host-context([gap="18px"]) {
-    margin: (18px / 2);
+    margin: math.div(18px, 2);
 }
 
 :host-context([gap="16px"]) {
-    margin: (16px / 2);
+    margin: math.div(16px, 2);
 }
 
 :host-context([gap="12px"]) {
-    margin: (12px / 2);
+    margin: math.div(12px, 2);
 }
 
 :host-context([gap="9px"]) {
-    margin: (9px / 2);
+    margin: math.div(9px, 2);
 }
 
 :host-context([gap="8px"]) {
-    margin: (8px / 2);
+    margin: math.div(8px, 2);
 }
 
 :host-context([gap="4px"]) {
-    margin: (4px / 2);
+    margin: math.div(4px, 2);
 }
 
 :host-context([gap="0"]) {

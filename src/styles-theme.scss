@@ -1,11 +1,11 @@
-@import 'mixins.scss';
+@use '@angular/material' as mat;
 
+@import 'mixins.scss';
 @import '@angular/material/theming';
 @import './theme-palettes/dark.scss';
-
 @import './theme-palettes/light.scss';
 
-@include mat-core();
+@include mat.core();
 
 .light-theme {
     $primary: mat-palette($mat-light);
