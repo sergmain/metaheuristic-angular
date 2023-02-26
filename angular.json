@@ -29,7 +29,8 @@
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
             "allowedCommonJsDependencies": [
-              "file-saver"
+              "file-saver",
+              "jszip"
             ],
             "aot": true,
             "outputPath": "dist/metaheuristic-app",
