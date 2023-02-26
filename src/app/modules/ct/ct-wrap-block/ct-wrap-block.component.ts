@@ -6,7 +6,7 @@ import {
 } from '@angular/core';
 
 @Component({
-    // tslint:disable-next-line: component-selector
+    // eslint-disable-next-line @angular-eslint/component-selector
     selector: 'ct-wrap-block',
     templateUrl: './ct-wrap-block.component.html',
     styleUrls: ['./ct-wrap-block.component.scss']
@@ -27,14 +27,14 @@ export class CtWrapBlockComponent implements OnInit, OnDestroy {
 
     wait() {
         this.state.wait = true;
-        // tslint:disable-next-line: no-string-literal
+        // eslint-disable-next-line @typescript-eslint/dot-notation
         if (!this.changeDetector['destroyed']) {
             this.changeDetector.detectChanges();
         }
     }
     show() {
         this.state.wait = false;
-        // tslint:disable-next-line: no-string-literal
+        // eslint-disable-next-line @typescript-eslint/dot-notation
         if (!this.changeDetector['destroyed']) {
             this.changeDetector.detectChanges();
         }

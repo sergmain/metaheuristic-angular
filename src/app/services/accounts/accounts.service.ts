@@ -7,6 +7,7 @@ import { OperationStatusRest } from '@app/models/OperationStatusRest';
 import { AccountResult } from './AccountResult';
 import { AccountsResult } from './AccountsResult';
 import { NewAccount } from './NewAccount';
+import {FormControl, ɵFormGroupValue, ɵTypedOrUntyped} from '@angular/forms';
 
 const url = (urlString: string): string => `${environment.baseUrl}dispatcher/account/${urlString}`;
 
@@ -18,7 +19,7 @@ export class AccountsService {
         return this.http.get<AccountsResult>(url(`accounts`), { params: { page } });
     }
 
-    addFormCommit(account: NewAccount): Observable<OperationStatusRest> {
+    addFormCommit(account: ɵTypedOrUntyped<{ password: FormControl<string | null>; publicName: FormControl<string | null>; password2: FormControl<string | null>; username: FormControl<string | null> }, ɵFormGroupValue<{ password: FormControl<string | null>; publicName: FormControl<string | null>; password2: FormControl<string | null>; username: FormControl<string | null> }>, any>): Observable<OperationStatusRest> {
         return this.http.post<OperationStatusRest>(url(`account-add-commit`), account);
     }
 

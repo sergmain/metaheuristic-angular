@@ -38,16 +38,6 @@ export const AiRoutes: Routes = [
             requiredRoles: commonRequiredRoles
         }
     },
-    {
-        path: 'experiment-results',
-        canActivate: [RoleRouteGuard],
-        component: AiRootComponent,
-        loadChildren: () => import('@src/app/modules/experiment-result/experiment-result.module').then(m => m.ExperimentResultModule),
-        data: {
-            section: 'experiment-result',
-            requiredRoles: commonRequiredRoles
-        }
-    }
 
 ];
 

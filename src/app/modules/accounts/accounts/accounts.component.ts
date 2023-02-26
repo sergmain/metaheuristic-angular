@@ -8,7 +8,7 @@ import { AuthenticationService } from '@src/app/services/authentication';
 import { DispatcherAssetModeService } from '@src/app/services/dispatcher-asset-mode/dispatcher-asset-mode.service';
 
 @Component({
-    // tslint:disable-next-line: component-selector
+    // eslint-disable-next-line @angular-eslint/component-selector
     selector: 'accounts-view',
     templateUrl: './accounts.component.html',
     styleUrls: ['./accounts.component.scss']

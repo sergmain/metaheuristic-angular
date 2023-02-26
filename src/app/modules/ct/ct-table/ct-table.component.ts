@@ -8,7 +8,7 @@ import {
 } from '@angular/core';
 
 @Component({
-    // tslint:disable-next-line: component-selector
+    // eslint-disable-next-line @angular-eslint/component-selector
     selector: 'ct-table',
     templateUrl: './ct-table.component.html',
     styleUrls: ['./ct-table.component.scss']
@@ -49,7 +49,7 @@ export class CtTableComponent implements OnInit, OnDestroy, OnChanges {
     wait(): void {
         if (this.isFnMode) {
             this.state.wait = true;
-            // tslint:disable-next-line: no-string-literal
+            // eslint-disable-next-line @typescript-eslint/dot-notation
             if (!this.changeDetector['destroyed']) {
                 this.changeDetector.detectChanges();
             }
@@ -58,7 +58,7 @@ export class CtTableComponent implements OnInit, OnDestroy, OnChanges {
     show(): void {
         if (this.isFnMode) {
             this.state.wait = false;
-            // tslint:disable-next-line: no-string-literal
+            // eslint-disable-next-line @typescript-eslint/dot-notation
             if (!this.changeDetector['destroyed']) {
                 this.changeDetector.detectChanges();
             }

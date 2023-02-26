@@ -49,7 +49,7 @@ const routes: Routes = [
 const extraOptions: ExtraOptions = {
     useHash: environment.hashLocationStrategy,
     onSameUrlNavigation: 'reload',
-    relativeLinkResolution: 'legacy'
+    // relativeLinkResolution: 'legacy'
 };
 
 @NgModule({

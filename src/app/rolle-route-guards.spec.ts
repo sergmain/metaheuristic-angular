@@ -7,7 +7,6 @@ import { AiRoutes } from './modules/ai/ai.module';
 import { BatchRoutes } from './modules/batch/batch.module';
 import { CompanyRoutes } from './modules/company/company.module';
 import { DispatcherRoutes } from './modules/dispatcher/dispatcher.module';
-import { ExperimentResultRoutes } from './modules/experiment-result/experiment-result.module';
 import { ExperimentsRoutes } from './modules/experiments/experiments.module';
 import { FunctionsRoutes } from './modules/functions/functions.module';
 import { GlobalVariablesRoutes } from './modules/global-variables/global-variables.module';
@@ -24,7 +23,6 @@ const LISTS: { route: Route[], name: string }[] = [
     { route: BatchRoutes, name: 'Batch' },
     { route: CompanyRoutes, name: 'Company' },
     { route: DispatcherRoutes, name: 'Dispatcher' },
-    { route: ExperimentResultRoutes, name: 'ExperimentResult' },
     { route: ExperimentsRoutes, name: 'Experiments' },
     { route: FunctionsRoutes, name: 'Functions' },
     { route: GlobalVariablesRoutes, name: 'GlobalVariables' },
