@@ -179,10 +179,14 @@ export class CompanyBatchListComponent extends UIStateComponent implements OnIni
         this.companyService
             .downloadProcessingResult(this.companyUniqueId, el.batch.id.toString())
             .subscribe((res) => {
-                const name: string = res.headers
-                    .get('Content-Disposition')
+                let contentDisposition = res.headers.get('Content-Disposition');
+                const tryname: string = contentDisposition
                     .replace('filename*=UTF-8\'\'', '') || 'result.zip';
-                fileSaver.saveAs(res.body, name);
+                console.log('company-batch-list.contentDisposition: ' + contentDisposition);
+                console.log('company-batch-list.tryname: ' + tryname);
+                const decodedName = decodeURI(tryname);
+                console.log('company-batch-list.decodedName: ' + decodedName);
+                fileSaver.saveAs(res.body, decodedName);
             });
     }
     downloadOriginFile(el: BatchData.BatchExecInfo): void {
@@ -196,6 +200,7 @@ export class CompanyBatchListComponent extends UIStateComponent implements OnIni
                 const name: string = res.headers
                     .get('Content-Disposition')
                     .replace('filename*=UTF-8\'\'', '') || 'result.zip';
+                console.log('company-batchs: ' + name);
                 fileSaver.saveAs(res.body, name);
             });
     }

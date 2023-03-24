@@ -60,10 +60,11 @@ export class StateOfTasksComponent implements OnInit {
         this.execContextService
             .downloadVariable(this.execContextId, out.id.toString())
             .subscribe(response => {
-                fileSaver.saveAs(
-                    response.body,
-                    response.headers.get('Content-Disposition').split('\'\'')[1]
-                );
+                const name: string = response.headers
+                    .get('Content-Disposition').split('\'\'')[1];
+                console.log('state-of-tasks: ' + name);
+
+                fileSaver.saveAs(response.body, name);
             });
     }
 }

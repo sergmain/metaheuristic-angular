@@ -103,8 +103,13 @@ export class BatchListComponent extends UIStateComponent implements OnInit, OnDe
         event.stopPropagation();
         this.batchService.downloadFile(batchId)
             .subscribe((res: HttpResponse<Blob>) => {
-                const tryname: string = res.headers.get('Content-Disposition')?.split?.('\'\'')?.[1];
-                fileSaver.saveAs(res.body, tryname ? tryname : 'result.zip');
+                let contentDisposition = res.headers.get('Content-Disposition');
+                const tryname: string = contentDisposition?.split?.('\'\'')?.[1];
+                console.log('batch-list.contentDisposition: ' + contentDisposition);
+                console.log('batch-list.tryname: ' + tryname);
+                const decodedName = tryname ? decodeURI(tryname) : tryname;
+                console.log('batch-list.decodedName: ' + decodedName);
+                fileSaver.saveAs(res.body, decodedName ? decodedName : 'result.zip');
             });
     }
 
