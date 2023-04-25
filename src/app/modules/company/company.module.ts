@@ -36,7 +36,7 @@ export const CompanyRoutes: Routes = [
         component: CompanyEditComponent,
         data: {
             backConfig: ['../', '../', 'companies'],
-            requiredRoles: [Role.MasterAdmin]
+            requiredRoles: [Role.MainAdmin]
         }
     },
     {
@@ -52,7 +52,7 @@ export const CompanyRoutes: Routes = [
         canActivate: [RoleRouteGuard],
         data: {
             backConfig: ['../', '../', 'companies'],
-            requiredRoles: [Role.MasterAdmin]
+            requiredRoles: [Role.MainAdmin]
         }
     },
     {
@@ -96,7 +96,7 @@ export const CompanyRoutes: Routes = [
         canActivate: [RoleRouteGuard],
         data: {
             backConfig: ['../', '../', 'companies'],
-            requiredRoles: [Role.MasterSupport, Role.MasterOpertator]
+            requiredRoles: [Role.MainSupport, Role.MainOpertator]
         }
     },
     {
@@ -105,7 +105,7 @@ export const CompanyRoutes: Routes = [
         canActivate: [RoleRouteGuard],
         data: {
             backConfig: ['../'],
-            requiredRoles: [Role.MasterSupport, Role.MasterOpertator]
+            requiredRoles: [Role.MainSupport, Role.MainOpertator]
         }
     },
     {
@@ -114,7 +114,7 @@ export const CompanyRoutes: Routes = [
         canActivate: [RoleRouteGuard],
         data: {
             backConfig: ['../', '../', 'batches'],
-            requiredRoles: [Role.MasterSupport, Role.MasterOpertator]
+            requiredRoles: [Role.MainSupport, Role.MainOpertator]
         }
     }
 ];

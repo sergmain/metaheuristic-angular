@@ -3,7 +3,8 @@
   "version": "0.0.1",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve --disable-host-check",
+    "start": "ng serve",
+    "start-disable-host-check": "ng serve --disable-host-check",
     "start-dev": "ng serve --configuration development --disable-host-check --host=127.0.0.1",
     "build": "ng build",
     "build2": "ng build --baseHref=/aiai-app/ --prod=true",

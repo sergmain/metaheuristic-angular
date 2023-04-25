@@ -12,10 +12,10 @@ import { RoleRouteGuard } from '@src/app/guards/role-route.guard';
 
 
 const commonRequiredRoles: Role[] = [
-    Role.MasterAssetManager,
-    Role.MasterAdmin,
-    Role.MasterOpertator,
-    Role.MasterSupport,
+    Role.MainAssetManager,
+    Role.MainAdmin,
+    Role.MainOpertator,
+    Role.MainSupport,
     Role.Admin,
     Role.Data,
     Role.Manager,
@@ -43,7 +43,7 @@ export const DispatcherRoutes: Routes = [
         component: DispatcherRootComponent,
         loadChildren: () => import('@src/app/modules/source-codes/source-codes.module').then(m => m.SourceCodeModule),
         data: {
-            requiredRoles: [Role.MasterAssetManager, Role.Admin, Role.Data, Role.Manager],
+            requiredRoles: [Role.MainAssetManager, Role.Admin, Role.Data, Role.Manager],
             section: 'source-codes'
         },
     },
@@ -63,7 +63,7 @@ export const DispatcherRoutes: Routes = [
         component: DispatcherRootComponent,
         loadChildren: () => import('@src/app/modules/functions/functions.module').then(m => m.FunctionsModule),
         data: {
-            requiredRoles: [Role.MasterAssetManager, Role.Admin, Role.Data],
+            requiredRoles: [Role.MainAssetManager, Role.Admin, Role.Data],
             section: 'functions'
         }
     },
@@ -93,7 +93,7 @@ export const DispatcherRoutes: Routes = [
         component: DispatcherRootComponent,
         loadChildren: () => import('src/app/modules/company/company.module').then(m => m.CompnyModule),
         data: {
-            requiredRoles: [Role.MasterAdmin, Role.MasterOpertator, Role.MasterSupport],
+            requiredRoles: [Role.MainAdmin, Role.MainOpertator, Role.MainSupport],
             section: 'company'
         }
     }
