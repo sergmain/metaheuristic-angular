@@ -16,7 +16,7 @@ import { DispatcherAssetModeService } from '@src/app/services/dispatcher-asset-m
 
 export class AccountsComponent extends UIStateComponent implements OnInit {
     dataSource = new MatTableDataSource<SimpleAccount>([]);
-    columnsToDisplay = ['id', 'isEnabled', 'login', 'publicName', 'createdOn', 'bts'];
+    columnsToDisplay = ['id', 'isEnabled', 'login', 'publicName', 'createdOn', 'roles', 'bts'];
     accountsResult: AccountsResult;
 
     constructor(

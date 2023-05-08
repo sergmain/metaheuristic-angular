@@ -29,8 +29,7 @@
                 <td>{{row.context}}</td>
                 <td *ngFor="let cell of row.cells">
                     <div *ngIf="!cell.empty">
-                        <div>{{cell.taskId}}</div>
-                        <div>{{cell.state}}</div>
+                        <div>{{cell.taskId}},&nbsp;{{cell.state}}</div>
                         <ng-container *ngTemplateOutlet="stateOkTemplate; context:{cell:cell}"></ng-container>
                         <ng-container *ngTemplateOutlet="stateErrorTemplate; context:{cell:cell}"></ng-container>
                     </div>
@@ -44,8 +43,11 @@
 <ng-template #stateOkTemplate let-cell="cell">
     <ng-container *ngIf="cell.state === TaskExecState.OK">
         <ng-container *ngFor="let out of cell.outs">
-            <div>
+            <div *ngIf="!out.n">
                 <span class="link" (click)="downloadFile(out)">{{out.id}}, {{out.nm}}</span>
+            </div>
+            <div *ngIf="out.n">
+                {{out.id}}, {{out.nm}}
             </div>
         </ng-container>
     </ng-container>

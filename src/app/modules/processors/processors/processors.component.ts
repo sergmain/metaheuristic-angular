@@ -21,7 +21,7 @@ export class ProcessorsComponent extends UIStateComponent implements OnInit, Con
     showStatusOfProcessor: boolean = false;
     dataSource: MatTableDataSource<ProcessorStatus> = new MatTableDataSource<ProcessorStatus>([]);
     selection: SelectionModel<ProcessorStatus> = new SelectionModel<ProcessorStatus>(true, []);
-    columnsToDisplay: string[] = ['check', 'id', 'ip', 'description', 'reason', 'lastSeen', 'bts'];
+    columnsToDisplay: string[] = ['check', 'id', 'ip', 'description', 'reason', 'cores', 'bts'];
     secondColumnsToDisplay: string[] = ['empty', 'env'];
 
     constructor(
