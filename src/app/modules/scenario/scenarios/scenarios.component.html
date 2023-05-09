@@ -41,6 +41,14 @@
                             <ct-flex justify-content="flex-end" gap="8px">
                                 <ct-flex-item>
                                     <button mat-flat-button color="primary" size="forTableRow"
+                                            [routerLink]="['../..', scenarioGroupId, 'scenario', el.scenarioId, 'details']">Details</button>
+                                </ct-flex-item>
+                                <ct-flex-item>
+                                    <button mat-flat-button color="primary" size="forTableRow"
+                                            [routerLink]="['../..', scenarioGroupId, 'scenario', el.scenarioId, 'dtls']">Dtls</button>
+                                </ct-flex-item>
+                                <ct-flex-item>
+                                    <button mat-flat-button color="primary" size="forTableRow"
                                             [routerLink]="['../..', scenarioGroupId, 'scenario', el.scenarioId, 'steps']">Steps</button>
                                 </ct-flex-item>
                                 <ct-flex-item>

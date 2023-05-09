@@ -30,7 +30,6 @@ const routes: Routes = [
         loadChildren: () => import('src/app/modules/ai/ai.module').then(m => m.AiModule),
         data: { sidenavExist: true }
     },
-
     {
         path: 'batch',
         loadChildren: () => import('src/app/modules/batch/batch.module').then(m => m.BatchModule),

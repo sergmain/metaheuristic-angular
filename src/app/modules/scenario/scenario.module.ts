@@ -16,6 +16,8 @@ import {ScenarioStepAddComponent} from "@app/modules/scenario/step-add/scenario-
 import {DragDropModule} from "@angular/cdk/drag-drop";
 import {MatTableModule} from "@angular/material/table";
 import {FlexLayoutModule} from "@angular/flex-layout";
+import {ScenarioDetailsComponent} from '@app/modules/scenario/scenario-details/scenario-details.component';
+import {ScenarioDtlsComponent} from '@app/modules/scenario/scenario-dtls/scenario-dtls.component';
 
 export const ScenarioRoutes: Routes = [
     {
@@ -48,6 +50,24 @@ export const ScenarioRoutes: Routes = [
     {
         path: ':scenarioGroupId/scenario/:scenarioId/steps',
         component: ScenarioStepsComponent,
+        canActivate: [RoleRouteGuard],
+        data: {
+            backConfig: ['../', '../', '../', 'scenarios'],
+            requiredRoles: [Role.Admin]
+        }
+    },
+    {
+        path: ':scenarioGroupId/scenario/:scenarioId/details',
+        component: ScenarioDetailsComponent,
+        canActivate: [RoleRouteGuard],
+        data: {
+            backConfig: ['../', '../', '../', 'scenarios'],
+            requiredRoles: [Role.Admin]
+        }
+    },
+    {
+        path: ':scenarioGroupId/scenario/:scenarioId/dtls',
+        component: ScenarioDetailsComponent,
         canActivate: [RoleRouteGuard],
         data: {
             backConfig: ['../', '../', '../', 'scenarios'],
@@ -89,7 +109,8 @@ export class ScenarioGroupRoutingModule { }
     declarations: [
         ScenarioGroupsComponent, ScenariosComponent,
         ScenarioGroupAddComponent, ScenarioAddComponent,
-        ScenarioStepsComponent, ScenarioStepAddComponent
+        ScenarioStepsComponent, ScenarioStepAddComponent,
+        ScenarioDetailsComponent, ScenarioDtlsComponent
     ]
 })
 export class ScenarioModule { }
