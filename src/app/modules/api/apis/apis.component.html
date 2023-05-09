@@ -1,0 +1,87 @@
+<app-ct-section *ngIf="simpleApisResult">
+    <app-ct-section-header>
+        <app-ct-section-header-row>
+            <app-ct-flex justify-content="space-between">
+                <app-ct-flex-item>
+                    <app-ct-heading>APIs</app-ct-heading>
+                </app-ct-flex-item>
+            </app-ct-flex>
+            <app-ct-flex-item>
+                <mat-slide-toggle [(ngModel)]="expandParams">
+                    Expand params and scheme
+                </mat-slide-toggle>
+            </app-ct-flex-item>
+            <app-ct-flex justify-content="flex-end">
+                <app-ct-flex-item>
+                    <button mat-flat-button="mat-flat-button" color="primary" routerLink="add">Add API</button>
+                </app-ct-flex-item>
+            </app-ct-flex>
+        </app-ct-section-header-row>
+    </app-ct-section-header>
+    <app-ct-section-body>
+        <app-ct-section-body-row>
+            <ng-container *ngTemplateOutlet="mainTableTemplate"></ng-container>
+        </app-ct-section-body-row>
+    </app-ct-section-body>
+    <app-ct-section-footer>
+        <app-ct-section-footer-row>
+            <app-ct-flex justify-content="space-between">
+                <app-ct-flex-item>
+                    <app-ct-flex justify-content="flex-start" gap="8px">
+                        <app-ct-table-pagination
+                                [pageableDefault]="simpleApisResult.apis"
+                                [globalDisable]="isLoading"
+                                (next)="nextPage()"
+                                (prev)="prevPage()">
+                        </app-ct-table-pagination>
+                    </app-ct-flex>
+                </app-ct-flex-item>
+            </app-ct-flex>
+        </app-ct-section-footer-row>
+    </app-ct-section-footer>
+</app-ct-section>
+
+<ng-template #mainTableTemplate>
+    <ct-table [isWaiting]="isLoading">
+        <table class="mat-table" mat-table="mat-table" [dataSource]="dataSource" multiTemplateDataRows="multiTemplateDataRows">
+            <ng-container matColumnDef="id">
+                <th mat-header-cell *matHeaderCellDef>Id</th>
+                <td mat-cell="mat-cell" *matCellDef="let el">{{el.id}} </td>
+            </ng-container>
+            <ng-container matColumnDef="name">
+                <th mat-header-cell *matHeaderCellDef>{{ 'api.name' | translate }}</th>
+                <td mat-cell="mat-cell" *matCellDef="let el">{{el.name}} </td>
+            </ng-container>
+            <ng-container matColumnDef="code">
+                <th mat-header-cell *matHeaderCellDef>{{ 'api.code' | translate }}</th>
+                <td mat-cell="mat-cell" *matCellDef="let el">{{el.code}} </td>
+            </ng-container>
+            <ng-container matColumnDef="empty">
+                <td mat-cell *matCellDef="let el"> </td>
+            </ng-container>
+            <ng-container matColumnDef="scheme">
+                <td mat-cell *matCellDef="let el" [attr.colspan]="columnsToDisplay.length - 1">
+                    <b>Scheme:</b>
+                    <app-ct-pre-10px>{{el.scheme || '—'}} </app-ct-pre-10px>
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="bts">
+                <th mat-header-cell *matHeaderCellDef></th>
+                <td mat-cell *matCellDef="let el">
+                    <app-ct-flex justify-content="flex-end" gap="8px">
+                        <app-ct-flex-item>
+                            <button mat-flat-button color="warn" size="forTableRow" (click)="delete(el)">
+                                <mat-icon>delete</mat-icon>
+                            </button>
+                        </app-ct-flex-item>
+                    </app-ct-flex>
+                </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+            <tr class="first-row" mat-row *matRowDef="let row; columns: columnsToDisplay;"></tr>
+            <tr class="second-row" mat-row *matRowDef="let row; columns: secondColumnsToDisplay;" [hidden]="!expandParams"></tr>
+        </table>
+    </ct-table>
+</ng-template>
+
+

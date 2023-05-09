@@ -1,4 +1,11 @@
 {
+	"main.Cancel": "Отмена",
+	"main.Create": "Создать",
+	"main.This is a required field": "Обязательное поле",
+	"main.CreatedOn": "Создан",
+	"main.Name": "Название",
+	"main.Description": "Описание",
+
 	"ai.Experiments": "Эксперименты",
 	"ai.Results": "Результаты",
 	"app-view.About": "Подробнее",
@@ -43,10 +50,36 @@
 	"batch.isBatchConsistent.true": "Да",
 	"batch.onlyMyBatches": "Только мои пакеты",
 	"ctBackButton.back": "Назад",
+	"dispatcher.Sessions": "Sessions",
+	"dispatcher.Apis": "APIs",
+	"dispatcher.Auths": "Auth",
+	"dispatcher.Kbs": "KBs",
+	"dispatcher.Eval": "Evaluation",
 	"dispatcher.Accounts": "Аккаунты",
 	"dispatcher.Company": "Компания",
 	"dispatcher.Functions": "Функции",
 	"dispatcher.Processors": "Обработчики",
 	"dispatcher.SourceCodes": "Исходный код",
-	"dispatcher.Variables": "Переменные"
+	"dispatcher.Variables": "Переменные",
+
+	"api.name": "API name",
+	"api.code": "API code",
+
+	"dispatcher.Scenario": "Scenarios",
+
+	"step.Prompt": "Prompt",
+	"step.Create": "Create",
+
+	"evaluation.StartedOn": "Started on",
+	"evaluation.FinishedOn": "Finished on",
+	"evaluation.ProviderCode": "Provider code",
+	"evaluation.ApiInfo": "API info",
+	"evaluation.KBs": "KB codes",
+	"evaluation.WithoutError": "No error",
+	"evaluation.WithError": "Fail",
+	"evaluation.SystemError": "SystemError",
+
+	"evaluation-add.Create a new evaluation for specific API": "Create a new evaluation for specific API",
+	"evaluation-add.List of APIs": "List of APIs",
+	"evaluation-add.Create": "Создать"
 }

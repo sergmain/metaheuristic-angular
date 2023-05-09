@@ -1,4 +1,11 @@
 {
+	"main.Cancel": "Cancel",
+	"main.This is a required field": "This is a required field",
+	"main.Create": "Create",
+	"main.CreatedOn": "Created On",
+	"main.Name": "Name",
+	"main.Description": "Description",
+
 	"ai.Experiments": "Experiments",
 	"ai.Results": "Results",
 	"app-view.About": "About",
@@ -43,10 +50,35 @@
 	"batch.isBatchConsistent.true": "OK",
 	"batch.onlyMyBatches": "Only My Batches",
 	"ctBackButton.back": "Back",
+	"dispatcher.Sessions": "Sessions",
+	"dispatcher.Apis": "APIs",
+	"dispatcher.Auths": "Auth",
+	"dispatcher.Kbs": "KBs",
+	"dispatcher.Eval": "Evaluation",
 	"dispatcher.Accounts": "Accounts",
 	"dispatcher.Company": "Company",
 	"dispatcher.Functions": "Functions",
 	"dispatcher.Processors": "Processors",
 	"dispatcher.SourceCodes": "Source Codes",
-	"dispatcher.Variables": "Variables"
+	"dispatcher.Variables": "Variables",
+
+	"api.name": "API name",
+	"api.code": "API code",
+
+	"dispatcher.Scenario": "Scenarios",
+
+	"step.Prompt": "Prompt",
+
+	"evaluation.StartedOn": "Started on",
+	"evaluation.FinishedOn": "Finished on",
+	"evaluation.ProviderCode": "Provider code",
+	"evaluation.ApiInfo": "API info",
+	"evaluation.KBs": "KB codes",
+	"evaluation.WithoutError": "No error",
+	"evaluation.WithError": "Fail",
+	"evaluation.SystemError": "SystemError",
+
+	"evaluation-add.Create a new evaluation for specific API": "Create a new evaluation for specific API",
+	"evaluation-add.List of APIs": "List of APIs",
+	"evaluation-add.Create": "Create"
 }

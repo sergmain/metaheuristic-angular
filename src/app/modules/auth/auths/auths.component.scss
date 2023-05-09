@@ -1,0 +1,35 @@
+.section {
+  .first-row {
+    td {
+      border-width: 0;
+    }
+  }
+}
+
+.mat-mdc-cell {
+  vertical-align: top;
+}
+
+.first-row td,
+.first-row th {
+  border-bottom: none;
+}
+
+.second-row td,
+.second-row th {
+  border: none;
+}
+
+.alert-success {
+  background-color: rgba(green, 0.25);
+  padding: 0 2px;
+}
+
+.alert-danger {
+  background-color: rgba(red, 0.25);
+  padding: 0 2px;
+}
+
+mat-checkbox {
+  padding-left:10px;
+}

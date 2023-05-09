@@ -1,0 +1,50 @@
+
+<app-ct-cols align-items="baseline">
+  <app-ct-col size="6">
+    <app-ct-section>
+      <app-ct-section-header>
+        <app-ct-section-header-row>
+          <app-ct-heading>Add new API</app-ct-heading>
+        </app-ct-section-header-row>
+      </app-ct-section-header>
+      <app-ct-section-body>
+        <form [formGroup]="form" novalidate="novalidate">
+          <mat-form-field appearance="outline" style="width: 100%;">
+            <mat-label>Name</mat-label>
+            <input matInput="matInput" type="text" autocomplete="name" formControlName="name" />
+            <mat-hint>This is a required field.</mat-hint>
+          </mat-form-field>
+          <br>
+          <mat-form-field appearance="outline" style="width: 100%;">
+            <mat-label>Code</mat-label>
+            <input matInput="matInput" type="text" autocomplete="code" formControlName="code" />
+            <mat-hint>This is a required field.</mat-hint>
+          </mat-form-field>
+          <br>
+          <mat-form-field appearance="outline" style="width: 100%;">
+            <mat-label>API scheme</mat-label>
+            <textarea formControlName="scheme" matInput="matInput" cdkTextareaAutosize="cdkTextareaAutosize"
+                      cdkAutosizeMinRows="10" value="" autocomplete="off"></textarea>
+            <mat-hint>This is a required field.</mat-hint>
+          </mat-form-field>
+        </form>
+      </app-ct-section-body>
+
+      <app-ct-section-footer>
+        <app-ct-section-footer-row>
+          <app-ct-flex justify-content="flex-end" gap="8px">
+            <app-ct-flex-item>
+              <button mat-stroked-button="mat-stroked-button" routerLink="/dispatcher/api">
+                {{ 'main.Cancel' | translate }}</button>
+            </app-ct-flex-item>
+            <app-ct-flex-item>
+              <button #button mat-flat-button="mat-flat-button" (click)="create()" color="primary"
+                      [disabled]="!form.valid">Add</button>
+            </app-ct-flex-item>
+          </app-ct-flex>
+        </app-ct-section-footer-row>
+      </app-ct-section-footer>
+    </app-ct-section>
+  </app-ct-col>
+</app-ct-cols>
+
