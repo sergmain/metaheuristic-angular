@@ -15,17 +15,16 @@ html {
 }
 
 body {
-    font-family: 'Roboto', sans-serif;
+    font-family: sans-serif;
     height: 100%;
     min-height: 100%;
-    font-size: unit(2);
-    line-height: unit(3);
+    font-size: 18px;
+    line-height: 18px;
 }
 
 h1 {
     line-height: unit(5);
     font-size: unit(4);
-    font-weight: normal;
     margin: unit(3) 0;
     font-weight: bold;
 }
