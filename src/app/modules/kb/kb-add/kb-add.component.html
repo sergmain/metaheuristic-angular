@@ -1,20 +1,13 @@
-
 <ct-cols align-items="baseline">
   <ct-col size="6">
     <ct-section>
       <ct-section-header>
         <ct-section-header-row>
-          <ct-heading>Add new API</ct-heading>
+          <ct-heading>Add new KB</ct-heading>
         </ct-section-header-row>
       </ct-section-header>
       <ct-section-body>
         <form [formGroup]="form" novalidate="novalidate">
-          <mat-form-field appearance="outline" style="width: 100%;">
-            <mat-label>Name</mat-label>
-            <input matInput="matInput" type="text" autocomplete="name" formControlName="name" />
-            <mat-hint>This is a required field.</mat-hint>
-          </mat-form-field>
-          <br>
           <mat-form-field appearance="outline" style="width: 100%;">
             <mat-label>Code</mat-label>
             <input matInput="matInput" type="text" autocomplete="code" formControlName="code" />
@@ -22,8 +15,8 @@
           </mat-form-field>
           <br>
           <mat-form-field appearance="outline" style="width: 100%;">
-            <mat-label>API scheme</mat-label>
-            <textarea formControlName="scheme" matInput="matInput" cdkTextareaAutosize="cdkTextareaAutosize"
+            <mat-label>KB parameters</mat-label>
+            <textarea formControlName="params" matInput="matInput" cdkTextareaAutosize="cdkTextareaAutosize"
                       cdkAutosizeMinRows="10" value="" autocomplete="off"></textarea>
             <mat-hint>This is a required field.</mat-hint>
           </mat-form-field>
@@ -34,7 +27,7 @@
         <ct-section-footer-row>
           <ct-flex justify-content="flex-end" gap="8px">
             <ct-flex-item>
-              <button mat-stroked-button="mat-stroked-button" routerLink="/dispatcher/api">
+              <button mat-stroked-button="mat-stroked-button" routerLink="/dispatcher/kb">
                 {{ 'main.Cancel' | translate }}</button>
             </ct-flex-item>
             <ct-flex-item>

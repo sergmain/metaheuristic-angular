@@ -14,7 +14,7 @@ import { RoleRouteGuard } from '@src/app/guards/role-route.guard';
 const commonRequiredRoles: Role[] = [
     Role.MainAssetManager,
     Role.MainAdmin,
-    Role.MainOpertator,
+    Role.MainOperator,
     Role.MainSupport,
     Role.Admin,
     Role.Data,
@@ -93,8 +93,68 @@ export const DispatcherRoutes: Routes = [
         component: DispatcherRootComponent,
         loadChildren: () => import('src/app/modules/company/company.module').then(m => m.CompnyModule),
         data: {
-            requiredRoles: [Role.MainAdmin, Role.MainOpertator, Role.MainSupport],
+            requiredRoles: [Role.MainAdmin, Role.MainOperator, Role.MainSupport],
             section: 'company'
+        }
+    },
+    {
+        path: 'scenario',
+        canActivate: [RoleRouteGuard],
+        component: DispatcherRootComponent,
+        loadChildren: () => import('@app/modules/scenario/scenario.module').then(m => m.ScenarioModule),
+        data: {
+            requiredRoles: [Role.MainAdmin, Role.MainOperator, Role.MainSupport, Role.Manager],
+            section: 'scenario-groups'
+        }
+    },
+    {
+        path: 'session',
+        canActivate: [RoleRouteGuard],
+        component: DispatcherRootComponent,
+        loadChildren: () => import('@app/modules/session/session.module').then(m => m.SessionModule),
+        data: {
+            requiredRoles: [Role.MainAdmin, Role.MainOperator, Role.MainSupport, Role.Manager],
+            section: 'sessions'
+        }
+    },
+    {
+        path: 'evaluation',
+        canActivate: [RoleRouteGuard],
+        component: DispatcherRootComponent,
+        loadChildren: () => import('@app/modules/evaluation/evaluation.module').then(m => m.EvaluationModule),
+        data: {
+            requiredRoles: [Role.MainAdmin, Role.MainOperator, Role.MainSupport, Role.Manager],
+            section: 'evaluations'
+        }
+    },
+    {
+        path: 'kb',
+        canActivate: [RoleRouteGuard],
+        component: DispatcherRootComponent,
+        loadChildren: () => import('src/app/modules/kb/kb.module').then(m => m.KbModule),
+        data: {
+            requiredRoles: [Role.MainAdmin, Role.MainOperator, Role.MainSupport, Role.Manager],
+            section: 'kbs'
+        }
+    },
+    {
+        path: 'auth',
+        canActivate: [RoleRouteGuard],
+        component: DispatcherRootComponent,
+        loadChildren: () => import('src/app/modules/auth/auth.module').then(m => m.AuthModule),
+        data: {
+            requiredRoles: [Role.MainAdmin, Role.MainOperator, Role.MainSupport, Role.Manager],
+            section: 'auths'
+        }
+    },
+    {
+        path: 'api',
+        canActivate: [RoleRouteGuard],
+        component: DispatcherRootComponent,
+        loadChildren: () => import('src/app/modules/api/api.module').then(m => m.ApiModule),
+        data: {
+            requiredRoles: [Role.MainAdmin, Role.MainOperator, Role.MainSupport, Role.Manager],
+            section: 'apis'
         }
     }
 ];

@@ -96,7 +96,7 @@ export const CompanyRoutes: Routes = [
         canActivate: [RoleRouteGuard],
         data: {
             backConfig: ['../', '../', 'companies'],
-            requiredRoles: [Role.MainSupport, Role.MainOpertator]
+            requiredRoles: [Role.MainSupport, Role.MainOperator]
         }
     },
     {
@@ -105,7 +105,7 @@ export const CompanyRoutes: Routes = [
         canActivate: [RoleRouteGuard],
         data: {
             backConfig: ['../'],
-            requiredRoles: [Role.MainSupport, Role.MainOpertator]
+            requiredRoles: [Role.MainSupport, Role.MainOperator]
         }
     },
     {
@@ -114,7 +114,7 @@ export const CompanyRoutes: Routes = [
         canActivate: [RoleRouteGuard],
         data: {
             backConfig: ['../', '../', 'batches'],
-            requiredRoles: [Role.MainSupport, Role.MainOpertator]
+            requiredRoles: [Role.MainSupport, Role.MainOperator]
         }
     }
 ];

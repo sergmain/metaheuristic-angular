@@ -1,0 +1,45 @@
+<ct-section *ngIf="errorsResult">
+    <ct-section-header>
+        <ct-section-header-row>
+            <ct-flex justify-content="space-between">
+                <ct-flex-item>
+                    <ct-heading>Errors</ct-heading>
+                </ct-flex-item>
+            </ct-flex>
+        </ct-section-header-row>
+    </ct-section-header>
+    <ct-section-body>
+        <ct-section-body-row>
+            <ct-table [isWaiting]="isLoading">
+                <table mat-table [dataSource]="dataSource">
+                    <ng-container matColumnDef="id">
+                        <th mat-header-cell *matHeaderCellDef>ID </th>
+                        <td mat-cell *matCellDef="let el">{{el.id}} </td>
+                    </ng-container>
+                    <ng-container matColumnDef="p">
+                        <th mat-header-cell *matHeaderCellDef>Prompt/Expected</th>
+                        <td mat-cell *matCellDef="let el">{{el.p}}<br/>{{el.e}} </td>
+                    </ng-container>
+                    <ng-container matColumnDef="a">
+                        <th mat-header-cell *matHeaderCellDef>Actual<br/>Raw</th>
+                        <td mat-cell *matCellDef="let el">{{el.a}}<br/>{{el.r}} </td>
+                    </ng-container>
+                    <tr mat-header-row *matHeaderRowDef="columnsToDisplay"> </tr>
+                    <tr mat-row *matRowDef="let row; columns: columnsToDisplay;"> </tr>
+                </table>
+            </ct-table>
+        </ct-section-body-row>
+    </ct-section-body>
+    <ct-section-footer>
+        <ct-section-footer-row>
+            <ct-flex justify-content="space-between">
+                <ct-flex-item>
+                    <ct-flex justify-content="flex-start" gap="8px">
+                        <ct-table-pagination (prev)="prevPage()" (next)="nextPage()"
+                            [pageableDefault]="errorsResult.errors"></ct-table-pagination>
+                    </ct-flex>
+                </ct-flex-item>
+            </ct-flex>
+        </ct-section-footer-row>
+    </ct-section-footer>
+</ct-section>

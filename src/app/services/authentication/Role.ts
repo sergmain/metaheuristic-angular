@@ -25,7 +25,7 @@ export enum Role {
     Billing = 'ROLE_BILLING',
 
     MainAdmin = 'ROLE_MAIN_ADMIN',
-    MainOpertator = 'ROLE_MAIN_OPERATOR',
+    MainOperator = 'ROLE_MAIN_OPERATOR',
     MainSupport = 'ROLE_MAIN_SUPPORT',
     MainAssetManager = 'ROLE_MAIN_ASSET_MANAGER',
 

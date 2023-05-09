@@ -1,0 +1,102 @@
+<ct-section *ngIf="simpleSessionsResult">
+    <ct-section-header>
+        <ct-section-header-row>
+            <ct-flex justify-content="space-between">
+                <ct-flex-item>
+                    <ct-heading>Sessions</ct-heading>
+                </ct-flex-item>
+            </ct-flex>
+        </ct-section-header-row>
+    </ct-section-header>
+    <ct-section-body>
+        <ct-section-body-row>
+            <ng-container *ngTemplateOutlet="mainTableTemplate"></ng-container>
+        </ct-section-body-row>
+    </ct-section-body>
+    <ct-section-footer>
+        <ct-section-footer-row>
+            <ct-flex justify-content="space-between">
+                <ct-flex-item>
+                    <ct-flex justify-content="flex-start" gap="8px">
+                        <ct-table-pagination
+                                [pageableDefault]="simpleSessionsResult.sessions"
+                                [globalDisable]="isLoading"
+                                (next)="nextPage()"
+                                (prev)="prevPage()">
+                        </ct-table-pagination>
+                    </ct-flex>
+                </ct-flex-item>
+            </ct-flex>
+        </ct-section-footer-row>
+    </ct-section-footer>
+</ct-section>
+
+
+
+<ng-template #mainTableTemplate>
+    <ct-table [isWaiting]="isLoading">
+        <table class="mat-table" mat-table="mat-table" [dataSource]="dataSource">
+            <ng-container matColumnDef="sessionId">
+                <th mat-header-cell *matHeaderCellDef>SessionId</th>
+                <td mat-cell="mat-cell" *matCellDef="let el">{{el.sessionId}} </td>
+            </ng-container>
+            <ng-container matColumnDef="startedOn">
+                <th mat-header-cell *matHeaderCellDef>
+                    {{ 'evaluation.StartedOn' | translate }}<br/>
+                    {{ 'evaluation.FinishedOn' | translate }}
+                </th>
+                <td mat-cell *matCellDef="let el">
+                    {{el.startedOn | date:'MMM d, yyyy, HH:mm:ss'}} <br/>
+                    {{el.finishedOn===null ? 'not yet' : (el.finishedOn | date:'MMM d, yyyy, HH:mm:ss')}}
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="providerCode">
+                <th mat-header-cell *matHeaderCellDef>
+                    {{ 'evaluation.ProviderCode' | translate }}<br/>
+                    {{ 'evaluation.ApiInfo' | translate }}<br/>
+                    {{ 'evaluation.KBs' | translate }}
+                </th>
+                <td mat-cell="mat-cell" *matCellDef="let el">
+                    {{el.providerCode}}<br/>
+                    {{el.apiInfo}}<br/>
+                    {{el.chapters}}
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="normalPercent">
+                <th mat-header-cell *matHeaderCellDef>{{ 'evaluation.WithoutError' | translate }}</th>
+                <td mat-cell="mat-cell" *matCellDef="let el">
+                    {{el.finishedOn===null ? '' : el.normalPercent.toLocaleString("en", {style: "percent"})}} </td>
+            </ng-container>
+            <ng-container matColumnDef="failPercent">
+                <th mat-header-cell *matHeaderCellDef>{{ 'evaluation.WithError' | translate }}</th>
+                <td mat-cell="mat-cell" *matCellDef="let el">
+                    {{el.finishedOn===null ? '' : el.failPercent.toLocaleString("en", {style: "percent"})}} </td>
+            </ng-container>
+            <ng-container matColumnDef="errorPercent">
+                <th mat-header-cell *matHeaderCellDef>{{ 'evaluation.SystemError' | translate }}</th>
+                <td mat-cell="mat-cell" *matCellDef="let el">
+                    {{el.finishedOn===null ? '' : el.errorPercent.toLocaleString("en", {style: "percent"})}} </td>
+            </ng-container>
+            <ng-container matColumnDef="bts">
+                <th mat-header-cell *matHeaderCellDef></th>
+                <td mat-cell *matCellDef="let el">
+                    <ct-flex justify-content="flex-end" gap="8px">
+                        <ct-flex-item>
+                            <button mat-flat-button color="primary" size="forTableRow"
+                               [routerLink]="['../session',el.sessionId,'errors']">Errors</button>
+                        </ct-flex-item>
+                        <ct-flex-item>
+                            <button mat-flat-button color="warn" size="forTableRow" (click)="delete(el)">
+                                <mat-icon>delete</mat-icon>
+                            </button>
+                        </ct-flex-item>
+                    </ct-flex>
+                </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+            <tr mat-row *matRowDef="let row; columns: columnsToDisplay;"></tr>
+        </table>
+    </ct-table>
+</ng-template>
+
+

@@ -4,7 +4,7 @@
     <ct-section>
       <ct-section-header>
         <ct-section-header-row>
-          <ct-heading>Add new API</ct-heading>
+          <ct-heading>Add new Scenario group</ct-heading>
         </ct-section-header-row>
       </ct-section-header>
       <ct-section-body>
@@ -16,17 +16,11 @@
           </mat-form-field>
           <br>
           <mat-form-field appearance="outline" style="width: 100%;">
-            <mat-label>Code</mat-label>
-            <input matInput="matInput" type="text" autocomplete="code" formControlName="code" />
+            <mat-label>Description</mat-label>
+            <input matInput="matInput" type="text" autocomplete="description" formControlName="description" />
             <mat-hint>This is a required field.</mat-hint>
           </mat-form-field>
           <br>
-          <mat-form-field appearance="outline" style="width: 100%;">
-            <mat-label>API scheme</mat-label>
-            <textarea formControlName="scheme" matInput="matInput" cdkTextareaAutosize="cdkTextareaAutosize"
-                      cdkAutosizeMinRows="10" value="" autocomplete="off"></textarea>
-            <mat-hint>This is a required field.</mat-hint>
-          </mat-form-field>
         </form>
       </ct-section-body>
 
@@ -34,7 +28,7 @@
         <ct-section-footer-row>
           <ct-flex justify-content="flex-end" gap="8px">
             <ct-flex-item>
-              <button mat-stroked-button="mat-stroked-button" routerLink="/dispatcher/api">
+              <button mat-stroked-button="mat-stroked-button" routerLink="/dispatcher/scenario">
                 {{ 'main.Cancel' | translate }}</button>
             </ct-flex-item>
             <ct-flex-item>

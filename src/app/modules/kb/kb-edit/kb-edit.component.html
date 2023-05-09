@@ -3,7 +3,7 @@
         <ct-section>
             <ct-section-header>
                 <ct-section-header-row>
-                    <ct-heading>Edit params for API  {{auth ? auth.id : ''}} ({{auth ? auth.code : ''}})
+                    <ct-heading>Edit params for KB  {{kb ? kb.id : ''}} ({{kb ? kb.code : ''}})
                     </ct-heading>
                 </ct-section-header-row>
             </ct-section-header>
@@ -12,7 +12,7 @@
                     <ct-section-content>
                         <mat-form-field appearance="outline">
                             <mat-label>Params</mat-label>
-                            <input matInput="matInput" [(ngModel)]="auth.params" />
+                            <input matInput="matInput" [(ngModel)]="kb.params" />
                         </mat-form-field>
                     </ct-section-content>
                 </ct-section-body-row>
@@ -21,7 +21,8 @@
                 <ct-section-footer-row>
                     <ct-flex justify-content="flex-end" gap="8px">
                         <ct-flex-item>
-                            <button mat-stroked-button="mat-stroked-button" (click)="back()">{{ 'main.Cancel' | translate }}</button>
+                            <button mat-stroked-button="mat-stroked-button" (click)="back()">
+                                {{ 'main.Cancel' | translate }}</button>
                         </ct-flex-item>
                         <ct-flex-item>
                             <button mat-flat-button="mat-flat-button" (click)="save()" color="primary"

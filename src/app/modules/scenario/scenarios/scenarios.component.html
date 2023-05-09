@@ -1,0 +1,72 @@
+<ct-section *ngIf="scenariosResult">
+    <ct-section-header>
+        <ct-section-header-row>
+            <ct-flex justify-content="space-between">
+                <ct-flex-item>
+                    <ct-heading>Scenarios</ct-heading>
+                </ct-flex-item>
+            </ct-flex>
+            <ct-flex justify-content="flex-end">
+                <ct-flex-item>
+                    <button mat-flat-button="mat-flat-button" color="primary"
+                            [routerLink]="['../..', scenarioGroupId, 'scenario-add']">Add Scenario</button>
+                </ct-flex-item>
+            </ct-flex>
+        </ct-section-header-row>
+    </ct-section-header>
+    <ct-section-body>
+        <ct-section-body-row>
+            <ct-table [isWaiting]="isLoading">
+                <table mat-table [dataSource]="dataSource">
+                    <ng-container matColumnDef="id">
+                        <th mat-header-cell *matHeaderCellDef>ID </th>
+                        <td mat-cell *matCellDef="let el">{{el.scenarioId}} </td>
+                    </ng-container>
+                    <ng-container matColumnDef="createdOn">
+                        <th mat-header-cell *matHeaderCellDef>Created On </th>
+                        <td mat-cell *matCellDef="let el">
+                            {{el.createdOn | date:'HH:mm, MMM&nbsp;d,&nbsp;yyyy'}} </td>
+                    </ng-container>
+                    <ng-container matColumnDef="name">
+                        <th mat-header-cell *matHeaderCellDef>Name<br/>Description</th>
+                        <td mat-cell *matCellDef="let el">{{el.name}}<br/>{{el.description}} </td>
+                    </ng-container>
+                    <ng-container matColumnDef="apiCode">
+                        <th mat-header-cell *matHeaderCellDef>API code</th>
+                        <td mat-cell *matCellDef="let el">{{el.apiCode}} </td>
+                    </ng-container>
+                    <ng-container matColumnDef="bts">
+                        <th mat-header-cell *matHeaderCellDef></th>
+                        <td mat-cell *matCellDef="let el">
+                            <ct-flex justify-content="flex-end" gap="8px">
+                                <ct-flex-item>
+                                    <button mat-flat-button color="primary" size="forTableRow"
+                                            [routerLink]="['../..', scenarioGroupId, 'scenario', el.scenarioId, 'steps']">Steps</button>
+                                </ct-flex-item>
+                                <ct-flex-item>
+                                    <button mat-flat-button color="warn" size="forTableRow" (click)="delete(el)">
+                                        <mat-icon>delete</mat-icon>
+                                    </button>
+                                </ct-flex-item>
+                            </ct-flex>
+                        </td>
+                    </ng-container>
+                    <tr mat-header-row *matHeaderRowDef="columnsToDisplay"> </tr>
+                    <tr mat-row *matRowDef="let row; columns: columnsToDisplay;"> </tr>
+                </table>
+            </ct-table>
+        </ct-section-body-row>
+    </ct-section-body>
+    <ct-section-footer>
+        <ct-section-footer-row>
+            <ct-flex justify-content="space-between">
+                <ct-flex-item>
+                    <ct-flex justify-content="flex-start" gap="8px">
+                        <ct-table-pagination (prev)="prevPage()" (next)="nextPage()"
+                            [pageableDefault]="scenariosResult.scenarios"></ct-table-pagination>
+                    </ct-flex>
+                </ct-flex-item>
+            </ct-flex>
+        </ct-section-footer-row>
+    </ct-section-footer>
+</ct-section>
