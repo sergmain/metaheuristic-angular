@@ -1,0 +1,8 @@
+
+== MENUS
+menu in navigation bar (in header) - src/app/components/app-view/app-view.component.html
+menu at left panel - src/app/modules/dispatcher/dispatcher-root/dispatcher-root.component.html
+
+top-menu, which contains color theme - src/app/components/app-view/app-view.component.html
+
+languages can be activated in src/app/services/settings/Settings.ts setOfLanguages
