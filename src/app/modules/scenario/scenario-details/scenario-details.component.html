@@ -1,10 +1,45 @@
+<ct-cols align-items="baseline" *ngIf="dataSourceEmpty()">
+    <ct-col size="6">
+        <ct-section>
+            <ct-section-header>
+                <ct-section-header-row>
+                    <ct-heading>Add the first step of Scenario</ct-heading>
+                </ct-section-header-row>
+            </ct-section-header>
+            <ct-section-body>
+                <form [formGroup]="form" novalidate="novalidate">
+                    <mat-form-field appearance="outline" style="width: 100%;">
+                        <mat-label>Name</mat-label>
+                        <input matInput="matInput" type="text" autocomplete="name" formControlName="name" />
+                        <mat-hint>This is a required field.</mat-hint>
+                    </mat-form-field>
+                </form>
+            </ct-section-body>
+
+            <ct-section-footer>
+                <ct-section-footer-row>
+                    <ct-flex justify-content="flex-end" gap="8px">
+                        <ct-flex-item>
+                            <button #button mat-flat-button="mat-flat-button" (click)="createFirstDetail()" color="primary"
+                                    [disabled]="!form.valid">Create</button>
+                        </ct-flex-item>
+                    </ct-flex>
+                </ct-section-footer-row>
+            </ct-section-footer>
+        </ct-section>
+    </ct-col>
+</ct-cols>
+
+
 <mat-tree #tree [dataSource]="dataSource" [treeControl]="treeControl" cdkDropList (cdkDropListDropped)="drop($event)">
+<!--
     <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle matTreeNodePadding
                    cdkDrag [cdkDragData]="node" (mouseenter)="dragHover(node)" (mouseleave)="dragHoverEnd()"
                    (cdkDragStarted)="dragStart()" (cdkDragReleased)="dragEnd()">
         <button mat-icon-button disabled></button>
         {{node.filename}} : {{node.type}}
     </mat-tree-node>
+-->
 
     <mat-tree-node *matTreeNodeDef="let node; when: hasNoContent" matTreeNodePadding
                    cdkDrag [cdkDragData]="node" (mouseenter)="dragHover(node)"
@@ -17,17 +52,15 @@
         <button mat-button (click)="saveNode(node, itemValue.value)">Save</button>
     </mat-tree-node>
 
-    <mat-tree-node *matTreeNodeDef="let node;when: hasChild" matTreeNodePadding
-                   cdkDrag [cdkDragData]="node" (mouseenter)="dragHover(node)"
-                   (mouseleave)="dragHoverEnd()" (cdkDragStarted)="dragStart()" (cdkDragReleased)="dragEnd()">
-        <button mat-icon-button>
-<!--
+    <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle matTreeNodePadding
+                   cdkDrag [cdkDragData]="node" (mouseenter)="dragHover(node)" (mouseleave)="dragHoverEnd()"
+                   (cdkDragStarted)="dragStart()" (cdkDragReleased)="dragEnd()">
+        <button mat-icon-button
                 matTreeNodeToggle (click)="expansionModel.toggle(node.id)"
                 [attr.aria-label]="'toggle ' + node.filename">
             <mat-icon class="mat-icon-rtl-mirror">
                 {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
             </mat-icon>
--->
         </button>
         {{node.filename}} : {{node.type}}
         <button mat-icon-button (click)="addNewItem(node)"><mat-icon>add</mat-icon></button>

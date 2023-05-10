@@ -1,10 +1,13 @@
 import {FlatTreeControl} from '@angular/cdk/tree';
 import {AfterViewInit, Component, Injectable, ViewChild} from '@angular/core';
 import {MatTreeFlatDataSource, MatTreeFlattener} from '@angular/material/tree';
-import {BehaviorSubject, Observable, of as observableOf} from 'rxjs';
+import {BehaviorSubject, isEmpty, Observable, of as observableOf, Subscription} from 'rxjs';
 import {CdkDragDrop} from '@angular/cdk/drag-drop';
 import {MatCheckboxChange} from '@angular/material/checkbox';
 import { SelectionModel } from '@angular/cdk/collections';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {OperationStatus} from '@app/enums/OperationStatus';
+import {MatButton} from '@angular/material/button';
 
 /**
  * File node data with nested structure.
@@ -33,37 +36,7 @@ export class DetailFlatNode {
  */
 const TREE_DATA = JSON.stringify({
     Applications: {
-        Calendar: 'app',
-        Chrome: 'app',
         Webstorm: 'app'
-    },
-    Documents: {
-        angular: {
-            src: {
-                compiler: 'ts',
-                core: 'ts'
-            }
-        },
-        material2: {
-            src: {
-                button: 'ts',
-                checkbox: 'ts',
-                input: 'ts'
-            }
-        }
-    },
-    Downloads: {
-        October: 'pdf',
-        November: 'pdf',
-        Tutorial: 'html'
-    },
-    Pictures: {
-        'Photo Booth Library': {
-            Contents: 'dir',
-            Pictures: 'dir'
-        },
-        Sun: 'png',
-        Woods: 'jpg'
     }
 });
 
@@ -82,7 +55,10 @@ export class ScenarioDetailsService {
         return Math.floor(Math.random() * (max - min + 1) + min).toString()
     }
 
-    get data(): DetailNode[] { return this.dataChange.value; }
+    // get data(): DetailNode[] { return this.dataChange.value; }
+    get data(): DetailNode[] { return this.dataTree; }
+
+    dataTree :DetailNode[]
 
     constructor() {
         this.initialize();
@@ -94,10 +70,10 @@ export class ScenarioDetailsService {
 
         // Build the tree nodes from Json object. The result is a list of `FileNode` with nested
         //     file node as children.
-        const data = this.buildFileTree(dataObject, 0);
+        this.dataTree = this.buildFileTree(dataObject, 0);
 
         // Notify the change.
-        this.dataChange.next(data);
+        this.dataChange.next(this.dataTree);
     }
 
     /**
@@ -142,6 +118,13 @@ export class ScenarioDetailsService {
         node.filename = filename;
         this.dataChange.next(this.data);
     }
+
+    createFirstDetail(name: string): void {
+        let newVar = {filename: name, uuid: ScenarioDetailsService.randomIntAsStr(1000, 9999) } as DetailNode;
+        newVar.children = [];
+        this.dataTree.push(newVar);
+        this.dataChange.next(this.dataTree);
+    }
 }
 
 /**
@@ -175,6 +158,9 @@ export class ScenarioDetailsComponent implements AfterViewInit {
     expandDelay = 1000;
     validateDrop = false;
     database: ScenarioDetailsService;
+    form = new FormGroup({
+        name: new FormControl('', [Validators.required, Validators.minLength(5)]),
+    });
 
     constructor(database: ScenarioDetailsService) {
         this.treeFlattener = new MatTreeFlattener(this.transformer, this._getLevel, this._isExpandable, this._getChildren);
@@ -185,6 +171,17 @@ export class ScenarioDetailsComponent implements AfterViewInit {
         database.dataChange.subscribe(data => this.rebuildTreeForData(data));
     }
 
+    @ViewChild(MatButton) button: MatButton;
+
+    createFirstDetail(): void {
+        this.button.disabled = true;
+        this.database.createFirstDetail(this.form.value.name);
+    }
+
+    dataSourceEmpty() {
+        return this.database.dataTree.length===0;
+    }
+
     transformer = (node: DetailNode, level: number) => {
         return new DetailFlatNode(!!node.children, node.filename, level, node.type, node.uuid);
     }
@@ -193,7 +190,10 @@ export class ScenarioDetailsComponent implements AfterViewInit {
     private _getChildren = (node: DetailNode): Observable<DetailNode[]> => observableOf(node.children);
     hasChild = (_: number, _nodeData: DetailFlatNode) => _nodeData.expandable;
 
-    hasNoContent = (_: number, _nodeData: DetailFlatNode) => _nodeData.filename === '';
+    hasNoContent = (_: number, _nodeData: DetailFlatNode) => {
+        console.log("hasNoContent()", JSON.stringify(_nodeData));
+        return _nodeData.filename === '';
+    };
 
     // DRAG AND DROP METHODS
 
@@ -366,7 +366,7 @@ export class ScenarioDetailsComponent implements AfterViewInit {
         return null;
     }
 
-    private findInBranch(detailFlatNode: DetailFlatNode, datum: DetailNode) {
+    private findInBranch(detailFlatNode: DetailFlatNode, datum: DetailNode) : DetailNode {
         if (datum.uuid===detailFlatNode.uuid) {
             return datum;
         }
@@ -393,11 +393,11 @@ export class ScenarioDetailsComponent implements AfterViewInit {
     // Select the category so we can insert the new item.
     addNewItem(node: DetailFlatNode) {
         console.log("10.10", node);
+        this.treeControl.expand(node);
         let detailNode = this.findInTree(node);
         console.log("10.11", detailNode)
         this.database.insertItem(detailNode, '');
-        this.treeControl.expand(node);
-        //this.database.dataChange.next(this.database.data);
+        this.database.dataChange.next(this.database.data);
     }
 
     // Save the node to database
@@ -406,5 +406,8 @@ export class ScenarioDetailsComponent implements AfterViewInit {
         let detailNode = this.findInTree(node);
         console.log("10.21", detailNode)
         this.database.updateItem(detailNode, itemValue);
+        this.ngAfterViewInit();
     }
+
+    protected readonly isEmpty = isEmpty;
 }

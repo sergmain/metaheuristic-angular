@@ -68,7 +68,7 @@ export const ScenarioRoutes: Routes = [
     },
     {
         path: ':scenarioGroupId/scenario/:scenarioId/dtls',
-        component: ScenarioDetailsComponent,
+        component: ScenarioDtlsComponent,
         canActivate: [RoleRouteGuard],
         data: {
             backConfig: ['../', '../', '../', 'scenarios'],
