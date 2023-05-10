@@ -176,8 +176,7 @@ export class ScenarioDetailsComponent implements AfterViewInit {
     database: ScenarioDetailsService;
 
     constructor(database: ScenarioDetailsService) {
-        this.treeFlattener = new MatTreeFlattener(this.transformer, this._getLevel,
-            this._isExpandable, this._getChildren);
+        this.treeFlattener = new MatTreeFlattener(this.transformer, this._getLevel, this._isExpandable, this._getChildren);
         this.treeControl = new FlatTreeControl<DetailFlatNode>(this._getLevel, this._isExpandable);
         this.dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
         this.database = database;
@@ -210,7 +209,7 @@ export class ScenarioDetailsComponent implements AfterViewInit {
         function addExpandedChildren(node: DetailNode, expanded: string[]) {
             result.push(node);
             if (expanded.includes(node.id)) {
-                if (node.children!==null && node.children!==undefined) {
+                if (ScenarioDetailsComponent.isNotNull(node.children)) {
                     node.children.map((child) => addExpandedChildren(child, expanded));
                 }
             }
@@ -323,7 +322,7 @@ export class ScenarioDetailsComponent implements AfterViewInit {
     // Not used but you might need this to programmatically expand nodes
     // to reveal a particular node
     private expandNodesById(flatNodes: DetailFlatNode[], ids: string[]) {
-        if (flatNodes===null || flatNodes===undefined || flatNodes.length === 0) return;
+        if (ScenarioDetailsComponent.isNull(flatNodes) || flatNodes.length === 0) return;
         const idSet = new Set(ids);
         return flatNodes.forEach((node) => {
             if (idSet.has(node.id)) {
