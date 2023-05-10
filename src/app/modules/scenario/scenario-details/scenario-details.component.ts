@@ -114,7 +114,8 @@ export class ScenarioDetailsService {
              * By passing parentId to buildFileTree, it constructs a path of indexes which make
              * it possible find the exact sub-array that the node was grabbed from when dropped.
              */
-            node.id = `${parentId}/${idx}`;
+            // node.id = `${parentId}/${idx}`;
+            node.id = ScenarioDetailsService.randomIntAsStr(1000, 9999);
 
             if (value != null) {
                 if (typeof value === 'object') {
@@ -319,11 +320,10 @@ export class ScenarioDetailsComponent implements AfterViewInit {
         });
     }
 
-/*
     // Not used but you might need this to programmatically expand nodes
     // to reveal a particular node
     private expandNodesById(flatNodes: DetailFlatNode[], ids: string[]) {
-        if (!flatNodes || flatNodes.length === 0) return;
+        if (flatNodes===null || flatNodes===undefined || flatNodes.length === 0) return;
         const idSet = new Set(ids);
         return flatNodes.forEach((node) => {
             if (idSet.has(node.id)) {
@@ -352,30 +352,59 @@ export class ScenarioDetailsComponent implements AfterViewInit {
         return null;
     }
 
-    findInTree(parentNode : DetailFlatNode ) {
-        if (!parentNode) {
-            return;
+    findInTree(detailFlatNode : DetailFlatNode ) {
+        if (ScenarioDetailsComponent.isNull(detailFlatNode)) {
+            return null;
         }
         for (const datum of this.database.data) {
-            if (datum.id===parentNode.id) {
-                return datum;
+            console.log("10.01", datum);
+            let n = this.findInBranch(detailFlatNode, datum);
+            if (ScenarioDetailsComponent.isNotNull(n)) {
+                return n;
             }
         }
+        return null;
+    }
+
+    private findInBranch(detailFlatNode: DetailFlatNode, datum: DetailNode) {
+        if (datum.id===detailFlatNode.id) {
+            return datum;
+        }
+        if (datum.children!==null && datum.children!==undefined) {
+            for (const child of datum.children) {
+                console.log("10.02", child);
+                let n = this.findInBranch(detailFlatNode, child)
+                if (ScenarioDetailsComponent.isNotNull(n)) {
+                    return n;
+                }
+            }
+            return null;
+        }
+    }
+
+    static isNotNull(obj: any) {
+        return !ScenarioDetailsComponent.isNull(obj);
+    }
+
+    static isNull(obj: any) {
+        return obj===null || obj===undefined;
     }
 
     // Select the category so we can insert the new item.
     addNewItem(node: DetailFlatNode) {
-        const parentNode =  this.getParentNode(node)
-        let detailNode = this.findInTree(parentNode);
+        console.log("10.10", node);
+        let detailNode = this.findInTree(node);
+        console.log("10.11", detailNode)
         this.database.insertItem(detailNode, '');
         this.treeControl.expand(node);
+        this.database.dataChange.next(this.database.data);
     }
 
     // Save the node to database
     saveNode(node: DetailFlatNode, itemValue: string) {
-        const nestedNode = this.getParentNode(node);
-        let detailNode = this.findInTree(nestedNode);
+        console.log("10.20", node);
+        let detailNode = this.findInTree(node);
+        console.log("10.21", detailNode)
         this.database.updateItem(detailNode, itemValue);
     }
-*/
 }
