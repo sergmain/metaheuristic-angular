@@ -1,24 +1,33 @@
-<p>Drag and drop the tree nodes. Move them within the same level, or across different levels.</p>
-<p><mat-checkbox (change)="shouldValidate($event)">Restrict moves to same level only</mat-checkbox></p>
+<mat-tree #tree [dataSource]="dataSource" [treeControl]="treeControl" cdkDropList (cdkDropListDropped)="drop($event)">
+    <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle matTreeNodePadding
+                   cdkDrag [cdkDragData]="node" (mouseenter)="dragHover(node)" (mouseleave)="dragHoverEnd()"
+                   (cdkDragStarted)="dragStart()" (cdkDragReleased)="dragEnd()">
+        <button mat-icon-button disabled></button>
+        {{node.filename}} : {{node.type}}
+    </mat-tree-node>
 
-<mat-tree [dataSource]="dataSource" [treeControl]="treeControl" cdkDropList (cdkDropListDropped)="drop($event)">
-  <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle matTreeNodePadding cdkDrag [cdkDragData]="node" (mouseenter)="dragHover(node)" (mouseleave)="dragHoverEnd()" (cdkDragStarted)="dragStart()" (cdkDragReleased)="dragEnd()">
-    <button mat-icon-button disabled></button>
-    {{node.filename}} : {{node.type}}
-  </mat-tree-node>
+<!--    <mat-tree-node *matTreeNodeDef="let node; when: hasNoContent" matTreeNodePadding
+                   cdkDrag [cdkDragData]="node" (mouseenter)="dragHover(node)"
+                   (mouseleave)="dragHoverEnd()" (cdkDragStarted)="dragStart()" (cdkDragReleased)="dragEnd()">
+        <button mat-icon-button disabled></button>
+        <mat-form-field appearance="fill">
+            <mat-label>New item...</mat-label>
+            <input matInput #itemValue placeholder="Ex. Lettuce">
+        </mat-form-field>
+        <button mat-button (click)="saveNode(node, itemValue.value)">Save</button>
+    </mat-tree-node>-->
 
-  <mat-tree-node *matTreeNodeDef="let node;when: hasChild" matTreeNodePadding cdkDrag [cdkDragData]="node" (mouseenter)="dragHover(node)" (mouseleave)="dragHoverEnd()" (cdkDragStarted)="dragStart()" (cdkDragReleased)="dragEnd()">
-    <button mat-icon-button matTreeNodeToggle (click)="expansionModel.toggle(node.id)"
-            [attr.aria-label]="'toggle ' + node.filename">
-      <mat-icon class="mat-icon-rtl-mirror">
-        {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
-      </mat-icon>
-    </button>
-    {{node.filename}} : {{node.type}}
-  </mat-tree-node>
+    <mat-tree-node *matTreeNodeDef="let node;when: hasChild" matTreeNodePadding
+                   cdkDrag [cdkDragData]="node" (mouseenter)="dragHover(node)"
+                   (mouseleave)="dragHoverEnd()" (cdkDragStarted)="dragStart()" (cdkDragReleased)="dragEnd()">
+        <button mat-icon-button matTreeNodeToggle (click)="expansionModel.toggle(node.id)"
+                [attr.aria-label]="'toggle ' + node.filename">
+            <mat-icon class="mat-icon-rtl-mirror">
+                {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+            </mat-icon>
+        </button>
+        {{node.filename}} : {{node.type}}
+    </mat-tree-node>
 </mat-tree>
 
-<p>Check out the <a href="https://medium.com/briebug-blog/angular-implementing-drag-and-drop-in-a-material-tree-f96b9fe40f81" target="_blank">complete write-up here</a>.</p>
-<!-- Copyright 2019 Google Inc. All Rights Reserved.
-    Use of this source code is governed by an MIT-style license that
-    can be found in the LICENSE file at http://angular.io/license -->
+

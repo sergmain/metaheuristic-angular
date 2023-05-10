@@ -130,7 +130,7 @@ export class ScenarioDetailsService {
 
     /** Add an item to to-do list */
     insertItem(parent: DetailNode, filename: string) {
-        if (!parent.children) {
+        if (parent.children===null || parent.children===undefined) {
             parent.children = []
         }
         parent.children.push({filename: filename, id: ScenarioDetailsService.randomIntAsStr(1000, 9999) } as DetailNode);
@@ -156,18 +156,11 @@ export class ScenarioDetailsComponent implements AfterViewInit {
     @ViewChild('tree') tree;
 
     ngAfterViewInit() {
-       //  this.tree.treeControl.dataNodes.forEach(n => {
-       //      if (!this.expansionModel.isSelected(n.id)) {
-       //          return this.expansionModel.toggle(n.id);
-       //      }
-       //  });
-       // this.tree.treeControl.expandAll();
-       // this.refreshTree();
         this.tree.treeControl.dataNodes.forEach(n => {
             this.expansionModel.select(n.id);
         });
-       this.tree.treeControl.expandAll();
-       this.refreshTree();
+        this.tree.treeControl.expandAll();
+        this.refreshTree();
     }
 
     treeControl: FlatTreeControl<DetailFlatNode>;
