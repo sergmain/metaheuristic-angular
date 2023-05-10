@@ -1,12 +1,14 @@
-<mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
-    <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle matTreeNodePadding>
+<mat-tree [dataSource]="dataSource" [treeControl]="treeControl" cdkDropList (cdkDropListDropped)="drop($event)">
+    <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle matTreeNodePadding
+                   cdkDrag [cdkDragData]="node" (mouseenter)="dragHover(node)" (mouseleave)="dragHoverEnd()"
+                   (cdkDragStarted)="dragStart()" (cdkDragReleased)="dragEnd()">
         <button mat-icon-button disabled></button>
-        <mat-checkbox class="checklist-leaf-node"
-                      [checked]="checklistSelection.isSelected(node)"
-                      (change)="todoLeafItemSelectionToggle(node)">{{node.item}}</mat-checkbox>
+        {{node.filename}} : {{node.type}}
     </mat-tree-node>
 
-    <mat-tree-node *matTreeNodeDef="let node; when: hasNoContent" matTreeNodePadding>
+    <mat-tree-node *matTreeNodeDef="let node; when: hasNoContent" matTreeNodePadding
+                   cdkDrag [cdkDragData]="node" (mouseenter)="dragHover(node)"
+                   (mouseleave)="dragHoverEnd()" (cdkDragStarted)="dragStart()" (cdkDragReleased)="dragEnd()">
         <button mat-icon-button disabled></button>
         <mat-form-field appearance="fill">
             <mat-label>New item...</mat-label>
@@ -15,16 +17,16 @@
         <button mat-button (click)="saveNode(node, itemValue.value)">Save</button>
     </mat-tree-node>
 
-    <mat-tree-node *matTreeNodeDef="let node; when: hasChild" matTreeNodePadding>
-        <button mat-icon-button matTreeNodeToggle
-                [attr.aria-label]="'Toggle ' + node.item">
+    <mat-tree-node *matTreeNodeDef="let node;when: hasChild" matTreeNodePadding
+                   cdkDrag [cdkDragData]="node" (mouseenter)="dragHover(node)"
+                   (mouseleave)="dragHoverEnd()" (cdkDragStarted)="dragStart()" (cdkDragReleased)="dragEnd()">
+        <button mat-icon-button matTreeNodeToggle (click)="expansionModel.toggle(node.id)"
+                [attr.aria-label]="'toggle ' + node.filename">
             <mat-icon class="mat-icon-rtl-mirror">
                 {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
             </mat-icon>
         </button>
-        <mat-checkbox [checked]="descendantsAllSelected(node)"
-                      [indeterminate]="descendantsPartiallySelected(node)"
-                      (change)="todoItemSelectionToggle(node)">{{node.item}}</mat-checkbox>
-        <button mat-icon-button (click)="addNewItem(node)"><mat-icon>add</mat-icon></button>
+        {{node.filename}} : {{node.type}}
     </mat-tree-node>
 </mat-tree>
+
