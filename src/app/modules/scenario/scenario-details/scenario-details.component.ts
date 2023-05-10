@@ -1,11 +1,10 @@
 import {FlatTreeControl} from '@angular/cdk/tree';
-import {Component, Injectable} from '@angular/core';
+import {AfterViewInit, Component, Injectable, ViewChild} from '@angular/core';
 import {MatTreeFlatDataSource, MatTreeFlattener} from '@angular/material/tree';
 import {BehaviorSubject, Observable, of as observableOf} from 'rxjs';
 import {CdkDragDrop} from '@angular/cdk/drag-drop';
 import {MatCheckboxChange} from '@angular/material/checkbox';
 import { SelectionModel } from '@angular/cdk/collections';
-import {TodoItemFlatNode} from '@app/modules/scenario/scenario-dtls/scenario-dtls.component';
 
 /**
  * File node data with nested structure.
@@ -79,6 +78,10 @@ const TREE_DATA = JSON.stringify({
 export class ScenarioDetailsService {
     dataChange = new BehaviorSubject<DetailNode[]>([]);
 
+    static randomIntAsStr(min, max) { // min and max included
+        return Math.floor(Math.random() * (max - min + 1) + min).toString()
+    }
+
     get data(): DetailNode[] { return this.dataChange.value; }
 
     constructor() {
@@ -124,6 +127,20 @@ export class ScenarioDetailsService {
             return accumulator.concat(node);
         }, []);
     }
+
+    /** Add an item to to-do list */
+    insertItem(parent: DetailNode, filename: string) {
+        if (!parent.children) {
+            parent.children = []
+        }
+        parent.children.push({filename: filename, id: ScenarioDetailsService.randomIntAsStr(1000, 9999) } as DetailNode);
+        this.dataChange.next(this.data);
+    }
+
+    updateItem(node: DetailNode, filename: string) {
+        node.filename = filename;
+        this.dataChange.next(this.data);
+    }
 }
 
 /**
@@ -135,7 +152,23 @@ export class ScenarioDetailsService {
     styleUrls: ['scenario-details.component.css'],
     providers: [ScenarioDetailsService]
 })
-export class ScenarioDetailsComponent {
+export class ScenarioDetailsComponent implements AfterViewInit {
+    @ViewChild('tree') tree;
+
+    ngAfterViewInit() {
+       //  this.tree.treeControl.dataNodes.forEach(n => {
+       //      if (!this.expansionModel.isSelected(n.id)) {
+       //          return this.expansionModel.toggle(n.id);
+       //      }
+       //  });
+       // this.tree.treeControl.expandAll();
+       // this.refreshTree();
+        this.tree.treeControl.dataNodes.forEach(n => {
+            this.expansionModel.select(n.id);
+        });
+       this.tree.treeControl.expandAll();
+       this.refreshTree();
+    }
 
     treeControl: FlatTreeControl<DetailFlatNode>;
     treeFlattener: MatTreeFlattener<DetailNode, DetailFlatNode>;
@@ -146,12 +179,14 @@ export class ScenarioDetailsComponent {
     expandTimeout: any;
     expandDelay = 1000;
     validateDrop = false;
+    database: ScenarioDetailsService;
 
     constructor(database: ScenarioDetailsService) {
         this.treeFlattener = new MatTreeFlattener(this.transformer, this._getLevel,
             this._isExpandable, this._getChildren);
         this.treeControl = new FlatTreeControl<DetailFlatNode>(this._getLevel, this._isExpandable);
         this.dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
+        this.database = database;
 
         database.dataChange.subscribe(data => this.rebuildTreeForData(data));
     }
@@ -164,7 +199,7 @@ export class ScenarioDetailsComponent {
     private _getChildren = (node: DetailNode): Observable<DetailNode[]> => observableOf(node.children);
     hasChild = (_: number, _nodeData: DetailFlatNode) => _nodeData.expandable;
 
-    hasNoContent = (_: number, _nodeData: TodoItemFlatNode) => _nodeData.item === '';
+    hasNoContent = (_: number, _nodeData: DetailFlatNode) => _nodeData.filename === '';
 
     // DRAG AND DROP METHODS
 
@@ -181,7 +216,9 @@ export class ScenarioDetailsComponent {
         function addExpandedChildren(node: DetailNode, expanded: string[]) {
             result.push(node);
             if (expanded.includes(node.id)) {
-                node.children.map((child) => addExpandedChildren(child, expanded));
+                if (node.children!==null && node.children!==undefined) {
+                    node.children.map((child) => addExpandedChildren(child, expanded));
+                }
             }
         }
         this.dataSource.data.forEach((node) => {
@@ -277,19 +314,21 @@ export class ScenarioDetailsComponent {
      * The following methods are for persisting the tree expand state
      * after being rebuilt
      */
-
     rebuildTreeForData(data: any) {
         this.dataSource.data = data;
+        this.refreshTree();
+    }
+
+    refreshTree() {
         this.expansionModel.selected.forEach((id) => {
             const node = this.treeControl.dataNodes.find((n) => n.id === id);
             this.treeControl.expand(node);
         });
     }
 
-    /**
-     * Not used but you might need this to programmatically expand nodes
-     * to reveal a particular node
-     */
+/*
+    // Not used but you might need this to programmatically expand nodes
+    // to reveal a particular node
     private expandNodesById(flatNodes: DetailFlatNode[], ids: string[]) {
         if (!flatNodes || flatNodes.length === 0) return;
         const idSet = new Set(ids);
@@ -320,9 +359,30 @@ export class ScenarioDetailsComponent {
         return null;
     }
 
-    /** Save the node to database */
+    findInTree(parentNode : DetailFlatNode ) {
+        if (!parentNode) {
+            return;
+        }
+        for (const datum of this.database.data) {
+            if (datum.id===parentNode.id) {
+                return datum;
+            }
+        }
+    }
+
+    // Select the category so we can insert the new item.
+    addNewItem(node: DetailFlatNode) {
+        const parentNode =  this.getParentNode(node)
+        let detailNode = this.findInTree(parentNode);
+        this.database.insertItem(detailNode, '');
+        this.treeControl.expand(node);
+    }
+
+    // Save the node to database
     saveNode(node: DetailFlatNode, itemValue: string) {
         const nestedNode = this.getParentNode(node);
-        // this.database.updateItem(nestedNode!, itemValue);
+        let detailNode = this.findInTree(nestedNode);
+        this.database.updateItem(detailNode, itemValue);
     }
+*/
 }

@@ -1,4 +1,4 @@
-<mat-tree [dataSource]="dataSource" [treeControl]="treeControl" cdkDropList (cdkDropListDropped)="drop($event)">
+<mat-tree #tree [dataSource]="dataSource" [treeControl]="treeControl" cdkDropList (cdkDropListDropped)="drop($event)">
     <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle matTreeNodePadding
                    cdkDrag [cdkDragData]="node" (mouseenter)="dragHover(node)" (mouseleave)="dragHoverEnd()"
                    (cdkDragStarted)="dragStart()" (cdkDragReleased)="dragEnd()">
@@ -6,7 +6,7 @@
         {{node.filename}} : {{node.type}}
     </mat-tree-node>
 
-    <mat-tree-node *matTreeNodeDef="let node; when: hasNoContent" matTreeNodePadding
+<!--    <mat-tree-node *matTreeNodeDef="let node; when: hasNoContent" matTreeNodePadding
                    cdkDrag [cdkDragData]="node" (mouseenter)="dragHover(node)"
                    (mouseleave)="dragHoverEnd()" (cdkDragStarted)="dragStart()" (cdkDragReleased)="dragEnd()">
         <button mat-icon-button disabled></button>
@@ -15,7 +15,7 @@
             <input matInput #itemValue placeholder="Ex. Lettuce">
         </mat-form-field>
         <button mat-button (click)="saveNode(node, itemValue.value)">Save</button>
-    </mat-tree-node>
+    </mat-tree-node>-->
 
     <mat-tree-node *matTreeNodeDef="let node;when: hasChild" matTreeNodePadding
                    cdkDrag [cdkDragData]="node" (mouseenter)="dragHover(node)"
@@ -29,4 +29,5 @@
         {{node.filename}} : {{node.type}}
     </mat-tree-node>
 </mat-tree>
+
 
