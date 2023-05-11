@@ -35,6 +35,11 @@ const routes: Routes = [
         loadChildren: () => import('src/app/modules/batch/batch.module').then(m => m.BatchModule),
     },
     {
+        path: 'mhbp',
+        loadChildren: () => import('src/app/modules/mhbp/mhbp.module').then(m => m.MhbpModule),
+        data: { sidenavExist: true }
+    },
+    {
         path: 'about',
         loadChildren: () => import('src/app/modules/about/about.module').then(m => m.AboutModule),
     },

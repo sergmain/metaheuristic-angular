@@ -12,6 +12,7 @@
 	"app-view.Ai": "AI",
 	"app-view.Batch": "Batch",
 	"app-view.Dispatcher": "Dispatcher",
+	"app-view.Mhbp": "MHBP",
 	"app-view.Logout": "Logout",
 	"batch-add.Cancel": "Cancel",
 	"batch-add.List of Source Codes": "List of Source Codes",

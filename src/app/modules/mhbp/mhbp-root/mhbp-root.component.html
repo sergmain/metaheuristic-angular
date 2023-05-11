@@ -1,0 +1,90 @@
+<mat-sidenav-container>
+    <mat-sidenav mode="side" [opened]="sidenavOpened">
+        <div class="navigation">
+            <button *ngIf="
+                    isRole.MasterAssetManager ||
+                    isRole.Admin ||
+                    isRole.Data ||
+                    isRole.Operator ||
+                    isRole.Manager
+                "
+                    mat-button
+                    routerLinkActive="active"
+                    routerLink="/mhbp/scenario">
+                {{ 'dispatcher.Scenario' | translate }}
+            </button>
+
+            <button *ngIf="
+                    isRole.MasterAssetManager ||
+                    isRole.Admin ||
+                    isRole.Data ||
+                    isRole.Operator ||
+                    isRole.Manager
+                "
+                    mat-button
+                    routerLinkActive="active"
+                    routerLink="/mhbp/session">
+                {{ 'dispatcher.Sessions' | translate }}
+            </button>
+
+            <button *ngIf="
+                    isRole.MasterAssetManager ||
+                    isRole.Admin ||
+                    isRole.Data ||
+                    isRole.Operator ||
+                    isRole.Manager
+                "
+                    mat-button
+                    routerLinkActive="active"
+                    routerLink="/mhbp/evaluation">
+                {{ 'dispatcher.Eval' | translate }}
+            </button>
+
+            <button *ngIf="
+                    isRole.MasterAssetManager ||
+                    isRole.Admin ||
+                    isRole.Data ||
+                    isRole.Operator ||
+                    isRole.Manager
+                "
+                    mat-button
+                    routerLinkActive="active"
+                    routerLink="/mhbp/kb">
+                {{ 'dispatcher.Kbs' | translate }}
+            </button>
+
+            <button *ngIf="
+                    isRole.MasterAssetManager ||
+                    isRole.Admin ||
+                    isRole.Data ||
+                    isRole.Operator ||
+                    isRole.Manager
+                "
+                    mat-button
+                    routerLinkActive="active"
+                    routerLink="/mhbp/api">
+                {{ 'dispatcher.Apis' | translate }}
+            </button>
+
+            <button *ngIf="
+                    isRole.MasterAssetManager ||
+                    isRole.Admin ||
+                    isRole.Data ||
+                    isRole.Operator ||
+                    isRole.Manager
+                "
+                    mat-button
+                    routerLinkActive="active"
+                    routerLink="/mhbp/auth">
+                {{ 'dispatcher.Auths' | translate }}
+            </button>
+        </div>
+    </mat-sidenav>
+    <mat-sidenav-content>
+        <ct-content>
+            <router-outlet></router-outlet>
+            <ct-back-button></ct-back-button>
+            <copy-right></copy-right>
+        </ct-content>
+    </mat-sidenav-content>
+</mat-sidenav-container>
