@@ -1,14 +1,23 @@
 import {FlatTreeControl} from '@angular/cdk/tree';
-import {AfterViewInit, Component, Injectable, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, Injectable, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {MatTreeFlatDataSource, MatTreeFlattener} from '@angular/material/tree';
-import {BehaviorSubject, isEmpty, Observable, of as observableOf, Subscription} from 'rxjs';
+import {BehaviorSubject, Observable, of as observableOf, Subscription} from 'rxjs';
 import {CdkDragDrop} from '@angular/cdk/drag-drop';
 import {MatCheckboxChange} from '@angular/material/checkbox';
-import { SelectionModel } from '@angular/cdk/collections';
+import {SelectionModel} from '@angular/cdk/collections';
 import {FormControl, FormGroup, FormGroupDirective, Validators} from '@angular/forms';
-import {OperationStatus} from '@app/enums/OperationStatus';
 import {MatButton} from '@angular/material/button';
 import {MhUtils} from '@services/mh-utils/mh-utils.service';
+import {ApiUid} from '@services/evaluation/ApiUid';
+import {ScenarioUidsForAccount} from '@services/scenario/ScenarioUidsForAccount';
+import {SettingsService, SettingsServiceEventChange} from '@services/settings/settings.service';
+import {ActivatedRoute, Router} from '@angular/router';
+import {AuthenticationService} from '@services/authentication';
+import {UIStateComponent} from '@app/models/UIStateComponent';
+import {TranslateService} from '@ngx-translate/core';
+import {OperationStatus} from '@app/enums/OperationStatus';
+import {ScenarioService} from '@services/scenario/scenario.service';
+import {LoadStates} from '@app/enums/LoadStates';
 
 /**
  * File node data with nested structure.
@@ -30,6 +39,7 @@ export class DetailNodeWithParent {
     node: DetailNode;
     parent: DetailNode;
 }
+
 /** Flat node with expandable and level information */
 export class DetailFlatNode {
     constructor(
@@ -198,8 +208,33 @@ export class ScenarioDetailsService {
     styleUrls: ['scenario-details.component.css'],
     providers: [ScenarioDetailsService]
 })
-export class ScenarioDetailsComponent implements AfterViewInit {
+export class ScenarioDetailsComponent extends UIStateComponent implements OnInit, OnDestroy, AfterViewInit {
+    treeControl: FlatTreeControl<DetailFlatNode>;
+    treeFlattener: MatTreeFlattener<DetailNode, DetailFlatNode>;
+    dataSource: MatTreeFlatDataSource<DetailNode, DetailFlatNode>;
+    // expansion model tracks expansion state
+    expansionModel = new SelectionModel<string>(true);
+    dragging = false;
+    expandTimeout: any;
+    expandDelay = 1000;
+    validateDrop = false;
+    database: ScenarioDetailsService;
+    apiUid: ApiUid;
+    listOfApis: ApiUid[] = [];
+    response: ScenarioUidsForAccount;
+    scenarioGroupId: string;
+    scenarioId: string;
+
+    form = new FormGroup({
+        name: new FormControl('', [Validators.required, Validators.minLength(5)]),
+        prompt: new FormControl('', [Validators.required, Validators.minLength(5)]),
+        resultCode: new FormControl('', [Validators.required, Validators.minLength(5)]),
+    });
+
     @ViewChild('tree') tree;
+    @ViewChild('formDirective') formDirective : FormGroupDirective;
+    currentStates: Set<LoadStates> = new Set();
+    readonly states = LoadStates;
 
     ngAfterViewInit() {
         console.log("15.01 ngAfterViewInit()");
@@ -211,23 +246,32 @@ export class ScenarioDetailsComponent implements AfterViewInit {
         this.refreshTree();
     }
 
-    treeControl: FlatTreeControl<DetailFlatNode>;
-    treeFlattener: MatTreeFlattener<DetailNode, DetailFlatNode>;
-    dataSource: MatTreeFlatDataSource<DetailNode, DetailFlatNode>;
-    // expansion model tracks expansion state
-    expansionModel = new SelectionModel<string>(true);
-    dragging = false;
-    expandTimeout: any;
-    expandDelay = 1000;
-    validateDrop = false;
-    database: ScenarioDetailsService;
-    form = new FormGroup({
-        name: new FormControl('', [Validators.required, Validators.minLength(5)]),
-        prompt: new FormControl('', [Validators.required, Validators.minLength(5)]),
-        resultCode: new FormControl('', [Validators.minLength(5)]),
-    });
+    ngOnInit(): void {
+        this.scenarioGroupId = this.activatedRoute.snapshot.paramMap.get('scenarioGroupId');
+        this.scenarioId = this.activatedRoute.snapshot.paramMap.get('scenarioId');
+        this.subscribeSubscription(this.settingsService.events.subscribe(event => {
+            if (event instanceof SettingsServiceEventChange) {
+                this.translate.use(event.settings.language);
+            }
+        }));
 
-    constructor(database: ScenarioDetailsService) {
+        this.updateResponse();
+    }
+
+    ngOnDestroy(): void {
+        this.unsubscribeSubscriptions();
+    }
+
+    constructor(database: ScenarioDetailsService,
+                private router: Router,
+                private scenarioService: ScenarioService,
+                private activatedRoute: ActivatedRoute,
+                private translate: TranslateService,
+                private settingsService: SettingsService,
+                readonly authenticationService: AuthenticationService
+                ) {
+        super(authenticationService);
+
         this.treeFlattener = new MatTreeFlattener(this.transformer, this._getLevel, this._isExpandable, this._getChildren);
         this.treeControl = new FlatTreeControl<DetailFlatNode>(this._getLevel, this._isExpandable);
         this.dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
@@ -238,10 +282,49 @@ export class ScenarioDetailsComponent implements AfterViewInit {
 
     @ViewChild(MatButton) button: MatButton;
 
-    createFirstDetail(formDirective: FormGroupDirective): void {
+    notToCreate() {
+        return this.apiUid==null || this.form.invalid;
+    }
+
+    updateResponse(): void {
+        this.scenarioService
+            .scenarioStepAdd()
+            .subscribe((response) => {
+                this.response = response;
+                this.listOfApis = this.response.apis;
+                this.isLoading = false;
+            });
+    }
+
+    create(): void {
+        this.button.disabled = true;
+        this.currentStates.add(this.states.wait);
+        const subscribe: Subscription = this.scenarioService
+            .addScenarioStepFormCommit(
+                this.scenarioGroupId,
+                this.scenarioId,
+                this.form.value.name,
+                this.form.value.prompt,
+                this.apiUid.id.toString()
+            )
+            .subscribe(
+                (response) => {
+                    if (response.status === OperationStatus.OK) {
+                        this.router.navigate(['../steps'], { relativeTo: this.activatedRoute });
+                    }
+                },
+                () => {},
+                () => {
+                    this.currentStates.delete(this.states.wait);
+                    subscribe.unsubscribe();
+                }
+            );
+    }
+
+    createFirstDetail(): void {
         this.button.disabled = true;
         this.database.createFirstDetail(this.form.value.name);
-        formDirective.resetForm();
+        this.formDirective.resetForm();
         this.form.reset();
     }
 
@@ -468,7 +551,7 @@ export class ScenarioDetailsComponent implements AfterViewInit {
     }
 
     // Select the category so we can insert the new item.
-    addNewItem(node: DetailFlatNode) {
+    addNewStubItem(node: DetailFlatNode) {
         console.log("10.10", node);
         this.treeControl.expand(node);
         let detailNode = this.findInTree(node);
@@ -479,7 +562,8 @@ export class ScenarioDetailsComponent implements AfterViewInit {
     }
 
     // Save the node to database
-    saveNode(node: DetailFlatNode, itemValue: string, formDirective: FormGroupDirective) {
+    saveNode(node: DetailFlatNode) {
+        let itemValue = this.form.value.name;
         let len = MhUtils.len(itemValue);
         console.log("MhUtils.len(itemValue.length)", itemValue, len);
         if (len<5) {
@@ -490,17 +574,17 @@ export class ScenarioDetailsComponent implements AfterViewInit {
         console.log("10.21", detailNode)
         this.database.updateNode(detailNode.node, itemValue);
         this.ngAfterViewInit();
-        formDirective.resetForm();
+        this.formDirective.resetForm();
         this.form.reset();
     }
 
-    deleteNewNode(node: DetailFlatNode, formDirective: FormGroupDirective) {
+    deleteNewNode(node: DetailFlatNode) {
         console.log("10.20", node);
         let detailNode = this.findInTree(node);
         console.log("10.21", detailNode)
         this.database.deleteNode(detailNode);
         this.ngAfterViewInit();
-        formDirective.resetForm();
+        this.formDirective.resetForm();
         this.form.reset();
     }
 
