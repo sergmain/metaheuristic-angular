@@ -5,7 +5,7 @@ import {BehaviorSubject, isEmpty, Observable, of as observableOf, Subscription} 
 import {CdkDragDrop} from '@angular/cdk/drag-drop';
 import {MatCheckboxChange} from '@angular/material/checkbox';
 import { SelectionModel } from '@angular/cdk/collections';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {FormControl, FormGroup, FormGroupDirective, Validators} from '@angular/forms';
 import {OperationStatus} from '@app/enums/OperationStatus';
 import {MatButton} from '@angular/material/button';
 import {MhUtils} from '@services/mh-utils/mh-utils.service';
@@ -46,11 +46,13 @@ export class DetailFlatNode {
  * The file structure tree data in string. The data could be parsed into a Json object
  */
 const TREE_DATA = JSON.stringify({
-    Applications: {
-        Webstorm: 'app'
-    }
-});
 
+});
+/*
+Applications: {
+    Webstorm: 'app'
+}
+*/
 /**
  * File database, it can build a tree structured Json object from string.
  * Each node in Json object represents a file or a directory. For a file, it has filename and type.
@@ -221,6 +223,8 @@ export class ScenarioDetailsComponent implements AfterViewInit {
     database: ScenarioDetailsService;
     form = new FormGroup({
         name: new FormControl('', [Validators.required, Validators.minLength(5)]),
+        prompt: new FormControl('', [Validators.required, Validators.minLength(5)]),
+        resultCode: new FormControl('', [Validators.minLength(5)]),
     });
 
     constructor(database: ScenarioDetailsService) {
@@ -234,9 +238,11 @@ export class ScenarioDetailsComponent implements AfterViewInit {
 
     @ViewChild(MatButton) button: MatButton;
 
-    createFirstDetail(): void {
+    createFirstDetail(formDirective: FormGroupDirective): void {
         this.button.disabled = true;
         this.database.createFirstDetail(this.form.value.name);
+        formDirective.resetForm();
+        this.form.reset();
     }
 
     dataSourceEmpty() {
@@ -473,8 +479,8 @@ export class ScenarioDetailsComponent implements AfterViewInit {
     }
 
     // Save the node to database
-    saveNode(node: DetailFlatNode, itemValue: string) {
-        let len = MhUtils.len(itemValue.length);
+    saveNode(node: DetailFlatNode, itemValue: string, formDirective: FormGroupDirective) {
+        let len = MhUtils.len(itemValue);
         console.log("MhUtils.len(itemValue.length)", itemValue, len);
         if (len<5) {
             return;
@@ -484,14 +490,18 @@ export class ScenarioDetailsComponent implements AfterViewInit {
         console.log("10.21", detailNode)
         this.database.updateNode(detailNode.node, itemValue);
         this.ngAfterViewInit();
+        formDirective.resetForm();
+        this.form.reset();
     }
 
-    deleteNewNode(node: DetailFlatNode) {
+    deleteNewNode(node: DetailFlatNode, formDirective: FormGroupDirective) {
         console.log("10.20", node);
         let detailNode = this.findInTree(node);
         console.log("10.21", detailNode)
         this.database.deleteNode(detailNode);
         this.ngAfterViewInit();
+        formDirective.resetForm();
+        this.form.reset();
     }
 
 }

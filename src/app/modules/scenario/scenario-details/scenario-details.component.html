@@ -7,20 +7,25 @@
                 </ct-section-header-row>
             </ct-section-header>
             <ct-section-body>
-                <form [formGroup]="form" novalidate="novalidate">
+                <form [formGroup]="form" #formDirective="ngForm"  novalidate="novalidate">
                     <mat-form-field appearance="outline" style="width: 100%;">
-                        <mat-label>Name</mat-label>
-                        <input matInput="matInput" type="text" autocomplete="name" formControlName="name" />
+                        <mat-label>Prompt name, min 5 chars</mat-label>
+                        <input matInput #itemValue type="text" autocomplete="off" formControlName="name" />
+                        <mat-hint>This is a required field.</mat-hint>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" style="width: 100%;">
+                        <mat-label>Prompt, min 5 chars</mat-label>
+                        <textarea formControlName="prompt" matInput="matInput" cdkTextareaAutosize="cdkTextareaAutosize"
+                                  cdkAutosizeMinRows="10" value="" autocomplete="off"></textarea>
                         <mat-hint>This is a required field.</mat-hint>
                     </mat-form-field>
                 </form>
             </ct-section-body>
-
             <ct-section-footer>
                 <ct-section-footer-row>
                     <ct-flex justify-content="flex-end" gap="8px">
                         <ct-flex-item>
-                            <button #button mat-flat-button="mat-flat-button" (click)="createFirstDetail()" color="primary"
+                            <button #button mat-flat-button="mat-flat-button" (click)="createFirstDetail(formDirective)" color="primary"
                                     [disabled]="!form.valid">Create</button>
                         </ct-flex-item>
                     </ct-flex>
@@ -32,28 +37,53 @@
 
 
 <mat-tree #tree [dataSource]="dataSource" [treeControl]="treeControl" cdkDropList (cdkDropListDropped)="drop($event)">
-<!--
-    <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle matTreeNodePadding
-                   cdkDrag [cdkDragData]="node" (mouseenter)="dragHover(node)" (mouseleave)="dragHoverEnd()"
-                   (cdkDragStarted)="dragStart()" (cdkDragReleased)="dragEnd()">
-        <button mat-icon-button disabled></button>
-        {{node.filename}} : {{node.type}}
-    </mat-tree-node>
--->
-
     <mat-tree-node *matTreeNodeDef="let node; when: hasNoContent" matTreeNodePadding
                    cdkDrag [cdkDragData]="node" (mouseenter)="dragHover(node)"
                    (mouseleave)="dragHoverEnd()" (cdkDragStarted)="dragStart()" (cdkDragReleased)="dragEnd()">
         <button mat-icon-button disabled></button>
-        <mat-form-field appearance="fill">
-            <mat-label>New item...</mat-label>
-            <input matInput #itemValue placeholder="Ex. Lettuce">
-        </mat-form-field>
-        <button mat-flat-button color="primary" size="forTableRow" (click)="saveNode(node, itemValue.value)"  gap="8px">
-            <mat-icon>saveNode</mat-icon></button>
-        <button mat-flat-button color="warn" size="forTableRow" (click)="deleteNewNode(node)">
-            <mat-icon>delete</mat-icon>
-        </button>
+
+        <ct-cols>
+            <ct-col size="100">
+                <ct-section>
+                    <ct-section-header>
+                        <ct-section-header-row>
+                            <ct-heading>New step</ct-heading>
+                        </ct-section-header-row>
+                    </ct-section-header>
+                    <ct-section-body>
+                        <ct-section-body-row>
+                            <form [formGroup]="form" #formDirective="ngForm"  novalidate="novalidate">
+                                <mat-form-field appearance="outline" style="width: 100%;">
+                                    <mat-label>Prompt name, min 5 chars</mat-label>
+                                    <input matInput #itemValue type="text" autocomplete="off" formControlName="name" />
+                                    <mat-hint>This is a required field.</mat-hint>
+                                </mat-form-field>
+                                <mat-form-field appearance="outline" style="width: 100%;">
+                                    <mat-label>Prompt, min 5 chars</mat-label>
+                                    <textarea formControlName="prompt" matInput="matInput" cdkTextareaAutosize="cdkTextareaAutosize"
+                                              cdkAutosizeMinRows="10" value="" autocomplete="off"></textarea>
+                                    <mat-hint>This is a required field.</mat-hint>
+                                </mat-form-field>
+                            </form>
+                        </ct-section-body-row>
+                    </ct-section-body>
+                    <ct-section-footer>
+                        <ct-section-footer-row>
+                            <ct-flex justify-content="flex-end" gap="8px">
+                                <ct-flex-item>
+                                    <button mat-flat-button color="primary" size="forTableRow" (click)="saveNode(node, itemValue.value, formDirective)" [disabled]="!form.valid">
+                                        Create</button>
+                                </ct-flex-item>
+                                <ct-flex-item>
+                                    <button mat-flat-button color="accent" size="forTableRow" (click)="deleteNewNode(node, formDirective)">
+                                        Cancel</button>
+                                </ct-flex-item>
+                            </ct-flex>
+                        </ct-section-footer-row>
+                    </ct-section-footer>
+                </ct-section>
+            </ct-col>
+        </ct-cols>
     </mat-tree-node>
 
     <mat-tree-node *matTreeNodeDef="let node; when: hasNewNodePresent" matTreeNodeToggle matTreeNodePadding
@@ -84,3 +114,25 @@
     </mat-tree-node>
 </mat-tree>
 
+
+<ng-template #promptForm>
+    <form [formGroup]="form" #formDirective="ngForm"  novalidate="novalidate">
+        <mat-form-field appearance="outline" style="width: 100%;">
+            <mat-label>Prompt name, min 5 chars</mat-label>
+            <input matInput #itemValue type="text" autocomplete="name" formControlName="name" />
+            <mat-hint>This is a required field.</mat-hint>
+        </mat-form-field>
+    </form>
+<!--
+    <form [formGroup]="form" #formDirective="ngForm" novalidate="novalidate">
+        <ct-section-content>
+            <mat-form-field appearance="outline">
+                <mat-label>Prompt name, min 5 chars</mat-label>
+                <input matInput #itemValue type="text" autocomplete="name" formControlName="name" />
+                <mat-hint>This is a required field.</mat-hint>
+            </mat-form-field>
+        </ct-section-content>
+    </form>
+-->
+
+</ng-template>

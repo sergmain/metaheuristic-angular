@@ -9,4 +9,5 @@ export interface IEnvironment {
     brandingMsg: string;
     brandingMsgIndex: string;
     brandingTitle: string;
+    forTableRow: string;
 }

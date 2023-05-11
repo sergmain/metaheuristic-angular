@@ -8,6 +8,7 @@ export const environment: IEnvironment = {
     isSslRequired: false,
     batchInterval: 10 * 1000, // pause between requests in milliseconds, 0 means a disable of any requests
     language: 'EN',
+    forTableRow: '20px',
     brandingTitle: 'Metaheuristic',
     brandingMsg: '<b>Metaheuristic platform</b><p>Metaheuristic is an application which implements (or intended to) a Turing complete machine.' +
     'The main use of MH is a management of distributed tasks. Right now there are two main areas where MH is being used:</p>' +
