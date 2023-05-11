@@ -1,5 +1,5 @@
-<ct-cols align-items="baseline" *ngIf="dataSourceEmpty()">
-    <ct-col size="6">
+<ct-cols align-items="baseline" *ngIf="dataSourceEmpty()" style="width: 100%;">
+    <ct-col style="width: 80%;">
         <ct-section>
             <ct-section-header>
                 <ct-section-header-row>
@@ -42,8 +42,8 @@
                    (mouseleave)="dragHoverEnd()" (cdkDragStarted)="dragStart()" (cdkDragReleased)="dragEnd()">
         <button mat-icon-button disabled></button>
 
-        <ct-cols>
-            <ct-col size="100">
+        <ct-cols style="width: 100%;">
+            <ct-col style="width: 80%;">
                 <ct-section>
                     <ct-section-header>
                         <ct-section-header-row>
