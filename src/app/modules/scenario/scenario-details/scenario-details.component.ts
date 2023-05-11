@@ -8,18 +8,28 @@ import { SelectionModel } from '@angular/cdk/collections';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {OperationStatus} from '@app/enums/OperationStatus';
 import {MatButton} from '@angular/material/button';
+import {MhUtils} from '@services/mh-utils/mh-utils.service';
 
 /**
  * File node data with nested structure.
  * Each node has a filename, and a type or a list of children.
  */
 export class DetailNode {
-    uuid: string;
+    nodeId: string;
     children: DetailNode[];
     filename: string;
     type: any;
+    isNew: boolean;
 }
 
+export class DetailNodeWithParent {
+    constructor(node: DetailNode, parent: DetailNode) {
+        this.node = node;
+        this.parent = parent;
+    }
+    node: DetailNode;
+    parent: DetailNode;
+}
 /** Flat node with expandable and level information */
 export class DetailFlatNode {
     constructor(
@@ -27,7 +37,8 @@ export class DetailFlatNode {
         public filename: string,
         public level: number,
         public type: any,
-        public uuid: string
+        public nodeId: string,
+        public isNew: boolean
     ) {}
 }
 
@@ -91,11 +102,11 @@ export class ScenarioDetailsService {
              * it possible find the exact sub-array that the node was grabbed from when dropped.
              */
             // node.id = `${parentId}/${idx}`;
-            node.uuid = ScenarioDetailsService.randomIntAsStr(1000, 9999);
+            node.nodeId = ScenarioDetailsService.randomIntAsStr(1000, 9999);
 
             if (value != null) {
                 if (typeof value === 'object') {
-                    node.children = this.buildFileTree(value, level + 1, node.uuid);
+                    node.children = this.buildFileTree(value, level + 1, node.nodeId);
                 } else {
                     node.type = value;
                 }
@@ -106,25 +117,74 @@ export class ScenarioDetailsService {
     }
 
     /** Add an item to to-do list */
-    insertItem(parent: DetailNode, filename: string) {
+    addNewNode(parent: DetailNode) {
         if (parent.children===null || parent.children===undefined) {
             parent.children = []
         }
-        parent.children.push({filename: filename, uuid: ScenarioDetailsService.randomIntAsStr(1000, 9999) } as DetailNode);
+        parent.children.push({filename: '', nodeId: ScenarioDetailsService.randomIntAsStr(1000, 9999), isNew: true } as DetailNode);
         this.dataChange.next(this.data);
     }
 
-    updateItem(node: DetailNode, filename: string) {
+    updateNode(node: DetailNode, filename: string) {
         node.filename = filename;
+        node.isNew = false;
+        this.dataChange.next(this.data);
+    }
+
+    deleteNode(node: DetailNodeWithParent) {
+        let nodes: DetailNode[];
+        if (MhUtils.isNull(node.parent)) {
+            nodes = this.dataTree;
+        }
+        else {
+            nodes = node.parent.children;
+        }
+        for (let i = 0; i < nodes.length; i++) {
+            let n = nodes[i];
+            if (n.nodeId===node.node.nodeId) {
+                nodes.splice(i, 1);
+            }
+        }
         this.dataChange.next(this.data);
     }
 
     createFirstDetail(name: string): void {
-        let newVar = {filename: name, uuid: ScenarioDetailsService.randomIntAsStr(1000, 9999) } as DetailNode;
+        let newVar = {filename: name, nodeId: ScenarioDetailsService.randomIntAsStr(1000, 9999) } as DetailNode;
         newVar.children = [];
         this.dataTree.push(newVar);
         this.dataChange.next(this.dataTree);
     }
+
+    newNodePresent() : boolean {
+        if (MhUtils.isNull(this.dataTree)) {
+            return false;
+        }
+        for (const dataNode of this.dataTree) {
+            let b = this.findInBranch(dataNode)
+            if (b) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private findInBranch(datum: DetailNode) : boolean {
+        console.log("31.10", datum)
+        if (MhUtils.isTrue(datum.isNew)) {
+            return true;
+        }
+        if (MhUtils.isNotNull(datum.children)) {
+            for (const child of datum.children) {
+                console.log("10.02", child);
+                let b = this.findInBranch(child)
+                if (b) {
+                    return true;
+                }
+            }
+            return false;
+        }
+    }
+
 }
 
 /**
@@ -142,7 +202,8 @@ export class ScenarioDetailsComponent implements AfterViewInit {
     ngAfterViewInit() {
         console.log("15.01 ngAfterViewInit()");
         this.tree.treeControl.dataNodes.forEach(n => {
-            this.expansionModel.select(n.uuid);
+            console.log("15.02 expansionModel.select({})", n.nodeId);
+            this.expansionModel.select(n.nodeId);
         });
         this.tree.treeControl.expandAll();
         this.refreshTree();
@@ -183,7 +244,7 @@ export class ScenarioDetailsComponent implements AfterViewInit {
     }
 
     transformer = (node: DetailNode, level: number) => {
-        return new DetailFlatNode(!!node.children, node.filename, level, node.type, node.uuid);
+        return new DetailFlatNode(!!node.children, node.filename, level, node.type, node.nodeId, node.isNew);
     }
     private _getLevel = (node: DetailFlatNode) => node.level;
     private _isExpandable = (node: DetailFlatNode) => node.expandable;
@@ -193,6 +254,18 @@ export class ScenarioDetailsComponent implements AfterViewInit {
     hasNoContent = (_: number, _nodeData: DetailFlatNode) => {
         console.log("hasNoContent()", JSON.stringify(_nodeData));
         return _nodeData.filename === '';
+    };
+
+    hasNewNodeAbsent = (_: number, _nodeData: DetailFlatNode) => {
+        let b = !this.database.newNodePresent();
+        console.log("hasNewNodeAbsent()", b, _nodeData.nodeId);
+        return b;
+    };
+
+    hasNewNodePresent = (_: number, _nodeData: DetailFlatNode)=> {
+        let b = this.database.newNodePresent();
+        console.log("hasNewNodePresent()", b, _nodeData.nodeId);
+        return b;
     };
 
     // DRAG AND DROP METHODS
@@ -209,8 +282,8 @@ export class ScenarioDetailsComponent implements AfterViewInit {
 
         function addExpandedChildren(node: DetailNode, expanded: string[]) {
             result.push(node);
-            if (expanded.includes(node.uuid)) {
-                if (ScenarioDetailsComponent.isNotNull(node.children)) {
+            if (expanded.includes(node.nodeId)) {
+                if (MhUtils.isNotNull(node.children)) {
                     node.children.map((child) => addExpandedChildren(child, expanded));
                 }
             }
@@ -240,13 +313,13 @@ export class ScenarioDetailsComponent implements AfterViewInit {
         const changedData = JSON.parse(JSON.stringify(this.dataSource.data));
 
         // recursive find function to find siblings of node
-        function findNodeSiblings(arr: Array<any>, uuid: string): Array<any> {
+        function findNodeSiblings(arr: Array<any>, nodeId: string): Array<any> {
             let result, subResult;
             arr.forEach((item, i) => {
-                if (item.uuid === uuid) {
+                if (item.nodeId === nodeId) {
                     result = arr;
                 } else if (item.children) {
-                    subResult = findNodeSiblings(item.children, uuid);
+                    subResult = findNodeSiblings(item.children, nodeId);
                     if (subResult) result = subResult;
                 }
             });
@@ -256,19 +329,19 @@ export class ScenarioDetailsComponent implements AfterViewInit {
 
         // determine where to insert the node
         const nodeAtDest = visibleNodes[event.currentIndex];
-        const newSiblings = findNodeSiblings(changedData, nodeAtDest.uuid);
+        const newSiblings = findNodeSiblings(changedData, nodeAtDest.nodeId);
         if (!newSiblings) return;
-        const insertIndex = newSiblings.findIndex(s => s.uuid === nodeAtDest.uuid);
+        const insertIndex = newSiblings.findIndex(s => s.nodeId === nodeAtDest.nodeId);
 
         // remove the node from its old place
         const node = event.item.data;
-        const siblings = findNodeSiblings(changedData, node.uuid);
-        const siblingIndex = siblings.findIndex(n => n.uuid === node.uuid);
+        const siblings = findNodeSiblings(changedData, node.nodeId);
+        const siblingIndex = siblings.findIndex(n => n.nodeId === node.nodeId);
         const nodeToInsert: DetailNode = siblings.splice(siblingIndex, 1)[0];
-        if (nodeAtDest.uuid === nodeToInsert.uuid) return;
+        if (nodeAtDest.nodeId === nodeToInsert.nodeId) return;
 
         // ensure validity of drop - must be same level
-        const nodeAtDestFlatNode = this.treeControl.dataNodes.find((n) => nodeAtDest.uuid === n.uuid);
+        const nodeAtDestFlatNode = this.treeControl.dataNodes.find((n) => nodeAtDest.nodeId === n.nodeId);
         if (this.validateDrop && nodeAtDestFlatNode.level !== node.level) {
             alert('Items can only be moved within the same level.');
             return;
@@ -309,13 +382,14 @@ export class ScenarioDetailsComponent implements AfterViewInit {
      * after being rebuilt
      */
     rebuildTreeForData(data: any) {
+        console.log("21.01 rebuildTreeForData()")
         this.dataSource.data = data;
         this.refreshTree();
     }
 
     refreshTree() {
         this.expansionModel.selected.forEach((id) => {
-            const node = this.treeControl.dataNodes.find((n) => n.uuid === id);
+            const node = this.treeControl.dataNodes.find((n) => n.nodeId === id);
             this.treeControl.expand(node);
         });
     }
@@ -323,10 +397,10 @@ export class ScenarioDetailsComponent implements AfterViewInit {
     // Not used but you might need this to programmatically expand nodes
     // to reveal a particular node
     private expandNodesById(flatNodes: DetailFlatNode[], ids: string[]) {
-        if (ScenarioDetailsComponent.isNull(flatNodes) || flatNodes.length === 0) return;
+        if (MhUtils.isNull(flatNodes) || flatNodes.length === 0) return;
         const idSet = new Set(ids);
         return flatNodes.forEach((node) => {
-            if (idSet.has(node.uuid)) {
+            if (idSet.has(node.nodeId)) {
                 this.treeControl.expand(node);
                 let parent = this.getParentNode(node);
                 while (parent) {
@@ -352,42 +426,39 @@ export class ScenarioDetailsComponent implements AfterViewInit {
         return null;
     }
 
-    findInTree(detailFlatNode : DetailFlatNode ) {
-        if (ScenarioDetailsComponent.isNull(detailFlatNode)) {
+    findInTree(detailFlatNode : DetailFlatNode ) : DetailNodeWithParent | null {
+        return this.findInTreeWithParent(detailFlatNode, null);
+    }
+
+    findInTreeWithParent(detailFlatNode : DetailFlatNode, parent: DetailNode) : DetailNodeWithParent | null {
+        if (MhUtils.isNull(detailFlatNode)) {
             return null;
         }
-        for (const datum of this.database.data) {
+        for (let i = 0; i < this.database.data.length; i++){
+            const datum = this.database.data[i];
             console.log("10.01", datum);
-            let n = this.findInBranch(detailFlatNode, datum);
-            if (ScenarioDetailsComponent.isNotNull(n)) {
+            let n = this.findInBranch(detailFlatNode, datum, parent);
+            if (MhUtils.isNotNull(n)) {
                 return n;
             }
         }
         return null;
     }
 
-    private findInBranch(detailFlatNode: DetailFlatNode, datum: DetailNode) : DetailNode {
-        if (datum.uuid===detailFlatNode.uuid) {
-            return datum;
+    private findInBranch(detailFlatNode: DetailFlatNode, datum: DetailNode, parent: DetailNode) : DetailNodeWithParent | null {
+        if (datum.nodeId===detailFlatNode.nodeId) {
+            return new DetailNodeWithParent(datum, parent);
         }
         if (datum.children!==null && datum.children!==undefined) {
             for (const child of datum.children) {
                 console.log("10.02", child);
-                let n = this.findInBranch(detailFlatNode, child)
-                if (ScenarioDetailsComponent.isNotNull(n)) {
+                let n = this.findInBranch(detailFlatNode, child, datum)
+                if (MhUtils.isNotNull(n)) {
                     return n;
                 }
             }
             return null;
         }
-    }
-
-    static isNotNull(obj: any) {
-        return !ScenarioDetailsComponent.isNull(obj);
-    }
-
-    static isNull(obj: any) {
-        return obj===null || obj===undefined;
     }
 
     // Select the category so we can insert the new item.
@@ -396,18 +467,31 @@ export class ScenarioDetailsComponent implements AfterViewInit {
         this.treeControl.expand(node);
         let detailNode = this.findInTree(node);
         console.log("10.11", detailNode)
-        this.database.insertItem(detailNode, '');
+        this.database.addNewNode(detailNode.node);
         this.database.dataChange.next(this.database.data);
+        this.refreshTree();
     }
 
     // Save the node to database
     saveNode(node: DetailFlatNode, itemValue: string) {
+        let len = MhUtils.len(itemValue.length);
+        console.log("MhUtils.len(itemValue.length)", itemValue, len);
+        if (len<5) {
+            return;
+        }
         console.log("10.20", node);
         let detailNode = this.findInTree(node);
         console.log("10.21", detailNode)
-        this.database.updateItem(detailNode, itemValue);
+        this.database.updateNode(detailNode.node, itemValue);
         this.ngAfterViewInit();
     }
 
-    protected readonly isEmpty = isEmpty;
+    deleteNewNode(node: DetailFlatNode) {
+        console.log("10.20", node);
+        let detailNode = this.findInTree(node);
+        console.log("10.21", detailNode)
+        this.database.deleteNode(detailNode);
+        this.ngAfterViewInit();
+    }
+
 }
