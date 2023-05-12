@@ -7,33 +7,29 @@
                 </ct-section-header-row>
             </ct-section-header>
             <ct-section-body>
+                <mat-form-field appearance="outline">
+                    <mat-label> {{ 'evaluation-add.List of APIs' | translate }}</mat-label>
+                    <mat-select [(ngModel)]="apiUid" >
+                        <mat-option  *ngFor="let apiOption of listOfApis" [value]="apiOption">
+                            {{apiOption.id}}, {{apiOption.uid}}
+                        </mat-option>
+                    </mat-select>
+                    <mat-hint>{{ 'main.This is a required field' | translate }}</mat-hint>
+                </mat-form-field>
                 <form [formGroup]="form" #formDirective="ngForm"  novalidate="novalidate">
                     <mat-form-field appearance="outline" style="width: 100%;">
-                        <mat-label>Prompt name, min 5 chars</mat-label>
+                        <mat-label>Prompt name, min 5 chars, required</mat-label>
                         <input matInput type="text" autocomplete="off" formControlName="name" />
-                        <mat-hint>This is a required field.</mat-hint>
-                    </mat-form-field>
-                    <mat-form-field appearance="outline">
-                        <mat-label> {{ 'evaluation-add.List of APIs' | translate }}</mat-label>
-                        <mat-select [(ngModel)]="apiUid">
-                            <div *ngFor="let api of listOfApis">
-                                <mat-option [value]="api">{{api.uid}}</mat-option>
-                            </div>
-                        </mat-select>
-                        <mat-hint>{{ 'main.This is a required field' | translate }}</mat-hint>
                     </mat-form-field>
                     <mat-form-field appearance="outline" style="width: 100%;">
-                        <mat-label>Prompt, min 5 chars</mat-label>
+                        <mat-label>Prompt, min 5 chars, required</mat-label>
                         <textarea formControlName="prompt" matInput="matInput" cdkTextareaAutosize="cdkTextareaAutosize"
                                   cdkAutosizeMinRows="10" value="" autocomplete="off"></textarea>
-                        <mat-hint>This is a required field.</mat-hint>
                     </mat-form-field>
                     <mat-form-field appearance="outline" style="width: 100%;">
-                        <mat-label>Code of result, min 5 chars</mat-label>
+                        <mat-label>Code of result, min 5 chars, required</mat-label>
                         <input matInput type="text" autocomplete="off" formControlName="resultCode" />
-                        <mat-hint>This is a required field.</mat-hint>
                     </mat-form-field>
-
                 </form>
             </ct-section-body>
             <ct-section-footer>
@@ -41,7 +37,7 @@
                     <ct-flex justify-content="flex-end" gap="8px">
                         <ct-flex-item>
                             <button #button mat-flat-button="mat-flat-button" (click)="createFirstDetail()" color="primary"
-                                    [disabled]="!form.valid">Create</button>
+                                    [disabled]="notToCreate()">Create</button>
                         </ct-flex-item>
                     </ct-flex>
                 </ct-section-footer-row>
@@ -67,30 +63,30 @@
                     </ct-section-header>
                     <ct-section-body>
                         <ct-section-body-row>
+                            <mat-form-field appearance="outline">
+                                <mat-label> {{ 'evaluation-add.List of APIs' | translate }}</mat-label>
+                                <mat-select [(ngModel)]="apiUid">
+                                    <div *ngFor="let api of listOfApis">
+                                        <mat-option [value]="api">{{api.uid}}</mat-option>
+                                    </div>
+                                </mat-select>
+                                <mat-hint>{{ 'main.This is a required field' | translate }}</mat-hint>
+                            </mat-form-field>
+                        </ct-section-body-row>
+                        <ct-section-body-row>
                             <form [formGroup]="form" #formDirective="ngForm"  novalidate="novalidate">
                                 <mat-form-field appearance="outline" style="width: 100%;">
-                                    <mat-label>Prompt name, min 5 chars</mat-label>
-                                    <input matInput #itemValue type="text" autocomplete="off" formControlName="name" />
-                                    <mat-hint>This is a required field.</mat-hint>
-                                </mat-form-field>
-                                <mat-form-field appearance="outline">
-                                    <mat-label> {{ 'evaluation-add.List of APIs' | translate }}</mat-label>
-                                    <mat-select [(ngModel)]="apiUid">
-                                        <div *ngFor="let api of listOfApis">
-                                            <mat-option [value]="api">{{api.uid}}</mat-option>
-                                        </div>
-                                    </mat-select>
-                                    <mat-hint>{{ 'main.This is a required field' | translate }}</mat-hint>
-                                </mat-form-field>                                <mat-form-field appearance="outline" style="width: 100%;">
-                                    <mat-label>Prompt, min 5 chars</mat-label>
-                                    <textarea formControlName="prompt" matInput="matInput" cdkTextareaAutosize="cdkTextareaAutosize"
-                                              cdkAutosizeMinRows="10" value="" autocomplete="off"></textarea>
-                                    <mat-hint>This is a required field.</mat-hint>
+                                    <mat-label>Prompt name, min 5 chars, required</mat-label>
+                                    <input matInput type="text" autocomplete="off" formControlName="name" />
                                 </mat-form-field>
                                 <mat-form-field appearance="outline" style="width: 100%;">
-                                    <mat-label>Code of result, min 5 chars</mat-label>
-                                    <input matInput #itemValue type="text" autocomplete="off" formControlName="resultCode" />
-                                    <mat-hint>This is a required field.</mat-hint>
+                                    <mat-label>Prompt, min 5 chars, required</mat-label>
+                                    <textarea formControlName="prompt" matInput="matInput" cdkTextareaAutosize="cdkTextareaAutosize"
+                                              cdkAutosizeMinRows="10" value="" autocomplete="off"></textarea>
+                                </mat-form-field>
+                                <mat-form-field appearance="outline" style="width: 100%;">
+                                    <mat-label>Code of result, min 5 chars, required</mat-label>
+                                    <input matInput type="text" autocomplete="off" formControlName="resultCode" />
                                 </mat-form-field>
                             </form>
                         </ct-section-body-row>

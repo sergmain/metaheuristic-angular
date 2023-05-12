@@ -15,7 +15,6 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {AuthenticationService} from '@services/authentication';
 import {UIStateComponent} from '@app/models/UIStateComponent';
 import {TranslateService} from '@ngx-translate/core';
-import {OperationStatus} from '@app/enums/OperationStatus';
 import {ScenarioService} from '@services/scenario/scenario.service';
 import {LoadStates} from '@app/enums/LoadStates';
 
@@ -56,7 +55,9 @@ export class DetailFlatNode {
  * The file structure tree data in string. The data could be parsed into a Json object
  */
 const TREE_DATA = JSON.stringify({
-
+    Applications: {
+        Webstorm: 'app'
+    }
 });
 /*
 Applications: {
@@ -296,7 +297,8 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
             });
     }
 
-    create(): void {
+    createFirstDetail(): void {
+        console.log("27.10", this.apiUid)
         this.button.disabled = true;
         this.currentStates.add(this.states.wait);
         const subscribe: Subscription = this.scenarioService
@@ -305,28 +307,30 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
                 this.scenarioId,
                 this.form.value.name,
                 this.form.value.prompt,
-                this.apiUid.id.toString()
+                this.apiUid.id.toString(),
+                this.form.value.resultCode
             )
             .subscribe(
-                (response) => {
-                    if (response.status === OperationStatus.OK) {
-                        this.router.navigate(['../steps'], { relativeTo: this.activatedRoute });
-                    }
-                },
+                (response) =>
+                {},
                 () => {},
                 () => {
                     this.currentStates.delete(this.states.wait);
                     subscribe.unsubscribe();
                 }
             );
+        this.formDirective.resetForm();
+        this.form.reset();
     }
 
+/*
     createFirstDetail(): void {
         this.button.disabled = true;
         this.database.createFirstDetail(this.form.value.name);
         this.formDirective.resetForm();
         this.form.reset();
     }
+*/
 
     dataSourceEmpty() {
         return this.database.dataTree.length===0;

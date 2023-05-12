@@ -2,17 +2,16 @@ import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {LoadStates} from '@app/enums/LoadStates';
 import {TranslateService} from '@ngx-translate/core';
-import {OperationStatusRest} from '@src/app/models/OperationStatusRest';
 import {UIStateComponent} from '@src/app/models/UIStateComponent';
 import {AuthenticationService} from '@src/app/services/authentication';
 import {SettingsService, SettingsServiceEventChange} from '@src/app/services/settings/settings.service';
-import {ApiUid} from "@services/evaluation/ApiUid";
-import {OperationStatus} from "@app/enums/OperationStatus";
-import {Subscription} from "rxjs";
-import {MatButton} from "@angular/material/button";
-import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {ScenarioService} from "@services/scenario/scenario.service";
-import {ScenarioUidsForAccount} from "@services/scenario/ScenarioUidsForAccount";
+import {ApiUid} from '@services/evaluation/ApiUid';
+import {OperationStatus} from '@app/enums/OperationStatus';
+import {Subscription} from 'rxjs';
+import {MatButton} from '@angular/material/button';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {ScenarioService} from '@services/scenario/scenario.service';
+import {ScenarioUidsForAccount} from '@services/scenario/ScenarioUidsForAccount';
 
 @Component({
     selector: 'scenario-step-add',
@@ -83,7 +82,8 @@ export class ScenarioStepAddComponent extends UIStateComponent implements OnInit
                 this.scenarioId,
                 this.form.value.name,
                 this.form.value.prompt,
-                this.apiUid.id.toString()
+                this.apiUid.id.toString(),
+                'some code'
             )
             .subscribe(
                 (response) => {

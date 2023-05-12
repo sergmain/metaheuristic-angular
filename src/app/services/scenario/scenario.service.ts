@@ -57,11 +57,11 @@ export class ScenarioService {
         );
     }
 
-    addScenarioStepFormCommit(scenarioGroupId: string, scenarioId: string, name: string, prompt: string, apiId: string) {
+    addScenarioStepFormCommit(scenarioGroupId: string, scenarioId: string, name: string, prompt: string, apiId: string, resultCode: string) {
         return this.http.post<OperationStatusRest>(
             url(`scenario-step-add-commit`),
             generateFormData({
-                scenarioGroupId, scenarioId, name, prompt, apiId
+                scenarioGroupId, scenarioId, name, prompt, apiId, resultCode
             })
         );
     }
