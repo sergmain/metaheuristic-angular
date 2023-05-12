@@ -1,4 +1,5 @@
-export interface SimpleScenarioStep {
+export class SimpleScenarioStep {
+    nodeId: string;
     scenarioId: number;
     uuid: string;
     parentUuid: string;
@@ -8,6 +9,7 @@ export interface SimpleScenarioStep {
     prompt: string;
     r: string;
     resultCode: string;
+    isNew: boolean;
 
-    SimpleScenarioStep: SimpleScenarioStep[];
+    steps: SimpleScenarioStep[];
 }
