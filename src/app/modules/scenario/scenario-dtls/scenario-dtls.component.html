@@ -1,25 +1,131 @@
-<mat-tree [dataSource]="dataSource" [treeControl]="treeControl" cdkDropList (cdkDropListDropped)="drop($event)">
-    <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle matTreeNodePadding
-                   cdkDrag [cdkDragData]="node" (mouseenter)="dragHover(node)" (mouseleave)="dragHoverEnd()"
-                   (cdkDragStarted)="dragStart()" (cdkDragReleased)="dragEnd()">
-        <button mat-icon-button disabled></button>
-        {{node.filename}} : {{node.type}}
-    </mat-tree-node>
+<ct-cols align-items="baseline" *ngIf="dataSourceEmpty()" style="width: 100%;">
+    <ct-col style="width: 80%;">
+        <ct-section>
+            <ct-section-header>
+                <ct-section-header-row>
+                    <ct-heading>Add the first step of Scenario</ct-heading>
+                </ct-section-header-row>
+            </ct-section-header>
+            <ct-section-body>
+                <mat-form-field appearance="outline">
+                    <mat-label> {{ 'evaluation-add.List of APIs' | translate }}</mat-label>
+                    <mat-select [(ngModel)]="apiUid" >
+                        <mat-option  *ngFor="let apiOption of listOfApis" [value]="apiOption">
+                            {{apiOption.id}}, {{apiOption.uid}}
+                        </mat-option>
+                    </mat-select>
+                    <mat-hint>{{ 'main.This is a required field' | translate }}</mat-hint>
+                </mat-form-field>
+                <form [formGroup]="form" #formDirective="ngForm"  novalidate="novalidate">
+                    <mat-form-field appearance="outline" style="width: 100%;">
+                        <mat-label>Prompt name, min 5 chars, required</mat-label>
+                        <input matInput type="text" autocomplete="off" formControlName="name" />
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" style="width: 100%;">
+                        <mat-label>Prompt, min 5 chars, required</mat-label>
+                        <textarea formControlName="prompt" matInput="matInput" cdkTextareaAutosize="cdkTextareaAutosize"
+                                  cdkAutosizeMinRows="10" value="" autocomplete="off"></textarea>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" style="width: 100%;">
+                        <mat-label>Code of result, min 5 chars, required</mat-label>
+                        <input matInput type="text" autocomplete="off" formControlName="resultCode" />
+                    </mat-form-field>
+                </form>
+            </ct-section-body>
+            <ct-section-footer>
+                <ct-section-footer-row>
+                    <ct-flex justify-content="flex-end" gap="8px">
+                        <ct-flex-item>
+                            <button #button mat-flat-button="mat-flat-button" (click)="createFirstDetail()" color="primary"
+                                    [disabled]="notToCreate()">Create</button>
+                        </ct-flex-item>
+                    </ct-flex>
+                </ct-section-footer-row>
+            </ct-section-footer>
+        </ct-section>
+    </ct-col>
+</ct-cols>
 
+
+<mat-tree #tree [dataSource]="dataSource" [treeControl]="treeControl" cdkDropList (cdkDropListDropped)="drop($event)">
     <mat-tree-node *matTreeNodeDef="let node; when: hasNoContent" matTreeNodePadding
                    cdkDrag [cdkDragData]="node" (mouseenter)="dragHover(node)"
                    (mouseleave)="dragHoverEnd()" (cdkDragStarted)="dragStart()" (cdkDragReleased)="dragEnd()">
         <button mat-icon-button disabled></button>
-        <mat-form-field appearance="fill">
-            <mat-label>New item...</mat-label>
-            <input matInput #itemValue placeholder="Ex. Lettuce">
+
+        <ct-cols style="width: 100%;">
+            <ct-col style="width: 80%;">
+                <ct-section>
+                    <ct-section-header>
+                        <ct-section-header-row>
+                            <ct-heading>New step</ct-heading>
+                        </ct-section-header-row>
+                    </ct-section-header>
+                    <ct-section-body>
+                        <ct-section-body-row>
+                            <mat-form-field appearance="outline">
+                                <mat-label> {{ 'evaluation-add.List of APIs' | translate }}</mat-label>
+                                <mat-select [(ngModel)]="apiUid">
+                                    <div *ngFor="let api of listOfApis">
+                                        <mat-option [value]="api">{{api.uid}}</mat-option>
+                                    </div>
+                                </mat-select>
+                                <mat-hint>{{ 'main.This is a required field' | translate }}</mat-hint>
+                            </mat-form-field>
+                        </ct-section-body-row>
+                        <ct-section-body-row>
+                            <form [formGroup]="form" #formDirective="ngForm"  novalidate="novalidate">
+                                <mat-form-field appearance="outline" style="width: 100%;">
+                                    <mat-label>Prompt name, min 5 chars, required</mat-label>
+                                    <input matInput type="text" autocomplete="off" formControlName="name" />
         </mat-form-field>
-        <button mat-button (click)="saveNode(node, itemValue.value)">Save</button>
+                                <mat-form-field appearance="outline" style="width: 100%;">
+                                    <mat-label>Prompt, min 5 chars, required</mat-label>
+                                    <textarea formControlName="prompt" matInput="matInput" cdkTextareaAutosize="cdkTextareaAutosize"
+                                              cdkAutosizeMinRows="10" value="" autocomplete="off"></textarea>
+                                </mat-form-field>
+                                <mat-form-field appearance="outline" style="width: 100%;">
+                                    <mat-label>Code of result, min 5 chars, required</mat-label>
+                                    <input matInput type="text" autocomplete="off" formControlName="resultCode" />
+                                </mat-form-field>
+                            </form>
+                        </ct-section-body-row>
+                    </ct-section-body>
+                    <ct-section-footer>
+                        <ct-section-footer-row>
+                            <ct-flex justify-content="flex-end" gap="8px">
+                                <ct-flex-item>
+                                    <button mat-flat-button color="primary" size="forTableRow" (click)="saveNode(node)" [disabled]="notToCreate()">
+                                        Create</button>
+                                </ct-flex-item>
+                                <ct-flex-item>
+                                    <button mat-flat-button color="accent" size="forTableRow" (click)="deleteNewNode(node)">
+                                        Cancel</button>
+                                </ct-flex-item>
+                            </ct-flex>
+                        </ct-section-footer-row>
+                    </ct-section-footer>
+                </ct-section>
+            </ct-col>
+        </ct-cols>
     </mat-tree-node>
 
-    <mat-tree-node *matTreeNodeDef="let node;when: hasChild" matTreeNodePadding
-                   cdkDrag [cdkDragData]="node" (mouseenter)="dragHover(node)"
-                   (mouseleave)="dragHoverEnd()" (cdkDragStarted)="dragStart()" (cdkDragReleased)="dragEnd()">
+    <mat-tree-node *matTreeNodeDef="let node; when: hasNewNodePresent" matTreeNodeToggle matTreeNodePadding
+                   cdkDrag [cdkDragData]="node" (mouseenter)="dragHover(node)" (mouseleave)="dragHoverEnd()"
+                   (cdkDragStarted)="dragStart()" (cdkDragReleased)="dragEnd()">
+        <button mat-icon-button
+                matTreeNodeToggle (click)="expansionModel.toggle(node.id)"
+                [attr.aria-label]="'toggle ' + node.filename">
+            <mat-icon class="mat-icon-rtl-mirror">
+                {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+            </mat-icon>
+        </button>
+        {{node.filename}} : {{node.type}}
+    </mat-tree-node>
+
+    <mat-tree-node *matTreeNodeDef="let node; when: hasNewNodeAbsent" matTreeNodeToggle matTreeNodePadding
+                   cdkDrag [cdkDragData]="node" (mouseenter)="dragHover(node)" (mouseleave)="dragHoverEnd()"
+                   (cdkDragStarted)="dragStart()" (cdkDragReleased)="dragEnd()">
         <button mat-icon-button matTreeNodeToggle (click)="expansionModel.toggle(node.id)"
                 [attr.aria-label]="'toggle ' + node.filename">
             <mat-icon class="mat-icon-rtl-mirror">
@@ -27,6 +133,7 @@
             </mat-icon>
         </button>
         {{node.filename}} : {{node.type}}
+        <button mat-icon-button (click)="addNewStubItem(node)"><mat-icon>add</mat-icon></button>
     </mat-tree-node>
 </mat-tree>
 
