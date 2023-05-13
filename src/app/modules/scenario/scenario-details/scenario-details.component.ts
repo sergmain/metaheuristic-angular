@@ -19,6 +19,7 @@ import {ScenarioService} from '@services/scenario/scenario.service';
 import {LoadStates} from '@app/enums/LoadStates';
 import {MatTableDataSource} from '@angular/material/table';
 import {SimpleScenarioStep} from '@services/scenario/SimpleScenarioStep';
+import {SimpleScenarioSteps} from '@services/scenario/SimpleScenarioSteps';
 
 export class SimpleScenarioStepWithParent {
     constructor(node: SimpleScenarioStep, parent: SimpleScenarioStep) {
@@ -30,15 +31,13 @@ export class SimpleScenarioStepWithParent {
 }
 
 /** Flat node with expandable and level information */
-export class DetailFlatNode {
+export class StepFlatNode {
     constructor(
         public nodeId: string,
         public expandable: boolean,
         public level: number,
 
-        public scenarioId: number,
         public uuid: string,
-        public parentUuid: string,
         public apiId: number,
         public apiCode: string,
         public name: string,
@@ -50,14 +49,21 @@ export class DetailFlatNode {
     ) {}
 }
 
+/*
+export class DetailFlatNode {
+    constructor(
+        public expandable: boolean,
+        public filename: string,
+        public level: number,
+        public type: any,
+        public nodeId: string,
+        public isNew: boolean
+    ) {}
+}
+*/
 
 @Injectable()
 export class ScenarioDetailsService {
-    dataChange = new BehaviorSubject<SimpleScenarioStep[]>([]);
-
-    dataTree :SimpleScenarioStep[]
-
-    get data(): SimpleScenarioStep[] { return this.dataTree; }
 
 
 
@@ -176,9 +182,9 @@ export class ScenarioDetailsService {
     providers: [ScenarioDetailsService]
 })
 export class ScenarioDetailsComponent extends UIStateComponent implements OnInit, OnDestroy, AfterViewInit {
-    treeControl: FlatTreeControl<DetailFlatNode>;
-    treeFlattener: MatTreeFlattener<SimpleScenarioStep, DetailFlatNode>;
-    dataSource: MatTreeFlatDataSource<SimpleScenarioStep, DetailFlatNode>;
+    treeControl: FlatTreeControl<StepFlatNode>;
+    treeFlattener: MatTreeFlattener<SimpleScenarioStep, StepFlatNode>;
+    dataSource: MatTreeFlatDataSource<SimpleScenarioStep, StepFlatNode>;
     // expansion model tracks expansion state
     expansionModel = new SelectionModel<string>(true);
     dragging = false;
@@ -191,6 +197,11 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
     response: ScenarioUidsForAccount;
     scenarioGroupId: string;
     scenarioId: string;
+
+    dataChange = new BehaviorSubject<SimpleScenarioStep[]>([]);
+    dataTree :SimpleScenarioStep[]
+
+    simpleScenarioSteps: SimpleScenarioSteps;
 
     form = new FormGroup({
         name: new FormControl('', [Validators.required, Validators.minLength(5)]),
@@ -222,7 +233,7 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
             }
         }));
 
-        this.updateResponse();
+        this.loadAssetsForCreation();
     }
 
     ngOnDestroy(): void {
@@ -240,11 +251,11 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
         super(authenticationService);
 
         this.treeFlattener = new MatTreeFlattener(this.transformer, this._getLevel, this._isExpandable, this._getChildren);
-        this.treeControl = new FlatTreeControl<DetailFlatNode>(this._getLevel, this._isExpandable);
+        this.treeControl = new FlatTreeControl<StepFlatNode>(this._getLevel, this._isExpandable);
         this.dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
         this.database = database;
 
-        database.dataChange.subscribe(data => this.rebuildTreeForData(data));
+        this.dataChange.subscribe(data => this.rebuildTreeForData(data));
     }
 
     @ViewChild(MatButton) button: MatButton;
@@ -253,7 +264,8 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
         return this.apiUid==null || this.form.invalid;
     }
 
-    updateResponse(): void {
+    // load assets for creating a new step of scenario
+    loadAssetsForCreation(): void {
         this.setIsLoadingStart();
         this.scenarioService
             .scenarioStepAdd()
@@ -291,29 +303,44 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
     }
 
     dataSourceEmpty() {
-        return this.database.dataTree.length===0;
+        return this.dataTree.length===0;
     }
 
     transformer = (node: SimpleScenarioStep, level: number) => {
-        return new DetailFlatNode(!!node.steps, node.filename, level, node.type, node.nodeId, node.isNew);
-    }
-    private _getLevel = (node: DetailFlatNode) => node.level;
-    private _isExpandable = (node: DetailFlatNode) => node.expandable;
-    private _getChildren = (node: SimpleScenarioStep): Observable<SimpleScenarioStep[]> => observableOf(node.steps);
-    hasChild = (_: number, _nodeData: DetailFlatNode) => _nodeData.expandable;
+/*
+    public nodeId: string,
+    public expandable: boolean,
+    public level: number,
 
-    hasNoContent = (_: number, _nodeData: DetailFlatNode) => {
+    public uuid: string,
+    public apiId: number,
+    public apiCode: string,
+    public name: string,
+    public prompt: string,
+    public r: string,
+    public resultCode: string,
+    public isNew: boolean
+*/
+        return new StepFlatNode(node.nodeId, MhUtils.len(node.steps)>0, level, node.uuid,
+            node.apiId, node.apiCode, node.name, node.prompt, node.r, node.resultCode, node.isNew);
+    }
+    private _getLevel = (node: StepFlatNode) => node.level;
+    private _isExpandable = (node: StepFlatNode) => node.expandable;
+    private _getChildren = (node: SimpleScenarioStep): Observable<SimpleScenarioStep[]> => observableOf(node.steps);
+    hasChild = (_: number, _nodeData: StepFlatNode) => _nodeData.expandable;
+
+    hasNoContent = (_: number, _nodeData: StepFlatNode) => {
         console.log("hasNoContent()", JSON.stringify(_nodeData));
         return _nodeData.uuid === '';
     };
 
-    hasNewNodeAbsent = (_: number, _nodeData: DetailFlatNode) => {
+    hasNewNodeAbsent = (_: number, _nodeData: StepFlatNode) => {
         let b = !this.database.newNodePresent();
         console.log("hasNewNodeAbsent()", b, _nodeData.nodeId);
         return b;
     };
 
-    hasNewNodePresent = (_: number, _nodeData: DetailFlatNode)=> {
+    hasNewNodePresent = (_: number, _nodeData: StepFlatNode)=> {
         let b = this.database.newNodePresent();
         console.log("hasNewNodePresent()", b, _nodeData.nodeId);
         return b;
@@ -405,6 +432,24 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
         this.rebuildTreeForData(changedData);
     }
 
+    updateTree(): void {
+        this.setIsLoadingStart();
+        this.scenarioService
+            .scenarioSteps(this.scenarioGroupId, this.scenarioId)
+            .subscribe({
+                next: simpleScenarioSteps => {
+                    this.simpleScenarioSteps = simpleScenarioSteps;
+                    this.dataTree = simpleScenarioSteps.steps;
+                    // console.log('ScenarioStepsComponent.simpleScenarioSteps: ' + JSON.stringify(this.simpleScenarioSteps));
+                    this.dataChange.next(this.dataTree);
+                    // console.log('ScenarioStepsComponent.simpleScenarioSteps: #3');
+                },
+                complete: () => {
+                    this.setIsLoadingEnd();
+                }
+            });
+    }
+
     /**
      * Experimental - opening tree nodes as you drag over them
      */
@@ -414,7 +459,7 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
     dragEnd() {
         this.dragging = false;
     }
-    dragHover(node: DetailFlatNode) {
+    dragHover(node: StepFlatNode) {
         if (this.dragging) {
             clearTimeout(this.expandTimeout);
             this.expandTimeout = setTimeout(() => {
@@ -447,7 +492,7 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
 
     // Not used but you might need this to programmatically expand nodes
     // to reveal a particular node
-    private expandNodesById(flatNodes: DetailFlatNode[], ids: string[]) {
+    private expandNodesById(flatNodes: StepFlatNode[], ids: string[]) {
         if (MhUtils.isNull(flatNodes) || flatNodes.length === 0) return;
         const idSet = new Set(ids);
         return flatNodes.forEach((node) => {
@@ -462,7 +507,7 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
         });
     }
 
-    private getParentNode(node: DetailFlatNode): DetailFlatNode | null {
+    private getParentNode(node: StepFlatNode): StepFlatNode | null {
         const currentLevel = node.level;
         if (currentLevel < 1) {
             return null;
@@ -477,11 +522,11 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
         return null;
     }
 
-    findInTree(detailFlatNode : DetailFlatNode ) : SimpleScenarioStepWithParent | null {
+    findInTree(detailFlatNode : StepFlatNode ) : SimpleScenarioStepWithParent | null {
         return this.findInTreeWithParent(detailFlatNode, null);
     }
 
-    findInTreeWithParent(detailFlatNode : DetailFlatNode, parent: SimpleScenarioStep) : SimpleScenarioStepWithParent | null {
+    findInTreeWithParent(detailFlatNode : StepFlatNode, parent: SimpleScenarioStep) : SimpleScenarioStepWithParent | null {
         if (MhUtils.isNull(detailFlatNode)) {
             return null;
         }
@@ -496,7 +541,7 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
         return null;
     }
 
-    private findInBranch(detailFlatNode: DetailFlatNode, datum: SimpleScenarioStep, parent: SimpleScenarioStep) : SimpleScenarioStepWithParent | null {
+    private findInBranch(detailFlatNode: StepFlatNode, datum: SimpleScenarioStep, parent: SimpleScenarioStep) : SimpleScenarioStepWithParent | null {
         if (datum.nodeId===detailFlatNode.nodeId) {
             return new SimpleScenarioStepWithParent(datum, parent);
         }
@@ -513,18 +558,18 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
     }
 
     // Select the category so we can insert the new item.
-    addNewStubItem(node: DetailFlatNode) {
+    addNewStubItem(node: StepFlatNode) {
         console.log("10.10", node);
         this.treeControl.expand(node);
         let detailNode = this.findInTree(node);
         console.log("10.11", detailNode)
         this.database.addNewNode(detailNode.node);
-        this.database.dataChange.next(this.database.data);
+        this.dataChange.next(this.data);
         this.refreshTree();
     }
 
     // Save the node to database
-    saveNode(node: DetailFlatNode) {
+    saveNode(node: StepFlatNode) {
         let itemValue = this.form.value.name;
         let len = MhUtils.len(itemValue);
         console.log("MhUtils.len(itemValue.length)", itemValue, len);
@@ -538,9 +583,10 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
         this.ngAfterViewInit();
         this.formDirective.resetForm();
         this.form.reset();
+
     }
 
-    deleteNewNode(node: DetailFlatNode) {
+    deleteNewNode(node: StepFlatNode) {
         console.log("10.20", node);
         let detailNode = this.findInTree(node);
         console.log("10.21", detailNode)
