@@ -72,8 +72,10 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
     scenarioGroupId: string;
     scenarioId: string;
     needToExpandAll: boolean = true;
+    showMyContainer: boolean = true;
     allUuids: string[] = [];
 
+    // this.refreshTree();
     dataChange = new BehaviorSubject<SimpleScenarioStep[]>([]);
     dataTree :SimpleScenarioStep[]
 
@@ -85,7 +87,6 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
         resultCode: new FormControl('', [Validators.required, Validators.minLength(5)]),
     });
 
-    @ViewChild('tree') tree;
     @ViewChild('formDirective') formDirective : FormGroupDirective;
     currentStates: Set<LoadStates> = new Set();
     readonly states = LoadStates;
@@ -96,8 +97,8 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
         //     console.log("15.02 ngAfterViewInit(), n.uuid: ", n.uuid);
         //     this.expansionModel.select(n.uuid);
         // });
-        this.tree.treeControl.expandAll();
-        this.refreshTree();
+        //this.tree.treeControl.expandAll();
+        // this.refreshTree();
     }
 
     ngOnInit(): void {
@@ -322,7 +323,6 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
      */
     rebuildTreeForData(data: any) {
         console.log("21.01 rebuildTreeForData()")
-        //this.needToExpandAll = true;
         this.dataSource.data = data;
         this.refreshTree();
     }
@@ -330,7 +330,7 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
     refreshTree() {
         if (this.needToExpandAll && MhUtils.isNotNull(this.simpleScenarioSteps)) {
             this.needToExpandAll = false;
-            this.tree.treeControl.expandAll();
+            this.treeControl.expandAll();
             this.allUuids.forEach(uuid=>this.expansionModel.select(uuid));
         }
         else {
@@ -422,13 +422,14 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
 
     // Select the category so we can insert the new item.
     addNewStubItem(node: StepFlatNode) {
+        this.showMyContainer = true;
         console.log("10.10", node);
         this.treeControl.expand(node);
         let detailNode = this.findInTree(node);
         console.log("10.11", detailNode)
         this.addNewNode(detailNode.node);
         this.dataChange.next(this.dataTree);
-        this.refreshTree();
+        //this.refreshTree();
     }
 
     createFirstDetail(): void {
@@ -448,28 +449,32 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
         let detailNode = this.findInTree(node);
         console.log("10.21", detailNode)
         this.saveStepInternal(MhUtils.isNull(detailNode.parent) ? null : detailNode.parent.uuid);
-
-        this.updateNode(detailNode.node, itemValue);
-        this.ngAfterViewInit();
-        this.formDirective.resetForm();
-        this.form.reset();
     }
 
     private saveStepInternal(parentUuid) {
         this.button.disabled = true;
         this.currentStates.add(this.states.wait);
+
+        let name = this.form.value.name;
+        let prompt = this.form.value.prompt;
+        let resultCode = this.form.value.resultCode;
+
+        this.formDirective.resetForm();
+        this.form.reset();
+
         const subscribe: Subscription = this.scenarioService
             .addScenarioStepFormCommit(
                 this.scenarioGroupId,
                 this.scenarioId,
                 parentUuid,
-                this.form.value.name,
-                this.form.value.prompt,
+                name,
+                prompt,
                 this.apiUid.id.toString(),
-                this.form.value.resultCode
+                resultCode
             )
             .subscribe(
                 (response) => {
+                    this.updateTree();
                 },
                 () => {
                 },
@@ -478,9 +483,6 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
                     subscribe.unsubscribe();
                 }
             );
-        this.ngAfterViewInit();
-        this.formDirective.resetForm();
-        this.form.reset();
     }
 
     deleteNewNode(node: StepFlatNode) {
@@ -488,7 +490,6 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
         let detailNode = this.findInTree(node);
         console.log("10.21", detailNode)
         this.deleteNode(detailNode);
-        this.ngAfterViewInit();
         this.formDirective.resetForm();
         this.form.reset();
     }

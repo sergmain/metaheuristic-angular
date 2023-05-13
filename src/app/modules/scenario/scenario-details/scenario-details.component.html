@@ -47,13 +47,13 @@
 </ct-cols>
 
 
-<mat-tree #tree [dataSource]="dataSource" [treeControl]="treeControl" cdkDropList (cdkDropListDropped)="drop($event)">
+<mat-tree [dataSource]="dataSource" [treeControl]="treeControl" cdkDropList (cdkDropListDropped)="drop($event)">
     <mat-tree-node *matTreeNodeDef="let node; when: hasNoContent" matTreeNodePadding
                    cdkDrag [cdkDragData]="node" (mouseenter)="dragHover(node)"
                    (mouseleave)="dragHoverEnd()" (cdkDragStarted)="dragStart()" (cdkDragReleased)="dragEnd()">
         <button mat-icon-button disabled></button>
 
-        <ct-cols style="width: 100%;">
+        <ct-cols style="width: 100%;" *ngIf="showMyContainer">
             <ct-col style="width: 80%;">
                 <ct-section>
                     <ct-section-header>
@@ -96,7 +96,7 @@
                             <ct-flex justify-content="flex-end" gap="8px">
                                 <ct-flex-item>
                                     <button mat-flat-button color="primary" size="forTableRow"
-                                            (click)="saveNode(node)" [disabled]="notToCreate()">
+                                            (click)="showMyContainer=false; saveNode(node)" [disabled]="notToCreate()">
                                         Create</button>
                                 </ct-flex-item>
                                 <ct-flex-item>
