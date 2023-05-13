@@ -307,6 +307,7 @@ export class ScenarioDtlsComponent extends UIStateComponent implements OnInit, O
             .addScenarioStepFormCommit(
                 this.scenarioGroupId,
                 this.scenarioId,
+                null,
                 this.form.value.name,
                 this.form.value.prompt,
                 this.apiUid.id.toString(),

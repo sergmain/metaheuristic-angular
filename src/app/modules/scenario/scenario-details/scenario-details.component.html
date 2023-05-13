@@ -115,13 +115,13 @@
                    cdkDrag [cdkDragData]="node" (mouseenter)="dragHover(node)" (mouseleave)="dragHoverEnd()"
                    (cdkDragStarted)="dragStart()" (cdkDragReleased)="dragEnd()">
         <button mat-icon-button
-                matTreeNodeToggle (click)="expansionModel.toggle(node.id)"
-                [attr.aria-label]="'toggle ' + node.filename">
+                matTreeNodeToggle (click)="expansionModel.toggle(node.nodeId)"
+                [attr.aria-label]="'toggle ' + node.name">
             <mat-icon class="mat-icon-rtl-mirror">
                 {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
             </mat-icon>
         </button>
-        {{node.filename}} : {{node.type}}
+        {{node.name}}<br/> {{node.prompt}}
     </mat-tree-node>
 
     <mat-tree-node *matTreeNodeDef="let node; when: hasNewNodeAbsent" matTreeNodeToggle matTreeNodePadding
@@ -129,12 +129,12 @@
                    (cdkDragStarted)="dragStart()" (cdkDragReleased)="dragEnd()">
         <button mat-icon-button
                 matTreeNodeToggle (click)="expansionModel.toggle(node.id)"
-                [attr.aria-label]="'toggle ' + node.filename">
+                [attr.aria-label]="'toggle ' + node.name">
             <mat-icon class="mat-icon-rtl-mirror">
                 {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
             </mat-icon>
         </button>
-        {{node.filename}} : {{node.type}}
+        {{node.name}}<br/> {{node.prompt}}
         <button mat-icon-button (click)="addNewStubItem(node)"><mat-icon>add</mat-icon></button>
     </mat-tree-node>
 </mat-tree>

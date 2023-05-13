@@ -78,7 +78,7 @@
                                 <mat-form-field appearance="outline" style="width: 100%;">
                                     <mat-label>Prompt name, min 5 chars, required</mat-label>
                                     <input matInput type="text" autocomplete="off" formControlName="name" />
-        </mat-form-field>
+                                </mat-form-field>
                                 <mat-form-field appearance="outline" style="width: 100%;">
                                     <mat-label>Prompt, min 5 chars, required</mat-label>
                                     <textarea formControlName="prompt" matInput="matInput" cdkTextareaAutosize="cdkTextareaAutosize"
@@ -114,7 +114,7 @@
                    cdkDrag [cdkDragData]="node" (mouseenter)="dragHover(node)" (mouseleave)="dragHoverEnd()"
                    (cdkDragStarted)="dragStart()" (cdkDragReleased)="dragEnd()">
         <button mat-icon-button
-                matTreeNodeToggle (click)="expansionModel.toggle(node.id)"
+                matTreeNodeToggle (click)="expansionModel.toggle(node.nodeId)"
                 [attr.aria-label]="'toggle ' + node.filename">
             <mat-icon class="mat-icon-rtl-mirror">
                 {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
@@ -126,7 +126,7 @@
     <mat-tree-node *matTreeNodeDef="let node; when: hasNewNodeAbsent" matTreeNodeToggle matTreeNodePadding
                    cdkDrag [cdkDragData]="node" (mouseenter)="dragHover(node)" (mouseleave)="dragHoverEnd()"
                    (cdkDragStarted)="dragStart()" (cdkDragReleased)="dragEnd()">
-        <button mat-icon-button matTreeNodeToggle (click)="expansionModel.toggle(node.id)"
+        <button mat-icon-button matTreeNodeToggle (click)="expansionModel.toggle(node.nodeId)"
                 [attr.aria-label]="'toggle ' + node.filename">
             <mat-icon class="mat-icon-rtl-mirror">
                 {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}

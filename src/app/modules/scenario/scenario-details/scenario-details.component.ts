@@ -1,5 +1,5 @@
 import {FlatTreeControl} from '@angular/cdk/tree';
-import {AfterViewInit, Component, Injectable, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {MatTreeFlatDataSource, MatTreeFlattener} from '@angular/material/tree';
 import {BehaviorSubject, Observable, of as observableOf, Subscription} from 'rxjs';
 import {CdkDragDrop} from '@angular/cdk/drag-drop';
@@ -17,7 +17,6 @@ import {UIStateComponent} from '@app/models/UIStateComponent';
 import {TranslateService} from '@ngx-translate/core';
 import {ScenarioService} from '@services/scenario/scenario.service';
 import {LoadStates} from '@app/enums/LoadStates';
-import {MatTableDataSource} from '@angular/material/table';
 import {SimpleScenarioStep} from '@services/scenario/SimpleScenarioStep';
 import {SimpleScenarioSteps} from '@services/scenario/SimpleScenarioSteps';
 
@@ -49,137 +48,13 @@ export class StepFlatNode {
     ) {}
 }
 
-/*
-export class DetailFlatNode {
-    constructor(
-        public expandable: boolean,
-        public filename: string,
-        public level: number,
-        public type: any,
-        public nodeId: string,
-        public isNew: boolean
-    ) {}
-}
-*/
-
-@Injectable()
-export class ScenarioDetailsService {
-
-
-
-    initialize() {
-/*
-        // Parse the string to json object.
-        const dataObject = JSON.parse(TREE_DATA);
-
-        // Build the tree nodes from Json object. The result is a list of `FileNode` with nested
-        //     file node as children.
-        this.dataTree = this.buildFileTree(dataObject, 0);
-*/
-
-        // Notify the change.
-        this.dataChange.next(this.dataTree);
-
-
-    }
-
-    /**
-     * Build the file structure tree. The `value` is the Json object, or a sub-tree of a Json object.
-     * The return value is the list of `FileNode`.
-     */
-/*
-    buildFileTree(obj: {[key: string]: any}, level: number, parentId: string = '0'): SimpleScenarioStep[] {
-        return Object.keys(obj).reduce<SimpleScenarioStep[]>((accumulator, key, idx) => {
-            const value = obj[key];
-            const node = new SimpleScenarioStep();
-            node.filename = key;
-            node.nodeId = MhUtils.randomIntAsStr(1000, 9999);
-
-            if (value != null) {
-                if (typeof value === 'object') {
-                    node.children = this.buildFileTree(value, level + 1, node.nodeId);
-                } else {
-                    node.type = value;
-                }
-            }
-
-            return accumulator.concat(node);
-        }, []);
-    }
-*/
-
-    /** Add an item to to-do list */
-    addNewNode(parent: SimpleScenarioStep) {
-        if (MhUtils.isNull(parent.steps)) {
-            parent.steps = []
-        }
-        parent.steps.push({uuid: '', nodeId: MhUtils.randomIntAsStr(1000, 999999), isNew: true } as SimpleScenarioStep);
-        this.dataChange.next(this.data);
-    }
-
-    updateNode(node: SimpleScenarioStep, filename: string) {
-        node.filename = filename;
-        node.isNew = false;
-        this.dataChange.next(this.data);
-    }
-
-    deleteNode(node: SimpleScenarioStepWithParent) {
-        let nodes: SimpleScenarioStep[];
-        if (MhUtils.isNull(node.parent)) {
-            nodes = this.dataTree;
-        }
-        else {
-            nodes = node.parent.steps;
-        }
-        for (let i = 0; i < nodes.length; i++) {
-            let n = nodes[i];
-            if (n.nodeId===node.node.nodeId) {
-                nodes.splice(i, 1);
-            }
-        }
-        this.dataChange.next(this.data);
-    }
-
-    newNodePresent() : boolean {
-        if (MhUtils.isNull(this.dataTree)) {
-            return false;
-        }
-        for (const dataNode of this.dataTree) {
-            let b = this.findInBranch(dataNode)
-            if (b) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    private findInBranch(datum: SimpleScenarioStep) : boolean {
-        console.log("31.10", datum)
-        if (MhUtils.isTrue(datum.isNew)) {
-            return true;
-        }
-        if (MhUtils.isNotNull(datum.steps)) {
-            for (const child of datum.steps) {
-                console.log("10.02", child);
-                let b = this.findInBranch(child)
-                if (b) {
-                    return true;
-                }
-            }
-            return false;
-        }
-    }
-
-}
-
 /**
  * @title Tree with flat nodes
  */
 @Component({
     selector: 'scenario-details',
     templateUrl: 'scenario-details.component.html',
-    styleUrls: ['scenario-details.component.css'],
-    providers: [ScenarioDetailsService]
+    styleUrls: ['scenario-details.component.css']
 })
 export class ScenarioDetailsComponent extends UIStateComponent implements OnInit, OnDestroy, AfterViewInit {
     treeControl: FlatTreeControl<StepFlatNode>;
@@ -191,7 +66,6 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
     expandTimeout: any;
     expandDelay = 1000;
     validateDrop = false;
-    database: ScenarioDetailsService;
     apiUid: ApiUid;
     listOfApis: ApiUid[] = [];
     response: ScenarioUidsForAccount;
@@ -234,13 +108,14 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
         }));
 
         this.loadAssetsForCreation();
+        this.updateTree();
     }
 
     ngOnDestroy(): void {
         this.unsubscribeSubscriptions();
     }
 
-    constructor(database: ScenarioDetailsService,
+    constructor(
                 private router: Router,
                 private scenarioService: ScenarioService,
                 private activatedRoute: ActivatedRoute,
@@ -253,7 +128,6 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
         this.treeFlattener = new MatTreeFlattener(this.transformer, this._getLevel, this._isExpandable, this._getChildren);
         this.treeControl = new FlatTreeControl<StepFlatNode>(this._getLevel, this._isExpandable);
         this.dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
-        this.database = database;
 
         this.dataChange.subscribe(data => this.rebuildTreeForData(data));
     }
@@ -276,34 +150,8 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
             });
     }
 
-    createFirstDetail(): void {
-        console.log("27.10", this.apiUid)
-        this.button.disabled = true;
-        this.currentStates.add(this.states.wait);
-        const subscribe: Subscription = this.scenarioService
-            .addScenarioStepFormCommit(
-                this.scenarioGroupId,
-                this.scenarioId,
-                this.form.value.name,
-                this.form.value.prompt,
-                this.apiUid.id.toString(),
-                this.form.value.resultCode
-            )
-            .subscribe(
-                (response) =>
-                {},
-                () => {},
-                () => {
-                    this.currentStates.delete(this.states.wait);
-                    subscribe.unsubscribe();
-                }
-            );
-        this.formDirective.resetForm();
-        this.form.reset();
-    }
-
     dataSourceEmpty() {
-        return this.dataTree.length===0;
+        return MhUtils.len(this.dataTree)===0;
     }
 
     transformer = (node: SimpleScenarioStep, level: number) => {
@@ -335,13 +183,13 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
     };
 
     hasNewNodeAbsent = (_: number, _nodeData: StepFlatNode) => {
-        let b = !this.database.newNodePresent();
+        let b = !this.newNodePresent();
         console.log("hasNewNodeAbsent()", b, _nodeData.nodeId);
         return b;
     };
 
     hasNewNodePresent = (_: number, _nodeData: StepFlatNode)=> {
-        let b = this.database.newNodePresent();
+        let b = this.newNodePresent();
         console.log("hasNewNodePresent()", b, _nodeData.nodeId);
         return b;
     };
@@ -530,8 +378,8 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
         if (MhUtils.isNull(detailFlatNode)) {
             return null;
         }
-        for (let i = 0; i < this.database.data.length; i++){
-            const datum = this.database.data[i];
+        for (let i = 0; i < this.dataTree.length; i++){
+            const datum = this.dataTree[i];
             console.log("10.01", datum);
             let n = this.findInBranch(detailFlatNode, datum, parent);
             if (MhUtils.isNotNull(n)) {
@@ -563,9 +411,14 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
         this.treeControl.expand(node);
         let detailNode = this.findInTree(node);
         console.log("10.11", detailNode)
-        this.database.addNewNode(detailNode.node);
-        this.dataChange.next(this.data);
+        this.addNewNode(detailNode.node);
+        this.dataChange.next(this.dataTree);
         this.refreshTree();
+    }
+
+    createFirstDetail(): void {
+        console.log("27.10", this.apiUid)
+        this.saveStepInternal(null);
     }
 
     // Save the node to database
@@ -579,21 +432,113 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
         console.log("10.20", node);
         let detailNode = this.findInTree(node);
         console.log("10.21", detailNode)
-        this.database.updateNode(detailNode.node, itemValue);
+        this.saveStepInternal(MhUtils.isNull(detailNode.parent) ? null : detailNode.parent.uuid);
+
+        this.updateNode(detailNode.node, itemValue);
         this.ngAfterViewInit();
         this.formDirective.resetForm();
         this.form.reset();
+    }
 
+    private saveStepInternal(parentUuid) {
+        this.button.disabled = true;
+        this.currentStates.add(this.states.wait);
+        const subscribe: Subscription = this.scenarioService
+            .addScenarioStepFormCommit(
+                this.scenarioGroupId,
+                this.scenarioId,
+                parentUuid,
+                this.form.value.name,
+                this.form.value.prompt,
+                this.apiUid.id.toString(),
+                this.form.value.resultCode
+            )
+            .subscribe(
+                (response) => {
+                },
+                () => {
+                },
+                () => {
+                    this.currentStates.delete(this.states.wait);
+                    subscribe.unsubscribe();
+                }
+            );
+        this.ngAfterViewInit();
+        this.formDirective.resetForm();
+        this.form.reset();
     }
 
     deleteNewNode(node: StepFlatNode) {
         console.log("10.20", node);
         let detailNode = this.findInTree(node);
         console.log("10.21", detailNode)
-        this.database.deleteNode(detailNode);
+        this.deleteNode(detailNode);
         this.ngAfterViewInit();
         this.formDirective.resetForm();
         this.form.reset();
     }
+
+    deleteNode(node: SimpleScenarioStepWithParent) {
+        let nodes: SimpleScenarioStep[];
+        if (MhUtils.isNull(node.parent)) {
+            nodes = this.dataTree;
+        }
+        else {
+            nodes = node.parent.steps;
+        }
+        for (let i = 0; i < nodes.length; i++) {
+            let n = nodes[i];
+            if (n.nodeId===node.node.nodeId) {
+                nodes.splice(i, 1);
+            }
+        }
+        this.dataChange.next(this.dataTree);
+    }
+
+    addNewNode(parent: SimpleScenarioStep) {
+        if (MhUtils.isNull(parent.steps)) {
+            parent.steps = []
+        }
+        parent.steps.push({uuid: '', nodeId: MhUtils.randomIntAsStr(1000, 999999), isNew: true } as SimpleScenarioStep);
+        this.dataChange.next(this.dataTree);
+    }
+
+    updateNode(node: SimpleScenarioStep, filename: string) {
+        node.name = filename;
+        node.isNew = false;
+
+        this.dataChange.next(this.dataTree);
+    }
+
+    newNodePresent() : boolean {
+        if (MhUtils.isNull(this.dataTree)) {
+            return false;
+        }
+        for (const dataNode of this.dataTree) {
+            let b = this.findInBranchBool(dataNode)
+            if (b) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private findInBranchBool(datum: SimpleScenarioStep) : boolean {
+        console.log("31.10", datum)
+        if (MhUtils.isTrue(datum.isNew)) {
+            return true;
+        }
+        if (MhUtils.isNotNull(datum.steps)) {
+            for (const child of datum.steps) {
+                console.log("10.02", child);
+                let b = this.findInBranchBool(child)
+                if (b) {
+                    return true;
+                }
+            }
+            return false;
+        }
+    }
+
 
 }
