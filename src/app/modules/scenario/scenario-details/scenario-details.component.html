@@ -121,7 +121,7 @@
                 {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
             </mat-icon>
         </button>
-        {{node.name}}<br/> {{node.prompt}}
+        {{node.name}}<br/> {{node.prompt}}<br/>Result code: {{node.resultCode}}
     </mat-tree-node>
 
     <mat-tree-node *matTreeNodeDef="let node; when: hasNewNodeAbsent" matTreeNodeToggle matTreeNodePadding
@@ -134,7 +134,7 @@
                 {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
             </mat-icon>
         </button>
-        {{node.uuid}}<br/>{{node.name}}<br/> {{node.prompt}}
+        {{node.name}}<br/> {{node.prompt}}<br/>Result code: {{node.resultCode}}
         <button mat-icon-button (click)="addNewStubItem(node)"><mat-icon>add</mat-icon></button>
     </mat-tree-node>
 </mat-tree>

@@ -2,8 +2,13 @@
   margin-right: 4px;
 }
 
+.mat-tree {
+  padding-top: 15px;
+}
+
 .mat-tree-node {
   min-height:20px;
+  padding-bottom: 15px;
 }
 
 .mat-mdc-icon-button.mat-mdc-button-base {
