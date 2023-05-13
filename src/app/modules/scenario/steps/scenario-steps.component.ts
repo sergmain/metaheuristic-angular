@@ -87,8 +87,11 @@ export class ScenarioStepsComponent extends UIStateComponent implements OnInit {
         if (event.previousIndex===event.currentIndex) {
             return;
         }
+
+        let prevUuid = this.simpleScenarioSteps.steps[event.previousIndex].uuid;
+        let currUuid = this.simpleScenarioSteps.steps[event.currentIndex].uuid;
         this.scenarioService
-            .scenarioStepRearrangeTable(this.scenarioId.toString(), event.previousIndex, event.currentIndex)
+            .scenarioStepRearrangeTable(this.scenarioId.toString(), prevUuid, currUuid)
             .subscribe(v => this.updateTable());
     }
 }

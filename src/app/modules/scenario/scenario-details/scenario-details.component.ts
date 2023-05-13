@@ -92,13 +92,6 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
     readonly states = LoadStates;
 
     ngAfterViewInit() {
-        console.log("15.01 ngAfterViewInit()");
-        // this.tree.treeControl.dataNodes.forEach(n => {
-        //     console.log("15.02 ngAfterViewInit(), n.uuid: ", n.uuid);
-        //     this.expansionModel.select(n.uuid);
-        // });
-        //this.tree.treeControl.expandAll();
-        // this.refreshTree();
     }
 
     ngOnInit(): void {
@@ -159,13 +152,13 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
 
     transformer = (node: SimpleScenarioStep, level: number) => {
         let numberOfSubSteps = MhUtils.len(node.steps);
-        console.log("07.10 transformer(), numberOfSubSteps: ", numberOfSubSteps);
+        //console.log("07.10 transformer(), numberOfSubSteps: ", numberOfSubSteps);
         let nodeId = MhUtils.randomIntAsStr(1000, 999999);
         node.nodeId = nodeId;
         let stepFlatNode = new StepFlatNode(nodeId, numberOfSubSteps>0, level, node.uuid,
             node.apiId, node.apiCode, node.name, node.prompt, node.r, node.resultCode, node.isNew);
         this.allUuids.push(node.uuid);
-        console.log("07.15 transformer(), stepFlatNode: ", stepFlatNode);
+        //console.log("07.15 transformer(), stepFlatNode: ", stepFlatNode);
         return stepFlatNode;
     }
 
@@ -174,19 +167,19 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
     private _getChildren = (node: SimpleScenarioStep): Observable<SimpleScenarioStep[]> => observableOf(node.steps);
     hasChild = (_: number, _nodeData: StepFlatNode) => _nodeData.expandable;
     hasNoContent = (_: number, _nodeData: StepFlatNode) => {
-        console.log("hasNoContent()", JSON.stringify(_nodeData));
+        //console.log("hasNoContent()", JSON.stringify(_nodeData));
         return _nodeData.uuid === '';
     };
 
     hasNewNodeAbsent = (_: number, _nodeData: StepFlatNode) => {
         let b = !this.newNodePresent();
-        console.log("hasNewNodeAbsent()", b, _nodeData.nodeId);
+        //console.log("hasNewNodeAbsent()", b, _nodeData.nodeId);
         return b;
     };
 
     hasNewNodePresent = (_: number, _nodeData: StepFlatNode)=> {
         let b = this.newNodePresent();
-        console.log("hasNewNodePresent()", b, _nodeData.nodeId);
+        //console.log("hasNewNodePresent()", b, _nodeData.nodeId);
         return b;
     };
 
@@ -204,7 +197,7 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
 
         function addExpandedChildren(node: SimpleScenarioStep, expanded: string[]) {
             result.push(node);
-            if (expanded.includes(node.nodeId)) {
+            if (expanded.includes(node.uuid)) {
                 if (MhUtils.isNotNull(node.steps)) {
                     node.steps.map((child) => addExpandedChildren(child, expanded));
                 }
@@ -213,6 +206,12 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
         this.dataSource.data.forEach((node) => {
             addExpandedChildren(node, this.expansionModel.selected);
         });
+
+        // this.treeControl.dataNodes.forEach(n=>{
+        //     console.log("35.45 refreshTree(), expanded: ", n.uuid, this.treeControl.isExpanded(n));
+        // });
+
+
         return result;
     }
 
@@ -220,60 +219,34 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
      * Handle the drop - here we rearrange the data based on the drop event,
      * then rebuild the tree.
      * */
-    drop(event: CdkDragDrop<string[]>) {
-        // console.log('origin/destination', event.previousIndex, event.currentIndex);
+    drop(event: CdkDragDrop<String>) {
+        console.log('37.10 origin/destination', event.previousIndex, event.currentIndex);
 
-        // ignore drops outside of the tree
-        if (!event.isPointerOverContainer) return;
-
-        // construct a list of visible nodes, this will match the DOM.
-        // the cdkDragDrop event.currentIndex jives with visible nodes.
-        // it calls rememberExpandedTreeNodes to persist expand state
-        const visibleNodes = this.visibleNodes();
-
-        // deep clone the data source so we can mutate it
-        const changedData = JSON.parse(JSON.stringify(this.dataSource.data));
-
-        // recursive find function to find siblings of node
-        function findNodeSiblings(arr: Array<any>, nodeId: string): Array<any> {
-            let result, subResult;
-            arr.forEach((item, i) => {
-                if (item.nodeId === nodeId) {
-                    result = arr;
-                } else if (item.children) {
-                    subResult = findNodeSiblings(item.children, nodeId);
-                    if (subResult) result = subResult;
-                }
-            });
-            return result;
-
-        }
-
-        // determine where to insert the node
-        const nodeAtDest = visibleNodes[event.currentIndex];
-        const newSiblings = findNodeSiblings(changedData, nodeAtDest.nodeId);
-        if (!newSiblings) return;
-        const insertIndex = newSiblings.findIndex(s => s.nodeId === nodeAtDest.nodeId);
-
-        // remove the node from its old place
-        const node = event.item.data;
-        const siblings = findNodeSiblings(changedData, node.nodeId);
-        const siblingIndex = siblings.findIndex(n => n.nodeId === node.nodeId);
-        const nodeToInsert: SimpleScenarioStep = siblings.splice(siblingIndex, 1)[0];
-        if (nodeAtDest.nodeId === nodeToInsert.nodeId) return;
-
-        // ensure validity of drop - must be same level
-        const nodeAtDestFlatNode = this.treeControl.dataNodes.find((n) => nodeAtDest.nodeId === n.nodeId);
-        if (this.validateDrop && nodeAtDestFlatNode.level !== node.level) {
-            alert('Items can only be moved within the same level.');
+        // ignore drops outside of the tree or the same position
+        if (event.previousIndex===event.currentIndex || !event.isPointerOverContainer) {
             return;
         }
 
-        // insert node
-        newSiblings.splice(insertIndex, 0, nodeToInsert);
+        console.log('37.20 drop()');
 
-        // rebuild tree with mutated data
-        this.rebuildTreeForData(changedData);
+        // determine where to insert the node
+        let currVisibleNodes = this.visibleNodes();
+        console.log('37.23 drop(), currVisibleNodes: ', currVisibleNodes);
+        const currNode = currVisibleNodes[event.currentIndex];
+        const prevNode = currVisibleNodes[event.previousIndex];
+
+        console.log('37.25 drop(), prev -->, curr: ', prevNode.uuid, currNode.uuid);
+        console.log('37.25 drop(), prev -->, curr: ', prevNode, currNode);
+
+        // ensure validity of drop - must be same level
+        console.log('37.50 drop()');
+
+        this.scenarioService
+            .scenarioStepRearrangeTable(this.scenarioId.toString(), prevNode.uuid, currNode.uuid)
+            .subscribe({
+                next: simpleScenarioSteps => this.updateTree(),
+                complete: () => this.setIsLoadingEnd()
+            });
     }
 
     updateTree(): void {
@@ -322,7 +295,7 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
      * after being rebuilt
      */
     rebuildTreeForData(data: any) {
-        console.log("21.01 rebuildTreeForData()")
+        //console.log("21.01 rebuildTreeForData()")
         this.dataSource.data = data;
         this.refreshTree();
     }
@@ -336,21 +309,21 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
         else {
             this.treeControl.collapseAll();
         }
-        console.log("35.10 refreshTree(), expansionModel.selected: ", this.expansionModel.selected)
+        // console.log("35.10 refreshTree(), expansionModel.selected: ", this.expansionModel.selected)
 
         this.expansionModel.selected.forEach((id) => {
             const node = this.treeControl.dataNodes.find((n) => {
-                console.log("35.25 n.nodeId: {}, id: {}", n.uuid, id)
+                // console.log("35.25 n.nodeId: {}, id: {}", n.uuid, id)
                 return n.uuid === id;
             });
-            console.log("35.35 refreshTree(), node: ", node)
+            // console.log("35.35 refreshTree(), node: ", node)
             if (MhUtils.isNotNull(node)) {
                 this.treeControl.expand(node);
             }
         });
-        this.treeControl.dataNodes.forEach(n=>{
-            console.log("35.45 refreshTree(), expanded: ", n.uuid, this.treeControl.isExpanded(n));
-        });
+        // this.treeControl.dataNodes.forEach(n=>{
+        //     console.log("35.45 refreshTree(), expanded: ", n.uuid, this.treeControl.isExpanded(n));
+        // });
     }
 
     // Not used but you might need this to programmatically expand nodes
@@ -410,7 +383,7 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
         }
         if (MhUtils.isNotNull(datum.steps)) {
             for (const child of datum.steps) {
-                console.log("10.02", child);
+                // console.log("10.02", child);
                 let n = this.findInBranch(detailFlatNode, child, datum)
                 if (MhUtils.isNotNull(n)) {
                     return n;
@@ -434,7 +407,7 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
 
     createFirstDetail(): void {
         console.log("27.10", this.apiUid)
-        this.saveStepInternal(null);
+        this.saveStepInternal(undefined);
     }
 
     // Save the node to database
@@ -451,7 +424,7 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
         this.saveStepInternal(MhUtils.isNull(detailNode.parent) ? null : detailNode.parent.uuid);
     }
 
-    private saveStepInternal(parentUuid) {
+    private saveStepInternal(parentUuid: string) {
         this.button.disabled = true;
         this.currentStates.add(this.states.wait);
 
@@ -546,7 +519,7 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
         }
         if (MhUtils.isNotNull(datum.steps)) {
             for (const child of datum.steps) {
-                console.log("10.02", child);
+                // console.log("40.02", child);
                 let b = this.findNewStubNodeInBranch(child)
                 if (b) {
                     return true;
@@ -555,6 +528,4 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
             return false;
         }
     }
-
-
 }

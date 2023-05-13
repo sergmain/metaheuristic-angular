@@ -8,6 +8,7 @@ import {generateFormData} from "@app/helpers/generateFormData";
 import {ScenariosResult} from "@services/scenario/ScenariosResult";
 import {ScenarioUidsForAccount} from "@services/scenario/ScenarioUidsForAccount";
 import {SimpleScenarioSteps} from "@services/scenario/SimpleScenarioSteps";
+import {MhUtils} from '@services/mh-utils/mh-utils.service';
 
 
 const url = (s: string): string => `${environment.baseUrl}dispatcher/scenario/${s}`;
@@ -57,7 +58,8 @@ export class ScenarioService {
         );
     }
 
-    addScenarioStepFormCommit(scenarioGroupId: string, scenarioId: string, parentUuid: string, name: string, prompt: string, apiId: string, resultCode: string) {
+    addScenarioStepFormCommit(scenarioGroupId: string, scenarioId: string, parentUuidTemp: string, name: string, prompt: string, apiId: string, resultCode: string) {
+        const parentUuid = MhUtils.isNull(parentUuidTemp) ? undefined : parentUuidTemp;
         return this.http.post<OperationStatusRest>(
             url(`scenario-step-add-commit`),
             generateFormData({
@@ -84,8 +86,9 @@ export class ScenarioService {
         return this.http.post<OperationStatusRest>(url(`scenario-step-delete-commit`), generateFormData({ scenarioId: scenarioId, uuid: uuid }));
     }
 
-    scenarioStepRearrangeTable(scenarioId: string, previousIndex: number, currentIndex: number): Observable<OperationStatusRest> {
-        console.log("scenarioStepRearrangeTable #"+ scenarioId+", prev: " + previousIndex+", curr: " + currentIndex);
-        return this.http.post<OperationStatusRest>(url(`scenario-step-rearrange`), generateFormData({ scenarioId: scenarioId, prev: previousIndex, curr: currentIndex }));
+    scenarioStepRearrangeTable(scenarioId: string, prevUuid: string, currUuid: string): Observable<OperationStatusRest> {
+        console.log("scenarioStepRearrangeTable #"+ scenarioId+", prev: " + prevUuid+", curr: " + currUuid);
+        return this.http.post<OperationStatusRest>(url(`scenario-step-rearrange`),
+            generateFormData({ scenarioId: scenarioId, prev: prevUuid, curr: currUuid }));
     }
 }

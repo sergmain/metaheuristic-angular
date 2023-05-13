@@ -134,7 +134,7 @@
                 {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
             </mat-icon>
         </button>
-        {{node.name}}<br/> {{node.prompt}}
+        {{node.uuid}}<br/>{{node.name}}<br/> {{node.prompt}}
         <button mat-icon-button (click)="addNewStubItem(node)"><mat-icon>add</mat-icon></button>
     </mat-tree-node>
 </mat-tree>
