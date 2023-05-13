@@ -326,15 +326,6 @@ export class ScenarioDtlsComponent extends UIStateComponent implements OnInit, O
         this.form.reset();
     }
 
-/*
-    createFirstDetail(): void {
-        this.button.disabled = true;
-        this.database.createFirstDetail(this.form.value.name);
-        this.formDirective.resetForm();
-        this.form.reset();
-    }
-*/
-
     dataSourceEmpty() {
         return this.database.dataTree.length===0;
     }

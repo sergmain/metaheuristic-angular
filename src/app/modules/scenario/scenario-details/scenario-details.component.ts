@@ -71,11 +71,13 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
     response: ScenarioUidsForAccount;
     scenarioGroupId: string;
     scenarioId: string;
+    needToExpandAll: boolean = true;
+    allUuids: string[] = [];
 
     dataChange = new BehaviorSubject<SimpleScenarioStep[]>([]);
     dataTree :SimpleScenarioStep[]
 
-    simpleScenarioSteps: SimpleScenarioSteps;
+    simpleScenarioSteps: SimpleScenarioSteps = null;
 
     form = new FormGroup({
         name: new FormControl('', [Validators.required, Validators.minLength(5)]),
@@ -90,10 +92,10 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
 
     ngAfterViewInit() {
         console.log("15.01 ngAfterViewInit()");
-        this.tree.treeControl.dataNodes.forEach(n => {
-            console.log("15.02 expansionModel.select({})", n.nodeId);
-            this.expansionModel.select(n.nodeId);
-        });
+        // this.tree.treeControl.dataNodes.forEach(n => {
+        //     console.log("15.02 ngAfterViewInit(), n.uuid: ", n.uuid);
+        //     this.expansionModel.select(n.uuid);
+        // });
         this.tree.treeControl.expandAll();
         this.refreshTree();
     }
@@ -155,28 +157,21 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
     }
 
     transformer = (node: SimpleScenarioStep, level: number) => {
-/*
-    public nodeId: string,
-    public expandable: boolean,
-    public level: number,
-
-    public uuid: string,
-    public apiId: number,
-    public apiCode: string,
-    public name: string,
-    public prompt: string,
-    public r: string,
-    public resultCode: string,
-    public isNew: boolean
-*/
-        return new StepFlatNode(node.nodeId, MhUtils.len(node.steps)>0, level, node.uuid,
+        let numberOfSubSteps = MhUtils.len(node.steps);
+        console.log("07.10 transformer(), numberOfSubSteps: ", numberOfSubSteps);
+        let nodeId = MhUtils.randomIntAsStr(1000, 999999);
+        node.nodeId = nodeId;
+        let stepFlatNode = new StepFlatNode(nodeId, numberOfSubSteps>0, level, node.uuid,
             node.apiId, node.apiCode, node.name, node.prompt, node.r, node.resultCode, node.isNew);
+        this.allUuids.push(node.uuid);
+        console.log("07.15 transformer(), stepFlatNode: ", stepFlatNode);
+        return stepFlatNode;
     }
+
     private _getLevel = (node: StepFlatNode) => node.level;
-    private _isExpandable = (node: StepFlatNode) => node.expandable;
+    private _isExpandable = (node: StepFlatNode): boolean => node.expandable;
     private _getChildren = (node: SimpleScenarioStep): Observable<SimpleScenarioStep[]> => observableOf(node.steps);
     hasChild = (_: number, _nodeData: StepFlatNode) => _nodeData.expandable;
-
     hasNoContent = (_: number, _nodeData: StepFlatNode) => {
         console.log("hasNoContent()", JSON.stringify(_nodeData));
         return _nodeData.uuid === '';
@@ -327,14 +322,34 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
      */
     rebuildTreeForData(data: any) {
         console.log("21.01 rebuildTreeForData()")
+        //this.needToExpandAll = true;
         this.dataSource.data = data;
         this.refreshTree();
     }
 
     refreshTree() {
+        if (this.needToExpandAll && MhUtils.isNotNull(this.simpleScenarioSteps)) {
+            this.needToExpandAll = false;
+            this.tree.treeControl.expandAll();
+            this.allUuids.forEach(uuid=>this.expansionModel.select(uuid));
+        }
+        else {
+            this.treeControl.collapseAll();
+        }
+        console.log("35.10 refreshTree(), expansionModel.selected: ", this.expansionModel.selected)
+
         this.expansionModel.selected.forEach((id) => {
-            const node = this.treeControl.dataNodes.find((n) => n.nodeId === id);
-            this.treeControl.expand(node);
+            const node = this.treeControl.dataNodes.find((n) => {
+                console.log("35.25 n.nodeId: {}, id: {}", n.uuid, id)
+                return n.uuid === id;
+            });
+            console.log("35.35 refreshTree(), node: ", node)
+            if (MhUtils.isNotNull(node)) {
+                this.treeControl.expand(node);
+            }
+        });
+        this.treeControl.dataNodes.forEach(n=>{
+            console.log("35.45 refreshTree(), expanded: ", n.uuid, this.treeControl.isExpanded(n));
         });
     }
 
@@ -515,7 +530,7 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
             return false;
         }
         for (const dataNode of this.dataTree) {
-            let b = this.findInBranchBool(dataNode)
+            let b = this.findNewStubNodeInBranch(dataNode)
             if (b) {
                 return true;
             }
@@ -523,15 +538,15 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
         return false;
     }
 
-    private findInBranchBool(datum: SimpleScenarioStep) : boolean {
-        console.log("31.10", datum)
+    private findNewStubNodeInBranch(datum: SimpleScenarioStep) : boolean {
+        // console.log("31.10", datum)
         if (MhUtils.isTrue(datum.isNew)) {
             return true;
         }
         if (MhUtils.isNotNull(datum.steps)) {
             for (const child of datum.steps) {
                 console.log("10.02", child);
-                let b = this.findInBranchBool(child)
+                let b = this.findNewStubNodeInBranch(child)
                 if (b) {
                     return true;
                 }

@@ -115,8 +115,8 @@
                    cdkDrag [cdkDragData]="node" (mouseenter)="dragHover(node)" (mouseleave)="dragHoverEnd()"
                    (cdkDragStarted)="dragStart()" (cdkDragReleased)="dragEnd()">
         <button mat-icon-button
-                matTreeNodeToggle (click)="expansionModel.toggle(node.nodeId)"
-                [attr.aria-label]="'toggle ' + node.name">
+                matTreeNodeToggle (click)="expansionModel.toggle(node.uuid)"
+                [attr.aria-label]="'toggle ' + node.uuid">
             <mat-icon class="mat-icon-rtl-mirror">
                 {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
             </mat-icon>
@@ -128,8 +128,8 @@
                    cdkDrag [cdkDragData]="node" (mouseenter)="dragHover(node)" (mouseleave)="dragHoverEnd()"
                    (cdkDragStarted)="dragStart()" (cdkDragReleased)="dragEnd()">
         <button mat-icon-button
-                matTreeNodeToggle (click)="expansionModel.toggle(node.id)"
-                [attr.aria-label]="'toggle ' + node.name">
+                matTreeNodeToggle (click)="expansionModel.toggle(node.uuid)"
+                [attr.aria-label]="'toggle ' + node.uuid">
             <mat-icon class="mat-icon-rtl-mirror">
                 {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
             </mat-icon>
