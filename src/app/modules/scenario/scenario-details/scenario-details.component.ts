@@ -8,7 +8,6 @@ import {SelectionModel} from '@angular/cdk/collections';
 import {FormControl, FormGroup, FormGroupDirective, Validators} from '@angular/forms';
 import {MatButton} from '@angular/material/button';
 import {MhUtils} from '@services/mh-utils/mh-utils.service';
-import {ApiUid} from '@services/evaluation/ApiUid';
 import {ScenarioUidsForAccount} from '@services/scenario/ScenarioUidsForAccount';
 import {SettingsService, SettingsServiceEventChange} from '@services/settings/settings.service';
 import {ActivatedRoute, Router} from '@angular/router';
@@ -19,6 +18,10 @@ import {ScenarioService} from '@services/scenario/scenario.service';
 import {LoadStates} from '@app/enums/LoadStates';
 import {SimpleScenarioStep} from '@services/scenario/SimpleScenarioStep';
 import {SimpleScenarioSteps} from '@services/scenario/SimpleScenarioSteps';
+import {ApiUid} from '@services/scenario/ApiUid';
+import {InternalFunction} from '@services/scenario/InternalFunction';
+import {ConfirmationDialogMethod} from '@app/components/app-dialog-confirmation/app-dialog-confirmation.component';
+import {MatDialog} from "@angular/material/dialog";
 
 export class SimpleScenarioStepWithParent {
     constructor(node: SimpleScenarioStep, parent: SimpleScenarioStep) {
@@ -67,13 +70,16 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
     expandDelay = 1000;
     validateDrop = false;
     apiUid: ApiUid;
+    processingFunction: InternalFunction;
     listOfApis: ApiUid[] = [];
+    listOfFunctions: InternalFunction[] = [];
     response: ScenarioUidsForAccount;
     scenarioGroupId: string;
     scenarioId: string;
     needToExpandAll: boolean = true;
     showMyContainer: boolean = true;
     allUuids: string[] = [];
+    isApi: boolean = true;
 
     // this.refreshTree();
     dataChange = new BehaviorSubject<SimpleScenarioStep[]>([]);
@@ -117,6 +123,7 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
                 private activatedRoute: ActivatedRoute,
                 private translate: TranslateService,
                 private settingsService: SettingsService,
+                private dialog: MatDialog,
                 readonly authenticationService: AuthenticationService
                 ) {
         super(authenticationService);
@@ -131,7 +138,7 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
     @ViewChild(MatButton) button: MatButton;
 
     notToCreate() {
-        return this.apiUid==null || this.form.invalid;
+        return (MhUtils.isNull(this.apiUid) && MhUtils.isNull(this.processingFunction)) || this.form.invalid;
     }
 
     // load assets for creating a new step of scenario
@@ -142,6 +149,7 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
             .subscribe((response) => {
                 this.response = response;
                 this.listOfApis = this.response.apis;
+                this.listOfFunctions = this.response.functions;
                 this.isLoading = false;
             });
     }
@@ -411,7 +419,7 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
     }
 
     // Save the node to database
-    saveNode(node: StepFlatNode) {
+    saveNode(node: StepFlatNode){
         let itemValue = this.form.value.name;
         let len = MhUtils.len(itemValue);
         console.log("MhUtils.len(itemValue.length)", itemValue, len);
@@ -431,6 +439,7 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
         let name = this.form.value.name;
         let prompt = this.form.value.prompt;
         let resultCode = this.form.value.resultCode;
+        let functionCode = MhUtils.isNull(this.processingFunction) ? null : this.processingFunction.code;
 
         this.formDirective.resetForm();
         this.form.reset();
@@ -442,8 +451,9 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
                 parentUuid,
                 name,
                 prompt,
-                this.apiUid.id.toString(),
-                resultCode
+                MhUtils.isNull(this.apiUid) ? null : this.apiUid.id.toString(),
+                resultCode,
+                functionCode
             )
             .subscribe(
                 (response) => {
@@ -456,6 +466,19 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
                     subscribe.unsubscribe();
                 }
             );
+    }
+
+    @ConfirmationDialogMethod({
+        question: (flatNode: StepFlatNode): string =>
+            `Do you want to delete Step #${flatNode.name}`,
+
+        resolveTitle: 'Delete',
+        rejectTitle: 'Cancel'
+    })
+    delete(flatNode: StepFlatNode): void {
+        this.scenarioService
+            .scenarioStepDeleteCommit(this.scenarioId.toString(), flatNode.uuid)
+            .subscribe(v => this.updateTree());
     }
 
     deleteNewNode(node: StepFlatNode) {

@@ -472,7 +472,8 @@ export class ScenarioDtlsComponent extends UIStateComponent implements OnInit, O
                 name,
                 prompt,
                 this.apiUid.id.toString(),
-                resultCode
+                resultCode,
+                null
             )
             .subscribe(
                 (response) => {

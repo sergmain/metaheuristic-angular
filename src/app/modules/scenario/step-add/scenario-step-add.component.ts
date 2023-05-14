@@ -84,7 +84,8 @@ export class ScenarioStepAddComponent extends UIStateComponent implements OnInit
                 this.form.value.name,
                 this.form.value.prompt,
                 this.apiUid.id.toString(),
-                'some code'
+                'some code',
+                null
             )
             .subscribe(
                 (response) => {
