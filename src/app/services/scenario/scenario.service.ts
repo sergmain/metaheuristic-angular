@@ -76,7 +76,7 @@ export class ScenarioService {
     runScenario(scenarioGroupId: string, scenarioId: string): Observable<OperationStatusRest> {
         console.log("Run Scenario #"+ scenarioId);
         return this.http.post<OperationStatusRest>(url(`scenario-run`),
-            generateFormData({ scenarioId: scenarioId }));
+            generateFormData({ scenarioGroupId: scenarioGroupId, scenarioId: scenarioId }));
     }
 
     scenarioAdd(): Observable<ScenarioUidsForAccount> {
