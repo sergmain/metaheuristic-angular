@@ -26,8 +26,6 @@ export class ScenarioService {
     }
 
     scenarioSteps(scenarioGroupId: string, scenarioId: string): Observable<SimpleScenarioSteps> {
-        let newUrl = url('scenario-steps')
-        console.log('ScenarioService.scenarioSteps.newUrl: ' + newUrl);
         return this.http.get<SimpleScenarioSteps>(url(`scenarios/${scenarioGroupId}/scenario/${scenarioId}/steps`));
     }
 
@@ -73,6 +71,12 @@ export class ScenarioService {
     scenarioDeleteCommit(scenarioId: string): Observable<OperationStatusRest> {
         console.log("Delete Scenario #"+ scenarioId);
         return this.http.post<OperationStatusRest>(url(`scenario-delete-commit`), generateFormData({ scenarioId: scenarioId }));
+    }
+
+    runScenario(scenarioGroupId: string, scenarioId: string): Observable<OperationStatusRest> {
+        console.log("Run Scenario #"+ scenarioId);
+        return this.http.post<OperationStatusRest>(url(`scenario-run`),
+            generateFormData({ scenarioId: scenarioId }));
     }
 
     scenarioAdd(): Observable<ScenarioUidsForAccount> {

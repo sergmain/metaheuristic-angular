@@ -168,10 +168,10 @@
                 {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
             </mat-icon>
         </button>
-        {{node.name}}<br/> {{node.prompt}}<br/>Result code: [[{{node.resultCode}}]]
+        Type: {{MhUtils.isNull(node.functionCode) ? 'API: '+ node.apiCode : 'Process: ' + node.functionCode}}, Name: {{node.name}}<br/> {{node.prompt}}<br/>Result code: [[{{node.resultCode}}]]
         <button mat-icon-button (click)="addNewStubItem(node)"><mat-icon>add</mat-icon></button>
         <button mat-icon-button (click)="delete(node)">
-            <mat-icon>delete</mat-icon>
+            <mat-icon>delete_forever</mat-icon>
         </button>
 
 

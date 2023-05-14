@@ -10,6 +10,7 @@ export class SimpleScenarioStep {
     r: string;
     resultCode: string;
     isNew: boolean;
+    functionCode: string;
 
     steps: SimpleScenarioStep[];
 }

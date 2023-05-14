@@ -49,15 +49,16 @@
                                 </ct-flex-item>
                                 <ct-flex-item>
                                     <button mat-flat-button color="primary" size="forTableRow"
-                                            [routerLink]="['../..', scenarioGroupId, 'scenario', el.scenarioId, 'dtls1']">Dtls1</button>
-                                </ct-flex-item>
-                                <ct-flex-item>
-                                    <button mat-flat-button color="primary" size="forTableRow"
                                             [routerLink]="['../..', scenarioGroupId, 'scenario', el.scenarioId, 'steps']">Steps</button>
                                 </ct-flex-item>
                                 <ct-flex-item>
+                                    <button mat-flat-button color="warn" size="forTableRow" (click)="runScenario(el)">
+                                        <mat-icon>play_arrow</mat-icon>
+                                    </button>
+                                </ct-flex-item>
+                                <ct-flex-item>
                                     <button mat-flat-button color="warn" size="forTableRow" (click)="delete(el)">
-                                        <mat-icon>delete</mat-icon>
+                                        <mat-icon>delete_forever</mat-icon>
                                     </button>
                                 </ct-flex-item>
                             </ct-flex>

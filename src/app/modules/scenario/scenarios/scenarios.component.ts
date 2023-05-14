@@ -62,6 +62,19 @@ export class ScenariosComponent extends UIStateComponent implements OnInit {
             .subscribe(v => this.updateTable(this.scenariosResult.scenarios.number));
     }
 
+    @ConfirmationDialogMethod({
+        question: (ss: SimpleScenario): string =>
+            `Do you want to exec Scenario #${ss.scenarioId}, ${ss.name}`,
+
+        resolveTitle: 'Delete',
+        rejectTitle: 'Cancel'
+    })
+    runScenario(scenario: SimpleScenario): void {
+        this.scenarioService
+            .runScenario(scenario.scenarioGroupId.toString(), scenario.scenarioId.toString())
+            .subscribe(v => this.updateTable(this.scenariosResult.scenarios.number));
+    }
+
     nextPage(): void {
         this.updateTable(this.scenariosResult.scenarios.number + 1);
     }

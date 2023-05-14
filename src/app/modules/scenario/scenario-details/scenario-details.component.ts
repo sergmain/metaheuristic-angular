@@ -47,7 +47,8 @@ export class StepFlatNode {
         public r: string,
         public resultCode: string,
 
-        public isNew: boolean
+        public isNew: boolean,
+        public functionCode: string
     ) {}
 }
 
@@ -164,7 +165,8 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
         let nodeId = MhUtils.randomIntAsStr(1000, 999999);
         node.nodeId = nodeId;
         let stepFlatNode = new StepFlatNode(nodeId, numberOfSubSteps>0, level, node.uuid,
-            node.apiId, node.apiCode, node.name, node.prompt, node.r, node.resultCode, node.isNew);
+            node.apiId, node.apiCode, node.name, node.prompt, node.r, node.resultCode, node.isNew,
+            node.functionCode);
         this.allUuids.push(node.uuid);
         //console.log("07.15 transformer(), stepFlatNode: ", stepFlatNode);
         return stepFlatNode;
@@ -551,4 +553,6 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
             return false;
         }
     }
+
+    protected readonly MhUtils = MhUtils;
 }
