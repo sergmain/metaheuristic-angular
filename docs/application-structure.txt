@@ -5,4 +5,5 @@ menu at left panel - src/app/modules/dispatcher/dispatcher-root/dispatcher-root.
 
 top-menu, which contains color theme - src/app/components/app-view/app-view.component.html
 
-languages can be activated in src/app/services/settings/Settings.ts setOfLanguages
+languages can be activated/deactivated in src/app/services/settings/Settings.ts
+    variable - setOfLanguages

@@ -19,9 +19,9 @@ export interface Settings {
 }
 
 export const setOfLanguages: Set < SettingsLanguage > = new Set([
-    SettingsLanguage.EN,
-    SettingsLanguage.RU,
+    SettingsLanguage.EN
 ]);
+//SettingsLanguage.RU,
 
 export const defaultSettings: Settings = {
     theme: SettingsTheme.Light,
