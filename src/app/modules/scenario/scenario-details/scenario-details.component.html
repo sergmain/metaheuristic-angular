@@ -116,7 +116,8 @@
                                 </mat-form-field>
                                 <mat-form-field appearance="outline" style="width: 100%;" *ngIf="!isApi">
                                     <mat-label>Input data, must be defined before</mat-label>
-                                    <input matInput autocomplete="off" formControlName="prompt"/>
+                                    <textarea formControlName="prompt" matInput cdkTextareaAutosize
+                                              cdkAutosizeMinRows="10" value="" autocomplete="off"></textarea>
                                 </mat-form-field>
                                 <mat-form-field appearance="outline" style="width: 100%;">
                                     <mat-label>Code of result, min 5 chars, required</mat-label>
@@ -170,11 +171,12 @@
         </button>
         Type: {{MhUtils.isNull(node.functionCode) ? 'API: '+ node.apiCode : 'Process: ' + node.functionCode}}, Name: {{node.name}}<br/> {{node.prompt}}<br/>Result code: [[{{node.resultCode}}]]
         <button mat-icon-button (click)="addNewStubItem(node)"><mat-icon>add</mat-icon></button>
+        <button mat-icon-button [disabled]="notToCreate()">
+            <mat-icon>edit_document</mat-icon>
+        </button>
         <button mat-icon-button (click)="delete(node)">
             <mat-icon>delete_forever</mat-icon>
         </button>
-
-
     </mat-tree-node>
 </mat-tree>
 

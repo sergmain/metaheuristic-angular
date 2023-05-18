@@ -12,7 +12,7 @@ import {MatDialog} from "@angular/material/dialog";
 @Component({
     selector: 'scenarios',
     templateUrl: './scenarios.component.html',
-    styleUrls: ['./scenarios.component.sass']
+    styleUrls: ['./scenarios.component.css']
 })
 export class ScenariosComponent extends UIStateComponent implements OnInit {
     dataSource: MatTableDataSource<SimpleScenario> = new MatTableDataSource<SimpleScenario>([]);
@@ -73,6 +73,17 @@ export class ScenariosComponent extends UIStateComponent implements OnInit {
         this.scenarioService
             .runScenario(scenario.scenarioGroupId.toString(), scenario.scenarioId.toString())
             .subscribe(v => this.updateTable(this.scenariosResult.scenarios.number));
+    }
+
+    @ConfirmationDialogMethod({
+        question: (ss: SimpleScenario): string =>
+            `Do you want to copy Scenario #${ss.scenarioId}, ${ss.name}`,
+
+        resolveTitle: 'Copy scenario',
+        rejectTitle: 'Cancel'
+    })
+    copyScenario(scenario: SimpleScenario) {
+
     }
 
     nextPage(): void {
