@@ -23,6 +23,12 @@ import {InternalFunction} from '@services/scenario/InternalFunction';
 import {ConfirmationDialogMethod} from '@app/components/app-dialog-confirmation/app-dialog-confirmation.component';
 import {MatDialog} from "@angular/material/dialog";
 
+export enum NodeMode {
+    new = 'new',
+    edit = 'edit',
+    show = 'show'
+}
+
 export class SimpleScenarioStepWithParent {
     constructor(node: SimpleScenarioStep, parent: SimpleScenarioStep) {
         this.node = node;
@@ -48,7 +54,8 @@ export class StepFlatNode {
         public resultCode: string,
 
         public isNew: boolean,
-        public functionCode: string
+        public functionCode: string,
+        public mode: NodeMode
     ) {}
 }
 
@@ -78,7 +85,10 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
     scenarioGroupId: string;
     scenarioId: string;
     needToExpandAll: boolean = true;
+
+    // for fast hiding input form
     showMyContainer: boolean = true;
+
     allUuids: string[] = [];
     isApi: boolean = true;
 
@@ -165,10 +175,12 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
         let nodeId = MhUtils.randomIntAsStr(1000, 999999);
         node.nodeId = nodeId;
         let stepFlatNode = new StepFlatNode(nodeId, numberOfSubSteps>0, level, node.uuid,
-            node.apiId, node.apiCode, node.name, node.prompt, node.r, node.resultCode, node.isNew,
-            node.functionCode);
+            node.apiId, node.apiCode, node.name, node.prompt, node.r, node.resultCode,
+            node.isNew, node.functionCode,
+            MhUtils.isNull(node.mode) ? NodeMode.show : node.mode
+        );
         this.allUuids.push(node.uuid);
-        //console.log("07.15 transformer(), stepFlatNode: ", stepFlatNode);
+        console.log("07.15 transformer(), stepFlatNode: ", stepFlatNode);
         return stepFlatNode;
     }
 
@@ -177,8 +189,9 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
     private _getChildren = (node: SimpleScenarioStep): Observable<SimpleScenarioStep[]> => observableOf(node.steps);
     hasChild = (_: number, _nodeData: StepFlatNode) => _nodeData.expandable;
     hasNoContent = (_: number, _nodeData: StepFlatNode) => {
-        //console.log("hasNoContent()", JSON.stringify(_nodeData));
-        return _nodeData.uuid === '';
+        console.log("hasNoContent()", JSON.stringify(_nodeData));
+        return ScenarioDetailsComponent.anyMode(_nodeData.mode, [NodeMode.new, NodeMode.edit])
+        // return _nodeData.uuid === '';
     };
 
     hasNewNodeAbsent = (_: number, _nodeData: StepFlatNode) => {
@@ -192,6 +205,44 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
         //console.log("hasNewNodePresent()", b, _nodeData.nodeId);
         return b;
     };
+
+
+    modeEditOrNewNode = (_: number, _nodeData: StepFlatNode) => {
+        //console.log("hasNoContent()", JSON.stringify(_nodeData));
+        return ScenarioDetailsComponent.anyMode(_nodeData.mode, [NodeMode.new, NodeMode.edit])
+        //return _nodeData.uuid === '';
+    };
+
+    modeEditNode = (node: StepFlatNode) => {
+        let b = ScenarioDetailsComponent.anyMode(node.mode, [NodeMode.edit]);
+        console.log("modeEditNode()", JSON.stringify(node), b);
+        return b
+    };
+
+    modeNewNode = (node: StepFlatNode) => {
+        let b = ScenarioDetailsComponent.anyMode(node.mode, [NodeMode.new]);
+        console.log("modeNewNode()", JSON.stringify(node), b);
+        return b
+    };
+
+    modeShowAllNode = (_: number, _nodeData: StepFlatNode) => {
+        let b = !this.nodeWithModePresent([NodeMode.new, NodeMode.edit]);
+        //console.log("hasNewNodeAbsent()", b, _nodeData.nodeId);
+        return b;
+    };
+
+    modeEditSomeNode = (_: number, _nodeData: StepFlatNode) => {
+        let b = this.nodeWithModePresent([NodeMode.edit]);
+        //console.log("hasNewNodeAbsent()", b, _nodeData.nodeId);
+        return b;
+    };
+
+    modeNewSomeNode = (_: number, _nodeData: StepFlatNode)=> {
+        let b = this.nodeWithModePresent([NodeMode.new]);
+        //console.log("hasNewNodePresent()", b, _nodeData.nodeId);
+        return b;
+    };
+
 
     // DRAG AND DROP METHODS
 
@@ -403,6 +454,15 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
         }
     }
 
+    startEditingNode(node: StepFlatNode) {
+        this.showMyContainer = true;
+        let detailNode = this.findInTree(node);
+        console.log("modeEditNode()", JSON.stringify(detailNode));
+        detailNode.node.isNew = true;
+        detailNode.node.mode = NodeMode.edit;
+        this.dataChange.next(this.dataTree);
+    }
+
     // Select the category so we can insert the new item.
     addNewStubItem(node: StepFlatNode) {
         this.showMyContainer = true;
@@ -513,13 +573,14 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
         if (MhUtils.isNull(parent.steps)) {
             parent.steps = []
         }
-        parent.steps.push({uuid: '', nodeId: MhUtils.randomIntAsStr(1000, 999999), isNew: true } as SimpleScenarioStep);
+        parent.steps.push({uuid: '', nodeId: MhUtils.randomIntAsStr(1000, 999999), isNew: true, mode: NodeMode.new } as SimpleScenarioStep);
         this.dataChange.next(this.dataTree);
     }
 
     updateNode(node: SimpleScenarioStep, filename: string) {
         node.name = filename;
         node.isNew = false;
+        node.mode = NodeMode.show;
 
         this.dataChange.next(this.dataTree);
     }
@@ -554,5 +615,59 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
         }
     }
 
+    nodeWithModePresent(modes: NodeMode[]): boolean {
+        if (MhUtils.isNull(this.dataTree)) {
+            return false;
+        }
+        for (const dataNode of this.dataTree) {
+            let b = this.findNodeWithModeInBranch(dataNode, modes)
+            if (b) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private findNodeWithModeInBranch(datum: SimpleScenarioStep, modes: NodeMode[]) : boolean {
+        // console.log("31.10", datum)
+        if (ScenarioDetailsComponent.anyMode(datum.mode, modes)) {
+            return true;
+        }
+        if (MhUtils.isNotNull(datum.steps)) {
+            for (const child of datum.steps) {
+                // console.log("40.02", child);
+                let b = this.findNodeWithModeInBranch(child, modes)
+                if (b) {
+                    return true;
+                }
+            }
+            return false;
+        }
+    }
+
+    public static anyMode(m: NodeMode, modes: NodeMode[]): boolean {
+        if (MhUtils.isNull(m)) {
+            return false;
+        }
+        for (const nodeMode of modes) {
+            if (nodeMode === m) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     protected readonly MhUtils = MhUtils;
+
+    setModeToShow(node) {
+        node.mode = NodeMode.show;
+        node.isNew = false;
+        console.log("40.20", node);
+        let detailNode = this.findInTree(node);
+        detailNode.node.mode = NodeMode.show;
+        detailNode.node.isNew = false;
+        this.formDirective.resetForm();
+        this.form.reset();
+        this.dataChange.next(this.dataTree);
+    }
 }

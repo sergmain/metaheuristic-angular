@@ -48,7 +48,7 @@
 
 
 <mat-tree [dataSource]="dataSource" [treeControl]="treeControl" cdkDropList (cdkDropListDropped)="drop($event)">
-    <mat-tree-node *matTreeNodeDef="let node; when: hasNoContent" matTreeNodePadding
+    <mat-tree-node *matTreeNodeDef="let node; when: modeEditOrNewNode" matTreeNodePadding
                    cdkDrag [cdkDragData]="node" (mouseenter)="dragHover(node)"
                    (mouseleave)="dragHoverEnd()" (cdkDragStarted)="dragStart()" (cdkDragReleased)="dragEnd()">
         <button mat-icon-button disabled></button>
@@ -134,8 +134,12 @@
                                             (click)="showMyContainer=false; saveNode(node)" [disabled]="notToCreate()">
                                         Create</button>
                                 </ct-flex-item>
-                                <ct-flex-item>
+                                <ct-flex-item *ngIf="modeNewNode(node)">
                                     <button mat-flat-button color="accent" size="forTableRow" (click)="deleteNewNode(node)">
+                                        Delete</button>
+                                </ct-flex-item>
+                                <ct-flex-item *ngIf="modeEditNode(node)">
+                                    <button mat-flat-button color="accent" size="forTableRow" (click)="setModeToShow(node)">
                                         Cancel</button>
                                 </ct-flex-item>
                             </ct-flex>
@@ -162,6 +166,7 @@
     <mat-tree-node *matTreeNodeDef="let node; when: hasNewNodeAbsent" matTreeNodeToggle matTreeNodePadding
                    cdkDrag [cdkDragData]="node" (mouseenter)="dragHover(node)" (mouseleave)="dragHoverEnd()"
                    (cdkDragStarted)="dragStart()" (cdkDragReleased)="dragEnd()">
+        <!--normal item -->
         <button mat-icon-button
                 matTreeNodeToggle (click)="expansionModel.toggle(node.uuid)"
                 [attr.aria-label]="'toggle ' + node.uuid">
@@ -171,7 +176,7 @@
         </button>
         Type: {{MhUtils.isNull(node.functionCode) ? 'API: '+ node.apiCode : 'Process: ' + node.functionCode}}, Name: {{node.name}}<br/> {{node.prompt}}<br/>Result code: [[{{node.resultCode}}]]
         <button mat-icon-button (click)="addNewStubItem(node)"><mat-icon>add</mat-icon></button>
-        <button mat-icon-button [disabled]="notToCreate()">
+        <button mat-icon-button (click)="startEditingNode(node)">
             <mat-icon>edit_document</mat-icon>
         </button>
         <button mat-icon-button (click)="delete(node)">

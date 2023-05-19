@@ -1,3 +1,5 @@
+import {NodeMode} from '@app/modules/scenario/scenario-details/scenario-details.component';
+
 export class SimpleScenarioStep {
     nodeId: string;
     scenarioId: number;
@@ -11,6 +13,7 @@ export class SimpleScenarioStep {
     resultCode: string;
     isNew: boolean;
     functionCode: string;
+    mode: NodeMode;
 
     steps: SimpleScenarioStep[];
 }

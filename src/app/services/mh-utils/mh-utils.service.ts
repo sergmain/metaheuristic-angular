@@ -1,6 +1,8 @@
 export class MhUtils {
     constructor() { }
 
+    static nop() {}
+
     static isNotNull(obj: any) {
         return !MhUtils.isNull(obj);
     }
