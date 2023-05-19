@@ -467,10 +467,6 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
             resultCode: new FormControl(detailNode.node.resultCode, [Validators.required, Validators.minLength(5)]),
         });
 
-        // this.form.value.name = detailNode.node.name;
-        // this.form.value.prompt = detailNode.node.prompt;
-        // this.form.value.resultCode = detailNode.node.resultCode;
-
         if (MhUtils.isNull(detailNode.node.functionCode)) {
             this.isApi = true;
             this.apiUid = new class implements ApiUid {
@@ -506,7 +502,7 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
 
     createFirstDetail(): void {
         console.log("27.10", this.apiUid)
-        this.saveStepInternal(undefined);
+        this.saveStepInternal(null, null);
     }
 
     // Save the node to database
@@ -520,10 +516,13 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
         console.log("10.20", node);
         let detailNode = this.findInTree(node);
         console.log("10.21", detailNode)
-        this.saveStepInternal(MhUtils.isNull(detailNode.parent) ? null : detailNode.parent.uuid);
+        this.saveStepInternal(
+            MhUtils.isNull(node.uuid) ? null : node.uuid,
+            MhUtils.isNull(detailNode.parent) ? null : detailNode.parent.uuid
+        );
     }
 
-    private saveStepInternal(parentUuid: string) {
+    private saveStepInternal(uuid:string, parentUuid: string) {
         this.button.disabled = true;
         this.currentStates.add(this.states.wait);
 
@@ -539,6 +538,7 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
             .addOrSaveScenarioStepFormCommit(
                 this.scenarioGroupId,
                 this.scenarioId,
+                uuid,
                 parentUuid,
                 name,
                 prompt,

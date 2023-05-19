@@ -81,6 +81,7 @@ export class ScenarioStepAddComponent extends UIStateComponent implements OnInit
                 this.scenarioGroupId,
                 this.scenarioId,
                 null,
+                null,
                 this.form.value.name,
                 this.form.value.prompt,
                 this.apiUid.id.toString(),
