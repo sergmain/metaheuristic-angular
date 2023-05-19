@@ -102,4 +102,13 @@ export class ScenarioService {
             generateFormData({ scenarioGroupId: scenarioGroupId, scenarioId: scenarioId }));
 
     }
+
+    updateScenarioInfoFormCommit(scenarioGroupId: string, scenarioId: string, name: string, description: string) {
+        return this.http.post<OperationStatusRest>(
+            url(`scenario-update-info-commit`),
+            generateFormData({
+                scenarioGroupId, scenarioId, name, description
+            })
+        );
+    }
 }

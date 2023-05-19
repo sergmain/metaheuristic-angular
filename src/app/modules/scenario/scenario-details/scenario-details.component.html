@@ -1,18 +1,48 @@
 <ct-section *ngIf="MhUtils.isNotNull(simpleScenarioSteps)">
-    <ct-section-body>
+    <ct-section-body style="width: 50%;">
         <ct-section-body-row>
-            <ct-flex justify-content="space-between">
+            <ct-flex justify-content="flex-start" gap="8px">
                 <ct-flex-item>
                     Scenario: {{simpleScenarioSteps.scenarioInfo.name}}<br/>
                     {{simpleScenarioSteps.scenarioInfo.description}}
+                </ct-flex-item>
+                <ct-flex-item *ngIf="!newNodePresent() && !isFormActive">
                     <button mat-icon-button (click)="startEditingScenarioInfo()" matTooltip="Edit scenario info">
                         <mat-icon>edit_document</mat-icon>
                     </button>
                 </ct-flex-item>
             </ct-flex>
-
+        </ct-section-body-row>
+        <ct-section-body-row *ngIf="isFormActive">
+            <form [formGroup]="scenarioForm" novalidate="novalidate">
+                <mat-form-field appearance="outline" style="width: 100%;">
+                    <mat-label>Name of Scenario, min 5 chars, required</mat-label>
+                    <input matInput type="text" autocomplete="off" formControlName="name" />
+                </mat-form-field>
+                <mat-form-field appearance="outline" style="width: 100%;">
+                    <mat-label>Description of Scenario, min 5 chars, required</mat-label>
+                    <textarea formControlName="description" matInput="matInput" cdkTextareaAutosize="cdkTextareaAutosize"
+                              cdkAutosizeMinRows="5" value="" autocomplete="off"></textarea>
+                </mat-form-field>
+            </form>
         </ct-section-body-row>
     </ct-section-body>
+    <ct-section-footer *ngIf="isFormActive" style="width: 50%;">
+        <ct-section-footer-row>
+            <ct-flex justify-content="flex-end" gap="8px">
+                <ct-flex-item>
+                    <button mat-flat-button color="primary" size="forTableRow"
+                            (click)="isFormActive=false; updateScenarioInfo()" [disabled]="notToUpdateScenarioInfo()">
+                        Save</button>
+                </ct-flex-item>
+                <ct-flex-item>
+                    <button mat-flat-button color="accent" size="forTableRow" (click)="cancelUpdatingScenarioInfo()">
+                        Cancel</button>
+                </ct-flex-item>
+            </ct-flex>
+        </ct-section-footer-row>
+    </ct-section-footer>
+
 </ct-section>
 
 <ct-cols align-items="baseline" *ngIf="dataSourceEmpty()" style="width: 100%;">
@@ -71,7 +101,7 @@
         <button mat-icon-button disabled></button>
 
         <ct-cols style="width: 100%;" *ngIf="showMyContainer">
-            <ct-col style="width: 80%;">
+            <ct-col style="width: 50%;">
                 <ct-section>
                     <ct-section-header>
                         <ct-section-header-row>

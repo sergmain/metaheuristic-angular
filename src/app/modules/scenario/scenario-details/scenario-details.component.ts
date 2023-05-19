@@ -88,6 +88,7 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
 
     // for fast hiding input form
     showMyContainer: boolean = true;
+    isFormActive: boolean = false;
 
     allUuids: string[] = [];
     isApi: boolean = true;
@@ -102,6 +103,11 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
         name: new FormControl('', [Validators.required, Validators.minLength(5)]),
         prompt: new FormControl('', [Validators.required, Validators.minLength(5)]),
         resultCode: new FormControl('', [Validators.required, Validators.minLength(5)]),
+    });
+
+    scenarioForm = new FormGroup({
+        name: new FormControl('', [Validators.required, Validators.minLength(5)]),
+        description: new FormControl('', [Validators.required, Validators.minLength(5)]),
     });
 
     @ViewChild('formDirective') formDirective : FormGroupDirective;
@@ -195,13 +201,14 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
     };
 
     hasNewNodeAbsent = (_: number, _nodeData: StepFlatNode) => {
-        let b = !this.newNodePresent();
+        // let b = !this.newNodePresent() && !this.isFormActive;
+        let b = !this.hasNewNodePresent(_, _nodeData);
         //console.log("hasNewNodeAbsent()", b, _nodeData.nodeId);
         return b;
     };
 
-    hasNewNodePresent = (_: number, _nodeData: StepFlatNode)=> {
-        let b = this.newNodePresent();
+    hasNewNodePresent = (_: number, _nodeData: StepFlatNode) => {
+        let b = this.newNodePresent() || this.isFormActive;
         //console.log("hasNewNodePresent()", b, _nodeData.nodeId);
         return b;
     };
@@ -454,8 +461,47 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
         }
     }
 
-    startEditingScenarioInfo() {
+    updateScenarioInfo() {
+        this.currentStates.add(this.states.wait);
 
+        this.isFormActive = false;
+
+        const subscribe: Subscription = this.scenarioService
+            .updateScenarioInfoFormCommit(
+                this.scenarioGroupId,
+                this.scenarioId,
+                this.scenarioForm.value.name,
+                this.scenarioForm.value.description
+            )
+            .subscribe(
+                (response) => {
+                    this.updateTree();
+                },
+                () => {
+                },
+                () => {
+                    this.currentStates.delete(this.states.wait);
+                    subscribe.unsubscribe();
+                }
+            );
+    }
+
+    notToUpdateScenarioInfo() : boolean  {
+        return this.scenarioForm.invalid;
+    }
+
+    cancelUpdatingScenarioInfo() {
+        this.isFormActive = false;
+        this.dataChange.next(this.dataTree);
+    }
+
+    startEditingScenarioInfo() {
+        this.scenarioForm = new FormGroup({
+            name: new FormControl(this.simpleScenarioSteps.scenarioInfo.name, [Validators.required, Validators.minLength(5)]),
+            description: new FormControl(this.simpleScenarioSteps.scenarioInfo.description, [Validators.required, Validators.minLength(5)]),
+        });
+        this.isFormActive = true;
+        this.dataChange.next(this.dataTree);
     }
 
     startEditingNode(node: StepFlatNode) {
