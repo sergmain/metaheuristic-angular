@@ -3,13 +3,11 @@ import {Injectable} from '@angular/core';
 import {environment} from '@src/environments/environment';
 import {Observable} from 'rxjs';
 import {SimpleScenarioGroupsResult} from './SimpleScenarioGroupsResult';
-import {OperationStatusRest} from "@app/models/OperationStatusRest";
-import {generateFormData} from "@app/helpers/generateFormData";
-import {ScenariosResult} from "@services/scenario/ScenariosResult";
-import {ScenarioUidsForAccount} from "@services/scenario/ScenarioUidsForAccount";
-import {SimpleScenarioSteps} from "@services/scenario/SimpleScenarioSteps";
-import {MhUtils} from '@services/mh-utils/mh-utils.service';
-
+import {OperationStatusRest} from '@app/models/OperationStatusRest';
+import {generateFormData} from '@app/helpers/generateFormData';
+import {ScenariosResult} from '@services/scenario/ScenariosResult';
+import {ScenarioUidsForAccount} from '@services/scenario/ScenarioUidsForAccount';
+import {SimpleScenarioSteps} from '@services/scenario/SimpleScenarioSteps';
 
 const url = (s: string): string => `${environment.baseUrl}dispatcher/scenario/${s}`;
 
@@ -36,7 +34,6 @@ export class ScenarioService {
 
     scenarios = (page: string, scenarioGroupId: string): Observable<ScenariosResult> =>
         this.http.get<ScenariosResult>(url(`scenarios/${scenarioGroupId}`), { params: { page } })
-
 
     addScenarioGroupFormCommit(name: string, description: string): Observable<OperationStatusRest> {
         return this.http.post<OperationStatusRest>(
@@ -97,5 +94,12 @@ export class ScenarioService {
         console.log("scenarioStepRearrangeTable #"+ scenarioId+", prev: " + prevUuid+", curr: " + currUuid);
         return this.http.post<OperationStatusRest>(url(`scenario-step-rearrange`),
             generateFormData({ scenarioId: scenarioId, prev: prevUuid, curr: currUuid }));
+    }
+
+    copyScenario(scenarioGroupId: string, scenarioId: string): Observable<OperationStatusRest> {
+        console.log("Run Scenario #"+ scenarioId);
+        return this.http.post<OperationStatusRest>(url(`scenario-copy`),
+            generateFormData({ scenarioGroupId: scenarioGroupId, scenarioId: scenarioId }));
+
     }
 }

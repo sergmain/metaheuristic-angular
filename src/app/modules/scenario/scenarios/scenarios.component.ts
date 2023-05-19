@@ -83,7 +83,9 @@ export class ScenariosComponent extends UIStateComponent implements OnInit {
         rejectTitle: 'Cancel'
     })
     copyScenario(scenario: SimpleScenario) {
-
+        this.scenarioService
+            .copyScenario(scenario.scenarioGroupId.toString(), scenario.scenarioId.toString())
+            .subscribe(v => this.updateTable(this.scenariosResult.scenarios.number));
     }
 
     nextPage(): void {
