@@ -454,6 +454,10 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
         }
     }
 
+    startEditingScenarioInfo() {
+
+    }
+
     startEditingNode(node: StepFlatNode) {
         this.showMyContainer = true;
         let detailNode = this.findInTree(node);
@@ -699,4 +703,5 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
         this.form.reset();
         this.dataChange.next(this.dataTree);
     }
+
 }
