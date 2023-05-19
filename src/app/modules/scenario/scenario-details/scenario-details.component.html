@@ -159,7 +159,7 @@
                    (cdkDragStarted)="dragStart()" (cdkDragReleased)="dragEnd()">
         <button mat-icon-button
                 matTreeNodeToggle (click)="expansionModel.toggle(node.uuid)"
-                [attr.aria-label]="'toggle ' + node.uuid">
+                [attr.aria-label]="'toggle ' + node.uuid"  matTooltip="Expand node">
             <mat-icon class="mat-icon-rtl-mirror">
                 {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
             </mat-icon>
@@ -179,11 +179,12 @@
             </mat-icon>
         </button>
         Type: {{MhUtils.isNull(node.functionCode) ? 'API: '+ node.apiCode : 'Process: ' + node.functionCode}}, Name: {{node.name}}<br/> {{node.prompt}}<br/>Result code: [[{{node.resultCode}}]]
-        <button mat-icon-button (click)="addNewStubItem(node)"><mat-icon>add</mat-icon></button>
-        <button mat-icon-button (click)="startEditingNode(node)">
+        <button mat-icon-button (click)="addNewStubItem(node)" matTooltip="Add new step">
+            <mat-icon>add</mat-icon></button>
+        <button mat-icon-button (click)="startEditingNode(node)" matTooltip="Edit step">
             <mat-icon>edit_document</mat-icon>
         </button>
-        <button mat-icon-button (click)="delete(node)">
+       <button mat-icon-button (click)="delete(node)" matTooltip="Delete step">
             <mat-icon>delete_forever</mat-icon>
         </button>
     </mat-tree-node>

@@ -8,8 +8,9 @@
             </ct-flex>
             <ct-flex justify-content="flex-end">
                 <ct-flex-item>
-                    <button mat-flat-button="mat-flat-button" color="primary"
-                            [routerLink]="['../..', scenarioGroupId, 'scenario-add']">Add Scenario</button>
+<!--                    <button mat-flat-button="mat-flat-button" color="primary"-->
+                    <button mat-icon-button color="primary"
+                            [routerLink]="['../..', scenarioGroupId, 'scenario-add']"><mat-icon>note_add</mat-icon></button>
                 </ct-flex-item>
             </ct-flex>
         </ct-section-header-row>
@@ -40,23 +41,17 @@
                         <td mat-cell *matCellDef="let el">
                             <ct-flex justify-content="flex-end" gap="8px">
                                 <ct-flex-item>
-                                    <button mat-flat-button color="accent" size="forTableRow" (click)="runScenario(el)">
+                                    <button mat-icon-button color="accent" size="forTableRow" (click)="runScenario(el)" matTooltip="Execute scenario">
                                         <mat-icon>play_arrow</mat-icon>
                                     </button>
-                                </ct-flex-item>
-                                <ct-flex-item>
-                                    <button mat-flat-button color="primary"
-                                            [routerLink]="['../..', scenarioGroupId, 'scenario', el.scenarioId, 'details']">
+                                    <button mat-icon-button color="primary"
+                                            [routerLink]="['../..', scenarioGroupId, 'scenario', el.scenarioId, 'details']" matTooltip="Edit scenario">
                                         <mat-icon>edit_document</mat-icon>
                                     </button>
-                                </ct-flex-item>
-                                <ct-flex-item>
-                                    <button mat-flat-button color="primary" (click)="copyScenario(el)">
+                                    <button mat-icon-button color="primary" (click)="copyScenario(el)" matTooltip="Copy scenario">
                                         <mat-icon>content_copy</mat-icon>
                                     </button>
-                                </ct-flex-item>
-                                <ct-flex-item>
-                                    <button mat-flat-button color="warn" size="forTableRow" (click)="delete(el)">
+                                    <button mat-icon-button color="warn" size="forTableRow" (click)="delete(el)" matTooltip="Delete scenario">
                                         <mat-icon>delete_forever</mat-icon>
                                     </button>
                                 </ct-flex-item>
