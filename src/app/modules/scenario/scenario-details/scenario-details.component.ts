@@ -215,13 +215,13 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
 
     modeEditNode = (node: StepFlatNode) => {
         let b = ScenarioDetailsComponent.anyMode(node.mode, [NodeMode.edit]);
-        console.log("modeEditNode()", JSON.stringify(node), b);
+        //console.log("modeEditNode()", JSON.stringify(node), b);
         return b
     };
 
     modeNewNode = (node: StepFlatNode) => {
         let b = ScenarioDetailsComponent.anyMode(node.mode, [NodeMode.new]);
-        console.log("modeNewNode()", JSON.stringify(node), b);
+        //console.log("modeNewNode()", JSON.stringify(node), b);
         return b
     };
 
@@ -457,9 +457,38 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
     startEditingNode(node: StepFlatNode) {
         this.showMyContainer = true;
         let detailNode = this.findInTree(node);
-        console.log("modeEditNode()", JSON.stringify(detailNode));
+        console.log("50.10", JSON.stringify(detailNode));
         detailNode.node.isNew = true;
         detailNode.node.mode = NodeMode.edit;
+
+        this.form = new FormGroup({
+            name: new FormControl(detailNode.node.name, [Validators.required, Validators.minLength(5)]),
+            prompt: new FormControl(detailNode.node.prompt, [Validators.required, Validators.minLength(5)]),
+            resultCode: new FormControl(detailNode.node.resultCode, [Validators.required, Validators.minLength(5)]),
+        });
+
+        // this.form.value.name = detailNode.node.name;
+        // this.form.value.prompt = detailNode.node.prompt;
+        // this.form.value.resultCode = detailNode.node.resultCode;
+
+        if (MhUtils.isNull(detailNode.node.functionCode)) {
+            this.isApi = true;
+            this.apiUid = new class implements ApiUid {
+                id: number = detailNode.node.apiId;
+                uid: string = detailNode.node.apiCode;
+            }
+            this.processingFunction = null;
+        }
+        else {
+            this.isApi = false;
+            this.apiUid = null;
+            this.processingFunction = new class implements InternalFunction {
+                code: string = detailNode.node.functionCode;
+                translate: string = detailNode.node.functionCode;
+            };
+        }
+        console.log("50.20", this.isApi, this.apiUid, this.processingFunction);
+
         this.dataChange.next(this.dataTree);
     }
 
@@ -507,7 +536,7 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
         this.form.reset();
 
         const subscribe: Subscription = this.scenarioService
-            .addScenarioStepFormCommit(
+            .addOrSaveScenarioStepFormCommit(
                 this.scenarioGroupId,
                 this.scenarioId,
                 parentUuid,

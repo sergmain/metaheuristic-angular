@@ -61,7 +61,8 @@
                             <ct-section-header-row>
                                 <ct-flex justify-content="space-between"  gap="9px">
                                     <ct-flex-item>
-                                        <ct-heading>New step</ct-heading>
+                                        <ct-heading *ngIf="modeNewNode(node)">New step</ct-heading>
+                                        <ct-heading *ngIf="modeEditNode(node)">Edit step</ct-heading>
                                     </ct-flex-item>
                                     <ct-flex-item>
                                         <ct-flex justify-content="flex-end" gap="8px">
@@ -86,18 +87,14 @@
                             <mat-form-field appearance="outline" *ngIf="!isApi" style="width: 50%;">
                                 <mat-label>Type of processing</mat-label>
                                 <mat-select [(ngModel)]="processingFunction">
-                                    <div *ngFor="let f of listOfFunctions">
-                                        <mat-option [value]="f">{{ 'scenario-function-'+f.code | translate }}</mat-option>
-                                    </div>
+                                    <mat-option  *ngFor="let f of listOfFunctions" [value]="f">{{ 'scenario-function-'+f.code | translate }}</mat-option>
                                 </mat-select>
                                 <mat-hint>{{ 'main.This is a required field' | translate }}</mat-hint>
                             </mat-form-field>
                             <mat-form-field appearance="outline" *ngIf="isApi" style="width: 50%;">
                                 <mat-label> {{ 'evaluation-add.List of APIs' | translate }}</mat-label>
                                 <mat-select [(ngModel)]="apiUid">
-                                    <div *ngFor="let api of listOfApis">
-                                        <mat-option [value]="api">{{api.uid}}</mat-option>
-                                    </div>
+                                    <mat-option  *ngFor="let api of listOfApis" [value]="api">{{api.uid}}</mat-option>
                                 </mat-select>
                                 <mat-hint>{{ 'main.This is a required field' | translate }}</mat-hint>
                             </mat-form-field>
@@ -107,7 +104,7 @@
                                 <mat-form-field appearance="outline" style="width: 100%;">
                                     <mat-label *ngIf="isApi">Prompt name, min 5 chars, required</mat-label>
                                     <mat-label *ngIf="!isApi">Name of process, min 5 chars, required</mat-label>
-                                    <input matInput type="text" autocomplete="off" formControlName="name" />
+                                    <input matInput type="text" autocomplete="off" formControlName="name"/>
                                 </mat-form-field>
                                 <mat-form-field appearance="outline" style="width: 100%;" *ngIf="isApi">
                                     <mat-label>Prompt, min 5 chars, required</mat-label>
@@ -128,17 +125,24 @@
                     </ct-section-body>
                     <ct-section-footer>
                         <ct-section-footer-row>
-                            <ct-flex justify-content="flex-end" gap="8px">
+                            <ct-flex justify-content="flex-end" gap="8px" *ngIf="modeNewNode(node)">
                                 <ct-flex-item>
                                     <button mat-flat-button color="primary" size="forTableRow"
                                             (click)="showMyContainer=false; saveNode(node)" [disabled]="notToCreate()">
                                         Create</button>
                                 </ct-flex-item>
-                                <ct-flex-item *ngIf="modeNewNode(node)">
+                                <ct-flex-item>
                                     <button mat-flat-button color="accent" size="forTableRow" (click)="deleteNewNode(node)">
                                         Delete</button>
                                 </ct-flex-item>
-                                <ct-flex-item *ngIf="modeEditNode(node)">
+                            </ct-flex>
+                            <ct-flex justify-content="flex-end" gap="8px" *ngIf="modeEditNode(node)">
+                                <ct-flex-item>
+                                    <button mat-flat-button color="primary" size="forTableRow"
+                                            (click)="showMyContainer=false; saveNode(node)" [disabled]="notToCreate()">
+                                        Save</button>
+                                </ct-flex-item>
+                                <ct-flex-item>
                                     <button mat-flat-button color="accent" size="forTableRow" (click)="setModeToShow(node)">
                                         Cancel</button>
                                 </ct-flex-item>

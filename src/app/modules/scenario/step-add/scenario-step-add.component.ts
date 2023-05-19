@@ -77,7 +77,7 @@ export class ScenarioStepAddComponent extends UIStateComponent implements OnInit
         this.button.disabled = true;
         this.currentStates.add(this.states.wait);
         const subscribe: Subscription = this.scenarioService
-            .addScenarioStepFormCommit(
+            .addOrSaveScenarioStepFormCommit(
                 this.scenarioGroupId,
                 this.scenarioId,
                 null,
