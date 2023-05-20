@@ -1,19 +1,32 @@
-<div *ngIf="response">
-    <table class="info-table">
-        <tr>
-            <td>UID: </td>
-            <td>{{response.sourceCodeUid}}</td>
-        </tr>
-        <tr>
-            <td>Is valid:</td>
-            <td>{{response.sourceCodeValid}}</td>
-        </tr>
-        <tr>
-            <td>Type: </td>
-            <td>{{response.sourceCodeType}}</td>
-        </tr>
-    </table>
-    <br>
+<ct-section *ngIf="response">
+    <ct-section-body>
+        <ct-section-body-row style="width: 100%;">
+            <ct-flex justify-content="space-between">
+                <ct-flex-item>
+                    <table>
+                        <tr>
+                            <td>UID: </td>
+                            <td>{{response.sourceCodeUid}}</td>
+                        </tr>
+                        <tr>
+                            <td>Is valid:</td>
+                            <td>{{response.sourceCodeValid}}</td>
+                        </tr>
+                        <tr>
+                            <td>Type: </td>
+                            <td>{{response.sourceCodeType}}</td>
+                        </tr>
+                    </table>
+                </ct-flex-item>
+                <ct-flex-item justify-content="flex-end">
+                    <button mat-icon-button (click)="reload()" matTooltip="Reload">
+                        <mat-icon>sync</mat-icon>
+                    </button>
+                </ct-flex-item>
+            </ct-flex>
+        </ct-section-body-row>
+    </ct-section-body>
+
     <table class="state-table">
         <thead>
             <tr>
@@ -37,7 +50,7 @@
             </tr>
         </tbody>
     </table>
-</div>
+</ct-section>
 
 
 <ng-template #stateOkTemplate let-cell="cell">

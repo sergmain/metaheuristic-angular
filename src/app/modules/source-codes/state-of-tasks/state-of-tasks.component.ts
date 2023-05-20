@@ -5,6 +5,7 @@ import { ExecContextService } from '@src/app/services/exec-context/exec-context.
 import { TaskExecInfo } from '@src/app/services/exec-context/TaskExecInfo';
 import { ExecContextStateResult } from '@src/app/services/source-codes/ExecContextStateResult';
 import * as fileSaver from 'file-saver';
+import {MhUtils} from '@services/mh-utils/mh-utils.service';
 
 
 @Component({
@@ -27,6 +28,10 @@ export class StateOfTasksComponent implements OnInit {
     ) { }
 
     ngOnInit(): void {
+        this.reload();
+    }
+
+    reload() {
         if (this.sourceCodeId && this.execContextId) {
             this.execContextService
                 .execContextsState(this.sourceCodeId, this.execContextId)
@@ -67,4 +72,6 @@ export class StateOfTasksComponent implements OnInit {
                 fileSaver.saveAs(response.body, name);
             });
     }
+
+    protected readonly MhUtils = MhUtils;
 }
