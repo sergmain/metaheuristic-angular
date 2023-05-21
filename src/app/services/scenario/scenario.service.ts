@@ -44,11 +44,11 @@ export class ScenarioService {
         );
     }
 
-    addScenarioFormCommit(scenarioGroupId: string, name: string, description: string, apiId: string): Observable<OperationStatusRest> {
+    addScenarioFormCommit(scenarioGroupId: string, name: string, description: string): Observable<OperationStatusRest> {
         return this.http.post<OperationStatusRest>(
             url(`scenario-add-commit`),
             generateFormData({
-                scenarioGroupId, name, description, apiId
+                scenarioGroupId, name, description
             })
         );
     }

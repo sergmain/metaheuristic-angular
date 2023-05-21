@@ -1,4 +1,4 @@
-<ct-cols *ngIf="response">
+<ct-cols>
     <ct-col size="6">
         <ct-section>
             <ct-section-header>
@@ -23,17 +23,6 @@
                         </mat-form-field>
                     </form>
                 </ct-section-body-row>
-                <ct-section-body-row>
-                    <mat-form-field appearance="outline">
-                        <mat-label> {{ 'evaluation-add.List of APIs' | translate }}</mat-label>
-                        <mat-select [(ngModel)]="apiUid">
-                            <div *ngFor="let api of listOfApis">
-                                <mat-option [value]="api">{{api.uid}}</mat-option>
-                            </div>
-                        </mat-select>
-                        <mat-hint>{{ 'main.This is a required field' | translate }}</mat-hint>
-                    </mat-form-field>
-                </ct-section-body-row>
             </ct-section-body>
 
             <ct-section-footer>
@@ -52,8 +41,5 @@
                 </ct-section-footer-row>
             </ct-section-footer>
         </ct-section>
-    </ct-col>
-    <ct-col size="6">
-        <ct-rest-status [content]="uploadResponse"></ct-rest-status>
     </ct-col>
 </ct-cols>

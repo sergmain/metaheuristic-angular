@@ -1,18 +1,18 @@
 <ct-section *ngIf="simpleAuthsResult">
     <ct-section-header>
         <ct-section-header-row>
-            <ct-flex justify-content="space-between">
+            <ct-flex>
                 <ct-flex-item>
                     <ct-heading>Authentications</ct-heading>
                 </ct-flex-item>
             </ct-flex>
-            <ct-flex-item>
-                <mat-slide-toggle [(ngModel)]="expandParams">
-                    Expand params
-                </mat-slide-toggle>
-            </ct-flex-item>
-            <ct-flex justify-content="flex-end">
+            <ct-flex justify-content="space-between">
                 <ct-flex-item>
+                    <mat-slide-toggle [(ngModel)]="expandParams">
+                        Expand params
+                    </mat-slide-toggle>
+                </ct-flex-item>
+                <ct-flex-item justify-content="flex-end">
                     <button mat-flat-button="mat-flat-button" color="primary" routerLink="add">Add Auth params</button>
                 </ct-flex-item>
             </ct-flex>

@@ -6,14 +6,14 @@
                     <ct-heading>Knowledge Bases</ct-heading>
                 </ct-flex-item>
             </ct-flex>
-            <ct-flex-item>
-                <mat-slide-toggle [(ngModel)]="expandParams">
-                    Expand params
-                </mat-slide-toggle>
-            </ct-flex-item>
-            <ct-flex justify-content="flex-end">
+            <ct-flex justify-content="space-between">
                 <ct-flex-item>
-                    <button mat-flat-button="mat-flat-button" color="primary" routerLink="add">Add KB</button>
+                    <mat-slide-toggle [(ngModel)]="expandParams">
+                        Expand params
+                    </mat-slide-toggle>
+                </ct-flex-item>
+                <ct-flex-item justify-content="flex-end">
+                    <button mat-flat-button color="primary" routerLink="add">Add KB</button>
                 </ct-flex-item>
             </ct-flex>
         </ct-section-header-row>
@@ -26,15 +26,13 @@
     <ct-section-footer>
         <ct-section-footer-row>
             <ct-flex justify-content="space-between">
-                <ct-flex-item>
-                    <ct-flex justify-content="flex-start" gap="8px">
-                        <ct-table-pagination
-                                [pageableDefault]="simpleKbsResult.kbs"
-                                [globalDisable]="isLoading"
-                                (next)="nextPage()"
-                                (prev)="prevPage()">
-                        </ct-table-pagination>
-                    </ct-flex>
+                <ct-flex-item justify-content="flex-start" gap="8px">
+                    <ct-table-pagination
+                            [pageableDefault]="simpleKbsResult.kbs"
+                            [globalDisable]="isLoading"
+                            (next)="nextPage()"
+                            (prev)="prevPage()">
+                    </ct-table-pagination>
                 </ct-flex-item>
             </ct-flex>
         </ct-section-footer-row>

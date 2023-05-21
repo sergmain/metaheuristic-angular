@@ -2,17 +2,14 @@ import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {LoadStates} from '@app/enums/LoadStates';
 import {TranslateService} from '@ngx-translate/core';
-import {OperationStatusRest} from '@src/app/models/OperationStatusRest';
 import {UIStateComponent} from '@src/app/models/UIStateComponent';
 import {AuthenticationService} from '@src/app/services/authentication';
 import {SettingsService, SettingsServiceEventChange} from '@src/app/services/settings/settings.service';
-import {ApiUid} from "@services/evaluation/ApiUid";
-import {OperationStatus} from "@app/enums/OperationStatus";
-import {Subscription} from "rxjs";
-import {MatButton} from "@angular/material/button";
-import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {ScenarioService} from "@services/scenario/scenario.service";
-import {ScenarioUidsForAccount} from "@services/scenario/ScenarioUidsForAccount";
+import {OperationStatus} from '@app/enums/OperationStatus';
+import {Subscription} from 'rxjs';
+import {MatButton} from '@angular/material/button';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {ScenarioService} from '@services/scenario/scenario.service';
 
 @Component({
     selector: 'scenario-add',
@@ -24,12 +21,8 @@ export class ScenarioAddComponent extends UIStateComponent implements OnInit, On
     readonly states = LoadStates;
 
     currentStates: Set<LoadStates> = new Set();
-    response: ScenarioUidsForAccount;
-    uploadResponse: OperationStatusRest;
     scenarioGroupId: string;
 
-    apiUid: ApiUid;
-    listOfApis: ApiUid[] = [];
     form = new FormGroup({
         name: new FormControl('', [Validators.required, Validators.minLength(5)]),
         description: new FormControl('', [Validators.required, Validators.minLength(5)]),
@@ -64,13 +57,6 @@ export class ScenarioAddComponent extends UIStateComponent implements OnInit, On
     }
 
     updateResponse(): void {
-        this.scenarioService
-            .scenarioAdd()
-            .subscribe((response) => {
-                this.response = response;
-                this.listOfApis = this.response.apis;
-                this.isLoading = false;
-            });
     }
 
     create(): void {
@@ -80,8 +66,7 @@ export class ScenarioAddComponent extends UIStateComponent implements OnInit, On
             .addScenarioFormCommit(
                 this.scenarioGroupId,
                 this.form.value.name,
-                this.form.value.description,
-                this.apiUid.id.toString()
+                this.form.value.description
             )
             .subscribe(
                 (response) => {
@@ -102,6 +87,6 @@ export class ScenarioAddComponent extends UIStateComponent implements OnInit, On
     }
 
     notToCreate() {
-        return this.apiUid==null || this.form.invalid;
+        return this.form.invalid;
     }
 }
