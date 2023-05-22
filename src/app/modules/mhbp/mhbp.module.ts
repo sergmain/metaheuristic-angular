@@ -35,7 +35,7 @@ export const MhbpRoutes: Routes = [
         component: MhbpRootComponent,
         loadChildren: () => import('@app/modules/scenario/scenario.module').then(m => m.ScenarioModule),
         data: {
-            requiredRoles: [Role.MainAdmin, Role.MainOperator, Role.MainSupport, Role.Manager],
+            requiredRoles: [Role.Admin, Role.Manager],
             section: 'scenario-groups'
         }
     },
@@ -45,7 +45,7 @@ export const MhbpRoutes: Routes = [
         component: MhbpRootComponent,
         loadChildren: () => import('@app/modules/session/session.module').then(m => m.SessionModule),
         data: {
-            requiredRoles: [Role.MainAdmin, Role.MainOperator, Role.MainSupport, Role.Manager],
+            requiredRoles: [Role.Admin, Role.Manager],
             section: 'sessions'
         }
     },
@@ -55,7 +55,7 @@ export const MhbpRoutes: Routes = [
         component: MhbpRootComponent,
         loadChildren: () => import('@app/modules/evaluation/evaluation.module').then(m => m.EvaluationModule),
         data: {
-            requiredRoles: [Role.MainAdmin, Role.MainOperator, Role.MainSupport, Role.Manager],
+            requiredRoles: [Role.Admin, Role.Manager],
             section: 'evaluations'
         }
     },
@@ -65,7 +65,7 @@ export const MhbpRoutes: Routes = [
         component: MhbpRootComponent,
         loadChildren: () => import('src/app/modules/kb/kb.module').then(m => m.KbModule),
         data: {
-            requiredRoles: [Role.MainAdmin, Role.MainOperator, Role.MainSupport, Role.Manager],
+            requiredRoles: [Role.Admin, Role.Manager],
             section: 'kbs'
         }
     },
@@ -75,7 +75,7 @@ export const MhbpRoutes: Routes = [
         component: MhbpRootComponent,
         loadChildren: () => import('src/app/modules/auth/auth.module').then(m => m.AuthModule),
         data: {
-            requiredRoles: [Role.MainAdmin, Role.MainOperator, Role.MainSupport, Role.Manager],
+            requiredRoles: [Role.Admin, Role.Manager],
             section: 'auths'
         }
     },
@@ -85,11 +85,10 @@ export const MhbpRoutes: Routes = [
         component: MhbpRootComponent,
         loadChildren: () => import('src/app/modules/api/api.module').then(m => m.ApiModule),
         data: {
-            requiredRoles: [Role.MainAdmin, Role.MainOperator, Role.MainSupport, Role.Manager],
+            requiredRoles: [Role.Admin, Role.Manager],
             section: 'apis'
         }
     }
-
 ];
 
 
