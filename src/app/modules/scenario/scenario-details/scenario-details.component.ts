@@ -103,6 +103,7 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
         name: new FormControl('', [Validators.required, Validators.minLength(5)]),
         prompt: new FormControl('', [Validators.required, Validators.minLength(5)]),
         resultCode: new FormControl('', [Validators.required, Validators.minLength(5)]),
+        expected: new FormControl(''),
     });
 
     scenarioForm = new FormGroup({
@@ -155,7 +156,13 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
     @ViewChild(MatButton) button: MatButton;
 
     notToCreate() {
-        return (MhUtils.isNull(this.apiUid) && MhUtils.isNull(this.processingFunction)) || this.form.invalid;
+        let b1 = MhUtils.isNull(this.apiUid) && MhUtils.isNull(this.processingFunction);
+        let b2 = this.form.invalid;
+        let b3 = !this.isApi && MhUtils.isNotNull(this.processingFunction) && this.processingFunction.code === 'mh.acceptance-test' && MhUtils.len(this.form.value.expected)===0;
+        console.log("notToCreate() ", b1, b2, b3);
+        return b1
+            || b2
+            || b3;
     }
 
     // load assets for creating a new step of scenario
@@ -213,6 +220,11 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
         return b;
     };
 
+    isAcceptanceTestFunc() {
+        let b= !this.isApi && MhUtils.isNotNull(this.processingFunction) && this.processingFunction.code==='mh.acceptance-test';
+        console.log("isAcceptanceTestFunc()", b, this.processingFunction);
+        return b;
+    }
 
     modeEditOrNewNode = (_: number, _nodeData: StepFlatNode) => {
         //console.log("hasNoContent()", JSON.stringify(_nodeData));
@@ -515,6 +527,7 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
             name: new FormControl(detailNode.node.name, [Validators.required, Validators.minLength(5)]),
             prompt: new FormControl(detailNode.node.prompt, [Validators.required, Validators.minLength(5)]),
             resultCode: new FormControl(detailNode.node.resultCode, [Validators.required, Validators.minLength(5)]),
+            expected: new FormControl(''),
         });
 
         if (MhUtils.isNull(detailNode.node.functionCode)) {
@@ -547,7 +560,6 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
         console.log("10.11", detailNode)
         this.addNewNode(detailNode.node);
         this.dataChange.next(this.dataTree);
-        //this.refreshTree();
     }
 
     createFirstDetail(): void {
@@ -580,6 +592,7 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
         let prompt = this.form.value.prompt;
         let resultCode = this.form.value.resultCode;
         let functionCode = MhUtils.isNull(this.processingFunction) ? null : this.processingFunction.code;
+        let expected = this.form.value.expected;
 
         this.formDirective.resetForm();
         this.form.reset();
@@ -594,7 +607,8 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
                 prompt,
                 MhUtils.isNull(this.apiUid) ? null : this.apiUid.id.toString(),
                 resultCode,
-                functionCode
+                functionCode,
+                expected
             )
             .subscribe(
                 (response) => {

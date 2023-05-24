@@ -167,6 +167,10 @@
                                     <mat-label>Code of result, min 5 chars, required</mat-label>
                                     <input matInput type="text" autocomplete="off" formControlName="resultCode" />
                                 </mat-form-field>
+                                <mat-form-field appearance="outline" style="width: 100%;" *ngIf="isAcceptanceTestFunc()" >
+                                    <mat-label>Expected result of calling API, min 1 chars, required</mat-label>
+                                    <input matInput type="text" autocomplete="off" formControlName="expected" />
+                                </mat-form-field>
                             </form>
                         </ct-section-body-row>
                     </ct-section-body>

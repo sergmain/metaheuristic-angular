@@ -55,13 +55,13 @@ export class ScenarioService {
 
     addOrSaveScenarioStepFormCommit(scenarioGroupId: string, scenarioId: string, uuid:string, parentUuidTemp: string,
                                     name: string, prompt: string, apiId: string, resultCode: string,
-                                    functionCode: string) {
+                                    functionCode: string, expected: string) {
         // const parentUuid = MhUtils.isNull(parentUuidTemp) ? undefined : parentUuidTemp;
         const parentUuid = parentUuidTemp;
         return this.http.post<OperationStatusRest>(
             url(`scenario-step-add-change-commit`),
             generateFormData({
-                scenarioGroupId, scenarioId, uuid, parentUuid, name, prompt, apiId, resultCode, functionCode
+                scenarioGroupId, scenarioId, uuid, parentUuid, name, prompt, apiId, resultCode, functionCode, expected
             })
         );
     }
