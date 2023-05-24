@@ -21,7 +21,7 @@ import {SimpleScenarioSteps} from '@services/scenario/SimpleScenarioSteps';
 import {ApiUid} from '@services/scenario/ApiUid';
 import {InternalFunction} from '@services/scenario/InternalFunction';
 import {ConfirmationDialogMethod} from '@app/components/app-dialog-confirmation/app-dialog-confirmation.component';
-import {MatDialog} from "@angular/material/dialog";
+import {MatDialog} from '@angular/material/dialog';
 
 export enum NodeMode {
     new = 'new',
@@ -156,6 +156,7 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
     @ViewChild(MatButton) button: MatButton;
 
     notToCreate() {
+/*
         let b1 = MhUtils.isNull(this.apiUid) && MhUtils.isNull(this.processingFunction);
         let b2 = this.form.invalid;
         let b3 = !this.isApi && MhUtils.isNotNull(this.processingFunction) && this.processingFunction.code === 'mh.acceptance-test' && MhUtils.len(this.form.value.expected)===0;
@@ -163,6 +164,10 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
         return b1
             || b2
             || b3;
+*/
+        return MhUtils.isNull(this.apiUid) && MhUtils.isNull(this.processingFunction)
+            || this.form.invalid
+            || !this.isApi && MhUtils.isNotNull(this.processingFunction) && this.processingFunction.code === 'mh.acceptance-test' && MhUtils.len(this.form.value.expected) === 0;
     }
 
     // load assets for creating a new step of scenario
