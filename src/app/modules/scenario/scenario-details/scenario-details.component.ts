@@ -170,6 +170,10 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
             || !this.isApi && MhUtils.isNotNull(this.processingFunction) && this.processingFunction.code === 'mh.acceptance-test' && MhUtils.len(this.form.value.expected) === 0;
     }
 
+    isApiNeeded() {
+        return this.isApi || MhUtils.isNotNull(this.processingFunction) && this.processingFunction.code === 'mh.acceptance-test';
+    }
+
     // load assets for creating a new step of scenario
     loadAssetsForCreation(): void {
         this.setIsLoadingStart();
@@ -610,7 +614,7 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
                 parentUuid,
                 name,
                 prompt,
-                MhUtils.isNull(this.apiUid) ? null : this.apiUid.id.toString(),
+                this.isApiNeeded() ? this.apiUid.id.toString() : null,
                 resultCode,
                 functionCode,
                 expected

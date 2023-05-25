@@ -138,7 +138,7 @@
                                 </mat-select>
                                 <mat-hint>{{ 'main.This is a required field' | translate }}</mat-hint>
                             </mat-form-field>
-                            <mat-form-field appearance="outline" *ngIf="isApi" style="width: 50%;">
+                            <mat-form-field appearance="outline" *ngIf="isApiNeeded()" style="width: 50%;">
                                 <mat-label> {{ 'evaluation-add.List of APIs' | translate }}</mat-label>
                                 <mat-select [(ngModel)]="apiUid">
                                     <mat-option  *ngFor="let api of listOfApis" [value]="api">{{api.uid}}</mat-option>
