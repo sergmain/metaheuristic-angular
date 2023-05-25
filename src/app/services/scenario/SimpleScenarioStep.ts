@@ -11,6 +11,7 @@ export class SimpleScenarioStep {
     prompt: string;
     r: string;
     resultCode: string;
+    expected: string;
     isNew: boolean;
     functionCode: string;
     mode: NodeMode;

@@ -42,7 +42,6 @@
             </ct-flex>
         </ct-section-footer-row>
     </ct-section-footer>
-
 </ct-section>
 
 <ct-cols align-items="baseline" *ngIf="dataSourceEmpty()" style="width: 100%;">
@@ -54,16 +53,16 @@
                 </ct-section-header-row>
             </ct-section-header>
             <ct-section-body>
-                <mat-form-field appearance="outline">
-                    <mat-label> {{ 'evaluation-add.List of APIs' | translate }}</mat-label>
-                    <mat-select [(ngModel)]="apiUid" >
-                        <mat-option  *ngFor="let apiOption of listOfApis" [value]="apiOption">
-                            {{apiOption.id}}, {{apiOption.uid}}
-                        </mat-option>
-                    </mat-select>
-                    <mat-hint>{{ 'main.This is a required field' | translate }}</mat-hint>
-                </mat-form-field>
                 <form [formGroup]="form" #formDirective="ngForm"  novalidate="novalidate">
+                    <mat-form-field appearance="outline">
+                        <mat-label> {{ 'evaluation-add.List of APIs' | translate }}</mat-label>
+                        <mat-select formControlName="apiUid">
+                            <mat-option  *ngFor="let apiOption of listOfApis" [value]="apiOption">
+                                {{apiOption.id}}, {{apiOption.uid}}
+                            </mat-option>
+                        </mat-select>
+                        <mat-hint>{{ 'main.This is a required field' | translate }}</mat-hint>
+                    </mat-form-field>
                     <mat-form-field appearance="outline" style="width: 100%;">
                         <mat-label>Prompt name, min 5 chars, required</mat-label>
                         <input matInput type="text" autocomplete="off" formControlName="name" />
@@ -138,16 +137,16 @@
                                 </mat-select>
                                 <mat-hint>{{ 'main.This is a required field' | translate }}</mat-hint>
                             </mat-form-field>
-                            <mat-form-field appearance="outline" *ngIf="isApiNeeded()" style="width: 50%;">
-                                <mat-label> {{ 'evaluation-add.List of APIs' | translate }}</mat-label>
-                                <mat-select [(ngModel)]="apiUid">
-                                    <mat-option  *ngFor="let api of listOfApis" [value]="api">{{api.uid}}</mat-option>
-                                </mat-select>
-                                <mat-hint>{{ 'main.This is a required field' | translate }}</mat-hint>
-                            </mat-form-field>
                         </ct-section-body-row>
                         <ct-section-body-row>
                             <form [formGroup]="form" #formDirective="ngForm"  novalidate="novalidate">
+                                <mat-form-field appearance="outline" *ngIf="isApiNeeded()" style="width: 50%;">
+                                    <mat-label>{{ 'evaluation-add.List of APIs' | translate }}</mat-label>
+                                    <mat-select formControlName="apiUid">
+                                        <mat-option *ngFor="let api of listOfApis" [value]="api">{{api.uid}}</mat-option>
+                                    </mat-select>
+                                    <mat-hint>{{ 'main.This is a required field' | translate }}</mat-hint>
+                                </mat-form-field>
                                 <mat-form-field appearance="outline" style="width: 100%;">
                                     <mat-label *ngIf="isApi">Prompt name, min 5 chars, required</mat-label>
                                     <mat-label *ngIf="!isApi">Name of process, min 5 chars, required</mat-label>

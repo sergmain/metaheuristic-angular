@@ -1,0 +1,7 @@
+    compareApis(o1:ApiUid, o2:ApiUid) {
+        return o1.id === o2.id;
+    }
+
+    <mat-select formControlName="apiUid" [compareWith]="compareApis">
+        <mat-option *ngFor="let api of listOfApis" [value]="api">{{api.uid}}</mat-option>
+    </mat-select>

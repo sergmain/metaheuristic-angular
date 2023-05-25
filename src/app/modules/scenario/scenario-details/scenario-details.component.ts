@@ -52,6 +52,7 @@ export class StepFlatNode {
         public prompt: string,
         public r: string,
         public resultCode: string,
+        public expected: string,
 
         public isNew: boolean,
         public functionCode: string,
@@ -77,7 +78,6 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
     expandTimeout: any;
     expandDelay = 1000;
     validateDrop = false;
-    apiUid: ApiUid;
     processingFunction: InternalFunction;
     listOfApis: ApiUid[] = [];
     listOfFunctions: InternalFunction[] = [];
@@ -93,7 +93,6 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
     allUuids: string[] = [];
     isApi: boolean = true;
 
-    // this.refreshTree();
     dataChange = new BehaviorSubject<SimpleScenarioStep[]>([]);
     dataTree :SimpleScenarioStep[]
 
@@ -103,6 +102,7 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
         name: new FormControl('', [Validators.required, Validators.minLength(5)]),
         prompt: new FormControl('', [Validators.required, Validators.minLength(5)]),
         resultCode: new FormControl('', [Validators.required, Validators.minLength(5)]),
+        apiUid: new FormControl(null, [Validators.required]),
         expected: new FormControl(''),
     });
 
@@ -165,7 +165,8 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
             || b2
             || b3;
 */
-        return MhUtils.isNull(this.apiUid) && MhUtils.isNull(this.processingFunction)
+        // return MhUtils.isNull(this.apiUid) && MhUtils.isNull(this.processingFunction)
+        return MhUtils.isNull(this.form.value.apiUid) && MhUtils.isNull(this.processingFunction)
             || this.form.invalid
             || !this.isApi && MhUtils.isNotNull(this.processingFunction) && this.processingFunction.code === 'mh.acceptance-test' && MhUtils.len(this.form.value.expected) === 0;
     }
@@ -197,7 +198,7 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
         let nodeId = MhUtils.randomIntAsStr(1000, 999999);
         node.nodeId = nodeId;
         let stepFlatNode = new StepFlatNode(nodeId, numberOfSubSteps>0, level, node.uuid,
-            node.apiId, node.apiCode, node.name, node.prompt, node.r, node.resultCode,
+            node.apiId, node.apiCode, node.name, node.prompt, node.r, node.resultCode, node.expected,
             node.isNew, node.functionCode,
             MhUtils.isNull(node.mode) ? NodeMode.show : node.mode
         );
@@ -231,7 +232,7 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
 
     isAcceptanceTestFunc() {
         let b= !this.isApi && MhUtils.isNotNull(this.processingFunction) && this.processingFunction.code==='mh.acceptance-test';
-        console.log("isAcceptanceTestFunc()", b, this.processingFunction);
+        //console.log("isAcceptanceTestFunc()", b, this.processingFunction);
         return b;
     }
 
@@ -536,26 +537,34 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
             name: new FormControl(detailNode.node.name, [Validators.required, Validators.minLength(5)]),
             prompt: new FormControl(detailNode.node.prompt, [Validators.required, Validators.minLength(5)]),
             resultCode: new FormControl(detailNode.node.resultCode, [Validators.required, Validators.minLength(5)]),
-            expected: new FormControl(''),
+            apiUid: new FormControl(null, [Validators.required]),
+            expected: new FormControl(detailNode.node.expected),
         });
+
+        const apiUid = this.listOfApis.find((c) => c.uid == detailNode.node.apiCode);
+        // const apiUid = new class implements ApiUid {
+        //     id: number = detailNode.node.apiId;
+        //     uid: string = detailNode.node.apiCode;
+        // }
+        this.form.get('apiUid').setValue(apiUid);
 
         if (MhUtils.isNull(detailNode.node.functionCode)) {
             this.isApi = true;
-            this.apiUid = new class implements ApiUid {
-                id: number = detailNode.node.apiId;
-                uid: string = detailNode.node.apiCode;
-            }
+            // this.apiUid = new class implements ApiUid {
+            // const toSelect = this.patientCategories.find(c => c.id == 3);
+            // this.patientCategory.get('patientCategory').setValue(toSelect);
+
             this.processingFunction = null;
         }
         else {
             this.isApi = false;
-            this.apiUid = null;
             this.processingFunction = new class implements InternalFunction {
                 code: string = detailNode.node.functionCode;
                 translate: string = detailNode.node.functionCode;
             };
         }
-        console.log("50.20", this.isApi, this.apiUid, this.processingFunction);
+        // console.log("50.20", this.isApi, this.apiUid, this.processingFunction);
+        console.log("50.20", this.isApi, this.form.value.apiUid, this.processingFunction);
 
         this.dataChange.next(this.dataTree);
     }
@@ -572,7 +581,8 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
     }
 
     createFirstDetail(): void {
-        console.log("27.10", this.apiUid)
+        // console.log("27.10", this.apiUid)
+        console.log("27.10", this.form.value.apiUid)
         this.saveStepInternal(null, null);
     }
 
@@ -587,6 +597,7 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
         console.log("10.20", node);
         let detailNode = this.findInTree(node);
         console.log("10.21", detailNode)
+        console.log("10.22", this.form.value.apiUid)
         this.saveStepInternal(
             MhUtils.isNull(node.uuid) ? null : node.uuid,
             MhUtils.isNull(detailNode.parent) ? null : detailNode.parent.uuid
@@ -602,6 +613,7 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
         let resultCode = this.form.value.resultCode;
         let functionCode = MhUtils.isNull(this.processingFunction) ? null : this.processingFunction.code;
         let expected = this.form.value.expected;
+        let apiUid = this.isApiNeeded() ? this.form.value.apiUid.id.toString() : null;
 
         this.formDirective.resetForm();
         this.form.reset();
@@ -614,7 +626,7 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
                 parentUuid,
                 name,
                 prompt,
-                this.isApiNeeded() ? this.apiUid.id.toString() : null,
+                apiUid,
                 resultCode,
                 functionCode,
                 expected
