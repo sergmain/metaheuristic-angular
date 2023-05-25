@@ -130,16 +130,14 @@
                     </ct-section-header>
                     <ct-section-body>
                         <ct-section-body-row>
-                            <mat-form-field appearance="outline" *ngIf="!isApi" style="width: 50%;">
-                                <mat-label>Type of processing</mat-label>
-                                <mat-select [(ngModel)]="processingFunction">
-                                    <mat-option  *ngFor="let f of listOfFunctions" [value]="f">{{ 'scenario-function-'+f.code | translate }}</mat-option>
-                                </mat-select>
-                                <mat-hint>{{ 'main.This is a required field' | translate }}</mat-hint>
-                            </mat-form-field>
-                        </ct-section-body-row>
-                        <ct-section-body-row>
                             <form [formGroup]="form" #formDirective="ngForm"  novalidate="novalidate">
+                                <mat-form-field appearance="outline" *ngIf="!isApi" style="width: 50%;">
+                                    <mat-label>Type of processing</mat-label>
+                                    <mat-select formControlName="processingFunction">
+                                        <mat-option *ngFor="let f of listOfFunctions" [value]="f">{{ 'scenario-function-'+f.code | translate }}</mat-option>
+                                    </mat-select>
+                                    <mat-hint>{{ 'main.This is a required field' | translate }}</mat-hint>
+                                </mat-form-field>
                                 <mat-form-field appearance="outline" *ngIf="isApiNeeded()" style="width: 50%;">
                                     <mat-label>{{ 'evaluation-add.List of APIs' | translate }}</mat-label>
                                     <mat-select formControlName="apiUid">
@@ -228,7 +226,8 @@
                 {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
             </mat-icon>
         </button>
-        Type: {{MhUtils.isNull(node.functionCode) ? 'API: '+ node.apiCode : 'Process: ' + node.functionCode}}, Name: {{node.name}}<br/> {{node.prompt}}<br/>Result code: [[{{node.resultCode}}]]
+        Type: {{MhUtils.isNull(node.functionCode) ? 'API: '+ node.apiCode : 'Process: ' + node.functionCode}}, Name: {{node.name}}<br/>{{node.prompt}}<br/>Result code: {{node.resultCode}}
+        <ng-container *ngIf="isMhAcceptanceTestNode(node)" ><br/>expected: {{node.expected}}</ng-container>
         <button mat-icon-button (click)="addNewStubItem(node)" matTooltip="Add new step">
             <mat-icon>add</mat-icon></button>
         <button mat-icon-button (click)="startEditingNode(node)" matTooltip="Edit step">
