@@ -24,6 +24,7 @@ import {ConfirmationDialogMethod} from '@app/components/app-dialog-confirmation/
 import {MatDialog} from '@angular/material/dialog';
 
 const MH_ACCEPTANCE_TEST = 'mh.acceptance-test';
+const MH_AGGREGATE = 'mh.aggregate';
 
 export enum NodeMode {
     new = 'new',
@@ -58,6 +59,7 @@ export class StepFlatNode {
 
         public isNew: boolean,
         public functionCode: string,
+        public aggregateType: string,
         public mode: NodeMode
     ) {}
 }
@@ -80,8 +82,11 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
     expandTimeout: any;
     expandDelay = 1000;
     validateDrop = false;
+
     listOfApis: ApiUid[] = [];
     listOfFunctions: InternalFunction[] = [];
+    listOfAggregateTypes: string[] = [];
+
     response: ScenarioUidsForAccount;
     scenarioGroupId: string;
     scenarioId: string;
@@ -101,9 +106,10 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
 
     form = new FormGroup({
         name: new FormControl('', [Validators.required, Validators.minLength(5)]),
-        prompt: new FormControl('', [Validators.required, Validators.minLength(5)]),
+        prompt: new FormControl('', [Validators.required, Validators.minLength(3)]),
         resultCode: new FormControl('', [Validators.required, Validators.minLength(5)]),
         apiUid: new FormControl(null),
+        aggregateType: new FormControl(null),
         processingFunction: new FormControl(null),
         expected: new FormControl(''),
     });
@@ -183,6 +189,7 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
                 this.response = response;
                 this.listOfApis = this.response.apis;
                 this.listOfFunctions = this.response.functions;
+                this.listOfAggregateTypes = this.response.aggregateTypes;
                 this.isLoading = false;
             });
     }
@@ -198,7 +205,7 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
         node.nodeId = nodeId;
         let stepFlatNode = new StepFlatNode(nodeId, numberOfSubSteps>0, level, node.uuid,
             node.apiId, node.apiCode, node.name, node.prompt, node.r, node.resultCode, node.expected,
-            node.isNew, node.functionCode,
+            node.isNew, node.functionCode, node.aggregateType,
             MhUtils.isNull(node.mode) ? NodeMode.show : node.mode
         );
         this.allUuids.push(node.uuid);
@@ -228,6 +235,17 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
         //console.log("hasNewNodePresent()", b, _nodeData.nodeId);
         return b;
     };
+
+    isMhAggregate() {
+        let b = MhUtils.isNotNull(this.form.value.processingFunction) && this.form.value.processingFunction.code===MH_AGGREGATE;
+        return b;
+    }
+
+    isMhAggregateFunc() {
+        let b= !this.isApi && this.isMhAggregate();
+        // console.log("isMhAggregateFunc()", b, this.isApi, this.isMhAggregate());
+        return b;
+    }
 
     isAcceptanceTestFunc() {
         let b= !this.isApi && this.isMhAcceptanceTest();
@@ -545,6 +563,7 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
             prompt: new FormControl(detailNode.node.prompt, [Validators.required, Validators.minLength(5)]),
             resultCode: new FormControl(detailNode.node.resultCode, [Validators.required, Validators.minLength(5)]),
             apiUid: new FormControl(null),
+            aggregateType: new FormControl(null),
             processingFunction: new FormControl(null),
             expected: new FormControl(detailNode.node.expected),
         });
@@ -575,8 +594,10 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
             // this.form.value.processingFunction = processingFunction;
             this.form.get('processingFunction').setValue(processingFunction);
 
+            this.form.get('aggregateType').setValue(detailNode.node.aggregateType);
+
         }
-        console.log("50.20", this.isApi, this.form.value.apiUid, this.form.value.processingFunction);
+        console.log("50.20", this.isApi, this.form.value.apiUid, this.form.value.processingFunction, this.form.value.aggregateType);
 
         this.dataChange.next(this.dataTree);
     }
@@ -624,6 +645,7 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
         let prompt = this.form.value.prompt;
         let resultCode = this.form.value.resultCode;
         let functionCode = MhUtils.isNull(this.form.value.processingFunction) ? null : this.form.value.processingFunction.code;
+        let aggregateType = MhUtils.isNull(this.form.value.aggregateType) ? null : this.form.value.aggregateType;
         let expected = this.form.value.expected;
         let apiUid = this.isApiNeeded() ? this.form.value.apiUid.id.toString() : null;
 
@@ -641,6 +663,7 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
                 apiUid,
                 resultCode,
                 functionCode,
+                aggregateType,
                 expected
             )
             .subscribe(

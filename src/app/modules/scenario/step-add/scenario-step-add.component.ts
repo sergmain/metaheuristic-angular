@@ -87,6 +87,7 @@ export class ScenarioStepAddComponent extends UIStateComponent implements OnInit
                 this.apiUid.id.toString(),
                 'some code',
                 null,
+                null,
                 null
             )
             .subscribe(

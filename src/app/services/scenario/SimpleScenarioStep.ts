@@ -14,6 +14,7 @@ export class SimpleScenarioStep {
     expected: string;
     isNew: boolean;
     functionCode: string;
+    aggregateType: string;
     mode: NodeMode;
 
     steps: SimpleScenarioStep[];

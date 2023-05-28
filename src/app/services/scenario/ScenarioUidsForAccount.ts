@@ -5,4 +5,5 @@ import {InternalFunction} from '@services/scenario/InternalFunction';
 export interface ScenarioUidsForAccount extends DefaultResponse {
     apis: ApiUid[];
     functions: InternalFunction[];
+    aggregateTypes: string[];
 }
