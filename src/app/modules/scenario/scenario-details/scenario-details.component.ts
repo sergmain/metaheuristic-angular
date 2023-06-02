@@ -107,7 +107,7 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
     form = new FormGroup({
         name: new FormControl('', [Validators.required, Validators.minLength(5)]),
         prompt: new FormControl('', [Validators.required, Validators.minLength(3)]),
-        resultCode: new FormControl('', [Validators.required, Validators.minLength(5)]),
+        resultCode: new FormControl('', [Validators.required, Validators.minLength(3)]),
         apiUid: new FormControl(null),
         aggregateType: new FormControl(null),
         processingFunction: new FormControl(null),

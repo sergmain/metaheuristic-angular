@@ -161,7 +161,7 @@
                                               cdkAutosizeMinRows="10" value="" autocomplete="off"></textarea>
                                 </mat-form-field>
                                 <mat-form-field appearance="outline" style="width: 100%;">
-                                    <mat-label>Code of result, min 5 chars, required</mat-label>
+                                    <mat-label>Code of result, min 3 chars, required</mat-label>
                                     <input matInput type="text" autocomplete="off" formControlName="resultCode" />
                                 </mat-form-field>
                                 <mat-form-field appearance="outline" style="width: 100%;" *ngIf="isAcceptanceTestFunc()" >
@@ -233,7 +233,7 @@
                 {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
             </mat-icon>
         </button>
-        Type: {{MhUtils.isNull(node.functionCode) ? 'API: '+ node.apiCode : 'Process: ' + node.functionCode}}, Name: {{node.name}}<br/>{{node.prompt}}<br/>Result code: {{node.resultCode}}
+        Type: {{MhUtils.isNull(node.functionCode) ? 'API: '+ node.apiCode : 'Process: ' + node.functionCode}}, Name: {{node.name}}<br/>{{node.prompt}}<br/>Result code: [[{{node.resultCode}}]]
         <ng-container *ngIf="isMhAcceptanceTestNode(node)" ><br/>expected: {{node.expected}}</ng-container>
         <button mat-icon-button (click)="addNewStubItem(node)" matTooltip="Add new step">
             <mat-icon>add</mat-icon></button>
