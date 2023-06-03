@@ -16,7 +16,7 @@ import {MatDialog} from "@angular/material/dialog";
 })
 export class ScenariosComponent extends UIStateComponent implements OnInit {
     dataSource: MatTableDataSource<SimpleScenario> = new MatTableDataSource<SimpleScenario>([]);
-    columnsToDisplay: string[] = ['id', 'createdOn', 'apiCode', 'name', 'bts'];
+    columnsToDisplay: string[] = ['id', 'createdOn', 'name', 'bts'];
     scenariosResult: ScenariosResult;
     scenarioGroupId: string;
 

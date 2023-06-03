@@ -24,15 +24,11 @@
                     <ng-container matColumnDef="createdOn">
                         <th mat-header-cell *matHeaderCellDef>Created On </th>
                         <td mat-cell *matCellDef="let el">
-                            {{el.createdOn | date:'HH:mm, MMM&nbsp;d,&nbsp;yyyy'}} </td>
+                            {{el.createdOn | date:'MMM&nbsp;d,&nbsp;yyyy, HH:mm'}} </td>
                     </ng-container>
                     <ng-container matColumnDef="name">
                         <th mat-header-cell *matHeaderCellDef>Name<br/>Description</th>
                         <td mat-cell *matCellDef="let el">{{el.name}}<br/>{{el.description}} </td>
-                    </ng-container>
-                    <ng-container matColumnDef="apiCode">
-                        <th mat-header-cell *matHeaderCellDef>API code</th>
-                        <td mat-cell *matCellDef="let el">{{el.apiCode}} </td>
                     </ng-container>
                     <ng-container matColumnDef="bts">
                         <th mat-header-cell *matHeaderCellDef></th>
