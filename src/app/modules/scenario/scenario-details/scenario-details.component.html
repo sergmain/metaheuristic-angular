@@ -1,14 +1,20 @@
 <ct-section *ngIf="MhUtils.isNotNull(simpleScenarioSteps)">
     <ct-section-body style="width: 50%;">
         <ct-section-body-row>
-            <ct-flex justify-content="flex-start" gap="8px">
+            <ct-flex gap="8px" justify-content="space-between">
                 <ct-flex-item>
                     Scenario: {{simpleScenarioSteps.scenarioInfo.name}}<br/>
                     {{simpleScenarioSteps.scenarioInfo.description}}
                 </ct-flex-item>
-                <ct-flex-item *ngIf="!newNodePresent() && !isFormActive">
+                <ct-flex-item *ngIf="!newNodePresent() && !isFormActive" justify-content="flex-end">
                     <button mat-icon-button (click)="startEditingScenarioInfo()" matTooltip="Edit scenario info">
                         <mat-icon>edit_document</mat-icon>
+                    </button>
+                    <button mat-icon-button (click)="runScenario()" matTooltip="Execute scenario">
+                        <mat-icon>play_arrow</mat-icon>
+                    </button>
+                    <button mat-icon-button (click)="stateOfTasks()" matTooltip="Tasks">
+                        <mat-icon>list</mat-icon>
                     </button>
                 </ct-flex-item>
             </ct-flex>

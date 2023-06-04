@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { SourceCodesService } from '../../../services/source-codes/source-codes.service';
-import { ExecContextStateResult } from '@src/app/services/source-codes/ExecContextStateResult';
 
 @Component({
     selector: 'exec-context-states',

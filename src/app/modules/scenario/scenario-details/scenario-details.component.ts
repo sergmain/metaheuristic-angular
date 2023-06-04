@@ -22,6 +22,7 @@ import {ApiUid} from '@services/scenario/ApiUid';
 import {InternalFunction} from '@services/scenario/InternalFunction';
 import {ConfirmationDialogMethod} from '@app/components/app-dialog-confirmation/app-dialog-confirmation.component';
 import {MatDialog} from '@angular/material/dialog';
+import {SimpleScenario} from '@services/scenario/SimpleScenario';
 
 const MH_ACCEPTANCE_TEST = 'mh.acceptance-test';
 const MH_AGGREGATE = 'mh.aggregate';
@@ -820,4 +821,20 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
         this.dataChange.next(this.dataTree);
     }
 
+    @ConfirmationDialogMethod({
+        question: (): string =>
+            `Do you want to exec Scenario`,
+
+        resolveTitle: 'Run scenario',
+        rejectTitle: 'Cancel'
+    })
+    runScenario(): void {
+        this.scenarioService
+            .runScenario(this.scenarioGroupId.toString(), this.scenarioId.toString())
+            .subscribe(v => {});
+    }
+
+    stateOfTasks() {
+
+    }
 }
