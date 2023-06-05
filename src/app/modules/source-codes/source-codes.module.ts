@@ -15,6 +15,7 @@ import { SourceCodesComponent } from './source-codes/source-codes.component';
 import { CardFormUploadSourceCodeComponent } from './card-form-upload-source-code/card-form-upload-source-code.component';
 import { CardFormAddSourceCodeComponent } from './card-form-add-source-code/card-form-add-source-code.component';
 import { ViewSourceCodeComponent } from './view-source-code/view-source-code.component';
+import {ExecContexts1Component} from '@app/modules/source-codes/exec-contexts1/exec-contexts1.component';
 
 export const SourceCodesRoutes: Routes = [
     {
@@ -38,6 +39,13 @@ export const SourceCodesRoutes: Routes = [
     {
         path: ':sourceCodeId/exec-contexts',
         component: ExecContextsComponent,
+        data: {
+            backConfig: ['../', '../']
+        }
+    },
+    {
+        path: ':sourceCodeId/exec-contexts1',
+        component: ExecContexts1Component,
         data: {
             backConfig: ['../', '../']
         }
@@ -81,7 +89,9 @@ export class SourceCodeRoutingModule { }
         EditExecContextComponent,
         ExecContextStatesComponent,
         CardFormAddSourceCodeComponent,
-        CardFormUploadSourceCodeComponent
+        CardFormUploadSourceCodeComponent,
+
+        ExecContexts1Component
     ],
 
     imports: [

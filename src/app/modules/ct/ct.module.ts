@@ -29,13 +29,15 @@ import { CtTablePaginationComponent } from './ct-table-pagination/ct-table-pagin
 import { CtStateOfTasksComponent } from './ct-state-of-tasks/ct-state-of-tasks.component';
 import { CtAlertComponent } from './ct-alert/ct-alert.component';
 import { CtPre10pxComponent } from './ct-pre-10px/ct-pre-10px.component';
+import {CtExecContextsComponent} from '@app/modules/ct/ct-exec-contexts/ct-exec-contexts.component';
+import {RouterModule} from '@angular/router';
 
 @NgModule({
     imports: [
         CommonModule,
         MaterialAppModule,
-        TranslateModule.forChild({})
-
+        TranslateModule.forChild({}),
+        RouterModule
     ],
     declarations: [
         CtSectionContentComponent,
@@ -64,7 +66,8 @@ import { CtPre10pxComponent } from './ct-pre-10px/ct-pre-10px.component';
         CtEnvMsgOuterComponent,
         CtTablePaginationComponent,
         CtStateOfTasksComponent,
-        CtAlertComponent
+        CtAlertComponent,
+        CtExecContextsComponent
     ],
     exports: [
         CtSectionContentComponent,
@@ -93,7 +96,9 @@ import { CtPre10pxComponent } from './ct-pre-10px/ct-pre-10px.component';
         CtEnvMsgOuterComponent,
         CtTablePaginationComponent,
         CtStateOfTasksComponent,
-        CtAlertComponent
+        CtAlertComponent,
+        CtExecContextsComponent,
+        RouterModule
     ]
 })
 

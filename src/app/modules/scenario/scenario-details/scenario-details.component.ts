@@ -1,5 +1,5 @@
 import {FlatTreeControl} from '@angular/cdk/tree';
-import {AfterViewInit, Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, OnDestroy, OnInit, TemplateRef, ViewChild} from '@angular/core';
 import {MatTreeFlatDataSource, MatTreeFlattener} from '@angular/material/tree';
 import {BehaviorSubject, Observable, of as observableOf, Subscription} from 'rxjs';
 import {CdkDragDrop} from '@angular/cdk/drag-drop';
@@ -22,7 +22,7 @@ import {ApiUid} from '@services/scenario/ApiUid';
 import {InternalFunction} from '@services/scenario/InternalFunction';
 import {ConfirmationDialogMethod} from '@app/components/app-dialog-confirmation/app-dialog-confirmation.component';
 import {MatDialog} from '@angular/material/dialog';
-import {SimpleScenario} from '@services/scenario/SimpleScenario';
+import {ExecContextService} from '@services/exec-context/exec-context.service';
 
 const MH_ACCEPTANCE_TEST = 'mh.acceptance-test';
 const MH_AGGREGATE = 'mh.aggregate';
@@ -74,6 +74,8 @@ export class StepFlatNode {
     styleUrls: ['scenario-details.component.css']
 })
 export class ScenarioDetailsComponent extends UIStateComponent implements OnInit, OnDestroy, AfterViewInit {
+    @ViewChild('execContexts') execContexts: TemplateRef<any>;
+
     treeControl: FlatTreeControl<StepFlatNode>;
     treeFlattener: MatTreeFlattener<SimpleScenarioStep, StepFlatNode>;
     dataSource: MatTreeFlatDataSource<SimpleScenarioStep, StepFlatNode>;
@@ -91,6 +93,7 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
     response: ScenarioUidsForAccount;
     scenarioGroupId: string;
     scenarioId: string;
+    sourceCodeId: string;
     needToExpandAll: boolean = true;
 
     // for fast hiding input form
@@ -138,6 +141,7 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
 
         this.loadAssetsForCreation();
         this.updateTree();
+        this.getSourceCodeId();
     }
 
     ngOnDestroy(): void {
@@ -151,6 +155,7 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
                 private translate: TranslateService,
                 private settingsService: SettingsService,
                 private dialog: MatDialog,
+                private execContextService: ExecContextService,
                 readonly authenticationService: AuthenticationService
                 ) {
         super(authenticationService);
@@ -828,13 +833,32 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
         resolveTitle: 'Run scenario',
         rejectTitle: 'Cancel'
     })
+
     runScenario(): void {
         this.scenarioService
             .runScenario(this.scenarioGroupId.toString(), this.scenarioId.toString())
-            .subscribe(v => {});
+            .subscribe(v => {
+                this.getSourceCodeId();
+            });
+    }
+
+    getSourceCodeId() {
+        this.scenarioService
+            .querySourceCodeId(this.scenarioGroupId.toString(), this.scenarioId.toString())
+            .subscribe(o => {
+                this.sourceCodeId = MhUtils.isNotNull(o) && MhUtils.isNotNull(o.simpleSourceCode)
+                    ? o.simpleSourceCode.id.toString()
+                    : null;
+            });
     }
 
     stateOfTasks() {
+        this.dialog.open(this.execContexts, {
+            width: '90%'
+        });
+    }
 
+    isSourceCodeId() {
+        return MhUtils.isNotNull(this.sourceCodeId);
     }
 }

@@ -13,7 +13,8 @@
                     <button mat-icon-button (click)="runScenario()" matTooltip="Execute scenario">
                         <mat-icon>play_arrow</mat-icon>
                     </button>
-                    <button mat-icon-button (click)="stateOfTasks()" matTooltip="Tasks">
+                    <button mat-icon-button (click)="stateOfTasks()" matTooltip="Tasks"
+                            *ngIf="isSourceCodeId()">
                         <mat-icon>list</mat-icon>
                     </button>
                 </ct-flex-item>
@@ -252,3 +253,8 @@
     </mat-tree-node>
 </mat-tree>
 
+<ng-template #execContexts>
+    <ng-container>
+        <ct-exec-contexts [sourceCodeId]="sourceCodeId"></ct-exec-contexts>
+    </ng-container>
+</ng-template>

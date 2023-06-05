@@ -8,6 +8,7 @@ import {generateFormData} from '@app/helpers/generateFormData';
 import {ScenariosResult} from '@services/scenario/ScenariosResult';
 import {ScenarioUidsForAccount} from '@services/scenario/ScenarioUidsForAccount';
 import {SimpleScenarioSteps} from '@services/scenario/SimpleScenarioSteps';
+import {SimpleSourceCodeUid} from '@services/source-codes/SimpleSourceCodeUid';
 
 const url = (s: string): string => `${environment.baseUrl}dispatcher/scenario/${s}`;
 
@@ -25,6 +26,10 @@ export class ScenarioService {
 
     scenarioSteps(scenarioGroupId: string, scenarioId: string): Observable<SimpleScenarioSteps> {
         return this.http.get<SimpleScenarioSteps>(url(`scenarios/${scenarioGroupId}/scenario/${scenarioId}/steps`));
+    }
+
+    querySourceCodeId(scenarioGroupId: string, scenarioId: string): Observable<SimpleSourceCodeUid> {
+        return this.http.get<SimpleSourceCodeUid>(url(`scenarios/${scenarioGroupId}/scenario/${scenarioId}/sourceCodeId`));
     }
 
     scenarioGroupDeleteCommit(scenarioGroupId: string): Observable<OperationStatusRest> {
