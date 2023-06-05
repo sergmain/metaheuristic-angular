@@ -846,9 +846,11 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
         this.scenarioService
             .querySourceCodeId(this.scenarioGroupId.toString(), this.scenarioId.toString())
             .subscribe(o => {
+                // console.log("getSourceCodeId(), response: ", JSON.stringify(o));
                 this.sourceCodeId = MhUtils.isNotNull(o) && MhUtils.isNotNull(o.simpleSourceCode)
                     ? o.simpleSourceCode.id.toString()
                     : null;
+                // console.log("getSourceCodeId(), sourceCodeId", this.sourceCodeId);
             });
     }
 

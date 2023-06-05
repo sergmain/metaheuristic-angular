@@ -22,16 +22,12 @@ import {AccountsRoutes} from '@app/modules/accounts/accounts.module';
 export class CtExecContextsComponent implements OnInit {
     readonly execState = ExecContextState;
 
-    @ViewChild('errorDialogTemplate')
-    errorDialogTemplate: TemplateRef<any>;
+    @ViewChild('errorDialogTemplate') errorDialogTemplate: TemplateRef<any>;
 
-    @Input()
-    sourceCodeId: string;
+    @Input() sourceCodeId: string;
 
-    @ViewChild('nextTable', { static: true })
-    nextTable: MatButton;
-    @ViewChild('prevTable', { static: true })
-    prevTable: MatButton;
+    @ViewChild('nextTable', { static: true }) nextTable: MatButton;
+    @ViewChild('prevTable', { static: true }) prevTable: MatButton;
 
     response: ExecContextsResult;
     execContextTableSource: MatTableDataSource<ExecContext> = new MatTableDataSource<ExecContext>([]);
@@ -50,10 +46,12 @@ export class CtExecContextsComponent implements OnInit {
         private execContextService: ExecContextService,
         private sourceCodesService: SourceCodesService,
         private router: Router
-    ) { }
+    ) {
+
+    }
 
     ngOnInit(): void {
-        this.sourceCodeId = this.route.snapshot.paramMap.get('sourceCodeId');
+        // this.sourceCodeId = this.route.snapshot.paramMap.get('sourceCodeId');
         this.getExecContexts(0);
     }
 
