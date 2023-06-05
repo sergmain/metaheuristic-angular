@@ -43,7 +43,7 @@ export class CtStateOfTasksComponent implements OnInit {
   openError(taskId: string): void {
     this.taskExecInfo = null;
     this.dialog.open(this.errorDialogTemplate, {
-      width: '90%'
+      width: '100%'
     });
     this.execContextService
         .taskExecInfo(this.sourceCodeId, this.execContextId, taskId)

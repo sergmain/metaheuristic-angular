@@ -856,7 +856,7 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
 
     stateOfTasks() {
         this.dialog.open(this.execContexts, {
-            width: '90%'
+            width: '100%'
         });
     }
 

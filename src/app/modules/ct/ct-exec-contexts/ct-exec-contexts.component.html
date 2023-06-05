@@ -58,25 +58,27 @@
                                     <button mat-flat-button="mat-flat-button" size="forTableRow" color="primary"
                                         (click)="produce(el,$event)">Produce</button>
                                 </ct-flex-item>
-                                <ct-flex-item
-                                    *ngIf="(el.execState == execState.PRODUCED) || (el.execState == execState.STOPPED)">
-                                    <button mat-flat-button="mat-flat-button" size="forTableRow" color="primary"
-                                        (click)="start(el,$event)">Start</button>
+                                <ct-flex-item *ngIf="(el.execState == execState.PRODUCED) || (el.execState == execState.STOPPED)">
+                                    <button mat-icon-button size="forTableRow" color="primary"
+                                        (click)="start(el,$event)">
+                                        <mat-icon>play_arrow</mat-icon>
+                                    </button>
                                 </ct-flex-item>
                                 <ct-flex-item *ngIf="(el.execState == execState.STARTED)">
-                                    <button mat-flat-button="mat-flat-button" size="forTableRow" color="primary"
-                                        (click)="stop(el,$event)">Stop</button>
-                                </ct-flex-item>
-                                <ct-flex-item>
-                                    <button mat-flat-button="mat-flat-button" color="primary" size="forTableRow"
-                                        [routerLink]="['/dispatcher','source-codes',sourceCodeId,'exec-context',el.id,'state']">Task
-                                        States
+                                    <button mat-icon-button size="forTableRow" color="primary"
+                                        (click)="stop(el,$event)">
+                                        <mat-icon>stop</mat-icon>
                                     </button>
                                 </ct-flex-item>
                                 <ct-flex-item>
-                                    <button mat-flat-button="mat-flat-button" color="warn" size="forTableRow"
+                                    <button mat-icon-button (click)="stateOfTasks(el)" matTooltip="Tasks" color="primary">
+                                        <mat-icon>list</mat-icon>
+                                    </button>
+                                </ct-flex-item>
+                                <ct-flex-item>
+                                    <button mat-icon-button color="warn" size="forTableRow" matTooltip="Delete ExecContext"
                                         [disabled]="el.__deleted" (click)="delete(el)">
-                                        <mat-icon>delete</mat-icon>
+                                        <mat-icon>delete_forever</mat-icon>
                                     </button>
                                 </ct-flex-item>
                             </ct-flex>
@@ -120,3 +122,10 @@
         </ct-section-footer-row>
     </ct-section-footer>
 </ct-section>
+
+
+<ng-template #stateOfTasksTemplate>
+    <ng-container>
+        <ct-state-of-tasks [sourceCodeId]="sourceCodeId" [execContextId]="execContextId"></ct-state-of-tasks>
+    </ng-container>
+</ng-template>

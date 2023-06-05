@@ -9,9 +9,6 @@ import { ExecContextService } from '@src/app/services/exec-context/exec-context.
 import { ExecContext } from '@src/app/services/source-codes/ExecContext';
 import { ExecContextsResult } from '@src/app/services/source-codes/ExecContextsResult';
 import { SourceCodesService } from '@src/app/services/source-codes/source-codes.service';
-import {RouterModule} from '@angular/router';
-import {AccountsRoutes} from '@app/modules/accounts/accounts.module';
-
 
 
 @Component({
@@ -20,14 +17,15 @@ import {AccountsRoutes} from '@app/modules/accounts/accounts.module';
     styleUrls: ['./ct-exec-contexts.component.scss']
 })
 export class CtExecContextsComponent implements OnInit {
-    readonly execState = ExecContextState;
-
+    @ViewChild('stateOfTasksTemplate') stateOfTasksTemplate: TemplateRef<any>;
     @ViewChild('errorDialogTemplate') errorDialogTemplate: TemplateRef<any>;
 
     @Input() sourceCodeId: string;
 
     @ViewChild('nextTable', { static: true }) nextTable: MatButton;
     @ViewChild('prevTable', { static: true }) prevTable: MatButton;
+
+    readonly execState = ExecContextState;
 
     response: ExecContextsResult;
     execContextTableSource: MatTableDataSource<ExecContext> = new MatTableDataSource<ExecContext>([]);
@@ -39,6 +37,8 @@ export class CtExecContextsComponent implements OnInit {
         'completedOn',
         'bts'
     ];
+
+    execContextId: string;
 
     constructor(
         private route: ActivatedRoute,
@@ -107,5 +107,14 @@ export class CtExecContextsComponent implements OnInit {
     produce(el, event): void {
         event.target.disabled = true;
         this.runExecState(el.id, 'PRODUCING');
+    }
+
+
+    stateOfTasks(el) {
+        this.dialog.closeAll();
+        this.execContextId = el.id;
+        this.dialog.open(this.stateOfTasksTemplate, {
+            width: '90%'
+        });
     }
 }

@@ -7,13 +7,13 @@
                     {{simpleScenarioSteps.scenarioInfo.description}}
                 </ct-flex-item>
                 <ct-flex-item *ngIf="!newNodePresent() && !isFormActive" justify-content="flex-end">
-                    <button mat-icon-button (click)="startEditingScenarioInfo()" matTooltip="Edit scenario info">
+                    <button mat-icon-button (click)="startEditingScenarioInfo()" matTooltip="Edit scenario info" color="primary">
                         <mat-icon>edit_document</mat-icon>
                     </button>
-                    <button mat-icon-button (click)="runScenario()" matTooltip="Execute scenario">
+                    <button mat-icon-button (click)="runScenario()" matTooltip="Execute scenario" color="primary">
                         <mat-icon>play_arrow</mat-icon>
                     </button>
-                    <button mat-icon-button (click)="stateOfTasks()" matTooltip="Tasks"
+                    <button mat-icon-button (click)="stateOfTasks()" matTooltip="Tasks" color="primary"
                             *ngIf="isSourceCodeId()">
                         <mat-icon>list</mat-icon>
                     </button>
@@ -242,12 +242,12 @@
         </button>
         Type: {{MhUtils.isNull(node.functionCode) ? 'API: '+ node.apiCode : 'Process: ' + node.functionCode}}, Name: {{node.name}}<br/>{{node.prompt}}<br/>Result code: [[{{node.resultCode}}]]
         <ng-container *ngIf="isMhAcceptanceTestNode(node)" ><br/>expected: {{node.expected}}</ng-container>
-        <button mat-icon-button (click)="addNewStubItem(node)" matTooltip="Add new step">
+        <button mat-icon-button (click)="addNewStubItem(node)" matTooltip="Add new step" color="primary">
             <mat-icon>add</mat-icon></button>
-        <button mat-icon-button (click)="startEditingNode(node)" matTooltip="Edit step">
+        <button mat-icon-button (click)="startEditingNode(node)" matTooltip="Edit step" color="primary">
             <mat-icon>edit_document</mat-icon>
         </button>
-       <button mat-icon-button (click)="delete(node)" matTooltip="Delete step">
+       <button mat-icon-button (click)="delete(node)" matTooltip="Delete step" color="warn">
             <mat-icon>delete_forever</mat-icon>
         </button>
     </mat-tree-node>
