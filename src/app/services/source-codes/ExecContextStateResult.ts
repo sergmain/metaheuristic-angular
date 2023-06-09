@@ -1,11 +1,29 @@
 import { DefaultResponse } from '@app/models/DefaultResponse';
 import { SourceCodeType } from '@app/enums/SourceCodeType';
 
+export interface VariableInfo {
+    id: number;
+    // name
+    nm: string;
+    // context EnumsApi.VariableContext
+    ctx: string;
+    // inited
+    i: boolean;
+    // defines: does this variable equal to null?
+    // boolean nullified
+    n: boolean;
+    // ext
+    e: string;
+}
+
 export interface StateCell {
     empty: boolean;
     taskId: number;
     state: string;
     context: string;
+    fromCache: boolean;
+
+    outs: VariableInfo[];
 }
 
 export interface ColumnHeader {
