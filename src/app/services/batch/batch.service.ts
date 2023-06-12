@@ -11,7 +11,7 @@ import { BatchExexStatusComparer } from './BatchExexStatusComparer';
 import { ExecStatuses } from './ExecStatuses';
 import { Status } from './Status';
 
-const url = (urlString: string): string => `${environment.baseUrl}dispatcher/batch/${urlString}`;
+const url = (s: string): string => `${environment.baseUrl}dispatcher/batch/${s}`;
 
 const FINISHED_STATE: number = 4;
 const ERROR_STATE: number = -1;

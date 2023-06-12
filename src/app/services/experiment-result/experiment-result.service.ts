@@ -6,7 +6,7 @@ import { environment } from '@src/environments/environment';
 import { ExperimentResultData } from '@app/services/experiment-result/ExperimentResultData';
 import { OperationStatusRest } from '@app/models/OperationStatusRest';
 
-const url = (s: string) => `${environment.baseUrl}dispatcher/experiment-result/${s}`;
+const url = (s: string): string => `${environment.baseUrl}dispatcher/experiment-result/${s}`;
 
 
 @Injectable({ providedIn: 'root' })

@@ -48,7 +48,7 @@ export class ExecContextService {
 
     execContextDeleteCommit(sourceCodeId: string, execContextId: string): Observable<OperationStatusRest> {
         return this.http.post<OperationStatusRest>(
-            url(`exec-context-delete-commit/`),
+            url(`exec-context-delete-commit`),
             generateFormData({ sourceCodeId, execContextId })
         );
     }
@@ -61,8 +61,6 @@ export class ExecContextService {
     execContextsState(sourceCodeId: string, execContextId: string): Observable<ExecContextStateResult> {
         return this.http.get<ExecContextStateResult>(url(`exec-context-state/${sourceCodeId}/${execContextId}`));
     }
-
-
 
     // @GetMapping("/exec-context-task-exec-info/{sourceCodeId}/{execContextId}/{taskId}")
     // @PreAuthorize("hasAnyRole('ADMIN', 'DATA', 'MANAGER', 'OPERATOR')")

@@ -9,7 +9,7 @@ import { AccountsResult } from './AccountsResult';
 import { NewAccount } from './NewAccount';
 import {FormControl, ɵFormGroupValue, ɵTypedOrUntyped} from '@angular/forms';
 
-const url = (urlString: string): string => `${environment.baseUrl}dispatcher/account/${urlString}`;
+const url = (s: string): string => `${environment.baseUrl}dispatcher/account/${s}`;
 
 @Injectable({ providedIn: 'root' })
 export class AccountsService {

@@ -27,7 +27,7 @@ export class ProcessorsService {
     }
 
     formCommit(station: Processor): Observable<ProcessorResult> {
-        return this.http.post<ProcessorResult>(url(`/processor-form-commit/`), station);
+        return this.http.post<ProcessorResult>(url(`/processor-form-commit`), station);
     }
 
     deleteProcessorCommit(id: string): Observable<OperationStatusRest> {
