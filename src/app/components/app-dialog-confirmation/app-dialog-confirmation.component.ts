@@ -1,6 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { forkJoin } from 'rxjs';
+import {MhUtils} from '@services/mh-utils/mh-utils.service';
 
 export interface QuestionData {
     text: string;
@@ -11,6 +12,7 @@ export interface DialogData {
     resolveTitle: string;
     rejectTitle: string;
     question ?(...data: any[]) : QuestionData | string;
+    theme?: string;
 }
 
 export interface ConfirmationDialogInterface {
@@ -40,8 +42,14 @@ export class AppDialogConfirmationComponent {
     onYesClick(): void {
         this.dialogRef.close(1);
     }
-}
 
+    getTheme(theme:string): string {
+        let actualTheme = MhUtils.isNull(theme) ? 'warn' : theme;
+        console.log("theme, actualTheme: ", theme, actualTheme);
+        return actualTheme;
+    }
+
+}
 
 
 /**
@@ -72,14 +80,22 @@ export function ConfirmationDialogMethod(dialogData: DialogData) {
                 questionData = dialogData.question(...args) as QuestionData;
             }
 
-            if (!this.dialog) { dialogError(); }
-            if (questionData.params && !this.translate) { translateError(); }
+            if (!this.dialog) {
+                dialogError();
+            }
+            if (questionData.params && !this.translate) {
+                translateError();
+            }
+
+            let actualTheme = MhUtils.isNull(dialogData.theme) ? 'warn' : dialogData.theme;
+            // console.log("ConfirmationDialogMethod, theme, actualTheme: ", dialogData.theme, actualTheme);
 
             if (this.translate) {
                 forkJoin(
                         this.translate.get(questionData.text, questionData.params),
                         this.translate.get(dialogData.resolveTitle),
-                        this.translate.get(dialogData.rejectTitle)
+                        this.translate.get(dialogData.rejectTitle),
+                        this.translate.get(actualTheme)
                     )
                     .subscribe(
                         (response: any) => {
@@ -88,7 +104,8 @@ export function ConfirmationDialogMethod(dialogData: DialogData) {
                                     data: {
                                         question: response[0],
                                         resolveTitle: response[1],
-                                        rejectTitle: response[2]
+                                        rejectTitle: response[2],
+                                        theme: response[3]
                                     }
                                 })
                                 .afterClosed()
@@ -105,7 +122,8 @@ export function ConfirmationDialogMethod(dialogData: DialogData) {
                         data: {
                             question: questionData.text,
                             resolveTitle: dialogData.resolveTitle,
-                            rejectTitle: dialogData.rejectTitle
+                            rejectTitle: dialogData.rejectTitle,
+                            theme: actualTheme
                         }
                     })
                     .afterClosed()

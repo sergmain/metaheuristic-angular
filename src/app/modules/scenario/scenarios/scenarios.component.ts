@@ -67,7 +67,8 @@ export class ScenariosComponent extends UIStateComponent implements OnInit {
             `Do you want to exec Scenario #${ss.scenarioId}, ${ss.name}`,
 
         resolveTitle: 'Run scenario',
-        rejectTitle: 'Cancel'
+        rejectTitle: 'Cancel',
+        theme: 'primary'
     })
     runScenario(scenario: SimpleScenario): void {
         this.scenarioService

@@ -832,13 +832,11 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
     }
 
     @ConfirmationDialogMethod({
-        question: (): string =>
-            `Do you want to exec Scenario`,
-
+        question: (): string => `Do you want to exec Scenario`,
         resolveTitle: 'Run scenario',
-        rejectTitle: 'Cancel'
+        rejectTitle: 'Cancel',
+        theme: 'primary'
     })
-
     runScenario(): void {
         this.scenarioService
             .runScenario(this.scenarioGroupId.toString(), this.scenarioId.toString())

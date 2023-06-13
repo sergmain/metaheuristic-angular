@@ -1,9 +1,7 @@
-<div class="mat-dialog-content">{{data.question}}</div><br />
+<div class="mat-dialog-content">
+  <p>{{data.question}}</p>
+</div>
 <div class="mat-dialog-actions">
-  <div class="mat-dialog-action">
-    <button mat-stroked-button="mat-stroked-button" (click)="onNoClick()">{{data.rejectTitle}}</button>
-  </div>
-  <div class="mat-dialog-action">
-    <button mat-flat-button="mat-flat-button" color="warn" (click)="onYesClick()">{{data.resolveTitle}}</button>
-  </div>
-</div> 
+  <button mat-stroked-button="mat-stroked-button" (click)="onNoClick()">{{data.rejectTitle}}</button>
+  <button mat-flat-button="mat-flat-button" color="{{getTheme(data.theme)}}" (click)="onYesClick()">{{data.resolveTitle}}</button>
+</div>
