@@ -145,13 +145,24 @@
                                     </mat-select>
                                     <mat-hint>{{ 'main.This is a required field' | translate }}</mat-hint>
                                 </mat-form-field>
-                                <mat-form-field appearance="outline" *ngIf="isApiNeeded()" style="width: 50%;">
-                                    <mat-label>{{ 'evaluation-add.List of APIs' | translate }}</mat-label>
-                                    <mat-select formControlName="apiUid">
-                                        <mat-option *ngFor="let api of listOfApis" [value]="api">{{api.uid}}</mat-option>
-                                    </mat-select>
-                                    <mat-hint>{{ 'main.This is a required field' | translate }}</mat-hint>
-                                </mat-form-field>
+                                <ct-flex gap="8px" justify-content="space-between">
+                                    <ct-flex-item  style="width: 100%;">
+                                        <mat-form-field appearance="outline" *ngIf="isApiNeeded()" style="width: 50%;">
+                                            <mat-label>{{ 'evaluation-add.List of APIs' | translate }}</mat-label>
+                                            <mat-select formControlName="apiUid">
+                                                <mat-option *ngFor="let api of listOfApis" [value]="api">{{api.uid}}</mat-option>
+                                            </mat-select>
+                                            <mat-hint>{{ 'main.This is a required field' | translate }}</mat-hint>
+                                        </mat-form-field>
+                                    </ct-flex-item>
+                                    <ct-flex-item  justify-content="flex-end">
+                                            <mat-label>{{ 'scenario.Use cache' | translate }}</mat-label>
+                                            <!--                                    <mat-slide-toggle formControlName="isCachable"  (change)="toggleCachable($event)">-->
+                                            <mat-slide-toggle formControlName="isCachable" >
+                                            </mat-slide-toggle>
+                                    </ct-flex-item>
+                                </ct-flex>
+
                                 <mat-form-field appearance="outline" style="width: 100%;">
                                     <mat-label *ngIf="isApi">Prompt name, min 5 chars, required</mat-label>
                                     <mat-label *ngIf="!isApi">Name of process, min 5 chars, required</mat-label>

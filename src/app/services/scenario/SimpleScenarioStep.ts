@@ -15,6 +15,7 @@ export class SimpleScenarioStep {
     isNew: boolean;
     functionCode: string;
     aggregateType: string;
+    isCachable: boolean
     mode: NodeMode;
 
     steps: SimpleScenarioStep[];

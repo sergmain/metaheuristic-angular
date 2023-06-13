@@ -61,6 +61,7 @@ export class StepFlatNode {
         public isNew: boolean,
         public functionCode: string,
         public aggregateType: string,
+        public isCachable: boolean,
         public mode: NodeMode
     ) {}
 }
@@ -116,6 +117,7 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
         aggregateType: new FormControl(null),
         processingFunction: new FormControl(null),
         expected: new FormControl(''),
+        isCachable: new FormControl(false)
     });
 
     scenarioForm = new FormGroup({
@@ -211,7 +213,7 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
         node.nodeId = nodeId;
         let stepFlatNode = new StepFlatNode(nodeId, numberOfSubSteps>0, level, node.uuid,
             node.apiId, node.apiCode, node.name, node.prompt, node.r, node.resultCode, node.expected,
-            node.isNew, node.functionCode, node.aggregateType,
+            node.isNew, node.functionCode, node.aggregateType, node.isCachable,
             MhUtils.isNull(node.mode) ? NodeMode.show : node.mode
         );
         this.allUuids.push(node.uuid);
@@ -572,6 +574,7 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
             aggregateType: new FormControl(null),
             processingFunction: new FormControl(null),
             expected: new FormControl(detailNode.node.expected),
+            isCachable: new FormControl(detailNode.node.isCachable)
         });
 
         // noinspection UnnecessaryLocalVariableJS
