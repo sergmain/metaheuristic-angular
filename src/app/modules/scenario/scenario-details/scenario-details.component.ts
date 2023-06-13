@@ -117,7 +117,7 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
         aggregateType: new FormControl(null),
         processingFunction: new FormControl(null),
         expected: new FormControl(''),
-        isCachable: new FormControl(false)
+        cachable: new FormControl(false)
     });
 
     scenarioForm = new FormGroup({
@@ -574,7 +574,7 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
             aggregateType: new FormControl(null),
             processingFunction: new FormControl(null),
             expected: new FormControl(detailNode.node.expected),
-            isCachable: new FormControl(detailNode.node.isCachable)
+            cachable: new FormControl(detailNode.node.isCachable)
         });
 
         // noinspection UnnecessaryLocalVariableJS
@@ -657,6 +657,7 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
         let aggregateType = MhUtils.isNull(this.form.value.aggregateType) ? null : this.form.value.aggregateType;
         let expected = this.form.value.expected;
         let apiUid = this.isApiNeeded() ? this.form.value.apiUid.id.toString() : null;
+        let isCachable= this.form.value.cachable;
 
         this.formDirective.resetForm();
         this.form.reset();
@@ -673,6 +674,7 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
                 resultCode,
                 functionCode,
                 aggregateType,
+                isCachable.toString(),
                 expected
             )
             .subscribe(

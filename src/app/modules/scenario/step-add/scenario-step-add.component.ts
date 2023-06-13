@@ -88,6 +88,7 @@ export class ScenarioStepAddComponent extends UIStateComponent implements OnInit
                 'some code',
                 null,
                 null,
+                'false',
                 null
             )
             .subscribe(

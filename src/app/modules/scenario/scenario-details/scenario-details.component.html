@@ -155,11 +155,9 @@
                                             <mat-hint>{{ 'main.This is a required field' | translate }}</mat-hint>
                                         </mat-form-field>
                                     </ct-flex-item>
-                                    <ct-flex-item  justify-content="flex-end">
+                                    <ct-flex-item justify-content="flex-end" *ngIf="isApi">
                                             <mat-label>{{ 'scenario.Use cache' | translate }}</mat-label>
-                                            <!--                                    <mat-slide-toggle formControlName="isCachable"  (change)="toggleCachable($event)">-->
-                                            <mat-slide-toggle formControlName="isCachable" >
-                                            </mat-slide-toggle>
+                                            <mat-slide-toggle formControlName="cachable"></mat-slide-toggle>
                                     </ct-flex-item>
                                 </ct-flex>
 
