@@ -240,7 +240,8 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
     };
 
     hasNewNodePresent = (_: number, _nodeData: StepFlatNode) => {
-        let b = this.newNodePresent() || this.isFormActive;
+        let b = this.newNodePresent() || this.isFormActive || !this.isStepEvaluation;
+
         //console.log("hasNewNodePresent()", b, _nodeData.nodeId);
         return b;
     };
