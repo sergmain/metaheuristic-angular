@@ -277,7 +277,7 @@
                 <mat-icon>edit_document</mat-icon>
             </button>
             <button mat-icon-button (click)="startStepEvaluation(node)" matTooltip="Evaluate step" color="primary"
-                    *ngIf="!stepEvaluation()">
+                    *ngIf="!stepEvaluation() && canBeEvaluated(node)">
                 <mat-icon>chat_paste_go</mat-icon>
             </button>
             <button mat-icon-button (click)="delete(node)" matTooltip="Delete step" color="warn"

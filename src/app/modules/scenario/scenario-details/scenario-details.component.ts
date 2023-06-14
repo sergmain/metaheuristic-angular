@@ -249,6 +249,12 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
         return b;
     };
 
+    canBeEvaluated(node: StepFlatNode) {
+        let b = MhUtils.isNull(node.functionCode)
+            || MhUtils.anyStr(node.functionCode, ['mh.acceptance-test', 'mh.enhance-text']);
+        return b;
+    }
+
     isMhAggregate() {
         let b = MhUtils.isNotNull(this.form.value.processingFunction) && this.form.value.processingFunction.code===MH_AGGREGATE;
         return b;

@@ -15,6 +15,15 @@ export class MhUtils {
         return MhUtils.isNotNull(obj) && obj===true;
     }
 
+    static anyStr(s:string, anyStrs: string[]): boolean {
+        for (const ss of anyStrs) {
+            if (s===ss) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     static len(obj: any) {
         return MhUtils.isNull(obj) || MhUtils.isNull(obj.length) ? 0 : obj.length;
     }
