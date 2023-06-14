@@ -74,7 +74,9 @@ TODO p0 2023-05-20 implement
             <td *ngFor="let cell of row.cells">
                 <div *ngIf="!cell.empty">
                     <div *ngIf="!cell.fromCache">{{cell.taskId}},&nbsp;{{cell.state}}</div>
-                    <div *ngIf="cell.fromCache">{{cell.taskId}},&nbsp;{{cell.state}},&nbsp;CACHED</div>
+                    <div *ngIf="cell.fromCache">{{cell.taskId}},&nbsp;{{cell.state}},&nbsp;
+                        <span class="link" (click)="clearCache(cell.taskId)">CACHED</span>
+                    </div>
                     <ng-container *ngTemplateOutlet="stateOkTemplate; context:{cell:cell}"></ng-container>
                     <ng-container *ngTemplateOutlet="stateErrorTemplate; context:{cell:cell}"></ng-container>
                 </div>

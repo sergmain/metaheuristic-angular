@@ -55,7 +55,6 @@ export class ExecContextService {
 
     execContextTargetState(sourceCodeId: string, state: string, id: string): Observable<OperationStatusRest> {
         return this.http.get<OperationStatusRest>(url(`exec-context-target-state/${sourceCodeId}/${state}/${id}`));
-
     }
 
     execContextsState(sourceCodeId: string, execContextId: string): Observable<ExecContextStateResult> {
@@ -82,5 +81,12 @@ export class ExecContextService {
             observe: 'response',
             responseType: 'blob'
         });
+    }
+
+    clearCache(taskId: string) {
+        return this.http.post<OperationStatusRest>(
+            url(`exec-context/task-reset-cache`),
+            generateFormData({ taskId })
+        );
     }
 }

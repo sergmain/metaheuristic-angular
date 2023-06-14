@@ -5,7 +5,7 @@ import { ExecContextService } from '@src/app/services/exec-context/exec-context.
 import { TaskExecInfo } from '@src/app/services/exec-context/TaskExecInfo';
 import { ExecContextStateResult } from '@src/app/services/source-codes/ExecContextStateResult';
 import * as fileSaver from 'file-saver';
-import {MhUtils} from '@services/mh-utils/mh-utils.service';
+import {ConfirmationDialogMethod} from '@app/components/app-dialog-confirmation/app-dialog-confirmation.component';
 
 @Component({
   selector: 'ct-state-of-tasks',
@@ -72,5 +72,18 @@ export class CtStateOfTasksComponent implements OnInit {
         });
   }
 
-  protected readonly MhUtils = MhUtils;
+  @ConfirmationDialogMethod({
+    question: (taskId: number): string => `Do you want to clear Cache for Task #${taskId}`,
+    resolveTitle: 'Clear Cache',
+    rejectTitle: 'Cancel',
+    theme: 'warn'
+  })
+  clearCache(taskId: number): void {
+    this.execContextService
+        .clearCache(taskId.toString())
+        .subscribe(v => {
+          //
+        });
+  }
+
 }
