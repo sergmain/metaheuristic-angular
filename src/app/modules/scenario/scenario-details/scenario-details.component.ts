@@ -23,6 +23,7 @@ import {InternalFunction} from '@services/scenario/InternalFunction';
 import {ConfirmationDialogMethod} from '@app/components/app-dialog-confirmation/app-dialog-confirmation.component';
 import {MatDialog} from '@angular/material/dialog';
 import {ExecContextService} from '@services/exec-context/exec-context.service';
+import {PreparedStep} from '@services/scenario/PreparedStep';
 
 const MH_ACCEPTANCE_TEST = 'mh.acceptance-test';
 const MH_AGGREGATE = 'mh.aggregate';
@@ -110,6 +111,8 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
 
     simpleScenarioSteps: SimpleScenarioSteps = null;
     activeNode: StepFlatNode = null;
+
+    preparedStep: PreparedStep = null;
 
     form = new FormGroup({
         name: new FormControl('', [Validators.required, Validators.minLength(5)]),
@@ -230,21 +233,16 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
     hasNoContent = (_: number, _nodeData: StepFlatNode) => {
         console.log("hasNoContent()", JSON.stringify(_nodeData));
         return ScenarioDetailsComponent.anyMode(_nodeData.mode, [NodeMode.new, NodeMode.edit])
-        // return _nodeData.uuid === '';
     };
 
     hasNewNodeAbsentAndNotEvaluation = (_: number, _nodeData: StepFlatNode) => {
-        // let b = !this.newNodePresent() && !this.isFormActive;
         let b = !this.hasNewNodePresent(_, _nodeData);
-        // let b = !this.hasNewNodePresent(_, _nodeData) && !this.isStepEvaluation;
         //console.log("hasNewNodeAbsent()", b, _nodeData.nodeId);
         return b;
     };
 
     hasNewNodePresent = (_: number, _nodeData: StepFlatNode) => {
-        // let b = this.newNodePresent() || this.isFormActive || !this.isStepEvaluation;
         let b = this.newNodePresent() || this.isFormActive;
-
         //console.log("hasNewNodePresent()", b, _nodeData.nodeId);
         return b;
     };
@@ -639,9 +637,19 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
 
     // Select the category so we can insert the new item.
     startStepEvaluation(node: StepFlatNode): void {
-        this.isStepEvaluation = true;
-        this.activeNode = node;
-        this.dataChange.next(this.dataTree);
+        this.scenarioService
+            .prepareStepForEvaluation(this.scenarioId.toString(), node.uuid)
+            .subscribe(o => {
+                console.log("startStepEvaluation(), response: ", JSON.stringify(o));
+                // console.log("getSourceCodeId(), sourceCodeId", this.sourceCodeId);
+                this.preparedStep = o;
+                if (MhUtils.isNull(o.errorMessagesAsStr)) {
+                    this.isStepEvaluation = true;
+                    this.activeNode = node;
+                    this.dataChange.next(this.dataTree);
+                }
+            });
+
     }
 
     // Select the category so we can insert the new item.

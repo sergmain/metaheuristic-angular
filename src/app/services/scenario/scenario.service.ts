@@ -9,6 +9,7 @@ import {ScenariosResult} from '@services/scenario/ScenariosResult';
 import {ScenarioUidsForAccount} from '@services/scenario/ScenarioUidsForAccount';
 import {SimpleScenarioSteps} from '@services/scenario/SimpleScenarioSteps';
 import {SimpleSourceCodeUid} from '@services/source-codes/SimpleSourceCodeUid';
+import {PreparedStep} from '@services/scenario/PreparedStep';
 
 const url = (s: string): string => `${environment.baseUrl}dispatcher/scenario/${s}`;
 
@@ -89,6 +90,10 @@ export class ScenarioService {
 
     scenarioStepAdd(): Observable<ScenarioUidsForAccount> {
         return this.http.get<ScenarioUidsForAccount>(url(`scenario-step-add`));
+    }
+
+    prepareStepForEvaluation(scenarioId: string, uuid: string): Observable<PreparedStep> {
+        return this.http.get<PreparedStep>(url(`scenario-step-evaluation-prepare/${scenarioId}/${uuid}`));
     }
 
     scenarioStepDeleteCommit(scenarioId: string, uuid: string): Observable<OperationStatusRest> {
