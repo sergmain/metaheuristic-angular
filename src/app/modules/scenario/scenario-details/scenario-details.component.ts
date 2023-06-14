@@ -109,6 +109,7 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
     dataTree :SimpleScenarioStep[]
 
     simpleScenarioSteps: SimpleScenarioSteps = null;
+    activeNode: StepFlatNode = null;
 
     form = new FormGroup({
         name: new FormControl('', [Validators.required, Validators.minLength(5)]),
@@ -234,13 +235,15 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
 
     hasNewNodeAbsentAndNotEvaluation = (_: number, _nodeData: StepFlatNode) => {
         // let b = !this.newNodePresent() && !this.isFormActive;
-        let b = !this.hasNewNodePresent(_, _nodeData) && !this.isStepEvaluation;
+        let b = !this.hasNewNodePresent(_, _nodeData);
+        // let b = !this.hasNewNodePresent(_, _nodeData) && !this.isStepEvaluation;
         //console.log("hasNewNodeAbsent()", b, _nodeData.nodeId);
         return b;
     };
 
     hasNewNodePresent = (_: number, _nodeData: StepFlatNode) => {
-        let b = this.newNodePresent() || this.isFormActive || !this.isStepEvaluation;
+        // let b = this.newNodePresent() || this.isFormActive || !this.isStepEvaluation;
+        let b = this.newNodePresent() || this.isFormActive;
 
         //console.log("hasNewNodePresent()", b, _nodeData.nodeId);
         return b;
@@ -625,13 +628,13 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
     }
 
     stepEvaluation() :boolean {
-        this.dataChange.next(this.dataTree);
         return this.isStepEvaluation;
     }
 
     // Select the category so we can insert the new item.
     startStepEvaluation(node: StepFlatNode): void {
         this.isStepEvaluation = true;
+        this.activeNode = node;
         this.dataChange.next(this.dataTree);
     }
 

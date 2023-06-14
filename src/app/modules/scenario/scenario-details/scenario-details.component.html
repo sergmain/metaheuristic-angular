@@ -102,11 +102,11 @@
 <ct-section>
     <ct-section-body style="width: 100%;">
         <ct-section-body-row>
-            <ct-flex gap="8px" justify-content="space-between">
+            <ct-flex gap="8px" justify-content="flex-start">
                 <ct-flex-item>
                     <ng-container *ngTemplateOutlet="scenarioTree"></ng-container>
                 </ct-flex-item>
-                <ct-flex-item justify-content="flex-end" *ngIf="stepEvaluation()">
+                <ct-flex-item *ngIf="stepEvaluation()">
                     <ng-container *ngTemplateOutlet="stepEvaluationTemplate"></ng-container>
                 </ct-flex-item>
             </ct-flex>
@@ -118,11 +118,13 @@
     <mat-tree [dataSource]="dataSource" [treeControl]="treeControl" cdkDropList (cdkDropListDropped)="drop($event)">
         <mat-tree-node *matTreeNodeDef="let node; when: modeEditOrNewNode" matTreeNodePadding
                        cdkDrag [cdkDragData]="node" (mouseenter)="dragHover(node)"
-                       (mouseleave)="dragHoverEnd()" (cdkDragStarted)="dragStart()" (cdkDragReleased)="dragEnd()">
+                       (mouseleave)="dragHoverEnd()" (cdkDragStarted)="dragStart()" (cdkDragReleased)="dragEnd()"
+                       [ngClass]="{ 'background-highlight': activeNode === node }"
+        >
             <button mat-icon-button disabled></button>
 
             <ct-cols style="width: 100%;" *ngIf="showMyContainer">
-                <ct-col style="width: 50%;">
+                <ct-col style="width: 75%;">
                     <ct-section>
                         <ct-section-header>
                             <ct-section-header-row>
@@ -265,15 +267,19 @@
             </button>
             Type: {{MhUtils.isNull(node.functionCode) ? 'API: '+ node.apiCode : 'Process: ' + node.functionCode}}, Name: {{node.name}}<br/>{{node.prompt}}<br/>Result code: [[{{node.resultCode}}]]
             <ng-container *ngIf="isMhAcceptanceTestNode(node)" ><br/>expected: {{node.expected}}</ng-container>
-            <button mat-icon-button (click)="addNewStubItem(node)" matTooltip="Add new step" color="primary">
+            <button mat-icon-button (click)="addNewStubItem(node)" matTooltip="Add new step" color="primary"
+                    *ngIf="!stepEvaluation()">
                 <mat-icon>add</mat-icon></button>
-            <button mat-icon-button (click)="startEditingNode(node)" matTooltip="Edit step" color="primary">
+            <button mat-icon-button (click)="startEditingNode(node)" matTooltip="Edit step" color="primary"
+                    *ngIf="!stepEvaluation()">
                 <mat-icon>edit_document</mat-icon>
             </button>
-            <button mat-icon-button (click)="startStepEvaluation(node)" matTooltip="Evaluate step" color="primary">
+            <button mat-icon-button (click)="startStepEvaluation(node)" matTooltip="Evaluate step" color="primary"
+                    *ngIf="!stepEvaluation()">
                 <mat-icon>chat_paste_go</mat-icon>
             </button>
-            <button mat-icon-button (click)="delete(node)" matTooltip="Delete step" color="warn">
+            <button mat-icon-button (click)="delete(node)" matTooltip="Delete step" color="warn"
+                    *ngIf="!stepEvaluation()">
                 <mat-icon>delete_forever</mat-icon>
             </button>
         </mat-tree-node>
