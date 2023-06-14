@@ -106,13 +106,13 @@
                 <ct-flex-item>
                     <ng-container *ngTemplateOutlet="scenarioTree"></ng-container>
                 </ct-flex-item>
-                <ct-flex-item justify-content="flex-end">
+                <ct-flex-item justify-content="flex-end" *ngIf="stepEvaluation()">
+                    <ng-container *ngTemplateOutlet="stepEvaluationTemplate"></ng-container>
                 </ct-flex-item>
             </ct-flex>
         </ct-section-body-row>
     </ct-section-body>
 </ct-section>
-
 
 <ng-template #scenarioTree>
     <mat-tree [dataSource]="dataSource" [treeControl]="treeControl" cdkDropList (cdkDropListDropped)="drop($event)">
@@ -252,7 +252,7 @@
             {{node.name}}<br/> {{node.prompt}}<br/>Result code: [[{{node.resultCode}}]]
         </mat-tree-node>
 
-        <mat-tree-node *matTreeNodeDef="let node; when: hasNewNodeAbsent" matTreeNodeToggle matTreeNodePadding
+        <mat-tree-node *matTreeNodeDef="let node; when: hasNewNodeAbsentAndNotEvaluation" matTreeNodeToggle matTreeNodePadding
                        cdkDrag [cdkDragData]="node" (mouseenter)="dragHover(node)" (mouseleave)="dragHoverEnd()"
                        (cdkDragStarted)="dragStart()" (cdkDragReleased)="dragEnd()">
             <!--normal item -->
@@ -270,7 +270,7 @@
             <button mat-icon-button (click)="startEditingNode(node)" matTooltip="Edit step" color="primary">
                 <mat-icon>edit_document</mat-icon>
             </button>
-            <button mat-icon-button (click)="startEditingNode(node)" matTooltip="Evaluate step" color="primary">
+            <button mat-icon-button (click)="startStepEvaluation(node)" matTooltip="Evaluate step" color="primary">
                 <mat-icon>chat_paste_go</mat-icon>
             </button>
             <button mat-icon-button (click)="delete(node)" matTooltip="Delete step" color="warn">
@@ -278,6 +278,42 @@
             </button>
         </mat-tree-node>
     </mat-tree>
+</ng-template>
+
+<ng-template #stepEvaluationTemplate>
+    <ct-cols style="width: 100%;">
+        <ct-col style="width: 50%;">
+            <ct-section>
+                <ct-section-header>
+                    <ct-section-header-row>
+                        <ct-section-header-row>
+                            <ct-flex justify-content="space-between" gap="9px">
+                                <ct-flex-item>
+                                    <ct-heading>Evaluate step</ct-heading>
+                                </ct-flex-item>
+                            </ct-flex>
+                        </ct-section-header-row>
+                    </ct-section-header-row>
+                </ct-section-header>
+                <ct-section-body>
+                    <ct-section-body-row>
+                        This place for Step Evaluation.
+                    </ct-section-body-row>
+                </ct-section-body>
+                <ct-section-footer>
+                    <ct-section-footer-row>
+                        <ct-flex justify-content="flex-end" gap="8px">
+                            <ct-flex-item>
+                                <button mat-flat-button color="accent" (click)="cancelStepEvaluation()">
+                                    Cancel
+                                </button>
+                            </ct-flex-item>
+                        </ct-flex>
+                    </ct-section-footer-row>
+                </ct-section-footer>
+            </ct-section>
+        </ct-col>
+    </ct-cols>
 </ng-template>
 
 <ng-template #execContexts>

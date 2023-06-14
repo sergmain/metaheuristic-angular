@@ -100,6 +100,7 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
     // for fast hiding input form
     showMyContainer: boolean = true;
     isFormActive: boolean = false;
+    isStepEvaluation: boolean = false;
 
     allUuids: string[] = [];
     isApi: boolean = true;
@@ -231,9 +232,9 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
         // return _nodeData.uuid === '';
     };
 
-    hasNewNodeAbsent = (_: number, _nodeData: StepFlatNode) => {
+    hasNewNodeAbsentAndNotEvaluation = (_: number, _nodeData: StepFlatNode) => {
         // let b = !this.newNodePresent() && !this.isFormActive;
-        let b = !this.hasNewNodePresent(_, _nodeData);
+        let b = !this.hasNewNodePresent(_, _nodeData) && !this.isStepEvaluation;
         //console.log("hasNewNodeAbsent()", b, _nodeData.nodeId);
         return b;
     };
@@ -621,6 +622,24 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
         this.addNewNode(detailNode.node);
         this.dataChange.next(this.dataTree);
     }
+
+    stepEvaluation() :boolean {
+        this.dataChange.next(this.dataTree);
+        return this.isStepEvaluation;
+    }
+
+    // Select the category so we can insert the new item.
+    startStepEvaluation(node: StepFlatNode): void {
+        this.isStepEvaluation = true;
+        this.dataChange.next(this.dataTree);
+    }
+
+    // Select the category so we can insert the new item.
+    cancelStepEvaluation(): void {
+        this.isStepEvaluation = false;
+        this.dataChange.next(this.dataTree);
+    }
+
 
     createFirstDetail(): void {
         // console.log("27.10", this.apiUid)
