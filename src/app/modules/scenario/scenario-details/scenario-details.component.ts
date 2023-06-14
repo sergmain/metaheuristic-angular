@@ -72,7 +72,7 @@ export class StepFlatNode {
 @Component({
     selector: 'scenario-details',
     templateUrl: 'scenario-details.component.html',
-    styleUrls: ['scenario-details.component.css']
+    styleUrls: ['scenario-details.component.scss']
 })
 export class ScenarioDetailsComponent extends UIStateComponent implements OnInit, OnDestroy, AfterViewInit {
     @ViewChild('execContexts') execContexts: TemplateRef<any>;
@@ -640,6 +640,7 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
 
     // Select the category so we can insert the new item.
     cancelStepEvaluation(): void {
+        this.activeNode = null;
         this.isStepEvaluation = false;
         this.dataChange.next(this.dataTree);
     }
@@ -711,6 +712,12 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
                     subscribe.unsubscribe();
                 }
             );
+    }
+
+    isActiveNode(node: StepFlatNode) {
+        let b = MhUtils.isNotNull(this.activeNode) && node.uuid===this.activeNode.uuid;
+        console.log("60.21 ", b)
+        return b;
     }
 
     @ConfirmationDialogMethod({
