@@ -106,10 +106,6 @@
                 <ct-flex-item>
                     <ng-container *ngTemplateOutlet="scenarioTree"></ng-container>
                 </ct-flex-item>
-                <ct-flex-item  style="width: 20px;"/>
-                <ct-flex-item *ngIf="stepEvaluation()">
-                    <ng-container *ngTemplateOutlet="stepEvaluationTemplate"></ng-container>
-                </ct-flex-item>
             </ct-flex>
         </ct-section-body-row>
     </ct-section-body>
@@ -257,40 +253,51 @@
         <mat-tree-node *matTreeNodeDef="let node; when: hasNewNodeAbsentAndNotEvaluation" matTreeNodeToggle matTreeNodePadding
                        cdkDrag [cdkDragData]="node" (mouseenter)="dragHover(node)" (mouseleave)="dragHoverEnd()"
                        (cdkDragStarted)="dragStart()" (cdkDragReleased)="dragEnd()"
-                       [ngClass]="{ 'background-highlight': isActiveNode(node) }"
+
         >
-            <!--normal item -->
-            <button mat-icon-button
-                    matTreeNodeToggle (click)="expansionModel.toggle(node.uuid)"
-                    [attr.aria-label]="'toggle ' + node.uuid">
-                <mat-icon class="mat-icon-rtl-mirror">
-                    {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
-                </mat-icon>
-            </button>
-            Type: {{MhUtils.isNull(node.functionCode) ? 'API: '+ node.apiCode : 'Process: ' + node.functionCode}}, Name: {{node.name}}<br/>{{node.prompt}}<br/>Result code: [[{{node.resultCode}}]]
-            <ng-container *ngIf="isMhAcceptanceTestNode(node)" ><br/>expected: {{node.expected}}</ng-container>
-            <button mat-icon-button (click)="addNewStubItem(node)" matTooltip="Add new step" color="primary"
-                    *ngIf="!stepEvaluation()">
-                <mat-icon>add</mat-icon></button>
-            <button mat-icon-button (click)="startEditingNode(node)" matTooltip="Edit step" color="primary"
-                    *ngIf="!stepEvaluation()">
-                <mat-icon>edit_document</mat-icon>
-            </button>
-            <button mat-icon-button (click)="startStepEvaluation(node)" matTooltip="Evaluate step" color="primary"
-                    *ngIf="!stepEvaluation() && canBeEvaluated(node)">
-                <mat-icon>chat_paste_go</mat-icon>
-            </button>
-            <button mat-icon-button (click)="delete(node)" matTooltip="Delete step" color="warn"
-                    *ngIf="!stepEvaluation()">
-                <mat-icon>delete_forever</mat-icon>
-            </button>
+            <ct-section-body>
+                <ct-section-body-row [ngClass]="{ 'background-highlight': isActiveNode(node) }">
+                    <ct-flex>
+                        <!--normal item -->
+                        <button mat-icon-button
+                                matTreeNodeToggle (click)="expansionModel.toggle(node.uuid)"
+                                [attr.aria-label]="'toggle ' + node.uuid">
+                            <mat-icon class="mat-icon-rtl-mirror">
+                                {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+                            </mat-icon>
+                        </button>
+                        Type: {{MhUtils.isNull(node.functionCode) ? 'API: '+ node.apiCode : 'Process: ' + node.functionCode}}, Name: {{node.name}}<br/>{{node.prompt}}<br/>Result code: [[{{node.resultCode}}]]
+                        <ng-container *ngIf="isMhAcceptanceTestNode(node)" ><br/>expected: {{node.expected}}</ng-container>
+                        <button mat-icon-button (click)="addNewStubItem(node)" matTooltip="Add new step" color="primary"
+                                *ngIf="!stepEvaluation()">
+                            <mat-icon>add</mat-icon></button>
+                        <button mat-icon-button (click)="startEditingNode(node)" matTooltip="Edit step" color="primary"
+                                *ngIf="!stepEvaluation()">
+                            <mat-icon>edit_document</mat-icon>
+                        </button>
+                        <button mat-icon-button (click)="startStepEvaluation(node)" matTooltip="Evaluate step" color="primary"
+                                *ngIf="!stepEvaluation() && canBeEvaluated(node)">
+                            <mat-icon>chat_paste_go</mat-icon>
+                        </button>
+                        <button mat-icon-button (click)="delete(node)" matTooltip="Delete step" color="warn"
+                                *ngIf="!stepEvaluation()">
+                            <mat-icon>delete_forever</mat-icon>
+                        </button>
+                    </ct-flex>
+                </ct-section-body-row>
+                <ct-section-body-row>
+                    <ct-flex *ngIf="stepEvaluation() && isActiveNode(node)">
+                        <ng-container *ngTemplateOutlet="stepEvaluationTemplate"></ng-container>
+                    </ct-flex>
+                </ct-section-body-row>
+            </ct-section-body>
         </mat-tree-node>
     </mat-tree>
 </ng-template>
 
 <ng-template #stepEvaluationTemplate>
     <ct-cols style="width: 100%;">
-        <ct-col>
+        <ct-col style="width: 100%;">
             <ct-section>
                 <ct-section-header>
                     <ct-section-header-row>
@@ -307,10 +314,20 @@
                     <ct-section-body-row>
                         <form [formGroup]="evalStepForm" novalidate="novalidate">
                             <ng-container formArrayName="variables" *ngFor="let variableForm of evalStepForm.controls.variables?.value;">
-                                <mat-form-field appearance="outline" style="width: 100%;" [formGroupName]="variableForm">
-                                    <mat-label>Value for variable, min 1 chars, required</mat-label>
-                                    <input matInput type="text" autocomplete="off" formControlName="value" placeholder="Value for variable"/>
-                                </mat-form-field>
+                                <ct-flex justify-content="flex-start" gap="8px" style="width: 100%;" [formGroupName]="variableForm">
+                                    <ct-flex-item>
+                                        <mat-form-field appearance="outline">
+                                            <input matInput type="text" autocomplete="off" formControlName="name" />
+                                        </mat-form-field>
+                                    </ct-flex-item>
+                                    <ct-flex-item>
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>Value for variable, min 1 chars, required</mat-label>
+                                            <input matInput type="text" autocomplete="off" formControlName="value" placeholder="Value for variable"/>
+                                        </mat-form-field>
+                                    </ct-flex-item>
+                                </ct-flex>
+
                             </ng-container>
                         </form>
                     </ct-section-body-row>
