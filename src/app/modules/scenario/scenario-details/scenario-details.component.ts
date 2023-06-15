@@ -5,7 +5,7 @@ import {BehaviorSubject, Observable, of as observableOf, Subscription} from 'rxj
 import {CdkDragDrop} from '@angular/cdk/drag-drop';
 import {MatCheckboxChange} from '@angular/material/checkbox';
 import {SelectionModel} from '@angular/cdk/collections';
-import {FormControl, FormGroup, FormGroupDirective, Validators} from '@angular/forms';
+import {FormArray, FormBuilder, FormControl, FormGroup, FormGroupDirective, Validators} from '@angular/forms';
 import {MatButton} from '@angular/material/button';
 import {MhUtils} from '@services/mh-utils/mh-utils.service';
 import {ScenarioUidsForAccount} from '@services/scenario/ScenarioUidsForAccount';
@@ -22,7 +22,6 @@ import {ApiUid} from '@services/scenario/ApiUid';
 import {InternalFunction} from '@services/scenario/InternalFunction';
 import {ConfirmationDialogMethod} from '@app/components/app-dialog-confirmation/app-dialog-confirmation.component';
 import {MatDialog} from '@angular/material/dialog';
-import {ExecContextService} from '@services/exec-context/exec-context.service';
 import {PreparedStep} from '@services/scenario/PreparedStep';
 
 const MH_ACCEPTANCE_TEST = 'mh.acceptance-test';
@@ -130,6 +129,25 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
         description: new FormControl('', [Validators.required, Validators.minLength(5)]),
     });
 
+    variableForm = new FormGroup({
+        name: new FormControl('', [Validators.required, Validators.minLength(1)]),
+        value: new FormControl('', [Validators.required, Validators.minLength(1)])
+    });
+
+    evalStepForm: FormGroup;
+
+    get variables() {
+        return this.getVariables();
+    }
+
+    getVariables(): FormArray {
+        //(this.invoiceForm.controls['other_Partners'] as FormArray).clear();
+        return this.evalStepForm.controls["variables"] as FormArray;
+        // return this.evalStepForm.controls.variables["variables"] as FormArray;
+        // return this.evalStepForm.get('variables') as FormArray
+        // return this.evalStepForm.value.variables as FormArray
+    }
+
     @ViewChild('formDirective') formDirective : FormGroupDirective;
     currentStates: Set<LoadStates> = new Set();
     readonly states = LoadStates;
@@ -138,6 +156,7 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
     }
 
     ngOnInit(): void {
+        console.log("ngOnInit() start");
         this.scenarioGroupId = this.activatedRoute.snapshot.paramMap.get('scenarioGroupId');
         this.scenarioId = this.activatedRoute.snapshot.paramMap.get('scenarioId');
         this.subscribeSubscription(this.settingsService.events.subscribe(event => {
@@ -149,6 +168,7 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
         this.loadAssetsForCreation();
         this.updateTree();
         this.getSourceCodeId();
+        console.log("ngOnInit() end");
     }
 
     ngOnDestroy(): void {
@@ -162,7 +182,6 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
                 private translate: TranslateService,
                 private settingsService: SettingsService,
                 private dialog: MatDialog,
-                private execContextService: ExecContextService,
                 readonly authenticationService: AuthenticationService
                 ) {
         super(authenticationService);
@@ -170,6 +189,10 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
         this.treeFlattener = new MatTreeFlattener(this.transformer, this._getLevel, this._isExpandable, this._getChildren);
         this.treeControl = new FlatTreeControl<StepFlatNode>(this._getLevel, this._isExpandable);
         this.dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
+
+        this.evalStepForm = new FormGroup({
+            variables: new FormArray([])
+        });
 
         this.dataChange.subscribe(data => this.rebuildTreeForData(data));
     }
@@ -222,7 +245,7 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
             MhUtils.isNull(node.mode) ? NodeMode.show : node.mode
         );
         this.allUuids.push(node.uuid);
-        console.log("07.15 transformer(), stepFlatNode: ", stepFlatNode);
+        //console.log("07.15 transformer(), stepFlatNode: ", stepFlatNode);
         return stepFlatNode;
     }
 
@@ -635,8 +658,22 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
         return this.isStepEvaluation;
     }
 
+    trackByFn(index: any, item: any) {
+        return index;
+    }
+
+    resetEvalStepForm() {
+        let formArray: FormArray = this.getVariables();
+
+        if (MhUtils.isNotNull(formArray) && formArray.length>0) {
+            formArray.clear();
+        }
+        this.evalStepForm.reset();
+    }
+
     // Select the category so we can insert the new item.
     startStepEvaluation(node: StepFlatNode): void {
+        this.resetEvalStepForm();
         this.scenarioService
             .prepareStepForEvaluation(this.scenarioId.toString(), node.uuid)
             .subscribe(o => {
@@ -646,7 +683,18 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
                 if (MhUtils.isNull(o.errorMessagesAsStr)) {
                     this.isStepEvaluation = true;
                     this.activeNode = node;
-                    this.dataChange.next(this.dataTree);
+
+                    const form = this.getVariables();
+                    for (const input of o.inputs) {
+                        const variableForm = new FormGroup({
+                            name: new FormControl(input, [Validators.required, Validators.minLength(1)]),
+                            value: new FormControl('', [Validators.required, Validators.minLength(1)])
+                        });
+                        form.push(variableForm);
+                    }
+                    console.log("startStepEvaluation(), form length: ", form.length);
+
+                    //this.dataChange.next(this.dataTree);
                 }
             });
 
@@ -730,7 +778,7 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
 
     isActiveNode(node: StepFlatNode) {
         let b = MhUtils.isNotNull(this.activeNode) && node.uuid===this.activeNode.uuid;
-        console.log("60.21 ", b)
+        //console.log("60.21 ", b)
         return b;
     }
 
