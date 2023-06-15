@@ -66,6 +66,8 @@ export class StepFlatNode {
     ) {}
 }
 
+const MIN_PROMPT_LEN: number = 3;
+
 /**
  * @title Tree with flat nodes
  */
@@ -110,12 +112,13 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
 
     simpleScenarioSteps: SimpleScenarioSteps = null;
     activeNode: StepFlatNode = null;
+    resultOfEvaluatingStep: string = '';
 
     preparedStep: PreparedStep = null;
 
     form = new FormGroup({
         name: new FormControl('', [Validators.required, Validators.minLength(5)]),
-        prompt: new FormControl('', [Validators.required, Validators.minLength(3)]),
+        prompt: new FormControl('', [Validators.required, Validators.minLength(MIN_PROMPT_LEN)]),
         resultCode: new FormControl('', [Validators.required, Validators.minLength(3)]),
         apiUid: new FormControl(null),
         aggregateType: new FormControl(null),
@@ -134,7 +137,10 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
         value: new FormControl('', [Validators.required, Validators.minLength(1)])
     });
 
-    evalStepForm: FormGroup;
+    evalStepForm = new FormGroup({
+        prompt: new FormControl('', [Validators.required, Validators.minLength(MIN_PROMPT_LEN)]),
+        variables: new FormArray([])
+    });
 
     get variables() {
         return this.getVariables();
@@ -189,10 +195,6 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
         this.treeFlattener = new MatTreeFlattener(this.transformer, this._getLevel, this._isExpandable, this._getChildren);
         this.treeControl = new FlatTreeControl<StepFlatNode>(this._getLevel, this._isExpandable);
         this.dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
-
-        this.evalStepForm = new FormGroup({
-            variables: new FormArray([])
-        });
 
         this.dataChange.subscribe(data => this.rebuildTreeForData(data));
     }
@@ -745,6 +747,7 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
         this.button.disabled = true;
         this.currentStates.add(this.states.wait);
 
+        // console.log("saveStepInternal() #1");
         let name = this.form.value.name;
         let prompt = this.form.value.prompt;
         let resultCode = this.form.value.resultCode;
@@ -752,10 +755,15 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
         let aggregateType = MhUtils.isNull(this.form.value.aggregateType) ? null : this.form.value.aggregateType;
         let expected = this.form.value.expected;
         let apiUid = this.isApiNeeded() ? this.form.value.apiUid.id.toString() : null;
-        let isCachable= this.form.value.cachable;
+        let isCachable=  MhUtils.isNull(this.form.value.cachable) ? false : this.form.value.cachable;
 
+        // console.log("saveStepInternal() #2");
         this.formDirective.resetForm();
+        // console.log("saveStepInternal() #3");
         this.form.reset();
+
+        // console.log("saveStepInternal(), : ", JSON.stringify(this.form.value));
+        // console.log("saveStepInternal() #4", isCachable);
 
         const subscribe: Subscription = this.scenarioService
             .addOrSaveScenarioStepFormCommit(
@@ -774,6 +782,7 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
             )
             .subscribe(
                 (response) => {
+                    // console.log("saveStepInternal() #4.1");
                     this.updateTree();
                 },
                 () => {
@@ -783,6 +792,7 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
                     subscribe.unsubscribe();
                 }
             );
+        // console.log("saveStepInternal() #5");
     }
 
     isActiveNode(node: StepFlatNode) {
@@ -968,4 +978,11 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
         return MhUtils.isNotNull(this.sourceCodeId);
     }
 
+    acceptStepEvaluation() {
+
+    }
+
+    dontAcceptStepEvaluation(): boolean {
+        return this.evalStepForm.invalid;
+    }
 }

@@ -103,7 +103,7 @@
     <ct-section-body style="width: 100%;">
         <ct-section-body-row>
             <ct-flex gap="8px" justify-content="flex-start">
-                <ct-flex-item>
+                <ct-flex-item style="width: 100%;">
                     <ng-container *ngTemplateOutlet="scenarioTree"></ng-container>
                 </ct-flex-item>
             </ct-flex>
@@ -255,7 +255,7 @@
                        (cdkDragStarted)="dragStart()" (cdkDragReleased)="dragEnd()"
 
         >
-            <ct-section-body>
+            <ct-section-body style="width: 100%;">
                 <ct-section-body-row [ngClass]="{ 'background-highlight': isActiveNode(node) }">
                     <ct-flex>
                         <!--normal item -->
@@ -297,7 +297,7 @@
 
 <ng-template #stepEvaluationTemplate>
     <ct-cols style="width: 100%;">
-        <ct-col style="width: 100%;">
+        <ct-col style="width: 75%;">
             <ct-section>
                 <ct-section-header>
                     <ct-section-header-row>
@@ -322,17 +322,27 @@
                                         </mat-form-field>
                                     </ct-flex-item>
                                 </ct-flex>
-
                             </ng-container>
+                            <mat-form-field appearance="outline" style="width: 100%;">
+                                <mat-label>Prompt for evaluating, min 5 chars, required</mat-label>
+                                <textarea formControlName="prompt" matInput="matInput" cdkTextareaAutosize="cdkTextareaAutosize"
+                                          cdkAutosizeMinRows="10" value="" autocomplete="off"></textarea>
+                            </mat-form-field>
                         </form>
                     </ct-section-body-row>
                 </ct-section-body>
                 <ct-section-footer>
                     <ct-section-footer-row>
-                        <ct-flex justify-content="flex-end" gap="8px">
+                        <ct-flex justify-content="space-between" gap="8px">
                             <ct-flex-item>
+                                Result of evaluation: {{resultOfEvaluatingStep}}
+                            </ct-flex-item>
+                            <ct-flex-item justify-content="flex-end">
                                 <button mat-flat-button color="accent" (click)="cancelStepEvaluation()">
                                     Cancel
+                                </button>
+                                <button mat-flat-button color="accent" (click)="acceptStepEvaluation()" [disabled]="dontAcceptStepEvaluation()">
+                                    Accept
                                 </button>
                             </ct-flex-item>
                         </ct-flex>
