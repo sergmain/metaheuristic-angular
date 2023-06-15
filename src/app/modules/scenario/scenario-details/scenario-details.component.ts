@@ -662,6 +662,15 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
         return index;
     }
 
+    getNameOfField(i: number): string {
+        let formArray: FormArray = this.getVariables();
+
+        if (MhUtils.isNotNull(formArray) && formArray.length>i) {
+            return formArray.at(i).value.name;
+        }
+        return '[not found]';
+    }
+
     resetEvalStepForm() {
         let formArray: FormArray = this.getVariables();
 
@@ -694,7 +703,7 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
                     }
                     console.log("startStepEvaluation(), form length: ", form.length);
 
-                    //this.dataChange.next(this.dataTree);
+                    this.dataChange.next(this.dataTree);
                 }
             });
 
@@ -958,4 +967,5 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
     isSourceCodeId() {
         return MhUtils.isNotNull(this.sourceCodeId);
     }
+
 }

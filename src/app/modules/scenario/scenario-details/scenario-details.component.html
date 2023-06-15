@@ -313,16 +313,11 @@
                 <ct-section-body>
                     <ct-section-body-row>
                         <form [formGroup]="evalStepForm" novalidate="novalidate">
-                            <ng-container formArrayName="variables" *ngFor="let variableForm of evalStepForm.controls.variables?.value;">
-                                <ct-flex justify-content="flex-start" gap="8px" style="width: 100%;" [formGroupName]="variableForm">
-                                    <ct-flex-item>
-                                        <mat-form-field appearance="outline">
-                                            <input matInput type="text" autocomplete="off" formControlName="name" />
-                                        </mat-form-field>
-                                    </ct-flex-item>
-                                    <ct-flex-item>
-                                        <mat-form-field appearance="outline">
-                                            <mat-label>Value for variable, min 1 chars, required</mat-label>
+                            <ng-container formArrayName="variables" *ngFor="let variableForm of evalStepForm.controls.variables?.value;let i = index; trackBy:trackByFn">
+                                <ct-flex justify-content="flex-start" gap="8px" style="width: 100%;" [formGroupName]="i">
+                                    <ct-flex-item style="width: 100%;">
+                                        <mat-form-field appearance="outline" style="width: 100%;">
+                                            <mat-label>Variable {{getNameOfField(i)}}, min 1 chars, required</mat-label>
                                             <input matInput type="text" autocomplete="off" formControlName="value" placeholder="Value for variable"/>
                                         </mat-form-field>
                                     </ct-flex-item>
