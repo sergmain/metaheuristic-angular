@@ -125,8 +125,9 @@ export class ScenarioService {
         );
     }
 
-    runStepEvaluation(scenarioId: string, stepEvaluation: StepEvaluation) {
-        console.log("runStepEvaluation Scenario #"+ scenarioId+", uuid: " + stepEvaluation.uuid);
-        return this.http.post<StepVariableResult>(url(`scenario-step-evaluation-run/${scenarioId}/${stepEvaluation.uuid}`), generateFormData({ stepEvaluation: stepEvaluation }));
+    runStepEvaluation(scenarioId: string, se: StepEvaluation) {
+        console.log("runStepEvaluation Scenario #"+ scenarioId+", uuid: " + se.uuid);
+        let stepEvaluation = JSON.stringify(se);
+        return this.http.post<StepVariableResult>(url(`scenario-step-evaluation-run/${scenarioId}/${se.uuid}`), generateFormData({ stepEvaluation: stepEvaluation }));
     }
 }

@@ -338,7 +338,7 @@
                                 Result of evaluation: {{resultOfEvaluatingStep}}
                             </ct-flex-item>
                             <ct-flex-item justify-content="flex-end">
-                                <button mat-flat-button color="primary" (click)="runStepEvaluation()">
+                                <button mat-flat-button color="primary" (click)="runStepEvaluation()" [disabled]="dontDoStepEvaluation()">
                                     Evaluate
                                 </button>
                                 <button mat-flat-button color="primary" (click)="acceptStepEvaluation()" [disabled]="dontAcceptStepEvaluation()">

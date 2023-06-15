@@ -698,6 +698,10 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
                     this.isStepEvaluation = true;
                     this.activeNode = node;
 
+                    this.evalStepForm.patchValue({prompt:node.prompt});
+                    // this.editqueForm.get('questioning').setValue(this.question.questioning);
+                    // this.evalStepForm.prompt.setValue(node.prompt);
+
                     const form = this.getVariables();
                     for (const input of o.inputs) {
                         const variableForm = new FormGroup({
@@ -724,8 +728,8 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
 
         for (let i = 0; i < formArray.length; i++) {
             let sv = new StepVariable();
-            sv.name = formArray.at(i).value.name.
-            sv.value = formArray.at(i).value.value.
+            sv.name = formArray.at(i).value.name;
+            sv.value = formArray.at(i).value.value;
             se.variables.push(sv);
         }
 
@@ -742,17 +746,20 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
 
     }
 
-    dontAcceptStepEvaluation(): boolean {
+    dontDoStepEvaluation(): boolean {
         let b: boolean = false;
-
-/*
-        for (let i = 0; i < this.getVariables().length; i++) {
-            if (this.getVariables().at(i).invalid) {
-                return true;
-            }
-        }
-*/
+        /*
+                for (let i = 0; i < this.getVariables().length; i++) {
+                    if (this.getVariables().at(i).invalid) {
+                        return true;
+                    }
+                }
+        */
         return this.evalStepForm.invalid || this.getVariables().invalid;
+    }
+
+    dontAcceptStepEvaluation(): boolean {
+        return this.evalStepForm.value.prompt===this.activeNode.prompt || MhUtils.isNull(this.resultOfEvaluatingStep);
     }
 
     // Select the category so we can insert the new item.
