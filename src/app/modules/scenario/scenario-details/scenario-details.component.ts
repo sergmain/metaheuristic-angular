@@ -22,10 +22,14 @@ import {ApiUid} from '@services/scenario/ApiUid';
 import {InternalFunction} from '@services/scenario/InternalFunction';
 import {ConfirmationDialogMethod} from '@app/components/app-dialog-confirmation/app-dialog-confirmation.component';
 import {MatDialog} from '@angular/material/dialog';
-import {PreparedStep} from '@services/scenario/PreparedStep';
+import {StepEvaluationPrepareResult} from '@services/scenario/StepEvaluationPrepareResult';
+import {StepEvaluation} from '@services/scenario/StepEvaluation';
+import {StepVariable} from '@services/scenario/StepVariable';
 
 const MH_ACCEPTANCE_TEST = 'mh.acceptance-test';
 const MH_AGGREGATE = 'mh.aggregate';
+const MIN_PROMPT_LEN: number = 3;
+
 
 export enum NodeMode {
     new = 'new',
@@ -65,8 +69,6 @@ export class StepFlatNode {
         public mode: NodeMode
     ) {}
 }
-
-const MIN_PROMPT_LEN: number = 3;
 
 /**
  * @title Tree with flat nodes
@@ -114,7 +116,7 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
     activeNode: StepFlatNode = null;
     resultOfEvaluatingStep: string = '';
 
-    preparedStep: PreparedStep = null;
+    preparedStep: StepEvaluationPrepareResult = null;
 
     form = new FormGroup({
         name: new FormControl('', [Validators.required, Validators.minLength(5)]),
@@ -148,7 +150,8 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
 
     getVariables(): FormArray {
         //(this.invoiceForm.controls['other_Partners'] as FormArray).clear();
-        return this.evalStepForm.controls["variables"] as FormArray;
+        let control = this.evalStepForm.controls["variables"] as FormArray;
+        return control;
         // return this.evalStepForm.controls.variables["variables"] as FormArray;
         // return this.evalStepForm.get('variables') as FormArray
         // return this.evalStepForm.value.variables as FormArray
@@ -711,6 +714,47 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
 
     }
 
+    runStepEvaluation() {
+        let se: StepEvaluation =  new StepEvaluation();
+        se.uuid = this.activeNode.uuid;
+        se.prompt = this.evalStepForm.value.prompt;
+        se.variables = [];
+
+        let formArray: FormArray = this.getVariables();
+
+        for (let i = 0; i < formArray.length; i++) {
+            let sv = new StepVariable();
+            sv.name = formArray.at(i).value.name.
+            sv.value = formArray.at(i).value.value.
+            se.variables.push(sv);
+        }
+
+        this.scenarioService
+            .runStepEvaluation(this.scenarioId.toString(), se)
+            .subscribe(o => {
+                console.log("runStepEvaluation(), response: ", JSON.stringify(o));
+                // console.log("getSourceCodeId(), sourceCodeId", this.sourceCodeId);
+                this.resultOfEvaluatingStep = o.result;
+            });
+    }
+
+    acceptStepEvaluation() {
+
+    }
+
+    dontAcceptStepEvaluation(): boolean {
+        let b: boolean = false;
+
+/*
+        for (let i = 0; i < this.getVariables().length; i++) {
+            if (this.getVariables().at(i).invalid) {
+                return true;
+            }
+        }
+*/
+        return this.evalStepForm.invalid || this.getVariables().invalid;
+    }
+
     // Select the category so we can insert the new item.
     cancelStepEvaluation(): void {
         this.activeNode = null;
@@ -978,11 +1022,4 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
         return MhUtils.isNotNull(this.sourceCodeId);
     }
 
-    acceptStepEvaluation() {
-
-    }
-
-    dontAcceptStepEvaluation(): boolean {
-        return this.evalStepForm.invalid;
-    }
 }
