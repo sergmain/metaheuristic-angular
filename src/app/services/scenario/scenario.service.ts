@@ -100,7 +100,8 @@ export class ScenarioService {
 
     scenarioStepDeleteCommit(scenarioId: string, uuid: string): Observable<OperationStatusRest> {
         console.log("Delete ScenarioStep #"+ scenarioId+", uuid: " + uuid);
-        return this.http.post<OperationStatusRest>(url(`scenario-step-delete-commit`), generateFormData({ scenarioId: scenarioId, uuid: uuid }));
+        return this.http.post<OperationStatusRest>(url(`scenario-step-delete-commit`),
+            generateFormData({ scenarioId: scenarioId, uuid: uuid }));
     }
 
     scenarioStepRearrangeTable(scenarioId: string, prevUuid: string, currUuid: string): Observable<OperationStatusRest> {
@@ -128,6 +129,12 @@ export class ScenarioService {
     runStepEvaluation(scenarioId: string, se: StepEvaluation) {
         console.log("runStepEvaluation Scenario #"+ scenarioId+", uuid: " + se.uuid);
         let stepEvaluation = JSON.stringify(se);
-        return this.http.post<StepEvaluationResult>(url(`scenario-step-evaluation-run/${scenarioId}/${se.uuid}`), generateFormData({ stepEvaluation: stepEvaluation }));
+        return this.http.post<StepEvaluationResult>(url(`scenario-step-evaluation-run/${scenarioId}/${se.uuid}`),
+            generateFormData({ stepEvaluation: stepEvaluation }));
+    }
+
+    acceptNewPromptForStep(scenarioId: string, uuid: string, newPrompt: string) {
+        return this.http.post<OperationStatusRest>(url(`accept-new-prompt-for-step/${scenarioId}/${uuid}`),
+            generateFormData({ newPrompt: newPrompt }));
     }
 }

@@ -152,11 +152,10 @@
                             <ct-section-body-row>
                                 <form [formGroup]="form" #formDirective="ngForm"  novalidate="novalidate">
                                     <mat-form-field appearance="outline" *ngIf="!isApi" style="width: 50%;">
-                                        <mat-label>Type of processing</mat-label>
+                                        <mat-label>Type of processing, required</mat-label>
                                         <mat-select formControlName="processingFunction">
                                             <mat-option *ngFor="let f of listOfFunctions" [value]="f">{{ 'scenario-function-'+f.code | translate }}</mat-option>
                                         </mat-select>
-                                        <mat-hint>{{ 'main.This is a required field' | translate }}</mat-hint>
                                     </mat-form-field>
                                     <ct-flex gap="8px" justify-content="space-between">
                                         <ct-flex-item  style="width: 100%;">

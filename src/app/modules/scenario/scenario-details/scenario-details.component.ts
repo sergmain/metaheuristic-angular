@@ -658,7 +658,6 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
         this.dataChange.next(this.dataTree);
     }
 
-    // Select the category so we can insert the new item.
     addNewStubItem(node: StepFlatNode) {
         this.showMyContainer = true;
         console.log("10.10", node);
@@ -695,7 +694,6 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
         this.evalStepForm.reset();
     }
 
-    // Select the category so we can insert the new item.
     startStepEvaluation(node: StepFlatNode): void {
         this.resetEvalStepForm();
         this.scenarioService
@@ -709,8 +707,6 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
                     this.stepEvaluationState.activeNode = node;
 
                     this.evalStepForm.patchValue({prompt:node.prompt});
-                    // this.editqueForm.get('questioning').setValue(this.question.questioning);
-                    // this.evalStepForm.prompt.setValue(node.prompt);
 
                     const form = this.getVariables();
                     for (const input of o.inputs) {
@@ -758,7 +754,20 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
     }
 
     acceptStepEvaluation() {
+        let node = this.stepEvaluationState.activeNode;
+        let newPrompt = this.evalStepForm.value.prompt;
 
+        console.log("10.20", node);
+        let detailNode = this.findInTree(node);
+
+        this.resetStepEvaluation();
+
+        this.scenarioService
+            .acceptNewPromptForStep(this.scenarioId.toString(), node.uuid, newPrompt)
+            .subscribe({
+                next: status => this.updateTree(),
+                complete: () => this.setIsLoadingEnd()
+            });
     }
 
     dontDoStepEvaluation(): boolean {
@@ -782,13 +791,18 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
 */
     }
 
-    // Select the category so we can insert the new item.
-    cancelStepEvaluation(): void {
-        this.stepEvaluationState.activeNode = null;
+    resetStepEvaluation(): void {
         this.isStepEvaluation = false;
         this.stepEvaluationState.activeNode = null;
-        this.stepEvaluationState.result = '';
-        this.stepEvaluationState.previousPrompt = '';
+        this.stepEvaluationState.prompt = null;
+        this.stepEvaluationState.result = null;
+        this.stepEvaluationState.rawResult = null;
+        this.stepEvaluationState.error = null;
+        this.stepEvaluationState.previousPrompt = null;
+    }
+
+    cancelStepEvaluation(): void {
+        this.resetStepEvaluation();
         this.dataChange.next(this.dataTree);
     }
 
