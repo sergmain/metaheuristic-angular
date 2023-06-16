@@ -335,7 +335,7 @@
                                 </ct-flex>
                             </ng-container>
                             <mat-form-field appearance="outline" style="width: 100%;">
-                                <mat-label>Prompt for evaluating, min 5 chars, required</mat-label>
+                                <mat-label>Prompt for evaluating, min 3 chars, required</mat-label>
                                 <textarea formControlName="prompt" matInput="matInput" cdkTextareaAutosize="cdkTextareaAutosize"
                                           cdkAutosizeMinRows="10" value="" autocomplete="off"></textarea>
                             </mat-form-field>
@@ -346,17 +346,26 @@
                     <ct-section-footer-row>
                         <ct-flex>
                             <ct-flex-item style="width: 75%;">
+                                <mat-form-field appearance="outline" style="width: 100%;" disabled *ngIf="MhUtils.isNotNull(stepEvaluationState.prompt)">
+                                    <mat-label>Actual prompt:</mat-label>
+<!--                                    <input matInput [value]="stepEvaluationState.prompt" disabled />-->
+                                    <textarea matInput [value]="stepEvaluationState.prompt" cdkTextareaAutosize="cdkTextareaAutosize"
+                                              cdkAutosizeMinRows="5" autocomplete="off" disabled></textarea>
+                                </mat-form-field>
                                 <mat-form-field appearance="outline" style="width: 100%;" disabled *ngIf="MhUtils.isNotNull(stepEvaluationState.result)">
                                     <mat-label>Result of evaluation:</mat-label>
-                                    <input matInput [value]="stepEvaluationState.result" disabled />
+                                    <textarea matInput [value]="stepEvaluationState.result" cdkTextareaAutosize="cdkTextareaAutosize"
+                                              cdkAutosizeMinRows="5" autocomplete="off" disabled></textarea>
                                 </mat-form-field>
                                 <mat-form-field appearance="outline" style="width: 100%;" disabled *ngIf="MhUtils.isNotNull(stepEvaluationState.rawResult)">
                                     <mat-label>Raw result of evaluation:</mat-label>
-                                    <input matInput [value]="stepEvaluationState.rawResult" disabled />
+                                    <textarea matInput [value]="stepEvaluationState.rawResult" cdkTextareaAutosize="cdkTextareaAutosize"
+                                              cdkAutosizeMinRows="5" autocomplete="off" disabled></textarea>
                                 </mat-form-field>
                                 <mat-form-field appearance="outline" style="width: 100%;" disabled *ngIf="MhUtils.isNotNull(stepEvaluationState.error)">
                                     <mat-label>Error:</mat-label>
-                                    <input matInput [value]="stepEvaluationState.error" disabled />
+                                    <textarea matInput [value]="stepEvaluationState.error" cdkTextareaAutosize="cdkTextareaAutosize"
+                                              cdkAutosizeMinRows="5" autocomplete="off" disabled></textarea>
                                 </mat-form-field>
                             </ct-flex-item>
                         </ct-flex>

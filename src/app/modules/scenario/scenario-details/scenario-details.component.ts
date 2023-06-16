@@ -73,6 +73,7 @@ export class StepFlatNode {
 export class StepEvaluationState {
     // for step evaluating
     activeNode: StepFlatNode = null;
+    prompt: string = null;
     result: string = null;
     rawResult: string = null;
     error: string = null;
@@ -748,6 +749,7 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
                 console.log("runStepEvaluation(), response: ", JSON.stringify(o));
                 // console.log("getSourceCodeId(), sourceCodeId", this.sourceCodeId);
 
+                this.stepEvaluationState.prompt = o.prompt;
                 this.stepEvaluationState.result = o.result;
                 this.stepEvaluationState.rawResult = o.rawrResult;
                 this.stepEvaluationState.error = o.error;
