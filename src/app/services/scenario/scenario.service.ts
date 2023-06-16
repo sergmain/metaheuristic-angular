@@ -11,7 +11,7 @@ import {SimpleScenarioSteps} from '@services/scenario/SimpleScenarioSteps';
 import {SimpleSourceCodeUid} from '@services/source-codes/SimpleSourceCodeUid';
 import {StepEvaluationPrepareResult} from '@services/scenario/StepEvaluationPrepareResult';
 import {StepEvaluation} from '@services/scenario/StepEvaluation';
-import {StepVariableResult} from '@services/scenario/StepEvaluationResult';
+import {StepEvaluationResult} from '@services/scenario/StepEvaluationResult';
 
 const url = (s: string): string => `${environment.baseUrl}dispatcher/scenario/${s}`;
 
@@ -128,6 +128,6 @@ export class ScenarioService {
     runStepEvaluation(scenarioId: string, se: StepEvaluation) {
         console.log("runStepEvaluation Scenario #"+ scenarioId+", uuid: " + se.uuid);
         let stepEvaluation = JSON.stringify(se);
-        return this.http.post<StepVariableResult>(url(`scenario-step-evaluation-run/${scenarioId}/${se.uuid}`), generateFormData({ stepEvaluation: stepEvaluation }));
+        return this.http.post<StepEvaluationResult>(url(`scenario-step-evaluation-run/${scenarioId}/${se.uuid}`), generateFormData({ stepEvaluation: stepEvaluation }));
     }
 }

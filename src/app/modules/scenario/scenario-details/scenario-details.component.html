@@ -344,19 +344,19 @@
                 </ct-section-body>
                 <ct-section-footer>
                     <ct-section-footer-row>
-                        <ct-flex justify-content="space-between" gap="8px">
-                            <ct-flex-item>
-                                <mat-form-field appearance="outline" style="width: 100%;" disabled>
+                        <ct-flex>
+                            <ct-flex-item style="width: 75%;">
+                                <mat-form-field appearance="outline" style="width: 100%;" disabled *ngIf="MhUtils.isNotNull(stepEvaluationState.result)">
                                     <mat-label>Result of evaluation:</mat-label>
-                                    <input matInput [value]="resultOfEvaluatingStep" disabled />
+                                    <input matInput [value]="stepEvaluationState.result" disabled />
                                 </mat-form-field>
-                                <mat-form-field appearance="outline" style="width: 100%;" disabled>
+                                <mat-form-field appearance="outline" style="width: 100%;" disabled *ngIf="MhUtils.isNotNull(stepEvaluationState.rawResult)">
                                     <mat-label>Raw result of evaluation:</mat-label>
-                                    <input matInput [value]="resultOfEvaluatingStep" disabled />
+                                    <input matInput [value]="stepEvaluationState.rawResult" disabled />
                                 </mat-form-field>
-                                <mat-form-field appearance="outline" style="width: 100%;" disabled>
+                                <mat-form-field appearance="outline" style="width: 100%;" disabled *ngIf="MhUtils.isNotNull(stepEvaluationState.error)">
                                     <mat-label>Error:</mat-label>
-                                    <input matInput [value]="resultOfEvaluatingStep" disabled />
+                                    <input matInput [value]="stepEvaluationState.error" disabled />
                                 </mat-form-field>
                             </ct-flex-item>
                         </ct-flex>

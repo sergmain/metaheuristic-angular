@@ -70,6 +70,15 @@ export class StepFlatNode {
     ) {}
 }
 
+export class StepEvaluationState {
+    // for step evaluating
+    activeNode: StepFlatNode = null;
+    result: string = null;
+    rawResult: string = null;
+    error: string = null;
+    previousPrompt: string = null;
+}
+
 /**
  * @title Tree with flat nodes
  */
@@ -114,10 +123,7 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
 
     simpleScenarioSteps: SimpleScenarioSteps = null;
 
-    // for step evaluating
-    activeNode: StepFlatNode = null;
-    resultOfEvaluatingStep: string = '';
-    previousPrompt: string = '';
+    readonly stepEvaluationState: StepEvaluationState = new StepEvaluationState();
 
     preparedStep: StepEvaluationPrepareResult = null;
 
@@ -699,7 +705,7 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
                 this.preparedStep = o;
                 if (MhUtils.isNull(o.errorMessagesAsStr)) {
                     this.isStepEvaluation = true;
-                    this.activeNode = node;
+                    this.stepEvaluationState.activeNode = node;
 
                     this.evalStepForm.patchValue({prompt:node.prompt});
                     // this.editqueForm.get('questioning').setValue(this.question.questioning);
@@ -723,7 +729,7 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
 
     runStepEvaluation() {
         let se: StepEvaluation =  new StepEvaluation();
-        se.uuid = this.activeNode.uuid;
+        se.uuid = this.stepEvaluationState.activeNode.uuid;
         se.prompt = this.evalStepForm.value.prompt;
         se.variables = [];
 
@@ -741,8 +747,11 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
             .subscribe(o => {
                 console.log("runStepEvaluation(), response: ", JSON.stringify(o));
                 // console.log("getSourceCodeId(), sourceCodeId", this.sourceCodeId);
-                this.resultOfEvaluatingStep = o.result;
-                this.previousPrompt = se.prompt;
+
+                this.stepEvaluationState.result = o.result;
+                this.stepEvaluationState.rawResult = o.rawrResult;
+                this.stepEvaluationState.error = o.error;
+                this.stepEvaluationState.previousPrompt = se.prompt;
             });
     }
 
@@ -751,23 +760,15 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
     }
 
     dontDoStepEvaluation(): boolean {
-        let b: boolean = false;
-        /*
-                for (let i = 0; i < this.getVariables().length; i++) {
-                    if (this.getVariables().at(i).invalid) {
-                        return true;
-                    }
-                }
-        */
         return this.evalStepForm.invalid || this.getVariables().invalid;
     }
 
     dontAcceptStepEvaluation(): boolean {
+        return this.evalStepForm.value.prompt===this.stepEvaluationState.activeNode.prompt
+            || (this.evalStepForm.value.prompt!==this.stepEvaluationState.previousPrompt && MhUtils.isNotNull(this.stepEvaluationState.result))
+            || MhUtils.isNull(this.stepEvaluationState.result)
+            ;
 /*
-        return this.evalStepForm.value.prompt===this.activeNode.prompt
-            || MhUtils.isNull(this.resultOfEvaluatingStep)
-            || this.evalStepForm.value.prompt!==this.previousPrompt;
-*/
         let b1 = this.evalStepForm.value.prompt===this.activeNode.prompt;
         let b2 = (this.evalStepForm.value.prompt!==this.previousPrompt && MhUtils.isNotNull(this.resultOfEvaluatingStep));
         let b3 = MhUtils.isNull(this.resultOfEvaluatingStep);
@@ -776,15 +777,16 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
             || b2
             || b3
             ;
+*/
     }
 
     // Select the category so we can insert the new item.
     cancelStepEvaluation(): void {
-        this.activeNode = null;
+        this.stepEvaluationState.activeNode = null;
         this.isStepEvaluation = false;
-        this.activeNode = null;
-        this.resultOfEvaluatingStep = '';
-        this.previousPrompt = '';
+        this.stepEvaluationState.activeNode = null;
+        this.stepEvaluationState.result = '';
+        this.stepEvaluationState.previousPrompt = '';
         this.dataChange.next(this.dataTree);
     }
 
@@ -865,7 +867,7 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
     }
 
     isActiveNode(node: StepFlatNode) {
-        let b = MhUtils.isNotNull(this.activeNode) && node.uuid===this.activeNode.uuid;
+        let b = MhUtils.isNotNull(this.stepEvaluationState.activeNode) && node.uuid===this.stepEvaluationState.activeNode.uuid;
         //console.log("60.21 ", b)
         return b;
     }
