@@ -5,7 +5,7 @@ import {BehaviorSubject, Observable, of as observableOf, Subscription} from 'rxj
 import {CdkDragDrop} from '@angular/cdk/drag-drop';
 import {MatCheckboxChange} from '@angular/material/checkbox';
 import {SelectionModel} from '@angular/cdk/collections';
-import {FormArray, FormBuilder, FormControl, FormGroup, FormGroupDirective, Validators} from '@angular/forms';
+import {FormArray, FormControl, FormGroup, FormGroupDirective, Validators} from '@angular/forms';
 import {MatButton} from '@angular/material/button';
 import {MhUtils} from '@services/mh-utils/mh-utils.service';
 import {ScenarioUidsForAccount} from '@services/scenario/ScenarioUidsForAccount';
@@ -113,8 +113,11 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
     dataTree :SimpleScenarioStep[]
 
     simpleScenarioSteps: SimpleScenarioSteps = null;
+
+    // for step evaluating
     activeNode: StepFlatNode = null;
     resultOfEvaluatingStep: string = '';
+    previousPrompt: string = '';
 
     preparedStep: StepEvaluationPrepareResult = null;
 
@@ -739,6 +742,7 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
                 console.log("runStepEvaluation(), response: ", JSON.stringify(o));
                 // console.log("getSourceCodeId(), sourceCodeId", this.sourceCodeId);
                 this.resultOfEvaluatingStep = o.result;
+                this.previousPrompt = se.prompt;
             });
     }
 
@@ -759,16 +763,30 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
     }
 
     dontAcceptStepEvaluation(): boolean {
-        return this.evalStepForm.value.prompt===this.activeNode.prompt || MhUtils.isNull(this.resultOfEvaluatingStep);
+/*
+        return this.evalStepForm.value.prompt===this.activeNode.prompt
+            || MhUtils.isNull(this.resultOfEvaluatingStep)
+            || this.evalStepForm.value.prompt!==this.previousPrompt;
+*/
+        let b1 = this.evalStepForm.value.prompt===this.activeNode.prompt;
+        let b2 = (this.evalStepForm.value.prompt!==this.previousPrompt && MhUtils.isNotNull(this.resultOfEvaluatingStep));
+        let b3 = MhUtils.isNull(this.resultOfEvaluatingStep);
+        console.log("dontAcceptStepEvaluation()", b1, b2, b3);
+        return b1
+            || b2
+            || b3
+            ;
     }
 
     // Select the category so we can insert the new item.
     cancelStepEvaluation(): void {
         this.activeNode = null;
         this.isStepEvaluation = false;
+        this.activeNode = null;
+        this.resultOfEvaluatingStep = '';
+        this.previousPrompt = '';
         this.dataChange.next(this.dataTree);
     }
-
 
     createFirstDetail(): void {
         // console.log("27.10", this.apiUid)

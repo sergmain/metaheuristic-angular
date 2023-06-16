@@ -302,9 +302,20 @@
                 <ct-section-header>
                     <ct-section-header-row>
                         <ct-section-header-row>
-                            <ct-flex justify-content="space-between" gap="9px">
+                            <ct-flex justify-content="space-between" gap="5px">
                                 <ct-flex-item>
                                     <ct-heading>Evaluate step</ct-heading>
+                                </ct-flex-item>
+                                <ct-flex-item justify-content="flex-end">
+                                    <button mat-flat-button color="primary" (click)="runStepEvaluation()" [disabled]="dontDoStepEvaluation()">
+                                        Evaluate
+                                    </button>
+                                    <button mat-flat-button color="primary" (click)="acceptStepEvaluation()" [disabled]="dontAcceptStepEvaluation()">
+                                        Accept
+                                    </button>
+                                    <button mat-flat-button color="accent" (click)="cancelStepEvaluation()">
+                                        Cancel
+                                    </button>
                                 </ct-flex-item>
                             </ct-flex>
                         </ct-section-header-row>
@@ -335,18 +346,18 @@
                     <ct-section-footer-row>
                         <ct-flex justify-content="space-between" gap="8px">
                             <ct-flex-item>
-                                Result of evaluation: {{resultOfEvaluatingStep}}
-                            </ct-flex-item>
-                            <ct-flex-item justify-content="flex-end">
-                                <button mat-flat-button color="primary" (click)="runStepEvaluation()" [disabled]="dontDoStepEvaluation()">
-                                    Evaluate
-                                </button>
-                                <button mat-flat-button color="primary" (click)="acceptStepEvaluation()" [disabled]="dontAcceptStepEvaluation()">
-                                    Accept
-                                </button>
-                                <button mat-flat-button color="accent" (click)="cancelStepEvaluation()">
-                                    Cancel
-                                </button>
+                                <mat-form-field appearance="outline" style="width: 100%;" disabled>
+                                    <mat-label>Result of evaluation:</mat-label>
+                                    <input matInput [value]="resultOfEvaluatingStep" disabled />
+                                </mat-form-field>
+                                <mat-form-field appearance="outline" style="width: 100%;" disabled>
+                                    <mat-label>Raw result of evaluation:</mat-label>
+                                    <input matInput [value]="resultOfEvaluatingStep" disabled />
+                                </mat-form-field>
+                                <mat-form-field appearance="outline" style="width: 100%;" disabled>
+                                    <mat-label>Error:</mat-label>
+                                    <input matInput [value]="resultOfEvaluatingStep" disabled />
+                                </mat-form-field>
                             </ct-flex-item>
                         </ct-flex>
                     </ct-section-footer-row>
