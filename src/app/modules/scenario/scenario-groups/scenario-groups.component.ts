@@ -5,8 +5,8 @@ import { AuthenticationService } from '@src/app/services/authentication';
 import { SimpleScenarioGroup } from '@src/app/services/scenario/SimpleScenarioGroup';
 import {ConfirmationDialogMethod} from "@src/app/components/app-dialog-confirmation/app-dialog-confirmation.component";
 import {MatDialog} from "@angular/material/dialog";
-import {SimpleScenarioGroupsResult} from "@services/scenario/SimpleScenarioGroupsResult";
 import {ScenarioService} from "@services/scenario/scenario.service";
+import {SimpleScenarioGroupsResult} from '@services/scenario/ScenarioData';
 
 @Component({
   selector: 'scenario-groups',

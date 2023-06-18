@@ -143,7 +143,8 @@ function dialogError() {
     throw new Error(`
 component require MatDialog
 
-import { MatDialog } from '@angular/material';
+import {MatDialog} from '@angular/material/dialog';
+
 ...
 constructor(
     ...

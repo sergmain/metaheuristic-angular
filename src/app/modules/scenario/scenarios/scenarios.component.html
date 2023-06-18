@@ -34,15 +34,16 @@
                         <td mat-cell *matCellDef="let el">
                             <ct-flex justify-content="flex-end" gap="8px">
                                 <ct-flex-item>
-                                    <button mat-icon-button color="accent" size="forTableRow" (click)="runScenario(el)" matTooltip="Execute scenario">
-                                        <mat-icon>play_arrow</mat-icon>
-                                    </button>
                                     <button mat-icon-button color="primary"
                                             [routerLink]="['../..', scenarioGroupId, 'scenario', el.scenarioId, 'details']" matTooltip="Edit scenario">
                                         <mat-icon>edit_document</mat-icon>
                                     </button>
                                     <button mat-icon-button color="primary" (click)="copyScenario(el)" matTooltip="Copy scenario">
                                         <mat-icon>content_copy</mat-icon>
+                                    </button>
+                                    <button mat-icon-button color="primary"
+                                            [routerLink]="['../..', scenarioGroupId, 'scenario', el.scenarioId, 'move']" matTooltip="Move to another group">
+                                        <mat-icon>forward</mat-icon>
                                     </button>
                                     <button mat-icon-button color="warn" size="forTableRow" (click)="delete(el)" matTooltip="Delete scenario">
                                         <mat-icon>delete_forever</mat-icon>

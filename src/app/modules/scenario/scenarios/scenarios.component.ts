@@ -1,13 +1,13 @@
-import { Component, OnInit } from '@angular/core';
-import { MatTableDataSource } from '@angular/material/table';
-import { ActivatedRoute } from '@angular/router';
-import { UIStateComponent } from '@src/app/models/UIStateComponent';
-import { AuthenticationService } from '@src/app/services/authentication';
-import {ScenariosResult} from "@services/scenario/ScenariosResult";
-import {ScenarioService} from "@services/scenario/scenario.service";
-import {SimpleScenario} from "@services/scenario/SimpleScenario";
-import {ConfirmationDialogMethod} from "@app/components/app-dialog-confirmation/app-dialog-confirmation.component";
-import {MatDialog} from "@angular/material/dialog";
+import {Component, OnInit} from '@angular/core';
+import {MatTableDataSource} from '@angular/material/table';
+import {ActivatedRoute} from '@angular/router';
+import {UIStateComponent} from '@src/app/models/UIStateComponent';
+import {AuthenticationService} from '@src/app/services/authentication';
+import {ScenariosResult} from '@services/scenario/ScenariosResult';
+import {ScenarioService} from '@services/scenario/scenario.service';
+import {SimpleScenario} from '@services/scenario/SimpleScenario';
+import {ConfirmationDialogMethod} from '@app/components/app-dialog-confirmation/app-dialog-confirmation.component';
+import {MatDialog} from '@angular/material/dialog';
 
 @Component({
     selector: 'scenarios',
@@ -59,20 +59,6 @@ export class ScenariosComponent extends UIStateComponent implements OnInit {
     delete(scenario: SimpleScenario): void {
         this.scenarioService
             .scenarioDeleteCommit(scenario.scenarioId.toString())
-            .subscribe(v => this.updateTable(this.scenariosResult.scenarios.number));
-    }
-
-    @ConfirmationDialogMethod({
-        question: (ss: SimpleScenario): string =>
-            `Do you want to exec Scenario #${ss.scenarioId}, ${ss.name}`,
-
-        resolveTitle: 'Run scenario',
-        rejectTitle: 'Cancel',
-        theme: 'primary'
-    })
-    runScenario(scenario: SimpleScenario): void {
-        this.scenarioService
-            .runScenario(scenario.scenarioGroupId.toString(), scenario.scenarioId.toString())
             .subscribe(v => this.updateTable(this.scenariosResult.scenarios.number));
     }
 

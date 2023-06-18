@@ -17,6 +17,7 @@ import {DragDropModule} from "@angular/cdk/drag-drop";
 import {MatTableModule} from "@angular/material/table";
 import {FlexLayoutModule} from "@angular/flex-layout";
 import {ScenarioDetailsComponent} from '@app/modules/scenario/scenario-details/scenario-details.component';
+import {ScenarioMoveComponent} from '@app/modules/scenario/scenario-move/scenario-move.component';
 
 export const ScenarioRoutes: Routes = [
     {
@@ -65,6 +66,15 @@ export const ScenarioRoutes: Routes = [
         }
     },
     {
+        path: ':scenarioGroupId/scenario/:scenarioId/move',
+        component: ScenarioMoveComponent,
+        canActivate: [RoleRouteGuard],
+        data: {
+            backConfig: ['../', '../', '../', 'scenarios'],
+            requiredRoles: [Role.Admin]
+        }
+    },
+    {
         path: ':scenarioGroupId/scenario/:scenarioId/scenario-step-add',
         component: ScenarioStepAddComponent,
         canActivate: [RoleRouteGuard],
@@ -100,7 +110,8 @@ export class ScenarioGroupRoutingModule { }
         ScenarioGroupsComponent, ScenariosComponent,
         ScenarioGroupAddComponent, ScenarioAddComponent,
         ScenarioStepsComponent, ScenarioStepAddComponent,
-        ScenarioDetailsComponent
+        ScenarioDetailsComponent,
+        ScenarioMoveComponent
     ]
 })
 export class ScenarioModule { }

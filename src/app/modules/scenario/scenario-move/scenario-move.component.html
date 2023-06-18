@@ -1,0 +1,45 @@
+<ct-section *ngIf="isInit()">
+    <ct-section-body style="width: 50%;">
+        <ct-section-body-row>
+            Data is loading.
+        </ct-section-body-row>
+    </ct-section-body>
+</ct-section>
+
+
+<ct-section *ngIf="isSelect()">
+    <ct-section-body style="width: 50%;">
+        <ct-section-body-row>
+            <form [formGroup]="form" novalidate="novalidate">
+                <mat-form-field appearance="outline">
+                    <mat-label>Select a new scenario group</mat-label>
+                    <mat-select formControlName="group">
+                        <mat-option  *ngFor="let group of simpleScenarioGroupsAllResult.scenarioGroups" [value]="group">
+                            {{group.scenarioGroupId}}, {{group.name}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </form>
+        </ct-section-body-row>
+    </ct-section-body>
+    <ct-section-footer style="width: 50%;">
+        <ct-section-footer-row>
+            <ct-flex justify-content="flex-end" gap="8px">
+                <ct-flex-item>
+                    <button mat-flat-button color="primary" size="forTableRow"
+                            (click)="moveScenarioCommit()" [disabled]="notToMoveScenario()">
+                        Move</button>
+                </ct-flex-item>
+            </ct-flex>
+        </ct-section-footer-row>
+    </ct-section-footer>
+</ct-section>
+
+<ct-section *ngIf="isDone()">
+    <ct-section-body style="width: 50%;">
+        <ct-section-body-row>
+            Scenario was moved.
+        </ct-section-body-row>
+    </ct-section-body>
+</ct-section>
+

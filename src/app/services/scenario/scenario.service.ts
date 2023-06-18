@@ -2,7 +2,6 @@ import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {environment} from '@src/environments/environment';
 import {Observable} from 'rxjs';
-import {SimpleScenarioGroupsResult} from './SimpleScenarioGroupsResult';
 import {OperationStatusRest} from '@app/models/OperationStatusRest';
 import {generateFormData} from '@app/helpers/generateFormData';
 import {ScenariosResult} from '@services/scenario/ScenariosResult';
@@ -12,6 +11,7 @@ import {SimpleSourceCodeUid} from '@services/source-codes/SimpleSourceCodeUid';
 import {StepEvaluationPrepareResult} from '@services/scenario/StepEvaluationPrepareResult';
 import {StepEvaluation} from '@services/scenario/StepEvaluation';
 import {StepEvaluationResult} from '@services/scenario/StepEvaluationResult';
+import {SimpleScenarioGroupsAllResult, SimpleScenarioGroupsResult} from '@services/scenario/ScenarioData';
 
 const url = (s: string): string => `${environment.baseUrl}dispatcher/scenario/${s}`;
 
@@ -25,6 +25,12 @@ export class ScenarioService {
         let newUrl = url('scenario-groups')
         console.log('ScenarioService.newUrl: ' + newUrl);
         return this.http.get<SimpleScenarioGroupsResult>(newUrl, {params: {page}});
+    }
+
+    getScenarioGroupsAll(scenarioGroupId: string): Observable<SimpleScenarioGroupsAllResult> {
+        let newUrl = url(`scenario-groups-all`)
+        console.log('getScenarioGroupsAll.newUrl: ' + newUrl);
+        return this.http.get<SimpleScenarioGroupsAllResult>(newUrl);
     }
 
     scenarioSteps(scenarioGroupId: string, scenarioId: string): Observable<SimpleScenarioSteps> {
@@ -136,5 +142,10 @@ export class ScenarioService {
     acceptNewPromptForStep(scenarioId: string, uuid: string, newPrompt: string) {
         return this.http.post<OperationStatusRest>(url(`accept-new-prompt-for-step/${scenarioId}/${uuid}`),
             generateFormData({ newPrompt: newPrompt }));
+    }
+
+    moveScenario(scenarioGroupId: string, scenarioId: string, newScenarioGroupId: any) {
+        return this.http.post<OperationStatusRest>(url(`move-scenario-to-new-group/${scenarioGroupId}/${scenarioId}`),
+            generateFormData({ newScenarioGroupId }));
     }
 }
