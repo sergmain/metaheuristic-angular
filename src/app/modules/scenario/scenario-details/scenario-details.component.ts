@@ -28,6 +28,7 @@ import {StepVariable} from '@services/scenario/StepVariable';
 
 const MH_ACCEPTANCE_TEST = 'mh.acceptance-test';
 const MH_AGGREGATE = 'mh.aggregate';
+const MH_ENHANCE_TEXT = 'mh.enhance-text';
 const MIN_PROMPT_LEN: number = 3;
 
 
@@ -1065,4 +1066,7 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
         return MhUtils.isNotNull(this.sourceCodeId);
     }
 
+    isEnhanceText(node: StepFlatNode): boolean {
+        return node.functionCode===MH_ENHANCE_TEXT;
+    }
 }

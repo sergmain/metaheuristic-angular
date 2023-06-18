@@ -265,7 +265,13 @@
                                 {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
                             </mat-icon>
                         </button>
-                        Type: {{MhUtils.isNull(node.functionCode) ? 'API: '+ node.apiCode : 'Process: ' + node.functionCode}}, Name: {{node.name}}<br/>{{node.prompt}}<br/>Result code: [[{{node.resultCode}}]]
+                        <div *ngIf="isEnhanceText(node);then content else other_content">here is ignored</div>
+                        <ng-template #content>
+                            [[{{node.resultCode}}]] = {{node.prompt}}
+                        </ng-template>
+                        <ng-template #other_content>
+                            Type: {{MhUtils.isNull(node.functionCode) ? 'API: '+ node.apiCode : 'Process: ' + node.functionCode}}, Name: {{node.name}}<br/>{{node.prompt}}<br/>Result code: [[{{node.resultCode}}]]
+                        </ng-template>
                         <ng-container *ngIf="isMhAcceptanceTestNode(node)" ><br/>expected: {{node.expected}}</ng-container>
                         <button mat-icon-button (click)="addNewStubItem(node)" matTooltip="Add new step" color="primary"
                                 *ngIf="!stepEvaluation()">
