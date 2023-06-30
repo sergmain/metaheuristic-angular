@@ -3,11 +3,10 @@ import {MatTableDataSource} from '@angular/material/table';
 import {ActivatedRoute} from '@angular/router';
 import {UIStateComponent} from '@src/app/models/UIStateComponent';
 import {AuthenticationService} from '@src/app/services/authentication';
-import {ScenariosResult} from '@services/scenario/ScenariosResult';
-import {ScenarioService} from '@services/scenario/scenario.service';
-import {SimpleScenario} from '@services/scenario/SimpleScenario';
 import {ConfirmationDialogMethod} from '@app/components/app-dialog-confirmation/app-dialog-confirmation.component';
 import {MatDialog} from '@angular/material/dialog';
+import {ChatService} from '@app/modules/chat/chat-service';
+import {Chats, SimpleChat} from '@app/modules/chat/chat-data';
 
 @Component({
     selector: 'chats',
@@ -15,15 +14,13 @@ import {MatDialog} from '@angular/material/dialog';
     styleUrls: ['./chats.component.css']
 })
 export class ChatsComponent extends UIStateComponent implements OnInit {
-    dataSource: MatTableDataSource<SimpleScenario> = new MatTableDataSource<SimpleScenario>([]);
+    dataSource: MatTableDataSource<SimpleChat> = new MatTableDataSource<SimpleChat>([]);
     columnsToDisplay: string[] = ['id', 'createdOn', 'name', 'bts'];
-    scenariosResult: ScenariosResult;
-    scenarioGroupId: string;
+    chats: Chats;
 
     constructor(
         readonly dialog: MatDialog,
-        private scenarioService: ScenarioService,
-        private activatedRoute: ActivatedRoute,
+        private chatService: ChatService,
         readonly authenticationService: AuthenticationService
     ) {
         super(authenticationService);
@@ -35,12 +32,12 @@ export class ChatsComponent extends UIStateComponent implements OnInit {
 
     updateTable(page: number): void {
         this.setIsLoadingStart();
-        this.scenarioService
-            .scenarios(page.toString(), this.scenarioGroupId)
+        this.chatService
+            .chats(page.toString())
             .subscribe({
-                next: accountsResult => {
-                    this.scenariosResult = accountsResult;
-                    this.dataSource = new MatTableDataSource(this.scenariosResult.scenarios.content || []);
+                next: chats => {
+                    this.chats = chats;
+                    this.dataSource = new MatTableDataSource(this.chats.chats.content || []);
                 },
                 complete: () => {
                     this.setIsLoadingEnd();
@@ -49,18 +46,19 @@ export class ChatsComponent extends UIStateComponent implements OnInit {
     }
 
     @ConfirmationDialogMethod({
-        question: (ss: SimpleScenario): string =>
-            `Do you want to delete Scenario #${ss.scenarioId}`,
+        question: (ss: SimpleChat): string =>
+            `Do you want to delete chat #${ss.chatId}`,
 
         resolveTitle: 'Delete',
         rejectTitle: 'Cancel'
     })
-    delete(scenario: SimpleScenario): void {
-        this.scenarioService
-            .scenarioDeleteCommit(scenario.scenarioId.toString())
-            .subscribe(v => this.updateTable(this.scenariosResult.scenarios.number));
+    delete(chat: SimpleChat): void {
+        this.chatService
+            .chatDeleteCommit(chat.chatId.toString())
+            .subscribe(v => this.updateTable(this.chats.chats.number));
     }
 
+/*
     @ConfirmationDialogMethod({
         question: (ss: SimpleScenario): string =>
             `Do you want to copy Scenario #${ss.scenarioId}, ${ss.name}`,
@@ -69,17 +67,18 @@ export class ChatsComponent extends UIStateComponent implements OnInit {
         rejectTitle: 'Cancel'
     })
     copyScenario(scenario: SimpleScenario) {
-        this.scenarioService
+        this.chatService
             .copyScenario(scenario.scenarioGroupId.toString(), scenario.scenarioId.toString())
-            .subscribe(v => this.updateTable(this.scenariosResult.scenarios.number));
+            .subscribe(v => this.updateTable(this.chats.scenarios.number));
     }
+*/
 
     nextPage(): void {
-        this.updateTable(this.scenariosResult.scenarios.number + 1);
+        this.updateTable(this.chats.chats.number + 1);
     }
 
     prevPage(): void {
-        this.updateTable(this.scenariosResult.scenarios.number - 1);
+        this.updateTable(this.chats.chats.number - 1);
     }
 
 }

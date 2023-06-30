@@ -1,13 +1,13 @@
-<ct-section *ngIf="scenariosResult">
+<ct-section *ngIf="chats">
     <ct-section-header>
         <ct-section-header-row>
             <ct-flex justify-content="space-between">
                 <ct-flex-item>
-                    <ct-heading>Scenarios</ct-heading>
+                    <ct-heading>Chats</ct-heading>
                 </ct-flex-item>
                 <ct-flex-item justify-content="flex-end">
                     <button mat-icon-button color="primary"
-                            [routerLink]="['../..', scenarioGroupId, 'scenario-add']"><mat-icon>note_add</mat-icon></button>
+                            [routerLink]="['../..', 'chat-add']"><mat-icon>note_add</mat-icon></button>
                 </ct-flex-item>
             </ct-flex>
         </ct-section-header-row>
@@ -18,7 +18,7 @@
                 <table mat-table [dataSource]="dataSource">
                     <ng-container matColumnDef="id">
                         <th mat-header-cell *matHeaderCellDef>ID </th>
-                        <td mat-cell *matCellDef="let el">{{el.scenarioId}} </td>
+                        <td mat-cell *matCellDef="let el">{{el.chatId}} </td>
                     </ng-container>
                     <ng-container matColumnDef="createdOn">
                         <th mat-header-cell *matHeaderCellDef>Created On </th>
@@ -26,8 +26,8 @@
                             {{el.createdOn | date:'MMM&nbsp;d,&nbsp;yyyy, HH:mm'}} </td>
                     </ng-container>
                     <ng-container matColumnDef="name">
-                        <th mat-header-cell *matHeaderCellDef>Name<br/>Description</th>
-                        <td mat-cell *matCellDef="let el">{{el.name}}<br/>{{el.description}} </td>
+                        <th mat-header-cell *matHeaderCellDef>Name</th>
+                        <td mat-cell *matCellDef="let el">{{el.name}}</td>
                     </ng-container>
                     <ng-container matColumnDef="bts">
                         <th mat-header-cell *matHeaderCellDef></th>
@@ -35,17 +35,16 @@
                             <ct-flex justify-content="flex-end" gap="8px">
                                 <ct-flex-item>
                                     <button mat-icon-button color="primary"
-                                            [routerLink]="['../..', scenarioGroupId, 'scenario', el.scenarioId, 'details']" matTooltip="Edit scenario">
+                                            [routerLink]="['../..', 'chat', el.chatId]" matTooltip="Continue chat">
                                         <mat-icon>edit_document</mat-icon>
                                     </button>
-                                    <button mat-icon-button color="primary" (click)="copyScenario(el)" matTooltip="Copy scenario">
-                                        <mat-icon>content_copy</mat-icon>
-                                    </button>
+<!--
                                     <button mat-icon-button color="primary"
                                             [routerLink]="['../..', scenarioGroupId, 'scenario', el.scenarioId, 'move']" matTooltip="Move to another group">
                                         <mat-icon>forward</mat-icon>
                                     </button>
-                                    <button mat-icon-button color="warn" size="forTableRow" (click)="delete(el)" matTooltip="Delete scenario">
+-->
+                                    <button mat-icon-button color="warn" size="forTableRow" (click)="delete(el)" matTooltip="Delete chat">
                                         <mat-icon>delete_forever</mat-icon>
                                     </button>
                                 </ct-flex-item>
@@ -64,7 +63,7 @@
                 <ct-flex-item>
                     <ct-flex justify-content="flex-start" gap="8px">
                         <ct-table-pagination (prev)="prevPage()" (next)="nextPage()"
-                            [pageableDefault]="scenariosResult.scenarios"></ct-table-pagination>
+                            [pageableDefault]="chats.chats"></ct-table-pagination>
                     </ct-flex>
                 </ct-flex-item>
             </ct-flex>

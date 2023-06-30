@@ -35,7 +35,7 @@ export const MhbpRoutes: Routes = [
         loadChildren: () => import('@app/modules/chat/chat.module').then(m => m.ChatModule),
         data: {
             requiredRoles: [Role.Admin, Role.Manager, Role.Operator],
-            section: 'scenarios'
+            section: 'chats'
         }
     },
     {

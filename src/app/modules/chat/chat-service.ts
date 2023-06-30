@@ -4,8 +4,7 @@ import {environment} from '@src/environments/environment';
 import {Observable} from 'rxjs';
 import {OperationStatusRest} from '@app/models/OperationStatusRest';
 import {generateFormData} from '@app/helpers/generateFormData';
-import {ScenariosResult} from '@services/scenario/ScenariosResult';
-import {SimpleScenarioSteps} from '@services/scenario/SimpleScenarioSteps';
+import {Chats, FullChat} from '@app/modules/chat/chat-data';
 
 const url = (s: string): string => `${environment.baseUrl}dispatcher/chat/${s}`;
 
@@ -13,21 +12,25 @@ const url = (s: string): string => `${environment.baseUrl}dispatcher/chat/${s}`;
 export class ChatService {
     constructor(private http: HttpClient) {}
 
-    chats = (page: string, scenarioGroupId: string): Observable<ScenariosResult> =>
-        this.http.get<ScenariosResult>(url(`chats`), { params: { page } })
+    chats = (page: string): Observable<Chats> =>
+        this.http.get<Chats>(url(`chats`), { params: { page } })
 
-    chat(chatId: number): Observable<SimpleScenarioSteps> {
-        return this.http.get<SimpleScenarioSteps>(url(`chat/${chatId}`));
+    chat(chatId: number): Observable<FullChat> {
+        return this.http.get<FullChat>(url(`chat/${chatId}`));
     }
 
     addChatFormCommit(name: string, description: string): Observable<OperationStatusRest> {
         return this.http.post<OperationStatusRest>(
-            url(`scenario-group-add-commit`),
+            url(`chat-add-commit`),
             generateFormData({
                 name, description
             })
         );
     }
 
+    chatDeleteCommit(chatId: string): Observable<OperationStatusRest> {
+        console.log("Delete chat #"+ chatId);
+        return this.http.post<OperationStatusRest>(url(`chat-delete-commit`), generateFormData({ chatId: chatId }));
+    }
 
 }

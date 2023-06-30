@@ -6,7 +6,6 @@ import {CtModule} from '../ct/ct.module';
 import {MaterialAppModule} from '@src/app/ngmaterial.module';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {RoleRouteGuard} from '@app/guards/role-route.guard';
-import {Role} from '@services/authentication';
 import {DragDropModule} from '@angular/cdk/drag-drop';
 import {MatTableModule} from '@angular/material/table';
 import {FlexLayoutModule} from '@angular/flex-layout';
@@ -31,8 +30,7 @@ export const ScenarioRoutes: Routes = [
         component: ChatComponent,
         canActivate: [RoleRouteGuard],
         data: {
-            backConfig: ['../', '../', 'chats'],
-            requiredRoles: [Role.Admin]
+            backConfig: ['../', 'chats']
         }
     }
 ];
