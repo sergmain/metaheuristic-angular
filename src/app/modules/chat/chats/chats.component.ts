@@ -27,6 +27,7 @@ export class ChatsComponent extends UIStateComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        console.log("ChatsComponent.ngOnInit()");
         this.updateTable(0);
     }
 
