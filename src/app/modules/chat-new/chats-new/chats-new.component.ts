@@ -1,33 +1,33 @@
 import {Component, OnInit} from '@angular/core';
 import {MatTableDataSource} from '@angular/material/table';
-import {ActivatedRoute} from '@angular/router';
 import {UIStateComponent} from '@src/app/models/UIStateComponent';
 import {AuthenticationService} from '@src/app/services/authentication';
-import {ConfirmationDialogMethod} from '@app/components/app-dialog-confirmation/app-dialog-confirmation.component';
+import {ChatsResult, SimpleChat} from '@app/modules/chat-new/chat-data';
+import {ChatService} from '@app/modules/chat-new/chat-service';
 import {MatDialog} from '@angular/material/dialog';
-import {ChatService} from '@app/modules/chat/chat-service';
-import {Chats, SimpleChat} from '@app/modules/chat/chat-data';
+import {ConfirmationDialogMethod} from '@app/components/app-dialog-confirmation/app-dialog-confirmation.component';
 
 @Component({
-    selector: 'chats',
-    templateUrl: './chats.component.html',
-    styleUrls: ['./chats.component.css']
+    selector: 'chats-new',
+    templateUrl: './chats-new.component.html',
+    styleUrls: ['./chats-new.component.scss']
 })
-export class ChatsComponent extends UIStateComponent implements OnInit {
+
+export class ChatsNewComponent extends UIStateComponent implements OnInit {
     dataSource: MatTableDataSource<SimpleChat> = new MatTableDataSource<SimpleChat>([]);
     columnsToDisplay: string[] = ['id', 'createdOn', 'name', 'bts'];
-    chats: Chats;
+    chats: ChatsResult;
 
     constructor(
         readonly dialog: MatDialog,
         private chatService: ChatService,
         readonly authenticationService: AuthenticationService
     ) {
-        super(authenticationService);
+        super(authenticationService)
     }
 
     ngOnInit(): void {
-        console.log("ChatsComponent.ngOnInit()");
+        console.log("ChatsNewComponent.ngOnInit()");
         this.updateTable(0);
     }
 
@@ -59,21 +59,6 @@ export class ChatsComponent extends UIStateComponent implements OnInit {
             .subscribe(v => this.updateTable(this.chats.chats.number));
     }
 
-/*
-    @ConfirmationDialogMethod({
-        question: (ss: SimpleScenario): string =>
-            `Do you want to copy Scenario #${ss.scenarioId}, ${ss.name}`,
-
-        resolveTitle: 'Copy scenario',
-        rejectTitle: 'Cancel'
-    })
-    copyScenario(scenario: SimpleScenario) {
-        this.chatService
-            .copyScenario(scenario.scenarioGroupId.toString(), scenario.scenarioId.toString())
-            .subscribe(v => this.updateTable(this.chats.scenarios.number));
-    }
-*/
-
     nextPage(): void {
         this.updateTable(this.chats.chats.number + 1);
     }
@@ -81,5 +66,6 @@ export class ChatsComponent extends UIStateComponent implements OnInit {
     prevPage(): void {
         this.updateTable(this.chats.chats.number - 1);
     }
+
 
 }

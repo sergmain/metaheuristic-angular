@@ -4,7 +4,7 @@ import {environment} from '@src/environments/environment';
 import {Observable} from 'rxjs';
 import {OperationStatusRest} from '@app/models/OperationStatusRest';
 import {generateFormData} from '@app/helpers/generateFormData';
-import {Chats, FullChat} from '@app/modules/chat/chat-data';
+import {ChatsResult, FullChat} from '@app/modules/chat-new/chat-data';
 
 const url = (s: string): string => `${environment.baseUrl}dispatcher/chat/${s}`;
 
@@ -12,8 +12,8 @@ const url = (s: string): string => `${environment.baseUrl}dispatcher/chat/${s}`;
 export class ChatService {
     constructor(private http: HttpClient) {}
 
-    chats = (page: string): Observable<Chats> =>
-        this.http.get<Chats>(url(`chats`), { params: { page } })
+    chats = (page: string): Observable<ChatsResult> =>
+        this.http.get<ChatsResult>(url(`chats`), { params: { page } })
 
     chat(chatId: number): Observable<FullChat> {
         return this.http.get<FullChat>(url(`chat/${chatId}`));

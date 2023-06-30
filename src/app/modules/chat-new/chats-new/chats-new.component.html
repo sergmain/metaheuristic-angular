@@ -7,7 +7,7 @@
                 </ct-flex-item>
                 <ct-flex-item justify-content="flex-end">
                     <button mat-icon-button color="primary"
-                            [routerLink]="['../..', 'chat-add']"><mat-icon>note_add</mat-icon></button>
+                            routerLink="chat-add"><mat-icon>note_add</mat-icon></button>
                 </ct-flex-item>
             </ct-flex>
         </ct-section-header-row>
@@ -35,15 +35,15 @@
                             <ct-flex justify-content="flex-end" gap="8px">
                                 <ct-flex-item>
                                     <button mat-icon-button color="primary"
-                                            [routerLink]="['../..', 'chat', el.chatId]" matTooltip="Continue chat">
+                                            [routerLink]="['..', 'chat', el.chatId]" matTooltip="Continue chat">
                                         <mat-icon>edit_document</mat-icon>
                                     </button>
-<!--
-                                    <button mat-icon-button color="primary"
-                                            [routerLink]="['../..', scenarioGroupId, 'scenario', el.scenarioId, 'move']" matTooltip="Move to another group">
-                                        <mat-icon>forward</mat-icon>
-                                    </button>
--->
+                                    <!--
+                                                                        <button mat-icon-button color="primary"
+                                                                                [routerLink]="['../..', scenarioGroupId, 'scenario', el.scenarioId, 'move']" matTooltip="Move to another group">
+                                                                            <mat-icon>forward</mat-icon>
+                                                                        </button>
+                                    -->
                                     <button mat-icon-button color="warn" size="forTableRow" (click)="delete(el)" matTooltip="Delete chat">
                                         <mat-icon>delete_forever</mat-icon>
                                     </button>
@@ -63,7 +63,7 @@
                 <ct-flex-item>
                     <ct-flex justify-content="flex-start" gap="8px">
                         <ct-table-pagination (prev)="prevPage()" (next)="nextPage()"
-                            [pageableDefault]="chats.chats"></ct-table-pagination>
+                                             [pageableDefault]="chats.chats"></ct-table-pagination>
                     </ct-flex>
                 </ct-flex-item>
             </ct-flex>

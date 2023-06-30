@@ -29,13 +29,13 @@ export const MhbpRoutes: Routes = [
         }]
     },
     {
-        path: 'chat',
+        path: 'chat-new',
         canActivate: [RoleRouteGuard],
         component: MhbpRootComponent,
-        loadChildren: () => import('@app/modules/chat/chat.module').then(m => m.ChatModule),
+        loadChildren: () => import('@app/modules/chat-new/chat-new.module').then(m => m.ChatNewModule),
         data: {
             requiredRoles: [Role.Admin, Role.Manager, Role.Operator],
-            section: 'chats'
+            section: 'chats-new'
         }
     },
     {

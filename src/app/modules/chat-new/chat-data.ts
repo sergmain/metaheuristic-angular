@@ -7,7 +7,7 @@ export interface SimpleChat {
     createdOn: number;
 }
 
-export interface Chats extends DefaultResponse {
+export interface ChatsResult extends DefaultResponse {
     chats: {
         content: SimpleChat[];
     } & PageableDefault;

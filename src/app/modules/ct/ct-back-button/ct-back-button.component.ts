@@ -1,6 +1,6 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
+import {Subscription} from 'rxjs';
 
 export interface MenuItem {
     label: string;
@@ -32,7 +32,6 @@ export class CtBackButtonComponent implements OnInit, OnDestroy {
             this.setConfig();
         }));
     }
-
     setConfig(): void {
         this.config = this.activatedRoute?.snapshot?.firstChild?.data?.backConfig;
     }
