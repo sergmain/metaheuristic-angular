@@ -9,7 +9,6 @@ import { MhbpIndexComponent } from './mhbp-index/mhbp-index.component';
 import { MhbpRootComponent } from './mhbp-root/mhbp-root.component';
 import { RoleRouteGuard } from '@src/app/guards/role-route.guard';
 import { Role } from '@src/app/services/authentication';
-import {DispatcherRootComponent} from '@app/modules/dispatcher/dispatcher-root/dispatcher-root.component';
 
 const commonRequiredRoles: Role[] = [Role.Admin, Role.Data, Role.Manager];
 
@@ -28,6 +27,16 @@ export const MhbpRoutes: Routes = [
                 requiredRoles: commonRequiredRoles
             },
         }]
+    },
+    {
+        path: 'chat',
+        canActivate: [RoleRouteGuard],
+        component: MhbpRootComponent,
+        loadChildren: () => import('@app/modules/chat/chat.module').then(m => m.ChatModule),
+        data: {
+            requiredRoles: [Role.Admin, Role.Manager, Role.Operator],
+            section: 'scenarios'
+        }
     },
     {
         path: 'scenario',

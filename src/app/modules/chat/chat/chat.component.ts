@@ -81,13 +81,10 @@ export class StepEvaluationState {
     previousPrompt: string = null;
 }
 
-/**
- * @title Tree with flat nodes
- */
 @Component({
-    selector: 'chat-prompts',
-    templateUrl: 'chat-prompts.component.html',
-    styleUrls: ['chat-prompts.component.scss']
+    selector: 'chat',
+    templateUrl: 'chat.component.html',
+    styleUrls: ['chat.component.scss']
 })
 export class ChatComponent extends UIStateComponent implements OnInit, OnDestroy, AfterViewInit {
     @ViewChild('execContexts') execContexts: TemplateRef<any>;

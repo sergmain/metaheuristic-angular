@@ -30,7 +30,6 @@ export class ChatsComponent extends UIStateComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.scenarioGroupId = this.activatedRoute.snapshot.paramMap.get('scenarioGroupId');
         this.updateTable(0);
     }
 

@@ -1,6 +1,19 @@
 <mat-sidenav-container>
     <mat-sidenav mode="side" [opened]="sidenavOpened">
         <div class="navigation">
+
+            <button *ngIf="
+                    isRole.Admin ||
+                    isRole.Data ||
+                    isRole.Operator ||
+                    isRole.Manager
+                "
+                    mat-button
+                    routerLinkActive="active"
+                    routerLink="/mhbp/chat">
+                {{ 'dispatcher.Chat' | translate }}
+            </button>
+
             <button *ngIf="
                     isRole.Admin ||
                     isRole.Data ||
