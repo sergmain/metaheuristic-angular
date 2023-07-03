@@ -11,7 +11,7 @@
                     <form [formGroup]="form" novalidate="novalidate" autocomplete="off">
                         <mat-form-field appearance="outline" style="width: 100%;">
                             <mat-label>Name</mat-label>
-                            <input matInput="matInput" type="text" autocomplete="name" formControlName="username" />
+                            <input matInput="matInput" type="text" autocomplete="off" formControlName="username" />
                             <mat-hint>This is a required field.</mat-hint>
                         </mat-form-field>
                         <br>
@@ -26,7 +26,7 @@
                         <br>
                         <mat-form-field appearance="outline" style="width: 100%;">
                             <mat-label>Password again</mat-label>
-                            <input matInput="matInput" type="password" autocomplete="new-password"
+                            <input matInput="matInput" type="password" autocomplete="off"
                                 formControlName="password2" />
                             <mat-hint>This is a required field.</mat-hint>
                         </mat-form-field>
@@ -34,7 +34,7 @@
                         <br>
                         <mat-form-field appearance="outline" style="width: 100%;">
                             <mat-label>Public Name</mat-label>
-                            <input matInput="matInput" type="text" autocomplete="name" formControlName="publicName" />
+                            <input matInput="matInput" type="text" autocomplete="off" formControlName="publicName" />
                             <mat-hint>This is a required field.</mat-hint>
                         </mat-form-field>
                     </form>

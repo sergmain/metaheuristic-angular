@@ -11,14 +11,14 @@
                     <form [formGroup]="form" novalidate="novalidate">
                         <mat-form-field appearance="outline" style="width: 100%;">
                             <mat-label>{{ 'main.Name' | translate }}</mat-label>
-                            <input matInput="matInput" type="text" autocomplete="name" formControlName="name" />
+                            <input matInput="matInput" type="text" autocomplete="off" formControlName="name" />
                             <mat-hint>{{ 'main.This is a required field' | translate }}</mat-hint>
                         </mat-form-field>
                         <br>
                         <br>
                         <mat-form-field appearance="outline" style="width: 100%;">
                             <mat-label>{{ 'step.Prompt' | translate }}</mat-label>
-                            <input matInput="matInput" type="text" autocomplete="prompt" formControlName="prompt" />
+                            <input matInput="matInput" type="text" autocomplete="off" formControlName="prompt" />
                             <mat-hint>{{ 'main.This is a required field' | translate }}</mat-hint>
                         </mat-form-field>
                     </form>

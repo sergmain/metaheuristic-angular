@@ -16,6 +16,7 @@ import {MatButton} from "@angular/material/button";
 import {SelectionModel} from "@angular/cdk/collections";
 import {MatTableDataSource} from "@angular/material/table";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {MhUtils} from '@services/mh-utils/mh-utils.service';
 
 @Component({
     selector: 'evaluation-add',
@@ -118,6 +119,6 @@ export class EvaluationAddComponent extends UIStateComponent implements OnInit, 
     }
 
     notToCreate() {
-        return this.apiUid==null || this.selection.isEmpty() || this.form.invalid;
+        return MhUtils.isNull(this.apiUid) || this.selection.isEmpty() || this.form.invalid;
     }
 }

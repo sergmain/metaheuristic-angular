@@ -4,7 +4,7 @@ import {environment} from '@src/environments/environment';
 import {Observable} from 'rxjs';
 import {OperationStatusRest} from '@app/models/OperationStatusRest';
 import {generateFormData} from '@app/helpers/generateFormData';
-import {ChatsResult, FullChat} from '@app/modules/chat-new/chat-data';
+import {ApiForCompany, ChatsResult, FullChat} from '@app/modules/chat-new/chat-data';
 
 const url = (s: string): string => `${environment.baseUrl}dispatcher/chat/${s}`;
 
@@ -33,4 +33,14 @@ export class ChatService {
         return this.http.post<OperationStatusRest>(url(`chat-delete-commit`), generateFormData({ chatId: chatId }));
     }
 
+    chatAdd(): Observable<ApiForCompany> {
+        return this.http.get<ApiForCompany>(url(`chat-add`));
+    }
+
+    chatAddCommit(name:string, apiId: string): Observable<OperationStatusRest> {
+        return this.http.post<OperationStatusRest>(
+            url(`chat-add-commit`),
+            generateFormData({name, apiId})
+        );
+    }
 }

@@ -66,6 +66,8 @@
 	"api.name": "API name",
 	"api.code": "API code",
 
+	"dispatcher.Chats": "Чаты",
+
 	"dispatcher.Scenario": "Scenarios",
 	"mhbp.scenario-function-mh.batch-line-splitter": "Split list per line",
 	"mhbp.scenario-function-mh.batch-line-splitter-desc": "Split input data per line.",

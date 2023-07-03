@@ -1,0 +1,51 @@
+<ct-cols *ngIf="response">
+    <ct-col size="6">
+        <ct-section>
+            <ct-section-header>
+                <ct-section-header-row>
+                    <ct-heading>{{ 'evaluation-add.Create a new chat for specific API' | translate }}</ct-heading>
+                </ct-section-header-row>
+            </ct-section-header>
+            <ct-section-body>
+                <ct-section-body-row>
+                    <form [formGroup]="form" novalidate="novalidate">
+                        <mat-form-field appearance="outline" style="width: 100%;">
+                            <mat-label>Name of Chat, min 3 chars, required</mat-label>
+                            <input matInput="matInput" type="text" autocomplete="off" formControlName="name" />
+                            <mat-hint>{{ 'main.This is a required field' | translate }}</mat-hint>
+                        </mat-form-field>
+                    </form>
+                </ct-section-body-row>
+                <ct-section-body-row>
+                    <mat-form-field appearance="outline">
+                        <mat-label> {{ 'evaluation-add.List of APIs' | translate }}</mat-label>
+                        <mat-select [(ngModel)]="apiUid">
+                            <div *ngFor="let api of listOfApis">
+                                <mat-option [value]="api">{{api.uid}}</mat-option>
+                            </div>
+                        </mat-select>
+                        <mat-hint>{{ 'main.This is a required field' | translate }}</mat-hint>
+                    </mat-form-field>
+                </ct-section-body-row>
+            </ct-section-body>
+
+            <ct-section-footer>
+                <ct-section-footer-row>
+                    <ct-flex justify-content="flex-end" gap="8px">
+                        <ct-flex-item>
+                            <button mat-stroked-button="mat-stroked-button" routerLink="/mhbp/chat">
+                                {{ 'main.Cancel' | translate }}</button>
+                        </ct-flex-item>
+                        <ct-flex-item>
+                            <button mat-flat-button="mat-flat-button" color="primary" [disabled]="notToCreate()"
+                                    (click)="create()"> {{ 'evaluation-add.Create' | translate }}</button>
+                        </ct-flex-item>
+                    </ct-flex>
+                </ct-section-footer-row>
+            </ct-section-footer>
+        </ct-section>
+    </ct-col>
+    <ct-col size="6">
+        <ct-rest-status [content]="uploadResponse"></ct-rest-status>
+    </ct-col>
+</ct-cols>

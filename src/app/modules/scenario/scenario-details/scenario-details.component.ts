@@ -842,7 +842,7 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
         let functionCode = MhUtils.isNull(this.form.value.processingFunction) ? null : this.form.value.processingFunction.code;
         let aggregateType = MhUtils.isNull(this.form.value.aggregateType) ? null : this.form.value.aggregateType;
         let expected = this.form.value.expected;
-        let apiUid = this.isApiNeeded() ? this.form.value.apiUid.id.toString() : null;
+        let apiId = this.isApiNeeded() ? this.form.value.apiUid.id.toString() : null;
         let isCachable=  MhUtils.isNull(this.form.value.cachable) ? false : this.form.value.cachable;
 
         // console.log("saveStepInternal() #2");
@@ -861,7 +861,7 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
                 parentUuid,
                 name,
                 prompt,
-                apiUid,
+                apiId,
                 resultCode,
                 functionCode,
                 aggregateType,
