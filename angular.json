@@ -107,6 +107,33 @@
                   "maximumWarning": "6kb"
                 }
               ]
+            },
+            "production-standalone":  {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.production-standalone.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "20mb",
+                  "maximumError": "50mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb"
+                }
+              ]
             }
           }
         },
@@ -122,6 +149,9 @@
               "browserTarget": "metaheuristic-app:build:production"
             },
             "production-no-ssl": {
+              "browserTarget": "metaheuristic-app:build:production"
+            },
+            "production-standalone": {
               "browserTarget": "metaheuristic-app:build:production"
             }
           }
@@ -179,6 +209,9 @@
               "devServerTarget": "metaheuristic-app:serve:production"
             },
             "production-no-ssl": {
+              "devServerTarget": "metaheuristic-app:serve:production"
+            },
+            "production-standalone": {
               "devServerTarget": "metaheuristic-app:serve:production"
             }
           }
