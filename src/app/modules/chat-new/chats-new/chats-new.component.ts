@@ -37,6 +37,7 @@ export class ChatsNewComponent extends UIStateComponent implements OnInit {
             .chats(page.toString())
             .subscribe({
                 next: chats => {
+                    //console.log("ChatsNewComponent.updateTable() #1", JSON.stringify(chats));
                     this.chats = chats;
                     this.dataSource = new MatTableDataSource(this.chats.chats.content || []);
                 },

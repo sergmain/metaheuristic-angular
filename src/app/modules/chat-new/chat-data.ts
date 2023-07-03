@@ -1,12 +1,12 @@
 import {DefaultResponse} from '@app/models/DefaultResponse';
 import {PageableDefault} from '@app/models/PageableDefault';
-import {ApiUid} from '@services/evaluation/ApiUid';
-import {ChapterUid} from '@services/evaluation/ChapterUid';
+import {ApiUid} from '@app/modules/api/api-data';
 
 export interface SimpleChat {
     chatId: number;
     name: string;
     createdOn: number;
+    apiUid: ApiUid;
 }
 
 export interface ChatsResult extends DefaultResponse {
