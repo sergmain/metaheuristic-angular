@@ -16,16 +16,21 @@ export interface ChatsResult extends DefaultResponse {
 }
 
 export interface ChatPrompt {
-    id: number;
     prompt: string;
     answer: string;
 }
 
 export interface FullChat extends DefaultResponse {
     sessionId: string;
+    chatId: string;
+    apiUid: ApiUid;
     prompts: ChatPrompt[];
 }
 
 export interface ApiForCompany extends DefaultResponse {
     apis: ApiUid[];
+}
+
+export interface AssetsForChatting extends DefaultResponse {
+    api: ApiUid;
 }

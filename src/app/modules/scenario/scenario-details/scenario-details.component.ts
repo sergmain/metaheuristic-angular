@@ -90,6 +90,9 @@ export class StepEvaluationState {
     styleUrls: ['scenario-details.component.scss']
 })
 export class ScenarioDetailsComponent extends UIStateComponent implements OnInit, OnDestroy, AfterViewInit {
+    // for scenario-details.component.html
+    protected readonly MhUtils = MhUtils;
+
     @ViewChild('execContexts') execContexts: TemplateRef<any>;
 
     treeControl: FlatTreeControl<StepFlatNode>;
@@ -1015,8 +1018,6 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
         }
         return false;
     }
-
-    protected readonly MhUtils = MhUtils;
 
     setModeToShow(node) {
         node.mode = NodeMode.show;

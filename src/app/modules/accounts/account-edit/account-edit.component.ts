@@ -4,12 +4,12 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AccountsService } from '@app/services/accounts/accounts.service';
 import { LoadStates } from '@app/enums/LoadStates';
 import { SimpleAccount } from '@src/app/services/accounts';
+
 @Component({
     selector: 'account-edit',
     templateUrl: './account-edit.component.html',
     styleUrls: ['./account-edit.component.scss']
 })
-
 export class AccountEditComponent implements OnInit {
     readonly states = LoadStates;
     currentStates = new Set();

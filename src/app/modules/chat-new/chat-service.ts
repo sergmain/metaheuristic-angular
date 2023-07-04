@@ -4,7 +4,8 @@ import {environment} from '@src/environments/environment';
 import {Observable} from 'rxjs';
 import {OperationStatusRest} from '@app/models/OperationStatusRest';
 import {generateFormData} from '@app/helpers/generateFormData';
-import {ApiForCompany, ChatsResult, FullChat} from '@app/modules/chat-new/chat-data';
+import {ApiForCompany, AssetsForChatting, ChatsResult, FullChat} from '@app/modules/chat-new/chat-data';
+import {ScenarioUidsForAccount} from '@services/scenario/ScenarioUidsForAccount';
 
 const url = (s: string): string => `${environment.baseUrl}dispatcher/chat/${s}`;
 
@@ -15,7 +16,7 @@ export class ChatService {
     chats = (page: string): Observable<ChatsResult> =>
         this.http.get<ChatsResult>(url(`chats`), { params: { page } })
 
-    chat(chatId: number): Observable<FullChat> {
+    chat(chatId: string): Observable<FullChat> {
         return this.http.get<FullChat>(url(`chat/${chatId}`));
     }
 
@@ -43,4 +44,5 @@ export class ChatService {
             generateFormData({name, apiId})
         );
     }
+
 }
