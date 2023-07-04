@@ -22,6 +22,7 @@ export type AuthenticationServiceEvent = AuthenticationServiceEventLogin | Authe
 export class AuthenticationService {
     private localStorageName: string = 'authenticationService';
     private userLifeTimeExpiredName: string = '__last';
+    private useLocalStorage: boolean = true;
     user: User;
     events: BehaviorSubject<AuthenticationServiceEvent> = new BehaviorSubject(null);
 
@@ -33,17 +34,20 @@ export class AuthenticationService {
         private http: HttpClient,
         private router: Router,
     ) {
-        this.user = this.getLocalStorageData();
+        if (this.useLocalStorage) {
+            this.user = this.getLocalStorageData();
+        }
         this.events.next(new AuthenticationServiceEventChange(this.user));
 
     }
 
     private updateData(user: User): void {
         this.user = user;
-        this.setLocalStorageData(user);
+        if (this.useLocalStorage) {
+            this.setLocalStorageData(user);
+        }
         this.events.next(new AuthenticationServiceEventChange(user));
     }
-
 
     convertRolesToString(roles?: Role[]): string {
         return roles.map(role => {
