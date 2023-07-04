@@ -51,6 +51,7 @@
 	"batch.isBatchConsistent.true": "OK",
 	"batch.onlyMyBatches": "Only My Batches",
 	"ctBackButton.back": "Back",
+
 	"dispatcher.Sessions": "Sessions",
 	"dispatcher.Apis": "APIs",
 	"dispatcher.Auths": "Auth",
@@ -62,13 +63,14 @@
 	"dispatcher.Processors": "Processors",
 	"dispatcher.SourceCodes": "Source Codes",
 	"dispatcher.Variables": "Variables",
+	"dispatcher-menu.Chat": "Chats",
+	"dispatcher-menu.Scenario": "Scenarios",
 
 	"api.name": "API name",
 	"api.code": "API code",
 
-	"dispatcher.Chat": "Chats",
+	"chat-add.Create a new chat for specific API": "Create a new chat for specific API",
 
-	"dispatcher.Scenario": "Scenarios",
 	"mhbp.scenario-function-mh.batch-line-splitter": "Split list per line",
 	"mhbp.scenario-function-mh.batch-line-splitter-desc": "Split input data per line.",
 	"scenario.Use cache": "Use cache",
