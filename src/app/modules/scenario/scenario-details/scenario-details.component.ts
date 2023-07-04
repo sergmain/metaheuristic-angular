@@ -25,12 +25,11 @@ import {MatDialog} from '@angular/material/dialog';
 import {StepEvaluationPrepareResult} from '@services/scenario/StepEvaluationPrepareResult';
 import {StepEvaluation} from '@services/scenario/StepEvaluation';
 import {StepVariable} from '@services/scenario/StepVariable';
+import {MIN_PROMPT_LEN} from '@app/modules/mh-consts';
 
 const MH_ACCEPTANCE_TEST = 'mh.acceptance-test';
 const MH_AGGREGATE = 'mh.aggregate';
 const MH_ENHANCE_TEXT = 'mh.enhance-text';
-const MIN_PROMPT_LEN: number = 3;
-
 
 export enum NodeMode {
     new = 'new',

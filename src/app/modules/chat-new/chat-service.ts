@@ -4,8 +4,7 @@ import {environment} from '@src/environments/environment';
 import {Observable} from 'rxjs';
 import {OperationStatusRest} from '@app/models/OperationStatusRest';
 import {generateFormData} from '@app/helpers/generateFormData';
-import {ApiForCompany, AssetsForChatting, ChatsResult, FullChat} from '@app/modules/chat-new/chat-data';
-import {ScenarioUidsForAccount} from '@services/scenario/ScenarioUidsForAccount';
+import {ApiForCompany, ChatPrompt, ChatsResult, FullChat} from '@app/modules/chat-new/chat-data';
 
 const url = (s: string): string => `${environment.baseUrl}dispatcher/chat/${s}`;
 
@@ -18,15 +17,6 @@ export class ChatService {
 
     chat(chatId: string): Observable<FullChat> {
         return this.http.get<FullChat>(url(`chat/${chatId}`));
-    }
-
-    addChatFormCommit(name: string, description: string): Observable<OperationStatusRest> {
-        return this.http.post<OperationStatusRest>(
-            url(`chat-add-commit`),
-            generateFormData({
-                name, description
-            })
-        );
     }
 
     chatDeleteCommit(chatId: string): Observable<OperationStatusRest> {
@@ -43,6 +33,11 @@ export class ChatService {
             url(`chat-add-commit`),
             generateFormData({name, apiId})
         );
+    }
+
+    postPrompt(chatId: string, prompt: string): Observable<ChatPrompt> {
+        return this.http.post<ChatPrompt>(url(`post-prompt/${chatId}`),
+            generateFormData({ prompt: prompt }));
     }
 
 }

@@ -29,10 +29,6 @@
     <ct-section-footer>
         <ct-section-footer-row>
             <ct-flex justify-content="space-between">
-                <ct-flex-item>
-                    <!-- <ct-table-pagination [pageableDefault]="functionsResult.items" [globalDisable]="false"
-                        (next)="nextPage()" (prev)="prevPage()"></ct-table-pagination> -->
-                </ct-flex-item>
                 <ct-flex-item *ngIf="!dispatcherAssetModeService.isReplicated(functionsResult.assetMode)">
                     <ng-container *ngTemplateOutlet="addButtonTemplate"></ng-container>
                 </ct-flex-item>
@@ -40,8 +36,6 @@
         </ct-section-footer-row>
     </ct-section-footer>
 </ct-section>
-
-
 
 <ng-template #MainTableTemplate>
     <ct-table [isWaiting]="isLoading">

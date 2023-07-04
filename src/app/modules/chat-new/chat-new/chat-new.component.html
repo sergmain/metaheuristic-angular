@@ -1,76 +1,71 @@
 <ct-section>
+    <ct-section-header>
+        <ct-section-header-row>
+            <ct-section-header-row>
+                <ct-flex justify-content="space-between" gap="5px">
+                    <ct-flex-item>
+                        <ct-heading>Chat with</ct-heading>
+                    </ct-flex-item>
+                    <!-- TODO insert switch of raw here  -->
+                    <ct-flex-item justify-content="flex-end">
+                        <button mat-icon-button (click)="bookmark()" matTooltip="Bookmark" color="primary">
+                            <mat-icon>bookmark</mat-icon>
+                        </button>
+                    </ct-flex-item>
+                </ct-flex>
+            </ct-section-header-row>
+        </ct-section-header-row>
+    </ct-section-header>
+
     <ct-section-body style="width: 100%;">
         <ct-section-body-row>
-            <ct-flex gap="8px" justify-content="flex-start">
-                <ct-flex-item style="width: 100%;">
-                    <ng-container *ngTemplateOutlet="stepEvaluationTemplate"></ng-container>
-                </ct-flex-item>
-            </ct-flex>
+            <ng-container *ngTemplateOutlet="mainTableTemplate"></ng-container>
+        </ct-section-body-row>
+        <ct-section-body-row>
+            <!-- https://stackoverflow.com/a/63814736/2672202 -->
+            <form [formGroup]="chatForm" novalidate="novalidate" (keyup.enter)="chatForm.valid && chatForm.dirty && postPrompt()">
+                <mat-form-field appearance="outline" style="width: 100%;">
+                    <mat-label>Prompt, min 3 chars, required</mat-label>
+                    <textarea formControlName="prompt" matInput="matInput" cdkTextareaAutosize="cdkTextareaAutosize"
+                              cdkAutosizeMinRows="10" value="" autocomplete="off"></textarea>
+                </mat-form-field>
+            </form>
         </ct-section-body-row>
     </ct-section-body>
 </ct-section>
 
-<ng-template #stepEvaluationTemplate>
-    <ct-cols style="width: 100%;">
-        <ct-col style="width: 75%;">
-            <ct-section>
-                <ct-section-header>
-                    <ct-section-header-row>
-                        <ct-section-header-row>
-                            <ct-flex justify-content="space-between" gap="5px">
-                                <ct-flex-item>
-                                    <ct-heading>Evaluate step</ct-heading>
-                                </ct-flex-item>
-                                <ct-flex-item justify-content="flex-end">
-                                    <button mat-icon-button (click)="bookmark()" matTooltip="Bookmark" color="primary">
-                                        <mat-icon>bookmark</mat-icon>
-                                    </button>
-                                </ct-flex-item>
-                            </ct-flex>
-                        </ct-section-header-row>
-                    </ct-section-header-row>
-                </ct-section-header>
-                <ct-section-body>
-                    <ct-section-body-row>
-                        <!-- https://stackoverflow.com/a/63814736/2672202 -->
-                        <form [formGroup]="evalStepForm" novalidate="novalidate" (keyup.enter)="evalStepForm.valid && evalStepForm.dirty && postPrompt()">
-                            <mat-form-field appearance="outline" style="width: 100%;">
-                                <mat-label>Prompt, min 3 chars, required</mat-label>
-                                <textarea formControlName="prompt" matInput="matInput" cdkTextareaAutosize="cdkTextareaAutosize"
-                                          cdkAutosizeMinRows="10" value="" autocomplete="off"></textarea>
+<ng-template #mainTableTemplate>
+    <ct-table [isWaiting]="isLoading">
+        <table class="mat-table" mat-table [dataSource]="dataSource" multiTemplateDataRows>
+            <ng-container matColumnDef="chat">
+                <td mat-cell *matCellDef="let prompt">
+                    <ct-flex>
+                        <ct-flex-item style="width: 75%;">
+                            <mat-form-field appearance="outline" style="width: 100%;" disabled>
+                                <mat-label>Actual prompt:</mat-label>
+                                <textarea matInput [value]="prompt.prompt" cdkTextareaAutosize="cdkTextareaAutosize"
+                                          cdkAutosizeMinRows="5" autocomplete="off" disabled></textarea>
                             </mat-form-field>
-                        </form>
-                    </ct-section-body-row>
-                </ct-section-body>
-                <ct-section-footer>
-                    <ct-section-footer-row>
-                        <ct-flex>
-                            <ct-flex-item style="width: 75%;">
-                                <mat-form-field appearance="outline" style="width: 100%;" disabled *ngIf="MhUtils.isNotNull(stepEvaluationState.prompt)">
-                                    <mat-label>Actual prompt:</mat-label>
-                                    <textarea matInput [value]="stepEvaluationState.prompt" cdkTextareaAutosize="cdkTextareaAutosize"
-                                              cdkAutosizeMinRows="5" autocomplete="off" disabled></textarea>
-                                </mat-form-field>
-                                <mat-form-field appearance="outline" style="width: 100%;" disabled *ngIf="MhUtils.isNotNull(stepEvaluationState.result)">
-                                    <mat-label>Result of evaluation:</mat-label>
-                                    <textarea matInput [value]="stepEvaluationState.result" cdkTextareaAutosize="cdkTextareaAutosize"
-                                              cdkAutosizeMinRows="5" autocomplete="off" disabled></textarea>
-                                </mat-form-field>
-                                <mat-form-field appearance="outline" style="width: 100%;" disabled *ngIf="MhUtils.isNotNull(stepEvaluationState.rawResult)">
-                                    <mat-label>Raw result of evaluation:</mat-label>
-                                    <textarea matInput [value]="stepEvaluationState.rawResult" cdkTextareaAutosize="cdkTextareaAutosize"
-                                              cdkAutosizeMinRows="5" autocomplete="off" disabled></textarea>
-                                </mat-form-field>
-                                <mat-form-field appearance="outline" style="width: 100%;" disabled *ngIf="MhUtils.isNotNull(stepEvaluationState.error)">
-                                    <mat-label>Error:</mat-label>
-                                    <textarea matInput [value]="stepEvaluationState.error" cdkTextareaAutosize="cdkTextareaAutosize"
-                                              cdkAutosizeMinRows="5" autocomplete="off" disabled></textarea>
-                                </mat-form-field>
-                            </ct-flex-item>
-                        </ct-flex>
-                    </ct-section-footer-row>
-                </ct-section-footer>
-            </ct-section>
-        </ct-col>
-    </ct-cols>
+                            <mat-form-field appearance="outline" style="width: 100%;" disabled *ngIf="MhUtils.isNotNull(prompt.result)">
+                                <mat-label>Result of evaluation:</mat-label>
+                                <textarea matInput [value]="prompt.result" cdkTextareaAutosize="cdkTextareaAutosize"
+                                          cdkAutosizeMinRows="5" autocomplete="off" disabled></textarea>
+                            </mat-form-field>
+                            <mat-form-field appearance="outline" style="width: 100%;" disabled *ngIf="showRaw && MhUtils.isNotNull(prompt.raw)">
+                                <mat-label>Raw result of evaluation:</mat-label>
+                                <textarea matInput [value]="prompt.raw" cdkTextareaAutosize="cdkTextareaAutosize"
+                                          cdkAutosizeMinRows="5" autocomplete="off" disabled></textarea>
+                            </mat-form-field>
+                            <mat-form-field appearance="outline" style="width: 100%;" disabled *ngIf="MhUtils.isNotNull(prompt.error)">
+                                <mat-label>Error:</mat-label>
+                                <textarea matInput [value]="prompt.error" cdkTextareaAutosize="cdkTextareaAutosize"
+                                          cdkAutosizeMinRows="5" autocomplete="off" disabled></textarea>
+                            </mat-form-field>
+                        </ct-flex-item>
+                    </ct-flex>
+                </td>
+            </ng-container>
+        </table>
+    </ct-table>
 </ng-template>
+

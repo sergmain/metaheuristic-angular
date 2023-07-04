@@ -17,7 +17,9 @@ export interface ChatsResult extends DefaultResponse {
 
 export interface ChatPrompt {
     prompt: string;
-    answer: string;
+    result: string;
+    raw: string;
+    error: string;
 }
 
 export interface FullChat extends DefaultResponse {
