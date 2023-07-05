@@ -41,6 +41,8 @@
 <ng-template #mainTableTemplate>
     <ct-table [isWaiting]="isLoading">
         <table class="mat-table" mat-table="mat-table" [dataSource]="dataSource">
+            <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+            <tr mat-row *matRowDef="let row; columns: columnsToDisplay;"></tr>
             <ng-container matColumnDef="uniqueId">
                 <th mat-header-cell *matHeaderCellDef>Id</th>
                 <td mat-cell="mat-cell" *matCellDef="let el">{{el.uniqueId}} </td>
@@ -82,8 +84,6 @@
                     </ct-flex>
                 </td>
             </ng-container>
-            <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
-            <tr mat-row *matRowDef="let row; columns: columnsToDisplay;"></tr>
         </table>
     </ct-table>
 </ng-template>

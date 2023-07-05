@@ -25,7 +25,7 @@ export const chatNewRoutes: Routes = [
         path: 'chat/:chatId',
         component: ChatNewComponent,
         data: {
-            backConfig: ['../', 'chats']
+            backConfig: ['../', '../']
         }
     }
 ];

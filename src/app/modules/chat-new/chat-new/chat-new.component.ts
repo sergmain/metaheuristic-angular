@@ -35,6 +35,7 @@ export class ChatNewComponent extends UIStateComponent implements OnInit, OnDest
     apiUid: string;
 
     showRaw: boolean = false;
+    isNotPosting: boolean = true;
 
     chatForm = new FormGroup({
         prompt: new FormControl('', [Validators.required, Validators.minLength(MIN_PROMPT_LEN)]),
@@ -82,6 +83,8 @@ export class ChatNewComponent extends UIStateComponent implements OnInit, OnDest
             .chat(this.chatId)
             .subscribe((response) => {
                 this.fullChat = response;
+                console.log("loadAssetsForChatting() ", this.fullChat.prompts || []);
+                this.dataSource = new MatTableDataSource(this.fullChat.prompts || []);
                 this.setIsLoadingEnd();
             });
     }
@@ -98,21 +101,32 @@ export class ChatNewComponent extends UIStateComponent implements OnInit, OnDest
         //
     }
 
+    notPosting() {
+        return this.isNotPosting;
+    }
+
     postPrompt() {
         let prompt: string = this.chatForm.value.prompt;
-
+        this.isNotPosting = false;
         this.chatService
             .postPrompt(this.chatId.toString(), prompt)
             .subscribe({
                 next: prompt => {
                     console.log("postPrompt(), response: ", JSON.stringify(prompt));
                     // console.log("getSourceCodeId(), sourceCodeId", this.sourceCodeId);
-                    this.fullChat.prompts.push(prompt);
-                    this.dataSource = new MatTableDataSource(this.fullChat.prompts);
+                    const myClonedArray = [];
+                    this.fullChat.prompts.forEach(val => myClonedArray.push(val));
+                    myClonedArray.push(prompt);
+                    this.dataSource.data = myClonedArray;
                 },
                 complete: () => {
+                    this.isNotPosting = true;
                     this.resetEvalStepForm()
                 }
             });
+    }
+
+    back() {
+
     }
 }

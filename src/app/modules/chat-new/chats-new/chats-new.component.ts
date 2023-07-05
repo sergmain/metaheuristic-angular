@@ -12,7 +12,7 @@ import {ConfirmationDialogMethod} from '@app/components/app-dialog-confirmation/
     templateUrl: './chats-new.component.html',
     styleUrls: ['./chats-new.component.scss']
 })
-
+// DO NOT REMOVE '-new' FROM NAME OF COMPONENT
 export class ChatsNewComponent extends UIStateComponent implements OnInit {
     dataSource: MatTableDataSource<SimpleChat> = new MatTableDataSource<SimpleChat>([]);
     columnsToDisplay: string[] = ['id', 'createdOn', 'name', 'bts'];
