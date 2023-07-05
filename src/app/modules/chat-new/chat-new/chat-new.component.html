@@ -40,7 +40,7 @@
             </form>
         </ct-section-body-row>
     </ct-section-body>
-    <ct-section-footer style="width: 75%;">
+    <ct-section-footer style="width: 75%;" *ngIf="notPosting()">
         <ct-section-footer-row>
             <ct-flex justify-content="flex-end" gap="8px">
                 <ct-flex-item>
