@@ -34,8 +34,9 @@ export class ChatNewComponent extends UIStateComponent implements OnInit, OnDest
     chatId: string;
     apiUid: string;
 
-    showRaw: boolean = false;
+    isShowRaw: boolean = false;
     isNotPosting: boolean = true;
+    isTextareaBased: boolean = false;
 
     chatForm = new FormGroup({
         prompt: new FormControl('', [Validators.required, Validators.minLength(MIN_PROMPT_LEN)]),
@@ -112,7 +113,7 @@ export class ChatNewComponent extends UIStateComponent implements OnInit, OnDest
             .postPrompt(this.chatId.toString(), prompt)
             .subscribe({
                 next: prompt => {
-                    console.log("postPrompt(), response: ", JSON.stringify(prompt));
+                    // console.log("postPrompt(), response: ", JSON.stringify(prompt));
                     // console.log("getSourceCodeId(), sourceCodeId", this.sourceCodeId);
                     const myClonedArray = [];
                     this.fullChat.prompts.forEach(val => myClonedArray.push(val));
