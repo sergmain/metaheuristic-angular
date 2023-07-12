@@ -12,6 +12,7 @@
     "build4": "ng build --aot --configuration production",
     "build4.1 ng build --aot --configuration production-no-ssl": "ng build --aot --configuration production-no-ssl",
     "build4.2 ng build --aot --configuration production-standalone": "ng build --aot --configuration production-standalone",
+
     "build5": "ng build --aot",
     "build6": "ng build --configuration development",
     "build8": "npm install -g npm@9.4.2",
@@ -36,7 +37,13 @@
     "version": "ng version",
     "extract-i18n": "ngx-translate-extract  -p /**/*.html /**/*.ts /**/*.pug --input ./src --output ./src/assets/i18n/EN.json ./src/assets/i18n/RU.json --clean --sort --format json --marker marker",
     "ng--migrate-only--from12.0.0 --to 13.0.0": "ng update @angular/cdk --migrate-only --from 12.0.0 --to 13.0.0",
-    "sass-migrator namespace **/*.scss": "sass-migrator -n namespace **/*.scss"
+    "sass-migrator namespace **/*.scss": "sass-migrator -n namespace **/*.scss",
+
+    "start-electron": "electron .",
+    "npm install electron-builder --save-dev": "npm install electron-builder --save-dev",
+    "npm install -g electron-packager --save-dev": "npm install -g electron-packager --save-dev",
+    "electron-packager": "electron-packager appdirectory metaheuristic --platform=win32 --arch=x64 --electron-version=25.2.0 --out=release-builds ",
+    "electron-packager 2": "electron-packager appdirectory metaheuristic --platform=win32 --arch=x64 --electron-version=25.2.0 --out=release-builds --overwrite --asar --prune=true --icon=./build/icon.ico"
   },
   "engines": {
     "node": "v16.20.0",
@@ -49,12 +56,12 @@
     "@angular/common": "^15.2.9",
     "@angular/compiler": "^15.2.9",
     "@angular/core": "^15.2.9",
+    "@angular/flex-layout": "^15.0.0-beta.42",
     "@angular/forms": "^15.2.9",
     "@angular/material": "^15.2.9",
     "@angular/platform-browser": "^15.2.9",
     "@angular/platform-browser-dynamic": "^15.2.9",
     "@angular/router": "^15.2.9",
-    "@angular/flex-layout": "^15.0.0-beta.42",
     "@biesbjerg/ngx-translate-extract-marker": "1.0.0",
     "@ngx-translate/core": "^14.0.0",
     "@ngx-translate/http-loader": "7.0.0",
@@ -82,6 +89,8 @@
     "@types/node": "^16.18.23",
     "@typescript-eslint/eslint-plugin": "^5.60.0",
     "@typescript-eslint/parser": "^5.60.0",
+    "electron": "^25.2.0",
+    "electron-builder": "^24.4.0",
     "eslint": "^8.39.0",
     "jasmine-core": "~4.6.0",
     "jasmine-spec-reporter": "~7.0.0",

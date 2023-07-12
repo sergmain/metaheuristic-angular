@@ -49,3 +49,7 @@ package-lock.json
 
 *_V2.class
 *_V3.class
+
+/metaheuristic-win32-x64
+/release-builds
+/appdirectory

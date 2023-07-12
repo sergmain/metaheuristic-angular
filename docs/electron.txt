@@ -1,0 +1,10 @@
+
+Do not forget to make these changes:
+
+1. in appdirectory/mh-angular/index.html base ref must be
+    <base href="./">
+
+2. in appdirectory/main.js executablePath must be
+var executablePath = path.join(__dirname, 'metaheuristic', 'metaheuristic.exe');
+
+
