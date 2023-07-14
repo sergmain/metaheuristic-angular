@@ -1,5 +1,5 @@
 // Modules to control application life and create native browser window
-const { app, BrowserWindow } = require('electron')
+const { app, BrowserWindow, ipcMain } = require('electron')
 const path = require('path')
 
 const child = require('child_process').execFile;
@@ -18,12 +18,14 @@ function createWindow () {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
     frame: false,
-    titleBarStyle: 'hidden',
+    // titleBarStyle: 'hidden',
     fullscreen: true,
     // width: 800,
     // height: 600,
     webPreferences: {
-      preload: path.join(__dirname, 'preload.js')
+      preload: path.join(__dirname, 'preload.js'),
+      // nodeIntegration: true,
+      enableRemoteModule: true
     }
   })
 
@@ -73,6 +75,11 @@ app.whenReady().then(() => {
   app.on('activate-with-no-open-windows', function(){
     mainWindow.show();
   });
+})
+
+// Event handler for synchronous incoming messages
+ipcMain.on('quit-message', (event, arg) => {
+  app.quit();
 })
 
 function mh_shutdown() {

@@ -130,7 +130,9 @@
                     </mat-select>
                 </ct-flex-item>
                 <ct-flex-item>
-                    <button class="mat-button mat-button--menu-item" mat-button routerLinkActive="active" routerLink="/about">{{ 'app-view.About' | translate }}</button>
+                    <button mat-icon-button matTooltip=" {{ 'app-view.About' | translate }}" routerLinkActive="active" routerLink="/about">
+                        <mat-icon>help_outline</mat-icon>
+                    </button>
                 </ct-flex-item>
                 <ct-flex-item>
                     <button mat-icon-button matTooltip="Settings">
@@ -143,8 +145,8 @@
                     </button>
                 </ct-flex-item>
                 <ct-flex-item>
-                    <button mat-icon-button matTooltip="Close Metaheuristic">
-                        <mat-icon>close</mat-icon>
+                    <button mat-icon-button matTooltip="Close Metaheuristic"  (click)="shutdown()" >
+                        <mat-icon>power_settings_new</mat-icon>
                     </button>
                 </ct-flex-item>
             </ct-flex>
