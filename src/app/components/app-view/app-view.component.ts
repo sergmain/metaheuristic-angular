@@ -8,7 +8,6 @@ import {UIStateComponent} from '@src/app/models/UIStateComponent';
 import {setOfLanguages, SettingsLanguage, SettingsTheme} from '@src/app/services/settings/Settings';
 import {SettingsService, SettingsServiceEventChange} from '@src/app/services/settings/settings.service';
 import {environment} from '@src/environments/environment';
-import {ConfirmationDialogMethod} from '@app/components/app-dialog-confirmation/app-dialog-confirmation.component';
 
 // declare function initQuitProcess(): any;
 
@@ -97,12 +96,15 @@ export class AppViewComponent extends UIStateComponent implements OnInit, OnDest
         this.authenticationService.logout().subscribe();
     }
 
+    // TODO 2023-07-13 ConfirmationDialogMethod isn't working rn
+/*
     @ConfirmationDialogMethod({
         question: (): string => `Do you want to quit Metaheuristic`,
         resolveTitle: 'Quit',
         rejectTitle: 'Stay',
         theme: 'primary'
     })
+*/
     shutdown() {
         // initQuitProcess();
         window.top.close();

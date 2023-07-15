@@ -18,7 +18,7 @@ function createWindow () {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
     frame: false,
-    // titleBarStyle: 'hidden',
+    titleBarStyle: 'hidden',
     fullscreen: true,
     // width: 800,
     // height: 600,
@@ -50,26 +50,10 @@ app.whenReady().then(() => {
     }
   })
 
-  // Continue to handle mainWindow "close" event here
-/*
-  mainWindow.on('close', function(e){
-    if(!force_quit){
-      e.preventDefault();
-      mainWindow.hide();
-    }
-  });
-*/
-
   // You can use 'before-quit' instead of (or with) the close event
   app.on('before-quit', function (e) {
     // Handle menu-item or keyboard shortcut quit here
     mh_shutdown();
-/*
-    if(!force_quit){
-      e.preventDefault();
-      mainWindow.hide();
-    }
-*/
   });
 
   app.on('activate-with-no-open-windows', function(){
@@ -79,7 +63,7 @@ app.whenReady().then(() => {
 
 // Event handler for synchronous incoming messages
 ipcMain.on('quit-message', (event, arg) => {
-  app.quit();
+  //app.quit();
 })
 
 function mh_shutdown() {
