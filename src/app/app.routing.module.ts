@@ -44,6 +44,9 @@ const routes: Routes = [
         loadChildren: () => import('src/app/modules/about/about.module').then(m => m.AboutModule),
     },
     {
+        path: 'settings',
+        loadChildren: () => import('src/app/modules/settings/settings.module').then(m => m.SettingsModule),
+    },    {
         path: '**',
         redirectTo: '',
         pathMatch: 'full'

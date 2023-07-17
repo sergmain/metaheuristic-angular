@@ -14,6 +14,8 @@
 	"app-view.Dispatcher": "Dispatcher",
 	"app-view.Mhbp": "MHBP",
 	"app-view.Logout": "Logout",
+	"app-view.Settings": "Settings",
+
 	"batch-add.Cancel": "Cancel",
 	"batch-add.List of Source Codes": "List of Source Codes",
 	"batch-add.Only .xml and .zip files are supported": "Only .xml and .zip files are supported",
@@ -68,6 +70,10 @@
 
 	"api.name": "API name",
 	"api.code": "API code",
+
+	"settings-menu.Security": "Security",
+	"settings-menu.Tokens": "Tokens",
+	"settings-menu.Languages": "Languages",
 
 	"chat-add.Create a new chat for specific API": "Create a new chat for specific API",
 

@@ -3,37 +3,30 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
-import { AddFunctionComponent } from './add-function/add-function.component';
-import { FunctionsComponent } from './functions/functions.component';
+import { SettingsSecurityIndexComponent } from './settings-security-index/settings-security-index.component';
 import { MaterialAppModule } from '@src/app/ngmaterial.module';
-import { CtModule } from '@app/modules/ct/ct.module';
+import {CtModule} from '@app/modules/ct/ct.module';
 
 
-export const FunctionsRoutes: Routes = [
+export const SettingsSecurityIndexRoutes: Routes = [
     {
         path: '',
-        component: FunctionsComponent,
-    }, {
-        path: 'add',
-        component: AddFunctionComponent,
-        data: {
-            backConfig: ['../']
-        }
+        component: SettingsSecurityIndexComponent,
     }
 ];
 
 
 @NgModule({
-    imports: [RouterModule.forChild(FunctionsRoutes)],
+    imports: [RouterModule.forChild(SettingsSecurityIndexRoutes)],
     exports: [RouterModule]
 })
-export class FunctionsRoutingModule { }
+export class SettingsSecurityIndexRoutingModule { }
 
 
 @NgModule({
     imports: [
         CommonModule,
-        FunctionsRoutingModule,
+        SettingsSecurityIndexRoutingModule,
         CtModule,
         MaterialAppModule,
         FormsModule,
@@ -41,8 +34,7 @@ export class FunctionsRoutingModule { }
         TranslateModule.forChild({})
     ],
     declarations: [
-        AddFunctionComponent,
-        FunctionsComponent
+        SettingsSecurityIndexComponent
     ]
 })
-export class FunctionsModule { }
+export class SettingsSecurityModule { }

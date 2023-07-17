@@ -14,6 +14,8 @@
 	"app-view.Dispatcher": "Панель управления",
 	"app-view.Mhbp": "МЭПП",
 	"app-view.Logout": "Выйти",
+	"app-view.Settings": "Настройки",
+
 	"batch-add.Cancel": "Отмена",
 	"batch-add.List of Source Codes": "Список исходных кодов",
 	"batch-add.Only .xml and .zip files are supported": "Только .xml и .zip",
@@ -68,6 +70,10 @@
 
 	"api.name": "API name",
 	"api.code": "API code",
+
+	"settings-menu.Security": "Security",
+	"settings-menu.Tokens": "Tokens",
+	"settings-menu.Languages": "Languages",
 
 	"mhbp.scenario-function-mh.batch-line-splitter": "Split list per line",
 	"mhbp.scenario-function-mh.batch-line-splitter-desc": "Split input data per line.",
