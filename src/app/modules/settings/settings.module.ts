@@ -29,73 +29,33 @@ export const SettingsRoutes: Routes = [
         }]
     },
     {
-        path: 'chat-new',
+        path: 'security',
         canActivate: [RoleRouteGuard],
         component: SettingsRootComponent,
-        loadChildren: () => import('@app/modules/chat-new/chat-new.module').then(m => m.ChatNewModule),
+        loadChildren: () => import('@app/modules/settings/settings-security/settings-security.module').then(m => m.SettingsSecurityModule),
         data: {
             requiredRoles: [Role.Admin, Role.Manager, Role.Operator],
-            section: 'chats-new'
+            section: 'security'
         }
     },
     {
-        path: 'scenario',
+        path: 'tokens',
         canActivate: [RoleRouteGuard],
         component: SettingsRootComponent,
-        loadChildren: () => import('@app/modules/scenario/scenario.module').then(m => m.ScenarioModule),
+        loadChildren: () => import('@app/modules/settings/settings-tokens/settings-tokens.module').then(m => m.SettingsTokensModule),
         data: {
-            requiredRoles: [Role.Admin, Role.Manager],
-            section: 'scenario-groups'
+            requiredRoles: [Role.Admin, Role.Manager, Role.Operator],
+            section: 'tokens'
         }
     },
     {
-        path: 'session',
+        path: 'languages',
         canActivate: [RoleRouteGuard],
         component: SettingsRootComponent,
-        loadChildren: () => import('@app/modules/session/session.module').then(m => m.SessionModule),
+        loadChildren: () => import('@app/modules/settings/settings-languages/settings-languages.module').then(m => m.SettingsLanguagesModule),
         data: {
-            requiredRoles: [Role.Admin, Role.Manager],
-            section: 'sessions'
-        }
-    },
-    {
-        path: 'evaluation',
-        canActivate: [RoleRouteGuard],
-        component: SettingsRootComponent,
-        loadChildren: () => import('@app/modules/evaluation/evaluation.module').then(m => m.EvaluationModule),
-        data: {
-            requiredRoles: [Role.Admin, Role.Manager],
-            section: 'evaluations'
-        }
-    },
-    {
-        path: 'kb',
-        canActivate: [RoleRouteGuard],
-        component: SettingsRootComponent,
-        loadChildren: () => import('src/app/modules/kb/kb.module').then(m => m.KbModule),
-        data: {
-            requiredRoles: [Role.Admin, Role.Manager],
-            section: 'kbs'
-        }
-    },
-    {
-        path: 'auth',
-        canActivate: [RoleRouteGuard],
-        component: SettingsRootComponent,
-        loadChildren: () => import('src/app/modules/auth/auth.module').then(m => m.AuthModule),
-        data: {
-            requiredRoles: [Role.Admin, Role.Manager],
-            section: 'auths'
-        }
-    },
-    {
-        path: 'api',
-        canActivate: [RoleRouteGuard],
-        component: SettingsRootComponent,
-        loadChildren: () => import('src/app/modules/api/api.module').then(m => m.ApiModule),
-        data: {
-            requiredRoles: [Role.Admin, Role.Manager],
-            section: 'apis'
+            requiredRoles: [Role.Admin, Role.Manager, Role.Operator],
+            section: 'languages'
         }
     }
 ];

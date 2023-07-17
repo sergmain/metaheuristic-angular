@@ -1,13 +1,17 @@
-import { Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
-import { MatTableDataSource } from '@angular/material/table';
-import { ConfirmationDialogMethod } from '@app/components/app-dialog-confirmation/app-dialog-confirmation.component';
-import { UIStateComponent } from '@src/app/models/UIStateComponent';
-import { AuthenticationService } from '@src/app/services/authentication';
-import { DispatcherAssetModeService } from '@src/app/services/dispatcher-asset-mode/dispatcher-asset-mode.service';
-import { FunctionEntity } from '@src/app/services/functions/FunctionEntity';
-import { FunctionsService } from '@src/app/services/functions/functions.service';
-import { FunctionsResult } from '@src/app/services/functions/FunctionsResult';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {LoadStates} from '@app/enums/LoadStates';
+import {DefaultResponse} from '@app/models/DefaultResponse';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {ApiService} from '@services/api/api.service';
+import {ActivatedRoute, Router} from '@angular/router';
+import {MatButton} from '@angular/material/button';
+import {Token, TokensResult} from '@app/modules/settings/settings.data';
+import {SettingsService} from '@app/modules/settings/settings.service';
+import {OperationStatus} from '@app/enums/OperationStatus';
+import {MatTableDataSource} from '@angular/material/table';
+import {UIStateComponent} from '@app/models/UIStateComponent';
+import {AuthenticationService} from '@services/authentication';
+import {FunctionEntity} from '@services/functions/FunctionEntity';
 
 @Component({
     selector: "settings-tokens-index",
@@ -15,19 +19,26 @@ import { FunctionsResult } from '@src/app/services/functions/FunctionsResult';
     styleUrls: ['./settings-tokens-index.component.scss'],
 })
 export class SettingsTokensIndexComponent extends UIStateComponent implements OnInit {
-    functionsResult: FunctionsResult;
-    dataSource = new MatTableDataSource<FunctionEntity>([]);
-    columnsToDisplay: string[] = ['code', 'type', 'params', 'bts'];
-    deletedRows: FunctionEntity[] = [];
-    showParams: boolean = false;
+    dataSource = new MatTableDataSource<Token>([]);
+    response: DefaultResponse;
+    status: string;
+
+    tokens: TokensResult;
+    token:Token;
+
+    tokenForm = new FormGroup({
+        name: new FormControl('', [Validators.required, Validators.minLength(3)]),
+        value: new FormControl('', [Validators.required, Validators.minLength(3)]),
+    });
 
     constructor(
-        private functionService: FunctionsService,
-        public dispatcherAssetModeService: DispatcherAssetModeService,
-        readonly dialog: MatDialog,
+        private settingsService: SettingsService,
+        private router: Router,
+        private activatedRoute: ActivatedRoute,
         readonly authenticationService: AuthenticationService
     ) {
         super(authenticationService);
+        this.token = new Token(0);
     }
 
     ngOnInit() {
@@ -36,12 +47,12 @@ export class SettingsTokensIndexComponent extends UIStateComponent implements On
 
     updateTable(page: number) {
         this.setIsLoadingStart();
-        this.functionService
-            .getFunctions(page.toString())
+        this.settingsService
+            .getTokens()
             .subscribe({
-                next: functionsResult => {
-                    this.functionsResult = functionsResult;
-                    this.dataSource = new MatTableDataSource(functionsResult.functions);
+                next: tokensResult => {
+                    this.tokens = tokensResult;
+                    this.dataSource = new MatTableDataSource(tokensResult.tokens);
                 },
                 complete: () => {
                     this.setIsLoadingEnd();
@@ -49,24 +60,21 @@ export class SettingsTokensIndexComponent extends UIStateComponent implements On
             });
     }
 
-    @ConfirmationDialogMethod({
-        question: (functionEntity: FunctionEntity): string =>
-            `Do you want to delete Function\xa0#${functionEntity.id}`,
-        rejectTitle: 'Cancel',
-        resolveTitle: 'Delete',
-    })
-    delete(functionEntity: FunctionEntity) {
-        this.deletedRows.push(functionEntity);
-        this.functionService.deleteCommit(functionEntity.id.toString()).subscribe();
+    create(): void {
+        this.settingsService
+            .changePasswordCommit(this.tokenForm.value.oldPassword, this.tokenForm.value.newPassword)
+            .subscribe({
+                next: result => {
+                    this.status = result.status === OperationStatus.OK ? 'Password was changed successfully.' : result.errorMessagesAsStr;
+                },
+                complete: () => {
+                    this.tokenForm.reset()
+                }
+            });
     }
 
-    // INFO: functionsResult не содержит pageable
-    // INFO: листание
-    nextPage() {
-        // this.updateTable(this...items.number + 1);
-    }
-
-    prevPage() {
-        // this.updateTable(this...items.number - 1);
+    notToCreate() {
+        return this.passwordForm.invalid || this.passwordForm.value.newPassword!==this.passwordForm.value.newPassword2
+            || this.passwordForm.value.oldPassword===this.passwordForm.value.newPassword;
     }
 }

@@ -1,72 +1,56 @@
-import { Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
-import { MatTableDataSource } from '@angular/material/table';
-import { ConfirmationDialogMethod } from '@app/components/app-dialog-confirmation/app-dialog-confirmation.component';
-import { UIStateComponent } from '@src/app/models/UIStateComponent';
-import { AuthenticationService } from '@src/app/services/authentication';
-import { DispatcherAssetModeService } from '@src/app/services/dispatcher-asset-mode/dispatcher-asset-mode.service';
-import { FunctionEntity } from '@src/app/services/functions/FunctionEntity';
-import { FunctionsService } from '@src/app/services/functions/functions.service';
-import { FunctionsResult } from '@src/app/services/functions/FunctionsResult';
+import {Component, ViewChild} from '@angular/core';
+import {LoadStates} from '@app/enums/LoadStates';
+import {DefaultResponse} from '@app/models/DefaultResponse';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {ApiService} from '@services/api/api.service';
+import {ActivatedRoute, Router} from '@angular/router';
+import {MatButton} from '@angular/material/button';
+import {Subscription} from 'rxjs';
+import {OperationStatus} from '@app/enums/OperationStatus';
 
 @Component({
     selector: "settings-languages-index",
     templateUrl: './settings-languages-index.component.html',
     styleUrls: ['./settings-languages-index.component.scss'],
 })
-export class SettingsLanguagesIndexComponent extends UIStateComponent implements OnInit {
-    functionsResult: FunctionsResult;
-    dataSource = new MatTableDataSource<FunctionEntity>([]);
-    columnsToDisplay: string[] = ['code', 'type', 'params', 'bts'];
-    deletedRows: FunctionEntity[] = [];
-    showParams: boolean = false;
+export class SettingsLanguagesIndexComponent {
+    readonly states = LoadStates;
+    currentStates = new Set();
+    response: DefaultResponse;
+    form = new FormGroup({
+        name: new FormControl('', [Validators.required, Validators.minLength(3)]),
+        code: new FormControl('', [Validators.required, Validators.minLength(3)]),
+        scheme: new FormControl('', [Validators.required, Validators.minLength(3)]),
+    });
 
     constructor(
-        private functionService: FunctionsService,
-        public dispatcherAssetModeService: DispatcherAssetModeService,
-        readonly dialog: MatDialog,
-        readonly authenticationService: AuthenticationService
-    ) {
-        super(authenticationService);
-    }
+        private apiService: ApiService,
+        private router: Router,
+        private activatedRoute: ActivatedRoute
+    ) { }
 
-    ngOnInit() {
-        this.updateTable(0);
-    }
+    @ViewChild(MatButton) button: MatButton;
 
-    updateTable(page: number) {
-        this.setIsLoadingStart();
-        this.functionService
-            .getFunctions(page.toString())
-            .subscribe({
-                next: functionsResult => {
-                    this.functionsResult = functionsResult;
-                    this.dataSource = new MatTableDataSource(functionsResult.functions);
+    create(): void {
+        this.button.disabled = true;
+        this.currentStates.add(this.states.wait);
+        const subscribe: Subscription = this.apiService
+            .addFormCommit(
+                this.form.value.name,
+                this.form.value.code,
+                this.form.value.scheme
+            )
+            .subscribe(
+                (response) => {
+                    if (response.status === OperationStatus.OK) {
+                        this.router.navigate(['../'], { relativeTo: this.activatedRoute });
+                    }
                 },
-                complete: () => {
-                    this.setIsLoadingEnd();
+                () => {},
+                () => {
+                    this.currentStates.delete(this.states.wait);
+                    subscribe.unsubscribe();
                 }
-            });
-    }
-
-    @ConfirmationDialogMethod({
-        question: (functionEntity: FunctionEntity): string =>
-            `Do you want to delete Function\xa0#${functionEntity.id}`,
-        rejectTitle: 'Cancel',
-        resolveTitle: 'Delete',
-    })
-    delete(functionEntity: FunctionEntity) {
-        this.deletedRows.push(functionEntity);
-        this.functionService.deleteCommit(functionEntity.id.toString()).subscribe();
-    }
-
-    // INFO: functionsResult не содержит pageable
-    // INFO: листание
-    nextPage() {
-        // this.updateTable(this...items.number + 1);
-    }
-
-    prevPage() {
-        // this.updateTable(this...items.number - 1);
+            );
     }
 }

@@ -1,91 +1,50 @@
-<ct-section *ngIf="functionsResult">
-    <ct-section-header>
-        <ct-section-header-row>
-            <ct-flex justify-content="space-between">
-                <ct-flex-item>
-                    <ct-heading>Functions</ct-heading>
-                </ct-flex-item>
-                <ct-flex-item>
-                    <ct-flex justify-content="flex-end" align-items="center" gap="16px">
+
+<ct-cols align-items="baseline">
+    <ct-col size="6">
+        <ct-section>
+            <ct-section-header>
+                <ct-section-header-row>
+                    <ct-heading>Add new API</ct-heading>
+                </ct-section-header-row>
+            </ct-section-header>
+            <ct-section-body>
+                <form [formGroup]="form" novalidate="novalidate">
+                    <mat-form-field appearance="outline" style="width: 100%;">
+                        <mat-label>Name</mat-label>
+                        <input matInput="matInput" type="text" autocomplete="off" formControlName="name" />
+                        <mat-hint>This is a required field.</mat-hint>
+                    </mat-form-field>
+                    <br>
+                    <mat-form-field appearance="outline" style="width: 100%;">
+                        <mat-label>Code</mat-label>
+                        <input matInput="matInput" type="text" autocomplete="off" formControlName="code" />
+                        <mat-hint>This is a required field.</mat-hint>
+                    </mat-form-field>
+                    <br>
+                    <mat-form-field appearance="outline" style="width: 100%;">
+                        <mat-label>API scheme</mat-label>
+                        <textarea formControlName="scheme" matInput="matInput" cdkTextareaAutosize="cdkTextareaAutosize"
+                                  cdkAutosizeMinRows="10" value="" autocomplete="off"></textarea>
+                        <mat-hint>This is a required field.</mat-hint>
+                    </mat-form-field>
+                </form>
+            </ct-section-body>
+
+            <ct-section-footer>
+                <ct-section-footer-row>
+                    <ct-flex justify-content="flex-end" gap="8px">
                         <ct-flex-item>
-                            <mat-slide-toggle [(ngModel)]="showParams">Show Params</mat-slide-toggle>
+                            <button mat-stroked-button="mat-stroked-button" routerLink="/mhbp/api">
+                                {{ 'main.Cancel' | translate }}</button>
                         </ct-flex-item>
-                        <ct-flex-item *ngIf="!dispatcherAssetModeService.isReplicated(functionsResult.assetMode)">
-                            <ng-container *ngTemplateOutlet="addButtonTemplate"></ng-container>
+                        <ct-flex-item>
+                            <button #button mat-flat-button="mat-flat-button" (click)="create()" color="primary"
+                                    [disabled]="!form.valid">Add</button>
                         </ct-flex-item>
                     </ct-flex>
-                </ct-flex-item>
-            </ct-flex>
-        </ct-section-header-row>
-        <ct-section-header-row *ngIf="dispatcherAssetModeService.isReplicated(functionsResult.assetMode)">
-            <ct-alert theme="info">Upload and deletion of functions are disabled, assetMode is 'replicated'.</ct-alert>
-        </ct-section-header-row>
-    </ct-section-header>
-    <ct-section-body>
-        <ct-section-body-row>
-            <ng-container *ngTemplateOutlet="MainTableTemplate"></ng-container>
-        </ct-section-body-row>
-    </ct-section-body>
-    <ct-section-footer>
-        <ct-section-footer-row>
-            <ct-flex justify-content="space-between">
-                <ct-flex-item *ngIf="!dispatcherAssetModeService.isReplicated(functionsResult.assetMode)">
-                    <ng-container *ngTemplateOutlet="addButtonTemplate"></ng-container>
-                </ct-flex-item>
-            </ct-flex>
-        </ct-section-footer-row>
-    </ct-section-footer>
-</ct-section>
+                </ct-section-footer-row>
+            </ct-section-footer>
+        </ct-section>
+    </ct-col>
+</ct-cols>
 
-<ng-template #MainTableTemplate>
-    <ct-table [isWaiting]="isLoading">
-        <table class="mat-table" mat-table [dataSource]="dataSource" multiTemplateDataRows>
-            <ng-container matColumnDef="code">
-                <th mat-header-cell *matHeaderCellDef>
-                    Code
-                </th>
-                <td mat-cell *matCellDef="let el">{{ el.code }}</td>
-            </ng-container>
-            <ng-container matColumnDef="type">
-                <th mat-header-cell *matHeaderCellDef>
-                    Type
-                </th>
-                <td mat-cell *matCellDef="let el">{{ el.type }}</td>
-            </ng-container>
-            <ng-container matColumnDef="params">
-                <th mat-header-cell *matHeaderCellDef>
-                    Params
-                </th>
-                <td mat-cell *matCellDef="let el">
-                    <div [hidden]="!showParams">
-                        <ct-pre>{{ el.params }}</ct-pre>
-                    </div>
-                </td>
-            </ng-container>
-            <ng-container matColumnDef="bts">
-                <th mat-header-cell *matHeaderCellDef></th>
-                <td mat-cell *matCellDef="let el">
-                    <ct-flex justify-content="flex-end" gap="8px"
-                        *ngIf="!dispatcherAssetModeService.isReplicated(functionsResult.assetMode)">
-                        <ct-flex-item>
-                            <button mat-flat-button color="warn" size="forTableRow" (click)="delete(el)">
-                                <mat-icon>delete</mat-icon>
-                            </button>
-                        </ct-flex-item>
-                    </ct-flex>
-                </td>
-            </ng-container>
-            <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
-            <tr mat-row *matRowDef="let row; columns: columnsToDisplay"
-                [class.deleted-table-row]="deletedRows.includes(row)"></tr>
-        </table>
-    </ct-table>
-</ng-template>
-
-
-
-<ng-template #addButtonTemplate>
-    <a routerLink="/dispatcher/functions/add">
-        <button mat-flat-button color="primary"> Add Function </button>
-    </a>
-</ng-template>

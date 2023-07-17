@@ -1,91 +1,79 @@
-<ct-section *ngIf="functionsResult">
-    <ct-section-header>
-        <ct-section-header-row>
-            <ct-flex justify-content="space-between">
-                <ct-flex-item>
-                    <ct-heading>Functions</ct-heading>
-                </ct-flex-item>
-                <ct-flex-item>
-                    <ct-flex justify-content="flex-end" align-items="center" gap="16px">
-                        <ct-flex-item>
-                            <mat-slide-toggle [(ngModel)]="showParams">Show Params</mat-slide-toggle>
-                        </ct-flex-item>
-                        <ct-flex-item *ngIf="!dispatcherAssetModeService.isReplicated(functionsResult.assetMode)">
-                            <ng-container *ngTemplateOutlet="addButtonTemplate"></ng-container>
-                        </ct-flex-item>
-                    </ct-flex>
-                </ct-flex-item>
-            </ct-flex>
-        </ct-section-header-row>
-        <ct-section-header-row *ngIf="dispatcherAssetModeService.isReplicated(functionsResult.assetMode)">
-            <ct-alert theme="info">Upload and deletion of functions are disabled, assetMode is 'replicated'.</ct-alert>
-        </ct-section-header-row>
-    </ct-section-header>
-    <ct-section-body>
-        <ct-section-body-row>
-            <ng-container *ngTemplateOutlet="MainTableTemplate"></ng-container>
-        </ct-section-body-row>
-    </ct-section-body>
-    <ct-section-footer>
-        <ct-section-footer-row>
-            <ct-flex justify-content="space-between">
-                <ct-flex-item *ngIf="!dispatcherAssetModeService.isReplicated(functionsResult.assetMode)">
-                    <ng-container *ngTemplateOutlet="addButtonTemplate"></ng-container>
-                </ct-flex-item>
-            </ct-flex>
-        </ct-section-footer-row>
-    </ct-section-footer>
-</ct-section>
 
-<ng-template #MainTableTemplate>
-    <ct-table [isWaiting]="isLoading">
-        <table class="mat-table" mat-table [dataSource]="dataSource" multiTemplateDataRows>
-            <ng-container matColumnDef="code">
-                <th mat-header-cell *matHeaderCellDef>
-                    Code
-                </th>
-                <td mat-cell *matCellDef="let el">{{ el.code }}</td>
-            </ng-container>
-            <ng-container matColumnDef="type">
-                <th mat-header-cell *matHeaderCellDef>
-                    Type
-                </th>
-                <td mat-cell *matCellDef="let el">{{ el.type }}</td>
-            </ng-container>
-            <ng-container matColumnDef="params">
-                <th mat-header-cell *matHeaderCellDef>
-                    Params
-                </th>
-                <td mat-cell *matCellDef="let el">
-                    <div [hidden]="!showParams">
-                        <ct-pre>{{ el.params }}</ct-pre>
-                    </div>
-                </td>
-            </ng-container>
-            <ng-container matColumnDef="bts">
-                <th mat-header-cell *matHeaderCellDef></th>
-                <td mat-cell *matCellDef="let el">
-                    <ct-flex justify-content="flex-end" gap="8px"
-                        *ngIf="!dispatcherAssetModeService.isReplicated(functionsResult.assetMode)">
+<ct-cols align-items="baseline">
+    <ct-col size="6">
+        <ct-section>
+            <ct-section-header>
+                <ct-section-header-row>
+                    <ct-heading>Change password</ct-heading>
+                </ct-section-header-row>
+            </ct-section-header>
+            <ct-section-body>
+                <form [formGroup]="tokenForm" novalidate="novalidate">
+                    <mat-form-field appearance="outline" style="width: 100%;">
+                        <mat-label>Name of token, required</mat-label>
+                        <input matInput="matInput" type="text" autocomplete="off" formControlName="oldPassword" />
+                    </mat-form-field>
+                    <br>
+                    <mat-form-field appearance="outline" style="width: 100%;">
+                        <mat-label>Value of token, required</mat-label>
+                        <input matInput="matInput" type="text" autocomplete="off" formControlName="newPassword" />
+                    </mat-form-field>
+                    <br>
+                </form>
+            </ct-section-body>
+
+            <ct-section-footer>
+                <ct-section-footer-row>
+                    <ct-flex justify-content="flex-end" gap="8px">
                         <ct-flex-item>
-                            <button mat-flat-button color="warn" size="forTableRow" (click)="delete(el)">
-                                <mat-icon>delete</mat-icon>
-                            </button>
+                            <button mat-stroked-button="mat-stroked-button" routerLink="/settings">
+                                {{ 'main.Cancel' | translate }}</button>
+                        </ct-flex-item>
+                        <ct-flex-item>
+                            <button #button mat-flat-button="mat-flat-button" (click)="create()" color="primary"
+                                    [disabled]="notToCreate()">{{ 'main.Change' | translate }}</button>
                         </ct-flex-item>
                     </ct-flex>
-                </td>
+                </ct-section-footer-row>
+            </ct-section-footer>
+        </ct-section>
+    </ct-col>
+</ct-cols>
+
+
+<div class="container">
+
+    <form  class="mt-3" (ngSubmit)="addToken()" ngNativeValidate>
+        <div class="form-row">
+            <div class="form-group col-md-5">
+                <input id="name" name="name" type="text" class="form-control" placeholder="First Name" [(ngModel)] = 'token.name' required />
+            </div>
+            <div class="form-group col-md-5">
+                <input id="value" name="value" type="text" class="form-control" placeholder="Last Name" [(ngModel)] = 'token.value' required />
+            </div>
+            <div class="form-group col-md-2">
+                <button type="submit" class="btn btn-primary">Create</button>
+            </div>
+        </div>
+    </form>
+
+    <div class="table-responsive-sm">
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Value</th>
+            </tr>
+            </thead>
+            <tbody>
+            <ng-container *ngFor="let u of _tokens.reverse(); let i = index">
+                <tr>
+                    <td>{{ u.name }}</td>
+                    <td>{{ u.value }}</td>
+                </tr>
             </ng-container>
-            <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
-            <tr mat-row *matRowDef="let row; columns: columnsToDisplay"
-                [class.deleted-table-row]="deletedRows.includes(row)"></tr>
+            </tbody>
         </table>
-    </ct-table>
-</ng-template>
+    </div>
 
-
-
-<ng-template #addButtonTemplate>
-    <a routerLink="/dispatcher/functions/add">
-        <button mat-flat-button color="primary"> Add Function </button>
-    </a>
-</ng-template>
+</div>
