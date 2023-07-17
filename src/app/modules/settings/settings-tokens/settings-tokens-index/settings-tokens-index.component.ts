@@ -60,6 +60,7 @@ export class SettingsTokensIndexComponent extends UIStateComponent implements On
             });
     }
 
+/*
     create(): void {
         this.settingsService
             .changePasswordCommit(this.tokenForm.value.oldPassword, this.tokenForm.value.newPassword)
@@ -73,8 +74,8 @@ export class SettingsTokensIndexComponent extends UIStateComponent implements On
             });
     }
 
+*/
     notToCreate() {
-        return this.passwordForm.invalid || this.passwordForm.value.newPassword!==this.passwordForm.value.newPassword2
-            || this.passwordForm.value.oldPassword===this.passwordForm.value.newPassword;
+        return this.tokenForm.invalid;
     }
 }
