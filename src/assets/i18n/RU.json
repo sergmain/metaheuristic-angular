@@ -73,7 +73,7 @@
 	"api.code": "API code",
 
 	"settings-menu.Security": "Security",
-	"settings-menu.Tokens": "Tokens",
+	"settings-menu.ApiKeys": "API keys",
 	"settings-menu.Languages": "Languages",
 
 	"mhbp.scenario-function-mh.batch-line-splitter": "Split list per line",

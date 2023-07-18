@@ -39,13 +39,13 @@ export const SettingsRoutes: Routes = [
         }
     },
     {
-        path: 'tokens',
+        path: 'api-keys',
         canActivate: [RoleRouteGuard],
         component: SettingsRootComponent,
         loadChildren: () => import('@app/modules/settings/settings-api-keys/settings-api-keys.module').then(m => m.SettingsApiKeysModule),
         data: {
             requiredRoles: [Role.Admin, Role.Manager, Role.Operator],
-            section: 'tokens'
+            section: 'api-keys'
         }
     },
     {

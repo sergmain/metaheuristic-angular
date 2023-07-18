@@ -1,10 +1,52 @@
+<ct-section>
+    <ct-section-body style="width: 50%;">
+        <ct-section-body-row>
+            <ct-flex gap="8px" justify-content="space-between">
+                <ct-flex-item>
+                    OPENAI_API_KEY:
+                </ct-flex-item>
+                <div *ngIf="editFormActive(); then editOpenaiKey else showOpenaiKey">here is ignored</div>
+                <ng-template #editOpenaiKey>
+                    <ct-flex-item justify-content="flex-start">
+                        <form [formGroup]="predefinedApiKeyForm" novalidate="novalidate">
+                            <mat-form-field appearance="outline" style="width: 100%;">
+                                <mat-label>OPENAI_API_KEY, required</mat-label>
+                                <input matInput type="text" autocomplete="off" formControlName="openaiKey" />
+                            </mat-form-field>
+                        </form>
+                    </ct-flex-item>
+                    <ct-flex-item justify-content="flex-start">
+                        <button mat-icon-button (click)="saveOpenaiKey()" matTooltip="Save OpenAI key" color="primary">
+                            <mat-icon>save</mat-icon>
+                        </button>
+                        <button mat-icon-button (click)="cancelEditingOpenaiKey()" matTooltip="Cancel editing" color="primary">
+                            <mat-icon>cancel</mat-icon>
+                        </button>
+                    </ct-flex-item>
+                </ng-template>
+                <ng-template #showOpenaiKey>
+                    <ct-flex-item>
+                        {{apiKeys.openaiKey}}
+                    </ct-flex-item>
+                    <ct-flex-item justify-content="flex-end">
+                        <button mat-icon-button (click)="startEditingOpenaiKey()" matTooltip="Edit OPENAI_API_KEY" color="primary">
+                            <mat-icon>edit_document</mat-icon>
+                        </button>
+                    </ct-flex-item>
+                </ng-template>
 
-<ct-cols align-items="baseline">
+            </ct-flex>
+        </ct-section-body-row>
+    </ct-section-body>
+</ct-section>
+
+
+<ct-cols align-items="baseline" *ngIf="false">
     <ct-col size="6">
         <ct-section>
             <ct-section-header>
                 <ct-section-header-row>
-                    <ct-heading>Change password</ct-heading>
+                    <ct-heading>Configure keys for API</ct-heading>
                 </ct-section-header-row>
             </ct-section-header>
             <ct-section-body>
