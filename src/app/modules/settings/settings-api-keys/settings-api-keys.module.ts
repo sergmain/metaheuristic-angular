@@ -3,30 +3,29 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
-import { SettingsTokensIndexComponent } from './settings-tokens-index/settings-tokens-index.component';
+import { SettingsApiKeysIndexComponent } from './settings-api-keys-index/settings-api-keys-index.component';
 import { MaterialAppModule } from '@src/app/ngmaterial.module';
 import {CtModule} from '@app/modules/ct/ct.module';
 
 
-export const SettingsTokensIndexRoutes: Routes = [
+export const settingsApiKeysIndexRoutes: Routes = [
     {
         path: '',
-        component: SettingsTokensIndexComponent,
+        component: SettingsApiKeysIndexComponent,
     }
 ];
 
-
 @NgModule({
-    imports: [RouterModule.forChild(SettingsTokensIndexRoutes)],
+    imports: [RouterModule.forChild(settingsApiKeysIndexRoutes)],
     exports: [RouterModule]
 })
-export class SettingsTokensIndexRoutingModule { }
+export class SettingsApiKeysIndexRoutingModule { }
 
 
 @NgModule({
     imports: [
         CommonModule,
-        SettingsTokensIndexRoutingModule,
+        SettingsApiKeysIndexRoutingModule,
         CtModule,
         MaterialAppModule,
         FormsModule,
@@ -34,7 +33,7 @@ export class SettingsTokensIndexRoutingModule { }
         TranslateModule.forChild({})
     ],
     declarations: [
-        SettingsTokensIndexComponent
+        SettingsApiKeysIndexComponent
     ]
 })
-export class SettingsTokensModule { }
+export class SettingsApiKeysModule { }

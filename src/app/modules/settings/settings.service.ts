@@ -4,8 +4,8 @@ import {environment} from '@src/environments/environment';
 import {Observable} from 'rxjs';
 import {OperationStatusRest} from '@app/models/OperationStatusRest';
 import {generateFormData} from '@app/helpers/generateFormData';
-import {ApiForCompany, ChatPrompt, ChatsResult, FullChat} from '@app/modules/chat-new/chat-data';
-import {TokensResult} from '@app/modules/settings/settings.data';
+import {ApiForCompany, ChatPrompt, FullChat} from '@app/modules/chat-new/chat-data';
+import {ApiKeysResult} from '@app/modules/settings/settings.data';
 
 const url = (s: string): string => `${environment.baseUrl}dispatcher/settings/${s}`;
 
@@ -20,8 +20,20 @@ export class SettingsService {
         );
     }
 
-    chats = (page: string): Observable<ChatsResult> =>
-        this.http.get<ChatsResult>(url(`chats`), { params: { page } })
+    createApiKeyCommit(name: string, value: string): Observable<OperationStatusRest> {
+        return this.http.post<OperationStatusRest>(
+            url(`create-api-key-commit`),
+            generateFormData({name, value})
+        );
+    }
+
+    getApiKeys(): Observable<ApiKeysResult> {
+        let newUrl = url('api-keys')
+        console.log('SettingsService.newUrl: ' + newUrl);
+        return this.http.get<ApiKeysResult>(newUrl);
+    }
+
+
 
     chat(chatId: string): Observable<FullChat> {
         return this.http.get<FullChat>(url(`chat/${chatId}`));
@@ -39,12 +51,6 @@ export class SettingsService {
     postPrompt(chatId: string, prompt: string): Observable<ChatPrompt> {
         return this.http.post<ChatPrompt>(url(`post-prompt/${chatId}`),
             generateFormData({ prompt: prompt }));
-    }
-
-    getTokens(): Observable<TokensResult> {
-        let newUrl = url('tokens')
-        console.log('SettingsService.newUrl: ' + newUrl);
-        return this.http.get<TokensResult>(newUrl);
     }
 
 }
