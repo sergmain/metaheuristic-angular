@@ -33,6 +33,13 @@ export class SettingsService {
         return this.http.get<ApiKeysResult>(newUrl);
     }
 
+    saveOpenaiKey(openaiKey: string): Observable<OperationStatusRest> {
+        return this.http.post<OperationStatusRest>(
+            url(`save-openai-key-commit`),
+            generateFormData({openaiKey})
+        );
+    }
+
 
 
     chat(chatId: string): Observable<FullChat> {

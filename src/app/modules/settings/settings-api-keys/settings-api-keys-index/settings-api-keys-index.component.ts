@@ -9,6 +9,7 @@ import {UIStateComponent} from '@app/models/UIStateComponent';
 import {AuthenticationService} from '@services/authentication';
 import {OperationStatus} from '@app/enums/OperationStatus';
 import {MhUtils} from '@services/mh-utils/mh-utils.service';
+import {Subscription} from 'rxjs';
 
 @Component({
     selector: "settings-api-keys-index",
@@ -96,6 +97,24 @@ export class SettingsApiKeysIndexComponent extends UIStateComponent implements O
     }
 
     saveOpenaiKey() {
+        this.setIsLoadingStart();
+        const subscribe: Subscription = this.settingsService
+            .saveOpenaiKey(
+                this.predefinedApiKeyForm.value.openaiKey
+            )
+            .subscribe({
+                    next: (response)=> {
+                        if (response.status === OperationStatus.OK) {
+                            this.router.navigate(['../'], {relativeTo: this.activatedRoute});
+                        }
+                    },
+                    complete: ()=> {
+                        this.setIsLoadingEnd();
+                        subscribe.unsubscribe();
+                    }
+                }
+            );
+
         this.editingOpenai = false;
     }
 
