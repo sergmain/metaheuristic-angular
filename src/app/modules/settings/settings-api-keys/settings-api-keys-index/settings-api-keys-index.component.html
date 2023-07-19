@@ -1,13 +1,13 @@
 <ct-section>
     <ct-section-body style="width: 50%;">
-        <ct-section-body-row>
+        <ct-section-body-row >
             <ct-flex gap="8px" justify-content="space-between">
-                <ct-flex-item>
+                <ct-flex-item class="vert-centered-flex">
                     OPENAI_API_KEY:
                 </ct-flex-item>
                 <div *ngIf="editFormActive(); then editOpenaiKey else showOpenaiKey">here is ignored</div>
                 <ng-template #editOpenaiKey>
-                    <ct-flex-item justify-content="flex-start">
+                    <ct-flex-item class="vert-centered-flex">
                         <form [formGroup]="predefinedApiKeyForm" novalidate="novalidate">
                             <mat-form-field appearance="outline" style="width: 100%;">
                                 <mat-label>OPENAI_API_KEY, required</mat-label>
@@ -15,7 +15,7 @@
                             </mat-form-field>
                         </form>
                     </ct-flex-item>
-                    <ct-flex-item justify-content="flex-start">
+                    <ct-flex-item class="vert-centered-flex">
                         <button mat-icon-button (click)="saveOpenaiKey()" matTooltip="Save OpenAI key" color="primary">
                             <mat-icon>save</mat-icon>
                         </button>
@@ -25,10 +25,10 @@
                     </ct-flex-item>
                 </ng-template>
                 <ng-template #showOpenaiKey>
-                    <ct-flex-item>
+                    <ct-flex-item class="vert-centered-flex">
                         {{apiKeys.openaiKey}}
                     </ct-flex-item>
-                    <ct-flex-item justify-content="flex-end">
+                    <ct-flex-item class="vert-centered-flex">
                         <button mat-icon-button (click)="startEditingOpenaiKey()" matTooltip="Edit OPENAI_API_KEY" color="primary">
                             <mat-icon>edit_document</mat-icon>
                         </button>
