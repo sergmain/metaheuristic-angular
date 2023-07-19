@@ -44,12 +44,11 @@ export class SettingsApiKeysIndexComponent extends UIStateComponent implements O
         super(authenticationService);
     }
 
-
     ngOnInit() {
-        this.updateTable(0);
+        this.updateTable();
     }
 
-    updateTable(page: number) {
+    updateTable() {
         this.setIsLoadingStart();
         this.settingsService
             .getApiKeys()
@@ -77,11 +76,11 @@ export class SettingsApiKeysIndexComponent extends UIStateComponent implements O
             });
     }
 
-
     startEditingOpenaiKey() {
         this.predefinedApiKeyForm = new FormGroup({
             openaiKey: new FormControl(this.apiKeys.openaiKey, [Validators.required, Validators.minLength(10)]),
         });
+        this.editingOpenai = true;
     }
 
     editFormActive() {
@@ -105,7 +104,9 @@ export class SettingsApiKeysIndexComponent extends UIStateComponent implements O
             .subscribe({
                     next: (response)=> {
                         if (response.status === OperationStatus.OK) {
-                            this.router.navigate(['../'], {relativeTo: this.activatedRoute});
+                            this.apiKeys.openaiKey = this.predefinedApiKeyForm.value.openaiKey;
+                            this.dataSource = new MatTableDataSource(this.apiKeys.apiKeys);
+                            //this.router.navigate(['../'], {relativeTo: this.activatedRoute});
                         }
                     },
                     complete: ()=> {
