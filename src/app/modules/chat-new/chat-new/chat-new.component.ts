@@ -84,7 +84,7 @@ export class ChatNewComponent extends UIStateComponent implements OnInit, OnDest
             .chat(this.chatId)
             .subscribe((response) => {
                 this.fullChat = response;
-                console.log("loadAssetsForChatting() ", this.fullChat.prompts || []);
+                //console.log("loadAssetsForChatting() ", this.fullChat.prompts || []);
                 this.dataSource = new MatTableDataSource(this.fullChat.prompts || []);
                 this.setIsLoadingEnd();
             });

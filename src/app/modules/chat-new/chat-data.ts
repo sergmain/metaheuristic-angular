@@ -25,6 +25,7 @@ export interface ChatPrompt {
 export interface FullChat extends DefaultResponse {
     sessionId: string;
     chatId: string;
+    chatName: string;
     apiUid: ApiUid;
     prompts: ChatPrompt[];
 }

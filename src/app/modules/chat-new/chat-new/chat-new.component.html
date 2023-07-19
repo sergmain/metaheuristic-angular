@@ -4,7 +4,7 @@
             <ct-section-header-row>
                 <ct-flex justify-content="space-between">
                     <ct-flex-item>
-                        <ct-heading>Chat with</ct-heading>
+                        <ct-heading>Chat '{{fullChat? fullChat.chatName : '#'+chatId}}' with {{fullChat? fullChat.apiUid.apiName : 'unknown'}}</ct-heading>
                     </ct-flex-item>
                     <ct-flex-item>
                         <ct-flex justify-content="flex-end" align-items="center" gap="16px">
