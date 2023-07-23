@@ -16,8 +16,8 @@ export class SettingsSecurityIndexComponent {
     status: string;
     passwordForm = new FormGroup({
         oldPassword: new FormControl('', [Validators.required]),
-        newPassword: new FormControl('', [Validators.required, Validators.minLength(6)]),
-        newPassword2: new FormControl('', [Validators.required, Validators.minLength(6)]),
+        newPassword: new FormControl('', [Validators.required, Validators.minLength(3)]),
+        newPassword2: new FormControl('', [Validators.required, Validators.minLength(3)]),
     });
 
     constructor(
@@ -26,7 +26,7 @@ export class SettingsSecurityIndexComponent {
         private activatedRoute: ActivatedRoute
     ) { }
 
-    create(): void {
+    changePassword(): void {
         this.settingsService
             .changePasswordCommit(this.passwordForm.value.oldPassword, this.passwordForm.value.newPassword)
             .subscribe({
@@ -40,6 +40,7 @@ export class SettingsSecurityIndexComponent {
     }
 
     notToCreate() {
+        //console.log();
         return this.passwordForm.invalid || this.passwordForm.value.newPassword!==this.passwordForm.value.newPassword2
             || this.passwordForm.value.oldPassword===this.passwordForm.value.newPassword;
     }
