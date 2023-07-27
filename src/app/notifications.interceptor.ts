@@ -1,13 +1,13 @@
 import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { EMPTY, Observable, throwError } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { DefaultResponse } from './models/DefaultResponse';
 import { OperationStatus } from './enums/OperationStatus';
 import { NotificationsService } from './modules/angular2-notifications/services/notifications.service';
+import {RuntimeService} from '@services/runtime/runtime.service';
 
 @Injectable()
-
 export class NotificationsInterceptor implements HttpInterceptor {
 
     options: { showProgressBar: boolean; pauseOnHover: boolean; timeOut: number; clickToClose: boolean } = {
@@ -18,6 +18,7 @@ export class NotificationsInterceptor implements HttpInterceptor {
     };
 
     constructor(
+        private runtimeService: RuntimeService,
         private notificationsService: NotificationsService
     ) { }
 
@@ -25,6 +26,7 @@ export class NotificationsInterceptor implements HttpInterceptor {
 
         return next.handle(req).pipe(
             tap((event: HttpEvent<any>) => {
+                //this.notificationsService.setServerReady(req.url);
                 if (event instanceof HttpResponse) {
                     event = event.clone({
                         body: this.modifyBody(event.body)
@@ -34,6 +36,7 @@ export class NotificationsInterceptor implements HttpInterceptor {
             }),
             catchError((error: HttpErrorResponse) => {
                 if (error.status >= 400) {
+                    //this.notificationsService.setServerReady(req.url);
                     if (error.error) {
                         const title: string = error.error.status ? error.error.status : error.status;
                         const content: string = error.error.message ? error.error.message : error.message;
@@ -46,14 +49,20 @@ export class NotificationsInterceptor implements HttpInterceptor {
                     }
                 }
                 if (error.status === 0) {
-                    const title: string = 'Server offline';
-                    const content: string = '';
-                    this.notificationsService.error(title, content, {
-                        // timeOut: 10000,
-                        // showProgressBar: true,
-                        pauseOnHover: true,
-                        clickToClose: true,
-                    });
+                    console.log("Server is ready: ", this.runtimeService.isServerReady(), ", ulr: ",  req.url);
+                    if (this.runtimeService.isServerReady()) {
+                        const title: string = 'Server offline';
+                        const content: string = '';
+                        this.notificationsService.error(title, content, {
+                            // timeOut: 10000,
+                            // showProgressBar: true,
+                            pauseOnHover: true,
+                            clickToClose: true,
+                        });
+                    }
+                    else {
+                        console.log("Server isn't ready yet. ulr: ", req.url);
+                    }
                 }
                 return throwError(error);
             })

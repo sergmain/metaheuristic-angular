@@ -6,7 +6,7 @@ import { Icons } from '../interfaces/icons';
 import { NotificationEvent } from '../interfaces/notification-event.type';
 import { Notification } from '../interfaces/notification.type';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class NotificationsService {
   constructor(
     @Inject('options') public globalOptions: any
