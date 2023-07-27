@@ -8,6 +8,8 @@ import {UIStateComponent} from '@src/app/models/UIStateComponent';
 import {setOfLanguages, SettingsLanguage, SettingsTheme} from '@src/app/services/settings/Settings';
 import {SettingsService, SettingsServiceEventChange} from '@src/app/services/settings/settings.service';
 import {environment} from '@src/environments/environment';
+import {RuntimeService} from '@services/runtime/runtime.service';
+import {MhUtils} from '@services/mh-utils/mh-utils.service';
 
 // declare function initQuitProcess(): any;
 
@@ -46,6 +48,7 @@ export class AppViewComponent extends UIStateComponent implements OnInit, OnDest
         readonly authenticationService: AuthenticationService,
         private domSanitizer: DomSanitizer,
         private settingsService: SettingsService,
+        private runtimeService: RuntimeService,
         private router: Router
     ) {
         super(authenticationService);
@@ -109,4 +112,10 @@ export class AppViewComponent extends UIStateComponent implements OnInit, OnDest
         // initQuitProcess();
         window.top.close();
     }
+
+    serverReady() {
+        return this.runtimeService.isServerReady();
+    }
+
+    protected readonly MhUtils = MhUtils;
 }
