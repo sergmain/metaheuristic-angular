@@ -9,3 +9,8 @@ export interface ApiKeysResult extends DefaultResponse {
     openaiKey: string;
     apiKeys: ApiKey[];
 }
+
+export class Language {
+    code: string;
+    name: string;
+}

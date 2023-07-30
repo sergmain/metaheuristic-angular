@@ -1,0 +1,49 @@
+<ct-section>
+    <ct-section-body>
+        <ct-section-body-row >
+            <ct-flex gap="16px">
+                <ct-flex-item class="vert-centered-flex">
+                    Language of UI:
+                </ct-flex-item>
+                <div *ngIf="editFormActive(); then editOpenaiKey else showOpenaiKey">here is ignored</div>
+                <ng-template #editOpenaiKey>
+                    <ct-flex-item class="vert-centered-flex key-input-field">
+                        <ct-section-body-row>
+                            <mat-form-field appearance="outline">
+                                <mat-label> {{ 'settings-select-language.Language of UI' | translate }}</mat-label>
+                                <mat-select [(ngModel)]="language">
+                                    <div *ngFor="let lang of listOfLanguage">
+                                        <mat-option [value]="lang">{{lang.name}}</mat-option>
+                                    </div>
+                                </mat-select>
+                                <mat-hint>{{ 'main.This is a required field' | translate }}</mat-hint>
+                            </mat-form-field>
+                        </ct-section-body-row>
+                    </ct-flex-item>
+                    <ct-flex-item class="vert-centered-flex">
+                        <button mat-icon-button (click)="saveSelectedLanguage()" matTooltip="Update language" color="primary">
+                            <mat-icon>save</mat-icon>
+                        </button>
+                        <button mat-icon-button (click)="cancelEditingOpenaiKey()" matTooltip="Cancel" color="primary">
+                            <mat-icon>cancel</mat-icon>
+                        </button>
+                    </ct-flex-item>
+                </ng-template>
+                <ng-template #showOpenaiKey>
+                    <ct-flex-item class="vert-centered-flex">
+                        {{apiKeys.openaiKey}}
+                    </ct-flex-item>
+                    <ct-flex-item class="vert-centered-flex">
+                        <button mat-icon-button (click)="startChangingLanguage()" matTooltip="Change languag of UI" color="primary">
+                            <mat-icon>edit_document</mat-icon>
+                        </button>
+                    </ct-flex-item>
+                </ng-template>
+
+            </ct-flex>
+        </ct-section-body-row>
+    </ct-section-body>
+</ct-section>
+
+
+
