@@ -78,16 +78,12 @@ app.whenReady().then(() => {
 })
 
 function mh_shutdown() {
-  //console.log('Request Metaheuristic to shutdown ...');
-  const userAction = async () => {
-    const response = await fetch('http://localhost:64967/rest/v1/standalone/anon/shutdown', {
-      method: 'GET'
-    });
-    const strResponse = response.json();
-    console.log('Response from Metaheuristic: ', strResponse);
-  }
-  userAction();
-
+  console.log('Request Metaheuristic to shutdown ...');
+  const response = fetch('http://localhost:64967/rest/v1/standalone/anon/shutdown', {
+    method: 'GET'
+  });
+  const strResponse = response.json();
+  console.log('Response from Metaheuristic: ', strResponse);
 }
 
 // Quit when all windows are closed, except on macOS. There, it's common
