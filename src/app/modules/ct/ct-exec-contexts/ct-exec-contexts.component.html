@@ -115,7 +115,7 @@
                 </ct-flex-item>
             </ct-flex>
         </ct-section-footer-row>
-        <ct-section-footer-row>
+        <ct-section-footer-row *ngIf="modal">
             <mat-dialog-actions align="end">
                 <button mat-flat-button color="primary" mat-dialog-close>Close</button>
             </mat-dialog-actions>

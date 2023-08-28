@@ -21,6 +21,7 @@ export class CtExecContextsComponent implements OnInit {
     @ViewChild('errorDialogTemplate') errorDialogTemplate: TemplateRef<any>;
 
     @Input() sourceCodeId: string;
+    @Input() modal: boolean;
 
     @ViewChild('nextTable', { static: true }) nextTable: MatButton;
     @ViewChild('prevTable', { static: true }) prevTable: MatButton;
