@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthenticationService } from '@app/services/authentication/authentication.service';
+import {environment} from '@src/environments/environment';
+
 @Component({
     selector: 'login-view',
     templateUrl: './login.component.html',
@@ -27,5 +29,9 @@ export class LoginComponent {
                 this.form.value.password
             );
         }
+    }
+
+    isStandalone() {
+        return environment.standalone;
     }
 }

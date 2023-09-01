@@ -15,10 +15,24 @@
     <div class="app-view__header">
         <mat-toolbar class="toolbar" color="primary">
             <mat-toolbar-row class="toolbar__row">
-                <div class="toolbar__left">
-                    <button class="mat-button" mat-button routerLink="/">{{brandingTitle}}</button>
-                </div>
-                <div class="toolbar__right"></div>
+                <ct-flex justify-content="space-between" align-items="center">
+                    <ct-flex-item>
+                        <ct-flex justify-content="flex-start" gap="9px" align-items="center">
+                            <ct-flex-item>
+                                <button class="mat-button mat-button--menu-item" mat-button routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" routerLink="/">{{brandingTitle}}</button>
+                            </ct-flex-item>
+                        </ct-flex>
+                    </ct-flex-item>
+                    <ct-flex-item>
+                        <ct-flex justify-content="flex-end" align-items="center">
+                            <ct-flex-item>
+                                <button mat-icon-button matTooltip="Close Metaheuristic"  (click)="shutdown()" >
+                                    <mat-icon>power_settings_new</mat-icon>
+                                </button>
+                            </ct-flex-item>
+                        </ct-flex>
+                    </ct-flex-item>
+                </ct-flex>
             </mat-toolbar-row>
         </mat-toolbar>
     </div>

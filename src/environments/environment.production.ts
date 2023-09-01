@@ -6,6 +6,7 @@ export const environment: IEnvironment = {
     hashLocationStrategy: true,
     userLifeTime: 30 * 60 * 1000, // 30 minutes
     isSslRequired: true,
+    standalone: false,
     batchInterval: 15 * 1000, // in milliseconds
     language: 'EN', // other supported languages: 'RU'
     forTableRow: '20px',

@@ -10,4 +10,5 @@ export interface IEnvironment {
     brandingMsgIndex: string;
     brandingTitle: string;
     forTableRow: string;
+    standalone: boolean;
 }
