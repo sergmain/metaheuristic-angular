@@ -1,6 +1,32 @@
+// noinspection NodeCoreCodingAssistance
+
 // Modules to control application life and create native browser window
 const { app, BrowserWindow } = require('electron')
 const path = require('path')
+const http = require('http');
+
+const port = 64968;
+
+// Setting hostname as the localhost
+// NOTE: You can set hostname to something
+// else as well, for example, say 127.0.0.1
+const hostname = 'localhost';
+
+// Creating Server
+const server = http.createServer((req,res)=>{
+  // Handling Request and Response
+  res.statusCode=200;
+  res.setHeader('Content-Type', 'text/plain')
+  res.end("Front-end is alive.")
+});
+
+// Making the server to listen to required
+// hostname and port number
+server.listen(port, hostname,()=>{
+  // Callback
+  console.log(`Server running at http://${hostname}:${port}/`);
+});
+
 
 const child = require('child_process').execFile;
 const executablePath = path.join(__dirname, 'metaheuristic', 'metaheuristic.exe');
@@ -79,9 +105,14 @@ app.whenReady().then(() => {
 
 function mh_shutdown() {
   console.log('Request Metaheuristic to shutdown ...');
+
+  const controller = new AbortController();
+  const id = setTimeout(() => controller.abort(), 1000);
   const response = fetch('http://localhost:64967/rest/v1/standalone/anon/shutdown', {
-    method: 'GET'
+    method: 'GET',
+    signal: controller.signal
   });
+  clearTimeout(id);
   const strResponse = response.json();
   console.log('Response from Metaheuristic: ', strResponse);
 }
