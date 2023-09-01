@@ -7,11 +7,13 @@
       </ct-section-header-row>
     </ct-section-header>
     <ct-section-body>
-      <ct-section-body-row>
-        <ct-section-content>
-          For standalone installation, like from Steam, default username and password are qqq:123
-        </ct-section-content>
-      </ct-section-body-row>
+      <div *ngIf="isStandalone()">
+        <ct-section-body-row>
+          <ct-section-content>
+             For standalone installation, like from Steam, default username and password are qqq:123
+          </ct-section-content>
+        </ct-section-body-row>
+      </div>
       <ct-section-body-row>
         <ct-section-content>
           <mat-form-field appearance="outline" style=" margin-bottom: -1.34375em">

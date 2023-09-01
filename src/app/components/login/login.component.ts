@@ -32,6 +32,7 @@ export class LoginComponent {
     }
 
     isStandalone() {
+        // console.log("environment.standalone: ", environment.standalone);
         return environment.standalone;
     }
 }
