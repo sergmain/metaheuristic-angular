@@ -1,43 +1,69 @@
-// noinspection NodeCoreCodingAssistance
+// noinspection NodeCoreCodingAssistance,DuplicatedCode
 
 // Modules to control application life and create native browser window
 const { app, BrowserWindow } = require('electron')
 const path = require('path')
 const http = require('http');
+const fs = require('fs');
+const util = require('util');
+const {execFile: child} = require("child_process");
+
+
+const userHomePath = path.join(app.getPath('home'), '.metaheuristic', 'electron');
+
+if (!fs.existsSync(userHomePath)){
+    fs.mkdirSync(userHomePath, { recursive: true });
+}
+
+const log_file = fs.createWriteStream(path.join(userHomePath, 'console.log'), {flags: 'a'});
+const log_stdout = process.stdout;
+
+console.log = function(d) {
+  log_file.write(util.format(d) + '\n');
+  log_stdout.write(util.format(d) + '\n');
+};
+
+console.log("Metaheuristic front-end was started at " + new Date());
 
 const port = 64968;
 
-// Setting hostname as the localhost
-// NOTE: You can set hostname to something
-// else as well, for example, say 127.0.0.1
-const hostname = 'localhost';
-
+try {
+  const hostname = 'localhost';
 // Creating Server
-const server = http.createServer((req,res)=>{
-  // Handling Request and Response
-  res.statusCode=200;
-  res.setHeader('Content-Type', 'text/plain')
-  res.end("Front-end is alive.")
-});
+  console.log(`Start preparing a Server for starting at http://${hostname}:${port}/`);
+  const server = http.createServer((req,res)=>{
+    // Handling Request and Response
+    res.statusCode=200;
+    res.setHeader('Content-Type', 'text/plain')
+    res.end("Front-end is alive.")
+  });
 
 // Making the server to listen to required
 // hostname and port number
-server.listen(port, hostname,()=>{
-  // Callback
-  console.log(`Server running at http://${hostname}:${port}/`);
-});
+  server.listen(port, hostname,()=>{
+    // Callback
+    console.log(`Server is running at http://${hostname}:${port}/`);
+  });
+} catch(e) {
+  console.log(e);
+}
 
 
-const child = require('child_process').execFile;
-const executablePath = path.join(__dirname, 'metaheuristic', 'metaheuristic.exe');
+try {
+  const child = require('child_process').execFile;
+  const executablePath = path.join(__dirname, 'metaheuristic', 'metaheuristic.exe');
 
-child(executablePath, function(err, data) {
-  if(err){
-    console.error(err);
-    return;
-  }
-  console.log(data.toString());
-});
+  child(executablePath, function(err, data) {
+    if(err){
+      console.error(err);
+      return;
+    }
+    console.log(data.toString());
+  });
+}
+catch(e) {
+  console.log(e);
+}
 
 function createWindow () {
   // Window Customization - https://www.electronjs.org/docs/latest/tutorial/window-customization
@@ -104,17 +130,34 @@ app.whenReady().then(() => {
 })
 
 function mh_shutdown() {
-  console.log('Request Metaheuristic to shutdown ...');
+  console.log("Metaheuristic was shutdown at "+ new Date());
 
-  const controller = new AbortController();
-  const id = setTimeout(() => controller.abort(), 1000);
-  const response = fetch('http://localhost:64967/rest/v1/standalone/anon/shutdown', {
-    method: 'GET',
-    signal: controller.signal
-  });
-  clearTimeout(id);
-  const strResponse = response.json();
-  console.log('Response from Metaheuristic: ', strResponse);
+  try {
+    (async () => {
+      try {
+        //
+        // const response = await fetch('http://example.com')
+        // const json = await response.json()
+        const controller = new AbortController();
+        const id = setTimeout(() => controller.abort(), 2000);
+        console.log('Request Metaheuristic server to shutdown ...');
+        const response = await fetch('http://localhost:64967/rest/v1/standalone/anon/shutdown', {
+          method: 'GET',
+          signal: controller.signal
+        });
+        clearTimeout(id);
+        const strResponse = await response.json();
+        console.log('Response from Metaheuristic server:\n'+ strResponse);
+
+        log_file.end("\n");
+      } catch (error) {
+        console.log(error);
+      }
+    })();
+  }
+  catch(e) {
+    console.log(e);
+  }
 }
 
 // Quit when all windows are closed, except on macOS. There, it's common
