@@ -1,29 +1,58 @@
 <ct-section>
-    <ct-section-header>
-        <ct-section-header-row>
-            <ct-section-header-row>
-                <ct-flex justify-content="space-between">
-                    <ct-flex-item>
-                        <ct-heading>Chat '{{fullChat? fullChat.chatName : '#'+chatId}}' with {{fullChat? fullChat.apiUid.apiName : 'unknown'}}</ct-heading>
-                    </ct-flex-item>
-                    <ct-flex-item>
-                        <ct-flex justify-content="flex-end" align-items="center" gap="16px">
-                            <ct-flex-item>
-                                <mat-slide-toggle [(ngModel)]="isShowRaw" matTooltip="Show raw result">
-                                </mat-slide-toggle>
-                            </ct-flex-item>
-                            <ct-flex-item >
-                                <button mat-icon-button (click)="bookmark()" matTooltip="Bookmark" color="primary">
-                                    <mat-icon>bookmark</mat-icon>
-                                </button>
-                            </ct-flex-item>
-                        </ct-flex>
-                    </ct-flex-item>
-                </ct-flex>
-            </ct-section-header-row>
-        </ct-section-header-row>
-    </ct-section-header>
+    <ct-section-body style="width: 50%;">
+        <ct-section-body-row>
+            <ct-flex gap="8px" justify-content="space-between">
+                <ct-flex-item>
+                    Chat: {{fullChat? fullChat.chatName : '#'+chatId}}<br/>
+                    LLM: {{fullChat? fullChat.apiUid.apiName : 'unknown'}}
+                </ct-flex-item>
+                <ct-flex-item justify-content="flex-end"  *ngIf="!isFormActive" >
+                    <ct-flex justify-content="flex-end" align-items="center" gap="16px">
+                        <ct-flex-item>
+                            <button mat-icon-button (click)="startEditingChatDescription()" matTooltip="Edit chat info" color="primary">
+                                <mat-icon>edit_document</mat-icon>
+                            </button>
+                        </ct-flex-item>
+                        <ct-flex-item>
+                            <mat-slide-toggle [(ngModel)]="isShowRaw" matTooltip="Show raw result">
+                            </mat-slide-toggle>
+                        </ct-flex-item>
+                        <ct-flex-item >
+                            <button mat-icon-button (click)="bookmark()" matTooltip="Bookmark" color="primary">
+                                <mat-icon>bookmark</mat-icon>
+                            </button>
+                        </ct-flex-item>
+                    </ct-flex>
+                </ct-flex-item>
+            </ct-flex>
+        </ct-section-body-row>
+        <ct-section-body-row *ngIf="isFormActive">
+            <form [formGroup]="charInfoForm" novalidate="novalidate">
+                <mat-form-field appearance="outline" style="width: 100%;">
+                    <mat-label>Name of Scenario, min 5 chars, required</mat-label>
+                    <input matInput type="text" autocomplete="off" formControlName="name" />
+                </mat-form-field>
+            </form>
+        </ct-section-body-row>
+    </ct-section-body>
+    <ct-section-footer *ngIf="isFormActive" style="width: 50%;">
+        <ct-section-footer-row>
+            <ct-flex justify-content="flex-end" gap="8px">
+                <ct-flex-item>
+                    <button mat-flat-button color="primary" size="forTableRow"
+                            (click)="isFormActive=false; updateChatInfo()" [disabled]="notToUpdateChatInfo()">
+                        Save</button>
+                </ct-flex-item>
+                <ct-flex-item>
+                    <button mat-flat-button color="accent" size="forTableRow" (click)="cancelUpdatingChatInfo()">
+                        Cancel</button>
+                </ct-flex-item>
+            </ct-flex>
+        </ct-section-footer-row>
+    </ct-section-footer>
+</ct-section>
 
+<ct-section>
     <ct-section-body style="width: 100%;">
         <ct-section-body-row>
             <ng-container *ngTemplateOutlet="mainTableTemplate"></ng-container>
@@ -43,9 +72,11 @@
     <ct-section-footer style="width: 75%;" *ngIf="notPosting()">
         <ct-section-footer-row>
             <ct-flex justify-content="flex-end" gap="8px">
+<!--
                 <ct-flex-item>
                     <button mat-stroked-button (click)="back()">Cancel</button>
                 </ct-flex-item>
+-->
                 <ct-flex-item>
                     <button #button mat-flat-button="mat-flat-button" (click)="postPrompt()" color="primary"
                             [disabled]="!chatForm.valid || !chatForm.dirty">Post</button>

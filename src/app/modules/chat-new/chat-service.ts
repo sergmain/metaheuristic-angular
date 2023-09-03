@@ -40,4 +40,8 @@ export class ChatService {
             generateFormData({ prompt: prompt }));
     }
 
+    updateChatInfoFormCommit(chatId: string, name: string) {
+        return this.http.post<ChatPrompt>(url(`update-chat-info-commit/${chatId}`),
+            generateFormData({ name: name }));
+    }
 }

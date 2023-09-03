@@ -13,6 +13,7 @@ import {ChatService} from '@app/modules/chat-new/chat-service';
 import {ChatPrompt, FullChat} from '@app/modules/chat-new/chat-data';
 import {MatTableDataSource} from '@angular/material/table';
 import {MIN_PROMPT_LEN} from '@app/modules/mh-consts';
+import {Subscription} from 'rxjs';
 
 @Component({
     selector: 'chat-new',
@@ -41,6 +42,11 @@ export class ChatNewComponent extends UIStateComponent implements OnInit, OnDest
     chatForm = new FormGroup({
         prompt: new FormControl('', [Validators.required, Validators.minLength(MIN_PROMPT_LEN)]),
     });
+
+    charInfoForm = new FormGroup({
+        name: new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(100)])
+    });
+    isFormActive: boolean = false;
 
     currentStates: Set<LoadStates> = new Set();
     readonly states = LoadStates;
@@ -128,6 +134,42 @@ export class ChatNewComponent extends UIStateComponent implements OnInit, OnDest
     }
 
     back() {
+    }
 
+    updateChatInfo() {
+        this.currentStates.add(this.states.wait);
+        this.isFormActive = false;
+
+        const subscribe: Subscription = this.chatService
+            .updateChatInfoFormCommit(
+                this.chatId.toString(),
+                this.charInfoForm.value.name
+            )
+            .subscribe( {
+                next: prompt => {
+                    //this.updateTree();
+                },
+                complete: () => {
+                    this.currentStates.delete(this.states.wait);
+                    subscribe.unsubscribe();
+                }
+            });
+    }
+
+    notToUpdateChatInfo() : boolean  {
+        return this.charInfoForm.invalid;
+    }
+
+    cancelUpdatingChatInfo() {
+        this.isFormActive = false;
+    }
+
+    startEditingChatDescription() {
+        let name: string = this.fullChat ? this.fullChat.chatName : '#'+this.chatId;
+
+        this.charInfoForm = new FormGroup({
+            name: new FormControl(name, [Validators.required, Validators.minLength(5)]),
+        });
+        this.isFormActive = true;
     }
 }
