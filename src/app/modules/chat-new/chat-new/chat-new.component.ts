@@ -147,6 +147,7 @@ export class ChatNewComponent extends UIStateComponent implements OnInit, OnDest
             )
             .subscribe( {
                 next: prompt => {
+                    this.fullChat.chatName = this.charInfoForm.value.name;
                     //this.updateTree();
                 },
                 complete: () => {

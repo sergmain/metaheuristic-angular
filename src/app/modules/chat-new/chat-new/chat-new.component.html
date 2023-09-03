@@ -29,7 +29,7 @@
         <ct-section-body-row *ngIf="isFormActive">
             <form [formGroup]="charInfoForm" novalidate="novalidate">
                 <mat-form-field appearance="outline" style="width: 100%;">
-                    <mat-label>Name of Scenario, min 5 chars, required</mat-label>
+                    <mat-label>Name of Scenario, min 5, max 100 chars, required</mat-label>
                     <input matInput type="text" autocomplete="off" formControlName="name" />
                 </mat-form-field>
             </form>
