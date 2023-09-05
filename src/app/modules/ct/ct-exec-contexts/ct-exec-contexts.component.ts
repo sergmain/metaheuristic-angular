@@ -48,10 +48,11 @@ export class CtExecContextsComponent implements OnInit {
         private sourceCodesService: SourceCodesService,
         private router: Router
     ) {
-
     }
 
     ngOnInit(): void {
+        //console.log("modal, modalBool", this.modal);
+
         // this.sourceCodeId = this.route.snapshot.paramMap.get('sourceCodeId');
         this.getExecContexts(0);
     }

@@ -9,9 +9,11 @@ export class SettingsServiceEventChange {
 }
 export type SettingsServiceEvent = SettingsServiceEventChange;
 
+const STORAGE_NAME: string = "metaheuristic-settings";
+
 @Injectable({ providedIn: 'root' })
 export class SettingsService {
-    private localStorageName: string = 'settingsService';
+    private localStorageName: string;
     private storageDefaultData: Settings = defaultSettings;
 
     events: BehaviorSubject<SettingsServiceEvent> = new BehaviorSubject<SettingsServiceEvent>(null);
@@ -22,13 +24,13 @@ export class SettingsService {
         this.authenticationService.events.subscribe(event => {
             if (event instanceof AuthenticationServiceEventChange) {
                 if (event.user && event.user.username) {
-                    this.localStorageName = event.user.username + ':' + 'settingsService';
+                    this.localStorageName = STORAGE_NAME +':' + event.user.username;
                     this.getSettings(settings => {
                         SettingsService.updateTheme(settings.theme);
                         this.update(settings);
                     });
                 } else {
-                    this.localStorageName = 'settingsService';
+                    this.localStorageName = STORAGE_NAME;
                     this.getSettings(settings => {
                         SettingsService.updateTheme(settings.theme);
                         this.update({ ...settings, ...defaultSettings });

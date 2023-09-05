@@ -29,7 +29,7 @@ export class SettingsService {
 
     getApiKeys(): Observable<ApiKeysResult> {
         let newUrl = url('api-keys')
-        console.log('SettingsService.newUrl: ' + newUrl);
+        // console.log('SettingsService.newUrl: ' + newUrl);
         return this.http.get<ApiKeysResult>(newUrl);
     }
 
