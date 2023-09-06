@@ -6,7 +6,7 @@ const path = require('path')
 const http = require('http');
 const fs = require('fs');
 const util = require('util');
-const {execFile: child} = require("child_process");
+const {exec: child} = require("child_process");
 
 
 const userHomePath = path.join(app.getPath('home'), '.metaheuristic', 'electron');
@@ -50,7 +50,7 @@ try {
 
 
 try {
-  const child = require('child_process').execFile;
+  // const child = require('child_process').execFile;
   const executablePath = path.join(__dirname, 'metaheuristic', 'metaheuristic.exe');
 
   child(executablePath, function(err, data) {
