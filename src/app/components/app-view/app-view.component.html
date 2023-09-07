@@ -16,10 +16,15 @@
         <mat-toolbar class="toolbar" color="primary">
             <mat-toolbar-row class="toolbar__row">
                 <ct-flex justify-content="space-between" align-items="center">
+                    <ng-container *ngTemplateOutlet="anonymous_header_template"></ng-container>
+                </ct-flex>
+
+<!--
+                <ct-flex justify-content="space-between" align-items="center">
                     <ct-flex-item>
                         <ct-flex justify-content="flex-start" gap="9px" align-items="center">
                             <ct-flex-item>
-                                <button class="mat-button mat-button--menu-item" mat-button routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" routerLink="/">{{brandingTitle}}</button>
+                                <button class="mat-button mat-button&#45;&#45;menu-item" mat-button routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" routerLink="/">{{brandingTitle}}</button>
                             </ct-flex-item>
                         </ct-flex>
                     </ct-flex-item>
@@ -33,6 +38,7 @@
                         </ct-flex>
                     </ct-flex-item>
                 </ct-flex>
+-->
             </mat-toolbar-row>
         </mat-toolbar>
     </div>
@@ -48,7 +54,7 @@
                         </ct-section-body>
                     </ct-section>
                 </ct-flex-item>
-                <ct-flex-item flex="1">
+                <ct-flex-item flex="1" *ngIf="serverReady()">
                     <login-view> </login-view>
                 </ct-flex-item>
             </ct-flex>
@@ -64,43 +70,48 @@
 
 <ng-template #isAuthToolbar>
     <ct-flex justify-content="space-between" align-items="center">
+        <div *ngIf="serverReady()
+        then auth_content_template
+        else anonymous_header_template">here is ignored</div>
+    </ct-flex>
+</ng-template>
 
-        <div *ngIf="serverReady() then content else other_content">here is ignored</div>
-        <ng-template #content>
+
+<ng-template #auth_content_template>
+    <ct-flex-item>
+        <ct-flex justify-content="flex-start" gap="9px" align-items="center">
+
             <ct-flex-item>
-                <ct-flex justify-content="flex-start" gap="9px" align-items="center">
+                <button
+                        class="mat-button mat-button--sidenav"
+                        [class.active]="sidenav"
+                        mat-button
+                        [disabled]="sidenavButtonDisable"
+                        (click)="toggleSideNav()">
+                    <mat-icon class="mat-icon">menu</mat-icon>
+                </button>
+            </ct-flex-item>
 
-                    <ct-flex-item>
-                        <button
-                                class="mat-button mat-button--sidenav"
-                                [class.active]="sidenav"
-                                mat-button
-                                [disabled]="sidenavButtonDisable"
-                                (click)="toggleSideNav()">
-                            <mat-icon class="mat-icon">menu</mat-icon>
-                        </button>
-                    </ct-flex-item>
+            <ct-flex-item>
+                <button class="mat-button mat-button--menu-item" mat-button routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" routerLink="">{{brandingTitle}}</button>
+            </ct-flex-item>
 
-                    <ct-flex-item>
-                        <button class="mat-button mat-button--menu-item" mat-button routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" routerLink="">{{brandingTitle}}</button>
-                    </ct-flex-item>
-
-                    <ct-flex-item *ngIf="
+            <ct-flex-item *ngIf="
                     false && (isRole.Admin ||
                     isRole.Data ||
                     isRole.Manager) ">
-                        <button class="mat-button mat-button--menu-item" mat-button routerLinkActive="active" routerLink="/ai">{{ 'app-view.Ai' | translate }}</button>
-                    </ct-flex-item>
+                <button class="mat-button mat-button--menu-item" mat-button routerLinkActive="active" routerLink="/ai">{{ 'app-view.Ai' | translate }}</button>
+            </ct-flex-item>
 
-                    <ct-flex-item *ngIf="
+            <ct-flex-item *ngIf="
                     isRole.Admin ||
                     isRole.Data ||
                     isRole.Manager ||
                     isRole.Operator ">
-                        <button class="mat-button mat-button--menu-item" mat-button routerLinkActive="active" routerLink="/batch">{{ 'app-view.Batch' | translate }}</button>
-                    </ct-flex-item>
+                <button class="mat-button mat-button--menu-item" mat-button routerLinkActive="active" routerLink="/batch">{{ 'app-view.Batch' | translate }}</button>
+            </ct-flex-item>
 
-                    <ct-flex-item *ngIf="
+            <ct-flex-item *ngIf="
                     isRole.MasterAdmin ||
                     isRole.MasterOperator ||
                     isRole.MasterSupport ||
@@ -108,90 +119,88 @@
                     isRole.Admin ||
                     isRole.Data ||
                     isRole.Manager ">
-                        <button class="mat-button mat-button--menu-item" mat-button routerLinkActive="active" routerLink="/dispatcher">{{ 'app-view.Dispatcher' | translate }}</button>
-                    </ct-flex-item>
+                <button class="mat-button mat-button--menu-item" mat-button routerLinkActive="active" routerLink="/dispatcher">{{ 'app-view.Dispatcher' | translate }}</button>
+            </ct-flex-item>
 
-                    <ct-flex-item *ngIf="
+            <ct-flex-item *ngIf="
                     isRole.Admin ||
                     isRole.Data ||
                     isRole.Manager ">
-                        <button class="mat-button mat-button--menu-item" mat-button routerLinkActive="active" routerLink="/mhbp">{{ 'app-view.Mhbp' | translate }}</button>
-                    </ct-flex-item>
-
-                </ct-flex>
+                <button class="mat-button mat-button--menu-item" mat-button routerLinkActive="active" routerLink="/mhbp">{{ 'app-view.Mhbp' | translate }}</button>
             </ct-flex-item>
 
+        </ct-flex>
+    </ct-flex-item>
+
+    <ct-flex-item>
+        <batch-change-notification></batch-change-notification>
+    </ct-flex-item>
+
+    <ct-flex-item>
+        <ct-flex justify-content="flex-end" align-items="center">
             <ct-flex-item>
-                <batch-change-notification></batch-change-notification>
+                <mat-slide-toggle #matSlideToggleTheme [checked]="theme === 'dark'" (change)="toggleTheme($event)">
+                </mat-slide-toggle>
             </ct-flex-item>
-
             <ct-flex-item>
-                <ct-flex justify-content="flex-end" align-items="center">
-                    <ct-flex-item>
-                        <mat-slide-toggle #matSlideToggleTheme [checked]="theme === 'dark'" (change)="toggleTheme($event)">
-                        </mat-slide-toggle>
-                    </ct-flex-item>
-                    <ct-flex-item>
-                        <mat-select #matSelectLanguage [(value)]="lang.current" (selectionChange)="toggleLanguage($event)">
-                            <mat-option *ngFor="let language of lang.list" [value]="language">{{language}}
-                            </mat-option>
-                        </mat-select>
-                    </ct-flex-item>
-                    <ct-flex-item>
-                        <button mat-icon-button matTooltip="{{ 'app-view.About' | translate }}" routerLinkActive="active" routerLink="/about">
-                            <mat-icon>help_outline</mat-icon>
-                        </button>
-                    </ct-flex-item>
-                    <ct-flex-item>
-                        <button mat-icon-button matTooltip="{{ 'app-view.Settings' | translate }}" routerLinkActive="active" routerLink="/settings">
-                            <mat-icon>settings</mat-icon>
-                        </button>
-                    </ct-flex-item>
-                    <ct-flex-item>
-                        <button mat-icon-button matTooltip="Log out" (click)="logout()" >
-                            <mat-icon>logout</mat-icon>
-                        </button>
-                    </ct-flex-item>
-                    <ct-flex-item>
-                        <button mat-icon-button matTooltip="Close Metaheuristic"  (click)="shutdown()" >
-                            <mat-icon>power_settings_new</mat-icon>
-                        </button>
-                    </ct-flex-item>
-                </ct-flex>
+                <mat-select #matSelectLanguage [(value)]="lang.current" (selectionChange)="toggleLanguage($event)">
+                    <mat-option *ngFor="let language of lang.list" [value]="language">{{language}}
+                    </mat-option>
+                </mat-select>
             </ct-flex-item>
-        </ng-template>
-
-        <ng-template #other_content>
             <ct-flex-item>
-                <ct-flex justify-content="flex-start" gap="9px" align-items="center">
-                    <ct-flex-item>
-                        <button class="mat-button mat-button--menu-item" mat-button routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" routerLink="">{{brandingTitle}}</button>
-                    </ct-flex-item>
-                </ct-flex>
+                <button mat-icon-button matTooltip="{{ 'app-view.About' | translate }}" routerLinkActive="active" routerLink="/about">
+                    <mat-icon>help_outline</mat-icon>
+                </button>
             </ct-flex-item>
-
             <ct-flex-item>
-                <ct-flex justify-content="center" align-items="center">
-                    <ct-flex-item>
-                        <button mat-flat-button color="warn">Metaheuristic is initializing. Please, wait.</button>
-                    </ct-flex-item>
-                </ct-flex>
+                <button mat-icon-button matTooltip="{{ 'app-view.Settings' | translate }}" routerLinkActive="active" routerLink="/settings">
+                    <mat-icon>settings</mat-icon>
+                </button>
             </ct-flex-item>
-
             <ct-flex-item>
-                <ct-flex justify-content="flex-end" align-items="center">
-                    <ct-flex-item>
-                        <mat-slide-toggle #matSlideToggleTheme [checked]="theme === 'dark'" (change)="toggleTheme($event)">
-                        </mat-slide-toggle>
-                    </ct-flex-item>
-                    <ct-flex-item>
-                        <button mat-icon-button matTooltip="Close Metaheuristic"  (click)="shutdown()" >
-                            <mat-icon>power_settings_new</mat-icon>
-                        </button>
-                    </ct-flex-item>
-                </ct-flex>
+                <button mat-icon-button matTooltip="Log out" (click)="logout()" >
+                    <mat-icon>logout</mat-icon>
+                </button>
             </ct-flex-item>
-        </ng-template>
-    </ct-flex>
+            <ct-flex-item>
+                <button mat-icon-button matTooltip="Close Metaheuristic"  (click)="shutdown()" >
+                    <mat-icon>power_settings_new</mat-icon>
+                </button>
+            </ct-flex-item>
+        </ct-flex>
+    </ct-flex-item>
 </ng-template>
 
+
+<ng-template #anonymous_header_template>
+    <ct-flex-item>
+        <ct-flex justify-content="flex-start" gap="9px" align-items="center">
+            <ct-flex-item>
+                <button class="mat-button mat-button--menu-item" mat-button routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" routerLink="">{{brandingTitle}}</button>
+            </ct-flex-item>
+        </ct-flex>
+    </ct-flex-item>
+
+    <ct-flex-item *ngIf="!serverReady()">
+        <ct-flex justify-content="center" align-items="center">
+            <ct-flex-item>
+                <button mat-flat-button color="warn">Metaheuristic is initializing. Please, wait.</button>
+            </ct-flex-item>
+        </ct-flex>
+    </ct-flex-item>
+
+    <ct-flex-item>
+        <ct-flex justify-content="flex-end" align-items="center">
+            <ct-flex-item>
+                <mat-slide-toggle #matSlideToggleTheme [checked]="theme === 'dark'" (change)="toggleTheme($event)">
+                </mat-slide-toggle>
+            </ct-flex-item>
+            <ct-flex-item>
+                <button mat-icon-button matTooltip="Close Metaheuristic"  (click)="shutdown()" >
+                    <mat-icon>power_settings_new</mat-icon>
+                </button>
+            </ct-flex-item>
+        </ct-flex>
+    </ct-flex-item>
+</ng-template>

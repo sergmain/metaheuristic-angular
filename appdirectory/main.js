@@ -6,7 +6,7 @@ const path = require('path')
 const http = require('http');
 const fs = require('fs');
 const util = require('util');
-const {exec: child} = require("child_process");
+// const {exec: child} = require("child_process");
 
 
 const userHomePath = path.join(app.getPath('home'), '.metaheuristic', 'electron');
@@ -49,9 +49,31 @@ try {
 }
 
 
+/*
 try {
+  spawn('"with spaces.cmd"', ['arg with spaces'], { shell: true });
+
   // const child = require('child_process').execFile;
-  const executablePath = path.join(__dirname, 'metaheuristic', 'metaheuristic.exe');
+  const childSpawn = require('child_process').spawn;
+  let executablePath = '"'+path.join(__dirname, 'metaheuristic', 'metaheuristic.exe') + '"';
+  console.log("Metaheuristic executablePath: " + executablePath);
+
+  childSpawn('metaheuristic.exe', function(err, data) {
+    if(err){
+      console.error(err);
+      return;
+    }
+    console.log(data.toString());
+  });
+}
+catch(e) {
+  console.log(e);
+}
+*/
+try {
+  const child = require('child_process').exec;
+  let executablePath = '"'+path.join(__dirname, 'metaheuristic', 'metaheuristic.exe') + '"';
+  console.log("Metaheuristic executablePath: " + executablePath);
 
   child(executablePath, function(err, data) {
     if(err){
@@ -77,7 +99,7 @@ function createWindow () {
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
       // nodeIntegration: true,
-      enableRemoteModule: true
+      enableRemoteModule: false
     }
   })
 
@@ -146,7 +168,7 @@ function mh_shutdown() {
           signal: controller.signal
         });
         clearTimeout(id);
-        const strResponse = await response.json();
+        const strResponse = await response.text();
         console.log('Response from Metaheuristic server:\n'+ strResponse);
 
         log_file.end("\n");
