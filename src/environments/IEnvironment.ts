@@ -1,3 +1,9 @@
+
+export interface UserAuth {
+    username: string;
+    password: string;
+}
+
 export interface IEnvironment {
     baseUrl: string;
     production: boolean;
@@ -11,4 +17,5 @@ export interface IEnvironment {
     brandingTitle: string;
     forTableRow: string;
     standalone: boolean;
+    userAuth: UserAuth;
 }

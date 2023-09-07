@@ -7,6 +7,7 @@ export const environment: IEnvironment = {
     userLifeTime: 30 * 60 * 1000, // 30 minutes
     isSslRequired: false,
     standalone: true,
+    userAuth: { username: 'qqq', password: '123' },
     batchInterval: 15 * 1000, // in milliseconds
     language: 'EN',
     forTableRow: '20px',

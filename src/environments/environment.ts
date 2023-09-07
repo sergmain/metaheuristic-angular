@@ -7,6 +7,7 @@ export const environment: IEnvironment = {
     userLifeTime: 30 * 60 * 1000, // 30 minutes
     isSslRequired: false,
     standalone: false,
+    userAuth: undefined,
     batchInterval: 10 * 1000, // pause between requests in milliseconds, 0 means a disable of any requests
     language: 'EN',
     forTableRow: '20px',
