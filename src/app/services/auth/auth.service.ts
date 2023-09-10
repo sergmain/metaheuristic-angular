@@ -43,9 +43,9 @@ export class AuthService {
 
     editFormCommit = (id: string, params: string): Observable<OperationStatusRest> =>
         this.http.post<OperationStatusRest>(
-            url(`auth-edit-commit/${id}`),
+            url(`auth-edit-commit`),
             generateFormData({
-                params
+                authId: id, params
             }))
 
 }

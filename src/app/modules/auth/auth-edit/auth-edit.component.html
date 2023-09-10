@@ -9,12 +9,13 @@
             </ct-section-header>
             <ct-section-body *ngIf="!currentStates.has(states.firstLoading)">
                 <ct-section-body-row>
-                    <ct-section-content>
-                        <mat-form-field appearance="outline">
-                            <mat-label>Params</mat-label>
-                            <input matInput="matInput" [(ngModel)]="auth.params" />
+                    <form [formGroup]="form" #formDirective="ngForm"  novalidate="novalidate">
+                        <mat-form-field appearance="outline" style="width: 100%;">
+                            <mat-label>Params, min 5 chars, required</mat-label>
+                            <textarea formControlName="params" matInput="matInput" cdkTextareaAutosize="cdkTextareaAutosize"
+                                      cdkAutosizeMinRows="10" value="" autocomplete="off"></textarea>
                         </mat-form-field>
-                    </ct-section-content>
+                    </form>
                 </ct-section-body-row>
             </ct-section-body>
             <ct-section-footer>

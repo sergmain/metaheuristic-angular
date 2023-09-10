@@ -23,10 +23,10 @@ export const AuthRoutes: Routes = [
         }
     },
     {
-        path: 'params-edit',
+        path: 'params-edit/:authId',
         component: AuthEditComponent,
         data: {
-            backConfig: ['../']
+            backConfig: ['../', '../']
         }
     },
 ];
