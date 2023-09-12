@@ -1,7 +1,6 @@
 {
   "name": "electron-quick-start",
   "version": "1.0.0",
-  "description": "A minimal Electron application",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
@@ -17,7 +16,8 @@
   ],
   "author": "GitHub",
   "license": "CC0-1.0",
+  "description": "A minimal Electron application. !!! Make this version of electron the same as in /package.json !!!",
   "devDependencies": {
-    "electron": "^25.1.0"
+    "electron": "^26.1.0"
   }
 }
