@@ -10,6 +10,7 @@ const {exec: child} = require("child_process");
 const {log} = require("util");
 const crypto = require('crypto');
 
+
 class Status {
   stage;
   status;
@@ -37,10 +38,9 @@ const statuses = {};
 const electronData = initElectronPath();
 const validStatusFilename = /^mh-[0-9a-zA-Z-]+.status$/;
 
+const log_file = redirectStdout();
 
 initMetaheuristicStatusFile();
-
-const log_file = redirectStdout();
 
 // this call of console must be after calling redirectStdout()
 console.log("Metaheuristic front-end was started at " + new Date());
@@ -84,7 +84,13 @@ function initMetaheuristicStatusFile() {
     }
   });
   electronData.uuid = crypto.randomUUID();
-  electronData.statusFile = 'mh-' + electronData.uuid + '.status';
+  electronData.statusFile = path.join(electronData.status, 'mh-' + electronData.uuid + '.status');
+  fs.closeSync(fs.openSync(electronData.statusFile, 'w'));
+
+  fs.watchFile(electronData.statusFile, (curr, prev) => {
+    const content = fs.readFileSync(electronData.statusFile);
+    console.log(`${electronData.statusFile} file Changed,\n` + content);
+  });
 }
 
 function initElectronPath() {
