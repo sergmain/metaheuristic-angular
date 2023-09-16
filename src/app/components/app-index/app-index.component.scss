@@ -1,0 +1,21 @@
+table {
+  width: min-content;
+  margin: 2rem;
+
+
+  & th {
+    font-weight: bold;
+    font-size: 120%;
+  }
+}
+
+.mat-column-code {
+  flex: none;
+  width: 100px;
+  padding: 1rem;
+}
+.mat-column-state {
+  flex: none;
+  width: 100px;
+  padding: 1rem;
+}

@@ -4,6 +4,8 @@ menu in navigation bar (in header) - src/app/components/app-view/app-view.compon
 menu at left panel for dispatcher - src/app/modules/dispatcher/dispatcher-root/dispatcher-root.component.html
 menu at left panel for mhbp - src/app/modules/mhbp/mhbp-root/mhbp-root.component.html
 
+component for index page - src/app/components/app-index
+
 top-menu, which contains color theme - src/app/components/app-view/app-view.component.html
 
 languages can be activated/deactivated in src/app/services/settings/Settings.ts

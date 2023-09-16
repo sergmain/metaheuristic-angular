@@ -35,7 +35,7 @@ export class AppComponent extends UIStateComponent implements OnInit, OnDestroy 
         super(authenticationService);
 
         const subscribe: Subscription = interval(1000).subscribe(() => {
-            console.log("Start querying MH server, this.busy", this.busy)
+            // console.log("Start querying MH server, this.busy", this.busy)
             if (this.busy) {
                 return;
             }

@@ -7,7 +7,6 @@ const http = require('http');
 const fs = require('fs');
 const util = require('util');
 const {exec: child} = require("child_process");
-const {log} = require("util");
 const crypto = require('crypto');
 
 
@@ -35,7 +34,6 @@ class ElectronData {
   }
 }
 
-const statuses = {};
 const electronData = initElectronPath();
 const validStatusFilename = /^mh-[0-9a-zA-Z-]+.status$/;
 const log_file = redirectStdout();
@@ -121,7 +119,7 @@ function initMetaheuristicStatusFile() {
       (curr, prev) => {
         if (fs.existsSync(electronData.statusFile) ) {
           electronData.statusContent = fs.readFileSync(electronData.statusFile);
-          console.log(`${electronData.statusFile} file Changed,\n` + electronData.statusContent);
+          // console.log(`${electronData.statusFile} file Changed,\n` + electronData.statusContent);
         }
       });
 }
@@ -232,17 +230,21 @@ function startUIServer() {
   }
 }
 
+function writeStatue(status, error) {
+  fs.writeFile(electronData.statusFile, JSON.stringify({stage: 'metaheuristic', status: status, error: error}) + '\n', (err) => {
+    if (err) {
+      fs.writeFile(electronData.statusFile, JSON.stringify({stage: 'metaheuristic', status: 'error', error: err.toString()}) + '\n', (err) => {
+        if (err) {
+          console.log("Error while writing an error to status file. " + JSON.stringify(err));
+        }
+      });
+    }
+  });
+}
+
 function startMetaheuristicServer() {
   try {
-    fs.writeFile(electronData.statusFile, JSON.stringify({stage:'metaheuristic', status:'start'})+'\n', (err) => {
-      if (err) {
-        fs.writeFile(electronData.statusFile, JSON.stringify({stage:'metaheuristic', status:'error', error: err.toString()})+'\n', (err) => {
-          if (err) {
-            console.log("Error while writing an error to status file. " + JSON.stringify(err));
-          }
-        });
-      }
-    });
+    writeStatue('start', null);
 
     // spawn('"with spaces.cmd"', ['arg with spaces'], { shell: true });
     // const childSpawn = require('child_process').spawn;
@@ -257,7 +259,9 @@ function startMetaheuristicServer() {
       }
       console.log(data.toString());
     });
+    writeStatue('done', null);
   } catch (e) {
+    writeStatue('error', ''+e);
     console.log(e);
   }
 }
