@@ -2,10 +2,17 @@ import {Injectable} from '@angular/core';
 import {environment} from '@src/environments/environment';
 import {AuthenticationService} from '@services/authentication';
 
+class MhStatus {
+    stage: string;
+    status: string;
+    error: string;
+}
+
 @Injectable({ providedIn: 'root' })
 export class RuntimeService {
 
     private serverReady: boolean = false;
+    private mhStatuses: MhStatus[] = [];
 
     constructor(
         private authenticationService: AuthenticationService,
@@ -25,5 +32,23 @@ export class RuntimeService {
 
     isServerReady(): boolean {
         return this.serverReady;
+    }
+
+    setMhStatuses(jsonl: string) {
+        // console.log("mhStatuses jsonl", jsonl);
+        this.mhStatuses = [];
+        let lines = jsonl.split(/\n/);
+        for (const json of lines) {
+            if (!json) {
+                continue;
+            }
+            try {
+                // console.log("mhStatuses json", json);
+                this.mhStatuses.push(JSON.parse(json));
+            } catch (e) {
+                console.log(e);
+            }
+        }
+        //console.log("mhStatuses", this.mhStatuses);
     }
 }

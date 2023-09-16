@@ -26,6 +26,7 @@ class ElectronData {
   status;
   statusFile;
   uuid;
+  statusContent = '';
 
   constructor(electron, logs, status) {
     this.electron = electron;
@@ -37,8 +38,10 @@ class ElectronData {
 const statuses = {};
 const electronData = initElectronPath();
 const validStatusFilename = /^mh-[0-9a-zA-Z-]+.status$/;
-
 const log_file = redirectStdout();
+
+let mainWindow;
+let statusFileWatcher;
 
 initMetaheuristicStatusFile();
 
@@ -48,8 +51,6 @@ console.log("Metaheuristic front-end was started at " + new Date());
 startUIServer();
 
 startMetaheuristicServer();
-
-let mainWindow;
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
@@ -85,6 +86,9 @@ app.whenReady().then(() => {
 })
 
 function initMetaheuristicStatusFile() {
+  electronData.uuid = crypto.randomUUID();
+  electronData.statusFile = path.join(electronData.status, 'mh-' + electronData.uuid + '.status');
+  console.log("electronData.statusFile: " + electronData.statusFile);
   fs.readdirSync(electronData.status).forEach(file => {
     if (validStatusFilename.test(file)) {
       let fullPath = path.join(electronData.status, file);
@@ -92,11 +96,14 @@ function initMetaheuristicStatusFile() {
       fs.rmSync(fullPath, {force: true});
     }
   });
-  electronData.uuid = crypto.randomUUID();
-  electronData.statusFile = path.join(electronData.status, 'mh-' + electronData.uuid + '.status');
+  fs.writeFileSync(electronData.statusFile, '', (err) => {
+    if (err) {
+      console.log("Error while initializing a status file. " + JSON.stringify(err));
+    }
+  });
   fs.closeSync(fs.openSync(electronData.statusFile, 'w'));
 
-  fs.watchFile(electronData.statusFile,
+  statusFileWatcher = fs.watchFile(electronData.statusFile,
       {
         // Specify the use of big integers
         // in the Stats object
@@ -112,9 +119,11 @@ function initMetaheuristicStatusFile() {
         interval: 1000,
       },
       (curr, prev) => {
-    const content = fs.readFileSync(electronData.statusFile);
-    console.log(`${electronData.statusFile} file Changed,\n` + content);
-  });
+        if (fs.existsSync(electronData.statusFile) ) {
+          electronData.statusContent = fs.readFileSync(electronData.statusFile);
+          console.log(`${electronData.statusFile} file Changed,\n` + electronData.statusContent);
+        }
+      });
 }
 
 function initElectronPath() {
@@ -168,7 +177,7 @@ function createWindow () {
   mainWindow.loadFile(path.join(__dirname, 'mh-angular', 'index.html'));
 
   // Open the DevTools.
-  //mainWindow.webContents.openDevTools()
+  mainWindow.webContents.openDevTools()
   return mainWindow;
 }
 
@@ -184,9 +193,14 @@ function handleCommands(req, res) {
     }
     case "/status": {
       console.log(""+req.method+" "+ url + " " + req.headers);
-      const currStatuses = JSON.stringify(statuses);
-      console.log("statuses: " + currStatuses);
-      res.end(currStatuses)
+      console.log("statuses:\n" + electronData.statusContent);
+      res.end(electronData.statusContent)
+      break;
+    }
+    case "/stop-status-watching": {
+      console.log(""+req.method+" "+ url + " " + req.headers);
+      statusFileWatcher.close();
+      res.end('ok')
       break;
     }
     default: {
@@ -222,7 +236,11 @@ function startMetaheuristicServer() {
   try {
     fs.writeFile(electronData.statusFile, JSON.stringify({stage:'metaheuristic', status:'start'})+'\n', (err) => {
       if (err) {
-        fs.writeFile(electronData.statusFile, JSON.stringify({stage:'metaheuristic', status:'error', error: err.toString()})+'\n');
+        fs.writeFile(electronData.statusFile, JSON.stringify({stage:'metaheuristic', status:'error', error: err.toString()})+'\n', (err) => {
+          if (err) {
+            console.log("Error while writing an error to status file. " + JSON.stringify(err));
+          }
+        });
       }
     });
 
