@@ -74,20 +74,44 @@ app.whenReady().then(() => {
   app.on('activate-with-no-open-windows', function(){
     mainWindow.show();
   });
+
+  // Quit when all windows are closed, except on macOS. There, it's common
+  // for applications and their menu bar to stay active until the user quits
+  // explicitly with Cmd + Q.
+  app.on('window-all-closed', function () {
+    app.quit();
+  })
+
 })
 
 function initMetaheuristicStatusFile() {
   fs.readdirSync(electronData.status).forEach(file => {
     if (validStatusFilename.test(file)) {
-      console.log("  found a lost lock file: " + file);
-      fs.rmSync(file, {force: true});
+      let fullPath = path.join(electronData.status, file);
+      console.log("  found a lost lock file: " + fullPath);
+      fs.rmSync(fullPath, {force: true});
     }
   });
   electronData.uuid = crypto.randomUUID();
   electronData.statusFile = path.join(electronData.status, 'mh-' + electronData.uuid + '.status');
   fs.closeSync(fs.openSync(electronData.statusFile, 'w'));
 
-  fs.watchFile(electronData.statusFile, (curr, prev) => {
+  fs.watchFile(electronData.statusFile,
+      {
+        // Specify the use of big integers
+        // in the Stats object
+        bigint: false,
+
+        // Specify if the process should
+        // continue as long as file is
+        // watched
+        persistent: true,
+
+        // Specify the interval between
+        // each poll the file
+        interval: 1000,
+      },
+      (curr, prev) => {
     const content = fs.readFileSync(electronData.statusFile);
     console.log(`${electronData.statusFile} file Changed,\n` + content);
   });
@@ -196,6 +220,12 @@ function startUIServer() {
 
 function startMetaheuristicServer() {
   try {
+    fs.writeFile(electronData.statusFile, JSON.stringify({stage:'metaheuristic', status:'start'})+'\n', (err) => {
+      if (err) {
+        fs.writeFile(electronData.statusFile, JSON.stringify({stage:'metaheuristic', status:'error', error: err.toString()})+'\n');
+      }
+    });
+
     // spawn('"with spaces.cmd"', ['arg with spaces'], { shell: true });
     // const childSpawn = require('child_process').spawn;
     const child = require('child_process').exec;
@@ -245,12 +275,3 @@ function mh_shutdown() {
   }
 }
 
-// Quit when all windows are closed, except on macOS. There, it's common
-// for applications and their menu bar to stay active until the user quits
-// explicitly with Cmd + Q.
-app.on('window-all-closed', function () {
-  app.quit();
-})
-
-// In this file you can include the rest of your app's specific main process
-// code. You can also put them in separate files and require them here.
