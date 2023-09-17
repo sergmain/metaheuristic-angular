@@ -22,6 +22,13 @@
             <ct-section style="width: 500px; margin-top: 15px;">
                 <ct-section-body>
                     <ct-section-body-row>
+                        <ct-flex justify-content="center" align-items="center">
+                            <ct-flex-item>
+                                <button mat-flat-button color="warn">Metaheuristic is initializing. Please, wait.</button>
+                            </ct-flex-item>
+                        </ct-flex>
+                    </ct-section-body-row>
+                    <ct-section-body-row>
                         <table class="mat-table" mat-table [dataSource]="mhStatusesAsMatTableDataSource$ | async">
                             <ng-container matColumnDef="stage">
                                 <th mat-header-cell *matHeaderCellDef>stage</th>

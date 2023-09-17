@@ -2,9 +2,11 @@ import {Injectable} from '@angular/core';
 import {environment} from '@src/environments/environment';
 import {AuthenticationService} from '@services/authentication';
 import {BehaviorSubject} from 'rxjs';
+import {HttpClient} from '@angular/common/http';
 
-enum Stage { metaheuristic="metaheuristic", tomcat="tomcat", datasource="datasource", liquibase="liquibase"}
+const electronStopWatchingUrl: string = 'http://localhost:64968/stop-status-watching';
 
+enum Stage { metaheuristic="metaheuristic", tomcat="tomcat", datasource="datasource", liquibase="liquibase", backend="backend" }
 export enum Status { none="none", started="started", done="done", error="error"}
 
 export interface MhStatus {
@@ -32,10 +34,11 @@ export class RuntimeService {
 
     private serverReady: boolean = false;
     private mhStatusesData: MhStatuses = new MhStatuses([
-        {stage: Stage.metaheuristic, status: Status.none},
+        {stage: Stage.metaheuristic, status: Status.started},
         {stage: Stage.tomcat, status: Status.none},
         {stage: Stage.datasource, status: Status.none},
-        {stage: Stage.liquibase, status: Status.none}
+        {stage: Stage.liquibase, status: Status.none},
+        {stage: Stage.backend, status: Status.started}
     ], null);
 /*
     private mhStatusesData: MhStatuses = new MhStatuses([
@@ -48,16 +51,9 @@ export class RuntimeService {
 
     private _mhStatuses = new BehaviorSubject<MhStatuses>(this.mhStatusesData);
 
-    get mhStatuses() {
-        return this._mhStatuses.asObservable()
-    }
-
-    updateMhStatuses() {
-        this._mhStatuses.next(this.mhStatusesData);
-    }
-
     constructor(
         private authenticationService: AuthenticationService,
+        private _http: HttpClient
     ) {
     }
 
@@ -66,6 +62,15 @@ export class RuntimeService {
         console.log("Set server is ready. ulr: ",  url, ", startWith baseUrl: ", startsWith);
         if (startsWith) {
             if (environment.standalone) {
+                this._http.get(electronStopWatchingUrl, {observe: 'response', responseType: 'text' })
+                    .subscribe({
+                        next: resp => {
+                            //console.log("next, status: ", resp.status);
+                        },
+                        error: rest => {
+                            //
+                        },
+                    });
                 this.authenticationService.login(environment.userAuth.username, environment.userAuth.password);
             }
             this.serverReady = true;
@@ -76,6 +81,13 @@ export class RuntimeService {
         return this.serverReady;
     }
 
+    get mhStatuses() {
+        return this._mhStatuses.asObservable()
+    }
+
+    updateMhStatuses() {
+        this._mhStatuses.next(this.mhStatusesData);
+    }
 
     setMhStatuses(jsonl: string) {
         // console.log("mhStatuses jsonl", jsonl);

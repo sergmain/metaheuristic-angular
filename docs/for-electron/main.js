@@ -190,8 +190,8 @@ function handleCommands(req, res) {
       break;
     }
     case "/status": {
-      console.log(""+req.method+" "+ url + " " + req.headers);
-      console.log("statuses:\n" + electronData.statusContent);
+      //console.log(""+req.method+" "+ url + " " + req.headers);
+      //console.log("statuses:\n" + electronData.statusContent);
       res.end(electronData.statusContent)
       break;
     }
