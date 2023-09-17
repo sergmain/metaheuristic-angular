@@ -5,7 +5,7 @@ import {BehaviorSubject} from 'rxjs';
 
 enum Stage { metaheuristic="metaheuristic", tomcat="tomcat", datasource="datasource", liquibase="liquibase"}
 
-enum Status { none="none", started="started", done="done", error="error"}
+export enum Status { none="none", started="started", done="done", error="error"}
 
 export interface MhStatus {
     stage: string;
@@ -37,6 +37,14 @@ export class RuntimeService {
         {stage: Stage.datasource, status: Status.none},
         {stage: Stage.liquibase, status: Status.none}
     ], null);
+/*
+    private mhStatusesData: MhStatuses = new MhStatuses([
+        {stage: Stage.metaheuristic, status: Status.done},
+        {stage: Stage.tomcat, status: Status.started},
+        {stage: Stage.datasource, status: Status.error},
+        {stage: Stage.liquibase, status: Status.none}
+    ], "Error, Error, Error, Error, Error");
+*/
 
     private _mhStatuses = new BehaviorSubject<MhStatuses>(this.mhStatusesData);
 
@@ -87,15 +95,19 @@ export class RuntimeService {
                 // console.log("mhStatuses json", json);
                 let parsed: MhStatusRaw = JSON.parse(json);
                 let item = this.mhStatusesData.statuses.find(i => i.stage === parsed.stage);
-                if (parsed.stage==='start') {
+                if (parsed.status==='start') {
                     item.status = Status.started;
                 }
-                if (parsed.stage==='done') {
+                if (parsed.status==='done') {
                     item.status = Status.done;
                 }
                 if (parsed.error) {
                     this.mhStatusesData.error = parsed.error;
                     item.status = Status.error;
+                }
+                if (parsed.status !==Stage.metaheuristic) {
+                    let mhItem = this.mhStatusesData.statuses.find(i => i.stage === Stage.metaheuristic);
+                    mhItem.status = Status.done;
                 }
             } catch (e) {
                 console.log(e);

@@ -15,24 +15,55 @@
         </ct-cols>
     </ct-content>
 </ng-template>
+
 <ng-template #serverNotReadyTemplate>
-    <mat-table [dataSource]="mhStatusesAsMatTableDataSource$ | async" class="mat-elevation-z8">
-        <!--- Note that these columns can be defined in any order.
-            The actual rendered columns are set as a property on the row definition" -->
+    <ct-flex justify-content="center" align-items="center">
+        <ct-flex-item>
+            <ct-section style="width: 500px; margin-top: 15px;">
+                <ct-section-body>
+                    <ct-section-body-row>
+                        <table class="mat-table" mat-table [dataSource]="mhStatusesAsMatTableDataSource$ | async">
+                            <ng-container matColumnDef="stage">
+                                <th mat-header-cell *matHeaderCellDef>stage</th>
+                                <td mat-cell *matCellDef="let element">{{ element.stage }}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="status">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <ct-flex justify-content="center" align-items="center">
+                                        <ct-flex-item>status</ct-flex-item>
+                                    </ct-flex>
+                                </th>
+                                <td mat-cell *matCellDef="let element">
+                                    <ct-flex justify-content="center" align-items="center">
+                                        <ct-flex-item>
+                                            <div matTooltip="{{ element.status }}" class="dot-flashing" *ngIf="isStarted(element)"></div>
+                                            <mat-icon  matTooltip="{{ element.status }}" *ngIf="isNone(element)" color="primary">minimize</mat-icon>
+                                            <mat-icon  matTooltip="{{ element.status }}" *ngIf="isDone(element)" color="primary">done</mat-icon>
+                                            <mat-icon  matTooltip="{{ element.status }}" *ngIf="isError(element)" color="warn">error</mat-icon>
+                                        </ct-flex-item>
+                                    </ct-flex>
+                                </td>
+                            </ng-container>
+                            <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+                            <tr mat-row *matRowDef="let row; columns: columnsToDisplay"></tr>
+                        </table>
+                    </ct-section-body-row>
+                    <ct-section-body-row  *ngIf="!error">
+                        <div>No any errors at this time.</div>
+                    </ct-section-body-row>
+                    <ct-section-body-row *ngIf="error">
+                        <ct-flex justify-content="center" align-items="center">
+                            <ct-flex-item color="warn">An error encountered:</ct-flex-item>
+                        </ct-flex>
+                    </ct-section-body-row>
+                    <ct-section-body-row *ngIf="error">
+                        <div>{{error}}</div>
+                    </ct-section-body-row>
+                </ct-section-body>
+            </ct-section>
+        </ct-flex-item>
+    </ct-flex>
 
-        <ng-container matColumnDef="stage">
-            <th mat-header-cell *matHeaderCellDef>stage</th>
-            <td mat-cell *matCellDef="let element">{{ element.stage }}</td>
-        </ng-container>
-
-        <ng-container matColumnDef="status">
-            <th mat-header-cell *matHeaderCellDef>status</th>
-            <td mat-cell *matCellDef="let element">{{ element.status }}</td>
-        </ng-container>
-
-        <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
-        <tr mat-row *matRowDef="let row; columns: columnsToDisplay"></tr>
-    </mat-table>
 </ng-template>
 
 

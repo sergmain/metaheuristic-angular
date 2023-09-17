@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {SettingsService} from '@services/settings/settings.service';
-import {MhStatus, RuntimeService} from '@services/runtime/runtime.service';
+import {MhStatus, RuntimeService, Status} from '@services/runtime/runtime.service';
 import {MatTableDataSource} from '@angular/material/table';
 import {map, Observable} from 'rxjs';
 
@@ -15,7 +15,6 @@ export class AppIndexComponent {
 
     columnsToDisplay: string[] = ['stage', 'status'];
     mhStatusesAsMatTableDataSource$: Observable<MatTableDataSource<MhStatus>>;
-
     error: string = undefined;
 
     constructor(
@@ -27,6 +26,7 @@ export class AppIndexComponent {
                 map((statuses) => {
                     const dataSource = this.dataSource;
                     dataSource.data = statuses.statuses
+                    this.error = statuses.error;
                     return dataSource;
                 })
             );
@@ -36,5 +36,21 @@ export class AppIndexComponent {
 
     serverReady() {
         return this.runtimeService.isServerReady();
+    }
+
+    isNone(status: MhStatus): boolean {
+        return status.status === Status.none;
+    }
+
+    isStarted(status: MhStatus): boolean {
+        return status.status === Status.started;
+    }
+
+    isDone(status: MhStatus): boolean {
+        return status.status === Status.done;
+    }
+
+    isError(status: MhStatus): boolean {
+        return status.status === Status.error;
     }
 }
