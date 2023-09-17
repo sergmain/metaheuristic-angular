@@ -197,7 +197,8 @@ function handleCommands(req, res) {
     }
     case "/stop-status-watching": {
       console.log(""+req.method+" "+ url + " " + req.headers);
-      statusFileWatcher.close();
+      // statusFileWatcher.close();
+      fs.unwatchFile(electronData.statusFile);
       res.end('ok')
       break;
     }

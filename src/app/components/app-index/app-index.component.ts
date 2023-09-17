@@ -3,6 +3,8 @@ import {SettingsService} from '@services/settings/settings.service';
 import {MhStatus, RuntimeService, Status} from '@services/runtime/runtime.service';
 import {MatTableDataSource} from '@angular/material/table';
 import {map, Observable} from 'rxjs';
+import {Clipboard} from '@angular/cdk/clipboard';
+import {environment} from '@src/environments/environment';
 
 @Component({
     selector: 'app-index',
@@ -20,6 +22,7 @@ export class AppIndexComponent {
     constructor(
         private settingsService: SettingsService,
         private runtimeService: RuntimeService,
+        private clipboard: Clipboard
     ) {
         this.mhStatusesAsMatTableDataSource$ =
             this.runtimeService.mhStatuses.pipe(
@@ -32,6 +35,10 @@ export class AppIndexComponent {
             );
 
         this.runtimeService.updateMhStatuses();
+    }
+
+    copyErrorToClipboard() {
+        this.clipboard.copy(this.runtimeService.getStatusError());
     }
 
     serverReady() {
@@ -52,5 +59,9 @@ export class AppIndexComponent {
 
     isError(status: MhStatus): boolean {
         return status.status === Status.error;
+    }
+
+    isStandalone(): boolean {
+        return environment.standalone;
     }
 }

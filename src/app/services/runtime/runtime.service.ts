@@ -33,6 +33,7 @@ export class MhStatuses {
 export class RuntimeService {
 
     private serverReady: boolean = false;
+/*
     private mhStatusesData: MhStatuses = new MhStatuses([
         {stage: Stage.metaheuristic, status: Status.started},
         {stage: Stage.tomcat, status: Status.none},
@@ -40,14 +41,13 @@ export class RuntimeService {
         {stage: Stage.liquibase, status: Status.none},
         {stage: Stage.backend, status: Status.started}
     ], null);
-/*
+*/
     private mhStatusesData: MhStatuses = new MhStatuses([
         {stage: Stage.metaheuristic, status: Status.done},
         {stage: Stage.tomcat, status: Status.started},
         {stage: Stage.datasource, status: Status.error},
         {stage: Stage.liquibase, status: Status.none}
     ], "Error, Error, Error, Error, Error");
-*/
 
     private _mhStatuses = new BehaviorSubject<MhStatuses>(this.mhStatusesData);
 
@@ -79,6 +79,10 @@ export class RuntimeService {
 
     isServerReady(): boolean {
         return this.serverReady;
+    }
+
+    getStatusError(): string {
+        return this.mhStatusesData.error;
     }
 
     get mhStatuses() {

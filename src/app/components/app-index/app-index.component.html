@@ -28,7 +28,7 @@
                             </ct-flex-item>
                         </ct-flex>
                     </ct-section-body-row>
-                    <ct-section-body-row>
+                    <ct-section-body-row *ngIf="isStandalone()">
                         <table class="mat-table" mat-table [dataSource]="mhStatusesAsMatTableDataSource$ | async">
                             <ng-container matColumnDef="stage">
                                 <th mat-header-cell *matHeaderCellDef>stage</th>
@@ -55,15 +55,20 @@
                             <tr mat-row *matRowDef="let row; columns: columnsToDisplay"></tr>
                         </table>
                     </ct-section-body-row>
-                    <ct-section-body-row  *ngIf="!error">
+                    <ct-section-body-row *ngIf="!error && isStandalone()">
                         <div>No any errors at this time.</div>
                     </ct-section-body-row>
-                    <ct-section-body-row *ngIf="error">
-                        <ct-flex justify-content="center" align-items="center">
-                            <ct-flex-item color="warn">An error encountered:</ct-flex-item>
+                    <ct-section-body-row *ngIf="error && isStandalone()">
+                        <ct-flex justify-content="center" align-items="center" gap="20px">
+                            <ct-flex-item>An error encountered:</ct-flex-item>
+                            <ct-flex-item>
+                                <button mat-icon-button color="warn" (click)="copyErrorToClipboard()" matTooltip="Copy error to clipboard">
+                                    <mat-icon>content_copy</mat-icon>
+                                </button>
+                            </ct-flex-item>
                         </ct-flex>
                     </ct-section-body-row>
-                    <ct-section-body-row *ngIf="error">
+                    <ct-section-body-row *ngIf="error && isStandalone()">
                         <div>{{error}}</div>
                     </ct-section-body-row>
                 </ct-section-body>
