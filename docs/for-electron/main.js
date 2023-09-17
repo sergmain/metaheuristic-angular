@@ -175,7 +175,7 @@ function createWindow () {
   mainWindow.loadFile(path.join(__dirname, 'mh-angular', 'index.html'));
 
   // Open the DevTools.
-  mainWindow.webContents.openDevTools()
+  // mainWindow.webContents.openDevTools()
   return mainWindow;
 }
 

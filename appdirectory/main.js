@@ -7,8 +7,8 @@ const http = require('http');
 const fs = require('fs');
 const util = require('util');
 const {exec: child} = require("child_process");
-const {log} = require("util");
 const crypto = require('crypto');
+
 
 class Status {
   stage;
@@ -25,6 +25,7 @@ class ElectronData {
   status;
   statusFile;
   uuid;
+  statusContent = '';
 
   constructor(electron, logs, status) {
     this.electron = electron;
@@ -33,12 +34,14 @@ class ElectronData {
   }
 }
 
-const statuses = {};
 const electronData = initElectronPath();
+const validStatusFilename = /^mh-[0-9a-zA-Z-]+.status$/;
+const log_file = redirectStdout();
+
+let mainWindow;
+let statusFileWatcher;
 
 initMetaheuristicStatusFile();
-
-const log_file = redirectStdout();
 
 // this call of console must be after calling redirectStdout()
 console.log("Metaheuristic front-end was started at " + new Date());
@@ -46,8 +49,6 @@ console.log("Metaheuristic front-end was started at " + new Date());
 startUIServer();
 
 startMetaheuristicServer();
-
-let mainWindow;
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
@@ -72,18 +73,55 @@ app.whenReady().then(() => {
   app.on('activate-with-no-open-windows', function(){
     mainWindow.show();
   });
+
+  // Quit when all windows are closed, except on macOS. There, it's common
+  // for applications and their menu bar to stay active until the user quits
+  // explicitly with Cmd + Q.
+  app.on('window-all-closed', function () {
+    app.quit();
+  })
+
 })
 
-const validStatusFilename = /^mh-[0-9a-zA-Z-]+.status$/;
 function initMetaheuristicStatusFile() {
+  electronData.uuid = crypto.randomUUID();
+  electronData.statusFile = path.join(electronData.status, 'mh-' + electronData.uuid + '.status');
+  console.log("electronData.statusFile: " + electronData.statusFile);
   fs.readdirSync(electronData.status).forEach(file => {
     if (validStatusFilename.test(file)) {
-      console.log("  found a lost lock file: " + file);
-      fs.rmSync(file, {force: true});
+      let fullPath = path.join(electronData.status, file);
+      console.log("  found a lost lock file: " + fullPath);
+      fs.rmSync(fullPath, {force: true});
     }
   });
-  electronData.uuid = crypto.randomUUID();
-  electronData.statusFile = 'mh-' + electronData.uuid + '.status';
+  fs.writeFileSync(electronData.statusFile, '', (err) => {
+    if (err) {
+      console.log("Error while initializing a status file. " + JSON.stringify(err));
+    }
+  });
+  fs.closeSync(fs.openSync(electronData.statusFile, 'w'));
+
+  statusFileWatcher = fs.watchFile(electronData.statusFile,
+      {
+        // Specify the use of big integers
+        // in the Stats object
+        bigint: false,
+
+        // Specify if the process should
+        // continue as long as file is
+        // watched
+        persistent: true,
+
+        // Specify the interval between
+        // each poll the file
+        interval: 1000,
+      },
+      (curr, prev) => {
+        if (fs.existsSync(electronData.statusFile) ) {
+          electronData.statusContent = fs.readFileSync(electronData.statusFile);
+          // console.log(`${electronData.statusFile} file Changed,\n` + electronData.statusContent);
+        }
+      });
 }
 
 function initElectronPath() {
@@ -137,7 +175,7 @@ function createWindow () {
   mainWindow.loadFile(path.join(__dirname, 'mh-angular', 'index.html'));
 
   // Open the DevTools.
-  //mainWindow.webContents.openDevTools()
+  // mainWindow.webContents.openDevTools()
   return mainWindow;
 }
 
@@ -152,10 +190,16 @@ function handleCommands(req, res) {
       break;
     }
     case "/status": {
+      //console.log(""+req.method+" "+ url + " " + req.headers);
+      //console.log("statuses:\n" + electronData.statusContent);
+      res.end(electronData.statusContent)
+      break;
+    }
+    case "/stop-status-watching": {
       console.log(""+req.method+" "+ url + " " + req.headers);
-      const currStatuses = JSON.stringify(statuses);
-      console.log("statuses: " + currStatuses);
-      res.end(currStatuses)
+      // statusFileWatcher.close();
+      fs.unwatchFile(electronData.statusFile);
+      res.end('ok')
       break;
     }
     default: {
@@ -187,8 +231,22 @@ function startUIServer() {
   }
 }
 
+function writeStatue(status, error) {
+  fs.writeFile(electronData.statusFile, JSON.stringify({stage: 'metaheuristic', status: status, error: error}) + '\n', (err) => {
+    if (err) {
+      fs.writeFile(electronData.statusFile, JSON.stringify({stage: 'metaheuristic', status: 'error', error: err.toString()}) + '\n', (err) => {
+        if (err) {
+          console.log("Error while writing an error to status file. " + JSON.stringify(err));
+        }
+      });
+    }
+  });
+}
+
 function startMetaheuristicServer() {
   try {
+    writeStatue('start', null);
+
     // spawn('"with spaces.cmd"', ['arg with spaces'], { shell: true });
     // const childSpawn = require('child_process').spawn;
     const child = require('child_process').exec;
@@ -202,7 +260,9 @@ function startMetaheuristicServer() {
       }
       console.log(data.toString());
     });
+    writeStatue('done', null);
   } catch (e) {
+    writeStatue('error', ''+e);
     console.log(e);
   }
 }
@@ -238,12 +298,3 @@ function mh_shutdown() {
   }
 }
 
-// Quit when all windows are closed, except on macOS. There, it's common
-// for applications and their menu bar to stay active until the user quits
-// explicitly with Cmd + Q.
-app.on('window-all-closed', function () {
-  app.quit();
-})
-
-// In this file you can include the rest of your app's specific main process
-// code. You can also put them in separate files and require them here.
