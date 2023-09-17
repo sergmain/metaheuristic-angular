@@ -100,13 +100,6 @@ export class RuntimeService {
             if (!json) {
                 continue;
             }
-            // {"stage":"tomcat","status":"start","error":null}
-            // {"stage":"tomcat","status":"done","error":null}
-            // {"stage":"datasource","status":"start","error":null}
-            // {"stage":"datasource","status":"done","error":null}
-            // {"stage":"liquibase","status":"start","error":null}
-            // {"stage":"liquibase","status":"done","error":null}
-
             try {
                 // console.log("mhStatuses json", json);
                 let parsed: MhStatusRaw = JSON.parse(json);
@@ -119,7 +112,13 @@ export class RuntimeService {
                 }
                 if (parsed.error) {
                     this.mhStatusesData.error = parsed.error;
-                    item.status = Status.error;
+                    for (const mhStatus of this.mhStatusesData.statuses) {
+                        if (mhStatus.status===Status.started) {
+                            mhStatus.status=Status.error;
+                        }
+                    }
+                    // let item = this.mhStatusesData.statuses.find(i => i.stage === parsed.stage);
+                    // item.status = Status.error;
                 }
                 if (parsed.status !==Stage.metaheuristic) {
                     let mhItem = this.mhStatusesData.statuses.find(i => i.stage === Stage.metaheuristic);

@@ -24,7 +24,8 @@
                     <ct-section-body-row>
                         <ct-flex justify-content="center" align-items="center">
                             <ct-flex-item>
-                                <button mat-flat-button color="warn">Metaheuristic is initializing. Please, wait.</button>
+                                <button mat-flat-button *ngIf="!error" color="warn">Metaheuristic is initializing. Please, wait.</button>
+                                <button mat-flat-button *ngIf="error" color="warn">Metaheuristic failed to start. Try to re-launch it.</button>
                             </ct-flex-item>
                         </ct-flex>
                     </ct-section-body-row>
@@ -60,7 +61,7 @@
                     </ct-section-body-row>
                     <ct-section-body-row *ngIf="error && isStandalone()">
                         <ct-flex justify-content="center" align-items="center" gap="20px">
-                            <ct-flex-item>An error encountered:</ct-flex-item>
+                            <ct-flex-item>An error was encountered:</ct-flex-item>
                             <ct-flex-item>
                                 <button mat-icon-button color="warn" (click)="copyErrorToClipboard()" matTooltip="Copy error to clipboard">
                                     <mat-icon>content_copy</mat-icon>
