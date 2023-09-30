@@ -44,14 +44,19 @@ export class AppComponent extends UIStateComponent implements OnInit, OnDestroy 
                 .get(statusUrl, { observe: 'response', responseType: 'text'})
                 .pipe(
                     timeout(1000),
-                    catchError(e => {
-                        return of({status: HttpStatusCode.RequestTimeout, body: ''});
+                    catchError(e  => {
+                        // if (e.status=== 401) {
+                        //     return of({status: e.status, body: ''});
+                        // }
+                        // console.log("pipe() error: ", e);
+                        // return of({status: HttpStatusCode.RequestTimeout, body: ''});
+                        return of({status: e.status, body: ''});
                     })
                 )
                 .subscribe({
                     next: resp => {
                         // console.log("MH server status: ", resp.status);
-                        if (resp.status==200) {
+                        if (resp.status===200 || resp.status===401) {
                             subscribe.unsubscribe();
                             if (this.subscribeStatus) {
                                 this.subscribeStatus.unsubscribe();
@@ -61,7 +66,7 @@ export class AppComponent extends UIStateComponent implements OnInit, OnDestroy 
                     },
                     error: resp => {
                         // console.log("MH server error status: ", resp.status);
-                        if (resp.status==200) {
+                        if (resp.status===200 || resp.status===401) {
                             subscribe.unsubscribe();
                             if (this.subscribeStatus) {
                                 this.busyStatus = true;
@@ -92,13 +97,14 @@ export class AppComponent extends UIStateComponent implements OnInit, OnDestroy 
                     .pipe(
                         timeout(1000),
                         catchError(e => {
-                            return of({status: HttpStatusCode.RequestTimeout, body: ''});
+                            return of({status: e.status, body: ''});
+                            // return of({status: HttpStatusCode.RequestTimeout, body: ''});
                         })
                     )
                     .subscribe({
                         next: resp => {
                             //console.log("next, status: ", resp.status);
-                            if (resp.status===200) {
+                            if (resp.status===200 || resp.status===401) {
                                 runtimeService.setMhStatuses(resp.body);
                             }
                         },

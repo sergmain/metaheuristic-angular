@@ -91,7 +91,9 @@ export class BatchExecStatusService {
     }
 
     startIntervalRequset(): void {
-        if (this.isIntervalStarted) { }
+        if (this.isIntervalStarted) {
+            //
+        }
         else {
             this.isIntervalStarted = true;
             this.intervalRequset();
