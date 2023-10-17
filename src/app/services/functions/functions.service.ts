@@ -5,9 +5,11 @@ import { OperationStatusRest } from '@src/app/models/OperationStatusRest';
 import { environment } from '@src/environments/environment';
 import { Observable } from 'rxjs';
 import { FunctionsResult } from './FunctionsResult';
+import {UploadingStatus} from '@app/modules/bundle/bundle-data';
 
 
 const url = (s: string): string => `${environment.baseUrl}dispatcher/function/${s}`;
+const bundleUrl = (s: string): string => `${environment.baseUrl}dispatcher/bundle/${s}`;
 
 
 @Injectable({ providedIn: 'root' })
@@ -40,7 +42,7 @@ export class FunctionsService {
     // public OperationStatusRest uploadFunction(final MultipartFile file) {
     //     return functionTopLevelService.uploadFunction(file);
     // }
-    uploadFunction(file: File): Observable<OperationStatusRest> {
-        return this.http.post<OperationStatusRest>(url('function-upload-from-file'), formData({ file }));
+    uploadBundle(file: File): Observable<UploadingStatus> {
+        return this.http.post<UploadingStatus>(bundleUrl('bundle-upload-from-file'), formData({ file }));
     }
 }
