@@ -66,9 +66,6 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
         }),
         SimpleNotificationsModule.forRoot()
     ],
-    entryComponents: [
-        AppDialogConfirmationComponent,
-    ],
     providers: [
         AuthGuard,
         AuthenticationService,

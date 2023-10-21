@@ -1,5 +1,19 @@
+import {HttpHeaders} from '@angular/common/http';
+
 export class MhUtils {
     constructor() { }
+
+    static printHeaders(headers: HttpHeaders) {
+        if (!headers) {
+            console.log("headers: " + headers);
+            return;
+        }
+        let keys = headers.keys();
+        for (const key of keys) {
+            let values = headers.getAll(key);
+            console.log("key: " + key+", values: " + values);
+        }
+    }
 
     static isNotNull(obj: any) {
         return !MhUtils.isNull(obj);

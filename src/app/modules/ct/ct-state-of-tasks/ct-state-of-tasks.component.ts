@@ -6,6 +6,7 @@ import { TaskExecInfo } from '@src/app/services/exec-context/TaskExecInfo';
 import { ExecContextStateResult } from '@src/app/services/source-codes/ExecContextStateResult';
 import * as fileSaver from 'file-saver';
 import {ConfirmationDialogMethod} from '@app/components/app-dialog-confirmation/app-dialog-confirmation.component';
+import {MhUtils} from '@services/mh-utils/mh-utils.service';
 
 @Component({
   selector: 'ct-state-of-tasks',
@@ -61,14 +62,23 @@ export class CtStateOfTasksComponent implements OnInit {
     n: boolean;
     nm: string;
   }): void {
+    console.log('Start downloading file');
     this.execContextService
         .downloadVariable(this.execContextId, out.id.toString())
         .subscribe(response => {
-          const name: string = response.headers
-              .get('Content-Disposition').split('\'\'')[1];
-          console.log('state-of-tasks: ' + name);
+            MhUtils.printHeaders(response.headers);
+            let contentDisposition = response.headers.get('Content-Disposition');
+            const tryName: string = contentDisposition?.split?.('\'\'')?.[1];
+            const decodedName = tryName ? decodeURI(tryName) : tryName;
+            // console.log('batch-list.contentDisposition: ' + contentDisposition);
+            // console.log('batch-list.tryName: ' + tryName);
+            // console.log('batch-list.decodedName: ' + decodedName);
 
-          fileSaver.saveAs(response.body, name);
+            // const name: string = response.headers.get('Content-Disposition').split('\'\'')[1];
+            // console.log('state-of-tasks: ' + name);
+
+            // fileSaver.saveAs(response.body, name);
+            fileSaver.saveAs(response.body, decodedName ? decodedName : 'file.bin');
         });
   }
 

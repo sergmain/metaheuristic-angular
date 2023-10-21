@@ -14,6 +14,7 @@ import { BatchesResult } from '@src/app/services/batch/BatchesResult';
 import { BatchExecStatusService } from '@src/app/services/batch/BatchExecStatusService';
 import { SettingsService } from '@src/app/services/settings/settings.service';
 import * as fileSaver from 'file-saver';
+import {MhUtils} from '@services/mh-utils/mh-utils.service';
 
 
 @Component({
@@ -103,12 +104,14 @@ export class BatchListComponent extends UIStateComponent implements OnInit, OnDe
         event.stopPropagation();
         this.batchService.downloadFile(batchId)
             .subscribe((res: HttpResponse<Blob>) => {
+                // MhUtils.printHeaders(res.headers);
                 let contentDisposition = res.headers.get('Content-Disposition');
-                const tryname: string = contentDisposition?.split?.('\'\'')?.[1];
-                console.log('batch-list.contentDisposition: ' + contentDisposition);
-                console.log('batch-list.tryname: ' + tryname);
-                const decodedName = tryname ? decodeURI(tryname) : tryname;
-                console.log('batch-list.decodedName: ' + decodedName);
+                const tryName: string = contentDisposition?.split?.('\'\'')?.[1];
+                const decodedName = tryName ? decodeURI(tryName) : tryName;
+                // console.log('batch-list.contentDisposition: ' + contentDisposition);
+                // console.log('batch-list.tryName: ' + tryName);
+                // console.log('batch-list.decodedName: ' + decodedName);
+
                 fileSaver.saveAs(res.body, decodedName ? decodedName : 'result.zip');
             });
     }
