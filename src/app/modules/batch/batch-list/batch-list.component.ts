@@ -105,6 +105,8 @@ export class BatchListComponent extends UIStateComponent implements OnInit, OnDe
         this.batchService.downloadFile(batchId)
             .subscribe((res: HttpResponse<Blob>) => {
                 // MhUtils.printHeaders(res.headers);
+                // console.log('batch-list.contentDispositionFilename: ' + MhUtils.parseContentDisposition(res.headers, 'result.zip'));
+
                 let contentDisposition = res.headers.get('Content-Disposition');
                 const tryName: string = contentDisposition?.split?.('\'\'')?.[1];
                 const decodedName = tryName ? decodeURI(tryName) : tryName;

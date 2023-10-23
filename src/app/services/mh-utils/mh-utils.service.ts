@@ -1,5 +1,9 @@
 import {HttpHeaders} from '@angular/common/http';
+import {Injectable} from '@angular/core';
+// import * as contentDisposition from 'content-disposition';
 
+// noinspection UnnecessaryLocalVariableJS
+@Injectable({ providedIn: 'root' })
 export class MhUtils {
     constructor() { }
 
@@ -48,6 +52,26 @@ export class MhUtils {
         return MhUtils.randomInt(min, max).toString()
     }
 
+    static parseContentDisposition(headers, defaultName: string): string {
+        let cd = headers.get('Content-Disposition');
+        if (!cd) {
+            return defaultName;
+        }
+        // var disposition = contentDisposition.parse(cd);
+        // console.log(disposition);
+
+        // Angular 12 with parsing of the file name - https://stackoverflow.com/a/75608515/2672202
+        // const fileName = headers
+        //     .get('Content-Disposition')
+        //     .split(';')
+        //     .map(h => h.trim())
+        //     .filter(h => h.startsWith('filename='))
+        //     .reduce(h => h.length === 1 ? h[0] : defaultName)
+        //     .replace('filename=', '');
+
+        // return fileName;
+        return defaultName;
+    }
 
 
 }

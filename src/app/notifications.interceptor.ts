@@ -24,6 +24,7 @@ export class NotificationsInterceptor implements HttpInterceptor {
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
+        let serverReady = this.runtimeService.isServerReady();
         return next.handle(req).pipe(
             tap((event: HttpEvent<any>) => {
                 //this.notificationsService.setServerReady(req.url);
@@ -49,8 +50,8 @@ export class NotificationsInterceptor implements HttpInterceptor {
                     }
                 }
                 if (error.status === 0) {
-                    console.log("Server is ready: ", this.runtimeService.isServerReady(), ", ulr: ",  req.url);
-                    if (this.runtimeService.isServerReady()) {
+                    console.log("Server is ready: ", serverReady, ", ulr: ",  req.url);
+                    if (serverReady) {
                         const title: string = 'Server offline';
                         const content: string = '';
                         this.notificationsService.error(title, content, {
