@@ -10,7 +10,7 @@ import {TranslateService} from '@ngx-translate/core';
 import {LoadStates} from '@app/enums/LoadStates';
 import {MatDialog} from '@angular/material/dialog';
 import {ChatService} from '@app/modules/chat-new/chat-service';
-import {ChatPrompt, ChatsResult, FullChat, SimpleChat} from '@app/modules/chat-new/chat-data';
+import {ChatPrompt, ChatsAllResult, ChatsResult, FullChat, SimpleChat} from '@app/modules/chat-new/chat-data';
 import {MatTableDataSource} from '@angular/material/table';
 import {MIN_PROMPT_LEN} from '@app/modules/mh-consts';
 import {Subscription} from 'rxjs';
@@ -30,7 +30,7 @@ export class ChatNewComponent extends UIStateComponent implements OnInit, OnDest
 
     chatsDataSource: MatTableDataSource<SimpleChat> = new MatTableDataSource<SimpleChat>([]);
     chatListColsToDisplay: string[] = ['name'];
-    chats: ChatsResult;
+    chats: ChatsAllResult;
 
     dataSource = new MatTableDataSource<ChatPrompt>([]);
     columnsToDisplay: string[] = ['chat'];
@@ -55,6 +55,9 @@ export class ChatNewComponent extends UIStateComponent implements OnInit, OnDest
     currentStates: Set<LoadStates> = new Set();
     readonly states = LoadStates;
 
+    isListLoading: boolean = false;
+    isChatLoading: boolean = false;
+
     constructor(
         private router: Router,
         private chatService: ChatService,
@@ -68,17 +71,17 @@ export class ChatNewComponent extends UIStateComponent implements OnInit, OnDest
     }
 
     updateTable(): void {
-        this.setIsLoadingStart();
+        this.isListLoading = true;
         this.chatService
             .chatsAll()
             .subscribe({
                 next: chats => {
                     //console.log("ChatsNewComponent.updateTable() #1", JSON.stringify(chats));
                     this.chats = chats;
-                    this.chatsDataSource = new MatTableDataSource(this.chats.chats.content || []);
+                    this.chatsDataSource = new MatTableDataSource(this.chats.chats || []);
                 },
                 complete: () => {
-                    this.setIsLoadingEnd();
+                    this.isListLoading = false;
                 }
             });
     }
@@ -87,13 +90,13 @@ export class ChatNewComponent extends UIStateComponent implements OnInit, OnDest
         console.log("ngOnInit() start");
         this.chatId = this.activatedRoute.snapshot.paramMap.get('chatId');
 
+        this.updateTable();
+
         this.subscribeSubscription(this.settingsService.events.subscribe(event => {
             if (event instanceof SettingsServiceEventChange) {
                 this.translate.use(event.settings.language);
             }
         }));
-
-        this.updateTable();
 
         this.loadAssetsForChatting();
         console.log("ngOnInit() end");
@@ -105,14 +108,14 @@ export class ChatNewComponent extends UIStateComponent implements OnInit, OnDest
 
     // load assets for creating a new step of scenario
     loadAssetsForChatting(): void {
-        this.setIsLoadingStart();
+        this.isChatLoading = true;
         this.chatService
             .chat(this.chatId)
             .subscribe((response) => {
                 this.fullChat = response;
                 //console.log("loadAssetsForChatting() ", this.fullChat.prompts || []);
                 this.dataSource = new MatTableDataSource(this.fullChat.prompts || []);
-                this.setIsLoadingEnd();
+                this.isChatLoading = false;
             });
     }
 

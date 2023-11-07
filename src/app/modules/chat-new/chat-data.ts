@@ -15,6 +15,10 @@ export interface ChatsResult extends DefaultResponse {
     } & PageableDefault;
 }
 
+export interface ChatsAllResult extends DefaultResponse {
+    chats: SimpleChat[];
+}
+
 export interface ChatPrompt {
     prompt: string;
     result: string;
