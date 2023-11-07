@@ -15,6 +15,10 @@ export class ChatService {
     chats = (page: string): Observable<ChatsResult> =>
         this.http.get<ChatsResult>(url(`chats`), { params: { page } })
 
+    chatsAll(): Observable<ChatsResult> {
+        return this.http.get<ChatsResult>(url(`chats`));
+    }
+
     chat(chatId: string): Observable<FullChat> {
         return this.http.get<FullChat>(url(`chat/${chatId}`));
     }

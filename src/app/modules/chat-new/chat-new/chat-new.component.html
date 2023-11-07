@@ -1,4 +1,20 @@
 <ct-section>
+    <ct-section-body-row gap="8px" justify-content="space-between">
+        <ct-flex justify-content="flex-end" align-items="center" gap="16px">
+            <ct-flex-item>
+                <ng-container *ngTemplateOutlet="chatListTemplate"></ng-container>
+            </ct-flex-item>
+            <ct-flex-item></ct-flex-item>
+                <ct-flex-item>
+                    <ng-container *ngTemplateOutlet="chatTemplate"></ng-container>
+                </ct-flex-item>
+            </ct-flex>
+
+    </ct-section-body-row>
+</ct-section>
+
+<ng-template #chatListTemplate>
+<ct-section>
     <ct-section-body style="width: 50%;">
         <ct-section-body-row>
             <ct-flex gap="8px" justify-content="space-between">
@@ -51,41 +67,34 @@
         </ct-section-footer-row>
     </ct-section-footer>
 </ct-section>
-
 <ct-section>
-    <ct-section-body style="width: 100%;">
-        <ct-section-body-row>
-            <ng-container *ngTemplateOutlet="mainTableTemplate"></ng-container>
-        </ct-section-body-row>
-        <ct-section-body-row *ngIf="notPosting()">
-            <!-- https://stackoverflow.com/a/63814736/2672202 -->
-            <form [formGroup]="chatForm" novalidate="novalidate"
-                  (keyup.shift.enter)="chatForm.valid && chatForm.dirty && postPrompt()">
-                <mat-form-field appearance="outline" style="width: 75%;">
-                    <mat-label>Prompt, min 3 chars, required</mat-label>
-                    <textarea formControlName="prompt" matInput="matInput" cdkTextareaAutosize="cdkTextareaAutosize"
-                              cdkAutosizeMinRows="10" value="" autocomplete="off"></textarea>
-                </mat-form-field>
-            </form>
-        </ct-section-body-row>
-    </ct-section-body>
-    <ct-section-footer style="width: 75%;" *ngIf="notPosting()">
-        <ct-section-footer-row>
-            <ct-flex justify-content="flex-end" gap="8px">
-<!--
-                <ct-flex-item>
-                    <button mat-stroked-button (click)="back()">Cancel</button>
-                </ct-flex-item>
--->
-                <ct-flex-item>
-                    <button #button mat-flat-button="mat-flat-button" (click)="postPrompt()" color="primary"
-                            [disabled]="!chatForm.valid || !chatForm.dirty">Post</button>
-                </ct-flex-item>
-            </ct-flex>
-        </ct-section-footer-row>
-    </ct-section-footer></ct-section>
+    <ng-container *ngTemplateOutlet="chatTemplate">
 
-<ng-template #mainTableTemplate>
+    </ng-container>
+
+
+<ng-template #chatListTemplate>
+    <ct-table [isWaiting]="isLoading">
+        <table mat-table [dataSource]="dataSource">
+<!--
+            <ng-container matColumnDef="id">
+                <td mat-cell *matCellDef="let el">{{el.chatId}} </td>
+            </ng-container>
+            <ng-container matColumnDef="createdOn">
+                <td mat-cell *matCellDef="let el">
+                    {{el.createdOn | date:'MMM&nbsp;d,&nbsp;yyyy, HH:mm'}} </td>
+            </ng-container>
+-->
+            <ng-container matColumnDef="name">
+                <td mat-cell *matCellDef="let el">{{el.name}}</td>
+            </ng-container>
+            <tr mat-row *matRowDef="let row; columns: chatListColsToDisplay;"
+                (click)="toChat(row)">></tr>
+        </table>
+    </ct-table>
+</ng-template>
+
+<ng-template #chatTemplate>
     <ct-table [isWaiting]="isLoading">
         <table class="mat-table" mat-table [dataSource]="dataSource">
             <tr mat-row *matRowDef="let row; columns: columnsToDisplay;"></tr>
@@ -117,22 +126,22 @@
                     </ct-flex>
                     <ct-flex *ngIf="!isTextareaBased">
                         <ct-flex-item style="width: 75%;">
-                            <div>
+                            <div class="prompt-field-header">
                                 <mat-label>Prompt:</mat-label>
                             </div>
                             <div>{{ prompt.prompt }}</div>
                             <div>&nbsp;</div>
-                            <div *ngIf="MhUtils.isNotNull(prompt.result)">
+                            <div *ngIf="MhUtils.isNotNull(prompt.result)" class="prompt-field-header">
                                 <mat-label>Result:</mat-label>
                             </div>
                             <div *ngIf="MhUtils.isNotNull(prompt.result)">{{ prompt.result }}</div>
                             <div>&nbsp;</div>
-                            <div *ngIf="isShowRaw && MhUtils.isNotNull(prompt.raw)">
+                            <div *ngIf="isShowRaw && MhUtils.isNotNull(prompt.raw)" class="prompt-field-header">
                                 <mat-label>Raw result:</mat-label>
                             </div>
                             <div *ngIf="isShowRaw && MhUtils.isNotNull(prompt.raw)" style class="pre">{{ prompt.raw }}</div>
                             <div>&nbsp;</div>
-                            <div *ngIf="MhUtils.isNotNull(prompt.error)">
+                            <div *ngIf="MhUtils.isNotNull(prompt.error)" class="prompt-field-header">
                                 <mat-label>Error:</mat-label>
                             </div>
                             <div *ngIf="MhUtils.isNotNull(prompt.error)">{{ prompt.error }}</div>

@@ -6,6 +6,7 @@ import {ChatsResult, SimpleChat} from '@app/modules/chat-new/chat-data';
 import {ChatService} from '@app/modules/chat-new/chat-service';
 import {MatDialog} from '@angular/material/dialog';
 import {ConfirmationDialogMethod} from '@app/components/app-dialog-confirmation/app-dialog-confirmation.component';
+import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
     selector: 'chats-new',
@@ -21,7 +22,9 @@ export class ChatsNewComponent extends UIStateComponent implements OnInit {
     constructor(
         readonly dialog: MatDialog,
         private chatService: ChatService,
-        readonly authenticationService: AuthenticationService
+        readonly authenticationService: AuthenticationService,
+        private router: Router,
+        private activatedRoute: ActivatedRoute
     ) {
         super(authenticationService)
     }
@@ -68,5 +71,7 @@ export class ChatsNewComponent extends UIStateComponent implements OnInit {
         this.updateTable(this.chats.chats.number - 1);
     }
 
-
+    toChat(chat: SimpleChat) {
+        this.router.navigate(['chat', chat.chatId], { relativeTo: this.activatedRoute });
+    }
 }

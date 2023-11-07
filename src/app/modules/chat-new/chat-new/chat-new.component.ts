@@ -10,7 +10,7 @@ import {TranslateService} from '@ngx-translate/core';
 import {LoadStates} from '@app/enums/LoadStates';
 import {MatDialog} from '@angular/material/dialog';
 import {ChatService} from '@app/modules/chat-new/chat-service';
-import {ChatPrompt, FullChat} from '@app/modules/chat-new/chat-data';
+import {ChatPrompt, ChatsResult, FullChat, SimpleChat} from '@app/modules/chat-new/chat-data';
 import {MatTableDataSource} from '@angular/material/table';
 import {MIN_PROMPT_LEN} from '@app/modules/mh-consts';
 import {Subscription} from 'rxjs';
@@ -27,6 +27,10 @@ export class ChatNewComponent extends UIStateComponent implements OnInit, OnDest
 
     @ViewChild(MatButton) button: MatButton;
     @ViewChild('formDirective') formDirective : FormGroupDirective;
+
+    chatsDataSource: MatTableDataSource<SimpleChat> = new MatTableDataSource<SimpleChat>([]);
+    chatListColsToDisplay: string[] = ['name'];
+    chats: ChatsResult;
 
     dataSource = new MatTableDataSource<ChatPrompt>([]);
     columnsToDisplay: string[] = ['chat'];
@@ -61,8 +65,22 @@ export class ChatNewComponent extends UIStateComponent implements OnInit, OnDest
         readonly authenticationService: AuthenticationService
     ) {
         super(authenticationService);
+    }
 
-        //this.dataChange.subscribe(data => this.rebuildTreeForData(data));
+    updateTable(): void {
+        this.setIsLoadingStart();
+        this.chatService
+            .chatsAll()
+            .subscribe({
+                next: chats => {
+                    //console.log("ChatsNewComponent.updateTable() #1", JSON.stringify(chats));
+                    this.chats = chats;
+                    this.chatsDataSource = new MatTableDataSource(this.chats.chats.content || []);
+                },
+                complete: () => {
+                    this.setIsLoadingEnd();
+                }
+            });
     }
 
     ngOnInit(): void {
@@ -74,6 +92,8 @@ export class ChatNewComponent extends UIStateComponent implements OnInit, OnDest
                 this.translate.use(event.settings.language);
             }
         }));
+
+        this.updateTable();
 
         this.loadAssetsForChatting();
         console.log("ngOnInit() end");
@@ -172,5 +192,9 @@ export class ChatNewComponent extends UIStateComponent implements OnInit, OnDest
             name: new FormControl(name, [Validators.required, Validators.minLength(5)]),
         });
         this.isFormActive = true;
+    }
+
+    toChat(chat: SimpleChat) {
+        this.router.navigate(['chat', chat.chatId], { relativeTo: this.activatedRoute });
     }
 }
