@@ -1,72 +1,11 @@
-<ct-section>
-    <ct-section-body-row gap="8px" justify-content="space-between">
-        <ct-flex justify-content="flex-end" align-items="center" gap="16px">
-            <ct-flex-item>
-                <ng-container *ngTemplateOutlet="chatListTemplate"></ng-container>
-            </ct-flex-item>
-<!--            <ct-flex-item>-->
-<!--                <ng-container *ngTemplateOutlet="fullChatTemplate"></ng-container>-->
-<!--            </ct-flex-item>-->
-        </ct-flex>
-    </ct-section-body-row>
-</ct-section>
-
-<ng-template #fullChatTemplate>
-<ct-section>
-    <ct-section-body style="width: 50%;">
-        <ct-section-body-row>
-            <ct-flex gap="8px" justify-content="space-between">
-                <ct-flex-item>
-                    Chat: {{fullChat? fullChat.chatName : '#'+chatId}}<br/>
-                    LLM: {{fullChat? fullChat.apiUid.apiName : 'unknown'}}
-                </ct-flex-item>
-                <ct-flex-item justify-content="flex-end"  *ngIf="!isFormActive" >
-                    <ct-flex justify-content="flex-end" align-items="center" gap="16px">
-                        <ct-flex-item>
-                            <button mat-icon-button (click)="startEditingChatDescription()" matTooltip="Edit chat info" color="primary">
-                                <mat-icon>edit_document</mat-icon>
-                            </button>
-                        </ct-flex-item>
-                        <ct-flex-item>
-                            <mat-slide-toggle [(ngModel)]="isShowRaw" matTooltip="Show raw result">
-                            </mat-slide-toggle>
-                        </ct-flex-item>
-                        <ct-flex-item >
-                            <button mat-icon-button (click)="bookmark()" matTooltip="Bookmark" color="primary">
-                                <mat-icon>bookmark</mat-icon>
-                            </button>
-                        </ct-flex-item>
-                    </ct-flex>
-                </ct-flex-item>
-            </ct-flex>
-        </ct-section-body-row>
-        <ct-section-body-row *ngIf="isFormActive">
-            <form [formGroup]="charInfoForm" novalidate="novalidate">
-                <mat-form-field appearance="outline" style="width: 100%;">
-                    <mat-label>Name of Scenario, min 5, max 100 chars, required</mat-label>
-                    <input matInput type="text" autocomplete="off" formControlName="name" />
-                </mat-form-field>
-            </form>
-        </ct-section-body-row>
-    </ct-section-body>
-    <ct-section-footer *ngIf="isFormActive" style="width: 50%;">
-        <ct-section-footer-row>
-            <ct-flex justify-content="flex-end" gap="8px">
-                <ct-flex-item>
-                    <button mat-flat-button color="primary" size="forTableRow"
-                            (click)="isFormActive=false; updateChatInfo()" [disabled]="notToUpdateChatInfo()">
-                        Save</button>
-                </ct-flex-item>
-                <ct-flex-item>
-                    <button mat-flat-button color="accent" size="forTableRow" (click)="cancelUpdatingChatInfo()">
-                        Cancel</button>
-                </ct-flex-item>
-            </ct-flex>
-        </ct-section-footer-row>
-    </ct-section-footer>
-</ct-section>
-<ng-container *ngTemplateOutlet="fullChatTemplate"></ng-container>
-</ng-template>
+<ct-cols align-items="flex-start">
+    <ct-col size="2">
+        <ng-container *ngTemplateOutlet="chatListTemplate"></ng-container>
+    </ct-col>
+    <ct-col size="10">
+        <ng-container *ngTemplateOutlet="fullChatTemplate"></ng-container>
+    </ct-col>
+</ct-cols>
 
 <ng-template #chatListTemplate>
     <ct-table [isWaiting]="isListLoading">
@@ -89,8 +28,97 @@
     </ct-table>
 </ng-template>
 
-<ng-template #chatTemplate>
-<!--
+<ng-template #fullChatTemplate>
+    <ct-section>
+        <ct-section-body style="width: 100%;">
+            <ct-section-body-row>
+                <ng-container *ngTemplateOutlet="chatInfoTemplate"></ng-container>
+            </ct-section-body-row>
+            <ct-section-body-row>
+                <ng-container *ngTemplateOutlet="chatPromptsTemplate"></ng-container>
+            </ct-section-body-row>
+            <ct-section-body-row *ngIf="notPosting()">
+                <!-- https://stackoverflow.com/a/63814736/2672202 -->
+                <form [formGroup]="chatForm" novalidate="novalidate"
+                      (keyup.shift.enter)="chatForm.valid && chatForm.dirty && postPrompt()">
+                    <mat-form-field appearance="outline" style="width: 75%;">
+                        <mat-label>Prompt, min 3 chars, required</mat-label>
+                        <textarea formControlName="prompt" matInput="matInput" cdkTextareaAutosize="cdkTextareaAutosize"
+                                  cdkAutosizeMinRows="10" value="" autocomplete="off"></textarea>
+                    </mat-form-field>
+                </form>
+            </ct-section-body-row>
+        </ct-section-body>
+        <ct-section-footer style="width: 75%;" *ngIf="notPosting()">
+            <ct-section-footer-row>
+                <ct-flex justify-content="flex-end" gap="8px">
+                    <ct-flex-item>
+                        <button #button mat-flat-button="mat-flat-button" (click)="postPrompt()" color="primary"
+                                [disabled]="!chatForm.valid || !chatForm.dirty">Post</button>
+                    </ct-flex-item>
+                </ct-flex>
+            </ct-section-footer-row>
+        </ct-section-footer>
+    </ct-section>
+</ng-template>
+
+<ng-template #chatInfoTemplate>
+    <ct-section>
+        <ct-section-body style="width: 50%;">
+            <ct-section-body-row>
+                <ct-flex gap="8px" justify-content="space-between">
+                    <ct-flex-item>
+                        Chat: {{fullChat? fullChat.chatName : '#'+chatId}}<br/>
+                        LLM: {{fullChat? fullChat.apiUid.apiName : 'unknown'}}
+                    </ct-flex-item>
+                    <ct-flex-item justify-content="flex-end"  *ngIf="!isFormActive" >
+                        <ct-flex justify-content="flex-end" align-items="center" gap="16px">
+                            <ct-flex-item>
+                                <button mat-icon-button (click)="startEditingChatDescription()" matTooltip="Edit chat info" color="primary">
+                                    <mat-icon>edit_document</mat-icon>
+                                </button>
+                            </ct-flex-item>
+                            <ct-flex-item>
+                                <mat-slide-toggle [(ngModel)]="isShowRaw" matTooltip="Show raw result">
+                                </mat-slide-toggle>
+                            </ct-flex-item>
+                            <ct-flex-item >
+                                <button mat-icon-button (click)="bookmark()" matTooltip="Bookmark" color="primary">
+                                    <mat-icon>bookmark</mat-icon>
+                                </button>
+                            </ct-flex-item>
+                        </ct-flex>
+                    </ct-flex-item>
+                </ct-flex>
+            </ct-section-body-row>
+            <ct-section-body-row *ngIf="isFormActive">
+                <form [formGroup]="charInfoForm" novalidate="novalidate">
+                    <mat-form-field appearance="outline" style="width: 100%;">
+                        <mat-label>Name of Scenario, min 5, max 100 chars, required</mat-label>
+                        <input matInput type="text" autocomplete="off" formControlName="name" />
+                    </mat-form-field>
+                </form>
+            </ct-section-body-row>
+        </ct-section-body>
+        <ct-section-footer *ngIf="isFormActive" style="width: 50%;">
+            <ct-section-footer-row>
+                <ct-flex justify-content="flex-end" gap="8px">
+                    <ct-flex-item>
+                        <button mat-flat-button color="primary" size="forTableRow"
+                                (click)="isFormActive=false; updateChatInfo()" [disabled]="notToUpdateChatInfo()">
+                            Save</button>
+                    </ct-flex-item>
+                    <ct-flex-item>
+                        <button mat-flat-button color="accent" size="forTableRow" (click)="cancelUpdatingChatInfo()">
+                            Cancel</button>
+                    </ct-flex-item>
+                </ct-flex>
+            </ct-section-footer-row>
+        </ct-section-footer>
+    </ct-section>
+</ng-template>
+
+<ng-template #chatPromptsTemplate>
     <ct-table [isWaiting]="isChatLoading">
         <table class="mat-table" mat-table [dataSource]="dataSource">
             <tr mat-row *matRowDef="let row; columns: columnsToDisplay;"></tr>
@@ -147,6 +175,5 @@
             </ng-container>
         </table>
     </ct-table>
--->
 </ng-template>
 
