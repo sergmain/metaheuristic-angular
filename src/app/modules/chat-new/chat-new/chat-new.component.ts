@@ -198,6 +198,7 @@ export class ChatNewComponent extends UIStateComponent implements OnInit, OnDest
     }
 
     toChat(chat: SimpleChat) {
-        this.router.navigate(['chat', chat.chatId], { relativeTo: this.activatedRoute });
+        // console.log('switch to chat #', chat.chatId);
+        this.router.navigate(['..', chat.chatId.toString()], {relativeTo: this.activatedRoute});
     }
 }
