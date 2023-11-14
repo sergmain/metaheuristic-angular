@@ -68,6 +68,8 @@ export class ChatNewComponent extends UIStateComponent implements OnInit, OnDest
         readonly authenticationService: AuthenticationService
     ) {
         super(authenticationService);
+        this.chatId = this.activatedRoute.snapshot.paramMap.get('chatId');
+        this.loadAssetsForChatting();
     }
 
     updateTable(): void {
@@ -88,9 +90,7 @@ export class ChatNewComponent extends UIStateComponent implements OnInit, OnDest
 
     ngOnInit(): void {
         console.log("ngOnInit() start");
-        this.chatId = this.activatedRoute.snapshot.paramMap.get('chatId');
-
-        this.updateTable();
+        // this.chatId = this.activatedRoute.snapshot.paramMap.get('chatId');
 
         this.subscribeSubscription(this.settingsService.events.subscribe(event => {
             if (event instanceof SettingsServiceEventChange) {
@@ -98,7 +98,7 @@ export class ChatNewComponent extends UIStateComponent implements OnInit, OnDest
             }
         }));
 
-        this.loadAssetsForChatting();
+        this.updateTable();
         console.log("ngOnInit() end");
     }
 
@@ -113,7 +113,10 @@ export class ChatNewComponent extends UIStateComponent implements OnInit, OnDest
             .chat(this.chatId)
             .subscribe((response) => {
                 this.fullChat = response;
-                //console.log("loadAssetsForChatting() ", this.fullChat.prompts || []);
+                // console.log("loadAssetsForChatting() ", this.fullChat.prompts || []);
+                // for (const prompt of response.prompts) {
+                //     console.log("\tloadAssetsForChatting.prompt ", prompt.prompt);
+                // }
                 this.dataSource = new MatTableDataSource(this.fullChat.prompts || []);
                 this.isChatLoading = false;
             });
