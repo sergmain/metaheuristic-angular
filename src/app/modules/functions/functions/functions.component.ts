@@ -62,6 +62,7 @@ export class FunctionsComponent extends UIStateComponent implements OnInit {
 
     // INFO: functionsResult не содержит pageable
     // INFO: листание
+    // TODO p0 2023-11-13 add
     nextPage() {
         // this.updateTable(this...items.number + 1);
     }
