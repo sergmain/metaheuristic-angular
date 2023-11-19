@@ -147,9 +147,9 @@ export class ChatNewComponent extends UIStateComponent implements OnInit, OnDest
                 next: prompt => {
                     // console.log("postPrompt(), response: ", JSON.stringify(prompt));
                     // console.log("getSourceCodeId(), sourceCodeId", this.sourceCodeId);
+                    this.fullChat.prompts.push(prompt);
                     const myClonedArray = [];
                     this.fullChat.prompts.forEach(val => myClonedArray.push(val));
-                    myClonedArray.push(prompt);
                     this.dataSource.data = myClonedArray;
                 },
                 complete: () => {
@@ -203,5 +203,11 @@ export class ChatNewComponent extends UIStateComponent implements OnInit, OnDest
     toChat(chat: SimpleChat) {
         // console.log('switch to chat #', chat.chatId);
         this.router.navigate(['..', chat.chatId.toString()], {relativeTo: this.activatedRoute});
+    }
+
+    addNewChat() {
+        // console.log('switch to chat #', chat.chatId);
+        // this.router.navigate(['chat-add'], {relativeTo: this.activatedRoute});
+        this.router.navigate(['/mhbp', 'chat-new', 'chat-add']);
     }
 }
