@@ -204,10 +204,4 @@ export class ChatNewComponent extends UIStateComponent implements OnInit, OnDest
         // console.log('switch to chat #', chat.chatId);
         this.router.navigate(['..', chat.chatId.toString()], {relativeTo: this.activatedRoute});
     }
-
-    addNewChat() {
-        // console.log('switch to chat #', chat.chatId);
-        // this.router.navigate(['chat-add'], {relativeTo: this.activatedRoute});
-        this.router.navigate(['/mhbp', 'chat-new', 'chat-add']);
-    }
 }
