@@ -31,3 +31,58 @@
         <ct-rest-status [content]="response"></ct-rest-status>
     </ct-col>
 </ct-cols>
+
+<hr>
+
+<ct-cols>
+    <ct-col size="6">
+        <ct-section>
+            <ct-section-header>
+                <ct-section-header-row>
+                    <ct-heading>Add New Source Code</ct-heading>
+                </ct-section-header-row>
+            </ct-section-header>
+            <ct-section-body>
+                <form [formGroup]="form" novalidate="novalidate">
+                    <ct-section-body-row>
+                        <mat-form-field appearance="outline" style="width: 100%;">
+                            <mat-label>Repository URL, required</mat-label>
+                            <input type="text" matInput="matInput" autocomplete="off" formControlName="repo"/>
+                        </mat-form-field>
+                        <mat-form-field appearance="outline" style="width: 100%;">
+                            <mat-label>Branch, required</mat-label>
+                            <input type="text" matInput="matInput" autocomplete="off" formControlName="branch"/>
+                        </mat-form-field>
+                        <mat-form-field appearance="outline" style="width: 100%;">
+                            <mat-label>Commit, required</mat-label>
+                            <input type="text" matInput="matInput" autocomplete="off" formControlName="commit"/>
+                        </mat-form-field>
+                        <mat-form-field appearance="outline" style="width: 100%;">
+                            <mat-label>Path</mat-label>
+                            <input type="text" matInput="matInput" autocomplete="off" formControlName="path"/>
+                        </mat-form-field>
+                    </ct-section-body-row>
+                </form>
+            </ct-section-body>
+            <ct-section-footer>
+                <ct-section-footer-row>
+                    <ct-flex justify-content="flex-end" gap="8px">
+                        <ct-flex-item>
+                            <button mat-stroked-button (click)="cancel()">Cancel</button>
+                        </ct-flex-item>
+                        <ct-flex-item>
+                            <button #button mat-flat-button="mat-flat-button" (click)="uploadFromGit()" color="primary"
+                                    [disabled]="!form.valid">Add</button>
+                        </ct-flex-item>
+                    </ct-flex>
+                </ct-section-footer-row>
+            </ct-section-footer>
+        </ct-section>
+    </ct-col>
+<!--
+    <ct-col size="6">
+        <ct-rest-status class="addRestStatus" [content]="newSourceCodeResponse"></ct-rest-status>
+    </ct-col>
+-->
+</ct-cols>
+

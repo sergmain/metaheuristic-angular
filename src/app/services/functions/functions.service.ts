@@ -45,4 +45,9 @@ export class FunctionsService {
     uploadBundle(file: File): Observable<UploadingStatus> {
         return this.http.post<UploadingStatus>(bundleUrl('bundle-upload-from-file'), formData({ file }));
     }
+
+    // String repo, String branch, String commit, String path
+    uploadFromGit(repo:string, branch: string, commit: string, path: string): Observable<UploadingStatus> {
+        return this.http.post<UploadingStatus>(bundleUrl('bundle-upload-from-git'), formData({ repo, branch, commit, path }));
+    }
 }
