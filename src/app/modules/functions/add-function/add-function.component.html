@@ -39,7 +39,7 @@
         <ct-section>
             <ct-section-header>
                 <ct-section-header-row>
-                    <ct-heading>Add New Source Code</ct-heading>
+                    <ct-heading>Upload Functions and SourceCodes from git</ct-heading>
                 </ct-section-header-row>
             </ct-section-header>
             <ct-section-body>
@@ -72,17 +72,12 @@
                         </ct-flex-item>
                         <ct-flex-item>
                             <button #button mat-flat-button="mat-flat-button" (click)="uploadFromGit()" color="primary"
-                                    [disabled]="!form.valid">Add</button>
+                                    [disabled]="!form.valid">Upload</button>
                         </ct-flex-item>
                     </ct-flex>
                 </ct-section-footer-row>
             </ct-section-footer>
         </ct-section>
     </ct-col>
-<!--
-    <ct-col size="6">
-        <ct-rest-status class="addRestStatus" [content]="newSourceCodeResponse"></ct-rest-status>
-    </ct-col>
--->
 </ct-cols>
 
