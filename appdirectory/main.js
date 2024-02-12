@@ -255,15 +255,16 @@ function startMetaheuristicServer() {
 
     child(executablePath, function (err, data) {
       if (err) {
-        console.error(err);
+        writeStatue('error', '' + err);
+        console.error('error while executing of mh:' + err);
         return;
       }
-      console.log(data.toString());
+      console.log('result of exec of mh:' + data.toString());
     });
     writeStatue('done', null);
   } catch (e) {
     writeStatue('error', ''+e);
-    console.log(e);
+    console.error('Caught error:'+e);
   }
 }
 
