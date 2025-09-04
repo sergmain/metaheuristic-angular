@@ -167,29 +167,29 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "metaheuristic-app:build"
+            "buildTarget": "metaheuristic-app:build"
           },
           "configurations": {
             "development": {
             },
             "production": {
-              "browserTarget": "metaheuristic-app:build:production"
+              "buildTarget": "metaheuristic-app:build:production"
             },
             "production-no-ssl": {
-              "browserTarget": "metaheuristic-app:build:production-no-ssl"
+              "buildTarget": "metaheuristic-app:build:production-no-ssl"
             },
             "production-standalone": {
-              "browserTarget": "metaheuristic-app:build:production-standalone"
+              "buildTarget": "metaheuristic-app:build:production-standalone"
             },
             "standalone": {
-              "browserTarget": "metaheuristic-app:build:standalone"
+              "buildTarget": "metaheuristic-app:build:standalone"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "metaheuristic-app:build"
+            "buildTarget": "metaheuristic-app:build"
           }
         },
         "lint": {
