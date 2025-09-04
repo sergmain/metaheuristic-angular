@@ -23,7 +23,7 @@
     </div>
     <div class="app-view__body">
         <ct-content>
-            <ct-flex justify-content="flex-start" align-items="flex-start" gap="9px">
+            <div class="flex justify-content-flex-start align-items-flex-start gap-9px">
                 <ct-flex-item flex="2">
                     <ct-section>
                         <ct-section-body>
@@ -36,23 +36,23 @@
                 <ct-flex-item flex="1" *ngIf="serverReady()">
                     <login-view> </login-view>
                 </ct-flex-item>
-            </ct-flex>
+            </div>
         </ct-content>
     </div>
     <div class="app-view__footer">
-        <ct-flex justify-content="center">
+        <div class="flex justify-content-center">
             <ct-flex-item>Powered by Metaheuristic</ct-flex-item>
-        </ct-flex>
+        </div>
     </div>
 </div>
 
 
 <ng-template #isAuthToolbar>
-    <ct-flex justify-content="space-between" align-items="center">
+    <div class="flex justify-content-space-between align-items-center">
         <div *ngIf="serverReady()
         then auth_content_template
         else anonymous_header_template">here is ignored</div>
-    </ct-flex>
+    </div>
 </ng-template>
 
 

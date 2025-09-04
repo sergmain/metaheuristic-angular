@@ -11,7 +11,8 @@
     </ct-section-body>
     <ct-section-footer>
         <ct-section-footer-row>
-            <ct-flex justify-content="flex-end" gap="8px">
+
+            <div class="flex justify-content-flex-end gap-8px">
                 <ct-flex-item>
                     <button mat-stroked-button (click)="cancel()">Cancel</button>
                 </ct-flex-item>
@@ -20,7 +21,7 @@
                         [disabled]="!file?.fileInput?.nativeElement?.files?.length" color="primary"
                         (click)="upload()">Upload</button>
                 </ct-flex-item>
-            </ct-flex>
+                </div>
         </ct-section-footer-row>
     </ct-section-footer>
 </ct-section>
