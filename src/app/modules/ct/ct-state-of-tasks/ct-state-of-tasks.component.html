@@ -32,29 +32,25 @@ TODO p0 2023-05-20 implement
 <ct-section *ngIf="response">
     <ct-section-body>
         <ct-section-body-row>
-            <ct-flex justify-content="space-between">
-                <ct-flex-item>
-                    <table>
-                        <tr>
-                            <td>UID: </td>
-                            <td>{{response.sourceCodeUid}}</td>
-                        </tr>
-                        <tr>
-                            <td>Is valid:</td>
-                            <td>{{response.sourceCodeValid}}</td>
-                        </tr>
-                        <tr>
-                            <td>Type: </td>
-                            <td>{{response.sourceCodeType}}</td>
-                        </tr>
-                    </table>
-                </ct-flex-item>
-                <ct-flex-item justify-content="flex-end">
-                    <button mat-icon-button (click)="reload()" matTooltip="Reload">
-                        <mat-icon>sync</mat-icon>
-                    </button>
-                </ct-flex-item>
-            </ct-flex>
+            <div class="flex justify-content-space-between">
+                <table>
+                    <tr>
+                        <td>UID: </td>
+                        <td>{{response.sourceCodeUid}}</td>
+                    </tr>
+                    <tr>
+                        <td>Is valid:</td>
+                        <td>{{response.sourceCodeValid}}</td>
+                    </tr>
+                    <tr>
+                        <td>Type: </td>
+                        <td>{{response.sourceCodeType}}</td>
+                    </tr>
+                </table>
+                <button mat-icon-button (click)="reload()" matTooltip="Reload">
+                    <mat-icon>sync</mat-icon>
+                </button>
+            </div>
         </ct-section-body-row>
     </ct-section-body>
 

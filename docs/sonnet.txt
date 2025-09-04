@@ -1,0 +1,23 @@
+in my angular based app I'm using ct-flex components.
+angular is 15.
+
+in latter versions of Angular, there aren't support of flex component
+
+migrate to standard implementation
+you have an access to code via mcp server.
+
+all code in /src
+so DO NOT query like this:
+`directoryToSearch`: `src`
+
+use always absolute path for src, like this:
+`directoryToSearch`: `/src`
+
+start changing components one by one. show info message which current component in processing right now
+
+
+
+--------------
+i need to check that mcp server is working correctly
+issue and comment to read directories in /
+only only, top, level

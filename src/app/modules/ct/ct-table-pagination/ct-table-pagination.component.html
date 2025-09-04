@@ -1,10 +1,8 @@
-<ct-flex justify-content="flex-start" *ngIf="pageableDefault">
-    <ct-flex-item>
-        <button mat-icon-button color="primary" (click)="_prev()" [disabled]="globalDisable || pageableDefault.first">
-            <mat-icon>navigate_before</mat-icon>
-        </button>
-        <button mat-icon-button color="primary" (click)="_next()" [disabled]="globalDisable || pageableDefault.last">
-            <mat-icon>navigate_next</mat-icon>
-        </button>
-    </ct-flex-item>
-</ct-flex>
+<div class="flex justify-content-flex-start" *ngIf="pageableDefault">
+    <button mat-icon-button color="primary" (click)="_prev()" [disabled]="globalDisable || pageableDefault.first">
+        <mat-icon>navigate_before</mat-icon>
+    </button>
+    <button mat-icon-button color="primary" (click)="_next()" [disabled]="globalDisable || pageableDefault.last">
+        <mat-icon>navigate_next</mat-icon>
+    </button>
+</div>

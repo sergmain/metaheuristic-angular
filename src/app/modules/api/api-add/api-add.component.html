@@ -32,16 +32,12 @@
 
       <ct-section-footer>
         <ct-section-footer-row>
-          <ct-flex justify-content="flex-end" gap="8px">
-            <ct-flex-item>
-              <button mat-stroked-button="mat-stroked-button" routerLink="/mhbp/api">
-                {{ 'main.Cancel' | translate }}</button>
-            </ct-flex-item>
-            <ct-flex-item>
-              <button #button mat-flat-button="mat-flat-button" (click)="create()" color="primary"
-                      [disabled]="!form.valid">Add</button>
-            </ct-flex-item>
-          </ct-flex>
+          <div class="flex justify-content-flex-end gap-8px">
+            <button mat-stroked-button="mat-stroked-button" routerLink="/mhbp/api">
+              {{ 'main.Cancel' | translate }}</button>
+            <button #button mat-flat-button="mat-flat-button" (click)="create()" color="primary"
+                    [disabled]="!form.valid">Add</button>
+          </div>
         </ct-section-footer-row>
       </ct-section-footer>
     </ct-section>
