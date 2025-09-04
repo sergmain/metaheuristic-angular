@@ -1,15 +1,11 @@
 <ct-section *ngIf="chats">
     <ct-section-header>
         <ct-section-header-row>
-            <ct-flex justify-content="space-between">
-                <ct-flex-item>
-                    <ct-heading>Chats</ct-heading>
-                </ct-flex-item>
-                <ct-flex-item justify-content="flex-end">
-                    <button mat-icon-button color="primary"
-                            routerLink="chat-add"><mat-icon>note_add</mat-icon></button>
-                </ct-flex-item>
-            </ct-flex>
+            <div class="flex justify-content-space-between">
+                <ct-heading>Chats</ct-heading>
+                <button mat-icon-button color="primary"
+                        routerLink="chat-add"><mat-icon>note_add</mat-icon></button>
+            </div>
         </ct-section-header-row>
     </ct-section-header>
     <ct-section-body>
@@ -32,23 +28,21 @@
                     <ng-container matColumnDef="bts">
                         <th mat-header-cell *matHeaderCellDef></th>
                         <td mat-cell *matCellDef="let el">
-                            <ct-flex justify-content="flex-end" gap="8px">
-                                <ct-flex-item>
-                                    <button mat-icon-button color="primary"
-                                            [routerLink]="['chat', el.chatId]" matTooltip="Continue chat">
-                                        <mat-icon>edit_document</mat-icon>
-                                    </button>
-                                    <!--
-                                                                        <button mat-icon-button color="primary"
-                                                                                [routerLink]="['../..', scenarioGroupId, 'scenario', el.scenarioId, 'move']" matTooltip="Move to another group">
-                                                                            <mat-icon>forward</mat-icon>
-                                                                        </button>
-                                    -->
-                                    <button mat-icon-button color="warn" size="forTableRow" (click)="delete(el)" matTooltip="Delete chat">
-                                        <mat-icon>delete_forever</mat-icon>
-                                    </button>
-                                </ct-flex-item>
-                            </ct-flex>
+                            <div class="flex justify-content-flex-end gap-8px">
+                                <button mat-icon-button color="primary"
+                                        [routerLink]="['chat', el.chatId]" matTooltip="Continue chat">
+                                    <mat-icon>edit_document</mat-icon>
+                                </button>
+                                <!--
+                                                                    <button mat-icon-button color="primary"
+                                                                            [routerLink]="['../..', scenarioGroupId, 'scenario', el.scenarioId, 'move']" matTooltip="Move to another group">
+                                                                        <mat-icon>forward</mat-icon>
+                                                                    </button>
+                                -->
+                                <button mat-icon-button color="warn" size="forTableRow" (click)="delete(el)" matTooltip="Delete chat">
+                                    <mat-icon>delete_forever</mat-icon>
+                                </button>
+                            </div>
                         </td>
                     </ng-container>
                     <tr mat-header-row *matHeaderRowDef="columnsToDisplay"> </tr>
@@ -60,14 +54,12 @@
     </ct-section-body>
     <ct-section-footer>
         <ct-section-footer-row>
-            <ct-flex justify-content="space-between">
-                <ct-flex-item>
-                    <ct-flex justify-content="flex-start" gap="8px">
-                        <ct-table-pagination (prev)="prevPage()" (next)="nextPage()"
-                                             [pageableDefault]="chats.chats"></ct-table-pagination>
-                    </ct-flex>
-                </ct-flex-item>
-            </ct-flex>
+            <div class="flex justify-content-space-between">
+                <div class="flex justify-content-flex-start gap-8px">
+                    <ct-table-pagination (prev)="prevPage()" (next)="nextPage()"
+                                         [pageableDefault]="chats.chats"></ct-table-pagination>
+                </div>
+            </div>
         </ct-section-footer-row>
     </ct-section-footer>
 </ct-section>

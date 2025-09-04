@@ -48,15 +48,11 @@ TODO p0 2023-05-20 implement
     </ct-section-body>
     <ct-section-footer>
         <ct-section-footer-row>
-            <ct-flex justify-content="flex-end" gap="8px">
-                <ct-flex-item>
-                    <button mat-stroked-button (click)="cancel()">Cancel</button>
-                </ct-flex-item>
-                <ct-flex-item>
-                    <button mat-flat-button="mat-flat-button" (click)="upload()" color="primary"
-                        [disabled]="checkDisable()">Create</button>
-                </ct-flex-item>
-            </ct-flex>
+            <div class="flex justify-content-flex-end gap-8px">
+                <button mat-stroked-button (click)="cancel()">Cancel</button>
+                <button mat-flat-button="mat-flat-button" (click)="upload()" color="primary"
+                    [disabled]="checkDisable()">Create</button>
+            </div>
         </ct-section-footer-row>
     </ct-section-footer>
 </ct-section>

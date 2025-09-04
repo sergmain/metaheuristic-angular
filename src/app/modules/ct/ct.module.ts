@@ -16,9 +16,6 @@ import { CtFileUploadComponent } from './ct-file-upload/ct-file-upload.component
 import { CtSectionHeaderComponent } from './ct-section-header/ct-section-header.component';
 import { CtSectionComponent } from './ct-section/ct-section.component';
 import { CtSectionHeaderRowComponent } from './ct-section-header-row/ct-section-header-row.component';
-// DEPRECATED - Migrating to standard CSS flexbox
-// import { CtFlexComponent } from './ct-flex/ct-flex.component';
-// import { CtFlexItemComponent } from './ct-flex-item/ct-flex-item.component';
 import { CtSectionBodyComponent } from './ct-section-body/ct-section-body.component';
 import { CtHintComponent } from './ct-hint/ct-hint.component';
 import { CtContentComponent } from './ct-content/ct-content.component';
@@ -57,9 +54,6 @@ import {RouterModule} from '@angular/router';
         CtSectionHeaderComponent,
         CtSectionComponent,
         CtSectionHeaderRowComponent,
-        // DEPRECATED - Migrating to standard CSS flexbox
-        // CtFlexComponent,
-        // CtFlexItemComponent,
         CtSectionBodyComponent,
         CtHintComponent,
         CtContentComponent,
@@ -88,9 +82,6 @@ import {RouterModule} from '@angular/router';
         CtSectionHeaderComponent,
         CtSectionComponent,
         CtSectionHeaderRowComponent,
-        // DEPRECATED - Migrating to standard CSS flexbox
-        // CtFlexComponent,
-        // CtFlexItemComponent,
         CtSectionBodyComponent,
         CtHintComponent,
         CtContentComponent,

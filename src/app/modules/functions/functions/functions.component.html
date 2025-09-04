@@ -1,21 +1,14 @@
 <ct-section *ngIf="functionsResult">
     <ct-section-header>
         <ct-section-header-row>
-            <ct-flex justify-content="space-between">
-                <ct-flex-item>
-                    <ct-heading>Functions</ct-heading>
-                </ct-flex-item>
-                <ct-flex-item>
-                    <ct-flex justify-content="flex-end" align-items="center" gap="16px">
-                        <ct-flex-item>
-                            <mat-slide-toggle [(ngModel)]="showParams">Show Params</mat-slide-toggle>
-                        </ct-flex-item>
-                        <ct-flex-item *ngIf="!dispatcherAssetModeService.isReplicated(functionsResult.assetMode)">
-                            <ng-container *ngTemplateOutlet="addButtonTemplate"></ng-container>
-                        </ct-flex-item>
-                    </ct-flex>
-                </ct-flex-item>
-            </ct-flex>
+            <div class="flex justify-content-space-between">
+                <ct-heading>Functions</ct-heading>
+                <div class="flex justify-content-flex-end align-items-center gap-16px">
+                    <mat-slide-toggle [(ngModel)]="showParams">Show Params</mat-slide-toggle>
+                    <ng-container *ngIf="!dispatcherAssetModeService.isReplicated(functionsResult.assetMode)" 
+                        *ngTemplateOutlet="addButtonTemplate"></ng-container>
+                </div>
+            </div>
         </ct-section-header-row>
         <ct-section-header-row *ngIf="dispatcherAssetModeService.isReplicated(functionsResult.assetMode)">
             <ct-alert theme="info">Upload and deletion of functions are disabled, assetMode is 'replicated'.</ct-alert>
@@ -28,11 +21,10 @@
     </ct-section-body>
     <ct-section-footer>
         <ct-section-footer-row>
-            <ct-flex justify-content="space-between">
-                <ct-flex-item *ngIf="!dispatcherAssetModeService.isReplicated(functionsResult.assetMode)">
-                    <ng-container *ngTemplateOutlet="addButtonTemplate"></ng-container>
-                </ct-flex-item>
-            </ct-flex>
+            <div class="flex justify-content-space-between">
+                <ng-container *ngIf="!dispatcherAssetModeService.isReplicated(functionsResult.assetMode)" 
+                    *ngTemplateOutlet="addButtonTemplate"></ng-container>
+            </div>
         </ct-section-footer-row>
     </ct-section-footer>
 </ct-section>
@@ -65,14 +57,12 @@
             <ng-container matColumnDef="bts">
                 <th mat-header-cell *matHeaderCellDef></th>
                 <td mat-cell *matCellDef="let el">
-                    <ct-flex justify-content="flex-end" gap="8px"
+                    <div class="flex justify-content-flex-end gap-8px"
                         *ngIf="!dispatcherAssetModeService.isReplicated(functionsResult.assetMode)">
-                        <ct-flex-item>
-                            <button mat-flat-button color="warn" size="forTableRow" (click)="delete(el)">
-                                <mat-icon>delete</mat-icon>
-                            </button>
-                        </ct-flex-item>
-                    </ct-flex>
+                        <button mat-flat-button color="warn" size="forTableRow" (click)="delete(el)">
+                            <mat-icon>delete</mat-icon>
+                        </button>
+                    </div>
                 </td>
             </ng-container>
             <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>

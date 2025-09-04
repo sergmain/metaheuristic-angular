@@ -16,6 +16,7 @@ use always absolute path for src, like this:
 start changing components one by one. show info message which current component in processing right now
 
 
+continue migration until it will be done completely. the main objective is to change version of angular to ver 20
 
 --------------
 i need to check that mcp server is working correctly

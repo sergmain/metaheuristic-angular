@@ -1,16 +1,12 @@
 <ct-section *ngIf="processorResult">
     <ct-section-header>
         <ct-section-header-row>
-            <ct-flex justify-content="space-between" align-items="center">
-                <ct-flex-item>
-                    <ct-heading>Processors</ct-heading>
-                </ct-flex-item>
-                <ct-flex-item>
-                    <mat-slide-toggle [(ngModel)]="showStatusOfProcessor">
-                        Show current status of processor
-                    </mat-slide-toggle>
-                </ct-flex-item>
-            </ct-flex>
+            <div class="flex justify-content-space-between align-items-center">
+                <ct-heading>Processors</ct-heading>
+                <mat-slide-toggle [(ngModel)]="showStatusOfProcessor">
+                    Show current status of processor
+                </mat-slide-toggle>
+            </div>
         </ct-section-header-row>
     </ct-section-header>
     <ct-section-body>
@@ -95,23 +91,19 @@
                     <ng-container matColumnDef="bts">
                         <th mat-header-cell *matHeaderCellDef> </th>
                         <td mat-cell *matCellDef="let el">
-                            <ct-flex justify-content="flex-end" gap="unit(1)">
-                                <ct-flex-item>
-                                    <button mat-icon-button
-                                        size="forTableRow" color="primary" 
-                                        [routerLink]="['/dispatcher/processors',el.processor.id,'edit']">
-                                        <mat-icon>edit</mat-icon>
-                                    </button>
-                                </ct-flex-item>
-                                <ct-flex-item>
-                                    <button mat-icon-button
-                                        size="forTableRow" 
-                                        color="warn" 
-                                        (click)="delete(el)">
-                                        <mat-icon>delete</mat-icon>
-                                    </button>
-                                </ct-flex-item>
-                            </ct-flex>
+                            <div class="flex justify-content-flex-end gap-unit-1">
+                                <button mat-icon-button
+                                    size="forTableRow" color="primary" 
+                                    [routerLink]="['/dispatcher/processors',el.processor.id,'edit']">
+                                    <mat-icon>edit</mat-icon>
+                                </button>
+                                <button mat-icon-button
+                                    size="forTableRow" 
+                                    color="warn" 
+                                    (click)="delete(el)">
+                                    <mat-icon>delete</mat-icon>
+                                </button>
+                            </div>
                         </td>
                     </ng-container>
                     <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
@@ -132,13 +124,11 @@
             </button>
         </ct-section-footer-row>
         <ct-section-footer-row>
-            <ct-flex-item>
-                <ct-table-pagination 
-                    (prev)="prevPage()" 
-                    (next)="nextPage()" 
-                    [pageableDefault]="processorResult.items">
-                </ct-table-pagination>
-            </ct-flex-item>
+            <ct-table-pagination 
+                (prev)="prevPage()" 
+                (next)="nextPage()" 
+                [pageableDefault]="processorResult.items">
+            </ct-table-pagination>
         </ct-section-footer-row>
     </ct-section-footer>
 </ct-section>

@@ -20,14 +20,10 @@
                         <input matInput="matInput" [(ngModel)]="groups" />
                     </mat-form-field>
                     <br>
-                    <ct-flex justify-content="flex-end" gap="unit(1)">
-                        <ct-flex-item>
-                            <a mat-stroked-button [routerLink]="['../../companies']">Cancel</a>
-                        </ct-flex-item>
-                        <ct-flex-item>
-                            <button mat-flat-button color="primary" (click)="saveChanges()">Save Changes</button>
-                        </ct-flex-item>
-                    </ct-flex>
+                    <div class="flex justify-content-flex-end gap-unit-1">
+                        <a mat-stroked-button [routerLink]="['../../companies']">Cancel</a>
+                        <button mat-flat-button color="primary" (click)="saveChanges()">Save Changes</button>
+                    </div>
                 </ct-section-body-row>
             </ct-section-body>
         </ct-section>

@@ -1,21 +1,15 @@
 <ct-section *ngIf="simpleKbsResult">
     <ct-section-header>
         <ct-section-header-row>
-            <ct-flex justify-content="space-between">
-                <ct-flex-item>
-                    <ct-heading>Knowledge Bases</ct-heading>
-                </ct-flex-item>
-            </ct-flex>
-            <ct-flex justify-content="space-between">
-                <ct-flex-item>
-                    <mat-slide-toggle [(ngModel)]="expandParams">
-                        Expand params
-                    </mat-slide-toggle>
-                </ct-flex-item>
-                <ct-flex-item justify-content="flex-end">
-                    <button mat-flat-button color="primary" routerLink="add">Add KB</button>
-                </ct-flex-item>
-            </ct-flex>
+            <div class="flex justify-content-space-between">
+                <ct-heading>Knowledge Bases</ct-heading>
+            </div>
+            <div class="flex justify-content-space-between">
+                <mat-slide-toggle [(ngModel)]="expandParams">
+                    Expand params
+                </mat-slide-toggle>
+                <button mat-flat-button color="primary" routerLink="add">Add KB</button>
+            </div>
         </ct-section-header-row>
     </ct-section-header>
     <ct-section-body>
@@ -25,16 +19,14 @@
     </ct-section-body>
     <ct-section-footer>
         <ct-section-footer-row>
-            <ct-flex justify-content="space-between">
-                <ct-flex-item justify-content="flex-start" gap="8px">
-                    <ct-table-pagination
-                            [pageableDefault]="simpleKbsResult.kbs"
-                            [globalDisable]="isLoading"
-                            (next)="nextPage()"
-                            (prev)="prevPage()">
-                    </ct-table-pagination>
-                </ct-flex-item>
-            </ct-flex>
+            <div class="flex justify-content-space-between">
+                <ct-table-pagination
+                        [pageableDefault]="simpleKbsResult.kbs"
+                        [globalDisable]="isLoading"
+                        (next)="nextPage()"
+                        (prev)="prevPage()">
+                </ct-table-pagination>
+            </div>
         </ct-section-footer-row>
     </ct-section-footer>
 </ct-section>
@@ -57,23 +49,17 @@
             <ng-container matColumnDef="bts">
                 <th mat-header-cell *matHeaderCellDef></th>
                 <td mat-cell *matCellDef="let el">
-                    <ct-flex justify-content="flex-end" gap="8px" *ngIf="el.editable">
-                        <ct-flex-item  *ngIf="false">
-                            <button mat-flat-button size="forTableRow"
-                                    [routerLink]="['/dispatcher/kb/edit/',el.id]" color="primary">
-                                Edit</button>
-                        </ct-flex-item>
-                        <ct-flex-item>
-                            <button mat-flat-button size="forTableRow" (click)="initKb(el)" color="primary">
-                                Init
-                            </button>
-                        </ct-flex-item>
-                        <ct-flex-item>
-                            <button mat-flat-button color="warn" size="forTableRow" (click)="delete(el)">
-                                <mat-icon>delete</mat-icon>
-                            </button>
-                        </ct-flex-item>
-                    </ct-flex>
+                    <div class="flex justify-content-flex-end gap-8px" *ngIf="el.editable">
+                        <button *ngIf="false" mat-flat-button size="forTableRow"
+                                [routerLink]="['/dispatcher/kb/edit/',el.id]" color="primary">
+                            Edit</button>
+                        <button mat-flat-button size="forTableRow" (click)="initKb(el)" color="primary">
+                            Init
+                        </button>
+                        <button mat-flat-button color="warn" size="forTableRow" (click)="delete(el)">
+                            <mat-icon>delete</mat-icon>
+                        </button>
+                    </div>
                 </td>
             </ng-container>
             <ng-container matColumnDef="empty">

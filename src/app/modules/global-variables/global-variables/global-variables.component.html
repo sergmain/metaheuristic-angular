@@ -1,14 +1,10 @@
 <ct-section *ngIf="globalVariablesResult">
     <ct-section-header>
         <ct-section-header-row>
-            <ct-flex justify-content="space-between">
-                <ct-flex-item>
-                    <ct-heading>Variables</ct-heading>
-                </ct-flex-item>
-                <ct-flex-item>
-                    <ng-container *ngTemplateOutlet="addVariableButton"></ng-container>
-                </ct-flex-item>
-            </ct-flex>
+            <div class="flex justify-content-space-between">
+                <ct-heading>Variables</ct-heading>
+                <ng-container *ngTemplateOutlet="addVariableButton"></ng-container>
+            </div>
         </ct-section-header-row>
     </ct-section-header>
     <ct-section-body>
@@ -40,14 +36,12 @@
                     <ng-container matColumnDef="bts" stickyEnd="stickyEnd">
                         <th mat-header-cell="mat-header-cell" *matHeaderCellDef> </th>
                         <td mat-cell="mat-cell" *matCellDef="let el">
-                            <ct-flex justify-content="flex-end">
-                                <ct-flex-item>
-                                    <button mat-flat-button="mat-flat-button" color="warn" size="forTableRow"
-                                        (click)="delete(el)">
-                                        <mat-icon>delete </mat-icon>
-                                    </button>
-                                </ct-flex-item>
-                            </ct-flex>
+                            <div class="flex justify-content-flex-end">
+                                <button mat-flat-button="mat-flat-button" color="warn" size="forTableRow"
+                                    (click)="delete(el)">
+                                    <mat-icon>delete </mat-icon>
+                                </button>
+                            </div>
                         </td>
                     </ng-container>
                     <tr mat-header-row="mat-header-row" *matHeaderRowDef="columnsToDisplay;"> </tr>
@@ -59,16 +53,12 @@
     </ct-section-body>
     <ct-section-footer>
         <ct-section-footer-row>
-            <ct-flex justify-content="space-between">
-                <ct-flex-item>
-                    <ct-table-pagination (next)="nextPage()" (prev)="prevPage()"
-                        [pageableDefault]="globalVariablesResult.items" [globalDisable]="isLoading">
-                    </ct-table-pagination>
-                </ct-flex-item>
-                <ct-flex-item>
-                    <ng-container *ngTemplateOutlet="addVariableButton"></ng-container>
-                </ct-flex-item>
-            </ct-flex>
+            <div class="flex justify-content-space-between">
+                <ct-table-pagination (next)="nextPage()" (prev)="prevPage()"
+                    [pageableDefault]="globalVariablesResult.items" [globalDisable]="isLoading">
+                </ct-table-pagination>
+                <ng-container *ngTemplateOutlet="addVariableButton"></ng-container>
+            </div>
         </ct-section-footer-row>
     </ct-section-footer>
 </ct-section>

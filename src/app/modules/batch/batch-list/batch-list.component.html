@@ -1,25 +1,17 @@
 <ct-section *ngIf="batchesResult">
     <ct-section-header>
         <ct-section-header-row>
-            <ct-flex justify-content="space-between" align-items="center" gap="unit(1)">
-                <ct-flex-item>
-                    <ct-heading>{{ 'batch.Batch' | translate }} </ct-heading>
-                </ct-flex-item>
-                <ct-flex-item>
-                    <ct-flex justify-content="flex-end" align-items="center" gap="unit(1)">
-                        <ct-flex-item>
-                            <ng-container *ngTemplateOutlet="uploadFilesButton"></ng-container>
-                        </ct-flex-item>
-                        <ct-flex-item>
-                            <button mat-stroked-button (click)="toggleFilter()" [disabled]="false">
-                                <span *ngIf="isFiltered" style="vertical-align: baseline;">✓&nbsp;&nbsp;</span>
-                                <span *ngIf="!isFiltered" style="vertical-align: baseline;">✗&nbsp;&nbsp;</span>
-                                <span>{{ 'batch.onlyMyBatches' | translate }}</span>
-                            </button>
-                        </ct-flex-item>
-                    </ct-flex>
-                </ct-flex-item>
-            </ct-flex>
+            <div class="flex justify-content-space-between align-items-center gap-unit-1">
+                <ct-heading>{{ 'batch.Batch' | translate }} </ct-heading>
+                <div class="flex justify-content-flex-end align-items-center gap-unit-1">
+                    <ng-container *ngTemplateOutlet="uploadFilesButton"></ng-container>
+                    <button mat-stroked-button (click)="toggleFilter()" [disabled]="false">
+                        <span *ngIf="isFiltered" style="vertical-align: baseline;">✓&nbsp;&nbsp;</span>
+                        <span *ngIf="!isFiltered" style="vertical-align: baseline;">✗&nbsp;&nbsp;</span>
+                        <span>{{ 'batch.onlyMyBatches' | translate }}</span>
+                    </button>
+                </div>
+            </div>
         </ct-section-header-row>
     </ct-section-header>
     <ct-section-body>
@@ -79,35 +71,27 @@
                     <ng-container matColumnDef="bts">
                         <th mat-header-cell *matHeaderCellDef> </th>
                         <td mat-cell *matCellDef="let el">
-                            <ct-flex justify-content="flex-end" gap="9px">
-                                <ct-flex-item>
-                                    <button mat-flat-button size="forTableRow" [disabled]="el.execContextDeleted"
-                                        [routerLink]="['/batch',el.batch.id,'source-code',el.batch.sourceCodeId,'exec-context',el.batch.execContextId, 'state']"
-                                        color="primary">
-                                        {{ 'batch.Task states' | translate }}</button>
-                                </ct-flex-item>
+                            <div class="flex justify-content-flex-end gap-9px">
+                                <button mat-flat-button size="forTableRow" [disabled]="el.execContextDeleted"
+                                    [routerLink]="['/batch',el.batch.id,'source-code',el.batch.sourceCodeId,'exec-context',el.batch.execContextId, 'state']"
+                                    color="primary">
+                                    {{ 'batch.Task states' | translate }}</button>
 
-                                <ct-flex-item>
-                                    <button mat-flat-button size="forTableRow"
-                                        [disabled]="el.execState !== 4 || el.execContextDeleted"
-                                        [routerLink]="['/batch',el.batch.id,'status']" color="primary">
-                                        {{ 'batch.Status' | translate }}</button>
-                                </ct-flex-item>
+                                <button mat-flat-button size="forTableRow"
+                                    [disabled]="el.execState !== 4 || el.execContextDeleted"
+                                    [routerLink]="['/batch',el.batch.id,'status']" color="primary">
+                                    {{ 'batch.Status' | translate }}</button>
 
-                                <ct-flex-item>
-                                    <button mat-flat-button size="forTableRow" color="primary"
-                                        [disabled]="el.execState !== 4 || el.execContextDeleted"
-                                        (click)="downloadFile($event, el.batch.id)">
-                                        {{ 'batch.Download Result' | translate }}</button>
-                                </ct-flex-item>
+                                <button mat-flat-button size="forTableRow" color="primary"
+                                    [disabled]="el.execState !== 4 || el.execContextDeleted"
+                                    (click)="downloadFile($event, el.batch.id)">
+                                    {{ 'batch.Download Result' | translate }}</button>
 
-                                <ct-flex-item>
-                                    <button mat-flat-button color="warn" size="forTableRow" (click)="delete($event, el)"
-                                        title="Delete">
-                                        <mat-icon>delete</mat-icon>
-                                    </button>
-                                </ct-flex-item>
-                            </ct-flex>
+                                <button mat-flat-button color="warn" size="forTableRow" (click)="delete($event, el)"
+                                    title="Delete">
+                                    <mat-icon>delete</mat-icon>
+                                </button>
+                            </div>
                         </td>
                     </ng-container>
                     <tr mat-header-row *matHeaderRowDef="columnsToDisplay"> </tr>
@@ -120,34 +104,22 @@
     </ct-section-body>
     <ct-section-footer>
         <ct-section-footer-row>
-            <ct-flex justify-content="space-between" align-items="center">
-                <ct-flex-item>
-                    <ct-table-pagination (prev)="prevPage()" (next)="nextPage()"
-                        [pageableDefault]="batchesResult.batches"></ct-table-pagination>
-                </ct-flex-item>
+            <div class="flex justify-content-space-between align-items-center">
+                <ct-table-pagination (prev)="prevPage()" (next)="nextPage()"
+                    [pageableDefault]="batchesResult.batches"></ct-table-pagination>
 
-                <ct-flex-item *ngIf="countOfSelectedRows()">
-                    <ct-flex justify-content="center" align-items="center" gap="unit(1)">
-                        <ct-flex-item>
-                            <div class="selected-count">
-                                {{ 'batch.Batch' | translate}} × {{countOfSelectedRows()}}
-                            </div>
-                        </ct-flex-item>
-                        <ct-flex-item>
-                            <button mat-flat-button color="primary" (click)="downloadSelectedRows()">{{ 'batch.Download'
-                                | translate}}</button>
-                        </ct-flex-item>
-                        <ct-flex-item>
-                            <button mat-flat-button color="primary" (click)="discardSelectedRows()">{{ 'batch.Discard'
-                                | translate}}</button>
-                        </ct-flex-item>
-                    </ct-flex>
-                </ct-flex-item>
+                <div *ngIf="countOfSelectedRows()" class="flex justify-content-center align-items-center gap-unit-1">
+                    <div class="selected-count">
+                        {{ 'batch.Batch' | translate}} × {{countOfSelectedRows()}}
+                    </div>
+                    <button mat-flat-button color="primary" (click)="downloadSelectedRows()">{{ 'batch.Download'
+                        | translate}}</button>
+                    <button mat-flat-button color="primary" (click)="discardSelectedRows()">{{ 'batch.Discard'
+                        | translate}}</button>
+                </div>
 
-                <ct-flex-item>
-                    <ng-container *ngTemplateOutlet="uploadFilesButton"></ng-container>
-                </ct-flex-item>
-            </ct-flex>
+                <ng-container *ngTemplateOutlet="uploadFilesButton"></ng-container>
+            </div>
         </ct-section-footer-row>
     </ct-section-footer>
 </ct-section>

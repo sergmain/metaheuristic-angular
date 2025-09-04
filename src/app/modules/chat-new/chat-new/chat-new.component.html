@@ -11,10 +11,8 @@
     <ct-section>
         <ct-section-body style="width: 100%;">
             <ct-section-body-row>
-                <ct-flex-item justify-content="flex-start">
-                    <button mat-icon-button color="primary"
-                            routerLink="/mhbp/chat-new/chat-add/"><mat-icon>note_add</mat-icon></button>
-                </ct-flex-item>
+                <button mat-icon-button color="primary"
+                        routerLink="/mhbp/chat-new/chat-add/"><mat-icon>note_add</mat-icon></button>
             </ct-section-body-row>
             <ct-section-body-row>
                 <ct-table [isWaiting]="isListLoading">
@@ -63,12 +61,10 @@
         </ct-section-body>
         <ct-section-footer style="width: 75%;" *ngIf="notPosting()">
             <ct-section-footer-row>
-                <ct-flex justify-content="flex-end" gap="8px">
-                    <ct-flex-item>
-                        <button #button mat-flat-button="mat-flat-button" (click)="postPrompt()" color="primary"
-                                [disabled]="!chatForm.valid || !chatForm.dirty">Post</button>
-                    </ct-flex-item>
-                </ct-flex>
+                <div class="flex justify-content-flex-end gap-8px">
+                    <button #button mat-flat-button="mat-flat-button" (click)="postPrompt()" color="primary"
+                            [disabled]="!chatForm.valid || !chatForm.dirty">Post</button>
+                </div>
             </ct-section-footer-row>
         </ct-section-footer>
     </ct-section>
@@ -78,30 +74,22 @@
     <ct-section>
         <ct-section-body style="width: 50%;">
             <ct-section-body-row>
-                <ct-flex gap="8px" justify-content="space-between">
-                    <ct-flex-item>
+                <div class="flex gap-8px justify-content-space-between">
+                    <div>
                         Chat: {{fullChat? fullChat.chatName : '#'+chatId}}<br/>
                         LLM: {{fullChat? fullChat.apiUid.apiName : 'unknown'}}
-                    </ct-flex-item>
-                    <ct-flex-item justify-content="flex-end"  *ngIf="!isFormActive" >
-                        <ct-flex justify-content="flex-end" align-items="center" gap="16px">
-                            <ct-flex-item>
-                                <button mat-icon-button (click)="startEditingChatDescription()" matTooltip="Edit chat info" color="primary">
-                                    <mat-icon>edit_document</mat-icon>
-                                </button>
-                            </ct-flex-item>
-                            <ct-flex-item>
-                                <mat-slide-toggle [(ngModel)]="isShowRaw" matTooltip="Show raw result">
-                                </mat-slide-toggle>
-                            </ct-flex-item>
-                            <ct-flex-item >
-                                <button mat-icon-button (click)="bookmark()" matTooltip="Bookmark" color="primary">
-                                    <mat-icon>bookmark</mat-icon>
-                                </button>
-                            </ct-flex-item>
-                        </ct-flex>
-                    </ct-flex-item>
-                </ct-flex>
+                    </div>
+                    <div *ngIf="!isFormActive" class="flex justify-content-flex-end align-items-center gap-16px">
+                        <button mat-icon-button (click)="startEditingChatDescription()" matTooltip="Edit chat info" color="primary">
+                            <mat-icon>edit_document</mat-icon>
+                        </button>
+                        <mat-slide-toggle [(ngModel)]="isShowRaw" matTooltip="Show raw result">
+                        </mat-slide-toggle>
+                        <button mat-icon-button (click)="bookmark()" matTooltip="Bookmark" color="primary">
+                            <mat-icon>bookmark</mat-icon>
+                        </button>
+                    </div>
+                </div>
             </ct-section-body-row>
             <ct-section-body-row *ngIf="isFormActive">
                 <form [formGroup]="charInfoForm" novalidate="novalidate">
@@ -114,17 +102,13 @@
         </ct-section-body>
         <ct-section-footer *ngIf="isFormActive" style="width: 50%;">
             <ct-section-footer-row>
-                <ct-flex justify-content="flex-end" gap="8px">
-                    <ct-flex-item>
-                        <button mat-flat-button color="primary" size="forTableRow"
-                                (click)="isFormActive=false; updateChatInfo()" [disabled]="notToUpdateChatInfo()">
-                            Save</button>
-                    </ct-flex-item>
-                    <ct-flex-item>
-                        <button mat-flat-button color="accent" size="forTableRow" (click)="cancelUpdatingChatInfo()">
-                            Cancel</button>
-                    </ct-flex-item>
-                </ct-flex>
+                <div class="flex justify-content-flex-end gap-8px">
+                    <button mat-flat-button color="primary" size="forTableRow"
+                            (click)="isFormActive=false; updateChatInfo()" [disabled]="notToUpdateChatInfo()">
+                        Save</button>
+                    <button mat-flat-button color="accent" size="forTableRow" (click)="cancelUpdatingChatInfo()">
+                        Cancel</button>
+                </div>
             </ct-section-footer-row>
         </ct-section-footer>
     </ct-section>
@@ -136,54 +120,50 @@
             <tr mat-row *matRowDef="let row; columns: columnsToDisplay;"></tr>
             <ng-container matColumnDef="chat">
                 <td mat-cell *matCellDef="let prompt" style="padding-top: 8px;">
-                    <ct-flex *ngIf="isTextareaBased">
-                        <ct-flex-item style="width: 75%;">
-                            <mat-form-field appearance="outline" style="width: 100%;padding-bottom: 0; min-height: 0;" disabled>
-                                <mat-label>Prompt:</mat-label>
-                                <textarea matInput [value]="prompt.prompt" cdkTextareaAutosize="cdkTextareaAutosize"
-                                          cdkAutosizeMinRows="1" autocomplete="off" disabled></textarea>
-                            </mat-form-field>
-                            <mat-form-field appearance="outline" style="width: 100%;" disabled *ngIf="MhUtils.isNotNull(prompt.result)">
-                                <mat-label>Result:</mat-label>
-                                <textarea matInput [value]="prompt.result" cdkTextareaAutosize="cdkTextareaAutosize"
-                                          cdkAutosizeMinRows="1" autocomplete="off" disabled></textarea>
-                            </mat-form-field>
-                            <mat-form-field appearance="outline" style="width: 100%;" disabled *ngIf="isShowRaw && MhUtils.isNotNull(prompt.raw)">
-                                <mat-label>Raw result:</mat-label>
-                                <textarea matInput [value]="prompt.raw" cdkTextareaAutosize="cdkTextareaAutosize"
-                                          cdkAutosizeMinRows="1" autocomplete="off" disabled></textarea>
-                            </mat-form-field>
-                            <mat-form-field appearance="outline" style="width: 100%;" disabled *ngIf="MhUtils.isNotNull(prompt.error)">
-                                <mat-label>Error:</mat-label>
-                                <textarea matInput [value]="prompt.error" cdkTextareaAutosize="cdkTextareaAutosize"
-                                          cdkAutosizeMinRows="1" autocomplete="off" disabled></textarea>
-                            </mat-form-field>
-                        </ct-flex-item>
-                    </ct-flex>
-                    <ct-flex *ngIf="!isTextareaBased">
-                        <ct-flex-item style="width: 75%;">
-                            <mat-form-field appearance="outline" style="width: 100%;" disabled>
-                                <mat-label>Prompt:</mat-label>
-                                <textarea matInput [value]="prompt.prompt" cdkTextareaAutosize="cdkTextareaAutosize"
-                                          style="overflow:hidden" autocomplete="off" disabled></textarea>
-                            </mat-form-field>
-                            <mat-form-field appearance="outline" style="width: 100%;" disabled *ngIf="MhUtils.isNotNull(prompt.result)">
-                                <mat-label>Result:</mat-label>
-                                <textarea matInput [value]="prompt.result" cdkTextareaAutosize="cdkTextareaAutosize"
-                                          style="overflow:hidden" autocomplete="off" disabled></textarea>
-                            </mat-form-field>
-                            <mat-form-field appearance="outline" style="width: 100%;" disabled *ngIf="isShowRaw && MhUtils.isNotNull(prompt.raw)">
-                                <mat-label>Raw result:</mat-label>
-                                <textarea matInput [value]="prompt.raw" cdkTextareaAutosize="cdkTextareaAutosize"
-                                          style="overflow:hidden" autocomplete="off" disabled></textarea>
-                            </mat-form-field>
-                            <mat-form-field appearance="outline" style="width: 100%;" disabled *ngIf="MhUtils.isNotNull(prompt.error)">
-                                <mat-label>Error:</mat-label>
-                                <textarea matInput [value]="prompt.error" cdkTextareaAutosize="cdkTextareaAutosize"
-                                          style="overflow:hidden" autocomplete="off" disabled></textarea>
-                            </mat-form-field>
-                        </ct-flex-item>
-                    </ct-flex>
+                    <div *ngIf="isTextareaBased" style="width: 75%;">
+                        <mat-form-field appearance="outline" style="width: 100%;padding-bottom: 0; min-height: 0;" disabled>
+                            <mat-label>Prompt:</mat-label>
+                            <textarea matInput [value]="prompt.prompt" cdkTextareaAutosize="cdkTextareaAutosize"
+                                      cdkAutosizeMinRows="1" autocomplete="off" disabled></textarea>
+                        </mat-form-field>
+                        <mat-form-field appearance="outline" style="width: 100%;" disabled *ngIf="MhUtils.isNotNull(prompt.result)">
+                            <mat-label>Result:</mat-label>
+                            <textarea matInput [value]="prompt.result" cdkTextareaAutosize="cdkTextareaAutosize"
+                                      cdkAutosizeMinRows="1" autocomplete="off" disabled></textarea>
+                        </mat-form-field>
+                        <mat-form-field appearance="outline" style="width: 100%;" disabled *ngIf="isShowRaw && MhUtils.isNotNull(prompt.raw)">
+                            <mat-label>Raw result:</mat-label>
+                            <textarea matInput [value]="prompt.raw" cdkTextareaAutosize="cdkTextareaAutosize"
+                                      cdkAutosizeMinRows="1" autocomplete="off" disabled></textarea>
+                        </mat-form-field>
+                        <mat-form-field appearance="outline" style="width: 100%;" disabled *ngIf="MhUtils.isNotNull(prompt.error)">
+                            <mat-label>Error:</mat-label>
+                            <textarea matInput [value]="prompt.error" cdkTextareaAutosize="cdkTextareaAutosize"
+                                      cdkAutosizeMinRows="1" autocomplete="off" disabled></textarea>
+                        </mat-form-field>
+                    </div>
+                    <div *ngIf="!isTextareaBased" style="width: 75%;">
+                        <mat-form-field appearance="outline" style="width: 100%;" disabled>
+                            <mat-label>Prompt:</mat-label>
+                            <textarea matInput [value]="prompt.prompt" cdkTextareaAutosize="cdkTextareaAutosize"
+                                      style="overflow:hidden" autocomplete="off" disabled></textarea>
+                        </mat-form-field>
+                        <mat-form-field appearance="outline" style="width: 100%;" disabled *ngIf="MhUtils.isNotNull(prompt.result)">
+                            <mat-label>Result:</mat-label>
+                            <textarea matInput [value]="prompt.result" cdkTextareaAutosize="cdkTextareaAutosize"
+                                      style="overflow:hidden" autocomplete="off" disabled></textarea>
+                        </mat-form-field>
+                        <mat-form-field appearance="outline" style="width: 100%;" disabled *ngIf="isShowRaw && MhUtils.isNotNull(prompt.raw)">
+                            <mat-label>Raw result:</mat-label>
+                            <textarea matInput [value]="prompt.raw" cdkTextareaAutosize="cdkTextareaAutosize"
+                                      style="overflow:hidden" autocomplete="off" disabled></textarea>
+                        </mat-form-field>
+                        <mat-form-field appearance="outline" style="width: 100%;" disabled *ngIf="MhUtils.isNotNull(prompt.error)">
+                            <mat-label>Error:</mat-label>
+                            <textarea matInput [value]="prompt.error" cdkTextareaAutosize="cdkTextareaAutosize"
+                                      style="overflow:hidden" autocomplete="off" disabled></textarea>
+                        </mat-form-field>
+                    </div>
                 </td>
             </ng-container>
         </table>

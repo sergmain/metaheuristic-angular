@@ -55,15 +55,11 @@
     </ct-section-body>
     <ct-section-footer>
         <ct-section-footer-row>
-            <ct-flex justify-content="space-between">
-                <ct-flex-item>
-                    <ct-table-pagination [pageableDefault]="experimentsResult.items" [globalDisable]="false"
-                        (next)="nextPage()" (prev)="prevPage()"></ct-table-pagination>
-                </ct-flex-item>
-                <ct-flex-item>
-                    <ng-container *ngTemplateOutlet="addButtonTemplate"></ng-container>
-                </ct-flex-item>
-            </ct-flex>
+            <div class="flex justify-content-space-between">
+                <ct-table-pagination [pageableDefault]="experimentsResult.items" [globalDisable]="false"
+                    (next)="nextPage()" (prev)="prevPage()"></ct-table-pagination>
+                <ng-container *ngTemplateOutlet="addButtonTemplate"></ng-container>
+            </div>
         </ct-section-footer-row>
     </ct-section-footer>
 </ct-section>
@@ -73,36 +69,24 @@
 
 
 <ng-template #actionsTemplate let-element="element">
-    <ct-flex justify-content="flex-end" gap="9px">
-        <ct-flex-item *ngIf="element.experiment.execState === ExecContextState.NONE">
-            <button mat-flat-button color="primary" size="forTableRow" (click)="produce(element)">Produce</button>
-        </ct-flex-item>
-        <ct-flex-item
-            *ngIf="element.experiment.execState === ExecContextState.PRODUCED || element.experiment.execState === ExecContextState.STOPPED">
-            <button mat-flat-button color="primary" size="forTableRow" (click)="start(element)">Start</button>
-        </ct-flex-item>
-        <ct-flex-item *ngIf="element.experiment.execState === ExecContextState.STARTED">
-            <button mat-flat-button color="primary" size="forTableRow" (click)="stop(element)">Stop</button>
-        </ct-flex-item>
-        <ct-flex-item>
-            <a mat-flat-button [routerLink]="[element.experiment.id, 'edit']" color="primary"
-                size="forTableRow">Edit</a>
-        </ct-flex-item>
-        <ct-flex-item>
-            <a mat-flat-button
-                [routerLink]="[element.experiment.id,'source-code',element.experiment.sourceCodeId,'exec-context',element.experiment.execContextId, 'state']"
-                color="primary" size="forTableRow">Task
-                State</a>
-        </ct-flex-item>
-        <ct-flex-item>
-            <button mat-flat-button size="forTableRow" color="primary" (click)="clone(element)">Clone</button>
-        </ct-flex-item>
-        <ct-flex-item>
-            <button mat-flat-button size="forTableRow" color="warn" (click)="delete(element)">
-                <mat-icon>delete</mat-icon>
-            </button>
-        </ct-flex-item>
-    </ct-flex>
+    <div class="flex justify-content-flex-end gap-9px">
+        <button *ngIf="element.experiment.execState === ExecContextState.NONE" 
+            mat-flat-button color="primary" size="forTableRow" (click)="produce(element)">Produce</button>
+        <button *ngIf="element.experiment.execState === ExecContextState.PRODUCED || element.experiment.execState === ExecContextState.STOPPED"
+            mat-flat-button color="primary" size="forTableRow" (click)="start(element)">Start</button>
+        <button *ngIf="element.experiment.execState === ExecContextState.STARTED"
+            mat-flat-button color="primary" size="forTableRow" (click)="stop(element)">Stop</button>
+        <a mat-flat-button [routerLink]="[element.experiment.id, 'edit']" color="primary"
+            size="forTableRow">Edit</a>
+        <a mat-flat-button
+            [routerLink]="[element.experiment.id,'source-code',element.experiment.sourceCodeId,'exec-context',element.experiment.execContextId, 'state']"
+            color="primary" size="forTableRow">Task
+            State</a>
+        <button mat-flat-button size="forTableRow" color="primary" (click)="clone(element)">Clone</button>
+        <button mat-flat-button size="forTableRow" color="warn" (click)="delete(element)">
+            <mat-icon>delete</mat-icon>
+        </button>
+    </div>
 </ng-template>
 
 
