@@ -51,7 +51,7 @@
     "npm install material-design-icons --save": "npm install material-design-icons --save",
 
 
-    "ng update @angular/core@17 @angular/cli@17": "ng update @angular/core@17 @angular/cli@17"
+    "ng update @angular/core@17 @angular/cli@17": "ng update @angular/core@17 @angular/cli@17 --force"
   },
   "engines": {
     "node": "v18.18.2",
