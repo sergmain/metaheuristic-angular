@@ -8,8 +8,9 @@
                         <div class="flex justify-content-flex-start gap-8px">
                             <ct-heading>Source Codes</ct-heading>
                         </div>
-                        <ng-container *ngIf="!dispatcherAssetModeService.isReplicated(sourceCodesResult.assetMode)" 
-                            *ngTemplateOutlet="addSourceCodeButtonTemplate"></ng-container>
+                        <ng-container *ngIf="!dispatcherAssetModeService.isReplicated(sourceCodesResult.assetMode)">
+  <ng-container *ngTemplateOutlet="addSourceCodeButtonTemplate"></ng-container>
+</ng-container>
                     </div>
                 </ct-section-header-row>
 
@@ -29,8 +30,9 @@
                     <div class="flex justify-content-space-between">
                         <ct-table-pagination [pageableDefault]="sourceCodesResult?.items" [globalDisable]="isLoading" (next)="nextPage()" (prev)="prevPage()">
                         </ct-table-pagination>
-                        <ng-container *ngIf="!dispatcherAssetModeService.isReplicated(sourceCodesResult.assetMode)" 
-                            *ngTemplateOutlet="addSourceCodeButtonTemplate"></ng-container>
+                        <ng-container *ngIf="!dispatcherAssetModeService.isReplicated(sourceCodesResult.assetMode)">
+  <ng-container *ngTemplateOutlet="addSourceCodeButtonTemplate"></ng-container>
+</ng-container>
                     </div>
                 </ct-section-footer-row>
             </ct-section-footer>

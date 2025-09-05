@@ -5,8 +5,9 @@
                 <ct-heading>Functions</ct-heading>
                 <div class="flex justify-content-flex-end align-items-center gap-16px">
                     <mat-slide-toggle [(ngModel)]="showParams">Show Params</mat-slide-toggle>
-                    <ng-container *ngIf="!dispatcherAssetModeService.isReplicated(functionsResult.assetMode)" 
-                        *ngTemplateOutlet="addButtonTemplate"></ng-container>
+                    <ng-container *ngIf="!dispatcherAssetModeService.isReplicated(functionsResult.assetMode)">
+  <ng-container *ngTemplateOutlet="addButtonTemplate"></ng-container>
+</ng-container>
                 </div>
             </div>
         </ct-section-header-row>
@@ -22,8 +23,9 @@
     <ct-section-footer>
         <ct-section-footer-row>
             <div class="flex justify-content-space-between">
-                <ng-container *ngIf="!dispatcherAssetModeService.isReplicated(functionsResult.assetMode)" 
-                    *ngTemplateOutlet="addButtonTemplate"></ng-container>
+                <ng-container *ngIf="!dispatcherAssetModeService.isReplicated(functionsResult.assetMode)">
+  <ng-container *ngTemplateOutlet="addButtonTemplate"></ng-container>
+</ng-container>
             </div>
         </ct-section-footer-row>
     </ct-section-footer>

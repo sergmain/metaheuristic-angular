@@ -3,8 +3,9 @@
         <ct-section-header-row>
             <div class="flex justify-content-space-between">
                 <ct-heading>Companies</ct-heading>
-                <ng-container *ngIf="!dispatcherAssetModeService.isReplicated(simpleCompaniesResult.assetMode)" 
-                    *ngTemplateOutlet="addButtonTemplate"></ng-container>
+                <ng-container *ngIf="!dispatcherAssetModeService.isReplicated(simpleCompaniesResult.assetMode)">
+  <ng-container *ngTemplateOutlet="addButtonTemplate"></ng-container>
+</ng-container>
             </div>
         </ct-section-header-row>
         <ct-section-header-row *ngIf="dispatcherAssetModeService.isReplicated(simpleCompaniesResult.assetMode)">
@@ -23,8 +24,9 @@
             <div class="flex justify-content-space-between">
                 <ct-table-pagination (prev)="prevPage()" (next)="nextPage()"
                     [pageableDefault]="simpleCompaniesResult.companies"></ct-table-pagination>
-                <ng-container *ngIf="!dispatcherAssetModeService.isReplicated(simpleCompaniesResult.assetMode)" 
-                    *ngTemplateOutlet="addButtonTemplate"></ng-container>
+                <ng-container *ngIf="!dispatcherAssetModeService.isReplicated(simpleCompaniesResult.assetMode)">
+  <ng-container *ngTemplateOutlet="addButtonTemplate"></ng-container>
+</ng-container>
             </div>
         </ct-section-footer-row>
     </ct-section-footer>
