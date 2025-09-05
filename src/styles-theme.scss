@@ -7,10 +7,10 @@
 @include mat.core();
 
 .light-theme {
-    $primary: mat.define-palette(mat.$indigo-palette);
-    $accent: mat.define-palette(mat.$pink-palette, A200, A100, A400);
-    $warn: mat.define-palette(mat.$red-palette);
-    $theme: mat.define-light-theme((
+    $primary: mat.m2-define-palette(mat.$m2-indigo-palette);
+    $accent: mat.m2-define-palette(mat.$m2-pink-palette, A200, A100, A400);
+    $warn: mat.m2-define-palette(mat.$m2-red-palette);
+    $theme: mat.m2-define-light-theme((
         color: (
             primary: $primary,
             accent: $accent,
@@ -25,10 +25,10 @@
 }
 
 .dark-theme {
-    $primary: mat.define-palette(mat.$blue-grey-palette);
-    $accent: mat.define-palette(mat.$amber-palette, 400);
-    $warn: mat.define-palette(mat.$red-palette);
-    $theme: mat.define-dark-theme((
+    $primary: mat.m2-define-palette(mat.$m2-blue-grey-palette);
+    $accent: mat.m2-define-palette(mat.$m2-amber-palette, 400);
+    $warn: mat.m2-define-palette(mat.$m2-red-palette);
+    $theme: mat.m2-define-dark-theme((
         color: (
             primary: $primary,
             accent: $accent,
