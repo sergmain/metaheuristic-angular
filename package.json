@@ -8,6 +8,7 @@
     "start-dev": "ng serve --configuration development --disable-host-check --host=localhost",
     "start-standalone": "ng serve --configuration standalone --disable-host-check --host=localhost",
     "start-production-standalone": "ng serve --configuration production-standalone --disable-host-check --host=localhost",
+    "ng cache clean": "ng cache clean",
     "build": "ng build",
     "build2": "ng build --baseHref=/aiai-app/ --prod=true",
     "build3": "ng build --prod=true",

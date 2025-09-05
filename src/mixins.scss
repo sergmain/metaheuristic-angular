@@ -1,4 +1,4 @@
-@import '@angular/material/theming';
+@use '@angular/material' as mat;
 
 
 @mixin section($theme) {
@@ -19,7 +19,7 @@
     }
 
     .section__body {
-        background-color: mat-color($background, card);
+        background-color: mat.get-color-from-palette($background, card);
         position: relative;
     }
 

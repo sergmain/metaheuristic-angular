@@ -1,18 +1,23 @@
 @use '@angular/material' as mat;
 
 @import 'mixins.scss';
-@import '@angular/material/theming';
 @import './theme-palettes/dark.scss';
 @import './theme-palettes/light.scss';
 
 @include mat.core();
 
 .light-theme {
-    $primary: mat-palette($mat-light);
-    $accent: mat-palette($mat-light, A200, A100, A400);
-    $warn: mat-palette($mat-red);
-    $theme: mat-light-theme($primary, $accent, $warn);
-    @include angular-material-theme($theme);
+    $primary: mat.define-palette(mat.$indigo-palette);
+    $accent: mat.define-palette(mat.$pink-palette, A200, A100, A400);
+    $warn: mat.define-palette(mat.$red-palette);
+    $theme: mat.define-light-theme((
+        color: (
+            primary: $primary,
+            accent: $accent,
+            warn: $warn,
+        )
+    ));
+    @include mat.all-component-themes($theme);
 
     @include simpleTable();
     @include section($theme);
@@ -20,11 +25,17 @@
 }
 
 .dark-theme {
-    $primary: mat-palette($mat-dark);
-    $accent: mat-palette($mat-dark, 400);
-    $warn: mat-palette($mat-warn-dark);
-    $theme: mat-dark-theme($primary, $accent, $warn);
-    @include angular-material-theme($theme);
+    $primary: mat.define-palette(mat.$blue-grey-palette);
+    $accent: mat.define-palette(mat.$amber-palette, 400);
+    $warn: mat.define-palette(mat.$red-palette);
+    $theme: mat.define-dark-theme((
+        color: (
+            primary: $primary,
+            accent: $accent,
+            warn: $warn,
+        )
+    ));
+    @include mat.all-component-themes($theme);
 
     @include simpleTable();
     @include section($theme);
