@@ -49,9 +49,9 @@
     "electron-packager 2": "electron-packager appdirectory metaheuristic --platform=win32 --arch=x64 --electron-version=28.2.2 --out=release-builds --overwrite --asar --prune=true --icon=./build/icon.ico",
     "npm install material-icons --save": "npm install material-icons --save",
     "npm install material-design-icons --save": "npm install material-design-icons --save",
-    "ng update @angular/core@18 @angular/cli@18": "ng update @angular/core@18 @angular/cli@18",
-    "ng update @angular/material@17": "ng update @angular/material@17",
-    "ng update @angular-eslint/schematics@17": "ng update @angular-eslint/schematics@17"
+    "ng update @angular/core@18 @angular/cli@18": "ng update @angular/core@18 @angular/cli@18 --force",
+    "ng update @angular/material@18": "ng update @angular/material@18",
+    "ng update @angular-eslint/schematics@17": "ng update @angular-eslint/schematics@18"
   },
   "engines": {
     "node": "v18.18.2",
