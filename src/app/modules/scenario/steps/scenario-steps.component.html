@@ -1,17 +1,13 @@
 <ct-section *ngIf="simpleScenarioSteps">
     <ct-section-header>
         <ct-section-header-row>
-            <ct-flex justify-content="space-between">
-                <ct-flex-item>
-                    <ct-heading>Steps of Scenario</ct-heading>
-                </ct-flex-item>
-            </ct-flex>
-            <ct-flex justify-content="flex-end">
-                <ct-flex-item>
-                    <button mat-flat-button="mat-flat-button" color="primary"
-                            [routerLink]="['../', 'scenario-step-add']">Add Scenario Step</button>
-                </ct-flex-item>
-            </ct-flex>
+            <div class="flex justify-content-space-between">
+                <ct-heading>Steps of Scenario</ct-heading>
+            </div>
+            <div class="flex justify-content-flex-end">
+                <button mat-flat-button="mat-flat-button" color="primary"
+        [routerLink]="['../', 'scenario-step-add']">Add Scenario Step</button>
+            </div>
         </ct-section-header-row>
     </ct-section-header>
     <ct-section-body>
@@ -37,17 +33,13 @@
                     <ng-container matColumnDef="bts">
                         <th mat-header-cell *matHeaderCellDef></th>
                         <td mat-cell *matCellDef="let el">
-                            <ct-flex justify-content="flex-end" gap="8px">
-                                <ct-flex-item>
-                                    <button mat-flat-button color="primary" size="forTableRow"
-                                            [routerLink]="['../step', el.uuid, 'step-edit']">Edit</button>
-                                </ct-flex-item>
-                                <ct-flex-item>
-                                    <button mat-flat-button color="warn" size="forTableRow" (click)="delete(el)">
-                                        <mat-icon>delete</mat-icon>
-                                    </button>
-                                </ct-flex-item>
-                            </ct-flex>
+                            <div class="flex justify-content-flex-end gap-8px">
+                                <button mat-flat-button color="primary" size="forTableRow"
+        [routerLink]="['../step', el.uuid, 'step-edit']">Edit</button>
+                                <button mat-flat-button color="warn" size="forTableRow" (click)="delete(el)">
+    <mat-icon>delete</mat-icon>
+</button>
+                            </div>
                         </td>
                     </ng-container>
                     <tr mat-header-row *matHeaderRowDef="columnsToDisplay"> </tr>

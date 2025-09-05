@@ -1,24 +1,20 @@
 <ct-section *ngIf="MhUtils.isNotNull(simpleScenarioSteps)">
     <ct-section-body style="width: 50%;">
         <ct-section-body-row>
-            <ct-flex gap="8px" justify-content="space-between">
-                <ct-flex-item>
-                    Scenario: {{simpleScenarioSteps.scenarioInfo.name}}<br/>
-                    {{simpleScenarioSteps.scenarioInfo.description}}
-                </ct-flex-item>
-                <ct-flex-item *ngIf="!newNodePresent() && !isFormActive" justify-content="flex-end">
-                    <button mat-icon-button (click)="startEditingScenarioInfo()" matTooltip="Edit scenario info" color="primary">
-                        <mat-icon>edit_document</mat-icon>
-                    </button>
-                    <button mat-icon-button (click)="runScenario()" matTooltip="Execute scenario" color="primary">
-                        <mat-icon>play_arrow</mat-icon>
-                    </button>
-                    <button mat-icon-button (click)="stateOfTasks()" matTooltip="Tasks" color="primary"
-                            *ngIf="isSourceCodeId()">
-                        <mat-icon>list</mat-icon>
-                    </button>
-                </ct-flex-item>
-            </ct-flex>
+            <div class="flex gap-8px justify-content-space-between">
+                Scenario: {{simpleScenarioSteps.scenarioInfo.name}}<br/>
+{{simpleScenarioSteps.scenarioInfo.description}}
+                <button mat-icon-button (click)="startEditingScenarioInfo()" matTooltip="Edit scenario info" color="primary" *ngIf="!newNodePresent() && !isFormActive">
+    <mat-icon>edit_document</mat-icon>
+</button>
+<button mat-icon-button (click)="runScenario()" matTooltip="Execute scenario" color="primary">
+    <mat-icon>play_arrow</mat-icon>
+</button>
+<button mat-icon-button (click)="stateOfTasks()" matTooltip="Tasks" color="primary"
+        *ngIf="isSourceCodeId()">
+    <mat-icon>list</mat-icon>
+</button>
+            </div>
         </ct-section-body-row>
         <ct-section-body-row *ngIf="isFormActive">
             <form [formGroup]="scenarioForm" novalidate="novalidate">
@@ -36,17 +32,13 @@
     </ct-section-body>
     <ct-section-footer *ngIf="isFormActive" style="width: 50%;">
         <ct-section-footer-row>
-            <ct-flex justify-content="flex-end" gap="8px">
-                <ct-flex-item>
-                    <button mat-flat-button color="primary" size="forTableRow"
-                            (click)="isFormActive=false; updateScenarioInfo()" [disabled]="notToUpdateScenarioInfo()">
-                        Save</button>
-                </ct-flex-item>
-                <ct-flex-item>
-                    <button mat-flat-button color="accent" size="forTableRow" (click)="cancelUpdatingScenarioInfo()">
-                        Cancel</button>
-                </ct-flex-item>
-            </ct-flex>
+            <div class="flex justify-content-flex-end gap-8px">
+                <button mat-flat-button color="primary" size="forTableRow"
+        (click)="isFormActive=false; updateScenarioInfo()" [disabled]="notToUpdateScenarioInfo()">
+    Save</button>
+                <button mat-flat-button color="accent" size="forTableRow" (click)="cancelUpdatingScenarioInfo()">
+    Cancel</button>
+            </div>
         </ct-section-footer-row>
     </ct-section-footer>
 </ct-section>
@@ -87,12 +79,10 @@
             </ct-section-body>
             <ct-section-footer>
                 <ct-section-footer-row>
-                    <ct-flex justify-content="flex-end" gap="8px">
-                        <ct-flex-item>
-                            <button #button mat-flat-button="mat-flat-button" (click)="createFirstDetail()" color="primary"
-                                    [disabled]="notToCreate()">Create</button>
-                        </ct-flex-item>
-                    </ct-flex>
+                    <div class="flex justify-content-flex-end gap-8px">
+                        <button #button mat-flat-button="mat-flat-button" (click)="createFirstDetail()" color="primary"
+        [disabled]="notToCreate()">Create</button>
+                    </div>
                 </ct-section-footer-row>
             </ct-section-footer>
         </ct-section>
@@ -102,11 +92,9 @@
 <ct-section>
     <ct-section-body style="width: 100%;">
         <ct-section-body-row>
-            <ct-flex gap="8px" justify-content="flex-start">
-                <ct-flex-item style="width: 100%;">
-                    <ng-container *ngTemplateOutlet="scenarioTree"></ng-container>
-                </ct-flex-item>
-            </ct-flex>
+            <div class="flex gap-8px justify-content-flex-start">
+                <ng-container *ngTemplateOutlet="scenarioTree"></ng-container>
+            </div>
         </ct-section-body-row>
     </ct-section-body>
 </ct-section>
@@ -125,26 +113,18 @@
                         <ct-section-header>
                             <ct-section-header-row>
                                 <ct-section-header-row>
-                                    <ct-flex justify-content="space-between"  gap="9px">
-                                        <ct-flex-item>
-                                            <ct-heading *ngIf="modeNewNode(node)">New step</ct-heading>
-                                            <ct-heading *ngIf="modeEditNode(node)">Edit step</ct-heading>
-                                        </ct-flex-item>
-                                        <ct-flex-item>
-                                            <ct-flex justify-content="flex-end" gap="8px">
-                                                <ct-flex-item style="">
-                                                    <button mat-flat-button="mat-flat-button" color="primary"
-                                                            [disabled]="isApi" (click)="isApi=!isApi"
-                                                    >API</button>
-                                                </ct-flex-item>
-                                                <ct-flex-item>
-                                                    <button mat-flat-button="mat-flat-button" color="primary"
-                                                            [disabled]="!isApi" (click)="isApi=!isApi"
-                                                    >Processing</button>
-                                                </ct-flex-item>
-                                            </ct-flex>
-                                        </ct-flex-item>
-                                    </ct-flex>
+                                    <div class="flex justify-content-space-between gap-9px">
+                                        <ct-heading *ngIf="modeNewNode(node)">New step</ct-heading>
+<ct-heading *ngIf="modeEditNode(node)">Edit step</ct-heading>
+                                        <div class="flex justify-content-flex-end gap-8px">
+            <button mat-flat-button="mat-flat-button" color="primary"
+                [disabled]="isApi" (click)="isApi=!isApi"
+        >API</button>
+                                                <button mat-flat-button="mat-flat-button" color="primary"
+        [disabled]="!isApi" (click)="isApi=!isApi"
+>Processing</button>
+                                            </div>
+                                    </div>
                                 </ct-section-header-row>
                             </ct-section-header-row>
                         </ct-section-header>
@@ -157,20 +137,16 @@
                                             <mat-option *ngFor="let f of listOfFunctions" [value]="f">{{ f.code }}</mat-option>
                                         </mat-select>
                                     </mat-form-field>
-                                    <ct-flex gap="8px" justify-content="space-between">
-                                        <ct-flex-item  style="width: 100%;">
-                                            <mat-form-field appearance="outline" *ngIf="isApiNeeded()" style="width: 50%;">
-                                                <mat-label>{{ 'scenario.API' | translate }}</mat-label>
-                                                <mat-select formControlName="apiUid">
-                                                    <mat-option *ngFor="let api of listOfApis" [value]="api">{{api.uid}}</mat-option>
-                                                </mat-select>
-                                            </mat-form-field>
-                                        </ct-flex-item>
-                                        <ct-flex-item justify-content="flex-end" *ngIf="isApi">
-                                            <mat-label>{{ 'scenario.Use cache' | translate }}</mat-label>
-                                            <mat-slide-toggle formControlName="cachable"></mat-slide-toggle>
-                                        </ct-flex-item>
-                                    </ct-flex>
+                                    <div class="flex gap-8px justify-content-space-between">
+                                        <mat-form-field appearance="outline" *ngIf="isApiNeeded()" style="width: 50%;">
+    <mat-label>{{ 'scenario.API' | translate }}</mat-label>
+    <mat-select formControlName="apiUid">
+        <mat-option *ngFor="let api of listOfApis" [value]="api">{{api.uid}}</mat-option>
+    </mat-select>
+</mat-form-field>
+                                        <mat-label *ngIf="isApi">{{ 'scenario.Use cache' | translate }}</mat-label>
+<mat-slide-toggle formControlName="cachable"></mat-slide-toggle>
+                                    </div>
 
                                     <mat-form-field appearance="outline" style="width: 100%;">
                                         <mat-label *ngIf="isApi">Prompt name, min 5 chars, required</mat-label>
@@ -207,28 +183,20 @@
                         </ct-section-body>
                         <ct-section-footer>
                             <ct-section-footer-row>
-                                <ct-flex justify-content="flex-end" gap="8px" *ngIf="modeNewNode(node)">
-                                    <ct-flex-item>
-                                        <button mat-flat-button color="primary" size="forTableRow"
-                                                (click)="showMyContainer=false; saveNode(node)" [disabled]="notToCreate()">
-                                            Create</button>
-                                    </ct-flex-item>
-                                    <ct-flex-item>
-                                        <button mat-flat-button color="accent" size="forTableRow" (click)="deleteNewNode(node)">
-                                            Delete</button>
-                                    </ct-flex-item>
-                                </ct-flex>
-                                <ct-flex justify-content="flex-end" gap="8px" *ngIf="modeEditNode(node)">
-                                    <ct-flex-item>
-                                        <button mat-flat-button color="primary" size="forTableRow"
-                                                (click)="showMyContainer=false; saveNode(node)" [disabled]="notToCreate()">
-                                            Save</button>
-                                    </ct-flex-item>
-                                    <ct-flex-item>
-                                        <button mat-flat-button color="accent" size="forTableRow" (click)="setModeToShow(node)">
-                                            Cancel</button>
-                                    </ct-flex-item>
-                                </ct-flex>
+                                <div class="flex justify-content-flex-end gap-8px ngif-modeNewNode(node)">
+                                    <button mat-flat-button color="primary" size="forTableRow"
+        (click)="showMyContainer=false; saveNode(node)" [disabled]="notToCreate()">
+    Create</button>
+                                    <button mat-flat-button color="accent" size="forTableRow" (click)="deleteNewNode(node)">
+    Delete</button>
+                                </div>
+                                <div class="flex justify-content-flex-end gap-8px ngif-modeEditNode(node)">
+                                    <button mat-flat-button color="primary" size="forTableRow"
+        (click)="showMyContainer=false; saveNode(node)" [disabled]="notToCreate()">
+    Save</button>
+                                    <button mat-flat-button color="accent" size="forTableRow" (click)="setModeToShow(node)">
+    Cancel</button>
+                                </div>
                             </ct-section-footer-row>
                         </ct-section-footer>
                     </ct-section>
@@ -256,7 +224,7 @@
         >
             <ct-section-body style="width: 100%;">
                 <ct-section-body-row [ngClass]="{ 'background-highlight': isActiveNode(node) }">
-                    <ct-flex>
+                    <div class="flex">
                         <!--normal item -->
                         <button mat-icon-button
                                 matTreeNodeToggle (click)="expansionModel.toggle(node.uuid)"
@@ -288,12 +256,12 @@
                                 *ngIf="!stepEvaluation()">
                             <mat-icon>delete_forever</mat-icon>
                         </button>
-                    </ct-flex>
+                    </div>
                 </ct-section-body-row>
                 <ct-section-body-row>
-                    <ct-flex *ngIf="stepEvaluation() && isActiveNode(node)">
+                    <div class="flex ngif-stepEvaluation() && isActiveNode(node)">
                         <ng-container *ngTemplateOutlet="stepEvaluationTemplate"></ng-container>
-                    </ct-flex>
+                    </div>
                 </ct-section-body-row>
             </ct-section-body>
         </mat-tree-node>
@@ -307,22 +275,18 @@
                 <ct-section-header>
                     <ct-section-header-row>
                         <ct-section-header-row>
-                            <ct-flex justify-content="space-between" gap="5px">
-                                <ct-flex-item>
-                                    <ct-heading>Evaluate step</ct-heading>
-                                </ct-flex-item>
-                                <ct-flex-item justify-content="flex-end">
-                                    <button mat-flat-button color="primary" (click)="runStepEvaluation()" [disabled]="dontDoStepEvaluation()">
-                                        Evaluate
-                                    </button>
-                                    <button mat-flat-button color="primary" (click)="acceptStepEvaluation()" [disabled]="dontAcceptStepEvaluation()">
-                                        Accept
-                                    </button>
-                                    <button mat-flat-button color="accent" (click)="cancelStepEvaluation()">
-                                        Cancel
-                                    </button>
-                                </ct-flex-item>
-                            </ct-flex>
+                            <div class="flex justify-content-space-between gap-5px">
+                                <ct-heading>Evaluate step</ct-heading>
+                                <button mat-flat-button color="primary" (click)="runStepEvaluation()" [disabled]="dontDoStepEvaluation()">
+    Evaluate
+</button>
+<button mat-flat-button color="primary" (click)="acceptStepEvaluation()" [disabled]="dontAcceptStepEvaluation()">
+    Accept
+</button>
+<button mat-flat-button color="accent" (click)="cancelStepEvaluation()">
+    Cancel
+</button>
+                            </div>
                         </ct-section-header-row>
                     </ct-section-header-row>
                 </ct-section-header>
@@ -330,14 +294,12 @@
                     <ct-section-body-row>
                         <form [formGroup]="evalStepForm" novalidate="novalidate">
                             <ng-container formArrayName="variables" *ngFor="let variableForm of evalStepForm.controls.variables?.value;let i = index; trackBy:trackByFn">
-                                <ct-flex justify-content="flex-start" gap="8px" style="width: 100%;" [formGroupName]="i">
-                                    <ct-flex-item style="width: 100%;">
-                                        <mat-form-field appearance="outline" style="width: 100%;">
-                                            <mat-label>Variable {{getNameOfField(i)}}, min 1 chars, required</mat-label>
-                                            <input matInput type="text" autocomplete="off" formControlName="value" placeholder="Value for variable"/>
-                                        </mat-form-field>
-                                    </ct-flex-item>
-                                </ct-flex>
+                                <div class="flex justify-content-flex-start gap-8px style-width: 100%;">
+                                    <mat-form-field appearance="outline" style="width: 100%;">
+    <mat-label>Variable {{getNameOfField(i)}}, min 1 chars, required</mat-label>
+    <input matInput type="text" autocomplete="off" formControlName="value" placeholder="Value for variable"/>
+</mat-form-field>
+                                </div>
                             </ng-container>
                             <mat-form-field appearance="outline" style="width: 100%;">
                                 <mat-label>Prompt for evaluating, min 3 chars, required</mat-label>
@@ -349,30 +311,28 @@
                 </ct-section-body>
                 <ct-section-footer>
                     <ct-section-footer-row>
-                        <ct-flex>
-                            <ct-flex-item style="width: 75%;">
-                                <mat-form-field appearance="outline" style="width: 100%;" disabled *ngIf="MhUtils.isNotNull(stepEvaluationState.prompt)">
-                                    <mat-label>Actual prompt:</mat-label>
-                                    <textarea matInput [value]="stepEvaluationState.prompt" cdkTextareaAutosize="cdkTextareaAutosize"
-                                              style="overflow:hidden" autocomplete="off" disabled></textarea>
-                                </mat-form-field>
-                                <mat-form-field appearance="outline" style="width: 100%;" disabled *ngIf="MhUtils.isNotNull(stepEvaluationState.result)">
-                                    <mat-label>Result of evaluation:</mat-label>
-                                    <textarea matInput [value]="stepEvaluationState.result" cdkTextareaAutosize="cdkTextareaAutosize"
-                                              style="overflow:hidden" autocomplete="off" disabled></textarea>
-                                </mat-form-field>
-                                <mat-form-field appearance="outline" style="width: 100%;" disabled *ngIf="MhUtils.isNotNull(stepEvaluationState.rawResult)">
-                                    <mat-label>Raw result of evaluation:</mat-label>
-                                    <textarea matInput [value]="stepEvaluationState.rawResult" cdkTextareaAutosize="cdkTextareaAutosize"
-                                              style="overflow:hidden" autocomplete="off" disabled></textarea>
-                                </mat-form-field>
-                                <mat-form-field appearance="outline" style="width: 100%;" disabled *ngIf="MhUtils.isNotNull(stepEvaluationState.error)">
-                                    <mat-label>Error:</mat-label>
-                                    <textarea matInput [value]="stepEvaluationState.error" cdkTextareaAutosize="cdkTextareaAutosize"
-                                              style="overflow:hidden" autocomplete="off" disabled></textarea>
-                                </mat-form-field>
-                            </ct-flex-item>
-                        </ct-flex>
+                        <div class="flex">
+                            <mat-form-field appearance="outline" style="width: 100%;" disabled *ngIf="MhUtils.isNotNull(stepEvaluationState.prompt)">
+    <mat-label>Actual prompt:</mat-label>
+    <textarea matInput [value]="stepEvaluationState.prompt" cdkTextareaAutosize="cdkTextareaAutosize"
+              style="overflow:hidden" autocomplete="off" disabled></textarea>
+</mat-form-field>
+<mat-form-field appearance="outline" style="width: 100%;" disabled *ngIf="MhUtils.isNotNull(stepEvaluationState.result)">
+    <mat-label>Result of evaluation:</mat-label>
+    <textarea matInput [value]="stepEvaluationState.result" cdkTextareaAutosize="cdkTextareaAutosize"
+              style="overflow:hidden" autocomplete="off" disabled></textarea>
+</mat-form-field>
+<mat-form-field appearance="outline" style="width: 100%;" disabled *ngIf="MhUtils.isNotNull(stepEvaluationState.rawResult)">
+    <mat-label>Raw result of evaluation:</mat-label>
+    <textarea matInput [value]="stepEvaluationState.rawResult" cdkTextareaAutosize="cdkTextareaAutosize"
+              style="overflow:hidden" autocomplete="off" disabled></textarea>
+</mat-form-field>
+<mat-form-field appearance="outline" style="width: 100%;" disabled *ngIf="MhUtils.isNotNull(stepEvaluationState.error)">
+    <mat-label>Error:</mat-label>
+    <textarea matInput [value]="stepEvaluationState.error" cdkTextareaAutosize="cdkTextareaAutosize"
+              style="overflow:hidden" autocomplete="off" disabled></textarea>
+</mat-form-field>
+                        </div>
                     </ct-section-footer-row>
                 </ct-section-footer>
             </ct-section>

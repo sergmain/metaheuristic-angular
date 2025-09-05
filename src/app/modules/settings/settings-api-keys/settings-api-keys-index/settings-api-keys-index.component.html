@@ -1,41 +1,31 @@
 <ct-section>
     <ct-section-body>
         <ct-section-body-row >
-            <ct-flex gap="16px">
-                <ct-flex-item class="vert-centered-flex">
-                    OPENAI_API_KEY:
-                </ct-flex-item>
+            <div class="flex gap-16px">
+                OPENAI_API_KEY:
                 <div *ngIf="editFormActive(); then editOpenaiKey else showOpenaiKey">here is ignored</div>
                 <ng-template #editOpenaiKey>
-                    <ct-flex-item class="vert-centered-flex key-input-field">
-                        <form [formGroup]="predefinedApiKeyForm" novalidate="novalidate">
-                            <mat-form-field appearance="outline" style="width: 100%;">
-                                <mat-label>OPENAI_API_KEY, required</mat-label>
-                                <input matInput type="text" autocomplete="off" formControlName="openaiKey"/>
-                            </mat-form-field>
-                        </form>
-                    </ct-flex-item>
-                    <ct-flex-item class="vert-centered-flex">
-                        <button mat-icon-button (click)="saveOpenaiKey()" matTooltip="Save OpenAI key" color="primary">
-                            <mat-icon>save</mat-icon>
-                        </button>
-                        <button mat-icon-button (click)="cancelEditingOpenaiKey()" matTooltip="Cancel editing" color="primary">
-                            <mat-icon>cancel</mat-icon>
-                        </button>
-                    </ct-flex-item>
+                    <form [formGroup]="predefinedApiKeyForm" novalidate="novalidate">
+    <mat-form-field appearance="outline" style="width: 100%;">
+        <mat-label>OPENAI_API_KEY, required</mat-label>
+        <input matInput type="text" autocomplete="off" formControlName="openaiKey"/>
+    </mat-form-field>
+</form>
+                    <button mat-icon-button (click)="saveOpenaiKey()" matTooltip="Save OpenAI key" color="primary">
+    <mat-icon>save</mat-icon>
+</button>
+<button mat-icon-button (click)="cancelEditingOpenaiKey()" matTooltip="Cancel editing" color="primary">
+    <mat-icon>cancel</mat-icon>
+</button>
                 </ng-template>
                 <ng-template #showOpenaiKey>
-                    <ct-flex-item class="vert-centered-flex">
-                        {{apiKeys.openaiKey}}
-                    </ct-flex-item>
-                    <ct-flex-item class="vert-centered-flex">
-                        <button mat-icon-button (click)="startEditingOpenaiKey()" matTooltip="Edit OPENAI_API_KEY" color="primary">
-                            <mat-icon>edit_document</mat-icon>
-                        </button>
-                    </ct-flex-item>
+                    {{apiKeys.openaiKey}}
+                    <button mat-icon-button (click)="startEditingOpenaiKey()" matTooltip="Edit OPENAI_API_KEY" color="primary">
+    <mat-icon>edit_document</mat-icon>
+</button>
                 </ng-template>
 
-            </ct-flex>
+            </div>
         </ct-section-body-row>
     </ct-section-body>
 </ct-section>
@@ -66,16 +56,12 @@
 
             <ct-section-footer>
                 <ct-section-footer-row>
-                    <ct-flex justify-content="flex-end" gap="8px">
-                        <ct-flex-item>
-                            <button mat-stroked-button="mat-stroked-button" routerLink="/settings">
-                                {{ 'main.Cancel' | translate }}</button>
-                        </ct-flex-item>
-                        <ct-flex-item>
-                            <button mat-flat-button="mat-flat-button" (click)="createKey()" color="primary"
-                                    [disabled]="notToCreateCustomForm()">{{ 'main.Change' | translate }}</button>
-                        </ct-flex-item>
-                    </ct-flex>
+                    <div class="flex justify-content-flex-end gap-8px">
+                        <button mat-stroked-button="mat-stroked-button" routerLink="/settings">
+    {{ 'main.Cancel' | translate }}</button>
+                        <button mat-flat-button="mat-flat-button" (click)="createKey()" color="primary"
+        [disabled]="notToCreateCustomForm()">{{ 'main.Change' | translate }}</button>
+                    </div>
                 </ct-section-footer-row>
             </ct-section-footer>
         </ct-section>

@@ -28,16 +28,12 @@
 
             <ct-section-footer>
                 <ct-section-footer-row>
-                    <ct-flex justify-content="flex-end" gap="8px">
-                        <ct-flex-item>
-                            <button mat-stroked-button="mat-stroked-button" routerLink="/settings">
-                                {{ 'main.Cancel' | translate }}</button>
-                        </ct-flex-item>
-                        <ct-flex-item>
-                            <button #button mat-flat-button="mat-flat-button" (click)="changePassword()" color="primary"
-                                    [disabled]="notToCreate()">{{ 'main.Change' | translate }}</button>
-                        </ct-flex-item>
-                    </ct-flex>
+                    <div class="flex justify-content-flex-end gap-8px">
+                        <button mat-stroked-button="mat-stroked-button" routerLink="/settings">
+    {{ 'main.Cancel' | translate }}</button>
+                        <button #button mat-flat-button="mat-flat-button" (click)="changePassword()" color="primary"
+        [disabled]="notToCreate()">{{ 'main.Change' | translate }}</button>
+                    </div>
                 </ct-section-footer-row>
             </ct-section-footer>
         </ct-section>

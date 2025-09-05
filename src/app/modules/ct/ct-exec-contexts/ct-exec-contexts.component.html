@@ -52,36 +52,25 @@
                     <ng-container matColumnDef="bts">
                         <th mat-header-cell="mat-header-cell" *matHeaderCellDef></th>
                         <td mat-cell="mat-cell" *matCellDef="let el">
-                            <ct-flex justify-content="flex-end" gap="9px">
-                                <ct-flex-item
-                                    *ngIf="(el.execState == execState.NONE) && (el.valid) && (response.sourceCodeValid)">
-                                    <button mat-flat-button="mat-flat-button" size="forTableRow" color="primary"
-                                        (click)="produce(el,$event)">Produce</button>
-                                </ct-flex-item>
-                                <ct-flex-item *ngIf="(el.execState == execState.PRODUCED) || (el.execState == execState.STOPPED)">
-                                    <button mat-icon-button size="forTableRow" color="primary"
-                                        (click)="start(el,$event)">
-                                        <mat-icon>play_arrow</mat-icon>
-                                    </button>
-                                </ct-flex-item>
-                                <ct-flex-item *ngIf="(el.execState == execState.STARTED)">
-                                    <button mat-icon-button size="forTableRow" color="primary"
-                                        (click)="stop(el,$event)">
-                                        <mat-icon>stop</mat-icon>
-                                    </button>
-                                </ct-flex-item>
-                                <ct-flex-item>
-                                    <button mat-icon-button (click)="stateOfTasks(el)" matTooltip="Tasks" color="primary">
-                                        <mat-icon>list</mat-icon>
-                                    </button>
-                                </ct-flex-item>
-                                <ct-flex-item>
-                                    <button mat-icon-button color="warn" size="forTableRow" matTooltip="Delete ExecContext"
-                                        [disabled]="el.__deleted" (click)="delete(el)">
-                                        <mat-icon>delete_forever</mat-icon>
-                                    </button>
-                                </ct-flex-item>
-                            </ct-flex>
+                            <div class="flex justify-content-flex-end gap-9px">
+                                <button mat-flat-button="mat-flat-button" size="forTableRow" color="primary"
+    (click)="produce(el,$event)" *ngIf="(el.execState == execState.NONE) && (el.valid) && (response.sourceCodeValid)">Produce</button>
+                                <button mat-icon-button size="forTableRow" color="primary"
+    (click)="start(el,$event)" *ngIf="(el.execState == execState.PRODUCED) || (el.execState == execState.STOPPED)">
+    <mat-icon>play_arrow</mat-icon>
+</button>
+                                <button mat-icon-button size="forTableRow" color="primary"
+    (click)="stop(el,$event)" *ngIf="(el.execState == execState.STARTED)">
+    <mat-icon>stop</mat-icon>
+</button>
+                                <button mat-icon-button (click)="stateOfTasks(el)" matTooltip="Tasks" color="primary">
+    <mat-icon>list</mat-icon>
+</button>
+                                <button mat-icon-button color="warn" size="forTableRow" matTooltip="Delete ExecContext"
+    [disabled]="el.__deleted" (click)="delete(el)">
+    <mat-icon>delete_forever</mat-icon>
+</button>
+                            </div>
                         </td>
                     </ng-container>
                     <tr mat-header-row="mat-header-row" *matHeaderRowDef="execContextColumnsToDisplay"></tr>
@@ -93,27 +82,19 @@
     </ct-section-body>
     <ct-section-footer>
         <ct-section-footer-row>
-            <ct-flex justify-content="space-between">
-                <ct-flex-item>
-                    <ct-flex justify-content="flex-start" gap="8px">
-                        <ct-flex-item>
-                            <button mat-flat-button="mat-flat-button" #prevTable (click)="prev()" disabled="disabled">
-                                <mat-icon>arrow_back_ios</mat-icon>
-                            </button>
-                        </ct-flex-item>
-                        <ct-flex-item>
-                            <button mat-flat-button="mat-flat-button" #nextTable (click)="next()" disabled="disabled">
-                                <mat-icon>arrow_forward_ios</mat-icon>
-                            </button>
-                        </ct-flex-item>
-                    </ct-flex>
-                </ct-flex-item>
-                <ct-flex-item>
-                    <a mat-flat-button="mat-flat-button" color="primary" [disabled]="!response"
-                        [routerLink]="['/dispatcher','source-codes',sourceCodeId,'exec-context','add']">Add Exec
-                        Context</a>
-                </ct-flex-item>
-            </ct-flex>
+            <div class="flex justify-content-space-between">
+                <div class="flex justify-content-flex-start gap-8px">
+            <button mat-flat-button="mat-flat-button" #prevTable (click)="prev()" disabled="disabled">
+            <mat-icon>arrow_back_ios</mat-icon>
+        </button>
+                        <button mat-flat-button="mat-flat-button" #nextTable (click)="next()" disabled="disabled">
+    <mat-icon>arrow_forward_ios</mat-icon>
+</button>
+                    </div>
+                <a mat-flat-button="mat-flat-button" color="primary" [disabled]="!response"
+    [routerLink]="['/dispatcher','source-codes',sourceCodeId,'exec-context','add']">Add Exec
+    Context</a>
+            </div>
         </ct-section-footer-row>
         <ct-section-footer-row *ngIf="modal">
             <mat-dialog-actions align="end">

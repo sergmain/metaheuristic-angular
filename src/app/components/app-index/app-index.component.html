@@ -18,15 +18,12 @@
 
 <ng-template #serverNotReadyTemplate>
     <div class="flex justify-content-center align-items-center">
-        <ct-flex-item>
-            <ct-section style="width: 500px; margin-top: 15px;">
-                <ct-section-body>
-                    <ct-section-body-row>
-                        <div class="flex justify-content-center align-items-center">
-                            <ct-flex-item>
-                                <button mat-flat-button *ngIf="!error" color="warn">Metaheuristic is initializing. Please, wait.</button>
-                                <button mat-flat-button *ngIf="error" color="warn">Metaheuristic failed to start. Try to re-launch it.</button>
-                            </ct-flex-item>
+        <ct-section style="width: 500px; margin-top: 15px;">
+    <ct-section-body>
+        <ct-section-body-row>
+            <div class="flex justify-content-center align-items-center">
+                                    <button mat-flat-button *ngIf="!error" color="warn">Metaheuristic is initializing. Please, wait.</button>
+                    <button mat-flat-button *ngIf="error" color="warn">Metaheuristic failed to start. Try to re-launch it.</button>
                         </div>
                     </ct-section-body-row>
                     <ct-section-body-row *ngIf="isStandalone()">
@@ -38,17 +35,15 @@
                             <ng-container matColumnDef="status">
                                 <th mat-header-cell *matHeaderCellDef>
                                     <div class="flex justify-content-center align-items-center">
-                                        <ct-flex-item>status</ct-flex-item>
+                                        status
                                     </div>
                                 </th>
                                 <td mat-cell *matCellDef="let element">
                                     <div class="flex justify-content-center align-items-center">
-                                        <ct-flex-item>
-                                            <div matTooltip="{{ element.status }}" class="dot-flashing" *ngIf="isStarted(element)"></div>
-                                            <mat-icon  matTooltip="{{ element.status }}" *ngIf="isNone(element)" color="primary">minimize</mat-icon>
-                                            <mat-icon  matTooltip="{{ element.status }}" *ngIf="isDone(element)" color="primary">done</mat-icon>
-                                            <mat-icon  matTooltip="{{ element.status }}" *ngIf="isError(element)" color="warn">error</mat-icon>
-                                        </ct-flex-item>
+                                        <div matTooltip="{{ element.status }}" class="dot-flashing" *ngIf="isStarted(element)"></div>
+<mat-icon  matTooltip="{{ element.status }}" *ngIf="isNone(element)" color="primary">minimize</mat-icon>
+<mat-icon  matTooltip="{{ element.status }}" *ngIf="isDone(element)" color="primary">done</mat-icon>
+<mat-icon  matTooltip="{{ element.status }}" *ngIf="isError(element)" color="warn">error</mat-icon>
                                     </div>
                                 </td>
                             </ng-container>
@@ -61,12 +56,10 @@
                     </ct-section-body-row>
                     <ct-section-body-row *ngIf="error && isStandalone()">
                         <div class="flex justify-content-center align-items-center gap-20px">
-                            <ct-flex-item>An error was encountered:</ct-flex-item>
-                            <ct-flex-item>
-                                <button mat-icon-button color="warn" (click)="copyErrorToClipboard()" matTooltip="Copy error to clipboard">
-                                    <mat-icon>content_copy</mat-icon>
-                                </button>
-                            </ct-flex-item>
+                            An error was encountered:
+                            <button mat-icon-button color="warn" (click)="copyErrorToClipboard()" matTooltip="Copy error to clipboard">
+    <mat-icon>content_copy</mat-icon>
+</button>
                         </div>
                     </ct-section-body-row>
                     <ct-section-body-row *ngIf="error && isStandalone()">
@@ -74,7 +67,6 @@
                     </ct-section-body-row>
                 </ct-section-body>
             </ct-section>
-        </ct-flex-item>
     </div>
 
 </ng-template>

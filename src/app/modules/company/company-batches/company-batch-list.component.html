@@ -1,14 +1,10 @@
 <ct-section *ngIf="batchesResult">
     <ct-section-header>
         <ct-section-header-row>
-            <ct-flex justify-content="space-between">
-                <ct-flex-item>
-                    <ct-heading> Batch </ct-heading>
-                </ct-flex-item>
-                <ct-flex-item>
-                    <ng-container *ngTemplateOutlet="uploadButtonTemplate"></ng-container>
-                </ct-flex-item>
-            </ct-flex>
+            <div class="flex justify-content-space-between">
+                <ct-heading> Batch </ct-heading>
+                <ng-container *ngTemplateOutlet="uploadButtonTemplate"></ng-container>
+            </div>
         </ct-section-header-row>
     </ct-section-header>
     <ct-section-body>
@@ -92,42 +88,34 @@
                     <ng-container matColumnDef="bts">
                         <th mat-header-cell *matHeaderCellDef> </th>
                         <td mat-cell *matCellDef="let el">
-                            <ct-flex justify-content="flex-end" gap="9px">
-                                <ct-flex-item>
-                                    <button mat-flat-button 
-                                        [routerLink]="['../','batch',el.batch.id]"
-                                        [disabled]="!isFinished(el) || isExecContextDeleted(el)" size="forTableRow"
-                                        color="primary">Status</button>
-                                </ct-flex-item>
-                                <ct-flex-item>
-                                    <button mat-flat-button 
-                                        size="forTableRow" 
-                                        color="primary"
-                                        [disabled]="!isFinished(el) || isExecContextDeleted(el)"
-                                        (click)="downloadResult(el)">
-                                        Result
-                                    </button>
-                                </ct-flex-item>
-                                <ct-flex-item>
-                                    <button mat-flat-button size="forTableRow" color="primary"
-                                        (click)="downloadOriginFile(el)">
-                                        Origin File
-                                    </button>
-                                </ct-flex-item>
+                            <div class="flex justify-content-flex-end gap-9px">
+                                <button mat-flat-button 
+    [routerLink]="['../','batch',el.batch.id]"
+    [disabled]="!isFinished(el) || isExecContextDeleted(el)" size="forTableRow"
+    color="primary">Status</button>
+                                <button mat-flat-button 
+    size="forTableRow" 
+    color="primary"
+    [disabled]="!isFinished(el) || isExecContextDeleted(el)"
+    (click)="downloadResult(el)">
+    Result
+</button>
+                                <button mat-flat-button size="forTableRow" color="primary"
+    (click)="downloadOriginFile(el)">
+    Origin File
+</button>
                                 <ng-container *ngIf="isRole.MasterOperator">
-                                    <ct-flex-item>
-                                        <button mat-flat-button 
-                                            color="warn" 
-                                            size="forTableRow" 
-                                            (click)="deleteOne(el)"
-                                            title="Delete" 
-                                            [disabled]="!(el.batch.deleted && isFinished(el))">
-                                            <mat-icon>delete</mat-icon>
-                                        </button>
-                                    </ct-flex-item>
+                                    <button mat-flat-button 
+    color="warn" 
+    size="forTableRow" 
+    (click)="deleteOne(el)"
+    title="Delete" 
+    [disabled]="!(el.batch.deleted && isFinished(el))">
+    <mat-icon>delete</mat-icon>
+</button>
                                 </ng-container>
                    
-                            </ct-flex>
+                            </div>
                         </td>
                     </ng-container>
                    
@@ -154,22 +142,16 @@
             </ct-section-footer-row>
         </ng-container>
         <ct-section-footer-row>
-            <ct-flex justify-content="space-between">
-                <ct-flex-item>
-                    <ct-table-pagination (prev)="prevPage()" (next)="nextPage()"
-                        [pageableDefault]="batchesResult.batches"></ct-table-pagination>
-                </ct-flex-item>
+            <div class="flex justify-content-space-between">
+                <ct-table-pagination (prev)="prevPage()" (next)="nextPage()"
+    [pageableDefault]="batchesResult.batches"></ct-table-pagination>
 
                 <ng-container *ngIf="downloadSelector.size > 0">
-                    <ct-flex-item>
-                        <ng-container *ngTemplateOutlet="downloadButtonsTemplate"></ng-container>
-                    </ct-flex-item>
+                    <ng-container *ngTemplateOutlet="downloadButtonsTemplate"></ng-container>
                 </ng-container>
 
-                <ct-flex-item>
-                    <ng-container *ngTemplateOutlet="uploadButtonTemplate"></ng-container>
-                </ct-flex-item>
-            </ct-flex>
+                <ng-container *ngTemplateOutlet="uploadButtonTemplate"></ng-container>
+            </div>
         </ct-section-footer-row>
     </ct-section-footer>
 </ct-section>
@@ -177,29 +159,23 @@
 
 
 <ng-template #downloadButtonsTemplate>
-    <ct-flex justify-content="center" gap="unit(1)" align-items="center">
-        <ct-flex-item>
-            <div class="selected-count">
-                Selected × {{downloadSelector.size}}
-            </div>
-        </ct-flex-item>
-        <ct-flex-item>
-            <button mat-flat-button 
-                color="primary" 
-                (click)="downloadResults()" 
-                [disabled]="isLoading">
-                Download
-            </button>
-        </ct-flex-item>
-        <ct-flex-item>
-            <button mat-flat-button 
-                [disabled]="isLoading"
-                (click)="downloadSelector.clear()"
-                color="primary">
-                Discard
-            </button>
-        </ct-flex-item>
-    </ct-flex>
+    <div class="flex justify-content-center gap-unit(1) align-items-center">
+        <div class="selected-count">
+    Selected × {{downloadSelector.size}}
+</div>
+        <button mat-flat-button 
+    color="primary" 
+    (click)="downloadResults()" 
+    [disabled]="isLoading">
+    Download
+</button>
+        <button mat-flat-button 
+    [disabled]="isLoading"
+    (click)="downloadSelector.clear()"
+    color="primary">
+    Discard
+</button>
+    </div>
 </ng-template>
 
 

@@ -15,14 +15,10 @@
             </ct-section-body>
             <ct-section-footer>
                 <ct-section-footer-row>
-                    <ct-flex justify-content="flex-end" gap="8px">
-                        <ct-flex-item>
-                            <button mat-stroked-button="mat-stroked-button" (click)="back()">Back</button>
-                        </ct-flex-item>
-                        <ct-flex-item>
-                            <button mat-flat-button="mat-flat-button" (click)="validate()" color="primary">Validate</button>
-                        </ct-flex-item>
-                    </ct-flex>
+                    <div class="flex justify-content-flex-end gap-8px">
+                        <button mat-stroked-button="mat-stroked-button" (click)="back()">Back</button>
+                        <button mat-flat-button="mat-flat-button" (click)="validate()" color="primary">Validate</button>
+                    </div>
                 </ct-section-footer-row>
             </ct-section-footer>
         </ct-section>

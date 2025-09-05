@@ -32,14 +32,12 @@
                     <ng-container matColumnDef="bts">
                         <th mat-header-cell="mat-header-cell" *matHeaderCellDef> </th>
                         <td mat-cell="mat-cell" *matCellDef="let el">
-                            <ct-flex justify-content="flex-end" gap="9px">
-                                <ct-flex-item>
-                                    <button mat-flat-button="mat-flat-button" color="warn" size="forTableRow"
-                                        (click)="delete(el)" title="Delete">
-                                        <mat-icon>delete</mat-icon>
-                                    </button>
-                                </ct-flex-item>
-                            </ct-flex>
+                            <div class="flex justify-content-flex-end gap-9px">
+                                <button mat-flat-button="mat-flat-button" color="warn" size="forTableRow"
+    (click)="delete(el)" title="Delete">
+    <mat-icon>delete</mat-icon>
+</button>
+                            </div>
                         </td>
                     </ng-container>
                     <tr mat-header-row="mat-header-row" *matHeaderRowDef="columnsToDisplay"> </tr>

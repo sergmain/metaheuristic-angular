@@ -1,11 +1,9 @@
 <ct-section *ngIf="errorsResult">
     <ct-section-header>
         <ct-section-header-row>
-            <ct-flex justify-content="space-between">
-                <ct-flex-item>
-                    <ct-heading>Errors</ct-heading>
-                </ct-flex-item>
-            </ct-flex>
+            <div class="flex justify-content-space-between">
+                <ct-heading>Errors</ct-heading>
+            </div>
         </ct-section-header-row>
     </ct-section-header>
     <ct-section-body>
@@ -32,14 +30,12 @@
     </ct-section-body>
     <ct-section-footer>
         <ct-section-footer-row>
-            <ct-flex justify-content="space-between">
-                <ct-flex-item>
-                    <ct-flex justify-content="flex-start" gap="8px">
-                        <ct-table-pagination (prev)="prevPage()" (next)="nextPage()"
-                            [pageableDefault]="errorsResult.errors"></ct-table-pagination>
-                    </ct-flex>
-                </ct-flex-item>
-            </ct-flex>
+            <div class="flex justify-content-space-between">
+                <div class="flex justify-content-flex-start gap-8px">
+    <ct-table-pagination (prev)="prevPage()" (next)="nextPage()"
+        [pageableDefault]="errorsResult.errors"></ct-table-pagination>
+</div>
+            </div>
         </ct-section-footer-row>
     </ct-section-footer>
 </ct-section>
