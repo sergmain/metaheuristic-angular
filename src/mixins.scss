@@ -1,13 +1,14 @@
+@use "sass:map";
 @use '@angular/material' as mat;
 
 
 @mixin section($theme) {
 
-    $primary: map-get($theme, primary);
-    $accent: map-get($theme, accent);
-    $warn: map-get($theme, warn);
-    $foreground: map-get($theme, foreground);
-    $background: map-get($theme, background);
+    $primary: map.get($theme, primary);
+    $accent: map.get($theme, accent);
+    $warn: map.get($theme, warn);
+    $foreground: map.get($theme, foreground);
+    $background: map.get($theme, background);
 
     .section {
         margin-bottom: 1.5em;
