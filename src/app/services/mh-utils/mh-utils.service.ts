@@ -1,4 +1,4 @@
-import {HttpHeaders} from '@angular/common/http';
+import { HttpHeaders } from '@angular/common/http';
 import {Injectable} from '@angular/core';
 // import * as contentDisposition from 'content-disposition';
 

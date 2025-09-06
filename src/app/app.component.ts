@@ -4,7 +4,7 @@ import { UIStateComponent } from '@app/models/UIStateComponent';
 import { AuthenticationService, AuthenticationServiceEventChange, AuthenticationServiceEventLogout } from '@services/authentication';
 import { BatchExecStatusService } from '@services/batch/BatchExecStatusService';
 import { SettingsService, SettingsServiceEventChange } from '@services/settings/settings.service';
-import {HttpClient, HttpHeaders, HttpStatusCode} from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpStatusCode } from '@angular/common/http';
 import {first, interval, Observable, of, Subscription, timeout} from 'rxjs';
 import {environment} from '@src/environments/environment';
 import {RuntimeService} from '@services/runtime/runtime.service';

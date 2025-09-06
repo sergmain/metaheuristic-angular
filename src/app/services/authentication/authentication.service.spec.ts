@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import {HttpClient} from '@angular/common/http';
 import { fakeAsync, tick } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { asyncData } from '@src/testing/async-observable-helpers';

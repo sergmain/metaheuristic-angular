@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import {HttpClient} from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { generateFormData as formData } from '@app/helpers/generateFormData';
 import { environment } from '@src/environments/environment';

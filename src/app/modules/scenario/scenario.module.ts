@@ -15,7 +15,7 @@ import {ScenarioStepsComponent} from "@app/modules/scenario/steps/scenario-steps
 import {ScenarioStepAddComponent} from "@app/modules/scenario/step-add/scenario-step-add.component";
 import {DragDropModule} from "@angular/cdk/drag-drop";
 import {MatTableModule} from "@angular/material/table";
-import {FlexLayoutModule} from "@angular/flex-layout";
+// import {FlexLayoutModule} from "@angular/flex-layout";
 import {ScenarioDetailsComponent} from '@app/modules/scenario/scenario-details/scenario-details.component';
 import {ScenarioMoveComponent} from '@app/modules/scenario/scenario-move/scenario-move.component';
 
@@ -103,8 +103,8 @@ export class ScenarioGroupRoutingModule { }
         ReactiveFormsModule,
         TranslateModule.forChild({}),
         DragDropModule,
-        MatTableModule,
-        FlexLayoutModule
+        MatTableModule
+        // ,FlexLayoutModule
     ],
     declarations: [
         ScenarioGroupsComponent, ScenariosComponent,

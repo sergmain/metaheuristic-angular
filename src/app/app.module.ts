@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { HttpClient, HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpClient, HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
@@ -32,8 +32,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
 }
 
 
-@NgModule({
-    declarations: [
+@NgModule({ declarations: [
         AppComponent,
         AppViewComponent,
         AppIndexComponent,
@@ -45,8 +44,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
         LoremIndexComponent,
         AppDialogConfirmationComponent,
     ],
-    imports: [
-        CommonModule,
+    bootstrap: [AppComponent], imports: [CommonModule,
         BrowserModule,
         AppRoutingModule,
         BrowserAnimationsModule,
@@ -55,8 +53,6 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
         CopyRightModule,
         FormsModule,
         ReactiveFormsModule,
-        HttpClientModule,
-
         TranslateModule.forRoot({
             loader: {
                 provide: TranslateLoader,
@@ -64,9 +60,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
                 deps: [HttpClient]
             }
         }),
-        SimpleNotificationsModule.forRoot()
-    ],
-    providers: [
+        SimpleNotificationsModule.forRoot()], providers: [
         AuthGuard,
         AuthenticationService,
         AccountsService,
@@ -79,8 +73,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
             provide: HTTP_INTERCEPTORS,
             useClass: NotificationsInterceptor,
             multi: true
-        }
-    ],
-    bootstrap: [AppComponent]
-})
+        },
+        provideHttpClient(withInterceptorsFromDi())
+    ] })
 export class AppModule { }
