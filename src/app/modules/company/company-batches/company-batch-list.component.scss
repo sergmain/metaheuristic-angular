@@ -1,4 +1,4 @@
-@import "../company.sass";
+@use "../company" as *;
 
 mat-checkbox {
     position: relative

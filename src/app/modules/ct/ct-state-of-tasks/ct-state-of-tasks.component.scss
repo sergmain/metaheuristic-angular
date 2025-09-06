@@ -1,4 +1,4 @@
-@import '../ct.sass';
+@use '../ct' as *;
 
 :host{
     font-family: $font-family-monospace

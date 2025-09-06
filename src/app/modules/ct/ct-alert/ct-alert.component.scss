@@ -1,4 +1,4 @@
-@import "../ct";
+@use "../ct" as *;
 
 :host {
     display: block;

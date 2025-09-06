@@ -1,4 +1,4 @@
-@import "../scenario.sass";
+@use "../scenario" as *;
 
 .mat-mdc-form-field {
   margin-right: 4px;

@@ -1,4 +1,4 @@
-@import '../source-codes.sass';
+@use '../source-codes' as *;
 
 .info-table {
     td {

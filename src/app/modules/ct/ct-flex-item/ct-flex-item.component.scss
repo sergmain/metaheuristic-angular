@@ -1,5 +1,5 @@
 @use "sass:math";
-@import '../../../../variables.scss';
+@use '../../../../variables' as *;
 
 :host-context([gap="unit(1)"]) {
     margin: math.div(unit(1), 2);

@@ -17,7 +17,7 @@
     "build4.2 ng build --aot --configuration production-standalone": "ng build --aot --configuration production-standalone",
     "build4.3 ng build --aot --configuration standalone": "ng build --aot --configuration standalone",
     "build5": "ng build --aot",
-    "build6": "ng build --configuration development",
+    "build6": "set SASS_QUIET_DEPS=true && ng build --configuration development",
     "build8": "npm install -g npm@9.8.1",
     "update1": "ng update @angular/core@15 @angular/cli@15",
     "update2": "ng update @angular/core @angular/cli",

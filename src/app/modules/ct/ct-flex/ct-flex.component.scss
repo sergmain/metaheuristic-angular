@@ -1,5 +1,5 @@
 @use "sass:math";
-@import '../../../../variables.scss';
+@use '../../../../variables' as *;
 
 :host {
     display: flex;

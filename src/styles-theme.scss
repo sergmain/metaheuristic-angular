@@ -1,8 +1,8 @@
 @use '@angular/material' as mat;
 
-@import 'mixins.scss';
-@import './theme-palettes/dark.scss';
-@import './theme-palettes/light.scss';
+@use 'mixins' as *;
+@use './theme-palettes/dark' as *;
+@use './theme-palettes/light' as *;
 
 @include mat.elevation-classes();
 @include mat.app-background();

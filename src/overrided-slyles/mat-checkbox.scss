@@ -1,4 +1,6 @@
-@import "../variables.scss";
+@use "../variables" as *;
+@forward '../variables';
+
 body {
     mat-checkbox[disabled] {
         opacity: 0.25;

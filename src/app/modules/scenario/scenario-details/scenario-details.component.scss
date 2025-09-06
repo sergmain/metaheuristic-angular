@@ -1,4 +1,5 @@
-@import "../scenario.sass";
+@use '../../../../variables' as *;
+@use "../scenario" as *;
 
 .mat-mdc-form-field {
   margin-right: 4px;

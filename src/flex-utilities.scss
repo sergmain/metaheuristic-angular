@@ -1,5 +1,5 @@
 // Flexbox utility classes to replace ct-flex components
-@import 'variables.scss';
+@use 'variables' as *;
 
 // Base flex container
 .flex {
