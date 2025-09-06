@@ -4,7 +4,8 @@ import { ActivatedRoute } from '@angular/router';
 @Component({
     selector: 'experiment-state',
     templateUrl: './experiment-state.component.html',
-    styleUrls: ['./experiment-state.component.sass']
+    styleUrls: ['./experiment-state.component.sass'],
+    standalone: false
 })
 export class ExperimentStateComponent implements OnInit {
     sourceCodeId: string;

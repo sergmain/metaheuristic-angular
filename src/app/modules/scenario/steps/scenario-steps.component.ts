@@ -17,7 +17,8 @@ import {CdkDragDrop} from "@angular/cdk/drag-drop";
 @Component({
     selector: 'scenario-steps',
     templateUrl: './scenario-steps.component.html',
-    styleUrls: ['./scenario-steps.component.sass']
+    styleUrls: ['./scenario-steps.component.sass'],
+    standalone: false
 })
 export class ScenarioStepsComponent extends UIStateComponent implements OnInit {
     readonly states = LoadStates;

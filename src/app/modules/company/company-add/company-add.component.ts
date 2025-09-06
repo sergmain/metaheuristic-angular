@@ -8,7 +8,8 @@ import { OperationStatus } from '@src/app/enums/OperationStatus';
 @Component({
     selector: 'company-add',
     templateUrl: './company-add.component.html',
-    styleUrls: ['./company-add.component.sass']
+    styleUrls: ['./company-add.component.sass'],
+    standalone: false
 })
 export class CompanyAddComponent {
     operationStatusRest: OperationStatusRest;

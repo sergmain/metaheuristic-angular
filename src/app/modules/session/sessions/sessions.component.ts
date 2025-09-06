@@ -9,9 +9,10 @@ import {ConfirmationDialogMethod} from "@src/app/components/app-dialog-confirmat
 import {MatDialog} from "@angular/material/dialog";
 
 @Component({
-  selector: 'sessions',
-  templateUrl: './sessions.component.html',
-  styleUrls: ['./sessions.component.sass']
+    selector: 'sessions',
+    templateUrl: './sessions.component.html',
+    styleUrls: ['./sessions.component.sass'],
+    standalone: false
 })
 export class SessionsComponent extends UIStateComponent implements OnInit {
 //   columnsToDisplay: string[] = ['sessionId', 'startedOn', 'finishedOn',

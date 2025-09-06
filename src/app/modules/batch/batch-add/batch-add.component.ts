@@ -16,7 +16,8 @@ import { CtFileUploadComponent } from '../../ct/ct-file-upload/ct-file-upload.co
 @Component({
     selector: 'batch-add',
     templateUrl: './batch-add.component.html',
-    styleUrls: ['./batch-add.component.scss']
+    styleUrls: ['./batch-add.component.scss'],
+    standalone: false
 })
 
 export class BatchAddComponent extends UIStateComponent implements OnInit, OnDestroy {

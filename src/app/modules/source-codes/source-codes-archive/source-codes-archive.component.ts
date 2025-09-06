@@ -15,7 +15,8 @@ import { CtTableComponent } from '../../ct/ct-table/ct-table.component';
 @Component({
     selector: 'source-codes-archive',
     templateUrl: './source-codes-archive.component.html',
-    styleUrls: ['./source-codes-archive.component.sass']
+    styleUrls: ['./source-codes-archive.component.sass'],
+    standalone: false
 })
 export class SourceCodesArchiveComponent extends UIStateComponent implements OnInit {
     sourceCodesResult: SourceCodesResult;

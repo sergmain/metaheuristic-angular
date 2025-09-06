@@ -11,7 +11,8 @@ import {AuthService} from "@services/auth/auth.service";
 @Component({
     selector: 'auth-add',
     templateUrl: './auth-add.component.html',
-    styleUrls: ['./auth-add.component.scss']
+    styleUrls: ['./auth-add.component.scss'],
+    standalone: false
 })
 
 export class AuthAddComponent {

@@ -12,7 +12,8 @@ import {MatDialog} from '@angular/material/dialog';
 @Component({
     selector: 'scenarios',
     templateUrl: './scenarios.component.html',
-    styleUrls: ['./scenarios.component.css']
+    styleUrls: ['./scenarios.component.css'],
+    standalone: false
 })
 export class ScenariosComponent extends UIStateComponent implements OnInit {
     dataSource: MatTableDataSource<SimpleScenario> = new MatTableDataSource<SimpleScenario>([]);

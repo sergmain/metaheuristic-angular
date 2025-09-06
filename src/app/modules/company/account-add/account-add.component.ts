@@ -9,7 +9,8 @@ import { OperationStatus } from '@src/app/enums/OperationStatus';
 @Component({
     selector: 'account-add',
     templateUrl: './account-add.component.html',
-    styleUrls: ['./account-add.component.sass']
+    styleUrls: ['./account-add.component.sass'],
+    standalone: false
 })
 export class AccountAddComponent implements OnInit {
     accountResult: AccountResult;

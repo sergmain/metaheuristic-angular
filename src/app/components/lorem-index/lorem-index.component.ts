@@ -5,7 +5,8 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 @Component({
     selector: 'lorem-index',
     templateUrl: './lorem-index.component.html',
-    styleUrls: ['./lorem-index.component.sass']
+    styleUrls: ['./lorem-index.component.sass'],
+    standalone: false
 })
 export class LoremIndexComponent {
     content: SafeHtml;

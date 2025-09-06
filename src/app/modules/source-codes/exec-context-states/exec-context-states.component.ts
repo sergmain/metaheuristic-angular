@@ -4,7 +4,8 @@ import { ActivatedRoute } from '@angular/router';
 @Component({
     selector: 'exec-context-states',
     templateUrl: './exec-context-states.component.html',
-    styleUrls: ['./exec-context-states.component.scss']
+    styleUrls: ['./exec-context-states.component.scss'],
+    standalone: false
 })
 export class ExecContextStatesComponent implements OnInit {
 

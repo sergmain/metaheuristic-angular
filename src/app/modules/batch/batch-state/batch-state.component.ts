@@ -2,9 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
-  selector: 'batch-state',
-  templateUrl: './batch-state.component.html',
-  styleUrls: ['./batch-state.component.sass']
+    selector: 'batch-state',
+    templateUrl: './batch-state.component.html',
+    styleUrls: ['./batch-state.component.sass'],
+    standalone: false
 })
 export class BatchStateComponent {
   sourceCodeId: string;

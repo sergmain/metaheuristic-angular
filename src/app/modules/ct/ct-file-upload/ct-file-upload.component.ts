@@ -5,7 +5,8 @@ import { TranslateService } from '@ngx-translate/core';
 @Component({
     selector: 'ct-file-upload',
     templateUrl: './ct-file-upload.component.html',
-    styleUrls: ['./ct-file-upload.component.scss']
+    styleUrls: ['./ct-file-upload.component.scss'],
+    standalone: false
 })
 export class CtFileUploadComponent implements OnInit, OnChanges {
     @Output() changed: EventEmitter<string> = new EventEmitter<string>();

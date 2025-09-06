@@ -6,11 +6,12 @@ import { Options, Position } from '../../interfaces/options.type';
 import { NotificationsService } from '../../services/notifications.service';
 
 @Component({
-  selector: 'simple-notifications',
-  encapsulation: ViewEncapsulation.None,
-  templateUrl: './simple-notifications.component.html',
-  styleUrls: ['./simple-notifications.component.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+    selector: 'simple-notifications',
+    encapsulation: ViewEncapsulation.None,
+    templateUrl: './simple-notifications.component.html',
+    styleUrls: ['./simple-notifications.component.css'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
 export class SimpleNotificationsComponent implements OnInit, OnDestroy {
   constructor(

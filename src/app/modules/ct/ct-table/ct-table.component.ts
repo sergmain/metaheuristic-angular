@@ -11,7 +11,8 @@ import {
     // eslint-disable-next-line @angular-eslint/component-selector
     selector: 'ct-table',
     templateUrl: './ct-table.component.html',
-    styleUrls: ['./ct-table.component.scss']
+    styleUrls: ['./ct-table.component.scss'],
+    standalone: false
 })
 export class CtTableComponent implements OnInit, OnDestroy, OnChanges {
     @Input() isWaiting: boolean;

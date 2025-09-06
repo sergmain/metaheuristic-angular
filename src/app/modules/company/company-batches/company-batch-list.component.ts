@@ -23,7 +23,8 @@ import { BatchService } from '@src/app/services/batch/batch.service';
 @Component({
     selector: 'company-batch-list',
     templateUrl: './company-batch-list.component.html',
-    styleUrls: ['./company-batch-list.component.scss']
+    styleUrls: ['./company-batch-list.component.scss'],
+    standalone: false
 })
 export class CompanyBatchListComponent extends UIStateComponent implements OnInit {
     companyUniqueId: string;

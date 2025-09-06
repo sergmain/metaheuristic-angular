@@ -19,6 +19,7 @@ import {Subscription} from 'rxjs';
     selector: 'chat-new',
     templateUrl: './chat-new.component.html',
     styleUrls: ['./chat-new.component.scss'],
+    standalone: false
 })
 // DO NOT REMOVE '-new' FROM NAME OF COMPONENT
 export class ChatNewComponent extends UIStateComponent implements OnInit, OnDestroy {

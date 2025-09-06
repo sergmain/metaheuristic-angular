@@ -14,7 +14,8 @@ import {ScenarioService} from '@services/scenario/scenario.service';
 @Component({
     selector: 'scenario-add',
     templateUrl: './scenario-add.component.html',
-    styleUrls: ['./scenario-add.component.scss']
+    styleUrls: ['./scenario-add.component.scss'],
+    standalone: false
 })
 
 export class ScenarioAddComponent extends UIStateComponent implements OnInit, OnDestroy {

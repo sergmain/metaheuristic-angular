@@ -11,7 +11,8 @@ import {KbService} from "@services/kb/kb.service";
 @Component({
     selector: 'kb-add',
     templateUrl: './kb-add.component.html',
-    styleUrls: ['./kb-add.component.scss']
+    styleUrls: ['./kb-add.component.scss'],
+    standalone: false
 })
 
 export class KbAddComponent {

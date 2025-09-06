@@ -10,6 +10,7 @@ import { GlobalVariablesResult } from '@src/app/services/global-variables/Global
     selector: 'global-variables',
     templateUrl: './global-variables.component.html',
     styleUrls: ['./global-variables.component.scss'],
+    standalone: false
 })
 
 export class GlobalVariablesComponent implements OnInit {

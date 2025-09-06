@@ -10,9 +10,10 @@ import {EvaluationService} from "@services/evaluation/evaluation.service";
 import {SimpleApi} from "@services/api/SimpleApi";
 
 @Component({
-  selector: 'evaluations',
-  templateUrl: './evaluations.component.html',
-  styleUrls: ['./evaluations.component.sass']
+    selector: 'evaluations',
+    templateUrl: './evaluations.component.html',
+    styleUrls: ['./evaluations.component.sass'],
+    standalone: false
 })
 export class EvaluationsComponent extends UIStateComponent implements OnInit {
   columnsToDisplay: string[] = ['evaluationId', 'code', 'createdOn', 'bts'];

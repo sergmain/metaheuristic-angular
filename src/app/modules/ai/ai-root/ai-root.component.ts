@@ -8,7 +8,8 @@ import { SettingsService, SettingsServiceEventChange } from '@src/app/services/s
 @Component({
     selector: 'ai-root',
     templateUrl: './ai-root.component.html',
-    styleUrls: ['./ai-root.component.sass']
+    styleUrls: ['./ai-root.component.sass'],
+    standalone: false
 })
 export class AiRootComponent extends UIStateComponent implements OnInit, OnDestroy {
     settings: Settings;

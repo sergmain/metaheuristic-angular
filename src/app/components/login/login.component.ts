@@ -6,7 +6,8 @@ import {environment} from '@src/environments/environment';
 @Component({
     selector: 'login-view',
     templateUrl: './login.component.html',
-    styleUrls: ['./login.component.scss']
+    styleUrls: ['./login.component.scss'],
+    standalone: false
 })
 export class LoginComponent {
 

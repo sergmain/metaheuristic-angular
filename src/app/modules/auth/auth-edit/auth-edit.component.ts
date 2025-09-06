@@ -10,7 +10,8 @@ import {MIN_PROMPT_LEN} from '@app/modules/mh-consts';
 @Component({
     selector: 'auth-edit',
     templateUrl: './auth-edit.component.html',
-    styleUrls: ['./auth-edit.component.scss']
+    styleUrls: ['./auth-edit.component.scss'],
+    standalone: false
 })
 
 export class AuthEditComponent implements OnInit {

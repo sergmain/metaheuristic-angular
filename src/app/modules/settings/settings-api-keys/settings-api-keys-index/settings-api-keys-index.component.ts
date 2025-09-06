@@ -15,6 +15,7 @@ import {Subscription} from 'rxjs';
     selector: "settings-api-keys-index",
     templateUrl: './settings-api-keys-index.component.html',
     styleUrls: ['./settings-api-keys-index.component.scss'],
+    standalone: false
 })
 export class SettingsApiKeysIndexComponent extends UIStateComponent implements OnInit {
     protected readonly MhUtils = MhUtils;

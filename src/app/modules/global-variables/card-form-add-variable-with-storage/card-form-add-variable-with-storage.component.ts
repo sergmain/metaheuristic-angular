@@ -7,7 +7,8 @@ import { GlobalVariablesService } from '@src/app/services/global-variables/globa
 @Component({
     selector: 'card-form-add-variable-with-storage',
     templateUrl: './card-form-add-variable-with-storage.component.html',
-    styleUrls: ['./card-form-add-variable-with-storage.component.scss']
+    styleUrls: ['./card-form-add-variable-with-storage.component.scss'],
+    standalone: false
 })
 export class CardFormAddVariableWithStorageComponent {
 

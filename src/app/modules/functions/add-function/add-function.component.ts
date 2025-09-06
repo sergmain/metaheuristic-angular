@@ -9,7 +9,8 @@ import {MatButton} from '@angular/material/button';
 @Component({
     selector: 'add-function',
     templateUrl: './add-function.component.html',
-    styleUrls: ['./add-function.component.scss']
+    styleUrls: ['./add-function.component.scss'],
+    standalone: false
 })
 
 export class AddFunctionComponent {

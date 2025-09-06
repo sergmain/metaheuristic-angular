@@ -11,7 +11,8 @@ export interface MenuItem {
 @Component({
     selector: 'ct-back-button',
     templateUrl: './ct-back-button.component.html',
-    styleUrls: ['./ct-back-button.component.sass']
+    styleUrls: ['./ct-back-button.component.sass'],
+    standalone: false
 })
 export class CtBackButtonComponent implements OnInit, OnDestroy {
 

@@ -8,7 +8,8 @@ import { SettingsService, SettingsServiceEventChange } from '@src/app/services/s
 @Component({
     selector: 'dispatcher-root',
     templateUrl: './dispatcher-root.component.html',
-    styleUrls: ['./dispatcher-root.component.sass']
+    styleUrls: ['./dispatcher-root.component.sass'],
+    standalone: false
 })
 export class DispatcherRootComponent extends UIStateComponent implements OnInit, OnDestroy {
     settings: Settings;

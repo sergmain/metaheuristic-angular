@@ -5,7 +5,8 @@ import {ActivatedRoute} from '@angular/router';
 @Component({
     selector: 'exec-contexts',
     templateUrl: './exec-contexts.component.html',
-    styleUrls: ['./exec-contexts.component.scss']
+    styleUrls: ['./exec-contexts.component.scss'],
+    standalone: false
 })
 export class ExecContextsComponent {
     sourceCodeId: string;

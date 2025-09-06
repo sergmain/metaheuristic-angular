@@ -9,7 +9,8 @@ import {environment} from '@src/environments/environment';
 @Component({
     selector: 'app-index',
     templateUrl: './app-index.component.html',
-    styleUrls: ['./app-index.component.scss']
+    styleUrls: ['./app-index.component.scss'],
+    standalone: false
 })
 export class AppIndexComponent {
 

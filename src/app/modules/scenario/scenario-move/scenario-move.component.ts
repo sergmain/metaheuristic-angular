@@ -23,7 +23,8 @@ export enum MoveState {
 @Component({
     selector: 'scenario-move',
     templateUrl: 'scenario-move.component.html',
-    styleUrls: ['scenario-move.component.scss']
+    styleUrls: ['scenario-move.component.scss'],
+    standalone: false
 })
 export class ScenarioMoveComponent extends UIStateComponent implements OnInit, OnDestroy {
 

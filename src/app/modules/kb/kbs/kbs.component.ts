@@ -9,9 +9,10 @@ import {KbService} from "@services/kb/kb.service";
 import {SimpleKb} from "@services/kb/SimpleKb";
 
 @Component({
-  selector: 'kbs',
-  templateUrl: './kbs.component.html',
-  styleUrls: ['./kbs.component.scss']
+    selector: 'kbs',
+    templateUrl: './kbs.component.html',
+    styleUrls: ['./kbs.component.scss'],
+    standalone: false
 })
 export class KbsComponent extends UIStateComponent implements OnInit, ConfirmationDialogInterface {
   columnsToDisplay: string[] = ['id', 'code', 'status', 'bts'];

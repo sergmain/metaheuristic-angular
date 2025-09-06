@@ -7,7 +7,8 @@ import { CtFileUploadComponent } from '../../ct/ct-file-upload/ct-file-upload.co
 @Component({
     selector: 'card-form-add-variable',
     templateUrl: './card-form-add-variable.component.html',
-    styleUrls: ['./card-form-add-variable.component.scss']
+    styleUrls: ['./card-form-add-variable.component.scss'],
+    standalone: false
 })
 export class CardFormAddVariableComponent {
     @Output() afterResponse: EventEmitter<OperationStatusRest> = new EventEmitter<OperationStatusRest>();

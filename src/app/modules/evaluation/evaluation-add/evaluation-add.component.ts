@@ -21,7 +21,8 @@ import {MhUtils} from '@services/mh-utils/mh-utils.service';
 @Component({
     selector: 'evaluation-add',
     templateUrl: './evaluation-add.component.html',
-    styleUrls: ['./evaluation-add.component.scss']
+    styleUrls: ['./evaluation-add.component.scss'],
+    standalone: false
 })
 
 export class EvaluationAddComponent extends UIStateComponent implements OnInit, OnDestroy {

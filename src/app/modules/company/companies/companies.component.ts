@@ -10,7 +10,8 @@ import { DispatcherAssetModeService } from '@src/app/services/dispatcher-asset-m
 @Component({
     selector: 'companies',
     templateUrl: './companies.component.html',
-    styleUrls: ['./companies.component.sass']
+    styleUrls: ['./companies.component.sass'],
+    standalone: false
 })
 export class CompaniesComponent extends UIStateComponent implements OnInit {
     columnsToDisplay: string[] = ['uniqueId', 'name', 'bts'];

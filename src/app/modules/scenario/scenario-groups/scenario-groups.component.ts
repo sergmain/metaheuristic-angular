@@ -9,9 +9,10 @@ import {ScenarioService} from "@services/scenario/scenario.service";
 import {SimpleScenarioGroupsResult} from '@services/scenario/ScenarioData';
 
 @Component({
-  selector: 'scenario-groups',
-  templateUrl: './scenario-groups.component.html',
-  styleUrls: ['./scenario-groups.component.sass']
+    selector: 'scenario-groups',
+    templateUrl: './scenario-groups.component.html',
+    styleUrls: ['./scenario-groups.component.sass'],
+    standalone: false
 })
 export class ScenarioGroupsComponent extends UIStateComponent implements OnInit {
   columnsToDisplay: string[] = ['scenarioGroupId', 'createdOn', 'name', 'bts'];

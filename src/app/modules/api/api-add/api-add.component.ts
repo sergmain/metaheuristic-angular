@@ -11,7 +11,8 @@ import {ApiService} from "@services/api/api.service";
 @Component({
     selector: 'api-add',
     templateUrl: './api-add.component.html',
-    styleUrls: ['./api-add.component.scss']
+    styleUrls: ['./api-add.component.scss'],
+    standalone: false
 })
 
 export class ApiAddComponent {

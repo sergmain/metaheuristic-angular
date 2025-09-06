@@ -8,7 +8,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 @Component({
     selector: 'add-source-code',
     templateUrl: './add-source-code.component.html',
-    styleUrls: ['./add-source-code.component.scss']
+    styleUrls: ['./add-source-code.component.scss'],
+    standalone: false
 })
 
 export class AddSourceCodeComponent {

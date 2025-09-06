@@ -10,7 +10,8 @@ import { Subscription } from 'rxjs';
 @Component({
     selector: 'account-add',
     templateUrl: './account-add.component.html',
-    styleUrls: ['./account-add.component.scss']
+    styleUrls: ['./account-add.component.scss'],
+    standalone: false
 })
 
 export class AccountAddComponent {

@@ -6,7 +6,8 @@ import { Subscription } from 'rxjs';
 @Component({
     selector: 'batch-change-notification',
     templateUrl: './batch-change-notification.component.html',
-    styleUrls: ['./batch-change-notification.component.sass']
+    styleUrls: ['./batch-change-notification.component.sass'],
+    standalone: false
 })
 export class BatchChangeNotificationComponent implements OnInit, OnDestroy {
     isActive: boolean = false;

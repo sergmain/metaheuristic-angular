@@ -16,7 +16,8 @@ import {ScenarioUidsForAccount} from '@services/scenario/ScenarioUidsForAccount'
 @Component({
     selector: 'scenario-step-add',
     templateUrl: './scenario-step-add.component.html',
-    styleUrls: ['./scenario-step-add.component.scss']
+    styleUrls: ['./scenario-step-add.component.scss'],
+    standalone: false
 })
 
 export class ScenarioStepAddComponent extends UIStateComponent implements OnInit, OnDestroy {

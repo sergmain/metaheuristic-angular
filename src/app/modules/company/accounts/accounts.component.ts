@@ -12,7 +12,8 @@ import { DispatcherAssetModeService } from '@src/app/services/dispatcher-asset-m
 @Component({
     selector: 'accounts',
     templateUrl: './accounts.component.html',
-    styleUrls: ['./accounts.component.sass']
+    styleUrls: ['./accounts.component.sass'],
+    standalone: false
 })
 export class AccountsComponent extends UIStateComponent implements OnInit {
     dataSource: MatTableDataSource<SimpleAccount> = new MatTableDataSource<SimpleAccount>([]);

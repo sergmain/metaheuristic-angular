@@ -7,7 +7,8 @@ import { SourceCodeResult } from '@src/app/services/source-codes/SourceCodeResul
 @Component({
     selector: 'view-source-code',
     templateUrl: './view-source-code.component.html',
-    styleUrls: ['./view-source-code.component.scss']
+    styleUrls: ['./view-source-code.component.scss'],
+    standalone: false
 })
 export class ViewSourceCodeComponent implements OnInit {
 

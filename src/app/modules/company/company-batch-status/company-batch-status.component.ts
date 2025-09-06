@@ -6,7 +6,8 @@ import { CompanyService } from '@src/app/services/company/company.service';
 @Component({
     selector: 'company-batch-status',
     templateUrl: './company-batch-status.component.html',
-    styleUrls: ['./company-batch-status.component.sass']
+    styleUrls: ['./company-batch-status.component.sass'],
+    standalone: false
 })
 export class CompanyBatchStatusComponent implements OnInit {
     isLoading: boolean;

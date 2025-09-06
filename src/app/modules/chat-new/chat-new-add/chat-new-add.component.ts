@@ -18,7 +18,8 @@ import {MhUtils} from '@services/mh-utils/mh-utils.service';
 @Component({
     selector: 'chat-new-add',
     templateUrl: './chat-new-add.component.html',
-    styleUrls: ['./chat-new-add.component.scss']
+    styleUrls: ['./chat-new-add.component.scss'],
+    standalone: false
 })
 
 export class ChatNewAddComponent extends UIStateComponent implements OnInit, OnDestroy {

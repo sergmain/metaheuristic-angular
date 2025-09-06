@@ -7,7 +7,8 @@ import { CtFileUploadComponent } from '../../ct/ct-file-upload/ct-file-upload.co
 @Component({
     selector: 'card-form-upload-source-code',
     templateUrl: './card-form-upload-source-code.component.html',
-    styleUrls: ['./card-form-upload-source-code.component.sass']
+    styleUrls: ['./card-form-upload-source-code.component.sass'],
+    standalone: false
 })
 export class CardFormUploadSourceCodeComponent {
     @ViewChild(MatButton) button: MatButton;

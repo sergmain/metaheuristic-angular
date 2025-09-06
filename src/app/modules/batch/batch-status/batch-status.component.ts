@@ -7,7 +7,8 @@ import { Status } from '@src/app/services/batch/Status';
 @Component({
     selector: 'batch-status',
     templateUrl: './batch-status.component.html',
-    styleUrls: ['./batch-status.component.scss']
+    styleUrls: ['./batch-status.component.scss'],
+    standalone: false
 })
 
 export class BatchStatusComponent implements OnInit {

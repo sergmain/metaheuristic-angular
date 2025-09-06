@@ -9,7 +9,8 @@ import { SimpleAccount } from '@src/app/services/accounts';
 @Component({
     selector: 'account-edit-pass',
     templateUrl: './account-edit-pass.component.html',
-    styleUrls: ['./account-edit-pass.component.scss']
+    styleUrls: ['./account-edit-pass.component.scss'],
+    standalone: false
 })
 
 export class AccountEditPassComponent implements OnInit {

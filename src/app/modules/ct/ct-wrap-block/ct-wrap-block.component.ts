@@ -9,7 +9,8 @@ import {
     // eslint-disable-next-line @angular-eslint/component-selector
     selector: 'ct-wrap-block',
     templateUrl: './ct-wrap-block.component.html',
-    styleUrls: ['./ct-wrap-block.component.scss']
+    styleUrls: ['./ct-wrap-block.component.scss'],
+    standalone: false
 })
 export class CtWrapBlockComponent implements OnInit, OnDestroy {
 

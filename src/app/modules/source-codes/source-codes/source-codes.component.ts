@@ -16,7 +16,8 @@ import { SourceCodesArchiveComponent } from '../source-codes-archive/source-code
 @Component({
     selector: 'source-codes',
     templateUrl: './source-codes.component.html',
-    styleUrls: ['./source-codes.component.sass']
+    styleUrls: ['./source-codes.component.sass'],
+    standalone: false
 })
 export class SourceCodesComponent extends UIStateComponent implements OnInit {
 

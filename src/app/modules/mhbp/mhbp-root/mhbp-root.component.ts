@@ -8,7 +8,8 @@ import { SettingsService, SettingsServiceEventChange } from '@src/app/services/s
 @Component({
     selector: 'mhbp-root',
     templateUrl: './mhbp-root.component.html',
-    styleUrls: ['./mhbp-root.component.sass']
+    styleUrls: ['./mhbp-root.component.sass'],
+    standalone: false
 })
 export class MhbpRootComponent extends UIStateComponent implements OnInit, OnDestroy {
     settings: Settings;

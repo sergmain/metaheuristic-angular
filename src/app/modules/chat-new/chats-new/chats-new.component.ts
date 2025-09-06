@@ -11,7 +11,8 @@ import {ActivatedRoute, Router} from '@angular/router';
 @Component({
     selector: 'chats-new',
     templateUrl: './chats-new.component.html',
-    styleUrls: ['./chats-new.component.scss']
+    styleUrls: ['./chats-new.component.scss'],
+    standalone: false
 })
 // DO NOT REMOVE '-new' FROM NAME OF COMPONENT
 export class ChatsNewComponent extends UIStateComponent implements OnInit {

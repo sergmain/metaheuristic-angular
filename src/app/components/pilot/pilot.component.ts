@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'pilot-view',
-  templateUrl: './pilot.component.html',
-  styleUrls: ['./pilot.component.scss']
+    selector: 'pilot-view',
+    templateUrl: './pilot.component.html',
+    styleUrls: ['./pilot.component.scss'],
+    standalone: false
 })
 export class PilotComponent implements OnInit {
 

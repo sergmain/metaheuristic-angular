@@ -10,7 +10,8 @@ import {SimpleError} from "@services/session/SimpleError";
 @Component({
     selector: 'errors',
     templateUrl: './errors.component.html',
-    styleUrls: ['./errors.component.sass']
+    styleUrls: ['./errors.component.sass'],
+    standalone: false
 })
 export class ErrorsComponent extends UIStateComponent implements OnInit {
     dataSource: MatTableDataSource<SimpleError> = new MatTableDataSource<SimpleError>([]);

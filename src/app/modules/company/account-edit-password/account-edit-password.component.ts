@@ -8,7 +8,8 @@ import { OperationStatusRest } from '@src/app/models/OperationStatusRest';
 @Component({
     selector: 'account-edit-password',
     templateUrl: './account-edit-password.component.html',
-    styleUrls: ['./account-edit-password.component.sass']
+    styleUrls: ['./account-edit-password.component.sass'],
+    standalone: false
 })
 export class AccountEditPasswordComponent implements OnInit {
     accountResult: AccountResult;

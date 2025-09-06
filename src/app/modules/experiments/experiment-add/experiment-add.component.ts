@@ -8,7 +8,8 @@ import { SourceCodeUidsForCompany } from '@src/app/services/source-codes/SourceC
 @Component({
     selector: 'experiment-add',
     templateUrl: './experiment-add.component.html',
-    styleUrls: ['./experiment-add.component.scss']
+    styleUrls: ['./experiment-add.component.scss'],
+    standalone: false
 })
 
 export class ExperimentAddComponent implements OnInit {

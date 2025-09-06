@@ -8,7 +8,8 @@ import { SimpleAccount } from '@src/app/services/accounts';
 @Component({
     selector: 'account-edit',
     templateUrl: './account-edit.component.html',
-    styleUrls: ['./account-edit.component.scss']
+    styleUrls: ['./account-edit.component.scss'],
+    standalone: false
 })
 export class AccountEditComponent implements OnInit {
     readonly states = LoadStates;

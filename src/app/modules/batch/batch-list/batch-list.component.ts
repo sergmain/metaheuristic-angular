@@ -20,7 +20,8 @@ import {MhUtils} from '@services/mh-utils/mh-utils.service';
 @Component({
     selector: 'batch-list',
     templateUrl: './batch-list.component.html',
-    styleUrls: ['./batch-list.component.scss']
+    styleUrls: ['./batch-list.component.scss'],
+    standalone: false
 })
 export class BatchListComponent extends UIStateComponent implements OnInit, OnDestroy {
     batchesResult: BatchesResult;

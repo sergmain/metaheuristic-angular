@@ -9,7 +9,8 @@ import { SourceCodeResult } from '@src/app/services/source-codes/SourceCodeResul
 @Component({
     selector: 'add-exec-context',
     templateUrl: './add-exec-context.component.html',
-    styleUrls: ['./add-exec-context.component.scss']
+    styleUrls: ['./add-exec-context.component.scss'],
+    standalone: false
 })
 
 export class AddExecContextComponent implements OnInit, OnDestroy {

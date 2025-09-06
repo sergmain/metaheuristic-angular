@@ -8,7 +8,8 @@ import { OperationStatus } from '@src/app/enums/OperationStatus';
 @Component({
     selector: 'company-edit',
     templateUrl: './company-edit.component.html',
-    styleUrls: ['./company-edit.component.sass']
+    styleUrls: ['./company-edit.component.sass'],
+    standalone: false
 })
 export class CompanyEditComponent implements OnInit {
 

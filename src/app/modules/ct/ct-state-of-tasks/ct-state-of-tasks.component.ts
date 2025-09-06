@@ -9,9 +9,10 @@ import {ConfirmationDialogMethod} from '@app/components/app-dialog-confirmation/
 import {MhUtils} from '@services/mh-utils/mh-utils.service';
 
 @Component({
-  selector: 'ct-state-of-tasks',
-  templateUrl: './ct-state-of-tasks.component.html',
-  styleUrls: ['./ct-state-of-tasks.component.scss']
+    selector: 'ct-state-of-tasks',
+    templateUrl: './ct-state-of-tasks.component.html',
+    styleUrls: ['./ct-state-of-tasks.component.scss'],
+    standalone: false
 })
 export class CtStateOfTasksComponent implements OnInit {
   @ViewChild('errorDialogTemplate') errorDialogTemplate: TemplateRef<any>;

@@ -23,7 +23,8 @@ export interface ConfirmationDialogInterface {
 @Component({
     selector: 'app-dialog-confirmation',
     templateUrl: './app-dialog-confirmation.component.html',
-    styleUrls: ['./app-dialog-confirmation.component.scss']
+    styleUrls: ['./app-dialog-confirmation.component.scss'],
+    standalone: false
 })
 
 

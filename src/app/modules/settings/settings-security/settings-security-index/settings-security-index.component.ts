@@ -10,6 +10,7 @@ import {OperationStatus} from '@app/enums/OperationStatus';
     selector: "settings-security-index",
     templateUrl: './settings-security-index.component.html',
     styleUrls: ['./settings-security-index.component.scss'],
+    standalone: false
 })
 export class SettingsSecurityIndexComponent {
     response: DefaultResponse;

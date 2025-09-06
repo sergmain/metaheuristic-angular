@@ -8,7 +8,8 @@ import {KbService} from "@services/kb/kb.service";
 @Component({
     selector: 'kb-edit',
     templateUrl: './kb-edit.component.html',
-    styleUrls: ['./kb-edit.component.scss']
+    styleUrls: ['./kb-edit.component.scss'],
+    standalone: false
 })
 
 export class KbEditComponent implements OnInit {

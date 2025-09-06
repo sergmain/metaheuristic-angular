@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'batch-root',
-  templateUrl: './batch-root.component.html',
-  styleUrls: ['./batch-root.component.sass']
+    selector: 'batch-root',
+    templateUrl: './batch-root.component.html',
+    styleUrls: ['./batch-root.component.sass'],
+    standalone: false
 })
 export class BatchRootComponent implements OnInit {
 

@@ -11,7 +11,8 @@ import { ExperimentsService } from '@src/app/services/experiments/experiments.se
 @Component({
     selector: 'experiments-view',
     templateUrl: './experiments.component.html',
-    styleUrls: ['./experiments.component.scss']
+    styleUrls: ['./experiments.component.scss'],
+    standalone: false
 })
 
 export class ExperimentsComponent extends UIStateComponent implements OnInit {

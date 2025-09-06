@@ -8,7 +8,8 @@ import { ProcessorResult } from '@src/app/services/processors/ProcessorResult';
 @Component({
     selector: 'edit-processor',
     templateUrl: './edit-processor.component.html',
-    styleUrls: ['./edit-processor.component.scss']
+    styleUrls: ['./edit-processor.component.scss'],
+    standalone: false
 })
 
 export class EditProcessorComponent implements OnInit {

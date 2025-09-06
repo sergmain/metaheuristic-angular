@@ -14,7 +14,8 @@ import { SourceCodesService } from '@src/app/services/source-codes/source-codes.
 @Component({
     selector: 'ct-exec-contexts',
     templateUrl: './ct-exec-contexts.component.html',
-    styleUrls: ['./ct-exec-contexts.component.scss']
+    styleUrls: ['./ct-exec-contexts.component.scss'],
+    standalone: false
 })
 export class CtExecContextsComponent implements OnInit {
     @ViewChild('stateOfTasksTemplate') stateOfTasksTemplate: TemplateRef<any>;

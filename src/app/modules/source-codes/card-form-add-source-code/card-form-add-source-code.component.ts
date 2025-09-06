@@ -7,7 +7,8 @@ import { MatButton } from '@angular/material/button';
 @Component({
     selector: 'card-form-add-source-code',
     templateUrl: './card-form-add-source-code.component.html',
-    styleUrls: ['./card-form-add-source-code.component.scss']
+    styleUrls: ['./card-form-add-source-code.component.scss'],
+    standalone: false
 })
 export class CardFormAddSourceCodeComponent {
     @ViewChild(MatButton) button: MatButton;

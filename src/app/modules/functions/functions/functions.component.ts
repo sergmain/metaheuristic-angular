@@ -13,6 +13,7 @@ import { FunctionsResult } from '@src/app/services/functions/FunctionsResult';
     selector: "functions",
     templateUrl: './functions.component.html',
     styleUrls: ['./functions.component.scss'],
+    standalone: false
 })
 export class FunctionsComponent extends UIStateComponent implements OnInit {
     functionsResult: FunctionsResult;

@@ -16,6 +16,7 @@ import { MhUtils } from '@src/app/services/mh-utils/mh-utils.service';
     selector: "settings-languages-index",
     templateUrl: './settings-languages-index.component.html',
     styleUrls: ['./settings-languages-index.component.scss'],
+    standalone: false
 })
 export class SettingsLanguagesIndexComponent extends UIStateComponent implements OnInit {
     protected readonly MhUtils = MhUtils;

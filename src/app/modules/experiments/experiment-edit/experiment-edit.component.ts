@@ -10,7 +10,8 @@ import { AuthenticationService } from '@src/app/services/authentication';
 @Component({
     selector: 'experiment-edit',
     templateUrl: './experiment-edit.component.html',
-    styleUrls: ['./experiment-edit.component.scss']
+    styleUrls: ['./experiment-edit.component.scss'],
+    standalone: false
 })
 
 export class ExperimentEditComponent extends UIStateComponent implements OnInit {

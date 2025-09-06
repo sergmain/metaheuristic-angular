@@ -9,9 +9,10 @@ import {SimpleApi} from "@services/api/SimpleApi";
 import {ApiService} from "@services/api/api.service";
 
 @Component({
-  selector: 'apis',
-  templateUrl: './apis.component.html',
-  styleUrls: ['./apis.component.scss']
+    selector: 'apis',
+    templateUrl: './apis.component.html',
+    styleUrls: ['./apis.component.scss'],
+    standalone: false
 })
 export class ApisComponent extends UIStateComponent implements OnInit, ConfirmationDialogInterface {
   columnsToDisplay: string[] = ['id', 'name', 'code', 'bts'];

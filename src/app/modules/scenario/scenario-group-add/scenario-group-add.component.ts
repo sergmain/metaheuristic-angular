@@ -11,7 +11,8 @@ import {ScenarioService} from "@services/scenario/scenario.service";
 @Component({
     selector: 'scenario-group-add',
     templateUrl: './scenario-group-add.component.html',
-    styleUrls: ['./scenario-group-add.component.scss']
+    styleUrls: ['./scenario-group-add.component.scss'],
+    standalone: false
 })
 
 export class ScenarioGroupAddComponent {

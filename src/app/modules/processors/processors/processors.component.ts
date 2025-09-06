@@ -13,7 +13,8 @@ import { AuthenticationService } from '@src/app/services/authentication';
 @Component({
     selector: 'processors',
     templateUrl: './processors.component.html',
-    styleUrls: ['./processors.component.scss']
+    styleUrls: ['./processors.component.scss'],
+    standalone: false
 })
 
 export class ProcessorsComponent extends UIStateComponent implements OnInit, ConfirmationDialogInterface {

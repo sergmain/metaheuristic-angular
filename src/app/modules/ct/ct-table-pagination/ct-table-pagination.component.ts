@@ -4,7 +4,8 @@ import { PageableDefault } from '@src/app/models/PageableDefault';
 @Component({
     selector: 'ct-table-pagination',
     templateUrl: './ct-table-pagination.component.html',
-    styleUrls: ['./ct-table-pagination.component.sass']
+    styleUrls: ['./ct-table-pagination.component.sass'],
+    standalone: false
 })
 export class CtTablePaginationComponent {
     @Output() next: EventEmitter<void> = new EventEmitter<void>();

@@ -11,7 +11,8 @@ import { CtFileUploadComponent } from '../../ct/ct-file-upload/ct-file-upload.co
 @Component({
     selector: 'company-batch-upload',
     templateUrl: './company-batch-upload.component.html',
-    styleUrls: ['./company-batch-upload.component.sass']
+    styleUrls: ['./company-batch-upload.component.sass'],
+    standalone: false
 })
 export class CompanyBatchUploadComponent implements OnInit {
     @ViewChild('fileUpload') fileUpload: CtFileUploadComponent;

@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'ct-section',
-  templateUrl: './ct-section.component.html',
-  styleUrls: ['./ct-section.component.scss']
+    selector: 'ct-section',
+    templateUrl: './ct-section.component.html',
+    styleUrls: ['./ct-section.component.scss'],
+    standalone: false
 })
 export class CtSectionComponent implements OnInit {
 

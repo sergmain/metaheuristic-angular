@@ -8,7 +8,8 @@ import { OperationStatus } from '@src/app/enums/OperationStatus';
 @Component({
     selector: 'account-edit',
     templateUrl: './account-edit.component.html',
-    styleUrls: ['./account-edit.component.sass']
+    styleUrls: ['./account-edit.component.sass'],
+    standalone: false
 })
 export class AccountEditComponent implements OnInit {
 

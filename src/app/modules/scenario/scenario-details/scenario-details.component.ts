@@ -86,7 +86,8 @@ export class StepEvaluationState {
 @Component({
     selector: 'scenario-details',
     templateUrl: 'scenario-details.component.html',
-    styleUrls: ['scenario-details.component.scss']
+    styleUrls: ['scenario-details.component.scss'],
+    standalone: false
 })
 export class ScenarioDetailsComponent extends UIStateComponent implements OnInit, OnDestroy, AfterViewInit {
     // for scenario-details.component.html

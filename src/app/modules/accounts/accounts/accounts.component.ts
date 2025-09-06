@@ -11,7 +11,8 @@ import { DispatcherAssetModeService } from '@src/app/services/dispatcher-asset-m
     // eslint-disable-next-line @angular-eslint/component-selector
     selector: 'accounts-view',
     templateUrl: './accounts.component.html',
-    styleUrls: ['./accounts.component.scss']
+    styleUrls: ['./accounts.component.scss'],
+    standalone: false
 })
 
 export class AccountsComponent extends UIStateComponent implements OnInit {

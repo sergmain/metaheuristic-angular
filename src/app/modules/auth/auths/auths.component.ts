@@ -9,9 +9,10 @@ import {AuthService} from "@services/auth/auth.service";
 import {SimpleAuth} from "@services/auth/SimpleAuth";
 
 @Component({
-  selector: 'auths',
-  templateUrl: './auths.component.html',
-  styleUrls: ['./auths.component.scss']
+    selector: 'auths',
+    templateUrl: './auths.component.html',
+    styleUrls: ['./auths.component.scss'],
+    standalone: false
 })
 export class AuthsComponent extends UIStateComponent implements OnInit, ConfirmationDialogInterface {
   columnsToDisplay: string[] = ['id', 'code', 'bts'];

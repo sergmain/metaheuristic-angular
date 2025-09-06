@@ -8,6 +8,7 @@ import { AccountResult } from '@src/app/services/accounts/AccountResult';
     selector: 'account-access',
     templateUrl: './account-access.component.html',
     styleUrls: ['./account-access.component.scss'],
+    standalone: false
 })
 export class AccountAccessComponent implements OnInit {
     response: AccountResult;

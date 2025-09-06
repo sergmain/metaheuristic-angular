@@ -16,7 +16,8 @@ const electronStatusUrl: string = 'http://localhost:64968/status';
 @Component({
     selector: 'app-root',
     templateUrl: './app.component.html',
-    styleUrls: ['./app.component.scss']
+    styleUrls: ['./app.component.scss'],
+    standalone: false
 })
 export class AppComponent extends UIStateComponent implements OnInit, OnDestroy {
 

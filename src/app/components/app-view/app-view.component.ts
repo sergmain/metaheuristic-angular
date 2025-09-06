@@ -16,7 +16,8 @@ import {MhUtils} from '@services/mh-utils/mh-utils.service';
 @Component({
     selector: 'app-view',
     templateUrl: './app-view.component.html',
-    styleUrls: ['./app-view.component.scss']
+    styleUrls: ['./app-view.component.scss'],
+    standalone: false
 })
 
 export class AppViewComponent extends UIStateComponent implements OnInit, OnDestroy, AfterViewInit {

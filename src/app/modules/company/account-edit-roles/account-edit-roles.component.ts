@@ -7,7 +7,8 @@ import { CompanyService } from '@src/app/services/company/company.service';
 @Component({
     selector: 'account-edit-roles',
     templateUrl: './account-edit-roles.component.html',
-    styleUrls: ['./account-edit-roles.component.sass']
+    styleUrls: ['./account-edit-roles.component.sass'],
+    standalone: false
 })
 export class AccountEditRolesComponent implements OnInit {
 

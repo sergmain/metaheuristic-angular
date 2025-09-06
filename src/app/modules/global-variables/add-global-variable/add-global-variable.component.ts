@@ -6,7 +6,8 @@ import { OperationStatus } from '@src/app/enums/OperationStatus';
 @Component({
     selector: 'add-global-variable',
     templateUrl: './add-global-variable.component.html',
-    styleUrls: ['./add-global-variable.component.scss']
+    styleUrls: ['./add-global-variable.component.scss'],
+    standalone: false
 })
 
 export class AddGlobalVariableComponent {
