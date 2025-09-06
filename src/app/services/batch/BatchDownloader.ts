@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { BatchData } from './BatchData';
-import * as JSZip from 'jszip';
+import JSZip from 'jszip';
 import * as fileSaver from 'file-saver';
 import { from, Observable, of, Subscription } from 'rxjs';
 import { catchError, concatMap } from 'rxjs/operators';

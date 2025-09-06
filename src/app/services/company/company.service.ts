@@ -11,7 +11,7 @@ import { AccountWithRoleResult } from '@services/company/AccountWithRoleResult';
 import { BatchesResult } from '@services/batch/BatchesResult';
 import { BatchData } from '@services/batch/BatchData';
 import { SourceCodesForCompany } from '@services/source-codes/SourceCodesForCompany';
-import * as JSZip from 'jszip';
+import JSZip from 'jszip';
 import { catchError, concatMap } from 'rxjs/operators';
 import * as fileSaver from 'file-saver';
 
