@@ -1,9 +1,10 @@
+@use 'sass:math';
 @use '../../../../variables' as *;
 
 :host {
     display: block;
-    margin: 0 unit(2);
-    margin-bottom: unit(2);
+    margin: 0 math.unit(2);
+    margin-bottom: math.unit(2);
     
     &:first-child {
         margin-top: 0;

@@ -1,3 +1,4 @@
+@use 'sass:math';
 @use "../variables" as *;
 @forward '../variables';
 
@@ -11,13 +12,13 @@ body {
     // .mat-stroked-button {
     //     font-family: inherit;
     //     letter-spacing: 0.5px;
-    //     padding: 0 unit(2);
-    //     line-height: unit(4);
-    //     height: unit(4);
+    //     padding: 0 math.unit(2);
+    //     line-height: math.unit(4);
+    //     height: math.unit(4);
     //     .mat-button-wrapper {
     //         display: block;
     //         font-weight: 500;
-    //         font-size: unit(1.5);
+    //         font-size: math.unit(1.5);
     //         line-height: inherit;
     //     }
     // }
@@ -26,7 +27,7 @@ body {
     // .mat-flat-button[wide],
     // .mat-icon-button[wide],
     // .mat-stroked-button[wide] {
-    //     padding: 0 unit(5)
+    //     padding: 0 math.unit(5)
     // }
 
     // .mat-button[size=forTableRow],
@@ -34,13 +35,13 @@ body {
     // .mat-icon-button[size=forTableRow],
     // .mat-stroked-button[size=forTableRow] {
     //     min-width: auto;
-    //     padding-left: unit(1);
-    //     padding-right: unit(1);
-    //     border-radius: unit(0.3333);
-    //     line-height: unit(3);
-    //     height: unit(3);
+    //     padding-left: math.unit(1);
+    //     padding-right: math.unit(1);
+    //     border-radius: math.unit(0.3333);
+    //     line-height: math.unit(3);
+    //     height: math.unit(3);
     //     .mat-button-wrapper {
-    //         font-size: unit(1.5)
+    //         font-size: math.unit(1.5)
     //     }
 
     //     .mat-icon {

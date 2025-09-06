@@ -1,3 +1,4 @@
+@use 'sass:math';
 @use '../../../variables' as *;
 
 :host {
@@ -7,7 +8,7 @@
         flex-direction: column;
     }
     .app-view__header {
-        height: unit(6);
+        height: math.unit(6);
         position: fixed;
         left: 0;
         right: 0;
@@ -16,17 +17,17 @@
     }
     .app-view__body {
         flex: 1;
-        margin-top: unit(6);
+        margin-top: math.unit(6);
         position: relative;
     }
     mat-toolbar {
-        height: unit(6);
-        min-height: unit(6);
+        height: math.unit(6);
+        min-height: math.unit(6);
     }
     mat-toolbar-row {
-        height: unit(6);
-        min-height: unit(6);
-        padding: 0 unit(1);
+        height: math.unit(6);
+        min-height: math.unit(6);
+        padding: 0 math.unit(1);
     }
     mat-select {
         text-transform: uppercase;
@@ -35,13 +36,13 @@
         padding-top: 2px;
         font-size: 12px;
         font-family: sans-serif;
-        padding-left: unit(1);
-        padding-right: unit(1);
-        min-width: (45px + unit(1) + unit(1));
+        padding-left: math.unit(1);
+        padding-right: math.unit(1);
+        min-width: (45px + math.unit(1) + math.unit(1));
     }
     mat-slide-toggle {
-        padding-left: unit(1);
-        padding-right: unit(1);
+        padding-left: math.unit(1);
+        padding-right: math.unit(1);
     }
     button {
         min-width: auto;
@@ -49,8 +50,8 @@
         letter-spacing: 0.1em;
         font-family: sans-serif;
         font-size: 12px;
-        padding-left: unit(1);
-        padding-right: unit(1);
+        padding-left: math.unit(1);
+        padding-right: math.unit(1);
         //mat-icon {
         //    margin-top: -4px;
         //}

@@ -1,4 +1,5 @@
-@function unit($a) {
+@use 'sass:math';
+@function math.unit($a) {
     @return $a * 9px
 }
 

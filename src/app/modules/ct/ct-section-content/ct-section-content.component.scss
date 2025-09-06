@@ -1,6 +1,7 @@
+@use 'sass:math';
 @use '../../../../variables' as *;
 
 :host {
     display: block;
-    padding: unit(1) unit(3);
+    padding: math.unit(1) math.unit(3);
 }
