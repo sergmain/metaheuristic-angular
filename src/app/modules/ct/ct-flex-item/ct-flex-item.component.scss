@@ -1,17 +1,17 @@
-@use 'sass:math';
+
 @use "sass:math";
 @use '../../../../variables' as *;
 
-:host-context([gap="math.unit(1)"]) {
-    margin: math.div(math.unit(1), 2);
+:host-context([gap="calcUnit(1)"]) {
+    margin: math.div(calcUnit(1), 2);
 }
 
-:host-context([gap="math.unit(2)"]) {
-    margin: math.div(math.unit(2), 2);
+:host-context([gap="calcUnit(2)"]) {
+    margin: math.div(calcUnit(2), 2);
 }
 
-:host-context([gap="math.unit(3)"]) {
-    margin: math.div(math.unit(3), 2);
+:host-context([gap="calcUnit(3)"]) {
+    margin: math.div(calcUnit(3), 2);
 }
 
 :host-context([gap="18px"]) {

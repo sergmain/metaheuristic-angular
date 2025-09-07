@@ -1,10 +1,10 @@
-@use 'sass:math';
+
 @use '../../../../variables' as *;
 
 :host {
     display: block;
     position: relative;
-    margin: 0 math.unit(0);
+    margin: 0 calcUnit(0);
     overflow-y: auto;
 
     ::ng-deep {
@@ -25,10 +25,10 @@
             border-bottom-style: solid;
             border-top-width: 1px;
             border-top-style: solid;
-            padding: math.unit(1);
+            padding: calcUnit(1);
             font-family: sans-serif;
-            font-size: math.unit(1.66);
-            line-height: math.unit(2);
+            font-size: calcUnit(1.66);
+            line-height: calcUnit(2);
         }
 
         .mat-header-cell {
@@ -44,12 +44,12 @@
 
         .mat-header-cell:first-child,
         .mat-cell:first-child {
-            padding-left: math.unit(1);
+            padding-left: calcUnit(1);
         }
 
         .mat-header-cell:last-child,
         .mat-cell:last-child {
-            padding-right: math.unit(1);
+            padding-right: calcUnit(1);
         }
 
         .mat-row {

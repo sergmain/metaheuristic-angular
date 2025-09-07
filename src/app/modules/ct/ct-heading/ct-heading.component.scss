@@ -1,4 +1,4 @@
-@use 'sass:math';
+
 @use '../../../../variables' as *;
 
 :host {
@@ -9,26 +9,26 @@
 }
 
 :host[size="xx-large"] {
-    line-height: math.unit(5);
-    font-size: math.unit(5);
+    line-height: calcUnit(5);
+    font-size: calcUnit(5);
 }
 
 :host[size="x-large"] {
-    line-height: math.unit(4);
-    font-size: math.unit(4);
+    line-height: calcUnit(4);
+    font-size: calcUnit(4);
 }
 
 :host {
-    line-height: math.unit(3);
-    font-size: math.unit(3);
+    line-height: calcUnit(3);
+    font-size: calcUnit(3);
 }
 
 :host[size="x-small"] {
-    line-height: math.unit(2);
-    font-size: math.unit(2);
+    line-height: calcUnit(2);
+    font-size: calcUnit(2);
 }
 
 :host[size="xx-small"] {
-    line-height: math.unit(1);
-    font-size: math.unit(1);
+    line-height: calcUnit(1);
+    font-size: calcUnit(1);
 }

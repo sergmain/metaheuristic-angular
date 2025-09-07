@@ -1,4 +1,4 @@
-@use 'sass:math';
+
 // Flexbox utility classes to replace ct-flex components
 @use 'variables' as *;
 
@@ -45,15 +45,15 @@
 
 // Gap utilities using CSS Grid gap property (modern approach)
 .gap-unit-1 {
-  gap: math.unit(1); // 9px
+  gap: calcUnit(1); // 9px
 }
 
 .gap-unit-2 {
-  gap: math.unit(2); // 18px
+  gap: calcUnit(2); // 18px
 }
 
 .gap-unit-3 {
-  gap: math.unit(3); // 27px
+  gap: calcUnit(3); // 27px
 }
 
 .gap-18px {

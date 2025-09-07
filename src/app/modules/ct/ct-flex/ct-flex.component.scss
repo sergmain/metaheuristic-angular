@@ -1,4 +1,4 @@
-@use 'sass:math';
+
 @use "sass:math";
 @use '../../../../variables' as *;
 
@@ -39,16 +39,16 @@
     }
 
 
-    &[gap="math.unit(1)"] {
-        margin: math.div(math.unit(1), -2);
+    &[gap="calcUnit(1)"] {
+        margin: math.div(calcUnit(1), -2);
     }
 
-    &[gap="math.unit(2)"] {
-        margin: math.div(math.unit(2), -2);
+    &[gap="calcUnit(2)"] {
+        margin: math.div(calcUnit(2), -2);
     }
 
-    &[gap="math.unit(3)"] {
-        margin: math.div(math.unit(3), -2);
+    &[gap="calcUnit(3)"] {
+        margin: math.div(calcUnit(3), -2);
     }
 
     &[gap="18px"] {

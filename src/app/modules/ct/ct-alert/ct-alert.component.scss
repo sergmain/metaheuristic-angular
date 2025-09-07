@@ -1,11 +1,11 @@
-@use 'sass:math';
+
 @use "../ct" as *;
 
 :host {
     display: block;
-    padding: math.unit(1.5) math.unit(1.75) math.unit(1.25);
+    padding: calcUnit(1.5) calcUnit(1.75) calcUnit(1.25);
     line-height: 1.2;
-    border-radius: math.unit(0.5);
+    border-radius: calcUnit(0.5);
 }
 
 :host[theme="info"] {

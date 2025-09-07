@@ -1,4 +1,4 @@
-@use 'sass:math';
+
 @use '../ct' as *;
 
 :host{
@@ -7,7 +7,7 @@
 
 .info-table {
     td {
-        padding-right: math.unit(2);
+        padding-right: calcUnit(2);
         line-height: 1.2;
         vertical-align: baseline;
     }
@@ -21,7 +21,7 @@
         background-color: rgba(128,128,128,0.05);
         vertical-align: baseline;
         white-space: nowrap; 
-        padding: math.unit(0.75) math.unit(1);
+        padding: calcUnit(0.75) calcUnit(1);
         font-size: 80%;
         line-height: 1.2;
     }

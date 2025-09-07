@@ -1,9 +1,9 @@
-@use 'sass:math';
+
 @use '../source-codes' as *;
 
 .info-table {
     td {
-        padding-right: math.unit(2);
+        padding-right: calcUnit(2);
     }
 }
 
@@ -14,7 +14,7 @@
     td {
         vertical-align: top;
         white-space: nowrap;
-        padding: math.unit(0.75) math.unit(1);
+        padding: calcUnit(0.75) calcUnit(1);
         font-size: 80%;
         line-height: 1.2;
     }

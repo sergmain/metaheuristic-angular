@@ -1,9 +1,9 @@
-@use 'sass:math';
+
 @use '../../../../variables' as *;
 
 :host{
     display: block;
-    margin-top: math.unit(6);
+    margin-top: calcUnit(6);
     opacity: 0.33;
     font-size: 75%;
     text-align: center;

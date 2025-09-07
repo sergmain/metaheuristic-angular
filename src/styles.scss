@@ -1,4 +1,4 @@
-@use 'sass:math';
+
 @use "../node_modules/normalize.css/normalize.css" as *;
 @use "./fonts/roboto/roboto.css" as *;
 @use "./fonts/robotocondensed/robotocondensed.css" as *;
@@ -30,21 +30,21 @@ body {
 }
 
 h1 {
-    line-height: math.unit(5);
-    font-size: math.unit(4);
-    margin: math.unit(3) 0;
+    line-height: calcUnit(5);
+    font-size: calcUnit(4);
+    margin: calcUnit(3) 0;
     font-weight: bold;
 }
 
 p {
-    margin: math.unit(2) 0;
+    margin: calcUnit(2) 0;
 }
 
 hr {
     display: block;
     height: 1px;
     border: none;
-    margin: math.unit(4) 0;
+    margin: calcUnit(4) 0;
     background-color: rgba(128, 128, 128, 0.5);
 }
 

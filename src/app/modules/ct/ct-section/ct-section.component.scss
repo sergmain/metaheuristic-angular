@@ -1,14 +1,14 @@
-@use 'sass:math';
+
 @use "../../../../variables" as *;
 
 :host{
     display: block;
     background: white;
-    border-radius: math.unit(0.5);
-    margin: math.unit(0);
-    margin-bottom: math.unit(3);
-    padding-top: math.unit(2);
-    padding-bottom: math.unit(3);
+    border-radius: calcUnit(0.5);
+    margin: calcUnit(0);
+    margin-bottom: calcUnit(3);
+    padding-top: calcUnit(2);
+    padding-bottom: calcUnit(3);
     box-shadow: 0px -1px 0px 0px rgba(0,0,0,0.025), 0px 1px 0px 0px rgba(0,0,0,0.05);
     &[mode=card]{
         display: inline-block;
@@ -19,7 +19,7 @@
 :host([inline]){
     display: inline-block;
     vertical-align: top;
-    margin-right: math.unit(3);
+    margin-right: calcUnit(3);
 
 }
 
