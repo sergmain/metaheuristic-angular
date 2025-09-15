@@ -19,7 +19,8 @@ export function optionsFactory(options) {
         CommonModule,
         SimpleNotificationsComponent,
         NotificationComponent
-    ],
+    ]
+    ,
     exports: [SimpleNotificationsComponent]
 })
 export class SimpleNotificationsModule {

@@ -13,7 +13,8 @@ import { NotificationComponent } from '../notification/notification.component';
     templateUrl: './simple-notifications.component.html',
     styleUrls: ['./simple-notifications.component.css'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [NgClass, NgFor, NotificationComponent]
+    imports: [NgClass, NgFor],
+  standalone: true
 })
 export class SimpleNotificationsComponent implements OnInit, OnDestroy {
   constructor(

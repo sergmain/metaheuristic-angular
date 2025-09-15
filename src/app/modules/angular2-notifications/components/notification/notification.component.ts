@@ -93,7 +93,8 @@ import { NgClass, NgIf, NgTemplateOutlet, NgStyle } from '@angular/common';
     templateUrl: './notification.component.html',
     styleUrls: ['./notification.component.css'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [NgClass, NgIf, NgTemplateOutlet, NgStyle]
+    imports: [NgClass, NgIf, NgTemplateOutlet, NgStyle],
+    standalone: true
 })
 
 export class NotificationComponent implements OnInit, OnDestroy {
