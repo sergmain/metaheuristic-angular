@@ -22,6 +22,7 @@ const commonRequiredRoles: Role[] = [
 ];
 
 export const DispatcherRoutes: Routes = [
+/*
     {
         path: '',
         canActivate: [RoleRouteGuard],
@@ -35,6 +36,8 @@ export const DispatcherRoutes: Routes = [
                 component: DispatcherIndexComponent
             }]
     },
+*/
+/*
     {
         path: 'source-codes',
         canActivate: [RoleRouteGuard],
@@ -95,6 +98,7 @@ export const DispatcherRoutes: Routes = [
             section: 'company'
         }
     }
+*/
 ];
 
 

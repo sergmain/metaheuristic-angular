@@ -10,6 +10,7 @@
     "start-production-standalone": "ng serve --configuration production-standalone --disable-host-check --host=localhost",
     "ng cache clean": "ng cache clean",
     "build": "ng build",
+    "build1": "ng build --delete-output-path",
     "build2": "ng build --baseHref=/aiai-app/ --prod=true",
     "build3": "ng build --prod=true",
     "build4": "ng build --aot --configuration production",
@@ -18,7 +19,7 @@
     "build4.3 ng build --aot --configuration standalone": "ng build --aot --configuration standalone",
     "build5": "ng build --aot",
     "build6": "set SASS_QUIET_DEPS=true && ng build --configuration development",
-    "build8": "npm install -g npm@9.8.1",
+    "npm install -g npm@9.8.1": "npm install -g npm@9.8.1",
     "update1": "ng update @angular/core@15 @angular/cli@15",
     "update2": "ng update @angular/core @angular/cli",
     "update3": "ng update @angular/material@11",
@@ -99,14 +100,13 @@
     "@angular/cli": "^20.2.2",
     "@angular/compiler-cli": "^20.2.4",
     "@angular/language-service": "^20.2.4",
-    "@types/jasminewd2": "2.0.12",
     "@types/node": "^18.18.6",
-    "@typescript-eslint/eslint-plugin": "^7.2.0",
-    "@typescript-eslint/parser": "^7.2.0",
-    "@vendure/ngx-translate-extract": "^9.4.2",
+    "@typescript-eslint/eslint-plugin": "^8.44.0",
+    "@typescript-eslint/parser": "^8.44.0",
+    "@vendure/ngx-translate-extract": "^10.1.0",
     "electron": "^28.2.2",
     "electron-builder": "^26.0.20",
-    "eslint": "^8.57.0",
-    "ts-node": "10.9.1"
+    "eslint": "^9.35.0",
+    "ts-node": "10.9.2"
   }
 }

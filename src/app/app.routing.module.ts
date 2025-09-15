@@ -15,9 +15,23 @@ export const ROOT_ROUTES: Routes = [
     {
         path: 'dispatcher',
         canActivate: [AuthGuard],
+        loadChildren: () => {
+            console.log('Loading dispatcher module...');
+            return import('@app//modules/dispatcher/dispatcher.module').then(m => {
+                console.log('Dispatcher module loaded:', m);
+                return m.DispatcherRoutes;
+            });
+        },
+        data: { sidenavExist: true }
+    },
+/*
+    {
+        path: 'dispatcher',
+        canActivate: [AuthGuard],
         loadChildren: () => import('@app//modules/dispatcher/dispatcher.module').then(m => m.DispatcherRoutes),
         data: { sidenavExist: true }
     },
+*/
 /*
     {
         path: 'billing',
@@ -29,6 +43,7 @@ export const ROOT_ROUTES: Routes = [
         component: PilotComponent,
     },
 */
+/*
     {
         path: 'ai',
         loadChildren: () => import('@app//modules/ai/ai.module').then(m => m.AiRoutes),
@@ -56,6 +71,7 @@ export const ROOT_ROUTES: Routes = [
         redirectTo: '',
         pathMatch: 'full'
     }
+*/
 ];
 
 export const extraOptions: ExtraOptions = {
