@@ -9,7 +9,8 @@ import { MatIcon } from '@angular/material/icon';
     selector: 'batch-change-notification',
     templateUrl: './batch-change-notification.component.html',
     styleUrls: ['./batch-change-notification.component.sass'],
-    imports: [NgIf, MatIcon]
+    imports: [NgIf, MatIcon],
+    standalone: true
 })
 export class BatchChangeNotificationComponent implements OnInit, OnDestroy {
     isActive: boolean = false;

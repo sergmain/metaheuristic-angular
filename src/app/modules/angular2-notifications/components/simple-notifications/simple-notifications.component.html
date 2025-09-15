@@ -1,5 +1,5 @@
 <div class="simple-notification-wrapper" [ngClass]="position">
-    <simple-notification
+    <simple-notifications
             *ngFor="let a of notifications; let i = index"
             [item]="a"
             [timeOut]="timeOut"
@@ -12,5 +12,5 @@
             [rtl]="rtl"
             [animate]="animate"
             [position]="i">
-    </simple-notification>
+    </simple-notifications>
 </div>
