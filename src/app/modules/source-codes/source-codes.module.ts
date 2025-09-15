@@ -1,10 +1,10 @@
 import { CommonModule } from '@angular/common';
-import { NgModule } from '@angular/core';
+// import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
-import { MaterialAppModule } from '@app/ngmaterial.module';
-import { CtModule } from '../ct/ct.module';
+
+// import { CtModule } from '../ct/ct.module';
 import { AddExecContextComponent } from './add-exec-context/add-exec-context.component';
 import { AddSourceCodeComponent } from './add-source-code/add-source-code.component';
 import { EditExecContextComponent } from './edit-exec-context/edit-exec-context.component';
@@ -62,6 +62,7 @@ export const SourceCodesRoutes: Routes = [
     }
 ];
 
+/*
 @NgModule({
     imports: [RouterModule.forChild(SourceCodesRoutes)],
     exports: [RouterModule],
@@ -71,27 +72,25 @@ export class SourceCodeRoutingModule { }
 
 
 @NgModule({
-    declarations: [
-        SourceCodesComponent,
-        SourceCodesArchiveComponent,
-        AddSourceCodeComponent,
-        ViewSourceCodeComponent,
-        ExecContextsComponent,
-        AddExecContextComponent,
-        EditExecContextComponent,
-        ExecContextStatesComponent,
-        CardFormAddSourceCodeComponent,
-        CardFormUploadSourceCodeComponent
-    ],
-
     imports: [
-        CommonModule,
-        SourceCodeRoutingModule,
-        CtModule,
-        MaterialAppModule,
-        FormsModule,
-        ReactiveFormsModule,
-        TranslateModule.forChild({})
-    ]
+    CommonModule,
+    SourceCodeRoutingModule,
+    CtModule,
+    FormsModule,
+    ReactiveFormsModule,
+    TranslateModule.forChild({}),
+    SourceCodesComponent,
+    SourceCodesArchiveComponent,
+    AddSourceCodeComponent,
+    ViewSourceCodeComponent,
+    ExecContextsComponent,
+    AddExecContextComponent,
+    EditExecContextComponent,
+    ExecContextStatesComponent,
+    CardFormAddSourceCodeComponent,
+    CardFormUploadSourceCodeComponent
+]
 })
 export class SourceCodeModule { }
+*/
+

@@ -5,11 +5,14 @@ import { SourceCodeResult } from '@app/services/source-codes/SourceCodeResult';
 import { CardFormAddSourceCodeComponent } from '../card-form-add-source-code/card-form-add-source-code.component';
 import { CardFormUploadSourceCodeComponent } from '../card-form-upload-source-code/card-form-upload-source-code.component';
 import { ActivatedRoute, Router } from '@angular/router';
+import { CtColsComponent } from '../../ct/ct-cols/ct-cols.component';
+import { CtColComponent } from '../../ct/ct-col/ct-col.component';
+import { CtRestStatusComponent } from '../../ct/ct-rest-status/ct-rest-status.component';
 @Component({
     selector: 'add-source-code',
     templateUrl: './add-source-code.component.html',
     styleUrls: ['./add-source-code.component.scss'],
-    standalone: false
+    imports: [CtColsComponent, CtColComponent, CardFormAddSourceCodeComponent, CtRestStatusComponent, CardFormUploadSourceCodeComponent]
 })
 
 export class AddSourceCodeComponent {

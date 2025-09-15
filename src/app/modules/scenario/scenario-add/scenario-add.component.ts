@@ -1,21 +1,32 @@
 import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import {LoadStates} from '@app/enums/LoadStates';
-import {TranslateService} from '@ngx-translate/core';
+import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import {UIStateComponent} from '@app/models/UIStateComponent';
 import {AuthenticationService} from '@app/services/authentication';
 import {SettingsService, SettingsServiceEventChange} from '@app/services/settings/settings.service';
 import {OperationStatus} from '@app/enums/OperationStatus';
 import {Subscription} from 'rxjs';
 import {MatButton} from '@angular/material/button';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
+import { FormControl, FormGroup, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {ScenarioService} from '@services/scenario/scenario.service';
+import { CtColsComponent } from '../../ct/ct-cols/ct-cols.component';
+import { CtColComponent } from '../../ct/ct-col/ct-col.component';
+import { CtSectionComponent } from '../../ct/ct-section/ct-section.component';
+import { CtSectionHeaderComponent } from '../../ct/ct-section-header/ct-section-header.component';
+import { CtSectionHeaderRowComponent } from '../../ct/ct-section-header-row/ct-section-header-row.component';
+import { CtHeadingComponent } from '../../ct/ct-heading/ct-heading.component';
+import { CtSectionBodyComponent } from '../../ct/ct-section-body/ct-section-body.component';
+import { CtSectionBodyRowComponent } from '../../ct/ct-section-body-row/ct-section-body-row.component';
+import { MatFormField, MatLabel, MatInput, MatHint } from '@angular/material/input';
+import { CtSectionFooterComponent } from '../../ct/ct-section-footer/ct-section-footer.component';
+import { CtSectionFooterRowComponent } from '../../ct/ct-section-footer-row/ct-section-footer-row.component';
 
 @Component({
     selector: 'scenario-add',
     templateUrl: './scenario-add.component.html',
     styleUrls: ['./scenario-add.component.scss'],
-    standalone: false
+    imports: [CtColsComponent, CtColComponent, CtSectionComponent, CtSectionHeaderComponent, CtSectionHeaderRowComponent, CtHeadingComponent, CtSectionBodyComponent, CtSectionBodyRowComponent, FormsModule, ReactiveFormsModule, MatFormField, MatLabel, MatInput, MatHint, CtSectionFooterComponent, CtSectionFooterRowComponent, MatButton, RouterLink, TranslateModule]
 })
 
 export class ScenarioAddComponent extends UIStateComponent implements OnInit, OnDestroy {

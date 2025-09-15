@@ -2,12 +2,14 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AudioNotification } from '@app/services/audioNotification/audioNotification.service';
 import { BatchExecStatusService } from '@app/services/batch/BatchExecStatusService';
 import { Subscription } from 'rxjs';
+import { NgIf } from '@angular/common';
+import { MatIcon } from '@angular/material/icon';
 
 @Component({
     selector: 'batch-change-notification',
     templateUrl: './batch-change-notification.component.html',
     styleUrls: ['./batch-change-notification.component.sass'],
-    standalone: false
+    imports: [NgIf, MatIcon]
 })
 export class BatchChangeNotificationComponent implements OnInit, OnDestroy {
     isActive: boolean = false;

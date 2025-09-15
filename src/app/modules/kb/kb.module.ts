@@ -1,9 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { NgModule } from '@angular/core';
+// import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
-import { CtModule } from '../ct/ct.module';
-import { MaterialAppModule } from '@app/ngmaterial.module';
+// import { CtModule } from '../ct/ct.module';
+
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import {KbsComponent} from './kbs/kbs.component';
@@ -32,6 +32,7 @@ export const KbRoutes: Routes = [
 ];
 
 
+/*
 @NgModule({
     imports: [RouterModule.forChild(KbRoutes)],
     exports: [RouterModule],
@@ -42,16 +43,14 @@ export class KbRoutingModule { }
 
 @NgModule({
     imports: [
-        CommonModule,
-        KbRoutingModule,
-        CtModule,
-        MaterialAppModule,
-        FormsModule,
-        ReactiveFormsModule,
-        TranslateModule.forChild({})
-    ],
-    declarations: [
-        KbsComponent, KbAddComponent, KbEditComponent
-    ]
+    CommonModule,
+    KbRoutingModule,
+    CtModule,
+    FormsModule,
+    ReactiveFormsModule,
+    TranslateModule.forChild({}),
+    KbsComponent, KbAddComponent, KbEditComponent
+]
 })
 export class KbModule { }
+*/

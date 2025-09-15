@@ -1,9 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { NgModule } from '@angular/core';
+// import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
-import { CtModule } from '../ct/ct.module';
-import { MaterialAppModule } from '@app/ngmaterial.module';
+// import { CtModule } from '../ct/ct.module';
+
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import {AuthsComponent} from './auths/auths.component';
@@ -31,6 +31,7 @@ export const AuthRoutes: Routes = [
     },
 ];
 
+/*
 
 @NgModule({
     imports: [RouterModule.forChild(AuthRoutes)],
@@ -42,16 +43,14 @@ export class AuthRoutingModule { }
 
 @NgModule({
     imports: [
-        CommonModule,
-        AuthRoutingModule,
-        CtModule,
-        MaterialAppModule,
-        FormsModule,
-        ReactiveFormsModule,
-        TranslateModule.forChild({})
-    ],
-    declarations: [
-        AuthsComponent, AuthAddComponent, AuthEditComponent
-    ]
+    CommonModule,
+    AuthRoutingModule,
+    CtModule,
+    FormsModule,
+    ReactiveFormsModule,
+    TranslateModule.forChild({}),
+    AuthsComponent, AuthAddComponent, AuthEditComponent
+]
 })
 export class AuthModule { }
+*/

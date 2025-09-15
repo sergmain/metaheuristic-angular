@@ -1,9 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { NgModule } from '@angular/core';
+// import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
-import { CtModule } from '../ct/ct.module';
-import { MaterialAppModule } from '@app/ngmaterial.module';
+// import { CtModule } from '../ct/ct.module';
+
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {RoleRouteGuard} from "@app/guards/role-route.guard";
 import {Role} from "@services/authentication";
@@ -85,6 +85,7 @@ export const ScenarioRoutes: Routes = [
     }
 ];
 
+/*
 @NgModule({
     imports: [RouterModule.forChild(ScenarioRoutes)],
     exports: [RouterModule],
@@ -95,23 +96,22 @@ export class ScenarioGroupRoutingModule { }
 
 @NgModule({
     imports: [
-        CommonModule,
-        ScenarioGroupRoutingModule,
-        CtModule,
-        MaterialAppModule,
-        FormsModule,
-        ReactiveFormsModule,
-        TranslateModule.forChild({}),
-        DragDropModule,
-        MatTableModule
-        // ,FlexLayoutModule
-    ],
-    declarations: [
-        ScenarioGroupsComponent, ScenariosComponent,
-        ScenarioGroupAddComponent, ScenarioAddComponent,
-        ScenarioStepsComponent, ScenarioStepAddComponent,
-        ScenarioDetailsComponent,
-        ScenarioMoveComponent
-    ]
+    CommonModule,
+    ScenarioGroupRoutingModule,
+    CtModule,
+    FormsModule,
+    ReactiveFormsModule,
+    TranslateModule.forChild({}),
+    DragDropModule,
+    MatTableModule
+    // ,FlexLayoutModule
+    ,
+    ScenarioGroupsComponent, ScenariosComponent,
+    ScenarioGroupAddComponent, ScenarioAddComponent,
+    ScenarioStepsComponent, ScenarioStepAddComponent,
+    ScenarioDetailsComponent,
+    ScenarioMoveComponent
+]
 })
 export class ScenarioModule { }
+*/

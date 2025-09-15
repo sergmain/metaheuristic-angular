@@ -5,18 +5,29 @@ import {UIStateComponent} from '@app/models/UIStateComponent';
 import {MatTableDataSource} from '@angular/material/table';
 import {ApiKey, ApiKeysResult, Language} from '@app/modules/settings/settings.data';
 import {DefaultResponse} from '@app/models/DefaultResponse';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
+import { FormControl, FormGroup, Validators, FormsModule } from '@angular/forms';
 import {AuthenticationService} from '@services/authentication';
 import {OperationStatus} from '@app/enums/OperationStatus';
 import {Subscription} from 'rxjs';
 import {ApiUid} from '@services/evaluation/ApiUid';
 import { MhUtils } from '@app/services/mh-utils/mh-utils.service';
+import { CtSectionComponent } from '../../../ct/ct-section/ct-section.component';
+import { CtSectionBodyComponent } from '../../../ct/ct-section-body/ct-section-body.component';
+import { CtSectionBodyRowComponent } from '../../../ct/ct-section-body-row/ct-section-body-row.component';
+import { NgIf, NgFor } from '@angular/common';
+import { MatFormField, MatLabel, MatHint } from '@angular/material/input';
+import { MatSelect } from '@angular/material/select';
+import { MatOption } from '@angular/material/autocomplete';
+import { MatIconButton } from '@angular/material/button';
+import { MatTooltip } from '@angular/material/tooltip';
+import { MatIcon } from '@angular/material/icon';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
     selector: "settings-languages-index",
     templateUrl: './settings-languages-index.component.html',
     styleUrls: ['./settings-languages-index.component.scss'],
-    standalone: false
+    imports: [CtSectionComponent, CtSectionBodyComponent, CtSectionBodyRowComponent, NgIf, MatFormField, MatLabel, MatSelect, FormsModule, NgFor, MatOption, MatHint, MatIconButton, MatTooltip, MatIcon, TranslateModule]
 })
 export class SettingsLanguagesIndexComponent extends UIStateComponent implements OnInit {
     protected readonly MhUtils = MhUtils;

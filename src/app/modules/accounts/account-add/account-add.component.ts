@@ -1,17 +1,31 @@
 import { Component } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { FormControl, FormGroup, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { Router, RouterLink } from '@angular/router';
 import { LoadStates } from '@app/enums/LoadStates';
 import { DefaultResponse } from '@app/models/DefaultResponse';
 import { AccountsService } from '@app/services/accounts/accounts.service';
 import { OperationStatus } from '@app/enums/OperationStatus';
 import { Subscription } from 'rxjs';
+import { CtColsComponent } from '../../ct/ct-cols/ct-cols.component';
+import { CtColComponent } from '../../ct/ct-col/ct-col.component';
+import { CtSectionComponent } from '../../ct/ct-section/ct-section.component';
+import { CtSectionHeaderComponent } from '../../ct/ct-section-header/ct-section-header.component';
+import { CtSectionHeaderRowComponent } from '../../ct/ct-section-header-row/ct-section-header-row.component';
+import { CtHeadingComponent } from '../../ct/ct-heading/ct-heading.component';
+import { CtSectionBodyComponent } from '../../ct/ct-section-body/ct-section-body.component';
+import { CtSectionBodyRowComponent } from '../../ct/ct-section-body-row/ct-section-body-row.component';
+import { CtSectionContentComponent } from '../../ct/ct-section-content/ct-section-content.component';
+import { MatFormField, MatLabel, MatInput, MatHint } from '@angular/material/input';
+import { CtSectionFooterComponent } from '../../ct/ct-section-footer/ct-section-footer.component';
+import { CtSectionFooterRowComponent } from '../../ct/ct-section-footer-row/ct-section-footer-row.component';
+import { MatButton } from '@angular/material/button';
+import { NgIf, NgFor } from '@angular/common';
 
 @Component({
     selector: 'account-add',
     templateUrl: './account-add.component.html',
     styleUrls: ['./account-add.component.scss'],
-    standalone: false
+    imports: [CtColsComponent, CtColComponent, CtSectionComponent, CtSectionHeaderComponent, CtSectionHeaderRowComponent, CtHeadingComponent, CtSectionBodyComponent, CtSectionBodyRowComponent, FormsModule, ReactiveFormsModule, CtSectionContentComponent, MatFormField, MatLabel, MatInput, MatHint, CtSectionFooterComponent, CtSectionFooterRowComponent, MatButton, RouterLink, NgIf, NgFor]
 })
 
 export class AccountAddComponent {

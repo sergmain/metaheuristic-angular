@@ -1,10 +1,10 @@
 import { CommonModule } from '@angular/common';
-import { NgModule } from '@angular/core';
+// import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
-import { CtModule } from '../ct/ct.module';
-import { MaterialAppModule } from '@app/ngmaterial.module';
-import { CopyRightModule } from '../copy-right/copy-right.module';
+// import { CtModule } from '../ct/ct.module';
+
+
 import { AiIndexComponent } from './ai-index/ai-index.component';
 import { AiRootComponent } from './ai-root/ai-root.component';
 import { RoleRouteGuard } from '@app/guards/role-route.guard';
@@ -32,7 +32,7 @@ export const AiRoutes: Routes = [
         path: 'experiments',
         canActivate: [RoleRouteGuard],
         component: AiRootComponent,
-        loadChildren: () => import('@app//modules/experiments/experiments.module').then(m => m.ExperimentsModule),
+        loadChildren: () => import('@app//modules/experiments/experiments.module').then(m => m.ExperimentsRoutes),
         data: {
             section: 'experiments',
             requiredRoles: commonRequiredRoles
@@ -41,6 +41,7 @@ export const AiRoutes: Routes = [
 
 ];
 
+/*
 
 @NgModule({
     imports: [RouterModule.forChild(AiRoutes)],
@@ -52,16 +53,14 @@ export class AiRoutingModule { }
 
 @NgModule({
     imports: [
-        CommonModule,
-        AiRoutingModule,
-        CtModule,
-        CopyRightModule,
-        MaterialAppModule,
-        TranslateModule.forChild({})
-    ],
-    declarations: [
-        AiIndexComponent,
-        AiRootComponent
-    ]
+    CommonModule,
+    AiRoutingModule,
+    CtModule,
+    TranslateModule.forChild({}),
+    AiIndexComponent,
+    AiRootComponent
+]
 })
 export class AiModule { }
+*/
+

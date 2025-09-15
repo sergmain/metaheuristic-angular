@@ -1,16 +1,29 @@
 import { Component, OnInit } from '@angular/core';
-import { Location } from '@angular/common';
+import { Location, NgIf, NgFor } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AccountsService } from '@app/services/accounts/accounts.service';
 import { LoadStates } from '@app/enums/LoadStates';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SimpleAccount } from '@app/services/accounts';
+import { CtColsComponent } from '../../ct/ct-cols/ct-cols.component';
+import { CtColComponent } from '../../ct/ct-col/ct-col.component';
+import { CtSectionComponent } from '../../ct/ct-section/ct-section.component';
+import { CtSectionHeaderComponent } from '../../ct/ct-section-header/ct-section-header.component';
+import { CtSectionHeaderRowComponent } from '../../ct/ct-section-header-row/ct-section-header-row.component';
+import { CtHeadingComponent } from '../../ct/ct-heading/ct-heading.component';
+import { CtSectionBodyComponent } from '../../ct/ct-section-body/ct-section-body.component';
+import { CtSectionBodyRowComponent } from '../../ct/ct-section-body-row/ct-section-body-row.component';
+import { CtSectionContentComponent } from '../../ct/ct-section-content/ct-section-content.component';
+import { MatFormField, MatLabel, MatInput } from '@angular/material/input';
+import { CtSectionFooterComponent } from '../../ct/ct-section-footer/ct-section-footer.component';
+import { CtSectionFooterRowComponent } from '../../ct/ct-section-footer-row/ct-section-footer-row.component';
+import { MatButton } from '@angular/material/button';
 
 @Component({
     selector: 'account-edit-pass',
     templateUrl: './account-edit-pass.component.html',
     styleUrls: ['./account-edit-pass.component.scss'],
-    standalone: false
+    imports: [CtColsComponent, CtColComponent, CtSectionComponent, CtSectionHeaderComponent, CtSectionHeaderRowComponent, CtHeadingComponent, CtSectionBodyComponent, CtSectionBodyRowComponent, FormsModule, ReactiveFormsModule, CtSectionContentComponent, MatFormField, MatLabel, MatInput, CtSectionFooterComponent, CtSectionFooterRowComponent, MatButton, NgIf, NgFor]
 })
 
 export class AccountEditPassComponent implements OnInit {

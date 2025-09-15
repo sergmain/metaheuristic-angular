@@ -1,11 +1,13 @@
-import { NgModule } from '@angular/core';
 import { RouterModule, Routes, ExtraOptions } from '@angular/router';
 import { AuthGuard } from '@app/guards/auth/auth.guard';
 import { BillingComponent } from './components/billing/billing.component';
 import { PilotComponent } from './components/pilot/pilot.component';
 import { environment } from '@src/environments/environment';
 import { AppIndexComponent } from './components/app-index/app-index.component';
-const routes: Routes = [
+// // import { NgModule } from '@angular/core';
+
+
+export const ROOT_ROUTES: Routes = [
     {
         path: '',
         component: AppIndexComponent,
@@ -13,7 +15,7 @@ const routes: Routes = [
     {
         path: 'dispatcher',
         canActivate: [AuthGuard],
-        loadChildren: () => import('@app//modules/dispatcher/dispatcher.module').then(m => m.DispatcherModule),
+        loadChildren: () => import('@app//modules/dispatcher/dispatcher.module').then(m => m.DispatcherRoutes),
         data: { sidenavExist: true }
     },
 /*
@@ -29,25 +31,25 @@ const routes: Routes = [
 */
     {
         path: 'ai',
-        loadChildren: () => import('@app//modules/ai/ai.module').then(m => m.AiModule),
+        loadChildren: () => import('@app//modules/ai/ai.module').then(m => m.AiRoutes),
         data: { sidenavExist: true }
     },
     {
         path: 'batch',
-        loadChildren: () => import('@app//modules/batch/batch.module').then(m => m.BatchModule),
+        loadChildren: () => import('@app//modules/batch/batch.module').then(m => m.BatchRoutes),
     },
     {
         path: 'mhbp',
-        loadChildren: () => import('@app//modules/mhbp/mhbp.module').then(m => m.MhbpModule),
+        loadChildren: () => import('@app//modules/mhbp/mhbp.module').then(m => m.MhbpRoutes),
         data: { sidenavExist: true }
     },
     {
         path: 'about',
-        loadChildren: () => import('@app//modules/about/about.module').then(m => m.AboutModule),
+        loadChildren: () => import('@app//modules/about/about.module').then(m => m.AboutRoutes),
     },
     {
         path: 'settings',
-        loadChildren: () => import('@app//modules/settings/settings.module').then(m => m.SettingsModule),
+        loadChildren: () => import('@app//modules/settings/settings.module').then(m => m.SettingsRoutes),
     },
     {
         path: '**',
@@ -56,15 +58,17 @@ const routes: Routes = [
     }
 ];
 
-const extraOptions: ExtraOptions = {
+export const extraOptions: ExtraOptions = {
     useHash: environment.hashLocationStrategy,
     onSameUrlNavigation: 'reload',
     // relativeLinkResolution: 'legacy'
 };
 
+/*
 @NgModule({
-    imports: [RouterModule.forRoot(routes, extraOptions)],
+    imports: [RouterModule.forRoot(ROOT_ROUTES, extraOptions)],
     exports: [RouterModule]
 })
+*/
 
-export class AppRoutingModule { }
+// export class AppRoutingModule { }

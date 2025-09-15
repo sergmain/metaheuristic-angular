@@ -1,15 +1,29 @@
 import { Component, OnInit } from '@angular/core';
 import { CompanyService } from '@app/services/company/company.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FormGroup, FormControl, Validators, ValidationErrors } from '@angular/forms';
+import { FormGroup, FormControl, Validators, ValidationErrors, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AccountResult } from '@app/services/accounts/AccountResult';
 import { OperationStatusRest } from '@app/models/OperationStatusRest';
+import { NgIf } from '@angular/common';
+import { CtColsComponent } from '../../ct/ct-cols/ct-cols.component';
+import { CtColComponent } from '../../ct/ct-col/ct-col.component';
+import { CtSectionComponent } from '../../ct/ct-section/ct-section.component';
+import { CtSectionHeaderComponent } from '../../ct/ct-section-header/ct-section-header.component';
+import { CtSectionHeaderRowComponent } from '../../ct/ct-section-header-row/ct-section-header-row.component';
+import { CtHeadingComponent } from '../../ct/ct-heading/ct-heading.component';
+import { CtSectionBodyComponent } from '../../ct/ct-section-body/ct-section-body.component';
+import { CtSectionBodyRowComponent } from '../../ct/ct-section-body-row/ct-section-body-row.component';
+import { MatFormField, MatLabel, MatInput, MatHint } from '@angular/material/input';
+import { CtSectionFooterComponent } from '../../ct/ct-section-footer/ct-section-footer.component';
+import { CtSectionFooterRowComponent } from '../../ct/ct-section-footer-row/ct-section-footer-row.component';
+import { MatButton } from '@angular/material/button';
+import { CtRestStatusComponent } from '../../ct/ct-rest-status/ct-rest-status.component';
 
 @Component({
     selector: 'account-edit-password',
     templateUrl: './account-edit-password.component.html',
     styleUrls: ['./account-edit-password.component.sass'],
-    standalone: false
+    imports: [NgIf, CtColsComponent, CtColComponent, CtSectionComponent, CtSectionHeaderComponent, CtSectionHeaderRowComponent, CtHeadingComponent, CtSectionBodyComponent, CtSectionBodyRowComponent, FormsModule, ReactiveFormsModule, MatFormField, MatLabel, MatInput, MatHint, CtSectionFooterComponent, CtSectionFooterRowComponent, MatButton, CtRestStatusComponent]
 })
 export class AccountEditPasswordComponent implements OnInit {
     accountResult: AccountResult;

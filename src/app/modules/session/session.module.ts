@@ -1,9 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { NgModule } from '@angular/core';
+// import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
-import { CtModule } from '../ct/ct.module';
-import { MaterialAppModule } from '@app/ngmaterial.module';
+// import { CtModule } from '../ct/ct.module';
+
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SessionsComponent } from './sessions/sessions.component';
 import {RoleRouteGuard} from "@app/guards/role-route.guard";
@@ -26,6 +26,7 @@ export const SessionRoutes: Routes = [
     },
 ];
 
+/*
 
 @NgModule({
     imports: [RouterModule.forChild(SessionRoutes)],
@@ -37,16 +38,14 @@ export class SessionRoutingModule { }
 
 @NgModule({
     imports: [
-        CommonModule,
-        SessionRoutingModule,
-        CtModule,
-        MaterialAppModule,
-        FormsModule,
-        ReactiveFormsModule,
-        TranslateModule.forChild({})
-    ],
-    declarations: [
-        SessionsComponent, ErrorsComponent
-    ]
+    CommonModule,
+    SessionRoutingModule,
+    CtModule,
+    FormsModule,
+    ReactiveFormsModule,
+    TranslateModule.forChild({}),
+    SessionsComponent, ErrorsComponent
+]
 })
 export class SessionModule { }
+*/

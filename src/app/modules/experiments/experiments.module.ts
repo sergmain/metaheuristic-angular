@@ -1,13 +1,13 @@
 import { CommonModule } from '@angular/common';
-import { NgModule } from '@angular/core';
+// import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
-import { MaterialAppModule } from '@app/ngmaterial.module';
+
 import { ExperimentAddComponent } from './experiment-add/experiment-add.component';
 import { ExperimentEditComponent } from './experiment-edit/experiment-edit.component';
 import { ExperimentsComponent } from './experiments/experiments.component';
-import { CtModule } from '../ct/ct.module';
+// import { CtModule } from '../ct/ct.module';
 import { ExperimentStateComponent } from './experiment-state/experiment-state.component';
 
 
@@ -40,6 +40,7 @@ export const ExperimentsRoutes: Routes = [
     }
 ];
 
+/*
 @NgModule({
     imports: [RouterModule.forChild(ExperimentsRoutes)],
     exports: [RouterModule],
@@ -50,19 +51,17 @@ export class ExperimentsRoutingModule { }
 
 @NgModule({
     imports: [
-        CommonModule,
-        ExperimentsRoutingModule,
-        CtModule,
-        MaterialAppModule,
-        FormsModule,
-        ReactiveFormsModule,
-        TranslateModule.forChild({})
-    ],
-    declarations: [
-        ExperimentsComponent,
-        ExperimentAddComponent,
-        ExperimentEditComponent,
-        ExperimentStateComponent
-    ]
+    CommonModule,
+    ExperimentsRoutingModule,
+    CtModule,
+    FormsModule,
+    ReactiveFormsModule,
+    TranslateModule.forChild({}),
+    ExperimentsComponent,
+    ExperimentAddComponent,
+    ExperimentEditComponent,
+    ExperimentStateComponent
+]
 })
 export class ExperimentsModule { }
+*/

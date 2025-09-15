@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, TemplateRef, ViewChild } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogContent, MatDialogActions, MatDialogClose } from '@angular/material/dialog';
 import { TaskExecState } from '@app/enums/TaskExecState';
 import { ExecContextService } from '@app/services/exec-context/exec-context.service';
 import { TaskExecInfo } from '@app/services/exec-context/TaskExecInfo';
@@ -7,12 +7,21 @@ import { ExecContextStateResult } from '@app/services/source-codes/ExecContextSt
 import * as fileSaver from 'file-saver';
 import {ConfirmationDialogMethod} from '@app/components/app-dialog-confirmation/app-dialog-confirmation.component';
 import {MhUtils} from '@services/mh-utils/mh-utils.service';
+import { NgIf, NgFor, NgTemplateOutlet } from '@angular/common';
+import { CtSectionComponent } from '../ct-section/ct-section.component';
+import { CtSectionBodyComponent } from '../ct-section-body/ct-section-body.component';
+import { CtSectionBodyRowComponent } from '../ct-section-body-row/ct-section-body-row.component';
+import { MatIconButton, MatButton } from '@angular/material/button';
+import { MatTooltip } from '@angular/material/tooltip';
+import { MatIcon } from '@angular/material/icon';
+import { CdkScrollable } from '@angular/cdk/scrolling';
+import { CtPreComponent } from '../ct-pre/ct-pre.component';
 
 @Component({
     selector: 'ct-state-of-tasks',
     templateUrl: './ct-state-of-tasks.component.html',
     styleUrls: ['./ct-state-of-tasks.component.scss'],
-    standalone: false
+    imports: [NgIf, CtSectionComponent, CtSectionBodyComponent, CtSectionBodyRowComponent, MatIconButton, MatTooltip, MatIcon, NgFor, NgTemplateOutlet, CdkScrollable, MatDialogContent, CtPreComponent, MatDialogActions, MatButton, MatDialogClose]
 })
 export class CtStateOfTasksComponent implements OnInit {
   @ViewChild('errorDialogTemplate') errorDialogTemplate: TemplateRef<any>;

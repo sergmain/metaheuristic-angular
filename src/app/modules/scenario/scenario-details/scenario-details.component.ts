@@ -1,19 +1,19 @@
 import {FlatTreeControl} from '@angular/cdk/tree';
 import {AfterViewInit, Component, OnDestroy, OnInit, TemplateRef, ViewChild} from '@angular/core';
-import {MatTreeFlatDataSource, MatTreeFlattener} from '@angular/material/tree';
+import { MatTreeFlatDataSource, MatTreeFlattener, MatTree, MatTreeNodeDef, MatTreeNode, MatTreeNodePadding, MatTreeNodeToggle } from '@angular/material/tree';
 import {BehaviorSubject, Observable, of as observableOf, Subscription} from 'rxjs';
-import {CdkDragDrop} from '@angular/cdk/drag-drop';
+import { CdkDragDrop, CdkDropList, CdkDrag } from '@angular/cdk/drag-drop';
 import {MatCheckboxChange} from '@angular/material/checkbox';
 import {SelectionModel} from '@angular/cdk/collections';
-import {FormArray, FormControl, FormGroup, FormGroupDirective, Validators} from '@angular/forms';
-import {MatButton} from '@angular/material/button';
+import { FormArray, FormControl, FormGroup, FormGroupDirective, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatButton, MatIconButton } from '@angular/material/button';
 import {MhUtils} from '@services/mh-utils/mh-utils.service';
 import {ScenarioUidsForAccount} from '@services/scenario/ScenarioUidsForAccount';
 import {SettingsService, SettingsServiceEventChange} from '@services/settings/settings.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {AuthenticationService} from '@services/authentication';
 import {UIStateComponent} from '@app/models/UIStateComponent';
-import {TranslateService} from '@ngx-translate/core';
+import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import {ScenarioService} from '@services/scenario/scenario.service';
 import {LoadStates} from '@app/enums/LoadStates';
 import {SimpleScenarioStep} from '@services/scenario/SimpleScenarioStep';
@@ -26,6 +26,25 @@ import {StepEvaluationPrepareResult} from '@services/scenario/StepEvaluationPrep
 import {StepEvaluation} from '@services/scenario/StepEvaluation';
 import {StepVariable} from '@services/scenario/StepVariable';
 import {MIN_PROMPT_LEN} from '@app/modules/mh-consts';
+import { NgIf, NgFor, NgTemplateOutlet, NgClass } from '@angular/common';
+import { CtSectionComponent } from '../../ct/ct-section/ct-section.component';
+import { CtSectionBodyComponent } from '../../ct/ct-section-body/ct-section-body.component';
+import { CtSectionBodyRowComponent } from '../../ct/ct-section-body-row/ct-section-body-row.component';
+import { MatTooltip } from '@angular/material/tooltip';
+import { MatIcon } from '@angular/material/icon';
+import { MatFormField, MatLabel, MatInput, MatHint } from '@angular/material/input';
+import { CdkTextareaAutosize } from '@angular/cdk/text-field';
+import { CtSectionFooterComponent } from '../../ct/ct-section-footer/ct-section-footer.component';
+import { CtSectionFooterRowComponent } from '../../ct/ct-section-footer-row/ct-section-footer-row.component';
+import { CtColsComponent } from '../../ct/ct-cols/ct-cols.component';
+import { CtColComponent } from '../../ct/ct-col/ct-col.component';
+import { CtSectionHeaderComponent } from '../../ct/ct-section-header/ct-section-header.component';
+import { CtSectionHeaderRowComponent } from '../../ct/ct-section-header-row/ct-section-header-row.component';
+import { CtHeadingComponent } from '../../ct/ct-heading/ct-heading.component';
+import { MatSelect } from '@angular/material/select';
+import { MatOption } from '@angular/material/autocomplete';
+import { MatSlideToggle } from '@angular/material/slide-toggle';
+import { CtExecContextsComponent } from '../../ct/ct-exec-contexts/ct-exec-contexts.component';
 
 const MH_ACCEPTANCE_TEST = 'mh.acceptance-test';
 const MH_AGGREGATE = 'mh.aggregate';
@@ -87,7 +106,7 @@ export class StepEvaluationState {
     selector: 'scenario-details',
     templateUrl: 'scenario-details.component.html',
     styleUrls: ['scenario-details.component.scss'],
-    standalone: false
+    imports: [NgIf, CtSectionComponent, CtSectionBodyComponent, CtSectionBodyRowComponent, MatIconButton, MatTooltip, MatIcon, FormsModule, ReactiveFormsModule, MatFormField, MatLabel, MatInput, CdkTextareaAutosize, CtSectionFooterComponent, CtSectionFooterRowComponent, MatButton, CtColsComponent, CtColComponent, CtSectionHeaderComponent, CtSectionHeaderRowComponent, CtHeadingComponent, MatSelect, NgFor, MatOption, MatHint, NgTemplateOutlet, MatTree, CdkDropList, MatTreeNodeDef, MatTreeNode, MatTreeNodePadding, CdkDrag, MatSlideToggle, MatTreeNodeToggle, NgClass, CtExecContextsComponent, TranslateModule]
 })
 export class ScenarioDetailsComponent extends UIStateComponent implements OnInit, OnDestroy, AfterViewInit {
     // for scenario-details.component.html

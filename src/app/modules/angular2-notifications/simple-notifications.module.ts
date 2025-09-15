@@ -15,14 +15,12 @@ export function optionsFactory(options) {
 }
 
 @NgModule({
-  imports: [
-    CommonModule
-  ],
-  declarations: [
-    SimpleNotificationsComponent,
-    NotificationComponent
-  ],
-  exports: [SimpleNotificationsComponent]
+    imports: [
+        CommonModule,
+        SimpleNotificationsComponent,
+        NotificationComponent
+    ],
+    exports: [SimpleNotificationsComponent]
 })
 export class SimpleNotificationsModule {
   static forRoot(options: Options = {}): ModuleWithProviders<SimpleNotificationsModule> {

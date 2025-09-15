@@ -4,6 +4,7 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { NotificationAnimationType } from '../../enums/notification-animation-type.enum';
 import { Notification } from '../../interfaces/notification.type';
 import { NotificationsService } from '../../services/notifications.service';
+import { NgClass, NgIf, NgTemplateOutlet, NgStyle } from '@angular/common';
 
 @Component({
     selector: 'simple-notification',
@@ -92,7 +93,7 @@ import { NotificationsService } from '../../services/notifications.service';
     templateUrl: './notification.component.html',
     styleUrls: ['./notification.component.css'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    imports: [NgClass, NgIf, NgTemplateOutlet, NgStyle]
 })
 
 export class NotificationComponent implements OnInit, OnDestroy {

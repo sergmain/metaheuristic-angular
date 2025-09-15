@@ -1,10 +1,10 @@
 import { CommonModule } from '@angular/common';
-import { NgModule } from '@angular/core';
+// import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
-import { CtModule } from '@app/modules/ct/ct.module';
-import { MaterialAppModule } from '@app/ngmaterial.module';
-import { CopyRightModule } from '@app/modules/copy-right/copy-right.module';
+// import { NgModule } from '@angular/core';
+
+
 import { SettingsIndexComponent } from '@app/modules/settings/settings-index/settings-index.component';
 import { SettingsRootComponent } from '@app/modules/settings/settings-root/settings-root.component';
 import { RoleRouteGuard } from '@app/guards/role-route.guard';
@@ -32,7 +32,7 @@ export const SettingsRoutes: Routes = [
         path: 'security',
         canActivate: [RoleRouteGuard],
         component: SettingsRootComponent,
-        loadChildren: () => import('@app/modules/settings/settings-security/settings-security.module').then(m => m.SettingsSecurityModule),
+        loadChildren: () => import('@app/modules/settings/settings-security/settings-security.module').then(m => m.SettingsSecurityRoutes),
         data: {
             requiredRoles: [Role.Admin, Role.Manager, Role.Operator],
             section: 'security'
@@ -42,7 +42,7 @@ export const SettingsRoutes: Routes = [
         path: 'api-keys',
         canActivate: [RoleRouteGuard],
         component: SettingsRootComponent,
-        loadChildren: () => import('@app/modules/settings/settings-api-keys/settings-api-keys.module').then(m => m.SettingsApiKeysModule),
+        loadChildren: () => import('@app/modules/settings/settings-api-keys/settings-api-keys.module').then(m => m.SettingsApiKeysRoutes),
         data: {
             requiredRoles: [Role.Admin, Role.Manager, Role.Operator],
             section: 'api-keys'
@@ -52,7 +52,7 @@ export const SettingsRoutes: Routes = [
         path: 'languages',
         canActivate: [RoleRouteGuard],
         component: SettingsRootComponent,
-        loadChildren: () => import('@app/modules/settings/settings-languages/settings-languages.module').then(m => m.SettingsLanguagesModule),
+        loadChildren: () => import('@app/modules/settings/settings-languages/settings-languages.module').then(m => m.SettingsLanguagesRoutes),
         data: {
             requiredRoles: [Role.Admin, Role.Manager, Role.Operator],
             section: 'languages'
@@ -60,6 +60,7 @@ export const SettingsRoutes: Routes = [
     }
 ];
 
+/*
 
 @NgModule({
     imports: [RouterModule.forChild(SettingsRoutes)],
@@ -71,16 +72,13 @@ export class SettingsRoutingModule { }
 
 @NgModule({
     imports: [
-        CommonModule,
-        SettingsRoutingModule,
-        CtModule,
-        CopyRightModule,
-        MaterialAppModule,
-        TranslateModule.forChild({})
-    ],
-    declarations: [
-        SettingsIndexComponent,
-        SettingsRootComponent
-    ]
+    CommonModule,
+    SettingsRoutingModule,
+    CtModule,
+    TranslateModule.forChild({}),
+    SettingsIndexComponent,
+    SettingsRootComponent
+]
 })
 export class SettingsModule { }
+*/

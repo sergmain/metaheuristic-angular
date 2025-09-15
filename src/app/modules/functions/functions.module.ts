@@ -1,12 +1,12 @@
 import { CommonModule } from '@angular/common';
-import { NgModule } from '@angular/core';
+// import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { AddFunctionComponent } from './add-function/add-function.component';
 import { FunctionsComponent } from './functions/functions.component';
-import { MaterialAppModule } from '@app/ngmaterial.module';
-import { CtModule } from '@app/modules/ct/ct.module';
+
+// import { NgModule } from '@angular/core';
 
 
 export const FunctionsRoutes: Routes = [
@@ -23,6 +23,7 @@ export const FunctionsRoutes: Routes = [
 ];
 
 
+/*
 @NgModule({
     imports: [RouterModule.forChild(FunctionsRoutes)],
     exports: [RouterModule]
@@ -32,17 +33,15 @@ export class FunctionsRoutingModule { }
 
 @NgModule({
     imports: [
-        CommonModule,
-        FunctionsRoutingModule,
-        CtModule,
-        MaterialAppModule,
-        FormsModule,
-        ReactiveFormsModule,
-        TranslateModule.forChild({})
-    ],
-    declarations: [
-        AddFunctionComponent,
-        FunctionsComponent
-    ]
+    CommonModule,
+    FunctionsRoutingModule,
+    CtModule,
+    FormsModule,
+    ReactiveFormsModule,
+    TranslateModule.forChild({}),
+    AddFunctionComponent,
+    FunctionsComponent
+]
 })
 export class FunctionsModule { }
+*/

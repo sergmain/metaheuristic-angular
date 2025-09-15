@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { HttpClient, HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
-import { NgModule } from '@angular/core';
+// import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -10,7 +10,7 @@ import { AuthenticationService } from '@app/services/authentication/authenticati
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { AppComponent } from './app.component';
-import { AppRoutingModule } from './app.routing.module';
+// import { AppRoutingModule } from './app.routing.module';
 import { AppDialogConfirmationComponent } from './components/app-dialog-confirmation/app-dialog-confirmation.component';
 import { AppIndexComponent } from './components/app-index/app-index.component';
 import { AppViewComponent } from './components/app-view/app-view.component';
@@ -22,9 +22,9 @@ import { NavPilotComponent } from './components/nav-pilot/nav-pilot.component';
 import { PilotComponent } from './components/pilot/pilot.component';
 import { JwtInterceptor } from './jwt.interceptor';
 import { SimpleNotificationsModule } from './modules/angular2-notifications/simple-notifications.module';
-import { CopyRightModule } from './modules/copy-right/copy-right.module';
-import { CtModule } from './modules/ct/ct.module';
-import { MaterialAppModule } from './ngmaterial.module';
+
+// import { CtModule } from './modules/ct/ct.module';
+
 import { NotificationsInterceptor } from './notifications.interceptor';
 
 export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
@@ -32,48 +32,3 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
 }
 
 
-@NgModule({ declarations: [
-        AppComponent,
-        AppViewComponent,
-        AppIndexComponent,
-        PilotComponent,
-        NavPilotComponent,
-        LoginComponent,
-        BillingComponent,
-        BatchChangeNotificationComponent,
-        LoremIndexComponent,
-        AppDialogConfirmationComponent,
-    ],
-    bootstrap: [AppComponent], imports: [CommonModule,
-        BrowserModule,
-        AppRoutingModule,
-        BrowserAnimationsModule,
-        MaterialAppModule,
-        CtModule,
-        CopyRightModule,
-        FormsModule,
-        ReactiveFormsModule,
-        TranslateModule.forRoot({
-            loader: {
-                provide: TranslateLoader,
-                useFactory: HttpLoaderFactory,
-                deps: [HttpClient]
-            }
-        }),
-        SimpleNotificationsModule.forRoot()], providers: [
-        AuthGuard,
-        AuthenticationService,
-        AccountsService,
-        {
-            provide: HTTP_INTERCEPTORS,
-            useClass: JwtInterceptor,
-            multi: true
-        },
-        {
-            provide: HTTP_INTERCEPTORS,
-            useClass: NotificationsInterceptor,
-            multi: true
-        },
-        provideHttpClient(withInterceptorsFromDi())
-    ] })
-export class AppModule { }

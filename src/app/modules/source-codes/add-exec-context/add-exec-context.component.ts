@@ -6,11 +6,24 @@ import { ExecContextService } from '@app/services/exec-context/exec-context.serv
 import { ExecContextResult } from '@app/services/source-codes/ExecContextResult';
 import { SourceCodesService } from '@app/services/source-codes/source-codes.service';
 import { SourceCodeResult } from '@app/services/source-codes/SourceCodeResult';
+import { NgIf, NgFor } from '@angular/common';
+import { CtColsComponent } from '../../ct/ct-cols/ct-cols.component';
+import { CtColComponent } from '../../ct/ct-col/ct-col.component';
+import { CtSectionComponent } from '../../ct/ct-section/ct-section.component';
+import { CtSectionHeaderComponent } from '../../ct/ct-section-header/ct-section-header.component';
+import { CtSectionHeaderRowComponent } from '../../ct/ct-section-header-row/ct-section-header-row.component';
+import { CtHeadingComponent } from '../../ct/ct-heading/ct-heading.component';
+import { CtSectionBodyComponent } from '../../ct/ct-section-body/ct-section-body.component';
+import { CtSectionBodyRowComponent } from '../../ct/ct-section-body-row/ct-section-body-row.component';
+import { CtSectionFooterComponent } from '../../ct/ct-section-footer/ct-section-footer.component';
+import { CtSectionFooterRowComponent } from '../../ct/ct-section-footer-row/ct-section-footer-row.component';
+import { MatButton } from '@angular/material/button';
+import { CtSectionContentComponent } from '../../ct/ct-section-content/ct-section-content.component';
 @Component({
     selector: 'add-exec-context',
     templateUrl: './add-exec-context.component.html',
     styleUrls: ['./add-exec-context.component.scss'],
-    standalone: false
+    imports: [NgIf, CtColsComponent, CtColComponent, CtSectionComponent, CtSectionHeaderComponent, CtSectionHeaderRowComponent, CtHeadingComponent, CtSectionBodyComponent, CtSectionBodyRowComponent, CtSectionFooterComponent, CtSectionFooterRowComponent, MatButton, CtSectionContentComponent, NgFor]
 })
 
 export class AddExecContextComponent implements OnInit, OnDestroy {

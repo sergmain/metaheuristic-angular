@@ -1,14 +1,14 @@
 import { CommonModule } from '@angular/common';
-import { NgModule } from '@angular/core';
+// import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
-import { MaterialAppModule } from '@app/ngmaterial.module';
+
 import { BatchStatusComponent } from './batch-status/batch-status.component';
 import { BatchAddComponent } from './batch-add/batch-add.component';
-import { CtModule } from '@app/modules/ct/ct.module';
+// import { NgModule } from '@angular/core';
 import { BatchRootComponent } from './batch-root/batch-root.component';
-import { CopyRightModule } from '@app/modules/copy-right/copy-right.module';
+
 import { BatchStateComponent } from './batch-state/batch-state.component';
 import { BatchListComponent } from './batch-list/batch-list.component';
 import { RoleRouteGuard } from '@app/guards/role-route.guard';
@@ -61,6 +61,7 @@ export const BatchRoutes: Routes = [
 ];
 
 
+/*
 @NgModule({
     imports: [RouterModule.forChild(BatchRoutes)],
     exports: [RouterModule],
@@ -71,21 +72,18 @@ export class BatchRoutingModule { }
 
 @NgModule({
     imports: [
-        CommonModule,
-        BatchRoutingModule,
-        CtModule,
-        MaterialAppModule,
-        FormsModule,
-        ReactiveFormsModule,
-        CopyRightModule,
-        TranslateModule.forChild({})
-    ],
-    declarations: [
-        BatchRootComponent,
-        BatchStatusComponent,
-        BatchAddComponent,
-        BatchStateComponent,
-        BatchListComponent
-    ]
+    CommonModule,
+    BatchRoutingModule,
+    CtModule,
+    FormsModule,
+    ReactiveFormsModule,
+    TranslateModule.forChild({}),
+    BatchRootComponent,
+    BatchStatusComponent,
+    BatchAddComponent,
+    BatchStateComponent,
+    BatchListComponent
+]
 })
 export class BatchModule { }
+*/

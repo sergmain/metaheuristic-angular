@@ -2,12 +2,17 @@ import { Component } from '@angular/core';
 import { OperationStatusRest } from '@app/models/OperationStatusRest';
 import { Router, ActivatedRoute } from '@angular/router';
 import { OperationStatus } from '@app/enums/OperationStatus';
+import { CtColsComponent } from '../../ct/ct-cols/ct-cols.component';
+import { CtColComponent } from '../../ct/ct-col/ct-col.component';
+import { CardFormAddVariableComponent } from '../card-form-add-variable/card-form-add-variable.component';
+import { CtRestStatusComponent } from '../../ct/ct-rest-status/ct-rest-status.component';
+import { CardFormAddVariableWithStorageComponent } from '../card-form-add-variable-with-storage/card-form-add-variable-with-storage.component';
 
 @Component({
     selector: 'add-global-variable',
     templateUrl: './add-global-variable.component.html',
     styleUrls: ['./add-global-variable.component.scss'],
-    standalone: false
+    imports: [CtColsComponent, CtColComponent, CardFormAddVariableComponent, CtRestStatusComponent, CardFormAddVariableWithStorageComponent]
 })
 
 export class AddGlobalVariableComponent {

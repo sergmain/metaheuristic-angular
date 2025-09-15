@@ -2,6 +2,7 @@ import { Component, Inject } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { forkJoin } from 'rxjs';
 import {MhUtils} from '@services/mh-utils/mh-utils.service';
+import { MatButton } from '@angular/material/button';
 
 export interface QuestionData {
     text: string;
@@ -24,7 +25,7 @@ export interface ConfirmationDialogInterface {
     selector: 'app-dialog-confirmation',
     templateUrl: './app-dialog-confirmation.component.html',
     styleUrls: ['./app-dialog-confirmation.component.scss'],
-    standalone: false
+    imports: [MatButton]
 })
 
 

@@ -4,6 +4,8 @@ import { NotificationAnimationType } from '../../enums/notification-animation-ty
 import { Notification } from '../../interfaces/notification.type';
 import { Options, Position } from '../../interfaces/options.type';
 import { NotificationsService } from '../../services/notifications.service';
+import { NgClass, NgFor } from '@angular/common';
+import { NotificationComponent } from '../notification/notification.component';
 
 @Component({
     selector: 'simple-notifications',
@@ -11,7 +13,7 @@ import { NotificationsService } from '../../services/notifications.service';
     templateUrl: './simple-notifications.component.html',
     styleUrls: ['./simple-notifications.component.css'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    imports: [NgClass, NgFor, NotificationComponent]
 })
 export class SimpleNotificationsComponent implements OnInit, OnDestroy {
   constructor(

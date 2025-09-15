@@ -1,9 +1,9 @@
 import { HttpResponse } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { MatTableDataSource } from '@angular/material/table';
+import { MatTableDataSource, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow } from '@angular/material/table';
 import { marker } from '@biesbjerg/ngx-translate-extract-marker';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { ConfirmationDialogMethod, QuestionData } from '@app/components/app-dialog-confirmation/app-dialog-confirmation.component';
 import { BatchExecState } from '@app/enums/BatchExecState';
 import { UIStateComponent } from '@app/models/UIStateComponent';
@@ -15,13 +15,27 @@ import { BatchExecStatusService } from '@app/services/batch/BatchExecStatusServi
 import { SettingsService } from '@app/services/settings/settings.service';
 import * as fileSaver from 'file-saver';
 import {MhUtils} from '@services/mh-utils/mh-utils.service';
+import { NgIf, NgTemplateOutlet, DatePipe } from '@angular/common';
+import { CtSectionComponent } from '../../ct/ct-section/ct-section.component';
+import { CtSectionHeaderComponent } from '../../ct/ct-section-header/ct-section-header.component';
+import { CtSectionHeaderRowComponent } from '../../ct/ct-section-header-row/ct-section-header-row.component';
+import { CtHeadingComponent } from '../../ct/ct-heading/ct-heading.component';
+import { MatButton } from '@angular/material/button';
+import { CtSectionBodyComponent } from '../../ct/ct-section-body/ct-section-body.component';
+import { CtSectionBodyRowComponent } from '../../ct/ct-section-body-row/ct-section-body-row.component';
+import { CtTableComponent } from '../../ct/ct-table/ct-table.component';
+import { RouterLink } from '@angular/router';
+import { MatIcon } from '@angular/material/icon';
+import { CtSectionFooterComponent } from '../../ct/ct-section-footer/ct-section-footer.component';
+import { CtSectionFooterRowComponent } from '../../ct/ct-section-footer-row/ct-section-footer-row.component';
+import { CtTablePaginationComponent } from '../../ct/ct-table-pagination/ct-table-pagination.component';
 
 
 @Component({
     selector: 'batch-list',
     templateUrl: './batch-list.component.html',
     styleUrls: ['./batch-list.component.scss'],
-    standalone: false
+    imports: [NgIf, CtSectionComponent, CtSectionHeaderComponent, CtSectionHeaderRowComponent, CtHeadingComponent, NgTemplateOutlet, MatButton, CtSectionBodyComponent, CtSectionBodyRowComponent, CtTableComponent, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, RouterLink, MatIcon, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, CtSectionFooterComponent, CtSectionFooterRowComponent, CtTablePaginationComponent, DatePipe, TranslateModule]
 })
 export class BatchListComponent extends UIStateComponent implements OnInit, OnDestroy {
     batchesResult: BatchesResult;

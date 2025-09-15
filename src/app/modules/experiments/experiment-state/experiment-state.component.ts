@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { CtStateOfTasksComponent } from '../../ct/ct-state-of-tasks/ct-state-of-tasks.component';
 
 @Component({
     selector: 'experiment-state',
     templateUrl: './experiment-state.component.html',
     styleUrls: ['./experiment-state.component.sass'],
-    standalone: false
+    imports: [CtStateOfTasksComponent]
 })
 export class ExperimentStateComponent implements OnInit {
     sourceCodeId: string;

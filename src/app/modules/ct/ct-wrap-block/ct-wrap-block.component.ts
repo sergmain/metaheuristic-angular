@@ -4,13 +4,14 @@ import {
     OnDestroy,
     ChangeDetectorRef
 } from '@angular/core';
+import { MatProgressSpinner } from '@angular/material/progress-spinner';
 
 @Component({
     // eslint-disable-next-line @angular-eslint/component-selector
     selector: 'ct-wrap-block',
     templateUrl: './ct-wrap-block.component.html',
     styleUrls: ['./ct-wrap-block.component.scss'],
-    standalone: false
+    imports: [MatProgressSpinner]
 })
 export class CtWrapBlockComponent implements OnInit, OnDestroy {
 

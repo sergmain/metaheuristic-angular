@@ -1,5 +1,5 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {FormControl, FormGroup} from '@angular/forms';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {SettingsService, SettingsServiceEventChange} from '@services/settings/settings.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {AuthenticationService} from '@services/authentication';
@@ -10,6 +10,16 @@ import {ConfirmationDialogMethod} from '@app/components/app-dialog-confirmation/
 import {SimpleScenarioGroupsAllResult} from '@services/scenario/ScenarioData';
 import {MhUtils} from '@services/mh-utils/mh-utils.service';
 import {MatDialog} from '@angular/material/dialog';
+import { NgIf, NgFor } from '@angular/common';
+import { CtSectionComponent } from '../../ct/ct-section/ct-section.component';
+import { CtSectionBodyComponent } from '../../ct/ct-section-body/ct-section-body.component';
+import { CtSectionBodyRowComponent } from '../../ct/ct-section-body-row/ct-section-body-row.component';
+import { MatFormField, MatLabel } from '@angular/material/input';
+import { MatSelect } from '@angular/material/select';
+import { MatOption } from '@angular/material/autocomplete';
+import { CtSectionFooterComponent } from '../../ct/ct-section-footer/ct-section-footer.component';
+import { CtSectionFooterRowComponent } from '../../ct/ct-section-footer-row/ct-section-footer-row.component';
+import { MatButton } from '@angular/material/button';
 
 export enum MoveState {
     init,
@@ -24,7 +34,7 @@ export enum MoveState {
     selector: 'scenario-move',
     templateUrl: 'scenario-move.component.html',
     styleUrls: ['scenario-move.component.scss'],
-    standalone: false
+    imports: [NgIf, CtSectionComponent, CtSectionBodyComponent, CtSectionBodyRowComponent, FormsModule, ReactiveFormsModule, MatFormField, MatLabel, MatSelect, NgFor, MatOption, CtSectionFooterComponent, CtSectionFooterRowComponent, MatButton]
 })
 export class ScenarioMoveComponent extends UIStateComponent implements OnInit, OnDestroy {
 

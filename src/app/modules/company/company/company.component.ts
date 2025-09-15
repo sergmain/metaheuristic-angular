@@ -3,8 +3,7 @@ import { Component, OnInit } from '@angular/core';
 @Component({
     selector: 'company',
     templateUrl: './company.component.html',
-    styleUrls: ['./company.component.sass'],
-    standalone: false
+    styleUrls: ['./company.component.sass']
 })
 export class CompanyComponent implements OnInit {
 

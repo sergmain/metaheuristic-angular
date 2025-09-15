@@ -1,9 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { NgModule } from '@angular/core';
+// import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
-import { CtModule } from '../ct/ct.module';
-import { MaterialAppModule } from '@app/ngmaterial.module';
+// import { CtModule } from '../ct/ct.module';
+
 import { CompanyComponent } from './company/company.component';
 import { CompaniesComponent } from './companies/companies.component';
 import { CompanyEditComponent } from './company-edit/company-edit.component';
@@ -118,6 +118,7 @@ export const CompanyRoutes: Routes = [
         }
     }
 ];
+/*
 
 
 @NgModule({
@@ -130,27 +131,25 @@ export class CompanyRoutingModule { }
 
 @NgModule({
     imports: [
-        CommonModule,
-        CompanyRoutingModule,
-        CtModule,
-        MaterialAppModule,
-        FormsModule,
-        ReactiveFormsModule,
-        TranslateModule.forChild({})
-    ],
-    declarations: [
-        CompanyComponent,
-        CompaniesComponent,
-        CompanyEditComponent,
-        CompanyAddComponent,
-        AccountsComponent,
-        AccountAddComponent,
-        AccountEditComponent,
-        AccountEditPasswordComponent,
-        AccountEditRolesComponent,
-        CompanyBatchListComponent,
-        CompanyBatchStatusComponent,
-        CompanyBatchUploadComponent
-    ]
+    CommonModule,
+    CompanyRoutingModule,
+    CtModule,
+    FormsModule,
+    ReactiveFormsModule,
+    TranslateModule.forChild({}),
+    CompanyComponent,
+    CompaniesComponent,
+    CompanyEditComponent,
+    CompanyAddComponent,
+    AccountsComponent,
+    AccountAddComponent,
+    AccountEditComponent,
+    AccountEditPasswordComponent,
+    AccountEditRolesComponent,
+    CompanyBatchListComponent,
+    CompanyBatchStatusComponent,
+    CompanyBatchUploadComponent
+]
 })
 export class CompnyModule { }
+*/

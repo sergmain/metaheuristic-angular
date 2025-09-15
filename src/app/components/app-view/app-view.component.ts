@@ -1,8 +1,8 @@
 import {AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {MatSelect, MatSelectChange} from '@angular/material/select';
-import {MatSlideToggleChange} from '@angular/material/slide-toggle';
+import { MatSlideToggleChange, MatSlideToggle } from '@angular/material/slide-toggle';
 import {DomSanitizer, SafeHtml} from '@angular/platform-browser';
-import {ActivationEnd, Router} from '@angular/router';
+import { ActivationEnd, Router, RouterOutlet, RouterLinkActive, RouterLink } from '@angular/router';
 import {AuthenticationService} from '@app/services/authentication/authentication.service';
 import {UIStateComponent} from '@app/models/UIStateComponent';
 import {setOfLanguages, SettingsLanguage, SettingsTheme} from '@app/services/settings/Settings';
@@ -10,6 +10,19 @@ import {SettingsService, SettingsServiceEventChange} from '@app/services/setting
 import {environment} from '@src/environments/environment';
 import {RuntimeService} from '@services/runtime/runtime.service';
 import {MhUtils} from '@services/mh-utils/mh-utils.service';
+import { NgIf, NgTemplateOutlet, NgFor } from '@angular/common';
+import { MatToolbar, MatToolbarRow } from '@angular/material/toolbar';
+import { CtContentComponent } from '../../modules/ct/ct-content/ct-content.component';
+import { CtSectionComponent } from '../../modules/ct/ct-section/ct-section.component';
+import { CtSectionBodyComponent } from '../../modules/ct/ct-section-body/ct-section-body.component';
+import { CtSectionBodyRowComponent } from '../../modules/ct/ct-section-body-row/ct-section-body-row.component';
+import { LoginComponent } from '../login/login.component';
+import { MatButton, MatIconButton } from '@angular/material/button';
+import { MatIcon } from '@angular/material/icon';
+import { BatchChangeNotificationComponent } from '../batch-change-notification/batch-change-notification.component';
+import { MatOption } from '@angular/material/autocomplete';
+import { MatTooltip } from '@angular/material/tooltip';
+import { TranslateModule } from '@ngx-translate/core';
 
 // declare function initQuitProcess(): any;
 
@@ -17,7 +30,7 @@ import {MhUtils} from '@services/mh-utils/mh-utils.service';
     selector: 'app-view',
     templateUrl: './app-view.component.html',
     styleUrls: ['./app-view.component.scss'],
-    standalone: false
+    imports: [NgIf, MatToolbar, MatToolbarRow, NgTemplateOutlet, RouterOutlet, CtContentComponent, CtSectionComponent, CtSectionBodyComponent, CtSectionBodyRowComponent, LoginComponent, MatButton, MatIcon, RouterLinkActive, RouterLink, BatchChangeNotificationComponent, MatSlideToggle, MatSelect, NgFor, MatOption, MatIconButton, MatTooltip, TranslateModule]
 })
 
 export class AppViewComponent extends UIStateComponent implements OnInit, OnDestroy, AfterViewInit {

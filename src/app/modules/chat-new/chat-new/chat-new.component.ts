@@ -1,9 +1,9 @@
 import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {FormControl, FormGroup, FormGroupDirective, Validators} from '@angular/forms';
-import {MatButton} from '@angular/material/button';
+import { FormControl, FormGroup, FormGroupDirective, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatButton, MatIconButton } from '@angular/material/button';
 import {MhUtils} from '@services/mh-utils/mh-utils.service';
 import {SettingsService, SettingsServiceEventChange} from '@services/settings/settings.service';
-import {ActivatedRoute, Router} from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import {AuthenticationService} from '@services/authentication';
 import {UIStateComponent} from '@app/models/UIStateComponent';
 import {TranslateService} from '@ngx-translate/core';
@@ -11,15 +11,29 @@ import {LoadStates} from '@app/enums/LoadStates';
 import {MatDialog} from '@angular/material/dialog';
 import {ChatService} from '@app/modules/chat-new/chat-service';
 import {ChatPrompt, ChatsAllResult, ChatsResult, FullChat, SimpleChat} from '@app/modules/chat-new/chat-data';
-import {MatTableDataSource} from '@angular/material/table';
+import { MatTableDataSource, MatTable, MatColumnDef, MatCellDef, MatCell, MatRowDef, MatRow } from '@angular/material/table';
 import {MIN_PROMPT_LEN} from '@app/modules/mh-consts';
 import {Subscription} from 'rxjs';
+import { CtColsComponent } from '../../ct/ct-cols/ct-cols.component';
+import { CtColComponent } from '../../ct/ct-col/ct-col.component';
+import { NgTemplateOutlet, NgIf } from '@angular/common';
+import { CtSectionComponent } from '../../ct/ct-section/ct-section.component';
+import { CtSectionBodyComponent } from '../../ct/ct-section-body/ct-section-body.component';
+import { CtSectionBodyRowComponent } from '../../ct/ct-section-body-row/ct-section-body-row.component';
+import { MatIcon } from '@angular/material/icon';
+import { CtTableComponent } from '../../ct/ct-table/ct-table.component';
+import { MatFormField, MatLabel, MatInput } from '@angular/material/input';
+import { CdkTextareaAutosize } from '@angular/cdk/text-field';
+import { CtSectionFooterComponent } from '../../ct/ct-section-footer/ct-section-footer.component';
+import { CtSectionFooterRowComponent } from '../../ct/ct-section-footer-row/ct-section-footer-row.component';
+import { MatTooltip } from '@angular/material/tooltip';
+import { MatSlideToggle } from '@angular/material/slide-toggle';
 
 @Component({
     selector: 'chat-new',
     templateUrl: './chat-new.component.html',
     styleUrls: ['./chat-new.component.scss'],
-    standalone: false
+    imports: [CtColsComponent, CtColComponent, NgTemplateOutlet, CtSectionComponent, CtSectionBodyComponent, CtSectionBodyRowComponent, MatIconButton, RouterLink, MatIcon, CtTableComponent, MatTable, MatColumnDef, MatCellDef, MatCell, MatRowDef, MatRow, NgIf, FormsModule, ReactiveFormsModule, MatFormField, MatLabel, MatInput, CdkTextareaAutosize, CtSectionFooterComponent, CtSectionFooterRowComponent, MatButton, MatTooltip, MatSlideToggle]
 })
 // DO NOT REMOVE '-new' FROM NAME OF COMPONENT
 export class ChatNewComponent extends UIStateComponent implements OnInit, OnDestroy {

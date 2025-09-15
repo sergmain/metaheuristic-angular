@@ -1,9 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { NgModule } from '@angular/core';
+// import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
-import { CtModule } from '../ct/ct.module';
-import { MaterialAppModule } from '@app/ngmaterial.module';
+// import { CtModule } from '../ct/ct.module';
+
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { EvaluationsComponent } from './evaluations/evaluations.component';
@@ -24,6 +24,7 @@ export const EvaluationRoutes: Routes = [
 ];
 
 
+/*
 @NgModule({
     imports: [RouterModule.forChild(EvaluationRoutes)],
     exports: [RouterModule],
@@ -34,16 +35,14 @@ export class EvaluationRoutingModule { }
 
 @NgModule({
     imports: [
-        CommonModule,
-        EvaluationRoutingModule,
-        CtModule,
-        MaterialAppModule,
-        FormsModule,
-        ReactiveFormsModule,
-        TranslateModule.forChild({})
-    ],
-    declarations: [
-        EvaluationsComponent, EvaluationAddComponent
-    ]
+    CommonModule,
+    EvaluationRoutingModule,
+    CtModule,
+    FormsModule,
+    ReactiveFormsModule,
+    TranslateModule.forChild({}),
+    EvaluationsComponent, EvaluationAddComponent
+]
 })
 export class EvaluationModule { }
+*/

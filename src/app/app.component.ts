@@ -9,6 +9,8 @@ import {first, interval, Observable, of, Subscription, timeout} from 'rxjs';
 import {environment} from '@src/environments/environment';
 import {RuntimeService} from '@services/runtime/runtime.service';
 import {catchError} from 'rxjs/operators';
+import { AppViewComponent } from './components/app-view/app-view.component';
+import { SimpleNotificationsComponent } from './modules/angular2-notifications/components/simple-notifications/simple-notifications.component';
 
 const statusUrl: string = environment.baseUrl+'dispatcher/anon/ping'
 const electronStatusUrl: string = 'http://localhost:64968/status';
@@ -17,7 +19,7 @@ const electronStatusUrl: string = 'http://localhost:64968/status';
     selector: 'app-root',
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.scss'],
-    standalone: false
+    imports: [AppViewComponent, SimpleNotificationsComponent]
 })
 export class AppComponent extends UIStateComponent implements OnInit, OnDestroy {
 

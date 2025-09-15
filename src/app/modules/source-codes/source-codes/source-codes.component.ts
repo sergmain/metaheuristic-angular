@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { MatTableDataSource } from '@angular/material/table';
-import { MatTabGroup } from '@angular/material/tabs';
+import { MatTableDataSource, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow } from '@angular/material/table';
+import { MatTabGroup, MatTab } from '@angular/material/tabs';
 import { ConfirmationDialogInterface, ConfirmationDialogMethod } from '@app/components/app-dialog-confirmation/app-dialog-confirmation.component';
 import { DispatcherAssetMode } from '@app/enums/DispatcherAssetMode';
 import { SourceCodeType } from '@app/enums/SourceCodeType';
@@ -12,12 +12,27 @@ import { SourceCodesService } from '@app/services/source-codes/source-codes.serv
 import { SourceCode } from '@app/services/source-codes/SourceCode';
 import { SourceCodesResult } from '@app/services/source-codes/SourceCodesResult';
 import { SourceCodesArchiveComponent } from '../source-codes-archive/source-codes-archive.component';
+import { NgIf, NgTemplateOutlet, DatePipe } from '@angular/common';
+import { CtSectionComponent } from '../../ct/ct-section/ct-section.component';
+import { CtSectionHeaderComponent } from '../../ct/ct-section-header/ct-section-header.component';
+import { CtSectionHeaderRowComponent } from '../../ct/ct-section-header-row/ct-section-header-row.component';
+import { CtHeadingComponent } from '../../ct/ct-heading/ct-heading.component';
+import { CtAlertComponent } from '../../ct/ct-alert/ct-alert.component';
+import { CtSectionBodyComponent } from '../../ct/ct-section-body/ct-section-body.component';
+import { CtSectionBodyRowComponent } from '../../ct/ct-section-body-row/ct-section-body-row.component';
+import { CtSectionFooterComponent } from '../../ct/ct-section-footer/ct-section-footer.component';
+import { CtSectionFooterRowComponent } from '../../ct/ct-section-footer-row/ct-section-footer-row.component';
+import { CtTablePaginationComponent } from '../../ct/ct-table-pagination/ct-table-pagination.component';
+import { CtTableComponent } from '../../ct/ct-table/ct-table.component';
+import { MatButton } from '@angular/material/button';
+import { RouterLink } from '@angular/router';
+import { MatIcon } from '@angular/material/icon';
 
 @Component({
     selector: 'source-codes',
     templateUrl: './source-codes.component.html',
     styleUrls: ['./source-codes.component.sass'],
-    standalone: false
+    imports: [MatTabGroup, MatTab, NgIf, CtSectionComponent, CtSectionHeaderComponent, CtSectionHeaderRowComponent, CtHeadingComponent, NgTemplateOutlet, CtAlertComponent, CtSectionBodyComponent, CtSectionBodyRowComponent, CtSectionFooterComponent, CtSectionFooterRowComponent, CtTablePaginationComponent, SourceCodesArchiveComponent, CtTableComponent, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatButton, RouterLink, MatIcon, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, DatePipe]
 })
 export class SourceCodesComponent extends UIStateComponent implements OnInit {
 

@@ -3,12 +3,27 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AccountsService, Authority, SimpleAccount } from '@app/services/accounts';
 import { Role } from '@app/services/authentication';
 import { AccountResult } from '@app/services/accounts/AccountResult';
+import { NgIf } from '@angular/common';
+import { CtColsComponent } from '../../ct/ct-cols/ct-cols.component';
+import { CtColComponent } from '../../ct/ct-col/ct-col.component';
+import { CtSectionComponent } from '../../ct/ct-section/ct-section.component';
+import { CtSectionHeaderComponent } from '../../ct/ct-section-header/ct-section-header.component';
+import { CtSectionHeaderRowComponent } from '../../ct/ct-section-header-row/ct-section-header-row.component';
+import { CtHeadingComponent } from '../../ct/ct-heading/ct-heading.component';
+import { CtSectionBodyComponent } from '../../ct/ct-section-body/ct-section-body.component';
+import { CtSectionBodyRowComponent } from '../../ct/ct-section-body-row/ct-section-body-row.component';
+import { CtSectionContentComponent } from '../../ct/ct-section-content/ct-section-content.component';
+import { MatCheckbox } from '@angular/material/checkbox';
+import { FormsModule } from '@angular/forms';
+import { CtSectionFooterComponent } from '../../ct/ct-section-footer/ct-section-footer.component';
+import { CtSectionFooterRowComponent } from '../../ct/ct-section-footer-row/ct-section-footer-row.component';
+import { MatButton } from '@angular/material/button';
 
 @Component({
     selector: 'account-access',
     templateUrl: './account-access.component.html',
     styleUrls: ['./account-access.component.scss'],
-    standalone: false
+    imports: [NgIf, CtColsComponent, CtColComponent, CtSectionComponent, CtSectionHeaderComponent, CtSectionHeaderRowComponent, CtHeadingComponent, CtSectionBodyComponent, CtSectionBodyRowComponent, CtSectionContentComponent, MatCheckbox, FormsModule, CtSectionFooterComponent, CtSectionFooterRowComponent, MatButton]
 })
 export class AccountAccessComponent implements OnInit {
     response: AccountResult;

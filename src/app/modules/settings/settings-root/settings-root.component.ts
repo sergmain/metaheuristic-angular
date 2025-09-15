@@ -1,15 +1,22 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, RouterLinkActive, RouterLink, RouterOutlet } from '@angular/router';
 import { UIStateComponent } from '@app/models/UIStateComponent';
 import { AuthenticationService } from '@app/services/authentication';
 import { Settings } from '@app/services/settings/Settings';
 import { SettingsService, SettingsServiceEventChange } from '@app/services/settings/settings.service';
+import { MatSidenavContainer, MatSidenav, MatSidenavContent } from '@angular/material/sidenav';
+import { NgIf } from '@angular/common';
+import { MatButton } from '@angular/material/button';
+import { CtContentComponent } from '../../ct/ct-content/ct-content.component';
+import { CtBackButtonComponent } from '../../ct/ct-back-button/ct-back-button.component';
+import { CopyRightComponent } from '../../copy-right/copy-right/copy-right.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
     selector: 'settings-root',
     templateUrl: './settings-root.component.html',
     styleUrls: ['./settings-root.component.sass'],
-    standalone: false
+    imports: [MatSidenavContainer, MatSidenav, NgIf, MatButton, RouterLinkActive, RouterLink, MatSidenavContent, CtContentComponent, RouterOutlet, CtBackButtonComponent, CopyRightComponent, TranslateModule]
 })
 export class SettingsRootComponent extends UIStateComponent implements OnInit, OnDestroy {
     settings: Settings;

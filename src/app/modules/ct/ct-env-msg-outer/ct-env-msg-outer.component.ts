@@ -5,8 +5,7 @@ import { environment } from '@src/environments/environment';
 @Component({
     selector: 'ct-env-msg-outer',
     templateUrl: './ct-env-msg-outer.component.html',
-    styleUrls: ['./ct-env-msg-outer.component.sass'],
-    standalone: false
+    styleUrls: ['./ct-env-msg-outer.component.sass']
 })
 export class CtEnvMsgOuterComponent implements OnInit {
   @Input() propertyName: string;

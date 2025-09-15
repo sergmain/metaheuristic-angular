@@ -1,12 +1,15 @@
 import { Component, ElementRef, OnInit, ViewChild, Input, OnChanges, EventEmitter, Output } from '@angular/core';
 import { marker } from '@biesbjerg/ngx-translate-extract-marker';
 import { TranslateService } from '@ngx-translate/core';
+import { NgIf } from '@angular/common';
+import { MatButton } from '@angular/material/button';
+import { MatIcon } from '@angular/material/icon';
 
 @Component({
     selector: 'ct-file-upload',
     templateUrl: './ct-file-upload.component.html',
     styleUrls: ['./ct-file-upload.component.scss'],
-    standalone: false
+    imports: [NgIf, MatButton, MatIcon]
 })
 export class CtFileUploadComponent implements OnInit, OnChanges {
     @Output() changed: EventEmitter<string> = new EventEmitter<string>();
