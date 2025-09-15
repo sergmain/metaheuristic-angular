@@ -31,7 +31,7 @@ export class SimpleNotificationsComponent implements OnInit, OnDestroy {
   @Output() destroy = new EventEmitter();
 
   notifications: Notification[] = [];
-  position: Position = ['bottom', 'right'];
+  @Input() position: Position = ['bottom', 'right'];
 
   private lastNotificationCreated: Notification;
   private listener: Subscription;
@@ -43,15 +43,15 @@ export class SimpleNotificationsComponent implements OnInit, OnDestroy {
   private preventDuplicates = false;
 
   // Sent values
-  timeOut = 0;
-  maxLength = 0;
-  clickToClose = true;
-  clickIconToClose = false;
-  showProgressBar = true;
-  pauseOnHover = true;
-  theClass = '';
-  rtl = false;
-  animate: NotificationAnimationType = NotificationAnimationType.FromRight;
+  @Input() timeOut = 0;
+  @Input() maxLength = 0;
+  @Input() clickToClose = true;
+  @Input() clickIconToClose = false;
+  @Input() showProgressBar = true;
+  @Input() pauseOnHover = true;
+  @Input() theClass = '';
+  @Input() rtl = false;
+  @Input() animate: NotificationAnimationType = NotificationAnimationType.FromRight;
 
   private usingComponentOptions = false;
 

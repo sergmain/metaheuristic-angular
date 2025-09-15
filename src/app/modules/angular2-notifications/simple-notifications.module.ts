@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { InjectionToken, ModuleWithProviders, NgModule } from '@angular/core';
-import { NotificationComponent } from './components/notification/notification.component';
-import { SimpleNotificationsComponent } from './components/simple-notifications/simple-notifications.component';
+// import { NotificationComponent } from './components/notification/notification.component';
+// import { SimpleNotificationsComponent } from './components/simple-notifications/simple-notifications.component';
 import { DEFAULT_OPTIONS } from './consts/default-options.const';
 import { Options } from './interfaces/options.type';
 import { NotificationsService } from './services/notifications.service';
@@ -16,12 +16,12 @@ export function optionsFactory(options) {
 
 @NgModule({
     imports: [
-        CommonModule,
-        SimpleNotificationsComponent,
-        NotificationComponent
+        CommonModule
+        // SimpleNotificationsComponent,
+        // NotificationComponent
     ]
-    ,
-    exports: [SimpleNotificationsComponent]
+    // ,
+    // exports: [SimpleNotificationsComponent]
 })
 export class SimpleNotificationsModule {
   static forRoot(options: Options = {}): ModuleWithProviders<SimpleNotificationsModule> {

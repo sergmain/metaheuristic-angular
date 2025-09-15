@@ -1,6 +1,20 @@
 <div class="simple-notification-wrapper" [ngClass]="position">
     <simple-notifications
             *ngFor="let a of notifications; let i = index"
+            [timeOut]="timeOut"
+            [clickToClose]="clickToClose"
+            [clickIconToClose]="clickIconToClose"
+            [maxLength]="maxLength"
+            [showProgressBar]="showProgressBar"
+            [pauseOnHover]="pauseOnHover"
+            [theClass]="theClass"
+            [rtl]="rtl"
+            [animate]="animate"
+            >
+    </simple-notifications>
+<!--
+    <simple-notifications
+            *ngFor="let a of notifications; let i = index"
             [item]="a"
             [timeOut]="timeOut"
             [clickToClose]="clickToClose"
@@ -13,4 +27,5 @@
             [animate]="animate"
             [position]="i">
     </simple-notifications>
+-->
 </div>
