@@ -3,12 +3,12 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { DispatcherIndexComponent } from './dispatcher-index/dispatcher-index.component';
 import { DispatcherRootComponent } from './dispatcher-root/dispatcher-root.component';
-import { MaterialAppModule } from '@src/app/ngmaterial.module';
+import { MaterialAppModule } from '@app/ngmaterial.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { CtModule } from '../ct/ct.module';
 import { CopyRightModule } from '../copy-right/copy-right.module';
-import { Role } from '@src/app/services/authentication';
-import { RoleRouteGuard } from '@src/app/guards/role-route.guard';
+import { Role } from '@app/services/authentication';
+import { RoleRouteGuard } from '@app/guards/role-route.guard';
 
 
 const commonRequiredRoles: Role[] = [
@@ -20,8 +20,6 @@ const commonRequiredRoles: Role[] = [
     Role.Data,
     Role.Manager,
 ];
-
-
 
 export const DispatcherRoutes: Routes = [
     {
@@ -41,7 +39,7 @@ export const DispatcherRoutes: Routes = [
         path: 'source-codes',
         canActivate: [RoleRouteGuard],
         component: DispatcherRootComponent,
-        loadChildren: () => import('@src/app/modules/source-codes/source-codes.module').then(m => m.SourceCodeModule),
+        loadChildren: () => import('@app/modules/source-codes/source-codes.module').then(m => m.SourceCodeModule),
         data: {
             requiredRoles: [Role.MainAssetManager, Role.Admin, Role.Data, Role.Manager],
             section: 'source-codes'
@@ -51,7 +49,7 @@ export const DispatcherRoutes: Routes = [
         path: 'global-variables',
         canActivate: [RoleRouteGuard],
         component: DispatcherRootComponent,
-        loadChildren: () => import('@src/app/modules/global-variables/global-variables.module').then(m => m.GlobalVariablesModule),
+        loadChildren: () => import('@app/modules/global-variables/global-variables.module').then(m => m.GlobalVariablesModule),
         data: {
             requiredRoles: [Role.Admin, Role.Data],
             section: 'global-variables'
@@ -61,7 +59,7 @@ export const DispatcherRoutes: Routes = [
         path: 'functions',
         canActivate: [RoleRouteGuard],
         component: DispatcherRootComponent,
-        loadChildren: () => import('@src/app/modules/functions/functions.module').then(m => m.FunctionsModule),
+        loadChildren: () => import('@app/modules/functions/functions.module').then(m => m.FunctionsModule),
         data: {
             requiredRoles: [Role.MainAssetManager, Role.Admin, Role.Data],
             section: 'functions'
@@ -71,7 +69,7 @@ export const DispatcherRoutes: Routes = [
         path: 'processors',
         canActivate: [RoleRouteGuard],
         component: DispatcherRootComponent,
-        loadChildren: () => import('src/app/modules/processors/processors.module').then(m => m.ProcessorsModule),
+        loadChildren: () => import('@app//modules/processors/processors.module').then(m => m.ProcessorsModule),
         data: {
             requiredRoles: [Role.Admin, Role.Data],
             section: 'processors'
@@ -81,7 +79,7 @@ export const DispatcherRoutes: Routes = [
         path: 'accounts',
         canActivate: [RoleRouteGuard],
         component: DispatcherRootComponent,
-        loadChildren: () => import('src/app/modules/accounts/accounts.module').then(m => m.AccountsModule),
+        loadChildren: () => import('@app//modules/accounts/accounts.module').then(m => m.AccountsModule),
         data: {
             requiredRoles: [Role.Admin],
             section: 'accounts'
@@ -91,7 +89,7 @@ export const DispatcherRoutes: Routes = [
         path: 'company',
         canActivate: [RoleRouteGuard],
         component: DispatcherRootComponent,
-        loadChildren: () => import('src/app/modules/company/company.module').then(m => m.CompnyModule),
+        loadChildren: () => import('@app//modules/company/company.module').then(m => m.CompnyModule),
         data: {
             requiredRoles: [Role.MainAdmin, Role.MainOperator, Role.MainSupport],
             section: 'company'

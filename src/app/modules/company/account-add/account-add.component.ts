@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { AccountResult } from '@src/app/services/accounts';
-import { OperationStatusRest } from '@src/app/models/OperationStatusRest';
+import { AccountResult } from '@app/services/accounts';
+import { OperationStatusRest } from '@app/models/OperationStatusRest';
 import { FormGroup, FormControl, Validators, ValidationErrors } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { CompanyService } from '@src/app/services/company/company.service';
-import { OperationStatus } from '@src/app/enums/OperationStatus';
+import { CompanyService } from '@app/services/company/company.service';
+import { OperationStatus } from '@app/enums/OperationStatus';
 
 @Component({
     selector: 'account-add',

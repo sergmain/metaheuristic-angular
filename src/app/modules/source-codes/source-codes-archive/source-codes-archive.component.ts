@@ -4,11 +4,11 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { ConfirmationDialogMethod } from '@app/components/app-dialog-confirmation/app-dialog-confirmation.component';
 import { LoadStates } from '@app/enums/LoadStates';
-import { UIStateComponent } from '@src/app/models/UIStateComponent';
-import { AuthenticationService } from '@src/app/services/authentication';
-import { SourceCodesService } from '@src/app/services/source-codes/source-codes.service';
-import { SourceCode } from '@src/app/services/source-codes/SourceCode';
-import { SourceCodesResult } from '@src/app/services/source-codes/SourceCodesResult';
+import { UIStateComponent } from '@app/models/UIStateComponent';
+import { AuthenticationService } from '@app/services/authentication';
+import { SourceCodesService } from '@app/services/source-codes/source-codes.service';
+import { SourceCode } from '@app/services/source-codes/SourceCode';
+import { SourceCodesResult } from '@app/services/source-codes/SourceCodesResult';
 import { CtTableComponent } from '../../ct/ct-table/ct-table.component';
 
 

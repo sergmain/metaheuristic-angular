@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { MaterialAppModule } from '@src/app/ngmaterial.module';
+import { MaterialAppModule } from '@app/ngmaterial.module';
 import { CtSectionContentComponent } from './ct-section-content/ct-section-content.component';
 import { CtPreComponent } from './ct-pre/ct-pre.component';
 import { CtHeadingComponent } from './ct-heading/ct-heading.component';

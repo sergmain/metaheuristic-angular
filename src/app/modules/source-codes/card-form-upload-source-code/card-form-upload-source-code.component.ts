@@ -1,7 +1,7 @@
 import { Component, ViewChild, Output, EventEmitter } from '@angular/core';
-import { SourceCodesService } from '@src/app/services/source-codes/source-codes.service';
+import { SourceCodesService } from '@app/services/source-codes/source-codes.service';
 import { MatButton } from '@angular/material/button';
-import { SourceCodeResult } from '@src/app/services/source-codes/SourceCodeResult';
+import { SourceCodeResult } from '@app/services/source-codes/SourceCodeResult';
 import { CtFileUploadComponent } from '../../ct/ct-file-upload/ct-file-upload.component';
 
 @Component({

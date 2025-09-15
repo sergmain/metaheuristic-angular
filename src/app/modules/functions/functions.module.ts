@@ -5,7 +5,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { AddFunctionComponent } from './add-function/add-function.component';
 import { FunctionsComponent } from './functions/functions.component';
-import { MaterialAppModule } from '@src/app/ngmaterial.module';
+import { MaterialAppModule } from '@app/ngmaterial.module';
 import { CtModule } from '@app/modules/ct/ct.module';
 
 

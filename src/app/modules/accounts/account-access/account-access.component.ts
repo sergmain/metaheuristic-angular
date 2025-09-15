@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AccountsService, Authority, SimpleAccount } from '@app/services/accounts';
 import { Role } from '@app/services/authentication';
-import { AccountResult } from '@src/app/services/accounts/AccountResult';
+import { AccountResult } from '@app/services/accounts/AccountResult';
 
 @Component({
     selector: 'account-access',

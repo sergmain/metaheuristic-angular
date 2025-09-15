@@ -2,12 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { ConfirmationDialogMethod } from '@app/components/app-dialog-confirmation/app-dialog-confirmation.component';
-import { UIStateComponent } from '@src/app/models/UIStateComponent';
-import { AuthenticationService } from '@src/app/services/authentication';
-import { DispatcherAssetModeService } from '@src/app/services/dispatcher-asset-mode/dispatcher-asset-mode.service';
-import { FunctionEntity } from '@src/app/services/functions/FunctionEntity';
-import { FunctionsService } from '@src/app/services/functions/functions.service';
-import { FunctionsResult } from '@src/app/services/functions/FunctionsResult';
+import { UIStateComponent } from '@app/models/UIStateComponent';
+import { AuthenticationService } from '@app/services/authentication';
+import { DispatcherAssetModeService } from '@app/services/dispatcher-asset-mode/dispatcher-asset-mode.service';
+import { FunctionEntity } from '@app/services/functions/FunctionEntity';
+import { FunctionsService } from '@app/services/functions/functions.service';
+import { FunctionsResult } from '@app/services/functions/FunctionsResult';
 
 @Component({
     selector: "functions",

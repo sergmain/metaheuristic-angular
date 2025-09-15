@@ -2,9 +2,9 @@ import { Component, OnInit, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog, } from '@angular/material/dialog';
 import { ConfirmationDialogMethod } from '@app/components/app-dialog-confirmation/app-dialog-confirmation.component';
-import { GlobalVariablesService } from '@src/app/services/global-variables/global-variables.service';
-import { GlobalVariable } from '@src/app/services/global-variables/GlobalVariables';
-import { GlobalVariablesResult } from '@src/app/services/global-variables/GlobalVariablesResult';
+import { GlobalVariablesService } from '@app/services/global-variables/global-variables.service';
+import { GlobalVariable } from '@app/services/global-variables/GlobalVariables';
+import { GlobalVariablesResult } from '@app/services/global-variables/GlobalVariablesResult';
 
 @Component({
     selector: 'global-variables',

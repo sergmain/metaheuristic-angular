@@ -1,12 +1,12 @@
 import {HttpClient} from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { generateFormData as formData } from '@src/app/helpers/generateFormData';
+import { generateFormData as formData } from '@app/helpers/generateFormData';
 import { environment } from '@src/environments/environment';
 import { Observable } from 'rxjs';
 import { Processor } from './Processor';
 import { ProcessorResult } from './ProcessorResult';
 import { ProcessorsResult } from './ProcessorsResult';
-import { OperationStatusRest } from '@src/app/models/OperationStatusRest';
+import { OperationStatusRest } from '@app/models/OperationStatusRest';
 import { ProcessorBulkDeleteCommitResult } from './ProcessorBulkDeleteCommitResult';
 
 

@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { generateFormData } from '@src/app/helpers/generateFormData';
-import { OperationStatusRest } from '@src/app/models/OperationStatusRest';
+import { generateFormData } from '@app/helpers/generateFormData';
+import { OperationStatusRest } from '@app/models/OperationStatusRest';
 import { environment } from '@src/environments/environment';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { SourceCodeUidsForCompany } from '../source-codes/SourceCodeUidsForCompany';

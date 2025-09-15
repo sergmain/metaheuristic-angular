@@ -1,7 +1,7 @@
 import {Component, ViewChild} from '@angular/core';
 import {Router} from '@angular/router';
-import {FunctionsService} from '@src/app/services/functions/functions.service';
-import {CtFileUploadComponent} from '@src/app/modules/ct/ct-file-upload/ct-file-upload.component';
+import {FunctionsService} from '@app/services/functions/functions.service';
+import {CtFileUploadComponent} from '@app/modules/ct/ct-file-upload/ct-file-upload.component';
 import {UploadingStatus} from '@app/modules/bundle/bundle-data';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {MatButton} from '@angular/material/button';

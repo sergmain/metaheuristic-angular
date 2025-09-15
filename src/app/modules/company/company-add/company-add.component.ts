@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
-import { CompanyService } from '@src/app/services/company/company.service';
-import { OperationStatusRest } from '@src/app/models/OperationStatusRest';
+import { CompanyService } from '@app/services/company/company.service';
+import { OperationStatusRest } from '@app/models/OperationStatusRest';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
-import { OperationStatus } from '@src/app/enums/OperationStatus';
+import { OperationStatus } from '@app/enums/OperationStatus';
 
 @Component({
     selector: 'company-add',

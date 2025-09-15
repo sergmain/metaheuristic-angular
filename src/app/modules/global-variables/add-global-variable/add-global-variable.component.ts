@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { OperationStatusRest } from '@src/app/models/OperationStatusRest';
+import { OperationStatusRest } from '@app/models/OperationStatusRest';
 import { Router, ActivatedRoute } from '@angular/router';
-import { OperationStatus } from '@src/app/enums/OperationStatus';
+import { OperationStatus } from '@app/enums/OperationStatus';
 
 @Component({
     selector: 'add-global-variable',

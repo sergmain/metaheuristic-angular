@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
-import { UIStateComponent } from '@src/app/models/UIStateComponent';
-import { AuthenticationService } from '@src/app/services/authentication';
-import { CompanyService } from '@src/app/services/company/company.service';
-import { SimpleCompaniesResult } from '@src/app/services/company/SimpleCompaniesResult';
-import { SimpleCompany } from '@src/app/services/company/SimpleCompany';
-import { DispatcherAssetModeService } from '@src/app/services/dispatcher-asset-mode/dispatcher-asset-mode.service';
+import { UIStateComponent } from '@app/models/UIStateComponent';
+import { AuthenticationService } from '@app/services/authentication';
+import { CompanyService } from '@app/services/company/company.service';
+import { SimpleCompaniesResult } from '@app/services/company/SimpleCompaniesResult';
+import { SimpleCompany } from '@app/services/company/SimpleCompany';
+import { DispatcherAssetModeService } from '@app/services/dispatcher-asset-mode/dispatcher-asset-mode.service';
 
 @Component({
     selector: 'companies',

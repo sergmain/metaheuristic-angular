@@ -79,7 +79,7 @@
     "@material-design-icons/svg": "^0.14.13",
     "@ngx-translate/core": "^15.0.0",
     "@ngx-translate/http-loader": "8.0.0",
-    "core-js": "3.33.1",
+    "core-js": "3.45.1",
     "file-saver": "2.0.5",
     "jszip": "3.10.1",
     "material-icons": "^1.13.12",

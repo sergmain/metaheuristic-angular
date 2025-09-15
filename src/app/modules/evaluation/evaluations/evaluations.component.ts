@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
-import { UIStateComponent } from '@src/app/models/UIStateComponent';
-import { AuthenticationService } from '@src/app/services/authentication';
-import { SimpleEvaluationsResult } from '@src/app/services/evaluation/SimpleEvaluationsResult';
-import { SimpleEvaluation } from '@src/app/services/evaluation/SimpleEvaluation';
+import { UIStateComponent } from '@app/models/UIStateComponent';
+import { AuthenticationService } from '@app/services/authentication';
+import { SimpleEvaluationsResult } from '@app/services/evaluation/SimpleEvaluationsResult';
+import { SimpleEvaluation } from '@app/services/evaluation/SimpleEvaluation';
 import {ConfirmationDialogMethod} from "@src/app/components/app-dialog-confirmation/app-dialog-confirmation.component";
 import {MatDialog} from "@angular/material/dialog";
 import {EvaluationService} from "@services/evaluation/evaluation.service";

@@ -1,9 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { UIStateComponent } from '@src/app/models/UIStateComponent';
-import { AuthenticationService } from '@src/app/services/authentication';
-import { Settings } from '@src/app/services/settings/Settings';
-import { SettingsService, SettingsServiceEventChange } from '@src/app/services/settings/settings.service';
+import { UIStateComponent } from '@app/models/UIStateComponent';
+import { AuthenticationService } from '@app/services/authentication';
+import { Settings } from '@app/services/settings/Settings';
+import { SettingsService, SettingsServiceEventChange } from '@app/services/settings/settings.service';
 
 @Component({
     selector: 'settings-root',

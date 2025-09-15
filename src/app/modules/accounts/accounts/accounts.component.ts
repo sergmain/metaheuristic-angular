@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { AccountsService } from '@app/services/accounts/accounts.service';
-import { DispatcherAssetMode } from '@src/app/enums/DispatcherAssetMode';
-import { UIStateComponent } from '@src/app/models/UIStateComponent';
-import { AccountsResult, SimpleAccount } from '@src/app/services/accounts';
-import { AuthenticationService } from '@src/app/services/authentication';
-import { DispatcherAssetModeService } from '@src/app/services/dispatcher-asset-mode/dispatcher-asset-mode.service';
+import { DispatcherAssetMode } from '@app/enums/DispatcherAssetMode';
+import { UIStateComponent } from '@app/models/UIStateComponent';
+import { AccountsResult, SimpleAccount } from '@app/services/accounts';
+import { AuthenticationService } from '@app/services/authentication';
+import { DispatcherAssetModeService } from '@app/services/dispatcher-asset-mode/dispatcher-asset-mode.service';
 
 @Component({
     // eslint-disable-next-line @angular-eslint/component-selector

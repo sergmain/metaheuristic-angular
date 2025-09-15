@@ -3,7 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
 import { LoadStates } from '@app/enums/LoadStates';
 import { DefaultResponse } from '@app/models/DefaultResponse';
-import { OperationStatus } from '@src/app/enums/OperationStatus';
+import { OperationStatus } from '@app/enums/OperationStatus';
 import { Subscription } from 'rxjs';
 import {MatButton} from "@angular/material/button";
 import {AuthService} from "@services/auth/auth.service";

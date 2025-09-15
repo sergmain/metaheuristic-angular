@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
-import { DispatcherAssetMode } from '@src/app/enums/DispatcherAssetMode';
-import { UIStateComponent } from '@src/app/models/UIStateComponent';
-import { AccountsResult } from '@src/app/services/accounts/AccountsResult';
-import { SimpleAccount } from '@src/app/services/accounts/SimpleAccount';
-import { AuthenticationService } from '@src/app/services/authentication';
-import { CompanyService } from '@src/app/services/company/company.service';
-import { DispatcherAssetModeService } from '@src/app/services/dispatcher-asset-mode/dispatcher-asset-mode.service';
+import { DispatcherAssetMode } from '@app/enums/DispatcherAssetMode';
+import { UIStateComponent } from '@app/models/UIStateComponent';
+import { AccountsResult } from '@app/services/accounts/AccountsResult';
+import { SimpleAccount } from '@app/services/accounts/SimpleAccount';
+import { AuthenticationService } from '@app/services/authentication';
+import { CompanyService } from '@app/services/company/company.service';
+import { DispatcherAssetModeService } from '@app/services/dispatcher-asset-mode/dispatcher-asset-mode.service';
 
 @Component({
     selector: 'accounts',

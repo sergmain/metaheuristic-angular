@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { PageableDefault } from '@src/app/models/PageableDefault';
+import { PageableDefault } from '@app/models/PageableDefault';
 
 @Component({
     selector: 'ct-table-pagination',

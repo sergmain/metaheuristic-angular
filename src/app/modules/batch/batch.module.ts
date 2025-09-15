@@ -11,8 +11,8 @@ import { BatchRootComponent } from './batch-root/batch-root.component';
 import { CopyRightModule } from '@app/modules/copy-right/copy-right.module';
 import { BatchStateComponent } from './batch-state/batch-state.component';
 import { BatchListComponent } from './batch-list/batch-list.component';
-import { RoleRouteGuard } from '@src/app/guards/role-route.guard';
-import { Role } from '@src/app/services/authentication';
+import { RoleRouteGuard } from '@app/guards/role-route.guard';
+import { Role } from '@app/services/authentication';
 
 const commonRequiredRoles: Role[] = [Role.Admin, Role.Data, Role.Manager, Role.Operator];
 

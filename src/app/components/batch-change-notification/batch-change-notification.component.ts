@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { AudioNotification } from '@src/app/services/audioNotification/audioNotification.service';
-import { BatchExecStatusService } from '@src/app/services/batch/BatchExecStatusService';
+import { AudioNotification } from '@app/services/audioNotification/audioNotification.service';
+import { BatchExecStatusService } from '@app/services/batch/BatchExecStatusService';
 import { Subscription } from 'rxjs';
 
 @Component({

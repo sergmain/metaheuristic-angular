@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
-import { MaterialAppModule } from '@src/app/ngmaterial.module';
+import { MaterialAppModule } from '@app/ngmaterial.module';
 import { ExperimentAddComponent } from './experiment-add/experiment-add.component';
 import { ExperimentEditComponent } from './experiment-edit/experiment-edit.component';
 import { ExperimentsComponent } from './experiments/experiments.component';

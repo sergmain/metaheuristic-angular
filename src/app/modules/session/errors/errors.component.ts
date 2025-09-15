@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
-import { UIStateComponent } from '@src/app/models/UIStateComponent';
-import { AuthenticationService } from '@src/app/services/authentication';
+import { UIStateComponent } from '@app/models/UIStateComponent';
+import { AuthenticationService } from '@app/services/authentication';
 import {SessionService} from "@services/session/session.service";
 import {ErrorsResult} from "@services/session/ErrorsResult";
 import {SimpleError} from "@services/session/SimpleError";

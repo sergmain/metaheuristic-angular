@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {MatTableDataSource} from '@angular/material/table';
 import {ActivatedRoute} from '@angular/router';
-import {UIStateComponent} from '@src/app/models/UIStateComponent';
-import {AuthenticationService} from '@src/app/services/authentication';
+import {UIStateComponent} from '@app/models/UIStateComponent';
+import {AuthenticationService} from '@app/services/authentication';
 import {ScenariosResult} from '@services/scenario/ScenariosResult';
 import {ScenarioService} from '@services/scenario/scenario.service';
 import {SimpleScenario} from '@services/scenario/SimpleScenario';

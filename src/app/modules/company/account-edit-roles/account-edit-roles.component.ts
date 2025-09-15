@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { OperationStatusRest } from '@src/app/models/OperationStatusRest';
-import { AccountWithRoleResult } from '@src/app/services/company/AccountWithRoleResult';
-import { CompanyService } from '@src/app/services/company/company.service';
+import { OperationStatusRest } from '@app/models/OperationStatusRest';
+import { AccountWithRoleResult } from '@app/services/company/AccountWithRoleResult';
+import { CompanyService } from '@app/services/company/company.service';
 
 @Component({
     selector: 'account-edit-roles',

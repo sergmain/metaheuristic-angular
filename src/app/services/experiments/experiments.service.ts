@@ -2,9 +2,9 @@ import {HttpClient} from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '@src/environments/environment';
 import { Observable } from 'rxjs';
-import { generateFormData } from '@src/app/helpers/generateFormData';
+import { generateFormData } from '@app/helpers/generateFormData';
 import { ExperimentApiData } from './ExperimentApiData';
-import { OperationStatusRest } from '@src/app/models/OperationStatusRest';
+import { OperationStatusRest } from '@app/models/OperationStatusRest';
 import { SimpleExperiment } from './SimpleExperiment';
 import { SourceCodeUidsForCompany } from '@services/source-codes/SourceCodeUidsForCompany';
 

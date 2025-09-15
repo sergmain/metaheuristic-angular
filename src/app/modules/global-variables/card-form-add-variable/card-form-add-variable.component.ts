@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Output, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { OperationStatusRest } from '@src/app/models/OperationStatusRest';
-import { GlobalVariablesService } from '@src/app/services/global-variables/global-variables.service';
+import { OperationStatusRest } from '@app/models/OperationStatusRest';
+import { GlobalVariablesService } from '@app/services/global-variables/global-variables.service';
 import { CtFileUploadComponent } from '../../ct/ct-file-upload/ct-file-upload.component';
 
 @Component({

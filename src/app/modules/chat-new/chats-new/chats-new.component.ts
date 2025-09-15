@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {MatTableDataSource} from '@angular/material/table';
-import {UIStateComponent} from '@src/app/models/UIStateComponent';
-import {AuthenticationService} from '@src/app/services/authentication';
+import {UIStateComponent} from '@app/models/UIStateComponent';
+import {AuthenticationService} from '@app/services/authentication';
 import {ChatsResult, SimpleChat} from '@app/modules/chat-new/chat-data';
 import {ChatService} from '@app/modules/chat-new/chat-service';
 import {MatDialog} from '@angular/material/dialog';

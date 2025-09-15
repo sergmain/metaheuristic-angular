@@ -1,7 +1,7 @@
 import {HttpClient} from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { generateFormData as formData } from '@src/app/helpers/generateFormData';
-import { OperationStatusRest } from '@src/app/models/OperationStatusRest';
+import { generateFormData as formData } from '@app/helpers/generateFormData';
+import { OperationStatusRest } from '@app/models/OperationStatusRest';
 import { environment } from '@src/environments/environment';
 import { Observable } from 'rxjs';
 import { ExecContextResult } from './ExecContextResult';
@@ -9,7 +9,7 @@ import { ExecContextsResult } from './ExecContextsResult';
 import { SimpleExecContextAddingResult } from './SimpleExecContextAddingResult';
 import { SourceCodeResult } from './SourceCodeResult';
 import { SourceCodesResult } from './SourceCodesResult';
-import { SourceCodeType } from '@src/app/enums/SourceCodeType';
+import { SourceCodeType } from '@app/enums/SourceCodeType';
 import { ExecContextStateResult } from './ExecContextStateResult';
 
 const url = (s: string): string => `${environment.baseUrl}dispatcher/source-code/${s}`;

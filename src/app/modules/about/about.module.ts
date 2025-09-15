@@ -6,7 +6,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { AboutRootComponent } from './about-root/about-root.component';
 import { AboutIndexComponent } from './about-index/about-index.component';
 import { CtModule } from '../ct/ct.module';
-import { MaterialAppModule } from '@src/app/ngmaterial.module';
+import { MaterialAppModule } from '@app/ngmaterial.module';
 import { CopyRightModule } from '../copy-right/copy-right.module';
 
 

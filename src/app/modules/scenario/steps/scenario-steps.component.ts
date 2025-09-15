@@ -1,7 +1,7 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {UIStateComponent} from '@src/app/models/UIStateComponent';
-import {AuthenticationService} from '@src/app/services/authentication';
+import {UIStateComponent} from '@app/models/UIStateComponent';
+import {AuthenticationService} from '@app/services/authentication';
 import {ScenarioService} from "@services/scenario/scenario.service";
 import {ConfirmationDialogMethod} from "@app/components/app-dialog-confirmation/app-dialog-confirmation.component";
 import {LoadStates} from "@app/enums/LoadStates";

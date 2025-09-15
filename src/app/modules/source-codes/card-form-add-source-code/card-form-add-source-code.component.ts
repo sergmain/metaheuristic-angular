@@ -1,7 +1,7 @@
 import { Component, Output, EventEmitter, ViewChild } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { SourceCodesService } from '@src/app/services/source-codes/source-codes.service';
-import { SourceCodeResult } from '@src/app/services/source-codes/SourceCodeResult';
+import { SourceCodesService } from '@app/services/source-codes/source-codes.service';
+import { SourceCodeResult } from '@app/services/source-codes/SourceCodeResult';
 import { MatButton } from '@angular/material/button';
 
 @Component({

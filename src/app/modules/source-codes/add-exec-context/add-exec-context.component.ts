@@ -2,10 +2,10 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LoadStates } from '@app/enums/LoadStates';
 import { state } from '@app/helpers/state';
-import { ExecContextService } from '@src/app/services/exec-context/exec-context.service';
-import { ExecContextResult } from '@src/app/services/source-codes/ExecContextResult';
-import { SourceCodesService } from '@src/app/services/source-codes/source-codes.service';
-import { SourceCodeResult } from '@src/app/services/source-codes/SourceCodeResult';
+import { ExecContextService } from '@app/services/exec-context/exec-context.service';
+import { ExecContextResult } from '@app/services/source-codes/ExecContextResult';
+import { SourceCodesService } from '@app/services/source-codes/source-codes.service';
+import { SourceCodeResult } from '@app/services/source-codes/SourceCodeResult';
 @Component({
     selector: 'add-exec-context',
     templateUrl: './add-exec-context.component.html',

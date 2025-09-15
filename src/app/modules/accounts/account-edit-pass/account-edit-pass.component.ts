@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AccountsService } from '@app/services/accounts/accounts.service';
 import { LoadStates } from '@app/enums/LoadStates';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { SimpleAccount } from '@src/app/services/accounts';
+import { SimpleAccount } from '@app/services/accounts';
 
 @Component({
     selector: 'account-edit-pass',

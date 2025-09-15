@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { BatchData } from '@src/app/services/batch/BatchData';
-import { CompanyService } from '@src/app/services/company/company.service';
+import { BatchData } from '@app/services/batch/BatchData';
+import { CompanyService } from '@app/services/company/company.service';
 
 @Component({
     selector: 'company-batch-status',

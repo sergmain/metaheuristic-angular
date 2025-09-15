@@ -1,11 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { BatchData } from '@src/app/services/batch/BatchData';
-import { BatchService } from '@src/app/services/batch/batch.service';
-import { CompanyService } from '@src/app/services/company/company.service';
-import { SourceCode } from '@src/app/services/source-codes/SourceCode';
-import { SourceCodesForCompany } from '@src/app/services/source-codes/SourceCodesForCompany';
-import { SourceCodeUidsForCompany } from '@src/app/services/source-codes/SourceCodeUidsForCompany';
+import { BatchData } from '@app/services/batch/BatchData';
+import { BatchService } from '@app/services/batch/batch.service';
+import { CompanyService } from '@app/services/company/company.service';
+import { SourceCode } from '@app/services/source-codes/SourceCode';
+import { SourceCodesForCompany } from '@app/services/source-codes/SourceCodesForCompany';
+import { SourceCodeUidsForCompany } from '@app/services/source-codes/SourceCodeUidsForCompany';
 import { CtFileUploadComponent } from '../../ct/ct-file-upload/ct-file-upload.component';
 
 @Component({

@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { CtModule } from '../ct/ct.module';
-import { MaterialAppModule } from '@src/app/ngmaterial.module';
+import { MaterialAppModule } from '@app/ngmaterial.module';
 import { CompanyComponent } from './company/company.component';
 import { CompaniesComponent } from './companies/companies.component';
 import { CompanyEditComponent } from './company-edit/company-edit.component';
@@ -17,8 +17,8 @@ import { AccountEditRolesComponent } from './account-edit-roles/account-edit-rol
 import { CompanyBatchStatusComponent } from './company-batch-status/company-batch-status.component';
 import { CompanyBatchUploadComponent } from './company-batch-upload/company-batch-upload.component';
 import { CompanyBatchListComponent } from './company-batches/company-batch-list.component';
-import { Role } from '@src/app/services/authentication';
-import { RoleRouteGuard } from '@src/app/guards/role-route.guard';
+import { Role } from '@app/services/authentication';
+import { RoleRouteGuard } from '@app/guards/role-route.guard';
 
 
 export const CompanyRoutes: Routes = [

@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { DefaultResponse } from '@src/app/models/DefaultResponse';
+import { DefaultResponse } from '@app/models/DefaultResponse';
 
 @Component({
     selector: 'ct-rest-status',

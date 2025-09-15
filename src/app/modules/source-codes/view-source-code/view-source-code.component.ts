@@ -1,8 +1,8 @@
 import { Component, ElementRef, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { SourceCodesService } from '@src/app/services/source-codes/source-codes.service';
-import { SourceCode } from '@src/app/services/source-codes/SourceCode';
-import { SourceCodeResult } from '@src/app/services/source-codes/SourceCodeResult';
+import { SourceCodesService } from '@app/services/source-codes/source-codes.service';
+import { SourceCode } from '@app/services/source-codes/SourceCode';
+import { SourceCodeResult } from '@app/services/source-codes/SourceCodeResult';
 
 @Component({
     selector: 'view-source-code',

@@ -5,12 +5,12 @@ import { BatchService } from '@app/services/batch/batch.service';
 import { SourceCode } from '@app/services/source-codes/SourceCode';
 import { SourceCodeUid } from '@app/services/source-codes/SourceCodeUid';
 import { TranslateService } from '@ngx-translate/core';
-import { OperationStatus } from '@src/app/enums/OperationStatus';
-import { OperationStatusRest } from '@src/app/models/OperationStatusRest';
-import { UIStateComponent } from '@src/app/models/UIStateComponent';
-import { AuthenticationService } from '@src/app/services/authentication';
-import { SettingsService, SettingsServiceEventChange } from '@src/app/services/settings/settings.service';
-import { SourceCodeUidsForCompany } from '@src/app/services/source-codes/SourceCodeUidsForCompany';
+import { OperationStatus } from '@app/enums/OperationStatus';
+import { OperationStatusRest } from '@app/models/OperationStatusRest';
+import { UIStateComponent } from '@app/models/UIStateComponent';
+import { AuthenticationService } from '@app/services/authentication';
+import { SettingsService, SettingsServiceEventChange } from '@app/services/settings/settings.service';
+import { SourceCodeUidsForCompany } from '@app/services/source-codes/SourceCodeUidsForCompany';
 import { CtFileUploadComponent } from '../../ct/ct-file-upload/ct-file-upload.component';
 
 @Component({

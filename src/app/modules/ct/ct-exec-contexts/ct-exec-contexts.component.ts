@@ -3,12 +3,12 @@ import { MatButton } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import {ActivatedRoute, Router} from '@angular/router';
-import { ConfirmationDialogMethod } from '@src/app/components/app-dialog-confirmation/app-dialog-confirmation.component';
-import { ExecContextState } from '@src/app/enums/ExecContextState';
-import { ExecContextService } from '@src/app/services/exec-context/exec-context.service';
-import { ExecContext } from '@src/app/services/source-codes/ExecContext';
-import { ExecContextsResult } from '@src/app/services/source-codes/ExecContextsResult';
-import { SourceCodesService } from '@src/app/services/source-codes/source-codes.service';
+import { ConfirmationDialogMethod } from '@app/components/app-dialog-confirmation/app-dialog-confirmation.component';
+import { ExecContextState } from '@app/enums/ExecContextState';
+import { ExecContextService } from '@app/services/exec-context/exec-context.service';
+import { ExecContext } from '@app/services/source-codes/ExecContext';
+import { ExecContextsResult } from '@app/services/source-codes/ExecContextsResult';
+import { SourceCodesService } from '@app/services/source-codes/source-codes.service';
 
 
 @Component({

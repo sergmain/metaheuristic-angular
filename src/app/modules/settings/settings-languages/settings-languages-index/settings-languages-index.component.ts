@@ -10,7 +10,7 @@ import {AuthenticationService} from '@services/authentication';
 import {OperationStatus} from '@app/enums/OperationStatus';
 import {Subscription} from 'rxjs';
 import {ApiUid} from '@services/evaluation/ApiUid';
-import { MhUtils } from '@src/app/services/mh-utils/mh-utils.service';
+import { MhUtils } from '@app/services/mh-utils/mh-utils.service';
 
 @Component({
     selector: "settings-languages-index",

@@ -1,8 +1,8 @@
 import { Component, OnInit, Output, EventEmitter, ViewChild } from '@angular/core';
-import { OperationStatusRest } from '@src/app/models/OperationStatusRest';
+import { OperationStatusRest } from '@app/models/OperationStatusRest';
 import { CtFileUploadComponent } from '../../ct/ct-file-upload/ct-file-upload.component';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { GlobalVariablesService } from '@src/app/services/global-variables/global-variables.service';
+import { GlobalVariablesService } from '@app/services/global-variables/global-variables.service';
 
 @Component({
     selector: 'card-form-add-variable-with-storage',

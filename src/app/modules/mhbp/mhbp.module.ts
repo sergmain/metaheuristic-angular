@@ -3,12 +3,12 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { CtModule } from '@app/modules/ct/ct.module';
-import { MaterialAppModule } from '@src/app/ngmaterial.module';
+import { MaterialAppModule } from '@app/ngmaterial.module';
 import { CopyRightModule } from '@app/modules/copy-right/copy-right.module';
 import { MhbpIndexComponent } from '@app/modules/mhbp/mhbp-index/mhbp-index.component';
 import { MhbpRootComponent } from '@app/modules/mhbp/mhbp-root/mhbp-root.component';
-import { RoleRouteGuard } from '@src/app/guards/role-route.guard';
-import { Role } from '@src/app/services/authentication';
+import { RoleRouteGuard } from '@app/guards/role-route.guard';
+import { Role } from '@app/services/authentication';
 
 const commonRequiredRoles: Role[] = [Role.Admin, Role.Data, Role.Manager];
 
@@ -72,7 +72,7 @@ export const MhbpRoutes: Routes = [
         path: 'kb',
         canActivate: [RoleRouteGuard],
         component: MhbpRootComponent,
-        loadChildren: () => import('src/app/modules/kb/kb.module').then(m => m.KbModule),
+        loadChildren: () => import('@app//modules/kb/kb.module').then(m => m.KbModule),
         data: {
             requiredRoles: [Role.Admin, Role.Manager],
             section: 'kbs'
@@ -82,7 +82,7 @@ export const MhbpRoutes: Routes = [
         path: 'auth',
         canActivate: [RoleRouteGuard],
         component: MhbpRootComponent,
-        loadChildren: () => import('src/app/modules/auth/auth.module').then(m => m.AuthModule),
+        loadChildren: () => import('@app//modules/auth/auth.module').then(m => m.AuthModule),
         data: {
             requiredRoles: [Role.Admin, Role.Manager],
             section: 'auths'
@@ -92,7 +92,7 @@ export const MhbpRoutes: Routes = [
         path: 'api',
         canActivate: [RoleRouteGuard],
         component: MhbpRootComponent,
-        loadChildren: () => import('src/app/modules/api/api.module').then(m => m.ApiModule),
+        loadChildren: () => import('@app//modules/api/api.module').then(m => m.ApiModule),
         data: {
             requiredRoles: [Role.Admin, Role.Manager],
             section: 'apis'

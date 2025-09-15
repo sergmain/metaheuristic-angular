@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
-import { UIStateComponent } from '@src/app/models/UIStateComponent';
-import { AuthenticationService } from '@src/app/services/authentication';
-import { SimpleScenarioGroup } from '@src/app/services/scenario/SimpleScenarioGroup';
+import { UIStateComponent } from '@app/models/UIStateComponent';
+import { AuthenticationService } from '@app/services/authentication';
+import { SimpleScenarioGroup } from '@app/services/scenario/SimpleScenarioGroup';
 import {ConfirmationDialogMethod} from "@src/app/components/app-dialog-confirmation/app-dialog-confirmation.component";
 import {MatDialog} from "@angular/material/dialog";
 import {ScenarioService} from "@services/scenario/scenario.service";

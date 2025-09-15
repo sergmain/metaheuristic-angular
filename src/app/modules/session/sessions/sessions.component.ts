@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
-import { UIStateComponent } from '@src/app/models/UIStateComponent';
-import { AuthenticationService } from '@src/app/services/authentication';
-import { SessionService } from '@src/app/services/session/session.service';
-import { SimpleSessionsResult } from '@src/app/services/session/SimpleSessionsResult';
-import { SimpleSession } from '@src/app/services/session/SimpleSession';
+import { UIStateComponent } from '@app/models/UIStateComponent';
+import { AuthenticationService } from '@app/services/authentication';
+import { SessionService } from '@app/services/session/session.service';
+import { SimpleSessionsResult } from '@app/services/session/SimpleSessionsResult';
+import { SimpleSession } from '@app/services/session/SimpleSession';
 import {ConfirmationDialogMethod} from "@src/app/components/app-dialog-confirmation/app-dialog-confirmation.component";
 import {MatDialog} from "@angular/material/dialog";
 

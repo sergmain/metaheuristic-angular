@@ -1,9 +1,9 @@
 import { Component, Input, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { TaskExecState } from '@src/app/enums/TaskExecState';
-import { ExecContextService } from '@src/app/services/exec-context/exec-context.service';
-import { TaskExecInfo } from '@src/app/services/exec-context/TaskExecInfo';
-import { ExecContextStateResult } from '@src/app/services/source-codes/ExecContextStateResult';
+import { TaskExecState } from '@app/enums/TaskExecState';
+import { ExecContextService } from '@app/services/exec-context/exec-context.service';
+import { TaskExecInfo } from '@app/services/exec-context/TaskExecInfo';
+import { ExecContextStateResult } from '@app/services/source-codes/ExecContextStateResult';
 import * as fileSaver from 'file-saver';
 import {ConfirmationDialogMethod} from '@app/components/app-dialog-confirmation/app-dialog-confirmation.component';
 import {MhUtils} from '@services/mh-utils/mh-utils.service';

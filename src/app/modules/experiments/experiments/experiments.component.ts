@@ -2,11 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { ConfirmationDialogMethod } from '@app/components/app-dialog-confirmation/app-dialog-confirmation.component';
-import { ExecContextState } from '@src/app/enums/ExecContextState';
-import { UIStateComponent } from '@src/app/models/UIStateComponent';
-import { AuthenticationService } from '@src/app/services/authentication';
-import { ExperimentApiData } from '@src/app/services/experiments/ExperimentApiData';
-import { ExperimentsService } from '@src/app/services/experiments/experiments.service';
+import { ExecContextState } from '@app/enums/ExecContextState';
+import { UIStateComponent } from '@app/models/UIStateComponent';
+import { AuthenticationService } from '@app/services/authentication';
+import { ExperimentApiData } from '@app/services/experiments/ExperimentApiData';
+import { ExperimentsService } from '@app/services/experiments/experiments.service';
 
 @Component({
     selector: 'experiments-view',

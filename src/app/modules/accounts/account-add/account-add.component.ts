@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { LoadStates } from '@app/enums/LoadStates';
 import { DefaultResponse } from '@app/models/DefaultResponse';
 import { AccountsService } from '@app/services/accounts/accounts.service';
-import { OperationStatus } from '@src/app/enums/OperationStatus';
+import { OperationStatus } from '@app/enums/OperationStatus';
 import { Subscription } from 'rxjs';
 
 @Component({

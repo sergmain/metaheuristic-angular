@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ExperimentsService } from '@app/services/experiments/experiments.service';
-import { OperationStatus } from '@src/app/enums/OperationStatus';
-import { OperationStatusRest } from '@src/app/models/OperationStatusRest';
-import { SourceCodeUidsForCompany } from '@src/app/services/source-codes/SourceCodeUidsForCompany';
+import { OperationStatus } from '@app/enums/OperationStatus';
+import { OperationStatusRest } from '@app/models/OperationStatusRest';
+import { SourceCodeUidsForCompany } from '@app/services/source-codes/SourceCodeUidsForCompany';
 @Component({
     selector: 'experiment-add',
     templateUrl: './experiment-add.component.html',

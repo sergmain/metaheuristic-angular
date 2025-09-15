@@ -1,20 +1,20 @@
 import { Component, OnInit } from '@angular/core';
-import { CompanyService } from '@src/app/services/company/company.service';
+import { CompanyService } from '@app/services/company/company.service';
 import { ActivatedRoute } from '@angular/router';
-import { BatchesResult } from '@src/app/services/batch/BatchesResult';
+import { BatchesResult } from '@app/services/batch/BatchesResult';
 import { MatTableDataSource } from '@angular/material/table';
 import { marker } from '@biesbjerg/ngx-translate-extract-marker';
-import { ConfirmationDialogMethod, QuestionData } from '@src/app/components/app-dialog-confirmation/app-dialog-confirmation.component';
+import { ConfirmationDialogMethod, QuestionData } from '@app/components/app-dialog-confirmation/app-dialog-confirmation.component';
 import { MatDialog } from '@angular/material/dialog';
 import { TranslateService } from '@ngx-translate/core';
-import { AuthenticationService } from '@src/app/services/authentication';
+import { AuthenticationService } from '@app/services/authentication';
 import * as fileSaver from 'file-saver';
-import { BatchExecState } from '@src/app/enums/BatchExecState';
-import { UIStateComponent } from '@src/app/models/UIStateComponent';
+import { BatchExecState } from '@app/enums/BatchExecState';
+import { UIStateComponent } from '@app/models/UIStateComponent';
 import { SelectionModel } from '@angular/cdk/collections';
-import { BatchData } from '@src/app/services/batch/BatchData';
-import { BatchSelector } from '@src/app/services/batch/BatchSelector';
-import { BatchService } from '@src/app/services/batch/batch.service';
+import { BatchData } from '@app/services/batch/BatchData';
+import { BatchSelector } from '@app/services/batch/BatchSelector';
+import { BatchService } from '@app/services/batch/batch.service';
 
 
 

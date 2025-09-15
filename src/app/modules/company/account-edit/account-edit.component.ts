@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { CompanyService } from '@src/app/services/company/company.service';
+import { CompanyService } from '@app/services/company/company.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AccountResult } from '@src/app/services/accounts';
-import { OperationStatusRest } from '@src/app/models/OperationStatusRest';
-import { OperationStatus } from '@src/app/enums/OperationStatus';
+import { AccountResult } from '@app/services/accounts';
+import { OperationStatusRest } from '@app/models/OperationStatusRest';
+import { OperationStatus } from '@app/enums/OperationStatus';
 
 @Component({
     selector: 'account-edit',

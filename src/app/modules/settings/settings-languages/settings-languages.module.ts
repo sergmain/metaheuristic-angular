@@ -4,7 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { SettingsLanguagesIndexComponent } from './settings-languages-index/settings-languages-index.component';
-import { MaterialAppModule } from '@src/app/ngmaterial.module';
+import { MaterialAppModule } from '@app/ngmaterial.module';
 import {CtModule} from '@app/modules/ct/ct.module';
 
 export const SettingsLanguagesIndexRoutes: Routes = [

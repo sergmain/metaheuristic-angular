@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { CompanyService } from '@src/app/services/company/company.service';
+import { CompanyService } from '@app/services/company/company.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormGroup, FormControl, Validators, ValidationErrors } from '@angular/forms';
-import { AccountResult } from '@src/app/services/accounts/AccountResult';
-import { OperationStatusRest } from '@src/app/models/OperationStatusRest';
+import { AccountResult } from '@app/services/accounts/AccountResult';
+import { OperationStatusRest } from '@app/models/OperationStatusRest';
 
 @Component({
     selector: 'account-edit-password',

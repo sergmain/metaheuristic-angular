@@ -13,7 +13,7 @@ const routes: Routes = [
     {
         path: 'dispatcher',
         canActivate: [AuthGuard],
-        loadChildren: () => import('src/app/modules/dispatcher/dispatcher.module').then(m => m.DispatcherModule),
+        loadChildren: () => import('@app//modules/dispatcher/dispatcher.module').then(m => m.DispatcherModule),
         data: { sidenavExist: true }
     },
 /*
@@ -29,25 +29,25 @@ const routes: Routes = [
 */
     {
         path: 'ai',
-        loadChildren: () => import('src/app/modules/ai/ai.module').then(m => m.AiModule),
+        loadChildren: () => import('@app//modules/ai/ai.module').then(m => m.AiModule),
         data: { sidenavExist: true }
     },
     {
         path: 'batch',
-        loadChildren: () => import('src/app/modules/batch/batch.module').then(m => m.BatchModule),
+        loadChildren: () => import('@app//modules/batch/batch.module').then(m => m.BatchModule),
     },
     {
         path: 'mhbp',
-        loadChildren: () => import('src/app/modules/mhbp/mhbp.module').then(m => m.MhbpModule),
+        loadChildren: () => import('@app//modules/mhbp/mhbp.module').then(m => m.MhbpModule),
         data: { sidenavExist: true }
     },
     {
         path: 'about',
-        loadChildren: () => import('src/app/modules/about/about.module').then(m => m.AboutModule),
+        loadChildren: () => import('@app//modules/about/about.module').then(m => m.AboutModule),
     },
     {
         path: 'settings',
-        loadChildren: () => import('src/app/modules/settings/settings.module').then(m => m.SettingsModule),
+        loadChildren: () => import('@app//modules/settings/settings.module').then(m => m.SettingsModule),
     },
     {
         path: '**',

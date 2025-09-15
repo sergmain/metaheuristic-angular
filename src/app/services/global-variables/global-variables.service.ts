@@ -1,11 +1,11 @@
 import {HttpClient} from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { generateFormData as formData } from '@src/app/helpers/generateFormData';
+import { generateFormData as formData } from '@app/helpers/generateFormData';
 import { Observable } from 'rxjs';
 import { environment } from '@src/environments/environment';
 import { GlobalVariableResult } from './GlobalVariableResult';
 import { GlobalVariablesResult } from './GlobalVariablesResult';
-import { OperationStatusRest } from '@src/app/models/OperationStatusRest';
+import { OperationStatusRest } from '@app/models/OperationStatusRest';
 
 const url = (s: string): string => `${environment.baseUrl}dispatcher/global-variable${s}`;
 

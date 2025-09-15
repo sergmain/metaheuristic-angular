@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { OperationStatusRest } from '@src/app/models/OperationStatusRest';
-import { ExperimentApiData } from '@src/app/services/experiments/ExperimentApiData';
-import { ExperimentsService } from '@src/app/services/experiments/experiments.service';
-import { SimpleExperiment } from '@src/app/services/experiments/SimpleExperiment';
-import { UIStateComponent } from '@src/app/models/UIStateComponent';
-import { AuthenticationService } from '@src/app/services/authentication';
+import { OperationStatusRest } from '@app/models/OperationStatusRest';
+import { ExperimentApiData } from '@app/services/experiments/ExperimentApiData';
+import { ExperimentsService } from '@app/services/experiments/experiments.service';
+import { SimpleExperiment } from '@app/services/experiments/SimpleExperiment';
+import { UIStateComponent } from '@app/models/UIStateComponent';
+import { AuthenticationService } from '@app/services/authentication';
 
 @Component({
     selector: 'experiment-edit',

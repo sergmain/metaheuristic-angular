@@ -1,9 +1,9 @@
 import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ProcessorsService } from '@src/app/services/processors/processors.service';
-import { Processor } from '@src/app/services/processors/Processor';
-import { ProcessorResult } from '@src/app/services/processors/ProcessorResult';
+import { ProcessorsService } from '@app/services/processors/processors.service';
+import { Processor } from '@app/services/processors/Processor';
+import { ProcessorResult } from '@app/services/processors/ProcessorResult';
 
 @Component({
     selector: 'edit-processor',

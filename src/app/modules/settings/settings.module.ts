@@ -3,12 +3,12 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { CtModule } from '@app/modules/ct/ct.module';
-import { MaterialAppModule } from '@src/app/ngmaterial.module';
+import { MaterialAppModule } from '@app/ngmaterial.module';
 import { CopyRightModule } from '@app/modules/copy-right/copy-right.module';
 import { SettingsIndexComponent } from '@app/modules/settings/settings-index/settings-index.component';
 import { SettingsRootComponent } from '@app/modules/settings/settings-root/settings-root.component';
-import { RoleRouteGuard } from '@src/app/guards/role-route.guard';
-import { Role } from '@src/app/services/authentication';
+import { RoleRouteGuard } from '@app/guards/role-route.guard';
+import { Role } from '@app/services/authentication';
 
 const commonRequiredRoles: Role[] = [Role.Admin, Role.Data, Role.Manager];
 

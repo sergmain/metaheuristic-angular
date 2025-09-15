@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { CtModule } from '../ct/ct.module';
-import { MaterialAppModule } from '@src/app/ngmaterial.module';
+import { MaterialAppModule } from '@app/ngmaterial.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import {KbsComponent} from './kbs/kbs.component';

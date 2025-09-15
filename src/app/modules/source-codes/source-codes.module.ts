@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
-import { MaterialAppModule } from '@src/app/ngmaterial.module';
+import { MaterialAppModule } from '@app/ngmaterial.module';
 import { CtModule } from '../ct/ct.module';
 import { AddExecContextComponent } from './add-exec-context/add-exec-context.component';
 import { AddSourceCodeComponent } from './add-source-code/add-source-code.component';

@@ -8,7 +8,7 @@ import { AccountAddComponent } from './account-add/account-add.component';
 import { AccountAccessComponent } from './account-access/account-access.component';
 import { AccountEditComponent } from './account-edit/account-edit.component';
 import { AccountEditPassComponent } from './account-edit-pass/account-edit-pass.component';
-import { MaterialAppModule } from '@src/app/ngmaterial.module';
+import { MaterialAppModule } from '@app/ngmaterial.module';
 import { CtModule } from '../ct/ct.module';
 
 

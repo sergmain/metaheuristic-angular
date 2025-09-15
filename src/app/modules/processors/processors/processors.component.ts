@@ -2,12 +2,12 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog, } from '@angular/material/dialog';
 import { ConfirmationDialogMethod, ConfirmationDialogInterface } from '@app/components/app-dialog-confirmation/app-dialog-confirmation.component';
-import { ProcessorsService } from '@src/app/services/processors/processors.service';
-import { ProcessorsResult } from '@src/app/services/processors/ProcessorsResult';
-import { ProcessorStatus } from '@src/app/services/processors/ProcessorStatus';
+import { ProcessorsService } from '@app/services/processors/processors.service';
+import { ProcessorsResult } from '@app/services/processors/ProcessorsResult';
+import { ProcessorStatus } from '@app/services/processors/ProcessorStatus';
 import { SelectionModel } from '@angular/cdk/collections';
-import { UIStateComponent } from '@src/app/models/UIStateComponent';
-import { AuthenticationService } from '@src/app/services/authentication';
+import { UIStateComponent } from '@app/models/UIStateComponent';
+import { AuthenticationService } from '@app/services/authentication';
 
 
 @Component({

@@ -3,14 +3,14 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatTabGroup } from '@angular/material/tabs';
 import { ConfirmationDialogInterface, ConfirmationDialogMethod } from '@app/components/app-dialog-confirmation/app-dialog-confirmation.component';
-import { DispatcherAssetMode } from '@src/app/enums/DispatcherAssetMode';
-import { SourceCodeType } from '@src/app/enums/SourceCodeType';
-import { UIStateComponent } from '@src/app/models/UIStateComponent';
-import { AuthenticationService } from '@src/app/services/authentication';
-import { DispatcherAssetModeService } from '@src/app/services/dispatcher-asset-mode/dispatcher-asset-mode.service';
-import { SourceCodesService } from '@src/app/services/source-codes/source-codes.service';
-import { SourceCode } from '@src/app/services/source-codes/SourceCode';
-import { SourceCodesResult } from '@src/app/services/source-codes/SourceCodesResult';
+import { DispatcherAssetMode } from '@app/enums/DispatcherAssetMode';
+import { SourceCodeType } from '@app/enums/SourceCodeType';
+import { UIStateComponent } from '@app/models/UIStateComponent';
+import { AuthenticationService } from '@app/services/authentication';
+import { DispatcherAssetModeService } from '@app/services/dispatcher-asset-mode/dispatcher-asset-mode.service';
+import { SourceCodesService } from '@app/services/source-codes/source-codes.service';
+import { SourceCode } from '@app/services/source-codes/SourceCode';
+import { SourceCodesResult } from '@app/services/source-codes/SourceCodesResult';
 import { SourceCodesArchiveComponent } from '../source-codes-archive/source-codes-archive.component';
 
 @Component({
