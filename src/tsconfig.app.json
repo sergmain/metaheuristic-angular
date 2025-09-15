@@ -7,8 +7,8 @@
     "include": [
         "src/**/*.d.ts"
     ],
-    "resolveJsonModule": true,
     "compilerOptions": {
+        "resolveJsonModule": true,
         "outDir": "../out-tsc/app",
         "types": []
     },

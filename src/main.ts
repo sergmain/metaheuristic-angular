@@ -58,9 +58,9 @@ bootstrapApplication(AppComponent, {
             ...(environment.hashLocationStrategy ? [withHashLocation()] : [])
             // Note: onSameUrlNavigation: 'reload' is handled automatically in newer Angular
         ),
-        AuthGuard,
-        AuthenticationService,
-        AccountsService,
+        // AuthGuard,
+        // AuthenticationService,
+        // AccountsService,
         {
             provide: HTTP_INTERCEPTORS,
             useClass: JwtInterceptor,
