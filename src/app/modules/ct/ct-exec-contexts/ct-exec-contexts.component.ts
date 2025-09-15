@@ -1,4 +1,5 @@
-import {Component, Input, NgModule, OnInit, TemplateRef, ViewChild} from '@angular/core';
+// import {NgModule} from '@angular/core';
+import {Component, Input, OnInit, TemplateRef, ViewChild} from '@angular/core';
 import { MatButton, MatIconButton } from '@angular/material/button';
 import { MatDialog, MatDialogActions, MatDialogClose } from '@angular/material/dialog';
 import { MatTableDataSource, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow } from '@angular/material/table';
@@ -25,7 +26,6 @@ import { CtStateOfTasksComponent } from '../ct-state-of-tasks/ct-state-of-tasks.
 
 
 @Component({
-    standalone : true,
     standalone : true,
     selector: 'ct-exec-contexts',
     templateUrl: './ct-exec-contexts.component.html',

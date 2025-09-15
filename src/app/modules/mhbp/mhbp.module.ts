@@ -73,7 +73,7 @@ export const MhbpRoutes: Routes = [
         path: 'kb',
         canActivate: [RoleRouteGuard],
         component: MhbpRootComponent,
-        loadChildren: () => import('@app//modules/kb/kb.module').then(m => m.KbRoutes),
+        loadChildren: () => import('@app/modules/kb/kb.module').then(m => m.KbRoutes),
         data: {
             requiredRoles: [Role.Admin, Role.Manager],
             section: 'kbs'
@@ -83,7 +83,7 @@ export const MhbpRoutes: Routes = [
         path: 'auth',
         canActivate: [RoleRouteGuard],
         component: MhbpRootComponent,
-        loadChildren: () => import('@app//modules/auth/auth.module').then(m => m.AuthRoutes),
+        loadChildren: () => import('@app/modules/auth/auth.module').then(m => m.AuthRoutes),
         data: {
             requiredRoles: [Role.Admin, Role.Manager],
             section: 'auths'
@@ -93,7 +93,7 @@ export const MhbpRoutes: Routes = [
         path: 'api',
         canActivate: [RoleRouteGuard],
         component: MhbpRootComponent,
-        loadChildren: () => import('@app//modules/api/api.module').then(m => m.ApiRoutes),
+        loadChildren: () => import('@app/modules/api/api.module').then(m => m.ApiRoutes),
         data: {
             requiredRoles: [Role.Admin, Role.Manager],
             section: 'apis'

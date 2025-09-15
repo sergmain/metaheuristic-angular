@@ -32,7 +32,7 @@ export const AiRoutes: Routes = [
         path: 'experiments',
         canActivate: [RoleRouteGuard],
         component: AiRootComponent,
-        loadChildren: () => import('@app//modules/experiments/experiments.module').then(m => m.ExperimentsRoutes),
+        loadChildren: () => import('@app/modules/experiments/experiments.module').then(m => m.ExperimentsRoutes),
         data: {
             section: 'experiments',
             requiredRoles: commonRequiredRoles

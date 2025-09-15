@@ -1,8 +1,9 @@
-import { CommonModule } from '@angular/common';
+// import { CommonModule } from '@angular/common';
 // import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+// import { RouterModule } from '@angular/router';
+import { Routes } from '@angular/router';
 import { AuthGuard } from '@app/guards/auth/auth.guard';
-import { TranslateModule } from '@ngx-translate/core';
+// import { TranslateModule } from '@ngx-translate/core';
 import { AboutRootComponent } from './about-root/about-root.component';
 import { AboutIndexComponent } from './about-index/about-index.component';
 // import { CtModule } from '../ct/ct.module';
@@ -10,7 +11,7 @@ import { AboutIndexComponent } from './about-index/about-index.component';
 
 
 
-export const AboutRoutes: Routes = [{
+export const ABOUT_ROUTES: Routes = [{
     path: '',
     canActivate: [AuthGuard],
     component: AboutRootComponent,

@@ -22,7 +22,6 @@ const commonRequiredRoles: Role[] = [
 ];
 
 export const DispatcherRoutes: Routes = [
-/*
     {
         path: '',
         canActivate: [RoleRouteGuard],
@@ -36,8 +35,6 @@ export const DispatcherRoutes: Routes = [
                 component: DispatcherIndexComponent
             }]
     },
-*/
-/*
     {
         path: 'source-codes',
         canActivate: [RoleRouteGuard],
@@ -72,7 +69,7 @@ export const DispatcherRoutes: Routes = [
         path: 'processors',
         canActivate: [RoleRouteGuard],
         component: DispatcherRootComponent,
-        loadChildren: () => import('@app//modules/processors/processors.module').then(m => m.ProcessorsRoutes),
+        loadChildren: () => import('@app/modules/processors/processors.module').then(m => m.ProcessorsRoutes),
         data: {
             requiredRoles: [Role.Admin, Role.Data],
             section: 'processors'
@@ -82,7 +79,7 @@ export const DispatcherRoutes: Routes = [
         path: 'accounts',
         canActivate: [RoleRouteGuard],
         component: DispatcherRootComponent,
-        loadChildren: () => import('@app//modules/accounts/accounts.module').then(m => m.AccountsRoutes),
+        loadChildren: () => import('@app/modules/accounts/accounts.module').then(m => m.AccountsRoutes),
         data: {
             requiredRoles: [Role.Admin],
             section: 'accounts'
@@ -92,13 +89,12 @@ export const DispatcherRoutes: Routes = [
         path: 'company',
         canActivate: [RoleRouteGuard],
         component: DispatcherRootComponent,
-        loadChildren: () => import('@app//modules/company/company.module').then(m => m.CompanyRoutes),
+        loadChildren: () => import('@app/modules/company/company.module').then(m => m.CompanyRoutes),
         data: {
             requiredRoles: [Role.MainAdmin, Role.MainOperator, Role.MainSupport],
             section: 'company'
         }
     }
-*/
 ];
 
 
