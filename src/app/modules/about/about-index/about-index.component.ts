@@ -10,6 +10,7 @@ import { CtSectionBodyComponent } from '../../ct/ct-section-body/ct-section-body
 import { CtSectionBodyRowComponent } from '../../ct/ct-section-body-row/ct-section-body-row.component';
 
 @Component({
+    standalone : true,
     selector: 'about-index',
     templateUrl: './about-index.component.html',
     styleUrls: ['./about-index.component.scss'],

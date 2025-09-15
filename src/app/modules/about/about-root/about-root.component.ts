@@ -3,6 +3,7 @@ import { AboutIndexComponent } from '../about-index/about-index.component';
 import { CopyRightComponent } from '../../copy-right/copy-right/copy-right.component';
 
 @Component({
+    standalone : true,
     selector: 'about-root',
     templateUrl: './about-root.component.html',
     styleUrls: ['./about-root.component.sass'],
