@@ -18,6 +18,7 @@ import { CdkScrollable } from '@angular/cdk/scrolling';
 import { CtPreComponent } from '../ct-pre/ct-pre.component';
 
 @Component({
+    standalone : true,
     selector: 'ct-state-of-tasks',
     templateUrl: './ct-state-of-tasks.component.html',
     styleUrls: ['./ct-state-of-tasks.component.scss'],

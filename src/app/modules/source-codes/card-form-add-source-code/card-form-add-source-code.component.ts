@@ -15,6 +15,7 @@ import { CtSectionFooterComponent } from '../../ct/ct-section-footer/ct-section-
 import { CtSectionFooterRowComponent } from '../../ct/ct-section-footer-row/ct-section-footer-row.component';
 
 @Component({
+    standalone : true,
     selector: 'card-form-add-source-code',
     templateUrl: './card-form-add-source-code.component.html',
     styleUrls: ['./card-form-add-source-code.component.scss'],

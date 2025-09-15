@@ -21,6 +21,7 @@ import { CtSectionFooterRowComponent } from '../../ct/ct-section-footer-row/ct-s
 import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
+    standalone : true,
     selector: 'kb-add',
     templateUrl: './kb-add.component.html',
     styleUrls: ['./kb-add.component.scss'],

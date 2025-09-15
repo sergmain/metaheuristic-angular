@@ -7,7 +7,7 @@ import {
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
 
 @Component({
-    // eslint-disable-next-line @angular-eslint/component-selector
+    standalone : true,
     selector: 'ct-wrap-block',
     templateUrl: './ct-wrap-block.component.html',
     styleUrls: ['./ct-wrap-block.component.scss'],

@@ -29,6 +29,7 @@ import { RouterLink } from '@angular/router';
 import { MatIcon } from '@angular/material/icon';
 
 @Component({
+    standalone : true,
     selector: 'source-codes',
     templateUrl: './source-codes.component.html',
     styleUrls: ['./source-codes.component.sass'],

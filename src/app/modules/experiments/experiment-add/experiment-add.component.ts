@@ -23,6 +23,7 @@ import { CtSectionFooterRowComponent } from '../../ct/ct-section-footer-row/ct-s
 import { MatButton } from '@angular/material/button';
 import { CtRestStatusComponent } from '../../ct/ct-rest-status/ct-rest-status.component';
 @Component({
+    standalone : true,
     selector: 'experiment-add',
     templateUrl: './experiment-add.component.html',
     styleUrls: ['./experiment-add.component.scss'],

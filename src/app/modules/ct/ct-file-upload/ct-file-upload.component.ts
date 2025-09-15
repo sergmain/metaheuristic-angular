@@ -6,6 +6,7 @@ import { MatButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
 
 @Component({
+    standalone : true,
     selector: 'ct-file-upload',
     templateUrl: './ct-file-upload.component.html',
     styleUrls: ['./ct-file-upload.component.scss'],

@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
+    standalone : true,
+    imports: [],
     selector: 'ct-heading',
     templateUrl: './ct-heading.component.html',
     styleUrls: ['./ct-heading.component.scss']

@@ -20,6 +20,7 @@ import { CtSectionFooterRowComponent } from '../../ct/ct-section-footer-row/ct-s
 import { MatButton } from '@angular/material/button';
 import { CtSectionContentComponent } from '../../ct/ct-section-content/ct-section-content.component';
 @Component({
+    standalone : true,
     selector: 'add-exec-context',
     templateUrl: './add-exec-context.component.html',
     styleUrls: ['./add-exec-context.component.scss'],

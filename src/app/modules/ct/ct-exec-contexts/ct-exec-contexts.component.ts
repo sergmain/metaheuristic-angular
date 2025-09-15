@@ -25,6 +25,8 @@ import { CtStateOfTasksComponent } from '../ct-state-of-tasks/ct-state-of-tasks.
 
 
 @Component({
+    standalone : true,
+    standalone : true,
     selector: 'ct-exec-contexts',
     templateUrl: './ct-exec-contexts.component.html',
     styleUrls: ['./ct-exec-contexts.component.scss'],

@@ -9,6 +9,7 @@ import { CtRestStatusComponent } from '../../ct/ct-rest-status/ct-rest-status.co
 import { CardFormAddVariableWithStorageComponent } from '../card-form-add-variable-with-storage/card-form-add-variable-with-storage.component';
 
 @Component({
+    standalone : true,
     selector: 'add-global-variable',
     templateUrl: './add-global-variable.component.html',
     styleUrls: ['./add-global-variable.component.scss'],

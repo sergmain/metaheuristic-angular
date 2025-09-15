@@ -7,6 +7,7 @@ import { CtSectionBodyRowComponent } from '../ct-section-body-row/ct-section-bod
 import { CtHeadingComponent } from '../ct-heading/ct-heading.component';
 
 @Component({
+    standalone : true,
     selector: 'ct-rest-status',
     templateUrl: './ct-rest-status.component.html',
     styleUrls: ['./ct-rest-status.component.scss'],

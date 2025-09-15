@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
+    standalone : true,
+    imports: [],
     selector: 'ct-section-body',
     templateUrl: './ct-section-body.component.html',
     styleUrls: ['./ct-section-body.component.scss']

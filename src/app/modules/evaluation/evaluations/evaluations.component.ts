@@ -26,6 +26,7 @@ import { MatIcon } from '@angular/material/icon';
 import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
+  standalone : true,
     selector: 'evaluations',
     templateUrl: './evaluations.component.html',
     styleUrls: ['./evaluations.component.sass'],

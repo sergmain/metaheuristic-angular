@@ -13,6 +13,7 @@ import { CopyRightComponent } from '../../copy-right/copy-right/copy-right.compo
 import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
+    standalone : true,
     selector: 'mhbp-root',
     templateUrl: './mhbp-root.component.html',
     styleUrls: ['./mhbp-root.component.sass'],

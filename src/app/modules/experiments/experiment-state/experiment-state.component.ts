@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { CtStateOfTasksComponent } from '../../ct/ct-state-of-tasks/ct-state-of-tasks.component';
 
 @Component({
+    standalone : true,
     selector: 'experiment-state',
     templateUrl: './experiment-state.component.html',
     styleUrls: ['./experiment-state.component.sass'],

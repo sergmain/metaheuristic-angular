@@ -18,6 +18,7 @@ import { CtSectionFooterRowComponent } from '../../../ct/ct-section-footer-row/c
 import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
+    standalone : true,
     selector: "settings-security-index",
     templateUrl: './settings-security-index.component.html',
     styleUrls: ['./settings-security-index.component.scss'],

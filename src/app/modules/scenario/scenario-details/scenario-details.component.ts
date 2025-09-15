@@ -103,6 +103,7 @@ export class StepEvaluationState {
  * @title Tree with flat nodes
  */
 @Component({
+    standalone : true,
     selector: 'scenario-details',
     templateUrl: 'scenario-details.component.html',
     styleUrls: ['scenario-details.component.scss'],

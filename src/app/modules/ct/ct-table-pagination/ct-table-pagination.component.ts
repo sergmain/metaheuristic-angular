@@ -5,6 +5,7 @@ import { MatIconButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
 
 @Component({
+    standalone : true,
     selector: 'ct-table-pagination',
     templateUrl: './ct-table-pagination.component.html',
     styleUrls: ['./ct-table-pagination.component.sass'],

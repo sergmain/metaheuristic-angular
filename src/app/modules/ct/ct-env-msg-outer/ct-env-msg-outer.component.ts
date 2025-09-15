@@ -3,6 +3,8 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { environment } from '@src/environments/environment';
 
 @Component({
+    imports: [],
+    standalone : true,
     selector: 'ct-env-msg-outer',
     templateUrl: './ct-env-msg-outer.component.html',
     styleUrls: ['./ct-env-msg-outer.component.sass']

@@ -31,6 +31,7 @@ export enum MoveState {
  * @title Tree with flat nodes
  */
 @Component({
+    standalone : true,
     selector: 'scenario-move',
     templateUrl: 'scenario-move.component.html',
     styleUrls: ['scenario-move.component.scss'],

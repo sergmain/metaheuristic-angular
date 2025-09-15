@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
+    standalone : true,
+    imports: [],
     selector: 'ct-section-footer-row',
     templateUrl: './ct-section-footer-row.component.html',
     styleUrls: ['./ct-section-footer-row.component.scss']

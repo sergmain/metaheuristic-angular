@@ -9,6 +9,7 @@ import { CtColsComponent } from '../../ct/ct-cols/ct-cols.component';
 import { CtColComponent } from '../../ct/ct-col/ct-col.component';
 import { CtRestStatusComponent } from '../../ct/ct-rest-status/ct-rest-status.component';
 @Component({
+    standalone : true,
     selector: 'add-source-code',
     templateUrl: './add-source-code.component.html',
     styleUrls: ['./add-source-code.component.scss'],

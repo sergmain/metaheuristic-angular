@@ -28,6 +28,7 @@ import { CtSectionFooterComponent } from '../../ct/ct-section-footer/ct-section-
 import { CtSectionFooterRowComponent } from '../../ct/ct-section-footer-row/ct-section-footer-row.component';
 
 @Component({
+    standalone : true,
     selector: 'scenario-step-add',
     templateUrl: './scenario-step-add.component.html',
     styleUrls: ['./scenario-step-add.component.scss'],

@@ -17,6 +17,7 @@ import { CtSectionFooterRowComponent } from '../../ct/ct-section-footer-row/ct-s
 import { MatButton } from '@angular/material/button';
 
 @Component({
+    standalone : true,
     selector: 'card-form-add-variable-with-storage',
     templateUrl: './card-form-add-variable-with-storage.component.html',
     styleUrls: ['./card-form-add-variable-with-storage.component.scss'],

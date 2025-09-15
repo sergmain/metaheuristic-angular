@@ -24,6 +24,7 @@ import { CtTablePaginationComponent } from '../../ct/ct-table-pagination/ct-tabl
 
 
 @Component({
+    standalone : true,
     selector: 'source-codes-archive',
     templateUrl: './source-codes-archive.component.html',
     styleUrls: ['./source-codes-archive.component.sass'],

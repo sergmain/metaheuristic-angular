@@ -22,6 +22,7 @@ import { MatButton } from '@angular/material/button';
 import { CtRestStatusComponent } from '../../ct/ct-rest-status/ct-rest-status.component';
 
 @Component({
+    standalone : true,
     selector: 'edit-processor',
     templateUrl: './edit-processor.component.html',
     styleUrls: ['./edit-processor.component.scss'],

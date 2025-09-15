@@ -23,6 +23,7 @@ import { CtSectionFooterComponent } from '../../ct/ct-section-footer/ct-section-
 import { CtSectionFooterRowComponent } from '../../ct/ct-section-footer-row/ct-section-footer-row.component';
 
 @Component({
+    standalone : true,
     selector: 'scenario-add',
     templateUrl: './scenario-add.component.html',
     styleUrls: ['./scenario-add.component.scss'],

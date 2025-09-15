@@ -21,6 +21,7 @@ import { CtRestStatusComponent } from '../../ct/ct-rest-status/ct-rest-status.co
 import { MatFormField, MatLabel, MatInput } from '@angular/material/input';
 
 @Component({
+    standalone : true,
     selector: 'add-function',
     templateUrl: './add-function.component.html',
     styleUrls: ['./add-function.component.scss'],

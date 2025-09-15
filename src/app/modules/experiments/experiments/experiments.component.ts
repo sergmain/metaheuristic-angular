@@ -23,6 +23,7 @@ import { RouterLink } from '@angular/router';
 import { MatIcon } from '@angular/material/icon';
 
 @Component({
+    standalone : true,
     selector: 'experiments-view',
     templateUrl: './experiments.component.html',
     styleUrls: ['./experiments.component.scss'],

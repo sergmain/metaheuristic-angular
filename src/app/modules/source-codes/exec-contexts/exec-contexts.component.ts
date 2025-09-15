@@ -4,6 +4,7 @@ import { CtExecContextsComponent } from '../../ct/ct-exec-contexts/ct-exec-conte
 
 
 @Component({
+    standalone : true,
     selector: 'exec-contexts',
     templateUrl: './exec-contexts.component.html',
     styleUrls: ['./exec-contexts.component.scss'],

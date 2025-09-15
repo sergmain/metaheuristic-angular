@@ -13,6 +13,7 @@ import { CopyRightComponent } from '../../copy-right/copy-right/copy-right.compo
 import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
+    standalone : true,
     selector: 'dispatcher-root',
     templateUrl: './dispatcher-root.component.html',
     styleUrls: ['./dispatcher-root.component.sass'],

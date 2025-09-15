@@ -24,6 +24,7 @@ import { MatButton } from '@angular/material/button';
 import { CtRestStatusComponent } from '../../ct/ct-rest-status/ct-rest-status.component';
 
 @Component({
+    standalone : true,
     selector: 'experiment-edit',
     templateUrl: './experiment-edit.component.html',
     styleUrls: ['./experiment-edit.component.scss'],

@@ -27,6 +27,7 @@ import { CtPre10pxComponent } from '../../ct/ct-pre-10px/ct-pre-10px.component';
 import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
+  standalone : true,
     selector: 'kbs',
     templateUrl: './kbs.component.html',
     styleUrls: ['./kbs.component.scss'],

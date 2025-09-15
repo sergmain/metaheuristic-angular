@@ -19,6 +19,7 @@ import { CtSectionFooterRowComponent } from '../../ct/ct-section-footer-row/ct-s
 import { CtTablePaginationComponent } from '../../ct/ct-table-pagination/ct-table-pagination.component';
 
 @Component({
+    standalone : true,
     selector: 'errors',
     templateUrl: './errors.component.html',
     styleUrls: ['./errors.component.sass'],

@@ -24,6 +24,7 @@ import { MatIcon } from '@angular/material/icon';
 import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
+    standalone : true,
     selector: "settings-languages-index",
     templateUrl: './settings-languages-index.component.html',
     styleUrls: ['./settings-languages-index.component.scss'],

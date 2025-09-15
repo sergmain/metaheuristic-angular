@@ -9,7 +9,7 @@ import {
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
 
 @Component({
-    // eslint-disable-next-line @angular-eslint/component-selector
+    standalone : true,
     selector: 'ct-table',
     templateUrl: './ct-table.component.html',
     styleUrls: ['./ct-table.component.scss'],

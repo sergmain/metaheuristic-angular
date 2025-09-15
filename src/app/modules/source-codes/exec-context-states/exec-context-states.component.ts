@@ -9,6 +9,7 @@ import { CtSectionBodyRowComponent } from '../../ct/ct-section-body-row/ct-secti
 import { CtStateOfTasksComponent } from '../../ct/ct-state-of-tasks/ct-state-of-tasks.component';
 
 @Component({
+    standalone : true,
     selector: 'exec-context-states',
     templateUrl: './exec-context-states.component.html',
     styleUrls: ['./exec-context-states.component.scss'],

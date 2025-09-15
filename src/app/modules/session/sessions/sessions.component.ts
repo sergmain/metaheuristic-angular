@@ -24,6 +24,7 @@ import { MatIcon } from '@angular/material/icon';
 import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
+    standalone : true,
     selector: 'sessions',
     templateUrl: './sessions.component.html',
     styleUrls: ['./sessions.component.sass'],

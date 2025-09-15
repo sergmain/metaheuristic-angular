@@ -13,6 +13,7 @@ import { CopyRightComponent } from '../../copy-right/copy-right/copy-right.compo
 import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
+    standalone : true,
     selector: 'settings-root',
     templateUrl: './settings-root.component.html',
     styleUrls: ['./settings-root.component.sass'],

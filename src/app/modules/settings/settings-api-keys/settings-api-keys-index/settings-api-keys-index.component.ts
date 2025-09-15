@@ -28,6 +28,7 @@ import { CtSectionFooterRowComponent } from '../../../ct/ct-section-footer-row/c
 import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
+    standalone : true,
     selector: "settings-api-keys-index",
     templateUrl: './settings-api-keys-index.component.html',
     styleUrls: ['./settings-api-keys-index.component.scss'],

@@ -21,6 +21,7 @@ import { MatButton } from '@angular/material/button';
 import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
+    standalone : true,
     selector: 'kb-edit',
     templateUrl: './kb-edit.component.html',
     styleUrls: ['./kb-edit.component.scss'],

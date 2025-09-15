@@ -29,6 +29,7 @@ import { CtTablePaginationComponent } from '../../ct/ct-table-pagination/ct-tabl
 
 
 @Component({
+    standalone : true,
     selector: 'processors',
     templateUrl: './processors.component.html',
     styleUrls: ['./processors.component.scss'],

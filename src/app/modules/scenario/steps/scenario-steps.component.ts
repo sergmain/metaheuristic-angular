@@ -24,6 +24,7 @@ import { MatIcon } from '@angular/material/icon';
 
 
 @Component({
+    standalone : true,
     selector: 'scenario-steps',
     templateUrl: './scenario-steps.component.html',
     styleUrls: ['./scenario-steps.component.sass'],

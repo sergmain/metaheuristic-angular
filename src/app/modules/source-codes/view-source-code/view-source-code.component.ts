@@ -20,6 +20,7 @@ import { MatButton } from '@angular/material/button';
 import { CtRestStatusComponent } from '../../ct/ct-rest-status/ct-rest-status.component';
 
 @Component({
+    standalone : true,
     selector: 'view-source-code',
     templateUrl: './view-source-code.component.html',
     styleUrls: ['./view-source-code.component.scss'],

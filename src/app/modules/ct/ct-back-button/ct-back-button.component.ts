@@ -16,6 +16,7 @@ export interface MenuItem {
     selector: 'ct-back-button',
     templateUrl: './ct-back-button.component.html',
     styleUrls: ['./ct-back-button.component.sass'],
+    standalone : true,
     imports: [NgIf, MatIconButton, MatTooltip, MatIcon]
 })
 export class CtBackButtonComponent implements OnInit, OnDestroy {

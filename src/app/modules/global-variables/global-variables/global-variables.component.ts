@@ -22,6 +22,7 @@ import { CtTablePaginationComponent } from '../../ct/ct-table-pagination/ct-tabl
 import { RouterLink } from '@angular/router';
 
 @Component({
+    standalone : true,
     selector: 'global-variables',
     templateUrl: './global-variables.component.html',
     styleUrls: ['./global-variables.component.scss'],

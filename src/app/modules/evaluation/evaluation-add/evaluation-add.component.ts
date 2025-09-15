@@ -36,6 +36,7 @@ import { CtSectionFooterRowComponent } from '../../ct/ct-section-footer-row/ct-s
 import { CtRestStatusComponent } from '../../ct/ct-rest-status/ct-rest-status.component';
 
 @Component({
+    standalone : true,
     selector: 'evaluation-add',
     templateUrl: './evaluation-add.component.html',
     styleUrls: ['./evaluation-add.component.scss'],

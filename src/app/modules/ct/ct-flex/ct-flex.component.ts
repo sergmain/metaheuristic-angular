@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
+  standalone : true,
+  imports: [],
   selector: 'ct-flex',
   templateUrl: './ct-flex.component.html',
   styleUrls: ['./ct-flex.component.scss']

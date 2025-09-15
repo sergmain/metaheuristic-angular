@@ -24,6 +24,7 @@ import { MatIcon } from '@angular/material/icon';
 import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
+    standalone : true,
     selector: 'scenario-groups',
     templateUrl: './scenario-groups.component.html',
     styleUrls: ['./scenario-groups.component.sass'],

@@ -24,6 +24,7 @@ import { CtSectionFooterRowComponent } from '../../ct/ct-section-footer-row/ct-s
 import { CtTablePaginationComponent } from '../../ct/ct-table-pagination/ct-table-pagination.component';
 
 @Component({
+    standalone : true,
     selector: 'scenarios',
     templateUrl: './scenarios.component.html',
     styleUrls: ['./scenarios.component.css'],

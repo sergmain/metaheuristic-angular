@@ -20,6 +20,7 @@ import { CtSectionFooterRowComponent } from '../../ct/ct-section-footer-row/ct-s
 import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
+    standalone : true,
     selector: 'scenario-group-add',
     templateUrl: './scenario-group-add.component.html',
     styleUrls: ['./scenario-group-add.component.scss'],

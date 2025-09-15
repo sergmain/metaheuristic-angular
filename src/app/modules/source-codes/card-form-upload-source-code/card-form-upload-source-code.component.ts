@@ -13,6 +13,7 @@ import { CtSectionFooterComponent } from '../../ct/ct-section-footer/ct-section-
 import { CtSectionFooterRowComponent } from '../../ct/ct-section-footer-row/ct-section-footer-row.component';
 
 @Component({
+    standalone : true,
     selector: 'card-form-upload-source-code',
     templateUrl: './card-form-upload-source-code.component.html',
     styleUrls: ['./card-form-upload-source-code.component.sass'],
