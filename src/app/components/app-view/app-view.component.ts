@@ -1,5 +1,6 @@
 import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {MatSelect, MatSelectChange} from '@angular/material/select';
+import {MatDialog} from '@angular/material/dialog';
 import {DomSanitizer, SafeHtml} from '@angular/platform-browser';
 import { ActivationEnd, Router, RouterOutlet, RouterLinkActive, RouterLink } from '@angular/router';
 import {AuthenticationService} from '@app/services/authentication/authentication.service';
@@ -23,8 +24,10 @@ import { MatOption } from '@angular/material/autocomplete';
 import { MatTooltip } from '@angular/material/tooltip';
 import { TranslateModule } from '@ngx-translate/core';
 import { ThemeToggleComponent } from '../theme-toggle/theme-toggle.component';
+import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
 
-// declare function initQuitProcess(): any;
+// Declare function from index.html for Electron IPC
+declare function initQuitProcess(): any;
 
 @Component({
     selector: 'app-view',
@@ -51,7 +54,8 @@ export class AppViewComponent extends UIStateComponent implements OnInit, OnDest
         private domSanitizer: DomSanitizer,
         private settingsService: SettingsService,
         private runtimeService: RuntimeService,
-        private router: Router
+        private router: Router,
+        private dialog: MatDialog
     ) {
         super(authenticationService);
     }
@@ -101,18 +105,43 @@ export class AppViewComponent extends UIStateComponent implements OnInit, OnDest
         this.authenticationService.logout().subscribe();
     }
 
-    // TODO 2023-07-13 ConfirmationDialogMethod isn't working rn
-/*
-    @ConfirmationDialogMethod({
-        question: (): string => `Do you want to quit Metaheuristic`,
-        resolveTitle: 'Quit',
-        rejectTitle: 'Stay',
-        theme: 'primary'
-    })
-*/
     shutdown() {
-        // initQuitProcess();
-        window.top.close();
+        const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+            width: '400px',
+            data: {
+                title: 'Close Metaheuristic',
+                message: 'Do you want to quit Metaheuristic? All unsaved changes will be lost.',
+                confirmText: 'Quit',
+                cancelText: 'Stay',
+                confirmColor: 'warn'
+            }
+        });
+
+        dialogRef.afterClosed().subscribe(result => {
+            if (result === true) {
+                this.performShutdown();
+            }
+        });
+    }
+
+    private performShutdown(): void {
+        // Check if we're in Electron environment
+        if (this.isElectron()) {
+            try {
+                initQuitProcess();
+                return;
+            } catch (error) {
+                console.warn('Failed to quit via Electron IPC:', error);
+            }
+        }
+
+        // For all other environments, simply use window.close()
+        // The browser will handle whether it can close or not
+        window.close();
+    }
+
+    private isElectron(): boolean {
+        return !!(window && (window as any).require);
     }
 
     serverReady() {
