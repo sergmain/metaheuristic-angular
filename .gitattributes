@@ -1,6 +1,8 @@
 * -text
 
 *.css           text
+*.scss          text
+*.sass          text
 *.html          text
 *.java          text
 *.js            text
