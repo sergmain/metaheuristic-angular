@@ -16,7 +16,7 @@ import { Role } from '@app/services/authentication';
 
 const commonRequiredRoles: Role[] = [Role.Admin, Role.Data, Role.Manager, Role.Operator];
 
-export const BatchRoutes: Routes = [
+export const BATCH_ROUTES: Routes = [
     {
         path: '',
         component: BatchRootComponent,

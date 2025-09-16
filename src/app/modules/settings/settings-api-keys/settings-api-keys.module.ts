@@ -8,7 +8,7 @@ import { SettingsApiKeysIndexComponent } from './settings-api-keys-index/setting
 // import {CtModule} from '@app/modules/ct/ct.module';
 
 
-export const SettingsApiKeysRoutes: Routes = [
+export const SETTINGS_API_KEYS_ROUTES: Routes = [
     {
         path: '',
         component: SettingsApiKeysIndexComponent,

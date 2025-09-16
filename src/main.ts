@@ -55,8 +55,8 @@ bootstrapApplication(AppComponent, {
         // Add the new router provider
         provideRouter(
             ROOT_ROUTES,
-            ...(environment.hashLocationStrategy ? [withHashLocation()] : [])
-            // Note: onSameUrlNavigation: 'reload' is handled automatically in newer Angular
+            ...(environment.hashLocationStrategy ? [withHashLocation()] : []),
+            // Remove extraOptions for now to test
         ),
         // AuthGuard,
         // AuthenticationService,

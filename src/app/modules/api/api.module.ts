@@ -9,7 +9,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {ApisComponent} from './apis/apis.component';
 import {ApiAddComponent} from "@app/modules/api/api-add/api-add.component";
 
-export const ApiRoutes: Routes = [
+export const API_ROUTES: Routes = [
     {
         path: '',
         component: ApisComponent

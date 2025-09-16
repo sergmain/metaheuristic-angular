@@ -16,7 +16,7 @@ import { CardFormUploadSourceCodeComponent } from './card-form-upload-source-cod
 import { CardFormAddSourceCodeComponent } from './card-form-add-source-code/card-form-add-source-code.component';
 import { ViewSourceCodeComponent } from './view-source-code/view-source-code.component';
 
-export const SourceCodesRoutes: Routes = [
+export const SOURCE_CODES_ROUTES: Routes = [
     {
         path: '',
         component: SourceCodesComponent,

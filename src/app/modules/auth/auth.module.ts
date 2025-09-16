@@ -10,7 +10,7 @@ import {AuthsComponent} from './auths/auths.component';
 import {AuthEditComponent} from "@app/modules/auth/auth-edit/auth-edit.component";
 import {AuthAddComponent} from "@app/modules/auth/auth-add/auth-add.component";
 
-export const AuthRoutes: Routes = [
+export const AUTH_ROUTES: Routes = [
     {
         path: '',
         component: AuthsComponent

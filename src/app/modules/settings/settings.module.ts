@@ -9,10 +9,13 @@ import { SettingsIndexComponent } from '@app/modules/settings/settings-index/set
 import { SettingsRootComponent } from '@app/modules/settings/settings-root/settings-root.component';
 import { RoleRouteGuard } from '@app/guards/role-route.guard';
 import { Role } from '@app/services/authentication';
+import {SETTINGS_SECURITY_ROUTES} from '@app/modules/settings/settings-security/settings-security.module';
+import {SETTINGS_API_KEYS_ROUTES} from '@app/modules/settings/settings-api-keys/settings-api-keys.module';
+import {SETTINGS_LANGUAGES_ROUTES} from '@app/modules/settings/settings-languages/settings-languages.module';
 
 const commonRequiredRoles: Role[] = [Role.Admin, Role.Data, Role.Manager];
 
-export const SettingsRoutes: Routes = [
+export const SETTINGS_ROUTES: Routes = [
     {
         path: '',
         canActivate: [RoleRouteGuard],
@@ -32,7 +35,7 @@ export const SettingsRoutes: Routes = [
         path: 'security',
         canActivate: [RoleRouteGuard],
         component: SettingsRootComponent,
-        loadChildren: () => import('@app/modules/settings/settings-security/settings-security.module').then(m => m.SettingsSecurityRoutes),
+        children: SETTINGS_SECURITY_ROUTES,
         data: {
             requiredRoles: [Role.Admin, Role.Manager, Role.Operator],
             section: 'security'
@@ -42,7 +45,7 @@ export const SettingsRoutes: Routes = [
         path: 'api-keys',
         canActivate: [RoleRouteGuard],
         component: SettingsRootComponent,
-        loadChildren: () => import('@app/modules/settings/settings-api-keys/settings-api-keys.module').then(m => m.SettingsApiKeysRoutes),
+        children: SETTINGS_API_KEYS_ROUTES,
         data: {
             requiredRoles: [Role.Admin, Role.Manager, Role.Operator],
             section: 'api-keys'
@@ -52,7 +55,7 @@ export const SettingsRoutes: Routes = [
         path: 'languages',
         canActivate: [RoleRouteGuard],
         component: SettingsRootComponent,
-        loadChildren: () => import('@app/modules/settings/settings-languages/settings-languages.module').then(m => m.SettingsLanguagesRoutes),
+        children: SETTINGS_LANGUAGES_ROUTES,
         data: {
             requiredRoles: [Role.Admin, Role.Manager, Role.Operator],
             section: 'languages'

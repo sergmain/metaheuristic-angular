@@ -12,7 +12,7 @@ import { ExperimentStateComponent } from './experiment-state/experiment-state.co
 
 
 
-export const ExperimentsRoutes: Routes = [
+export const EXPERIMENTS_ROUTES: Routes = [
     {
         path: '',
         component: ExperimentsComponent

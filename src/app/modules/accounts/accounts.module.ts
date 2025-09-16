@@ -12,7 +12,7 @@ import { AccountEditPassComponent } from './account-edit-pass/account-edit-pass.
 // import { NgModule } from '@angular/core';
 
 
-export const AccountsRoutes: Routes = [
+export const ACCOUNTS_ROUTES: Routes = [
     {
         path: '',
         component: AccountsComponent

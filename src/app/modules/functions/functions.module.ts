@@ -9,7 +9,7 @@ import { FunctionsComponent } from './functions/functions.component';
 // import { NgModule } from '@angular/core';
 
 
-export const FunctionsRoutes: Routes = [
+export const FUNCTIONS_ROUTES: Routes = [
     {
         path: '',
         component: FunctionsComponent,

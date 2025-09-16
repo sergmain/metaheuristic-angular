@@ -8,7 +8,7 @@ import { SettingsSecurityIndexComponent } from './settings-security-index/settin
 // import {CtModule} from '@app/modules/ct/ct.module';
 
 
-export const SettingsSecurityRoutes: Routes = [
+export const SETTINGS_SECURITY_ROUTES: Routes = [
     {
         path: '',
         component: SettingsSecurityIndexComponent,

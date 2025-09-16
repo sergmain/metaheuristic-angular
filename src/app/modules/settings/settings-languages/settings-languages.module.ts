@@ -7,7 +7,7 @@ import { SettingsLanguagesIndexComponent } from './settings-languages-index/sett
 
 // import {CtModule} from '@app/modules/ct/ct.module';
 
-export const SettingsLanguagesRoutes: Routes = [
+export const SETTINGS_LANGUAGES_ROUTES: Routes = [
     {
         path: '',
         component: SettingsLanguagesIndexComponent,

@@ -9,10 +9,11 @@ import { AiIndexComponent } from './ai-index/ai-index.component';
 import { AiRootComponent } from './ai-root/ai-root.component';
 import { RoleRouteGuard } from '@app/guards/role-route.guard';
 import { Role } from '@app/services/authentication';
+import {EXPERIMENTS_ROUTES} from '@app/modules/experiments/experiments.module';
 
 const commonRequiredRoles: Role[] = [Role.Admin, Role.Data, Role.Manager];
 
-export const AiRoutes: Routes = [
+export const AI_ROUTES: Routes = [
     {
         path: '',
         canActivate: [RoleRouteGuard],
@@ -32,7 +33,7 @@ export const AiRoutes: Routes = [
         path: 'experiments',
         canActivate: [RoleRouteGuard],
         component: AiRootComponent,
-        loadChildren: () => import('@app/modules/experiments/experiments.module').then(m => m.ExperimentsRoutes),
+        children: EXPERIMENTS_ROUTES,
         data: {
             section: 'experiments',
             requiredRoles: commonRequiredRoles

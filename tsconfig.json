@@ -1,11 +1,11 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
-    "baseUrl": "src",
+    "baseUrl": "./",
     "paths": {
-      "@src/*": ["*"],
-      "@app/*": ["app/*"],
-      "@services/*": ["app/services/*"]
+      "@src/*": ["src/*"],
+      "@app/*": ["src/app/*"],
+      "@services/*": ["src/app/services/*"]
     },
     "outDir": "./dist/out-tsc",
     "esModuleInterop": true,

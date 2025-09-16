@@ -9,7 +9,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { EvaluationsComponent } from './evaluations/evaluations.component';
 import {EvaluationAddComponent} from "./evaluation-add/evaluation-add.component";
 
-export const EvaluationRoutes: Routes = [
+export const EVALUATION_ROUTES: Routes = [
     {
         path: '',
         component: EvaluationsComponent

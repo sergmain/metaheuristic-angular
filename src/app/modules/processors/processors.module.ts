@@ -9,7 +9,7 @@ import { ProcessorsComponent } from './processors/processors.component';
 // import { CtModule } from '../ct/ct.module';
 
 
-export const ProcessorsRoutes: Routes = [
+export const PROCESSORS_ROUTES: Routes = [
     {
         path: '',
         component: ProcessorsComponent

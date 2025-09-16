@@ -21,7 +21,7 @@ import { Role } from '@app/services/authentication';
 import { RoleRouteGuard } from '@app/guards/role-route.guard';
 
 
-export const CompanyRoutes: Routes = [
+export const COMPANY_ROUTES: Routes = [
     {
         path: '',
         component: CompanyComponent,

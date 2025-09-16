@@ -9,11 +9,17 @@ import { MhbpIndexComponent } from '@app/modules/mhbp/mhbp-index/mhbp-index.comp
 import { MhbpRootComponent } from '@app/modules/mhbp/mhbp-root/mhbp-root.component';
 import { RoleRouteGuard } from '@app/guards/role-route.guard';
 import { Role } from '@app/services/authentication';
-import {ChatNewRoutes} from '@app/modules/chat-new/chat-new.module';
+import {CHAT_NEW_ROUTES} from '@app/modules/chat-new/chat-new.module';
+import {SCENARIO_ROUTES} from '@app/modules/scenario/scenario.module';
+import {SESSION_ROUTES} from '@app/modules/session/session.module';
+import {EVALUATION_ROUTES} from '@app/modules/evaluation/evaluation.module';
+import {KB_ROUTES} from '@app/modules/kb/kb.module';
+import {AUTH_ROUTES} from '@app/modules/auth/auth.module';
+import {API_ROUTES} from '@app/modules/api/api.module';
 
 const commonRequiredRoles: Role[] = [Role.Admin, Role.Data, Role.Manager];
 
-export const MhbpRoutes: Routes = [
+export const MHBP_ROUTES: Routes = [
     {
         path: '',
         canActivate: [RoleRouteGuard],
@@ -33,7 +39,7 @@ export const MhbpRoutes: Routes = [
         path: 'chat-new',
         canActivate: [RoleRouteGuard],
         component: MhbpRootComponent,
-        loadChildren: () => import('@app/modules/chat-new/chat-new.module').then(m => m.ChatNewRoutes),
+        children: CHAT_NEW_ROUTES,
         data: {
             requiredRoles: [Role.Admin, Role.Manager, Role.Operator],
             section: 'chats-new'
@@ -43,7 +49,7 @@ export const MhbpRoutes: Routes = [
         path: 'scenario',
         canActivate: [RoleRouteGuard],
         component: MhbpRootComponent,
-        loadChildren: () => import('@app/modules/scenario/scenario.module').then(m => m.ScenarioRoutes),
+        children: SCENARIO_ROUTES,
         data: {
             requiredRoles: [Role.Admin, Role.Manager],
             section: 'scenario-groups'
@@ -53,7 +59,7 @@ export const MhbpRoutes: Routes = [
         path: 'session',
         canActivate: [RoleRouteGuard],
         component: MhbpRootComponent,
-        loadChildren: () => import('@app/modules/session/session.module').then(m => m.SessionRoutes),
+        children: SESSION_ROUTES,
         data: {
             requiredRoles: [Role.Admin, Role.Manager],
             section: 'sessions'
@@ -63,7 +69,7 @@ export const MhbpRoutes: Routes = [
         path: 'evaluation',
         canActivate: [RoleRouteGuard],
         component: MhbpRootComponent,
-        loadChildren: () => import('@app/modules/evaluation/evaluation.module').then(m => m.EvaluationRoutes),
+        children: EVALUATION_ROUTES,
         data: {
             requiredRoles: [Role.Admin, Role.Manager],
             section: 'evaluations'
@@ -73,7 +79,7 @@ export const MhbpRoutes: Routes = [
         path: 'kb',
         canActivate: [RoleRouteGuard],
         component: MhbpRootComponent,
-        loadChildren: () => import('@app/modules/kb/kb.module').then(m => m.KbRoutes),
+        children: KB_ROUTES,
         data: {
             requiredRoles: [Role.Admin, Role.Manager],
             section: 'kbs'
@@ -83,7 +89,7 @@ export const MhbpRoutes: Routes = [
         path: 'auth',
         canActivate: [RoleRouteGuard],
         component: MhbpRootComponent,
-        loadChildren: () => import('@app/modules/auth/auth.module').then(m => m.AuthRoutes),
+        children: AUTH_ROUTES,
         data: {
             requiredRoles: [Role.Admin, Role.Manager],
             section: 'auths'
@@ -93,7 +99,7 @@ export const MhbpRoutes: Routes = [
         path: 'api',
         canActivate: [RoleRouteGuard],
         component: MhbpRootComponent,
-        loadChildren: () => import('@app/modules/api/api.module').then(m => m.ApiRoutes),
+        children: API_ROUTES,
         data: {
             requiredRoles: [Role.Admin, Role.Manager],
             section: 'apis'

@@ -10,7 +10,7 @@ import {RoleRouteGuard} from "@app/guards/role-route.guard";
 import {Role} from "@services/authentication";
 import {ErrorsComponent} from "@app/modules/session/errors/errors.component";
 
-export const SessionRoutes: Routes = [
+export const SESSION_ROUTES: Routes = [
     {
         path: '',
         component: SessionsComponent

@@ -19,7 +19,7 @@ import {MatTableModule} from "@angular/material/table";
 import {ScenarioDetailsComponent} from '@app/modules/scenario/scenario-details/scenario-details.component';
 import {ScenarioMoveComponent} from '@app/modules/scenario/scenario-move/scenario-move.component';
 
-export const ScenarioRoutes: Routes = [
+export const SCENARIO_ROUTES: Routes = [
     {
         path: '',
         component: ScenarioGroupsComponent
