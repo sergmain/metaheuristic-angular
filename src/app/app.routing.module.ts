@@ -8,7 +8,6 @@ import {AI_ROUTES} from '@app/modules/ai/ai.module';
 import {BATCH_ROUTES} from '@app/modules/batch/batch.module';
 import {MHBP_ROUTES} from '@app/modules/mhbp/mhbp.module';
 import {SETTINGS_ROUTES} from '@app/modules/settings/settings.module';
-// // import { NgModule } from '@angular/core';
 
 
 export const ROOT_ROUTES: Routes = [
@@ -67,13 +66,3 @@ export const extraOptions: ExtraOptions = {
     onSameUrlNavigation: 'reload'
     // relativeLinkResolution: 'legacy'
 };
-
-/*
-@NgModule({
-    imports: [RouterModule.forRoot(ROOT_ROUTES, extraOptions)],
-    exports: [RouterModule]
-})
-
-// export class AppRoutingModule { }
-
-*/

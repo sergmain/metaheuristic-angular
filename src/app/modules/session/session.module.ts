@@ -1,14 +1,8 @@
-import { CommonModule } from '@angular/common';
-// import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { TranslateModule } from '@ngx-translate/core';
-// import { CtModule } from '../ct/ct.module';
-
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { SessionsComponent } from './sessions/sessions.component';
-import {RoleRouteGuard} from "@app/guards/role-route.guard";
-import {Role} from "@services/authentication";
-import {ErrorsComponent} from "@app/modules/session/errors/errors.component";
+import {Routes} from '@angular/router';
+import {SessionsComponent} from './sessions/sessions.component';
+import {RoleRouteGuard} from '@app/guards/role-route.guard';
+import {Role} from '@services/authentication/Role';
+import {ErrorsComponent} from '@app/modules/session/errors/errors.component';
 
 export const SESSION_ROUTES: Routes = [
     {
@@ -26,26 +20,3 @@ export const SESSION_ROUTES: Routes = [
     },
 ];
 
-/*
-
-@NgModule({
-    imports: [RouterModule.forChild(SessionRoutes)],
-    exports: [RouterModule],
-    declarations: []
-})
-export class SessionRoutingModule { }
-
-
-@NgModule({
-    imports: [
-    CommonModule,
-    SessionRoutingModule,
-    CtModule,
-    FormsModule,
-    ReactiveFormsModule,
-    TranslateModule.forChild({}),
-    SessionsComponent, ErrorsComponent
-]
-})
-export class SessionModule { }
-*/

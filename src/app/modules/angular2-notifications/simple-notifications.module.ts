@@ -1,10 +1,10 @@
-import { CommonModule } from '@angular/common';
-import { InjectionToken, ModuleWithProviders, NgModule } from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {InjectionToken, ModuleWithProviders, NgModule} from '@angular/core';
 // import { NotificationComponent } from './components/notification/notification.component';
 // import { SimpleNotificationsComponent } from './components/simple-notifications/simple-notifications.component';
-import { DEFAULT_OPTIONS } from './consts/default-options.const';
-import { Options } from './interfaces/options.type';
-import { NotificationsService } from './services/notifications.service';
+import {DEFAULT_OPTIONS} from './consts/default-options.const';
+import {Options} from './interfaces/options.type';
+import {NotificationsService} from './services/notifications.service';
 
 export const OPTIONS = new InjectionToken<Options>('options');
 export function optionsFactory(options) {

@@ -1,14 +1,7 @@
-import { CommonModule } from '@angular/common';
-// import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { TranslateModule } from '@ngx-translate/core';
-// import { CtModule } from '../ct/ct.module';
-
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
+import {Routes} from '@angular/router';
 import {KbsComponent} from './kbs/kbs.component';
-import {KbEditComponent} from "@app/modules/kb/kb-edit/kb-edit.component";
-import {KbAddComponent} from "@app/modules/kb/kb-add/kb-add.component";
+import {KbEditComponent} from '@app/modules/kb/kb-edit/kb-edit.component';
+import {KbAddComponent} from '@app/modules/kb/kb-add/kb-add.component';
 
 export const KB_ROUTES: Routes = [
     {
@@ -30,27 +23,3 @@ export const KB_ROUTES: Routes = [
         }
     },
 ];
-
-
-/*
-@NgModule({
-    imports: [RouterModule.forChild(KbRoutes)],
-    exports: [RouterModule],
-    declarations: []
-})
-export class KbRoutingModule { }
-
-
-@NgModule({
-    imports: [
-    CommonModule,
-    KbRoutingModule,
-    CtModule,
-    FormsModule,
-    ReactiveFormsModule,
-    TranslateModule.forChild({}),
-    KbsComponent, KbAddComponent, KbEditComponent
-]
-})
-export class KbModule { }
-*/

@@ -1,6 +1,4 @@
 import { CommonModule } from '@angular/common';
-// import { NgModule } from '@angular/core';
-
 import { CtSectionContentComponent } from './ct-section-content/ct-section-content.component';
 import { CtPreComponent } from './ct-pre/ct-pre.component';
 import { CtHeadingComponent } from './ct-heading/ct-heading.component';
@@ -30,69 +28,3 @@ import { CtPre10pxComponent } from './ct-pre-10px/ct-pre-10px.component';
 import {CtExecContextsComponent} from '@app/modules/ct/ct-exec-contexts/ct-exec-contexts.component';
 import {RouterModule} from '@angular/router';
 
-/*
-@NgModule({
-    imports: [
-    CommonModule,
-    TranslateModule.forChild({}),
-    RouterModule,
-    CtSectionContentComponent,
-    CtPreComponent,
-    CtPre10pxComponent,
-    CtHeadingComponent,
-    CtSectionBodyRowComponent,
-    CtSectionFooterRowComponent,
-    CtSectionFooterComponent,
-    CtColComponent,
-    CtColsComponent,
-    CtSectionCaptionComponent,
-    CtTableComponent,
-    CtWrapBlockComponent,
-    CtFileUploadComponent,
-    CtSectionHeaderComponent,
-    CtSectionComponent,
-    CtSectionHeaderRowComponent,
-    CtSectionBodyComponent,
-    CtHintComponent,
-    CtContentComponent,
-    CtRestStatusComponent,
-    CtBackButtonComponent,
-    CtEnvMsgOuterComponent,
-    CtTablePaginationComponent,
-    CtStateOfTasksComponent,
-    CtAlertComponent,
-    CtExecContextsComponent
-],
-    exports: [
-        CtSectionContentComponent,
-        CtPreComponent,
-        CtPre10pxComponent,
-        CtHeadingComponent,
-        CtSectionBodyRowComponent,
-        CtSectionFooterRowComponent,
-        CtSectionFooterComponent,
-        CtColComponent,
-        CtColsComponent,
-        CtSectionCaptionComponent,
-        CtTableComponent,
-        CtWrapBlockComponent,
-        CtFileUploadComponent,
-        CtSectionHeaderComponent,
-        CtSectionComponent,
-        CtSectionHeaderRowComponent,
-        CtSectionBodyComponent,
-        CtHintComponent,
-        CtContentComponent,
-        CtRestStatusComponent,
-        CtBackButtonComponent,
-        CtEnvMsgOuterComponent,
-        CtTablePaginationComponent,
-        CtStateOfTasksComponent,
-        CtAlertComponent,
-        CtExecContextsComponent,
-        RouterModule
-    ]
-})
-
-export class CtModule { }
-*/

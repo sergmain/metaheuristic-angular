@@ -1,14 +1,8 @@
-import { CommonModule } from '@angular/common';
-// import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { DispatcherIndexComponent } from './dispatcher-index/dispatcher-index.component';
-import { DispatcherRootComponent } from './dispatcher-root/dispatcher-root.component';
-
-import { TranslateModule } from '@ngx-translate/core';
-// import { CtModule } from '../ct/ct.module';
-
-import { Role } from '@app/services/authentication';
-import { RoleRouteGuard } from '@app/guards/role-route.guard';
+import {Routes} from '@angular/router';
+import {DispatcherIndexComponent} from './dispatcher-index/dispatcher-index.component';
+import {DispatcherRootComponent} from './dispatcher-root/dispatcher-root.component';
+import {Role} from '@app/services/authentication';
+import {RoleRouteGuard} from '@app/guards/role-route.guard';
 import {SOURCE_CODES_ROUTES} from '@app/modules/source-codes/source-codes.module';
 import {GLOBAL_VARIABLES_ROUTES} from '@app/modules/global-variables/global-variables.module';
 import {FUNCTIONS_ROUTES} from '@app/modules/functions/functions.module';
@@ -103,25 +97,4 @@ export const DISPATCHER_ROUTES: Routes = [
     }
 ];
 
-
-/*
-@NgModule({
-    imports: [RouterModule.forChild(DispatcherRoutes)],
-    exports: [RouterModule],
-})
-export class DispatcherRoutingModule { }
-
-
-@NgModule({
-    imports: [
-    CommonModule,
-    DispatcherRoutingModule,
-    CtModule,
-    TranslateModule.forChild({}),
-    DispatcherRootComponent,
-    DispatcherIndexComponent
-]
-})
-export class DispatcherModule { }
-*/
 

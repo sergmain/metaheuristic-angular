@@ -1,21 +1,12 @@
-import { CommonModule } from '@angular/common';
-// import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { TranslateModule } from '@ngx-translate/core';
-// import { CtModule } from '../ct/ct.module';
-
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import {RoleRouteGuard} from "@app/guards/role-route.guard";
-import {Role} from "@services/authentication";
-import {ScenarioGroupsComponent} from "./scenario-groups/scenario-groups.component";
-import {ScenariosComponent} from "./scenarios/scenarios.component";
-import {ScenarioGroupAddComponent} from "./scenario-group-add/scenario-group-add.component";
-import {ScenarioAddComponent} from "@app/modules/scenario/scenario-add/scenario-add.component";
-import {ScenarioStepsComponent} from "@app/modules/scenario/steps/scenario-steps.component";
-import {ScenarioStepAddComponent} from "@app/modules/scenario/step-add/scenario-step-add.component";
-import {DragDropModule} from "@angular/cdk/drag-drop";
-import {MatTableModule} from "@angular/material/table";
-// import {FlexLayoutModule} from "@angular/flex-layout";
+import {Routes} from '@angular/router';
+import {RoleRouteGuard} from '@app/guards/role-route.guard';
+import {Role} from '@services/authentication/Role';
+import {ScenarioGroupsComponent} from './scenario-groups/scenario-groups.component';
+import {ScenariosComponent} from './scenarios/scenarios.component';
+import {ScenarioGroupAddComponent} from './scenario-group-add/scenario-group-add.component';
+import {ScenarioAddComponent} from '@app/modules/scenario/scenario-add/scenario-add.component';
+import {ScenarioStepsComponent} from '@app/modules/scenario/steps/scenario-steps.component';
+import {ScenarioStepAddComponent} from '@app/modules/scenario/step-add/scenario-step-add.component';
 import {ScenarioDetailsComponent} from '@app/modules/scenario/scenario-details/scenario-details.component';
 import {ScenarioMoveComponent} from '@app/modules/scenario/scenario-move/scenario-move.component';
 
@@ -85,33 +76,3 @@ export const SCENARIO_ROUTES: Routes = [
     }
 ];
 
-/*
-@NgModule({
-    imports: [RouterModule.forChild(ScenarioRoutes)],
-    exports: [RouterModule],
-    declarations: []
-})
-export class ScenarioGroupRoutingModule { }
-
-
-@NgModule({
-    imports: [
-    CommonModule,
-    ScenarioGroupRoutingModule,
-    CtModule,
-    FormsModule,
-    ReactiveFormsModule,
-    TranslateModule.forChild({}),
-    DragDropModule,
-    MatTableModule
-    // ,FlexLayoutModule
-    ,
-    ScenarioGroupsComponent, ScenariosComponent,
-    ScenarioGroupAddComponent, ScenarioAddComponent,
-    ScenarioStepsComponent, ScenarioStepAddComponent,
-    ScenarioDetailsComponent,
-    ScenarioMoveComponent
-]
-})
-export class ScenarioModule { }
-*/

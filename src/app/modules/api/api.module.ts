@@ -1,13 +1,6 @@
-import { CommonModule } from '@angular/common';
-// import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { TranslateModule } from '@ngx-translate/core';
-// import { CtModule } from '../ct/ct.module';
-
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
+import {Routes} from '@angular/router';
 import {ApisComponent} from './apis/apis.component';
-import {ApiAddComponent} from "@app/modules/api/api-add/api-add.component";
+import {ApiAddComponent} from '@app/modules/api/api-add/api-add.component';
 
 export const API_ROUTES: Routes = [
     {
@@ -22,27 +15,3 @@ export const API_ROUTES: Routes = [
         }
     },
 ];
-
-
-/*
-@NgModule({
-    imports: [RouterModule.forChild(ApiRoutes)],
-    exports: [RouterModule],
-    declarations: []
-})
-export class ApiRoutingModule { }
-
-
-@NgModule({
-    imports: [
-    CommonModule,
-    ApiRoutingModule,
-    CtModule,
-    FormsModule,
-    ReactiveFormsModule,
-    TranslateModule.forChild({}),
-    ApisComponent, ApiAddComponent
-]
-})
-export class ApiModule { }
-*/

@@ -1,14 +1,8 @@
-import { CommonModule } from '@angular/common';
-// import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { TranslateModule } from '@ngx-translate/core';
-// import { NgModule } from '@angular/core';
-
-
-import { SettingsIndexComponent } from '@app/modules/settings/settings-index/settings-index.component';
-import { SettingsRootComponent } from '@app/modules/settings/settings-root/settings-root.component';
-import { RoleRouteGuard } from '@app/guards/role-route.guard';
-import { Role } from '@app/services/authentication';
+import {Routes} from '@angular/router';
+import {SettingsIndexComponent} from '@app/modules/settings/settings-index/settings-index.component';
+import {SettingsRootComponent} from '@app/modules/settings/settings-root/settings-root.component';
+import {RoleRouteGuard} from '@app/guards/role-route.guard';
+import {Role} from '@app/services/authentication/Role';
 import {SETTINGS_SECURITY_ROUTES} from '@app/modules/settings/settings-security/settings-security.module';
 import {SETTINGS_API_KEYS_ROUTES} from '@app/modules/settings/settings-api-keys/settings-api-keys.module';
 import {SETTINGS_LANGUAGES_ROUTES} from '@app/modules/settings/settings-languages/settings-languages.module';
@@ -63,25 +57,3 @@ export const SETTINGS_ROUTES: Routes = [
     }
 ];
 
-/*
-
-@NgModule({
-    imports: [RouterModule.forChild(SettingsRoutes)],
-    exports: [RouterModule],
-    declarations: []
-})
-export class SettingsRoutingModule { }
-
-
-@NgModule({
-    imports: [
-    CommonModule,
-    SettingsRoutingModule,
-    CtModule,
-    TranslateModule.forChild({}),
-    SettingsIndexComponent,
-    SettingsRootComponent
-]
-})
-export class SettingsModule { }
-*/

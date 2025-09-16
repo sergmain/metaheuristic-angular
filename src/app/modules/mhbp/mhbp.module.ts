@@ -1,14 +1,8 @@
-import { CommonModule } from '@angular/common';
-// import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { TranslateModule } from '@ngx-translate/core';
-// import { NgModule } from '@angular/core';
-
-
-import { MhbpIndexComponent } from '@app/modules/mhbp/mhbp-index/mhbp-index.component';
-import { MhbpRootComponent } from '@app/modules/mhbp/mhbp-root/mhbp-root.component';
-import { RoleRouteGuard } from '@app/guards/role-route.guard';
-import { Role } from '@app/services/authentication';
+import {Routes} from '@angular/router';
+import {MhbpIndexComponent} from '@app/modules/mhbp/mhbp-index/mhbp-index.component';
+import {MhbpRootComponent} from '@app/modules/mhbp/mhbp-root/mhbp-root.component';
+import {RoleRouteGuard} from '@app/guards/role-route.guard';
+import {Role} from '@app/services/authentication';
 import {CHAT_NEW_ROUTES} from '@app/modules/chat-new/chat-new.module';
 import {SCENARIO_ROUTES} from '@app/modules/scenario/scenario.module';
 import {SESSION_ROUTES} from '@app/modules/session/session.module';
@@ -107,25 +101,3 @@ export const MHBP_ROUTES: Routes = [
     }
 ];
 
-
-/*
-@NgModule({
-    imports: [RouterModule.forChild(MhbpRoutes)],
-    exports: [RouterModule],
-    declarations: []
-})
-export class MhbpRoutingModule { }
-
-
-@NgModule({
-    imports: [
-    CommonModule,
-    MhbpRoutingModule,
-    CtModule,
-    TranslateModule.forChild({}),
-    MhbpIndexComponent,
-    MhbpRootComponent
-]
-})
-export class MhbpModule { }
-*/

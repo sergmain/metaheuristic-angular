@@ -1,18 +1,13 @@
-import { CommonModule } from '@angular/common';
-// import { NgModule } from '@angular/core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { RouterModule, Routes } from '@angular/router';
-import { TranslateModule } from '@ngx-translate/core';
+import {Routes} from '@angular/router';
 
-import { BatchStatusComponent } from './batch-status/batch-status.component';
-import { BatchAddComponent } from './batch-add/batch-add.component';
-// import { NgModule } from '@angular/core';
-import { BatchRootComponent } from './batch-root/batch-root.component';
+import {BatchStatusComponent} from './batch-status/batch-status.component';
+import {BatchAddComponent} from './batch-add/batch-add.component';
+import {BatchRootComponent} from './batch-root/batch-root.component';
 
-import { BatchStateComponent } from './batch-state/batch-state.component';
-import { BatchListComponent } from './batch-list/batch-list.component';
-import { RoleRouteGuard } from '@app/guards/role-route.guard';
-import { Role } from '@app/services/authentication';
+import {BatchStateComponent} from './batch-state/batch-state.component';
+import {BatchListComponent} from './batch-list/batch-list.component';
+import {RoleRouteGuard} from '@app/guards/role-route.guard';
+import {Role} from '@app/services/authentication';
 
 const commonRequiredRoles: Role[] = [Role.Admin, Role.Data, Role.Manager, Role.Operator];
 
@@ -60,30 +55,3 @@ export const BATCH_ROUTES: Routes = [
     }
 ];
 
-
-/*
-@NgModule({
-    imports: [RouterModule.forChild(BatchRoutes)],
-    exports: [RouterModule],
-    declarations: []
-})
-export class BatchRoutingModule { }
-
-
-@NgModule({
-    imports: [
-    CommonModule,
-    BatchRoutingModule,
-    CtModule,
-    FormsModule,
-    ReactiveFormsModule,
-    TranslateModule.forChild({}),
-    BatchRootComponent,
-    BatchStatusComponent,
-    BatchAddComponent,
-    BatchStateComponent,
-    BatchListComponent
-]
-})
-export class BatchModule { }
-*/
