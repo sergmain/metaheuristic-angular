@@ -1,0 +1,33 @@
+## ✅ Yes, Roboto is completely free for commercial use!
+
+Roboto is licensed under the **Apache License, Version 2.0**, which allows free commercial use without any restrictions. Here are the key details:
+
+### 📄 License Information
+
+**Original License:** Apache License, Version 2.0
+**Current Status:** Most variants of Roboto have been licensed or re-licensed under the OFL (Open Font License)
+
+### ✅ What You Can Do
+
+The Apache License grants you a "perpetual, worldwide, non-exclusive, no-charge, royalty-free, irrevocable" license to use, modify, and distribute the font. This means you can:
+
+- ✅ Use it in commercial projects
+- ✅ Use it in logos and branding
+- ✅ Modify the font if needed
+- ✅ Distribute it with your software
+- ✅ Use it in web applications
+- ✅ Use it in mobile apps
+
+### 🌟 Background
+
+Roboto was developed by Google as the system font for Android, first released in 2011. The font was designed by Christian Robertson and is now used across Google services like Google Play, YouTube, Google Maps, and more.
+
+### 📂 Your Current Setup
+
+Looking at your project, you're already using Roboto fonts from your local `/src/fonts/roboto/` directory, which is perfectly fine for commercial use. The fonts are properly imported in your `styles.scss` file.
+
+### 💡 Recommendation
+
+Since Roboto is completely free and open source, you have no licensing concerns whatsoever. It's one of the most widely used fonts in the world and is an excellent choice for professional applications like yours.
+
+**Bottom line:** You can use Roboto in your Angular application without any legal concerns, even for commercial distribution.

@@ -31,7 +31,9 @@
         </ct-section-body-row>
     </ct-section-body>
 </ct-section>
+
                 <login-view class="flex-1" *ngIf="serverReady()"> </login-view>
+
             </div>
         </ct-content>
     </div>
@@ -64,18 +66,22 @@
     <mat-icon class="mat-icon">menu</mat-icon>
 </button>
 
+
     <button class="mat-button mat-button--menu-item" mat-button routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" routerLink="">{{brandingTitle}}</button>
+
 
     <button class="mat-button mat-button--menu-item" mat-button routerLinkActive="active" routerLink="/ai" *ngIf="
             false && (isRole.Admin ||
             isRole.Data ||
             isRole.Manager) ">{{ 'app-view.Ai' | translate }}</button>
 
+
     <button class="mat-button mat-button--menu-item" mat-button routerLinkActive="active" routerLink="/batch" *ngIf="
             isRole.Admin ||
             isRole.Data ||
             isRole.Manager ||
             isRole.Operator ">{{ 'app-view.Batch' | translate }}</button>
+
 
     <button class="mat-button mat-button--menu-item" mat-button routerLinkActive="active" routerLink="/dispatcher" *ngIf="
             isRole.MasterAdmin ||
@@ -86,47 +92,61 @@
             isRole.Data ||
             isRole.Manager ">{{ 'app-view.Dispatcher' | translate }}</button>
 
+
     <button class="mat-button mat-button--menu-item" mat-button routerLinkActive="active" routerLink="/mhbp" *ngIf="
             isRole.Admin ||
             isRole.Data ||
             isRole.Manager ">{{ 'app-view.Mhbp' | translate }}</button>
 
+
 </div>
+
 
     <batch-change-notification></batch-change-notification>
 
+
     <div class="flex justify-content-flex-end align-items-center">
-            <mat-slide-toggle #matSlideToggleTheme [checked]="theme === 'dark'" (change)="toggleTheme($event)">
-        </mat-slide-toggle>
+            <theme-toggle [checked]="theme === 'dark'" (checkedChange)="toggleTheme($event)"></theme-toggle>
+
             <mat-select #matSelectLanguage [(value)]="lang.current" (selectionChange)="toggleLanguage($event)">
     <mat-option *ngFor="let language of lang.list" [value]="language">{{language}}
     </mat-option>
 </mat-select>
+
             <button mat-icon-button matTooltip="{{ 'app-view.About' | translate }}" routerLinkActive="active" routerLink="/about">
     <mat-icon>help_outline</mat-icon>
 </button>
+
             <button mat-icon-button matTooltip="{{ 'app-view.Settings' | translate }}" routerLinkActive="active" routerLink="/settings">
     <mat-icon>settings</mat-icon>
 </button>
+
             <button mat-icon-button matTooltip="Log out" (click)="logout()" >
     <mat-icon>logout</mat-icon>
 </button>
+
             <button mat-icon-button matTooltip="Close Metaheuristic"  (click)="shutdown()" >
     <mat-icon>power_settings_new</mat-icon>
 </button>
+
         </div>
+
 </ng-template>
 
 
 <ng-template #anonymous_header_template>
     <div class="flex justify-content-flex-start gap-9px align-items-center">
     <button class="mat-button mat-button--menu-item" mat-button routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" routerLink="">{{brandingTitle}}</button>
+
 </div>
+
     <div class="flex justify-content-flex-end align-items-center">
-            <mat-slide-toggle #matSlideToggleTheme [checked]="theme === 'dark'" (change)="toggleTheme($event)">
-        </mat-slide-toggle>
+            <theme-toggle [checked]="theme === 'dark'" (checkedChange)="toggleTheme($event)"></theme-toggle>
+
             <button mat-icon-button matTooltip="Close Metaheuristic"  (click)="shutdown()" >
     <mat-icon>power_settings_new</mat-icon>
 </button>
+
         </div>
+
 </ng-template>

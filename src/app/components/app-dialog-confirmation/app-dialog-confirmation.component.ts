@@ -22,13 +22,12 @@ export interface ConfirmationDialogInterface {
 
 
 @Component({
+    standalone: true,
     selector: 'app-dialog-confirmation',
     templateUrl: './app-dialog-confirmation.component.html',
     styleUrls: ['./app-dialog-confirmation.component.scss'],
     imports: [MatButton]
 })
-
-
 export class AppDialogConfirmationComponent {
     constructor(
         public dialogRef: MatDialogRef < AppDialogConfirmationComponent > ,
