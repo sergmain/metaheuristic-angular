@@ -1,13 +1,14 @@
 @use 'sass:math'
 @use '../settings' as *;
 
+mat-sidenav-container
+    height: 100%
+
 mat-sidenav-content 
     overflow: hidden
 
-
 mat-sidenav 
-    position: fixed
-    top: calcUnit(6)
+    width: 150px
 
 
 
@@ -16,6 +17,7 @@ mat-sidenav
     display: flex
     flex-direction: column
     padding: calcUnit(1)
+    padding-top: calcUnit(2)
 
 
 .navigation button
