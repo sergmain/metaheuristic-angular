@@ -3,9 +3,15 @@
   "compilerOptions": {
     "baseUrl": "./",
     "paths": {
-      "@src/*": ["src/*"],
-      "@app/*": ["src/app/*"],
-      "@services/*": ["src/app/services/*"]
+      "@app/*": [
+        "./src/app/*"
+      ],
+      "@services/*": [
+        "./src/app/services/*"
+      ],
+      "@src/*": [
+        "./src/*"
+      ]
     },
     "outDir": "./dist/out-tsc",
     "esModuleInterop": true,
@@ -15,12 +21,12 @@
     "moduleResolution": "bundler",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "target": "ES2022",
+    "target": "ES2023",
     "typeRoots": [
       "node_modules/@types"
     ],
     "lib": [
-      "ES2022",
+      "ES2023",
       "dom"
     ]
   }

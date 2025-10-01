@@ -16,6 +16,23 @@ import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
 import {HttpLoaderFactory} from './app/app.module';
 import {SimpleNotificationsModule} from './app/modules/angular2-notifications/simple-notifications.module';
 import {AppComponent} from './app/app.component';
+import { Observable, map } from 'rxjs';
+import { parse } from 'yaml';
+
+class TranslateYamlHttpLoader implements TranslateLoader {
+    constructor(
+        private http: HttpClient,
+        public path: string = 'assets/i18n/'
+    ) {}
+
+    public getTranslation(lang: string): Observable<Object> {
+        let url = `${this.path}${lang}.yaml`;
+        console.log('translation lang, url: ', lang, url);
+        return this.http
+            .get(url, { responseType: 'text' })
+            .pipe(map((data) => parse(data)));
+    }
+}
 
 if (environment.isSslRequired) {
     if (window.location.protocol === 'http:') {
