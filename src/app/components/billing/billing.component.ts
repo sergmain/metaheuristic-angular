@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
+    imports: [],
     selector: 'billing',
     templateUrl: './billing.component.html',
     styleUrls: ['./billing.component.scss']

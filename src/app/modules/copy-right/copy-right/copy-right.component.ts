@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
+    imports: [],
     selector: 'copy-right',
     templateUrl: './copy-right.component.html',
     styleUrls: ['./copy-right.component.scss']
