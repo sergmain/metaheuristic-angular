@@ -32,15 +32,13 @@ import { TranslateModule } from '@ngx-translate/core';
 })
 export class ScenarioGroupsComponent extends UIStateComponent implements OnInit {
       public readonly dialog = inject(MatDialog);
-      public readonly authenticationService = inject(AuthenticationService);
       private scenarioService = inject(ScenarioService);
   columnsToDisplay: string[] = ['scenarioGroupId', 'createdOn', 'name', 'bts'];
   simpleScenarioGroupsResult: SimpleScenarioGroupsResult;
   dataSource = new MatTableDataSource<SimpleScenarioGroup>([]);
 
-  constructor(
-) {
-    super(this.authenticationService);
+  constructor(public readonly authenticationService: AuthenticationService = inject(AuthenticationService)) {
+    super(authenticationService);
   }
 
   ngOnInit(): void {

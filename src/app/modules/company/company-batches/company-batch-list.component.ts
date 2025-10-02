@@ -41,7 +41,6 @@ import { CtTablePaginationComponent } from '../../ct/ct-table-pagination/ct-tabl
     imports: [CtSectionComponent, CtSectionHeaderComponent, CtSectionHeaderRowComponent, CtHeadingComponent, NgTemplateOutlet, CtSectionBodyComponent, CtSectionBodyRowComponent, CtTableComponent, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCheckbox, MatCellDef, MatCell, MatButton, RouterLink, MatIcon, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, CtSectionFooterComponent, CtSectionFooterRowComponent, CtTablePaginationComponent, DatePipe, TranslateModule]
 })
 export class CompanyBatchListComponent extends UIStateComponent implements OnInit {
-      public readonly authenticationService = inject(AuthenticationService);
       private companyService = inject(CompanyService);
       private activatedRoute = inject(ActivatedRoute);
       public readonly dialog = inject(MatDialog);
@@ -54,9 +53,8 @@ export class CompanyBatchListComponent extends UIStateComponent implements OnIni
 
     downloadSelector: BatchSelector = new BatchSelector();
 
-    constructor(
-) {
-        super(this.authenticationService);
+    constructor(public readonly authenticationService: AuthenticationService = inject(AuthenticationService)) {
+        super(authenticationService);
     }
 
     checkAndToggleRowSeletion(batch: BatchData.BatchExecInfo): void {

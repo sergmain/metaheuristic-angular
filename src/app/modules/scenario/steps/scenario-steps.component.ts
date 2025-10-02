@@ -35,7 +35,6 @@ export class ScenarioStepsComponent extends UIStateComponent implements OnInit {
       private scenarioService = inject(ScenarioService);
       private router = inject(Router);
       private activatedRoute = inject(ActivatedRoute);
-      public readonly authenticationService = inject(AuthenticationService);
     readonly states = LoadStates;
 
     currentStates: Set<LoadStates> = new Set();
@@ -52,9 +51,8 @@ export class ScenarioStepsComponent extends UIStateComponent implements OnInit {
 
     cancelCreationButton = viewChild(MatButton);
 
-    constructor(
-) {
-        super(this.authenticationService);
+    constructor(public readonly authenticationService: AuthenticationService = inject(AuthenticationService)) {
+        super(authenticationService);
     }
 
     ngOnInit(): void {

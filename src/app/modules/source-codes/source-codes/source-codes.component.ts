@@ -39,7 +39,6 @@ export class SourceCodesComponent extends UIStateComponent implements OnInit {
       public readonly dialog = inject(MatDialog);
       private sourceCodesService = inject(SourceCodesService);
       public dispatcherAssetModeService = inject(DispatcherAssetModeService);
-      public readonly authenticationService = inject(AuthenticationService);
     TABINDEX: number = 0;
 
     sourceCodesResult: SourceCodesResult;
@@ -51,9 +50,8 @@ export class SourceCodesComponent extends UIStateComponent implements OnInit {
     matTabGroup = viewChild<MatTabGroup>('matTabGroup');
     sourceCodesArchive = viewChild<SourceCodesArchiveComponent>('sourceCodesArchive');
 
-    constructor(
-) {
-        super(this.authenticationService);
+    constructor(public readonly authenticationService: AuthenticationService = inject(AuthenticationService)) {
+        super(authenticationService);
     }
 
     ngOnInit(): void {

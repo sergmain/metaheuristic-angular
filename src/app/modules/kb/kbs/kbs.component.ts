@@ -35,7 +35,6 @@ import { TranslateModule } from '@ngx-translate/core';
 })
 export class KbsComponent extends UIStateComponent implements OnInit, ConfirmationDialogInterface {
       public readonly dialog = inject(MatDialog);
-      public readonly authenticationService = inject(AuthenticationService);
       private kbService = inject(KbService);
   columnsToDisplay: string[] = ['id', 'code', 'status', 'bts'];
   secondColumnsToDisplay: string[] = ['empty', 'params'];
@@ -43,9 +42,8 @@ export class KbsComponent extends UIStateComponent implements OnInit, Confirmati
   dataSource = new MatTableDataSource<SimpleKb>([]);
   expandParams: boolean = false;
 
-  constructor(
-) {
-    super(this.authenticationService);
+  constructor(public readonly authenticationService: AuthenticationService = inject(AuthenticationService)) {
+    super(authenticationService);
   }
 
   ngOnInit(): void {

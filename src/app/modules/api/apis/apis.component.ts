@@ -34,7 +34,6 @@ import { TranslateModule } from '@ngx-translate/core';
 })
 export class ApisComponent extends UIStateComponent implements OnInit, ConfirmationDialogInterface {
       public readonly dialog = inject(MatDialog);
-      public readonly authenticationService = inject(AuthenticationService);
       private apiService = inject(ApiService);
   columnsToDisplay: string[] = ['id', 'name', 'code', 'bts'];
   secondColumnsToDisplay: string[] = ['empty', 'scheme'];
@@ -42,9 +41,8 @@ export class ApisComponent extends UIStateComponent implements OnInit, Confirmat
   dataSource = new MatTableDataSource<SimpleApi>([]);
   expandParams: boolean = false;
 
-  constructor(
-) {
-    super(this.authenticationService);
+  constructor(public readonly authenticationService: AuthenticationService = inject(AuthenticationService)) {
+    super(authenticationService);
   }
 
   ngOnInit(): void {

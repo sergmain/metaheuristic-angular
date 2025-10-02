@@ -34,8 +34,6 @@ import { TranslateModule } from '@ngx-translate/core';
 })
 export class AuthsComponent extends UIStateComponent implements OnInit, ConfirmationDialogInterface {
       public readonly dialog = inject(MatDialog);
-      public readonly authenticationService = inject(AuthenticationService);
-      private authService = inject(AuthService);
   columnsToDisplay: string[] = ['id', 'code', 'bts'];
   secondColumnsToDisplay: string[] = ['empty', 'params'];
   simpleAuthsResult: SimpleAuthsResult;
@@ -43,8 +41,10 @@ export class AuthsComponent extends UIStateComponent implements OnInit, Confirma
   expandParams: boolean = false;
 
   constructor(
+    public readonly authenticationService: AuthenticationService = inject(AuthenticationService),
+    private authService: AuthService = inject(AuthService)
 ) {
-    super(this.authenticationService);
+    super(authenticationService);
   }
 
   ngOnInit(): void {

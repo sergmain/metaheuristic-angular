@@ -39,7 +39,6 @@ import { CtTablePaginationComponent } from '../../ct/ct-table-pagination/ct-tabl
 })
 export class BatchListComponent extends UIStateComponent implements OnInit, OnDestroy {
       private batchService = inject(BatchService);
-      public readonly authenticationService = inject(AuthenticationService);
       public readonly dialog = inject(MatDialog);
       public readonly translate = inject(TranslateService);
       private batchExexStatusService = inject(BatchExecStatusService);
@@ -49,9 +48,8 @@ export class BatchListComponent extends UIStateComponent implements OnInit, OnDe
     dataSource: MatTableDataSource<BatchData.BatchExecInfo> = new MatTableDataSource([]);
     columnsToDisplay: string[] = ['id', 'createdOn', 'Owner', 'isBatchConsistent', 'sourceCode', 'execState', 'bts'];
 
-    constructor(
-) {
-        super(this.authenticationService);
+    constructor(public readonly authenticationService: AuthenticationService = inject(AuthenticationService)) {
+        super(authenticationService);
     }
 
     ngOnInit(): void {

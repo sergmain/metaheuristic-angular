@@ -43,7 +43,6 @@ export class ChatNewComponent extends UIStateComponent implements OnInit, OnDest
       private translate = inject(TranslateService);
       private settingsService = inject(SettingsService);
       private dialog = inject(MatDialog);
-      public readonly authenticationService = inject(AuthenticationService);
     // for chat-new.component.html
     protected readonly MhUtils = MhUtils;
 
@@ -80,9 +79,8 @@ export class ChatNewComponent extends UIStateComponent implements OnInit, OnDest
     isListLoading: boolean = false;
     isChatLoading: boolean = false;
 
-    constructor(
-) {
-        super(this.authenticationService);
+    constructor(public readonly authenticationService: AuthenticationService = inject(AuthenticationService)) {
+        super(authenticationService);
         this.chatId = this.activatedRoute.snapshot.paramMap.get('chatId');
         this.loadAssetsForChatting();
     }

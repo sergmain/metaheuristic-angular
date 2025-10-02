@@ -34,15 +34,13 @@ export class ScenariosComponent extends UIStateComponent implements OnInit {
       public readonly dialog = inject(MatDialog);
       private scenarioService = inject(ScenarioService);
       private activatedRoute = inject(ActivatedRoute);
-      public readonly authenticationService = inject(AuthenticationService);
     dataSource: MatTableDataSource<SimpleScenario> = new MatTableDataSource<SimpleScenario>([]);
     columnsToDisplay: string[] = ['id', 'createdOn', 'name', 'bts'];
     scenariosResult: ScenariosResult;
     scenarioGroupId: string;
 
-    constructor(
-) {
-        super(this.authenticationService);
+    constructor(public readonly authenticationService: AuthenticationService = inject(AuthenticationService)) {
+        super(authenticationService);
     }
 
     ngOnInit(): void {

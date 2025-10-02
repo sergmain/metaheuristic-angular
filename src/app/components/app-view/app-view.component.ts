@@ -37,7 +37,6 @@ declare function initQuitProcess(): any;
 })
 
 export class AppViewComponent extends UIStateComponent implements OnInit, OnDestroy {
-      public readonly authenticationService = inject(AuthenticationService);
       private domSanitizer = inject(DomSanitizer);
       private settingsService = inject(SettingsService);
       private runtimeService = inject(RuntimeService);
@@ -55,9 +54,8 @@ export class AppViewComponent extends UIStateComponent implements OnInit, OnDest
 
     matSelectLanguage = viewChild<MatSelect>('matSelectLanguage');
 
-    constructor(
-) {
-        super(this.authenticationService);
+    constructor(public readonly authenticationService: AuthenticationService = inject(AuthenticationService)) {
+        super(authenticationService);
     }
 
     ngOnInit(): void {

@@ -49,7 +49,6 @@ export class EvaluationAddComponent extends UIStateComponent implements OnInit, 
       private route = inject(ActivatedRoute);
       private translate = inject(TranslateService);
       private settingsService = inject(SettingsService);
-      public readonly authenticationService = inject(AuthenticationService);
     readonly states = LoadStates;
 
     currentStates: Set<LoadStates> = new Set();
@@ -67,9 +66,8 @@ export class EvaluationAddComponent extends UIStateComponent implements OnInit, 
         code: new FormControl('', [Validators.required, Validators.minLength(3)]),
     });
 
-    constructor(
-) {
-        super(this.authenticationService);
+    constructor(public readonly authenticationService: AuthenticationService = inject(AuthenticationService)) {
+        super(authenticationService);
     }
 
     button = viewChild(MatButton);

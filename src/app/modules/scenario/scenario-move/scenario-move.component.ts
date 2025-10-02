@@ -44,7 +44,6 @@ export class ScenarioMoveComponent extends UIStateComponent implements OnInit, O
       private translate = inject(TranslateService);
       private settingsService = inject(SettingsService);
       private dialog = inject(MatDialog);
-      public readonly authenticationService = inject(AuthenticationService);
     simpleScenarioGroupsAllResult: SimpleScenarioGroupsAllResult;
     scenarioGroupId: string;
     scenarioId: string;
@@ -52,9 +51,8 @@ export class ScenarioMoveComponent extends UIStateComponent implements OnInit, O
 
     form: FormGroup;
 
-    constructor(
-) {
-        super(this.authenticationService);
+    constructor(public readonly authenticationService: AuthenticationService = inject(AuthenticationService)) {
+        super(authenticationService);
     }
 
     ngOnInit(): void {

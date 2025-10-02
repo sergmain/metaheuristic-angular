@@ -32,16 +32,14 @@ import { CtTablePaginationComponent } from '../../ct/ct-table-pagination/ct-tabl
 export class ChatsNewComponent extends UIStateComponent implements OnInit {
       public readonly dialog = inject(MatDialog);
       private chatService = inject(ChatService);
-      public readonly authenticationService = inject(AuthenticationService);
       private router = inject(Router);
       private activatedRoute = inject(ActivatedRoute);
     dataSource: MatTableDataSource<SimpleChat> = new MatTableDataSource<SimpleChat>([]);
     columnsToDisplay: string[] = ['id', 'createdOn', 'name', 'bts'];
     chats: ChatsResult;
 
-    constructor(
-) {
-        super(this.authenticationService)
+    constructor(public readonly authenticationService: AuthenticationService = inject(AuthenticationService)) {
+        super(authenticationService)
     }
 
     ngOnInit(): void {

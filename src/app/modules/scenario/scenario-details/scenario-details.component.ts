@@ -116,7 +116,6 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
       private translate = inject(TranslateService);
       private settingsService = inject(SettingsService);
       private dialog = inject(MatDialog);
-      public readonly authenticationService = inject(AuthenticationService);
     // for scenario-details.component.html
     protected readonly MhUtils = MhUtils;
 
@@ -225,9 +224,8 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
         this.unsubscribeSubscriptions();
     }
 
-    constructor(
-) {
-        super(this.authenticationService);
+    constructor(public readonly authenticationService: AuthenticationService = inject(AuthenticationService)) {
+        super(authenticationService);
 
         this.treeFlattener = new MatTreeFlattener(this.transformer, this._getLevel, this._isExpandable, this._getChildren);
         this.treeControl = new FlatTreeControl<StepFlatNode>(this._getLevel, this._isExpandable);

@@ -23,7 +23,6 @@ const electronStatusUrl: string = 'http://localhost:64968/status';
 export class AppComponent extends UIStateComponent implements OnInit, OnDestroy {
       private translate = inject(TranslateService);
       private batchExexStatusService = inject(BatchExecStatusService);
-      public readonly authenticationService = inject(AuthenticationService);
       private settingsService = inject(SettingsService);
       private runtimeService = inject(RuntimeService);
       private _http = inject(HttpClient);
@@ -31,9 +30,8 @@ export class AppComponent extends UIStateComponent implements OnInit, OnDestroy 
     private busy: boolean = false;
     private busyStatus: boolean = false;
 
-    constructor(
-) {
-        super(this.authenticationService);
+    constructor(public readonly authenticationService: AuthenticationService = inject(AuthenticationService)) {
+        super(authenticationService);
 
         const subscribe: Subscription = interval(1000).subscribe(() => {
             // console.log("Start querying MH server, this.busy", this.busy)

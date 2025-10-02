@@ -32,14 +32,12 @@ import { CtTablePaginationComponent } from '../../ct/ct-table-pagination/ct-tabl
 export class AccountsComponent extends UIStateComponent implements OnInit {
       private accountsService = inject(AccountsService);
       public dispatcherAssetModeService = inject(DispatcherAssetModeService);
-      public readonly authenticationService = inject(AuthenticationService);
     dataSource = new MatTableDataSource<SimpleAccount>([]);
     columnsToDisplay = ['id', 'isEnabled', 'login', 'publicName', 'createdOn', 'roles', 'bts'];
     accountsResult: AccountsResult;
 
-    constructor(
-) {
-        super(this.authenticationService)
+    constructor(public readonly authenticationService: AuthenticationService = inject(AuthenticationService)) {
+        super(authenticationService)
     }
 
     ngOnInit() {

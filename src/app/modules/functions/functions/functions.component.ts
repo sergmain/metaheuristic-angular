@@ -37,16 +37,14 @@ export class FunctionsComponent extends UIStateComponent implements OnInit {
       private functionService = inject(FunctionsService);
       public dispatcherAssetModeService = inject(DispatcherAssetModeService);
       public readonly dialog = inject(MatDialog);
-      public readonly authenticationService = inject(AuthenticationService);
     functionsResult: FunctionsResult;
     dataSource = new MatTableDataSource<FunctionEntity>([]);
     columnsToDisplay: string[] = ['code', 'type', 'params', 'bts'];
     deletedRows: FunctionEntity[] = [];
     showParams: boolean = false;
 
-    constructor(
-) {
-        super(this.authenticationService);
+    constructor(public readonly authenticationService: AuthenticationService = inject(AuthenticationService)) {
+        super(authenticationService);
     }
 
     ngOnInit() {

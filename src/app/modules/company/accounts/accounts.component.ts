@@ -32,15 +32,13 @@ export class AccountsComponent extends UIStateComponent implements OnInit {
       private companyService = inject(CompanyService);
       private activatedRoute = inject(ActivatedRoute);
       public dispatcherAssetModeService = inject(DispatcherAssetModeService);
-      public readonly authenticationService = inject(AuthenticationService);
     dataSource: MatTableDataSource<SimpleAccount> = new MatTableDataSource<SimpleAccount>([]);
     columnsToDisplay: string[] = ['id', 'isEnabled', 'login', 'publicName', 'role', 'createdOn', 'bts'];
     accountsResult: AccountsResult;
     companyUniqueId: string;
 
-    constructor(
-) {
-        super(this.authenticationService);
+    constructor(public readonly authenticationService: AuthenticationService = inject(AuthenticationService)) {
+        super(authenticationService);
     }
 
     ngOnInit(): void {

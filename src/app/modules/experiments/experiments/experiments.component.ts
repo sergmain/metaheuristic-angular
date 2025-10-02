@@ -33,15 +33,13 @@ import { MatIcon } from '@angular/material/icon';
 export class ExperimentsComponent extends UIStateComponent implements OnInit {
       public readonly dialog = inject(MatDialog);
       private experimentsService = inject(ExperimentsService);
-      public readonly authenticationService = inject(AuthenticationService);
     ExecContextState: typeof ExecContextState = ExecContextState;
     experimentsResult: ExperimentApiData.ExperimentsResult;
     dataSource: MatTableDataSource<ExperimentApiData.ExperimentResult> = new MatTableDataSource<ExperimentApiData.ExperimentResult>([]);
     columnsToDisplay: string[] = ['id', 'name', 'createdOn', 'code', 'description', 'execState', 'bts'];
 
-    constructor(
-) {
-        super(this.authenticationService);
+    constructor(public readonly authenticationService: AuthenticationService = inject(AuthenticationService)) {
+        super(authenticationService);
     }
 
     ngOnInit(): void {

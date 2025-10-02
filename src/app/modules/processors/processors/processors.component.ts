@@ -39,7 +39,6 @@ import { CtTablePaginationComponent } from '../../ct/ct-table-pagination/ct-tabl
 export class ProcessorsComponent extends UIStateComponent implements OnInit, ConfirmationDialogInterface {
       public readonly dialog = inject(MatDialog);
       private processorsService = inject(ProcessorsService);
-      public readonly authenticationService = inject(AuthenticationService);
     processorResult: ProcessorsResult;
     showStatusOfProcessor: boolean = false;
     dataSource: MatTableDataSource<ProcessorStatus> = new MatTableDataSource<ProcessorStatus>([]);
@@ -47,9 +46,8 @@ export class ProcessorsComponent extends UIStateComponent implements OnInit, Con
     columnsToDisplay: string[] = ['check', 'id', 'ip', 'description', 'reason', 'cores', 'bts'];
     secondColumnsToDisplay: string[] = ['empty', 'env'];
 
-    constructor(
-) {
-        super(this.authenticationService);
+    constructor(public readonly authenticationService: AuthenticationService = inject(AuthenticationService)) {
+        super(authenticationService);
     }
 
     ngOnInit(): void {

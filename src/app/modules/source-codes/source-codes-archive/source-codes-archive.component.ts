@@ -33,15 +33,13 @@ import { CtTablePaginationComponent } from '../../ct/ct-table-pagination/ct-tabl
 export class SourceCodesArchiveComponent extends UIStateComponent implements OnInit {
       public readonly dialog = inject(MatDialog);
       private sourceCodesService = inject(SourceCodesService);
-      public readonly authenticationService = inject(AuthenticationService);
     sourceCodesResult: SourceCodesResult;
     dataSource = new MatTableDataSource<SourceCode>([]);
     columnsToDisplay = ['id', 'uid', 'createdOn', 'valid', 'locked', 'bts'];
     deletedRows: SourceCode[] = [];
 
-    constructor(
-) {
-        super(this.authenticationService);
+    constructor(public readonly authenticationService: AuthenticationService = inject(AuthenticationService)) {
+        super(authenticationService);
     }
 
     ngOnInit(): void {

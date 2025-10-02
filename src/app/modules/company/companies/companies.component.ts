@@ -28,16 +28,14 @@ import { RouterLink } from '@angular/router';
     imports: [CtSectionComponent, CtSectionHeaderComponent, CtSectionHeaderRowComponent, CtHeadingComponent, NgTemplateOutlet, CtAlertComponent, CtSectionBodyComponent, CtSectionBodyRowComponent, CtSectionFooterComponent, CtSectionFooterRowComponent, CtTablePaginationComponent, CtTableComponent, MatTable, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatButton, RouterLink]
 })
 export class CompaniesComponent extends UIStateComponent implements OnInit {
-      public readonly authenticationService = inject(AuthenticationService);
       private companyService = inject(CompanyService);
       public dispatcherAssetModeService = inject(DispatcherAssetModeService);
     columnsToDisplay: string[] = ['uniqueId', 'name', 'bts'];
     simpleCompaniesResult: SimpleCompaniesResult;
     dataSource: MatTableDataSource<SimpleCompany> = new MatTableDataSource([]);
 
-    constructor(
-) {
-        super(this.authenticationService);
+    constructor(public readonly authenticationService: AuthenticationService = inject(AuthenticationService)) {
+        super(authenticationService);
     }
 
     ngOnInit(): void {

@@ -44,7 +44,6 @@ export class BatchAddComponent extends UIStateComponent implements OnInit, OnDes
       private route = inject(ActivatedRoute);
       private translate = inject(TranslateService);
       private settingsService = inject(SettingsService);
-      public readonly authenticationService = inject(AuthenticationService);
     currentStates: Set<LoadStates> = new Set();
     response: SourceCodeUidsForCompany;
     uploadResponse: OperationStatusRest;
@@ -54,9 +53,8 @@ export class BatchAddComponent extends UIStateComponent implements OnInit, OnDes
     listOfSourceCodes: SourceCodeUid[] = [];
     fileUpload = viewChild<CtFileUploadComponent>('fileUpload');
 
-    constructor(
-) {
-        super(this.authenticationService);
+    constructor(public readonly authenticationService: AuthenticationService = inject(AuthenticationService)) {
+        super(authenticationService);
     }
 
     ngOnInit(): void {

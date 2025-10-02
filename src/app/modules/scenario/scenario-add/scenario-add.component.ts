@@ -36,7 +36,6 @@ export class ScenarioAddComponent extends UIStateComponent implements OnInit, On
       private activatedRoute = inject(ActivatedRoute);
       private translate = inject(TranslateService);
       private settingsService = inject(SettingsService);
-      public readonly authenticationService = inject(AuthenticationService);
     readonly states = LoadStates;
 
     currentStates: Set<LoadStates> = new Set();
@@ -47,9 +46,8 @@ export class ScenarioAddComponent extends UIStateComponent implements OnInit, On
         description: new FormControl('', [Validators.required, Validators.minLength(5)]),
     });
 
-    constructor(
-) {
-        super(this.authenticationService);
+    constructor(public readonly authenticationService: AuthenticationService = inject(AuthenticationService)) {
+        super(authenticationService);
     }
 
     button = viewChild(MatButton);

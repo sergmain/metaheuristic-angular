@@ -36,7 +36,6 @@ import { TranslateModule } from '@ngx-translate/core';
 })
 export class SettingsApiKeysIndexComponent extends UIStateComponent implements OnInit {
       private readonly settingsService = inject(SettingsService);
-      public readonly authenticationService = inject(AuthenticationService);
       private readonly router = inject(Router);
       private readonly activatedRoute = inject(ActivatedRoute);
     protected readonly MhUtils = MhUtils;
@@ -57,9 +56,8 @@ export class SettingsApiKeysIndexComponent extends UIStateComponent implements O
         value: new FormControl('', [Validators.required, Validators.minLength(3)]),
     });
 
-    constructor(
-) {
-        super(this.authenticationService);
+    constructor(public readonly authenticationService: AuthenticationService = inject(AuthenticationService)) {
+        super(authenticationService);
     }
 
     ngOnInit() {

@@ -28,15 +28,13 @@ import { CtTablePaginationComponent } from '../../ct/ct-table-pagination/ct-tabl
 export class ErrorsComponent extends UIStateComponent implements OnInit {
       private sessionService = inject(SessionService);
       private activatedRoute = inject(ActivatedRoute);
-      public readonly authenticationService = inject(AuthenticationService);
     dataSource: MatTableDataSource<SimpleError> = new MatTableDataSource<SimpleError>([]);
     columnsToDisplay: string[] = ['id', 'p', 'a'];
     errorsResult: ErrorsResult;
     sessionId: string;
 
-    constructor(
-) {
-        super(this.authenticationService);
+    constructor(public readonly authenticationService: AuthenticationService = inject(AuthenticationService)) {
+        super(authenticationService);
     }
 
     ngOnInit(): void {

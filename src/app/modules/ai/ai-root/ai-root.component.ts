@@ -20,13 +20,11 @@ import { TranslateModule } from '@ngx-translate/core';
 export class AiRootComponent extends UIStateComponent implements OnInit, OnDestroy {
       private router = inject(Router);
       private settingsService = inject(SettingsService);
-      public readonly authenticationService = inject(AuthenticationService);
     settings: Settings;
     sidenavOpened: boolean;
 
-    constructor(
-) {
-        super(this.authenticationService);
+    constructor(public readonly authenticationService: AuthenticationService = inject(AuthenticationService)) {
+        super(authenticationService);
         this.router.routeReuseStrategy.shouldReuseRoute = () => false;
     }
 

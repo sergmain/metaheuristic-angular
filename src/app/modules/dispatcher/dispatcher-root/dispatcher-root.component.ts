@@ -20,15 +20,13 @@ import { TranslateModule } from '@ngx-translate/core';
     imports: [MatSidenavContainer, MatSidenav, MatButton, RouterLinkActive, RouterLink, MatSidenavContent, CtContentComponent, RouterOutlet, CtBackButtonComponent, CopyRightComponent, TranslateModule]
 })
 export class DispatcherRootComponent extends UIStateComponent implements OnInit, OnDestroy {
-      public authenticationService = inject(AuthenticationService);
       private router = inject(Router);
       private settingsService = inject(SettingsService);
     settings: Settings;
     sidenavOpened: boolean;
 
-    constructor(
-) {
-        super(this.authenticationService);
+    constructor(public authenticationService: AuthenticationService = inject(AuthenticationService)) {
+        super(authenticationService);
         // повторным кликом перезагружаем страницу
         this.router.routeReuseStrategy.shouldReuseRoute = () => false;
     }

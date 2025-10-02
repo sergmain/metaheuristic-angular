@@ -36,7 +36,6 @@ export class ExperimentEditComponent extends UIStateComponent implements OnInit 
       private experimentsService = inject(ExperimentsService);
       private router = inject(Router);
       private activatedRoute = inject(ActivatedRoute);
-      public readonly authenticationService = inject(AuthenticationService);
     experimentsEditResult: ExperimentApiData.ExperimentsEditResult;
     operationStatusRest: OperationStatusRest;
 
@@ -47,9 +46,8 @@ export class ExperimentEditComponent extends UIStateComponent implements OnInit 
         id: null
     };
 
-    constructor(
-) {
-        super(this.authenticationService);
+    constructor(public readonly authenticationService: AuthenticationService = inject(AuthenticationService)) {
+        super(authenticationService);
     }
 
     ngOnInit(): void {

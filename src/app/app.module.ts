@@ -19,7 +19,6 @@ import { LoremIndexComponent } from './components/lorem-index/lorem-index.compon
 import { NavPilotComponent } from './components/nav-pilot/nav-pilot.component';
 import { PilotComponent } from './components/pilot/pilot.component';
 import { JwtInterceptor } from './jwt.interceptor';
-import { SimpleNotificationsModule } from './modules/angular2-notifications/simple-notifications.module';
 
 import { NotificationsInterceptor } from './notifications.interceptor';
 

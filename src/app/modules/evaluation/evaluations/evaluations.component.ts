@@ -34,15 +34,13 @@ import { TranslateModule } from '@ngx-translate/core';
 })
 export class EvaluationsComponent extends UIStateComponent implements OnInit {
       public readonly dialog = inject(MatDialog);
-      public readonly authenticationService = inject(AuthenticationService);
       private evaluationService = inject(EvaluationService);
   columnsToDisplay: string[] = ['evaluationId', 'code', 'createdOn', 'bts'];
   simpleEvaluationsResult: SimpleEvaluationsResult;
   dataSource = new MatTableDataSource<SimpleEvaluation>([]);
 
-  constructor(
-) {
-    super(this.authenticationService);
+  constructor(public readonly authenticationService: AuthenticationService = inject(AuthenticationService)) {
+    super(authenticationService);
   }
 
   ngOnInit(): void {

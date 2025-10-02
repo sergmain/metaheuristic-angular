@@ -32,7 +32,6 @@ import { TranslateModule } from '@ngx-translate/core';
 })
 export class SessionsComponent extends UIStateComponent implements OnInit {
       public readonly dialog = inject(MatDialog);
-      public readonly authenticationService = inject(AuthenticationService);
       private sessionService = inject(SessionService);
 //   columnsToDisplay: string[] = ['sessionId', 'startedOn', 'finishedOn',
 //     'sessionStatus', 'safe', 'normalPercent', 'failPercent', 'errorPercent', 'providerCode', 'modelInfo'];
@@ -41,9 +40,8 @@ export class SessionsComponent extends UIStateComponent implements OnInit {
   simpleSessionsResult: SimpleSessionsResult;
   dataSource = new MatTableDataSource<SimpleSession>([]);
 
-  constructor(
-) {
-    super(this.authenticationService);
+  constructor(public readonly authenticationService: AuthenticationService = inject(AuthenticationService)) {
+    super(authenticationService);
   }
 
   ngOnInit(): void {
