@@ -62,8 +62,16 @@
     "npm install yaml": "npm install yaml",
     "ng g @angular/core:control-flow": "ng g @angular/core:control-flow",
     "npm install ngxtension": "npm install ngxtension",
+    "ng add ngxtension": "ng add ngxtension",
     "ng update electron": "ng update electron@latest",
-    "ng update electron-builder": "ng update electron-builder@latest"
+    "ng update electron-builder": "ng update electron-builder@latest",
+    "ng generate ngxtension-plugin:init": "ng generate ngxtension-plugin:init",
+    "ng g ngxtension:convert-signal-inputs": "ng g ngxtension:convert-signal-inputs",
+    "ng g ngxtension:convert-signal-outputs": "ng g ngxtension:convert-signal-outputs",
+    "npm list ngxtension": "npm list ngxtension",
+    "npm list @ngxtension/platform": "npm list @ngxtension/platform",
+    "cat package.json | grep -i ngxtension": "cat package.json | grep -i ngxtension",
+    "ng g --help | grep ngxtension": "ng g --help"
   },
   "engines": {
     "node": ">=18.18.2",
