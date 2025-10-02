@@ -18,6 +18,7 @@ import { provideToastr } from 'ngx-toastr';
 import {AppComponent} from './app/app.component';
 import { Observable, map } from 'rxjs';
 import { parse } from 'yaml';
+import { provideZonelessChangeDetection } from '@angular/core';
 
 class TranslateYamlHttpLoader implements TranslateLoader {
     constructor(
@@ -46,6 +47,7 @@ if (environment.production) {
 
 bootstrapApplication(AppComponent, {
     providers: [
+        provideZonelessChangeDetection(),
         importProvidersFrom(
             CommonModule,
             BrowserModule,
