@@ -62,7 +62,8 @@
     "npm install yaml": "npm install yaml",
     "ng g @angular/core:control-flow": "ng g @angular/core:control-flow",
     "npm install ngxtension": "npm install ngxtension",
-    "ng update electron": "ng update electron@latest"
+    "ng update electron": "ng update electron@latest",
+    "ng update electron-builder": "ng update electron-builder@latest"
   },
   "engines": {
     "node": ">=18.18.2",
@@ -111,7 +112,7 @@
     "@typescript-eslint/eslint-plugin": "^8.44.0",
     "@typescript-eslint/parser": "^8.44.0",
     "@vendure/ngx-translate-extract": "^10.1.0",
-    "electron": "^28.2.2",
+    "electron": "^38.2.0",
     "electron-builder": "^26.0.20",
     "eslint": "^9.35.0",
     "ts-node": "10.9.2"
