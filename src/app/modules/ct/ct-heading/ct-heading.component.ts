@@ -8,9 +8,6 @@ import { Component, OnInit } from '@angular/core';
     styleUrls: ['./ct-heading.component.scss']
 })
 export class CtHeadingComponent implements OnInit {
-
-  constructor() { }
-
   ngOnInit() {
   }
 

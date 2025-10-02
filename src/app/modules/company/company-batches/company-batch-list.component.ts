@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { CompanyService } from '@app/services/company/company.service';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { BatchesResult } from '@app/services/batch/BatchesResult';
@@ -41,6 +41,11 @@ import { CtTablePaginationComponent } from '../../ct/ct-table-pagination/ct-tabl
     imports: [CtSectionComponent, CtSectionHeaderComponent, CtSectionHeaderRowComponent, CtHeadingComponent, NgTemplateOutlet, CtSectionBodyComponent, CtSectionBodyRowComponent, CtTableComponent, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCheckbox, MatCellDef, MatCell, MatButton, RouterLink, MatIcon, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, CtSectionFooterComponent, CtSectionFooterRowComponent, CtTablePaginationComponent, DatePipe, TranslateModule]
 })
 export class CompanyBatchListComponent extends UIStateComponent implements OnInit {
+      public readonly authenticationService = inject(AuthenticationService);
+      private companyService = inject(CompanyService);
+      private activatedRoute = inject(ActivatedRoute);
+      public readonly dialog = inject(MatDialog);
+      public readonly translate = inject(TranslateService);
     companyUniqueId: string;
     batchesResult: BatchesResult;
     batches: BatchData.BatchExecInfo[];
@@ -50,13 +55,8 @@ export class CompanyBatchListComponent extends UIStateComponent implements OnIni
     downloadSelector: BatchSelector = new BatchSelector();
 
     constructor(
-        readonly authenticationService: AuthenticationService,
-        private companyService: CompanyService,
-        private activatedRoute: ActivatedRoute,
-        readonly dialog: MatDialog,
-        readonly translate: TranslateService,
-    ) {
-        super(authenticationService);
+) {
+        super(this.authenticationService);
     }
 
     checkAndToggleRowSeletion(batch: BatchData.BatchExecInfo): void {

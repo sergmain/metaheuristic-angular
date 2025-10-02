@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { MatTableDataSource, MatTable, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell } from '@angular/material/table';
 import { UIStateComponent } from '@app/models/UIStateComponent';
 import { AuthenticationService } from '@app/services/authentication';
@@ -28,16 +28,16 @@ import { RouterLink } from '@angular/router';
     imports: [CtSectionComponent, CtSectionHeaderComponent, CtSectionHeaderRowComponent, CtHeadingComponent, NgTemplateOutlet, CtAlertComponent, CtSectionBodyComponent, CtSectionBodyRowComponent, CtSectionFooterComponent, CtSectionFooterRowComponent, CtTablePaginationComponent, CtTableComponent, MatTable, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatButton, RouterLink]
 })
 export class CompaniesComponent extends UIStateComponent implements OnInit {
+      public readonly authenticationService = inject(AuthenticationService);
+      private companyService = inject(CompanyService);
+      public dispatcherAssetModeService = inject(DispatcherAssetModeService);
     columnsToDisplay: string[] = ['uniqueId', 'name', 'bts'];
     simpleCompaniesResult: SimpleCompaniesResult;
     dataSource: MatTableDataSource<SimpleCompany> = new MatTableDataSource([]);
 
     constructor(
-        readonly authenticationService: AuthenticationService,
-        private companyService: CompanyService,
-        public dispatcherAssetModeService: DispatcherAssetModeService
-    ) {
-        super(authenticationService);
+) {
+        super(this.authenticationService);
     }
 
     ngOnInit(): void {

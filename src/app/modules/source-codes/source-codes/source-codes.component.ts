@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, viewChild, inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow } from '@angular/material/table';
 import { MatTabGroup, MatTab } from '@angular/material/tabs';
@@ -36,7 +36,10 @@ import { MatIcon } from '@angular/material/icon';
     imports: [MatTabGroup, MatTab, CtSectionComponent, CtSectionHeaderComponent, CtSectionHeaderRowComponent, CtHeadingComponent, NgTemplateOutlet, CtAlertComponent, CtSectionBodyComponent, CtSectionBodyRowComponent, CtSectionFooterComponent, CtSectionFooterRowComponent, CtTablePaginationComponent, SourceCodesArchiveComponent, CtTableComponent, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatButton, RouterLink, MatIcon, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, DatePipe]
 })
 export class SourceCodesComponent extends UIStateComponent implements OnInit {
-
+      public readonly dialog = inject(MatDialog);
+      private sourceCodesService = inject(SourceCodesService);
+      public dispatcherAssetModeService = inject(DispatcherAssetModeService);
+      public readonly authenticationService = inject(AuthenticationService);
     TABINDEX: number = 0;
 
     sourceCodesResult: SourceCodesResult;
@@ -45,16 +48,12 @@ export class SourceCodesComponent extends UIStateComponent implements OnInit {
     deletedSourceCodes: SourceCode[] = [];
     archivedSourceCodes: SourceCode[] = [];
 
-    @ViewChild('matTabGroup', { static: true }) matTabGroup: MatTabGroup;
-    @ViewChild('sourceCodesArchive', { static: true }) sourceCodesArchive: SourceCodesArchiveComponent;
+    matTabGroup = viewChild<MatTabGroup>('matTabGroup');
+    sourceCodesArchive = viewChild<SourceCodesArchiveComponent>('sourceCodesArchive');
 
     constructor(
-        readonly dialog: MatDialog,
-        private sourceCodesService: SourceCodesService,
-        public dispatcherAssetModeService: DispatcherAssetModeService,
-        readonly authenticationService: AuthenticationService
-    ) {
-        super(authenticationService);
+) {
+        super(this.authenticationService);
     }
 
     ngOnInit(): void {
@@ -103,8 +102,8 @@ export class SourceCodesComponent extends UIStateComponent implements OnInit {
     }
 
     tabChange(): void {
-        if (this.matTabGroup.selectedIndex === 1) {
-            this.sourceCodesArchive.updateTable(0);
+        if (this.matTabGroup().selectedIndex === 1) {
+            this.sourceCodesArchive().updateTable(0);
         }
     }
 
@@ -119,5 +118,4 @@ export class SourceCodesComponent extends UIStateComponent implements OnInit {
     getType(uid: string): SourceCodeType {
         return this.sourceCodesService.getSourceCodeType(uid, this.sourceCodesResult);
     }
-
 }

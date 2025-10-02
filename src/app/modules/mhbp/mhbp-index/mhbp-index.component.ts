@@ -8,9 +8,6 @@ import { Component, OnInit } from '@angular/core';
     styleUrls: ['./mhbp-index.component.sass']
 })
 export class MhbpIndexComponent implements OnInit {
-
-  constructor() { }
-
   ngOnInit(): void {
   }
 

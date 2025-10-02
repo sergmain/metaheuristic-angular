@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { MatTableDataSource, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow } from '@angular/material/table';
 import { UIStateComponent } from '@app/models/UIStateComponent';
 import { AuthenticationService } from '@app/services/authentication';
@@ -33,16 +33,16 @@ import { TranslateModule } from '@ngx-translate/core';
     imports: [CtSectionComponent, CtSectionHeaderComponent, CtSectionHeaderRowComponent, CtHeadingComponent, MatButton, RouterLink, CtSectionBodyComponent, CtSectionBodyRowComponent, NgTemplateOutlet, CtSectionFooterComponent, CtSectionFooterRowComponent, CtTablePaginationComponent, CtTableComponent, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatTooltip, MatIcon, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, DatePipe, TranslateModule]
 })
 export class EvaluationsComponent extends UIStateComponent implements OnInit {
+      public readonly dialog = inject(MatDialog);
+      public readonly authenticationService = inject(AuthenticationService);
+      private evaluationService = inject(EvaluationService);
   columnsToDisplay: string[] = ['evaluationId', 'code', 'createdOn', 'bts'];
   simpleEvaluationsResult: SimpleEvaluationsResult;
   dataSource = new MatTableDataSource<SimpleEvaluation>([]);
 
   constructor(
-      readonly dialog: MatDialog,
-      readonly authenticationService: AuthenticationService,
-      private evaluationService: EvaluationService,
-  ) {
-    super(authenticationService);
+) {
+    super(this.authenticationService);
   }
 
   ngOnInit(): void {

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { MatTableDataSource, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
 import { UIStateComponent } from '@app/models/UIStateComponent';
@@ -26,17 +26,17 @@ import { CtTablePaginationComponent } from '../../ct/ct-table-pagination/ct-tabl
     imports: [CtSectionComponent, CtSectionHeaderComponent, CtSectionHeaderRowComponent, CtHeadingComponent, CtSectionBodyComponent, CtSectionBodyRowComponent, CtTableComponent, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, CtSectionFooterComponent, CtSectionFooterRowComponent, CtTablePaginationComponent]
 })
 export class ErrorsComponent extends UIStateComponent implements OnInit {
+      private sessionService = inject(SessionService);
+      private activatedRoute = inject(ActivatedRoute);
+      public readonly authenticationService = inject(AuthenticationService);
     dataSource: MatTableDataSource<SimpleError> = new MatTableDataSource<SimpleError>([]);
     columnsToDisplay: string[] = ['id', 'p', 'a'];
     errorsResult: ErrorsResult;
     sessionId: string;
 
     constructor(
-        private sessionService: SessionService,
-        private activatedRoute: ActivatedRoute,
-        readonly authenticationService: AuthenticationService
-    ) {
-        super(authenticationService);
+) {
+        super(this.authenticationService);
     }
 
     ngOnInit(): void {

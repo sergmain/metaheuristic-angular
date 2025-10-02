@@ -1,5 +1,5 @@
 import {HttpClient} from '@angular/common/http';
-import {Injectable} from '@angular/core';
+import {Injectable, inject } from '@angular/core';
 import {environment} from '@src/environments/environment';
 import {Observable} from 'rxjs';
 import {OperationStatusRest} from '@app/models/OperationStatusRest';
@@ -10,8 +10,7 @@ const url = (s: string): string => `${environment.baseUrl}dispatcher/chat/${s}`;
 
 @Injectable({ providedIn: 'root' })
 export class ChatService {
-    constructor(private http: HttpClient) {}
-
+      private http = inject(HttpClient);
     chats = (page: string): Observable<ChatsResult> =>
         this.http.get<ChatsResult>(url(`chats`), { params: { page } })
 

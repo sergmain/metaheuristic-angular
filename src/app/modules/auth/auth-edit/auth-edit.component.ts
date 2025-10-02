@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { Location } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LoadStates } from '@app/enums/LoadStates';
@@ -29,6 +29,10 @@ import { TranslateModule } from '@ngx-translate/core';
 })
 
 export class AuthEditComponent implements OnInit {
+      private route = inject(ActivatedRoute);
+      private router = inject(Router);
+      private authService = inject(AuthService);
+      private location = inject(Location);
     readonly states = LoadStates;
     currentStates = new Set();
     response;
@@ -38,13 +42,6 @@ export class AuthEditComponent implements OnInit {
     form = new FormGroup({
         params: new FormControl('', [Validators.required, Validators.minLength(5)]),
     });
-
-    constructor(
-        private route: ActivatedRoute,
-        private router: Router,
-        private authService: AuthService,
-        private location: Location
-    ) { }
 
     ngOnInit() {
         this.authId = this.route.snapshot.paramMap.get('authId');

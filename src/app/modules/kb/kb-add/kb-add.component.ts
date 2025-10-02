@@ -1,4 +1,4 @@
-import {Component, ViewChild} from '@angular/core';
+import {Component, viewChild, inject } from '@angular/core';
 import { FormControl, FormGroup, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { LoadStates } from '@app/enums/LoadStates';
@@ -29,6 +29,9 @@ import { TranslateModule } from '@ngx-translate/core';
 })
 
 export class KbAddComponent {
+      private kbService = inject(KbService);
+      private router = inject(Router);
+      private activatedRoute = inject(ActivatedRoute);
     readonly states = LoadStates;
     currentStates = new Set();
     response: DefaultResponse;
@@ -36,17 +39,10 @@ export class KbAddComponent {
         code: new FormControl('', [Validators.required, Validators.minLength(3)]),
         params: new FormControl('', [Validators.required, Validators.minLength(3)])
     });
-
-    constructor(
-        private kbService: KbService,
-        private router: Router,
-        private activatedRoute: ActivatedRoute
-    ) { }
-
-    @ViewChild(MatButton) button: MatButton;
+    button = viewChild(MatButton);
 
     create(): void {
-        this.button.disabled = true;
+        this.button().disabled = true;
         this.currentStates.add(this.states.wait);
         const subscribe: Subscription = this.kbService
             .addFormCommit(

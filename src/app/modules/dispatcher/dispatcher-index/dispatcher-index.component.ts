@@ -12,9 +12,6 @@ import { CtEnvMsgOuterComponent } from '../../ct/ct-env-msg-outer/ct-env-msg-out
     imports: [CtSectionComponent, CtSectionBodyComponent, CtSectionBodyRowComponent, CtEnvMsgOuterComponent]
 })
 export class DispatcherIndexComponent implements OnInit {
-
-  constructor() { }
-
   ngOnInit() {
   }
 

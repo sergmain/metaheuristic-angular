@@ -8,9 +8,6 @@ import { Component, OnInit } from '@angular/core';
     styleUrls: ['./ct-hint.component.scss']
 })
 export class CtHintComponent implements OnInit {
-
-  constructor() { }
-
   ngOnInit() {
   }
 

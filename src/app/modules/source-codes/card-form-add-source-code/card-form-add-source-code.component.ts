@@ -1,4 +1,4 @@
-import { Component, Output, EventEmitter, ViewChild } from '@angular/core';
+import { Component, output, viewChild, inject } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SourceCodesService } from '@app/services/source-codes/source-codes.service';
 import { SourceCodeResult } from '@app/services/source-codes/SourceCodeResult';
@@ -22,9 +22,10 @@ import { CtSectionFooterRowComponent } from '../../ct/ct-section-footer-row/ct-s
     imports: [CtSectionComponent, CtSectionHeaderComponent, CtSectionHeaderRowComponent, CtHeadingComponent, CtSectionBodyComponent, FormsModule, ReactiveFormsModule, CtSectionBodyRowComponent, MatFormField, MatLabel, MatInput, CdkTextareaAutosize, MatHint, CtSectionFooterComponent, CtSectionFooterRowComponent, MatButton]
 })
 export class CardFormAddSourceCodeComponent {
-    @ViewChild(MatButton) button: MatButton;
-    @Output() responseChange: EventEmitter<SourceCodeResult> = new EventEmitter<SourceCodeResult>();
-    @Output() abort: EventEmitter<void> = new EventEmitter<void>();
+      private sourceCodesService = inject(SourceCodesService);
+    button = viewChild(MatButton);
+    responseChange = output<SourceCodeResult>();
+    abort = output<void>();
 
 
     form: FormGroup = new FormGroup({
@@ -34,20 +35,16 @@ export class CardFormAddSourceCodeComponent {
         ]),
     });
 
-    constructor(
-        private sourceCodesService: SourceCodesService
-    ) { }
-
     cancel(): void {
         this.abort.emit();
     }
 
     create(): void {
-        this.button.disabled = true;
+        this.button().disabled = true;
         this.sourceCodesService
             .addFormCommit(this.form.value.source)
             .subscribe(sourceCodeResult => {
-                this.button.disabled = false;
+                this.button().disabled = false;
                 this.responseChange.emit(sourceCodeResult);
             });
     }

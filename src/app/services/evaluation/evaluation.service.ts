@@ -1,5 +1,5 @@
 import {HttpClient} from '@angular/common/http';
-import {Injectable} from '@angular/core';
+import {Injectable, inject } from '@angular/core';
 import {environment} from '@src/environments/environment';
 import {Observable} from 'rxjs';
 import {SimpleEvaluationsResult} from './SimpleEvaluationsResult';
@@ -12,9 +12,7 @@ const url = (s: string): string => `${environment.baseUrl}dispatcher/evaluation/
 
 @Injectable({ providedIn: 'root' })
 export class EvaluationService {
-    constructor(
-        private http: HttpClient
-    ) { }
+      private http = inject(HttpClient);
 
     getEvaluations(page: string): Observable<SimpleEvaluationsResult> {
         let newUrl = url('evaluations')

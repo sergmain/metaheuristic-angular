@@ -1,5 +1,5 @@
 import {HttpClient} from '@angular/common/http';
-import {Injectable} from '@angular/core';
+import {Injectable, inject } from '@angular/core';
 import {environment} from '@src/environments/environment';
 import {Observable} from 'rxjs';
 import {SimpleSessionsResult} from './SimpleSessionsResult';
@@ -12,9 +12,7 @@ const url = (s: string): string => `${environment.baseUrl}dispatcher/session/${s
 
 @Injectable({ providedIn: 'root' })
 export class SessionService {
-    constructor(
-        private http: HttpClient
-    ) { }
+      private http = inject(HttpClient);
 
     getSessions(page: string): Observable<SimpleSessionsResult> {
         let newUrl = url('sessions')

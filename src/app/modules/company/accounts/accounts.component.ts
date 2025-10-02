@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { MatTableDataSource, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow } from '@angular/material/table';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { DispatcherAssetMode } from '@app/enums/DispatcherAssetMode';
@@ -29,18 +29,18 @@ import { CtTablePaginationComponent } from '../../ct/ct-table-pagination/ct-tabl
     imports: [CtSectionComponent, CtSectionHeaderComponent, CtSectionHeaderRowComponent, CtHeadingComponent, NgTemplateOutlet, CtAlertComponent, CtSectionBodyComponent, CtSectionBodyRowComponent, CtTableComponent, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatButton, RouterLink, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, CtSectionFooterComponent, CtSectionFooterRowComponent, CtTablePaginationComponent, DatePipe]
 })
 export class AccountsComponent extends UIStateComponent implements OnInit {
+      private companyService = inject(CompanyService);
+      private activatedRoute = inject(ActivatedRoute);
+      public dispatcherAssetModeService = inject(DispatcherAssetModeService);
+      public readonly authenticationService = inject(AuthenticationService);
     dataSource: MatTableDataSource<SimpleAccount> = new MatTableDataSource<SimpleAccount>([]);
     columnsToDisplay: string[] = ['id', 'isEnabled', 'login', 'publicName', 'role', 'createdOn', 'bts'];
     accountsResult: AccountsResult;
     companyUniqueId: string;
 
     constructor(
-        private companyService: CompanyService,
-        private activatedRoute: ActivatedRoute,
-        public dispatcherAssetModeService: DispatcherAssetModeService,
-        readonly authenticationService: AuthenticationService
-    ) {
-        super(authenticationService);
+) {
+        super(this.authenticationService);
     }
 
     ngOnInit(): void {

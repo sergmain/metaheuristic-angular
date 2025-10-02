@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { MatTableDataSource, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow } from '@angular/material/table';
 import { UIStateComponent } from '@app/models/UIStateComponent';
 import { AuthenticationService } from '@app/services/authentication';
@@ -33,6 +33,9 @@ import { TranslateModule } from '@ngx-translate/core';
     imports: [CtSectionComponent, CtSectionHeaderComponent, CtSectionHeaderRowComponent, CtHeadingComponent, MatSlideToggle, FormsModule, MatButton, RouterLink, CtSectionBodyComponent, CtSectionBodyRowComponent, NgTemplateOutlet, CtSectionFooterComponent, CtSectionFooterRowComponent, CtTablePaginationComponent, CtTableComponent, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, CtPre10pxComponent, MatIcon, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, TranslateModule]
 })
 export class ApisComponent extends UIStateComponent implements OnInit, ConfirmationDialogInterface {
+      public readonly dialog = inject(MatDialog);
+      public readonly authenticationService = inject(AuthenticationService);
+      private apiService = inject(ApiService);
   columnsToDisplay: string[] = ['id', 'name', 'code', 'bts'];
   secondColumnsToDisplay: string[] = ['empty', 'scheme'];
   simpleApisResult: SimpleApisResult;
@@ -40,11 +43,8 @@ export class ApisComponent extends UIStateComponent implements OnInit, Confirmat
   expandParams: boolean = false;
 
   constructor(
-      readonly dialog: MatDialog,
-      readonly authenticationService: AuthenticationService,
-      private apiService: ApiService,
-  ) {
-    super(authenticationService);
+) {
+    super(this.authenticationService);
   }
 
   ngOnInit(): void {

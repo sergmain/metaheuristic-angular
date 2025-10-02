@@ -1,5 +1,5 @@
 import {HttpClient} from '@angular/common/http';
-import {Injectable} from '@angular/core';
+import {Injectable, inject } from '@angular/core';
 import {environment} from '@src/environments/environment';
 import {Observable} from 'rxjs';
 import {SimpleApisResult} from './SimpleApisResult';
@@ -12,9 +12,7 @@ const url = (s: string): string => `${environment.baseUrl}dispatcher/api/${s}`;
 
 @Injectable({ providedIn: 'root' })
 export class ApiService {
-    constructor(
-        private http: HttpClient
-    ) { }
+      private http = inject(HttpClient);
 
     getApis(page: string): Observable<SimpleApisResult> {
         let newUrl = url('apis')

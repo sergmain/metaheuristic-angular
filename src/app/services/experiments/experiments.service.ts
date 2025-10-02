@@ -1,5 +1,5 @@
 import {HttpClient} from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { environment } from '@src/environments/environment';
 import { Observable } from 'rxjs';
 import { generateFormData } from '@app/helpers/generateFormData';
@@ -14,9 +14,7 @@ const url = (s: string): string => `${environment.baseUrl}dispatcher/experiment$
 
 @Injectable({ providedIn: 'root' })
 export class ExperimentsService {
-
-    constructor(private http: HttpClient) { }
-
+      private http = inject(HttpClient);
     // @GetMapping("/experiments")
     // public ExperimentApiData.ExperimentsResult getExperiments(@PageableDefault(size = 5) Pageable pageable) {
     //     return experimentTopLevelService.getExperiments(pageable);

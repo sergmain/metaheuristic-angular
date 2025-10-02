@@ -8,9 +8,6 @@ import { Component, OnInit } from '@angular/core';
     styleUrls: ['./ct-section-header-row.component.scss']
 })
 export class CtSectionHeaderRowComponent implements OnInit {
-
-  constructor() { }
-
   ngOnInit() {
   }
 

@@ -11,9 +11,6 @@ import { CopyRightComponent } from '../../copy-right/copy-right/copy-right.compo
     imports: [CtContentComponent, RouterOutlet, CtBackButtonComponent, CopyRightComponent]
 })
 export class BatchRootComponent implements OnInit {
-
-  constructor() { }
-
   ngOnInit(): void {
   }
 

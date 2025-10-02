@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit, viewChild, inject } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import {UIStateComponent} from '@app/models/UIStateComponent';
 import {AuthenticationService} from '@app/services/authentication';
@@ -31,6 +31,11 @@ import { MatIcon } from '@angular/material/icon';
     imports: [CtSectionComponent, CtSectionHeaderComponent, CtSectionHeaderRowComponent, CtHeadingComponent, MatButton, RouterLink, CtSectionBodyComponent, CtSectionBodyRowComponent, CtTableComponent, MatTable, CdkDropList, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatIcon, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, CdkDrag]
 })
 export class ScenarioStepsComponent extends UIStateComponent implements OnInit {
+      public readonly dialog = inject(MatDialog);
+      private scenarioService = inject(ScenarioService);
+      private router = inject(Router);
+      private activatedRoute = inject(ActivatedRoute);
+      public readonly authenticationService = inject(AuthenticationService);
     readonly states = LoadStates;
 
     currentStates: Set<LoadStates> = new Set();
@@ -45,16 +50,11 @@ export class ScenarioStepsComponent extends UIStateComponent implements OnInit {
 
     response: ScenarioUidsForAccount;
 
-    @ViewChild(MatButton) cancelCreationButton: MatButton;
+    cancelCreationButton = viewChild(MatButton);
 
     constructor(
-        readonly dialog: MatDialog,
-        private scenarioService: ScenarioService,
-        private router: Router,
-        private activatedRoute: ActivatedRoute,
-        readonly authenticationService: AuthenticationService
-    ) {
-        super(authenticationService);
+) {
+        super(this.authenticationService);
     }
 
     ngOnInit(): void {

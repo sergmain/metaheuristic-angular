@@ -10,9 +10,6 @@ import { CopyRightComponent } from '../../copy-right/copy-right/copy-right.compo
     imports: [AboutIndexComponent, CopyRightComponent]
 })
 export class AboutRootComponent implements OnInit {
-
-  constructor() { }
-
   ngOnInit() {
   }
 

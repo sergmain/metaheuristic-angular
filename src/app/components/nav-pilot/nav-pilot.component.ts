@@ -10,9 +10,6 @@ import { RouterLinkActive, RouterLink } from '@angular/router';
     imports: [MatList, MatListItem, MatButton, RouterLinkActive, RouterLink]
 })
 export class NavPilotComponent implements OnInit {
-
-  constructor() { }
-
   ngOnInit() {
   }
 

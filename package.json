@@ -67,11 +67,21 @@
     "ng update electron-builder": "ng update electron-builder@latest",
     "ng generate ngxtension-plugin:init": "ng generate ngxtension-plugin:init",
     "ng g ngxtension:convert-signal-inputs": "ng g ngxtension:convert-signal-inputs",
-    "ng g ngxtension:convert-signal-outputs": "ng g ngxtension:convert-signal-outputs",
+    "ng g ngxtension:convert-signal-outputs": "ng g ngxtension:convert-outputs",
+    "npx ng g ngxtension:convert-queries ": "npx ng g ngxtension:convert-queries ",
+    "npx ng g ngxtension:convert-di-to-inject": "npx ng g ngxtension:convert-di-to-inject",
     "npm list ngxtension": "npm list ngxtension",
+    "ng g --help | findstr ngxtension -A 10": "ng g --help | findstr ngxtension -A 10",
     "npm list @ngxtension/platform": "npm list @ngxtension/platform",
     "cat package.json | grep -i ngxtension": "cat package.json | grep -i ngxtension",
-    "ng g --help | grep ngxtension": "ng g --help"
+    "ng g --help | grep ngxtension": "ng g --help",
+    "npm uninstall ngxtension": "npm uninstall ngxtension",
+    "npm install @ngxtension/platform": "npm install @ngxtension/platform",
+    "npm install ngxtension@4.0.0 --save-dev": "npm install ngxtension@4.0.0 --save-dev",
+    "npm info ngxtension": "npm info ngxtension",
+    "npm install -g ngxtension": "npm install -g ngxtension",
+    "npm install ngxtension --save-dev": "npm install ngxtension --save-dev",
+    "npm install @ngxtension/schematics --save-dev": "npm install @ngxtension/schematics --save-dev"
   },
   "engines": {
     "node": ">=18.18.2",
@@ -99,7 +109,6 @@
     "jszip": "3.10.1",
     "material-icons": "^1.13.12",
     "ngx-toastr": "^19.1.0",
-    "ngxtension": "^6.0.0",
     "normalize.css": "8.0.1",
     "rxjs": "7.8.1",
     "tslib": "^2.6.2",
@@ -123,6 +132,7 @@
     "electron": "^38.2.0",
     "electron-builder": "^26.0.20",
     "eslint": "^9.35.0",
+    "ngxtension": "^4.0.0",
     "ts-node": "10.9.2"
   }
 }

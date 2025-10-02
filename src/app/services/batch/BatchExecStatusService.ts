@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { environment } from '@src/environments/environment';
 import { BehaviorSubject } from 'rxjs';
 import { BatchService } from '@services/batch/batch.service';
@@ -77,14 +77,13 @@ class StatusChecker {
 
 @Injectable({ providedIn: 'root' })
 export class BatchExecStatusService {
+      private batchService = inject(BatchService);
     private isIntervalStarted: boolean = false;
     private interval: number = environment.batchInterval || 15000;
     private statusChecker: StatusChecker = new StatusChecker();
 
     getStatuses: BehaviorSubject<ExecStatuses> = new BehaviorSubject(null);
     getChanges: BehaviorSubject<BatchExecStatusChangesResult> = new BehaviorSubject(null);
-
-    constructor(private batchService: BatchService) { }
 
     stopIntervalRequset(): void {
         this.isIntervalStarted = false;

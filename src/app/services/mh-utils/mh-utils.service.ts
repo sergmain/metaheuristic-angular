@@ -5,8 +5,6 @@ import {Injectable} from '@angular/core';
 // noinspection UnnecessaryLocalVariableJS
 @Injectable({ providedIn: 'root' })
 export class MhUtils {
-    constructor() { }
-
     static printHeaders(headers: HttpHeaders) {
         if (!headers) {
             console.log("headers: " + headers);

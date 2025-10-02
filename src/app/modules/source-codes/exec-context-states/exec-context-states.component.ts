@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CtSectionComponent } from '../../ct/ct-section/ct-section.component';
 import { CtSectionHeaderComponent } from '../../ct/ct-section-header/ct-section-header.component';
@@ -16,13 +16,12 @@ import { CtStateOfTasksComponent } from '../../ct/ct-state-of-tasks/ct-state-of-
     imports: [CtSectionComponent, CtSectionHeaderComponent, CtSectionHeaderRowComponent, CtHeadingComponent, CtSectionBodyComponent, CtSectionBodyRowComponent, CtStateOfTasksComponent]
 })
 export class ExecContextStatesComponent implements OnInit {
-
+      private route = inject(ActivatedRoute);
     sourceCodeId: string;
     execContextId: string;
 
     constructor(
-        private route: ActivatedRoute,
-    ) {
+) {
         this.sourceCodeId = this.route.snapshot.paramMap.get('sourceCodeId');
         this.execContextId = this.route.snapshot.paramMap.get('execContextId');
     }

@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, inject } from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {SettingsService} from '@app/modules/settings/settings.service';
 import {UIStateComponent} from '@app/models/UIStateComponent';
@@ -31,6 +31,10 @@ import { TranslateModule } from '@ngx-translate/core';
     imports: [CtSectionComponent, CtSectionBodyComponent, CtSectionBodyRowComponent, MatFormField, MatLabel, MatSelect, FormsModule, MatOption, MatHint, MatIconButton, MatTooltip, MatIcon, TranslateModule]
 })
 export class SettingsLanguagesIndexComponent extends UIStateComponent implements OnInit {
+      private readonly settingsService = inject(SettingsService);
+      public readonly authenticationService = inject(AuthenticationService);
+      private readonly router = inject(Router);
+      private readonly activatedRoute = inject(ActivatedRoute);
     protected readonly MhUtils = MhUtils;
 
     dataSource = new MatTableDataSource<ApiKey>([]);
@@ -53,12 +57,8 @@ export class SettingsLanguagesIndexComponent extends UIStateComponent implements
     });
 
     constructor(
-        private readonly settingsService: SettingsService,
-        readonly authenticationService: AuthenticationService,
-        private readonly router: Router,
-        private readonly activatedRoute: ActivatedRoute,
-    ) {
-        super(authenticationService);
+) {
+        super(this.authenticationService);
     }
 
     ngOnInit() {

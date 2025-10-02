@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewEncapsulation, ChangeDetectorRef, ViewRef } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit, ViewEncapsulation, ChangeDetectorRef, ViewRef, input, output, inject } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { NotificationAnimationType } from '../../enums/notification-animation-type.enum';
 import { Notification } from '../../interfaces/notification.type';
@@ -17,21 +17,19 @@ import { NotificationComponent } from '../notification/notification.component';
   standalone: true
 })
 export class SimpleNotificationsComponent implements OnInit, OnDestroy {
-  constructor(
-    private service: NotificationsService,
-    private cd: ChangeDetectorRef
-  ) { }
+      private service = inject(NotificationsService);
+      private cd = inject(ChangeDetectorRef);
 
   @Input() set options(opt: Options) {
     this.usingComponentOptions = true;
     this.attachChanges(opt);
   }
 
-  @Output() create = new EventEmitter();
-  @Output() destroy = new EventEmitter();
+  create = output();
+  destroy = output();
 
   notifications: Notification[] = [];
-  @Input() position: Position = ['bottom', 'right'];
+  position = input<Position>(['bottom', 'right']);
 
   private lastNotificationCreated: Notification;
   private listener: Subscription;
@@ -43,15 +41,15 @@ export class SimpleNotificationsComponent implements OnInit, OnDestroy {
   private preventDuplicates = false;
 
   // Sent values
-  @Input() timeOut = 0;
-  @Input() maxLength = 0;
-  @Input() clickToClose = true;
-  @Input() clickIconToClose = false;
-  @Input() showProgressBar = true;
-  @Input() pauseOnHover = true;
-  @Input() theClass = '';
-  @Input() rtl = false;
-  @Input() animate: NotificationAnimationType = NotificationAnimationType.FromRight;
+  timeOut = input(0);
+  maxLength = input(0);
+  clickToClose = input(true);
+  clickIconToClose = input(false);
+  showProgressBar = input(true);
+  pauseOnHover = input(true);
+  theClass = input('');
+  rtl = input(false);
+  animate = input<NotificationAnimationType>(NotificationAnimationType.FromRight);
 
   private usingComponentOptions = false;
 

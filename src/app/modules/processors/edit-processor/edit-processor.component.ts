@@ -1,5 +1,5 @@
 import { Location } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProcessorsService } from '@app/services/processors/processors.service';
 import { Processor } from '@app/services/processors/Processor';
@@ -30,13 +30,11 @@ import { CtRestStatusComponent } from '../../ct/ct-rest-status/ct-rest-status.co
 })
 
 export class EditProcessorComponent implements OnInit {
+      private route = inject(ActivatedRoute);
+      private processorsService = inject(ProcessorsService);
+      private router = inject(Router);
     processor: Processor;
     processorResponse: ProcessorResult;
-    constructor(
-        private route: ActivatedRoute,
-        private processorsService: ProcessorsService,
-        private router: Router,
-    ) { }
 
     ngOnInit(): void {
         this.processorsService

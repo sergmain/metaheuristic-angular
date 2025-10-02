@@ -1,9 +1,9 @@
-@if (pageableDefault) {
+@if (pageableDefault()) {
   <div class="flex justify-content-flex-start">
-    <button mat-icon-button color="primary" (click)="_prev()" [disabled]="globalDisable || pageableDefault.first">
+    <button mat-icon-button color="primary" (click)="_prev()" [disabled]="globalDisable() || pageableDefault().first">
       <mat-icon>navigate_before</mat-icon>
     </button>
-    <button mat-icon-button color="primary" (click)="_next()" [disabled]="globalDisable || pageableDefault.last">
+    <button mat-icon-button color="primary" (click)="_next()" [disabled]="globalDisable() || pageableDefault().last">
       <mat-icon>navigate_next</mat-icon>
     </button>
   </div>

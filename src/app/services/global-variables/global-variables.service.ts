@@ -1,5 +1,5 @@
 import {HttpClient} from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { generateFormData as formData } from '@app/helpers/generateFormData';
 import { Observable } from 'rxjs';
 import { environment } from '@src/environments/environment';
@@ -11,9 +11,7 @@ const url = (s: string): string => `${environment.baseUrl}dispatcher/global-vari
 
 @Injectable({ providedIn: 'root' })
 export class GlobalVariablesService {
-    constructor(
-        private http: HttpClient
-    ) { }
+      private http = inject(HttpClient);
 
     getResources(page: string): Observable<GlobalVariablesResult> {
         return this.http.get<GlobalVariablesResult>(url('/global-variables'), { params: { page } });

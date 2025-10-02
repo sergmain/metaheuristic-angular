@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {Component, OnDestroy, OnInit, viewChild, inject } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import {LoadStates} from '@app/enums/LoadStates';
 import {OperationStatusRest} from '@app/models/OperationStatusRest';
@@ -38,6 +38,12 @@ import { CtRestStatusComponent } from '../../ct/ct-rest-status/ct-rest-status.co
 })
 
 export class ChatNewAddComponent extends UIStateComponent implements OnInit, OnDestroy {
+      private chatService = inject(ChatService);
+      private router = inject(Router);
+      private route = inject(ActivatedRoute);
+      private translate = inject(TranslateService);
+      private settingsService = inject(SettingsService);
+      public readonly authenticationService = inject(AuthenticationService);
     readonly states = LoadStates;
 
     currentStates: Set<LoadStates> = new Set();
@@ -51,17 +57,11 @@ export class ChatNewAddComponent extends UIStateComponent implements OnInit, OnD
     });
 
     constructor(
-        private chatService: ChatService,
-        private router: Router,
-        private route: ActivatedRoute,
-        private translate: TranslateService,
-        private settingsService: SettingsService,
-        readonly authenticationService: AuthenticationService,
-    ) {
-        super(authenticationService);
+) {
+        super(this.authenticationService);
     }
 
-    @ViewChild(MatButton) button: MatButton;
+    button = viewChild(MatButton);
 
     ngOnInit(): void {
         this.subscribeSubscription(this.settingsService.events.subscribe(event => {
@@ -88,7 +88,7 @@ export class ChatNewAddComponent extends UIStateComponent implements OnInit, OnD
     }
 
     create(): void {
-        this.button.disabled = true;
+        this.button().disabled = true;
         this.currentStates.add(this.states.wait);
         const subscribe: Subscription = this.chatService
             .chatAddCommit(
@@ -116,6 +116,4 @@ export class ChatNewAddComponent extends UIStateComponent implements OnInit, OnD
     notToCreate() {
         return MhUtils.isNull(this.apiUid) || this.form.invalid;
     }
-
-
 }

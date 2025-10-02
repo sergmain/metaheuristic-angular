@@ -2,8 +2,7 @@ import {
     Component,
     OnInit,
     OnDestroy,
-    ChangeDetectorRef
-} from '@angular/core';
+    ChangeDetectorRef, inject } from '@angular/core';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
 
 @Component({
@@ -14,11 +13,10 @@ import { MatProgressSpinner } from '@angular/material/progress-spinner';
     imports: [MatProgressSpinner]
 })
 export class CtWrapBlockComponent implements OnInit, OnDestroy {
-
+      private changeDetector = inject(ChangeDetectorRef);
     state = {
         wait: false
     };
-    constructor(private changeDetector: ChangeDetectorRef) {}
 
     ngOnInit() {}
 

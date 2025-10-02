@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, inject } from '@angular/core';
 import { MatTableDataSource, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow } from '@angular/material/table';
 import { MatDialog, } from '@angular/material/dialog';
 import { ConfirmationDialogMethod, ConfirmationDialogInterface } from '@app/components/app-dialog-confirmation/app-dialog-confirmation.component';
@@ -37,6 +37,9 @@ import { CtTablePaginationComponent } from '../../ct/ct-table-pagination/ct-tabl
 })
 
 export class ProcessorsComponent extends UIStateComponent implements OnInit, ConfirmationDialogInterface {
+      public readonly dialog = inject(MatDialog);
+      private processorsService = inject(ProcessorsService);
+      public readonly authenticationService = inject(AuthenticationService);
     processorResult: ProcessorsResult;
     showStatusOfProcessor: boolean = false;
     dataSource: MatTableDataSource<ProcessorStatus> = new MatTableDataSource<ProcessorStatus>([]);
@@ -45,11 +48,8 @@ export class ProcessorsComponent extends UIStateComponent implements OnInit, Con
     secondColumnsToDisplay: string[] = ['empty', 'env'];
 
     constructor(
-        readonly dialog: MatDialog,
-        private processorsService: ProcessorsService,
-        readonly authenticationService: AuthenticationService
-    ) {
-        super(authenticationService);
+) {
+        super(this.authenticationService);
     }
 
     ngOnInit(): void {

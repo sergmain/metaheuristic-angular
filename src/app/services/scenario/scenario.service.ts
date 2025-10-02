@@ -1,5 +1,5 @@
 import {HttpClient} from '@angular/common/http';
-import {Injectable} from '@angular/core';
+import {Injectable, inject } from '@angular/core';
 import {environment} from '@src/environments/environment';
 import {Observable} from 'rxjs';
 import {OperationStatusRest} from '@app/models/OperationStatusRest';
@@ -17,9 +17,7 @@ const url = (s: string): string => `${environment.baseUrl}dispatcher/scenario/${
 
 @Injectable({ providedIn: 'root' })
 export class ScenarioService {
-    constructor(
-        private http: HttpClient
-    ) { }
+      private http = inject(HttpClient);
 
     getScenarioGroups(page: string): Observable<SimpleScenarioGroupsResult> {
         let newUrl = url('scenario-groups')

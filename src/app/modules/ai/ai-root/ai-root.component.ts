@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { Router, RouterLinkActive, RouterLink, RouterOutlet } from '@angular/router';
 import { UIStateComponent } from '@app/models/UIStateComponent';
 import { AuthenticationService } from '@app/services/authentication';
@@ -18,15 +18,15 @@ import { TranslateModule } from '@ngx-translate/core';
     imports: [MatSidenavContainer, MatSidenav, MatButton, RouterLinkActive, RouterLink, MatSidenavContent, CtContentComponent, RouterOutlet, CtBackButtonComponent, CopyRightComponent, TranslateModule]
 })
 export class AiRootComponent extends UIStateComponent implements OnInit, OnDestroy {
+      private router = inject(Router);
+      private settingsService = inject(SettingsService);
+      public readonly authenticationService = inject(AuthenticationService);
     settings: Settings;
     sidenavOpened: boolean;
 
     constructor(
-        private router: Router,
-        private settingsService: SettingsService,
-        readonly authenticationService: AuthenticationService
-    ) {
-        super(authenticationService);
+) {
+        super(this.authenticationService);
         this.router.routeReuseStrategy.shouldReuseRoute = () => false;
     }
 

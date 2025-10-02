@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, inject } from '@angular/core';
 import { MatTableDataSource, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow } from '@angular/material/table';
 import {UIStateComponent} from '@app/models/UIStateComponent';
 import {AuthenticationService} from '@app/services/authentication';
@@ -30,18 +30,18 @@ import { CtTablePaginationComponent } from '../../ct/ct-table-pagination/ct-tabl
 })
 // DO NOT REMOVE '-new' FROM NAME OF COMPONENT
 export class ChatsNewComponent extends UIStateComponent implements OnInit {
+      public readonly dialog = inject(MatDialog);
+      private chatService = inject(ChatService);
+      public readonly authenticationService = inject(AuthenticationService);
+      private router = inject(Router);
+      private activatedRoute = inject(ActivatedRoute);
     dataSource: MatTableDataSource<SimpleChat> = new MatTableDataSource<SimpleChat>([]);
     columnsToDisplay: string[] = ['id', 'createdOn', 'name', 'bts'];
     chats: ChatsResult;
 
     constructor(
-        readonly dialog: MatDialog,
-        private chatService: ChatService,
-        readonly authenticationService: AuthenticationService,
-        private router: Router,
-        private activatedRoute: ActivatedRoute
-    ) {
-        super(authenticationService)
+) {
+        super(this.authenticationService)
     }
 
     ngOnInit(): void {

@@ -7,9 +7,6 @@ import { Component, OnInit } from '@angular/core';
     styleUrls: ['./ai-index.component.sass']
 })
 export class AiIndexComponent implements OnInit {
-
-  constructor() { }
-
   ngOnInit(): void {
   }
 

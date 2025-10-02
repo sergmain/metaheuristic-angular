@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild, Input, OnChanges, EventEmitter, Output } from '@angular/core';
+import { Component, ElementRef, OnInit, OnChanges, input, output, viewChild } from '@angular/core';
 import { marker } from '@biesbjerg/ngx-translate-extract-marker';
 import { TranslateService } from '@ngx-translate/core';
 
@@ -13,11 +13,11 @@ import { MatIcon } from '@angular/material/icon';
     imports: [MatButton, MatIcon]
 })
 export class CtFileUploadComponent implements OnInit, OnChanges {
-    @Output() changed: EventEmitter<string> = new EventEmitter<string>();
+    changed = output<string>();
 
-    @ViewChild('fileInput', { static: true }) fileInput: ElementRef;
-    @Input() buttonTitle: string;
-    @Input() acceptTypes: string = '';
+    fileInput = viewChild<ElementRef>('fileInput');
+    buttonTitle = input<string>();
+    acceptTypes = input<string>('');
 
 
     value: string = '';
@@ -25,20 +25,20 @@ export class CtFileUploadComponent implements OnInit, OnChanges {
     accept: string;
 
     ngOnInit(): void {
-        this.buttonTitleString = this.buttonTitle || 'Select File';
+        this.buttonTitleString = this.buttonTitle() || 'Select File';
     }
 
     ngOnChanges(): void {
-        this.buttonTitleString = this.buttonTitle || 'Select File';
+        this.buttonTitleString = this.buttonTitle() || 'Select File';
     }
 
     fileChanged(): void {
-        this.value = this.fileInput.nativeElement.value;
+        this.value = this.fileInput().nativeElement.value;
         this.changed.emit('fileChanged');
     }
 
     removeFile(): void {
-        this.fileInput.nativeElement.value = '';
+        this.fileInput().nativeElement.value = '';
         this.value = '';
         this.changed.emit('fileChanged');
     }

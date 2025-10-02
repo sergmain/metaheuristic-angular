@@ -1,5 +1,5 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { environment } from '@src/environments/environment';
 import { BehaviorSubject, Observable } from 'rxjs';
@@ -20,6 +20,8 @@ export type AuthenticationServiceEvent = AuthenticationServiceEventLogin | Authe
     providedIn: 'root'
 })
 export class AuthenticationService {
+      private http = inject(HttpClient);
+      private router = inject(Router);
     private localStorageName: string = 'authenticationService';
     private userLifeTimeExpiredName: string = '__last';
     private useLocalStorage: boolean = true;
@@ -31,9 +33,7 @@ export class AuthenticationService {
     }
 
     constructor(
-        private http: HttpClient,
-        private router: Router,
-    ) {
+) {
         if (this.useLocalStorage) {
             this.user = this.getLocalStorageData();
         }

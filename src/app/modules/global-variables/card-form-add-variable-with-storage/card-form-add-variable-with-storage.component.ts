@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter, ViewChild } from '@angular/core';
+import { Component, OnInit, output, viewChild, inject } from '@angular/core';
 import { OperationStatusRest } from '@app/models/OperationStatusRest';
 import { CtFileUploadComponent } from '../../ct/ct-file-upload/ct-file-upload.component';
 import { FormGroup, FormControl, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -24,19 +24,15 @@ import { MatButton } from '@angular/material/button';
     imports: [CtSectionComponent, CtSectionHeaderComponent, CtSectionHeaderRowComponent, CtHeadingComponent, CtSectionBodyComponent, FormsModule, ReactiveFormsModule, CtSectionBodyRowComponent, MatFormField, MatLabel, MatInput, MatHint, CtSectionContentComponent, CdkTextareaAutosize, CtSectionFooterComponent, CtSectionFooterRowComponent, MatButton]
 })
 export class CardFormAddVariableWithStorageComponent {
-
-    @Output() afterResponse: EventEmitter<OperationStatusRest> = new EventEmitter<OperationStatusRest>();
-    @ViewChild('fileUpload', { static: true }) fileUpload: CtFileUploadComponent;
-    @Output() abort: EventEmitter<void> = new EventEmitter<void>();
+      private globalVariablesService = inject(GlobalVariablesService);
+    afterResponse = output<OperationStatusRest>();
+    fileUpload = viewChild<CtFileUploadComponent>('fileUpload');
+    abort = output<void>();
 
     form: FormGroup = new FormGroup({
         params: new FormControl('', [Validators.required, Validators.minLength(1)]),
         poolCode: new FormControl('', [Validators.required, Validators.minLength(1)]),
     });
-
-    constructor(
-        private globalVariablesService: GlobalVariablesService,
-    ) { }
 
     create(): void {
         this.globalVariablesService

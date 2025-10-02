@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AccountsService, Authority, SimpleAccount } from '@app/services/accounts';
 import { Role } from '@app/services/authentication';
@@ -26,6 +26,9 @@ import { MatButton } from '@angular/material/button';
     imports: [CtColsComponent, CtColComponent, CtSectionComponent, CtSectionHeaderComponent, CtSectionHeaderRowComponent, CtHeadingComponent, CtSectionBodyComponent, CtSectionBodyRowComponent, CtSectionContentComponent, MatCheckbox, FormsModule, CtSectionFooterComponent, CtSectionFooterRowComponent, MatButton]
 })
 export class AccountAccessComponent implements OnInit {
+      private router = inject(Router);
+      private route = inject(ActivatedRoute);
+      private accountsService = inject(AccountsService);
     response: AccountResult;
 
     isManager: boolean = false;
@@ -34,12 +37,6 @@ export class AccountAccessComponent implements OnInit {
     isData: boolean = false;
     isAdmin: boolean = false;
     isServerRestAccess: boolean = false;
-
-    constructor(
-        private router: Router,
-        private route: ActivatedRoute,
-        private accountsService: AccountsService
-    ) { }
 
     ngOnInit(): void {
         this.accountsService

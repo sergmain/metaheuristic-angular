@@ -1,33 +1,33 @@
-@if (content) {
+@if (content()) {
   <ct-section>
     <ct-section-body>
-      @if (content.status) {
+      @if (content().status) {
         <ct-section-body-row>
           <div style="font-size: 75%; opacity: 0.75;">STATUS:</div>
-          <ct-heading>{{content.status}}</ct-heading>
+          <ct-heading>{{content().status}}</ct-heading>
         </ct-section-body-row>
       }
-      @if (content.validationResult) {
+      @if (content().validationResult) {
         <ct-section-body-row>
           <div style="font-size: 75%; opacity: 0.75;">STATUS:</div>
-          <ct-heading>{{content.validationResult.status}}</ct-heading>
+          <ct-heading>{{content().validationResult.status}}</ct-heading>
         </ct-section-body-row>
       }
-      @if (content.errorMessages?.length) {
+      @if (content().errorMessages?.length) {
         <ct-section-body-row>
           <div style="font-size: 75%; opacity: 0.75;">ERRORS:</div>
           <ul class="code">
-            @for (error of content.errorMessages; track error; let i = $index) {
+            @for (error of content().errorMessages; track error; let i = $index) {
               <li>{{error}}</li>
             }
           </ul>
         </ct-section-body-row>
       }
-      @if (content.infoMessages?.length) {
+      @if (content().infoMessages?.length) {
         <ct-section-body-row>
           <div style="font-size: 75%; opacity: 0.75;">INFO:</div>
           <ul class="code">
-            @for (info of content.infoMessages; track info; let i = $index) {
+            @for (info of content().infoMessages; track info; let i = $index) {
               <li>{{info}}</li>
             }
           </ul>

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { MatTableDataSource, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow } from '@angular/material/table';
 import { UIStateComponent } from '@app/models/UIStateComponent';
 import { AuthenticationService } from '@app/services/authentication';
@@ -34,6 +34,9 @@ import { TranslateModule } from '@ngx-translate/core';
     imports: [CtSectionComponent, CtSectionHeaderComponent, CtSectionHeaderRowComponent, CtHeadingComponent, MatSlideToggle, FormsModule, MatButton, RouterLink, CtSectionBodyComponent, CtSectionBodyRowComponent, NgTemplateOutlet, CtSectionFooterComponent, CtSectionFooterRowComponent, CtTablePaginationComponent, CtTableComponent, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatIcon, CtPre10pxComponent, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, TranslateModule]
 })
 export class KbsComponent extends UIStateComponent implements OnInit, ConfirmationDialogInterface {
+      public readonly dialog = inject(MatDialog);
+      public readonly authenticationService = inject(AuthenticationService);
+      private kbService = inject(KbService);
   columnsToDisplay: string[] = ['id', 'code', 'status', 'bts'];
   secondColumnsToDisplay: string[] = ['empty', 'params'];
   simpleKbsResult: SimpleKbsResult;
@@ -41,11 +44,8 @@ export class KbsComponent extends UIStateComponent implements OnInit, Confirmati
   expandParams: boolean = false;
 
   constructor(
-      readonly dialog: MatDialog,
-      readonly authenticationService: AuthenticationService,
-      private kbService: KbService,
-  ) {
-    super(authenticationService);
+) {
+    super(this.authenticationService);
   }
 
   ngOnInit(): void {

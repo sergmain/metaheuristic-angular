@@ -1,4 +1,4 @@
-import { EventEmitter, Inject, Injectable } from '@angular/core';
+import { EventEmitter, Inject, Injectable, inject } from '@angular/core';
 import { Subject } from 'rxjs';
 import { DEFAULT_ICONS } from '../consts/default-icons.const';
 import { NotificationType } from '../enums/notification-type.enum';
@@ -8,10 +8,7 @@ import { Notification } from '../interfaces/notification.type';
 
 @Injectable({ providedIn: 'root' })
 export class NotificationsService {
-  constructor(
-    @Inject('options') public globalOptions: any
-  ) { }
-
+      public globalOptions = inject<any>('options' as any /* TODO(inject-migration): Please check if the type is correct */);
   emitter = new Subject<NotificationEvent>();
   icons: Icons = DEFAULT_ICONS;
 

@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, viewChild, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LoadStates } from '@app/enums/LoadStates';
 import { BatchService } from '@app/services/batch/batch.service';
@@ -39,6 +39,12 @@ import { CtRestStatusComponent } from '../../ct/ct-rest-status/ct-rest-status.co
 })
 
 export class BatchAddComponent extends UIStateComponent implements OnInit, OnDestroy {
+      private batchService = inject(BatchService);
+      private router = inject(Router);
+      private route = inject(ActivatedRoute);
+      private translate = inject(TranslateService);
+      private settingsService = inject(SettingsService);
+      public readonly authenticationService = inject(AuthenticationService);
     currentStates: Set<LoadStates> = new Set();
     response: SourceCodeUidsForCompany;
     uploadResponse: OperationStatusRest;
@@ -46,17 +52,11 @@ export class BatchAddComponent extends UIStateComponent implements OnInit, OnDes
     sourceCode: SourceCode;
     file: File;
     listOfSourceCodes: SourceCodeUid[] = [];
-    @ViewChild('fileUpload') fileUpload: CtFileUploadComponent;
+    fileUpload = viewChild<CtFileUploadComponent>('fileUpload');
 
     constructor(
-        private batchService: BatchService,
-        private router: Router,
-        private route: ActivatedRoute,
-        private translate: TranslateService,
-        private settingsService: SettingsService,
-        readonly authenticationService: AuthenticationService,
-    ) {
-        super(authenticationService);
+) {
+        super(this.authenticationService);
     }
 
     ngOnInit(): void {
@@ -88,7 +88,7 @@ export class BatchAddComponent extends UIStateComponent implements OnInit, OnDes
 
     upload(): void {
         this.batchService
-            .uploadFile(this.sourceCode.id.toString(), this.fileUpload.fileInput.nativeElement.files[0])
+            .uploadFile(this.sourceCode.id.toString(), this.fileUpload().fileInput.nativeElement.files[0])
             .subscribe((response) => {
                 if (response.status === OperationStatus.OK) {
                     this.back();
@@ -98,6 +98,6 @@ export class BatchAddComponent extends UIStateComponent implements OnInit, OnDes
     }
 
     fileUploadChanged(): void {
-        this.file = this.fileUpload.fileInput.nativeElement.files[0] || false;
+        this.file = this.fileUpload().fileInput.nativeElement.files[0] || false;
     }
 }

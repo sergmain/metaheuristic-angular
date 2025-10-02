@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LoadStates } from '@app/enums/LoadStates';
 import { BatchService } from '@app/services/batch/batch.service';
@@ -21,17 +21,14 @@ import { TranslateModule } from '@ngx-translate/core';
 })
 
 export class BatchStatusComponent implements OnInit {
+      private route = inject(ActivatedRoute);
+      private batchService = inject(BatchService);
+      private router = inject(Router);
     readonly states = LoadStates;
     currentState: LoadStates = LoadStates.firstLoading;
 
     response: Status;
     batchId: string;
-
-    constructor(
-        private route: ActivatedRoute,
-        private batchService: BatchService,
-        private router: Router
-    ) { }
 
     ngOnInit() {
         this.batchId = this.route.snapshot.paramMap.get('batchId');

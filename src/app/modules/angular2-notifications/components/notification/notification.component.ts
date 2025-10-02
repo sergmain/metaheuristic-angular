@@ -1,5 +1,5 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import { ChangeDetectionStrategy, Component, Input, NgZone, OnDestroy, OnInit, TemplateRef, ViewEncapsulation, ChangeDetectorRef, ViewRef } from '@angular/core';
+import { ChangeDetectionStrategy, Component, NgZone, OnDestroy, OnInit, TemplateRef, ViewEncapsulation, ChangeDetectorRef, ViewRef, input, inject } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { NotificationAnimationType } from '../../enums/notification-animation-type.enum';
 import { Notification } from '../../interfaces/notification.type';
@@ -98,18 +98,21 @@ import { NgClass, NgTemplateOutlet, NgStyle } from '@angular/common';
 })
 
 export class NotificationComponent implements OnInit, OnDestroy {
-
-  @Input() timeOut: number;
-  @Input() showProgressBar: boolean;
-  @Input() pauseOnHover: boolean;
-  @Input() clickToClose: boolean;
-  @Input() clickIconToClose: boolean;
-  @Input() maxLength: number;
-  @Input() theClass: string;
-  @Input() rtl: boolean;
-  @Input() animate: NotificationAnimationType;
-  @Input() position: number;
-  @Input() item: Notification;
+      private notificationService = inject(NotificationsService);
+      private domSanitizer = inject(DomSanitizer);
+      private cd = inject(ChangeDetectorRef);
+      private zone = inject(NgZone);
+  timeOut = input<number>();
+  showProgressBar = input<boolean>();
+  pauseOnHover = input<boolean>();
+  clickToClose = input<boolean>();
+  clickIconToClose = input<boolean>();
+  maxLength = input<number>();
+  theClass = input<string>();
+  rtl = input<boolean>();
+  animate = input<NotificationAnimationType>();
+  position = input<number>();
+  item = input<Notification>();
 
 
   // Progress bar variables
@@ -134,32 +137,25 @@ export class NotificationComponent implements OnInit, OnDestroy {
 
   private icon: string;
 
-  constructor(
-    private notificationService: NotificationsService,
-    private domSanitizer: DomSanitizer,
-    private cd: ChangeDetectorRef,
-    private zone: NgZone
-  ) {}
-
   ngOnInit() {
-    if (this.item.override) {
+    if (this.item().override) {
       this.attachOverrides();
     }
 
-    if (this.animate) {
-      this.item.state = this.animate;
+    if (this.animate()) {
+      this.item().state = this.animate()!;
     }
 
-    if (this.timeOut !== 0) {
+    if (this.timeOut() !== 0) {
       this.startTimeOut();
     }
 
-    this.contentType(this.item.title, 'title');
-    this.contentType(this.item.content, 'content');
-    this.contentType(this.item.html, 'html');
+    this.contentType(this.item().title, 'title');
+    this.contentType(this.item().content, 'content');
+    this.contentType(this.item().html, 'html');
 
-    this.safeSvg = this.domSanitizer.bypassSecurityTrustHtml(this.icon || this.item.icon);
-    this.safeInputHtml = this.domSanitizer.bypassSecurityTrustHtml(this.item.html);
+    this.safeSvg = this.domSanitizer.bypassSecurityTrustHtml(this.icon || this.item().icon);
+    this.safeInputHtml = this.domSanitizer.bypassSecurityTrustHtml(this.item().html);
   }
 
   ngOnDestroy(): void {
@@ -170,19 +166,19 @@ export class NotificationComponent implements OnInit, OnDestroy {
   startTimeOut(): void {
     this.sleepTime = 1000 / this.framesPerSecond /* ms */;
     this.startTime = new Date().getTime();
-    this.endTime = this.startTime + this.timeOut;
+    this.endTime = this.startTime + this.timeOut();
     this.zone.runOutsideAngular(() => this.timer = setTimeout(this.instance, this.sleepTime));
   }
 
   onEnter(): void {
-    if (this.pauseOnHover) {
+    if (this.pauseOnHover()) {
       this.stopTime = true;
       this.pauseStart = new Date().getTime();
     }
   }
 
   onLeave(): void {
-    if (this.pauseOnHover) {
+    if (this.pauseOnHover()) {
       this.stopTime = false;
       this.startTime += (new Date().getTime() - this.pauseStart);
       this.endTime += (new Date().getTime() - this.pauseStart);
@@ -191,26 +187,26 @@ export class NotificationComponent implements OnInit, OnDestroy {
   }
 
   onClick(event: MouseEvent): void {
-    this.item.click!.emit(event);
+    this.item().click!.emit(event);
 
-    if (this.clickToClose) {
+    if (this.clickToClose()) {
       this.remove();
     }
   }
 
   onClickIcon(event: MouseEvent): void {
-    this.item.clickIcon!.emit(event);
+    this.item().clickIcon!.emit(event);
 
-    if (this.clickIconToClose) {
+    if (this.clickIconToClose()) {
       this.remove();
     }
   }
 
   // Attach all the overrides
   attachOverrides(): void {
-    Object.keys(this.item.override).forEach(a => {
+    Object.keys(this.item().override).forEach(a => {
       if (this.hasOwnProperty(a)) {
-        (this as any)[a] = this.item.override[a];
+        (this as any)[a] = this.item().override[a];
       }
     });
   }
@@ -220,11 +216,11 @@ export class NotificationComponent implements OnInit, OnDestroy {
 
     if (this.endTime < now) {
       this.remove();
-      this.item.timeoutEnd!.emit();
+      this.item().timeoutEnd!.emit();
     } else if (!this.stopTime) {
-      if (this.showProgressBar) {
+      if (this.showProgressBar()) {
         // We add this.sleepTime just to have 100% before close
-        this.progressWidth = Math.min((now - this.startTime + this.sleepTime) * 100 / this.timeOut, 100);
+        this.progressWidth = Math.min((now - this.startTime + this.sleepTime) * 100 / this.timeOut(), 100);
       }
 
       this.timer = setTimeout(this.instance, this.sleepTime);
@@ -237,13 +233,13 @@ export class NotificationComponent implements OnInit, OnDestroy {
   }
 
   private remove() {
-    if (this.animate) {
-      this.item.state = this.animate + 'Out';
+    if (this.animate()) {
+      this.item().state = this.animate()! + 'Out';
       setTimeout(() => {
-        this.notificationService.set(this.item, false);
+        this.notificationService.set(this.item(), false);
       }, 310);
     } else {
-      this.notificationService.set(this.item, false);
+      this.notificationService.set(this.item(), false);
     }
   }
 

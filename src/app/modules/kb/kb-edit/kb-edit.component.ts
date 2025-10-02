@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { Location } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LoadStates } from '@app/enums/LoadStates';
@@ -29,17 +29,14 @@ import { TranslateModule } from '@ngx-translate/core';
 })
 
 export class KbEditComponent implements OnInit {
+      private route = inject(ActivatedRoute);
+      private router = inject(Router);
+      private kbService = inject(KbService);
+      private location = inject(Location);
     readonly states = LoadStates;
     currentStates = new Set();
     response;
     kb: SimpleKb;
-
-    constructor(
-        private route: ActivatedRoute,
-        private router: Router,
-        private kbService: KbService,
-        private location: Location
-    ) { }
 
     ngOnInit() {
         this.currentStates.add(this.states.firstLoading);

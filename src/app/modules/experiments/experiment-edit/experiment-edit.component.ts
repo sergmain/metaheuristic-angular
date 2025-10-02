@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { OperationStatusRest } from '@app/models/OperationStatusRest';
 import { ExperimentApiData } from '@app/services/experiments/ExperimentApiData';
@@ -32,7 +32,11 @@ import { CtRestStatusComponent } from '../../ct/ct-rest-status/ct-rest-status.co
 })
 
 export class ExperimentEditComponent extends UIStateComponent implements OnInit {
-
+      private route = inject(ActivatedRoute);
+      private experimentsService = inject(ExperimentsService);
+      private router = inject(Router);
+      private activatedRoute = inject(ActivatedRoute);
+      public readonly authenticationService = inject(AuthenticationService);
     experimentsEditResult: ExperimentApiData.ExperimentsEditResult;
     operationStatusRest: OperationStatusRest;
 
@@ -44,13 +48,8 @@ export class ExperimentEditComponent extends UIStateComponent implements OnInit 
     };
 
     constructor(
-        private route: ActivatedRoute,
-        private experimentsService: ExperimentsService,
-        private router: Router,
-        private activatedRoute: ActivatedRoute,
-        readonly authenticationService: AuthenticationService
-    ) {
-        super(authenticationService);
+) {
+        super(this.authenticationService);
     }
 
     ngOnInit(): void {

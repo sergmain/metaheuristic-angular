@@ -1,5 +1,5 @@
 import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { generateFormData } from '@app/helpers/generateFormData';
 import { OperationStatusRest } from '@app/models/OperationStatusRest';
 import { environment } from '@src/environments/environment';
@@ -17,9 +17,7 @@ const url = (s: string): string => `${environment.baseUrl}dispatcher/source-code
     providedIn: 'root'
 })
 export class ExecContextService {
-    constructor(
-        private http: HttpClient
-    ) { }
+      private http = inject(HttpClient);
 
     execContexts(sourceCodeId: string, page: string): Observable<ExecContextsResult> {
         return this.http.get<ExecContextsResult>(

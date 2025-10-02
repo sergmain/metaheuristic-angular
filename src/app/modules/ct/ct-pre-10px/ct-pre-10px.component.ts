@@ -8,9 +8,6 @@ import { Component, OnInit } from '@angular/core';
     styleUrls: ['./ct-pre-10px.component.scss']
 })
 export class CtPre10pxComponent implements OnInit {
-
-  constructor() { }
-
   ngOnInit() {
   }
 

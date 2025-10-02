@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LoadStates } from '@app/enums/LoadStates';
 import { state } from '@app/helpers/state';
@@ -28,6 +28,10 @@ import { CtSectionContentComponent } from '../../ct/ct-section-content/ct-sectio
 })
 
 export class AddExecContextComponent implements OnInit, OnDestroy {
+      private activatedRoute = inject(ActivatedRoute);
+      private router = inject(Router);
+      private sourceCodesService = inject(SourceCodesService);
+      private execContextService = inject(ExecContextService);
     readonly states = LoadStates;
     currentStates: Set<LoadStates> = new Set();
     state: LoadStates = state;
@@ -36,13 +40,6 @@ export class AddExecContextComponent implements OnInit, OnDestroy {
     responseSingle: ExecContextResult;
     sourceCodeId: string;
     sourceCodeResponse: SourceCodeResult;
-
-    constructor(
-        private activatedRoute: ActivatedRoute,
-        private router: Router,
-        private sourceCodesService: SourceCodesService,
-        private execContextService: ExecContextService
-    ) { }
 
     ngOnInit(): void {
         this.sourceCodeId = this.activatedRoute.snapshot.paramMap.get('sourceCodeId');

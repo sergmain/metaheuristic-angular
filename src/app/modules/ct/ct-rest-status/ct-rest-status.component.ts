@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, input } from '@angular/core';
 import { DefaultResponse } from '@app/models/DefaultResponse';
 
 import { CtSectionComponent } from '../ct-section/ct-section.component';
@@ -14,5 +14,5 @@ import { CtHeadingComponent } from '../ct-heading/ct-heading.component';
     imports: [CtSectionComponent, CtSectionBodyComponent, CtSectionBodyRowComponent, CtHeadingComponent]
 })
 export class CtRestStatusComponent {
-  @Input() content: DefaultResponse;
+  content = input<DefaultResponse>();
 }

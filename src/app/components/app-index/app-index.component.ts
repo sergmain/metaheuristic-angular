@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, inject } from '@angular/core';
 import {SettingsService} from '@services/settings/settings.service';
 import {MhStatus, RuntimeService, Status} from '@services/runtime/runtime.service';
 import { MatTableDataSource, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow } from '@angular/material/table';
@@ -25,7 +25,9 @@ import { CopyRightComponent } from '../../modules/copy-right/copy-right/copy-rig
     imports: [CtContentComponent, CtColsComponent, CtColComponent, CtSectionComponent, CtSectionBodyComponent, CtSectionBodyRowComponent, CtEnvMsgOuterComponent, MatButton, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatTooltip, MatIcon, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, MatIconButton, CopyRightComponent, AsyncPipe]
 })
 export class AppIndexComponent {
-
+      private settingsService = inject(SettingsService);
+      private runtimeService = inject(RuntimeService);
+      private clipboard = inject(Clipboard);
     private dataSource: MatTableDataSource<MhStatus> = new MatTableDataSource<MhStatus>([]);
 
     columnsToDisplay: string[] = ['stage', 'status'];
@@ -33,10 +35,7 @@ export class AppIndexComponent {
     error: string = undefined;
 
     constructor(
-        private settingsService: SettingsService,
-        private runtimeService: RuntimeService,
-        private clipboard: Clipboard
-    ) {
+) {
         this.mhStatusesAsMatTableDataSource$ =
             this.runtimeService.mhStatuses.pipe(
                 map((statuses) => {

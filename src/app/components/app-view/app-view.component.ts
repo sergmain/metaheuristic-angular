@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {Component, OnDestroy, OnInit, viewChild, inject } from '@angular/core';
 import {MatSelect, MatSelectChange} from '@angular/material/select';
 import {MatDialog} from '@angular/material/dialog';
 import {DomSanitizer, SafeHtml} from '@angular/platform-browser';
@@ -37,6 +37,12 @@ declare function initQuitProcess(): any;
 })
 
 export class AppViewComponent extends UIStateComponent implements OnInit, OnDestroy {
+      public readonly authenticationService = inject(AuthenticationService);
+      private domSanitizer = inject(DomSanitizer);
+      private settingsService = inject(SettingsService);
+      private runtimeService = inject(RuntimeService);
+      private router = inject(Router);
+      private dialog = inject(MatDialog);
     htmlContent: SafeHtml;
     sidenavButtonDisable: boolean = false;
     sidenav: boolean = false;
@@ -47,17 +53,11 @@ export class AppViewComponent extends UIStateComponent implements OnInit, OnDest
     } = {};
     brandingTitle: string = environment.brandingTitle;
 
-    @ViewChild('matSelectLanguage') matSelectLanguage: MatSelect;
+    matSelectLanguage = viewChild<MatSelect>('matSelectLanguage');
 
     constructor(
-        readonly authenticationService: AuthenticationService,
-        private domSanitizer: DomSanitizer,
-        private settingsService: SettingsService,
-        private runtimeService: RuntimeService,
-        private router: Router,
-        private dialog: MatDialog
-    ) {
-        super(authenticationService);
+) {
+        super(this.authenticationService);
     }
 
     ngOnInit(): void {

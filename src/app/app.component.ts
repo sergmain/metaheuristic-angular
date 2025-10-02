@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { UIStateComponent } from '@app/models/UIStateComponent';
 import { AuthenticationService, AuthenticationServiceEventChange, AuthenticationServiceEventLogout } from '@services/authentication';
@@ -21,20 +21,19 @@ const electronStatusUrl: string = 'http://localhost:64968/status';
     imports: [AppViewComponent]
 })
 export class AppComponent extends UIStateComponent implements OnInit, OnDestroy {
-
+      private translate = inject(TranslateService);
+      private batchExexStatusService = inject(BatchExecStatusService);
+      public readonly authenticationService = inject(AuthenticationService);
+      private settingsService = inject(SettingsService);
+      private runtimeService = inject(RuntimeService);
+      private _http = inject(HttpClient);
     private subscribeStatus: Subscription = undefined;
     private busy: boolean = false;
     private busyStatus: boolean = false;
 
     constructor(
-        private translate: TranslateService,
-        private batchExexStatusService: BatchExecStatusService,
-        readonly authenticationService: AuthenticationService,
-        private settingsService: SettingsService,
-        private runtimeService: RuntimeService,
-        private _http: HttpClient
-    ) {
-        super(authenticationService);
+) {
+        super(this.authenticationService);
 
         const subscribe: Subscription = interval(1000).subscribe(() => {
             // console.log("Start querying MH server, this.busy", this.busy)
@@ -63,7 +62,7 @@ export class AppComponent extends UIStateComponent implements OnInit, OnDestroy 
                             if (this.subscribeStatus) {
                                 this.subscribeStatus.unsubscribe();
                             }
-                            runtimeService.setServerReady(statusUrl)
+                            this.runtimeService.setServerReady(statusUrl)
                         }
                     },
                     error: resp => {
@@ -74,7 +73,7 @@ export class AppComponent extends UIStateComponent implements OnInit, OnDestroy 
                                 this.busyStatus = true;
                                 this.subscribeStatus.unsubscribe();
                             }
-                            runtimeService.setServerReady(statusUrl)
+                            this.runtimeService.setServerReady(statusUrl)
                         }
                         // else {
                         //     console.log("error:", resp.error);
@@ -107,7 +106,7 @@ export class AppComponent extends UIStateComponent implements OnInit, OnDestroy 
                         next: resp => {
                             //console.log("next, status: ", resp.status);
                             if (resp.status===200 || resp.status===401) {
-                                runtimeService.setMhStatuses(resp.body);
+                                this.runtimeService.setMhStatuses(resp.body);
                             }
                         },
                         complete: () => {

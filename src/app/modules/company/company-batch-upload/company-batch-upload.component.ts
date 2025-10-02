@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, viewChild, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BatchData } from '@app/services/batch/BatchData';
 import { BatchService } from '@app/services/batch/batch.service';
@@ -34,7 +34,10 @@ import { TranslateModule } from '@ngx-translate/core';
     imports: [CtColsComponent, CtColComponent, CtSectionComponent, CtSectionHeaderComponent, CtSectionHeaderRowComponent, CtHeadingComponent, CtSectionBodyComponent, CtSectionBodyRowComponent, MatFormField, MatLabel, MatSelect, FormsModule, MatOption, MatHint, CtFileUploadComponent, CtHintComponent, CtSectionFooterComponent, CtSectionFooterRowComponent, MatButton, CtRestStatusComponent, TranslateModule]
 })
 export class CompanyBatchUploadComponent implements OnInit {
-    @ViewChild('fileUpload') fileUpload: CtFileUploadComponent;
+      private companyService = inject(CompanyService);
+      private activatedRoute = inject(ActivatedRoute);
+      private router = inject(Router);
+    fileUpload = viewChild<CtFileUploadComponent>('fileUpload');
 
     batchId: string;
     companyUniqueId: string;
@@ -42,11 +45,6 @@ export class CompanyBatchUploadComponent implements OnInit {
     sourceCode: SourceCode;
     file: File;
     batchDataUploadingStatus: BatchData.UploadingStatus;
-    constructor(
-        private companyService: CompanyService,
-        private activatedRoute: ActivatedRoute,
-        private router: Router
-    ) { }
 
     ngOnInit(): void {
         this.batchId = this.activatedRoute.snapshot.paramMap.get('batchId');
@@ -60,7 +58,7 @@ export class CompanyBatchUploadComponent implements OnInit {
     }
 
     fileUploadChanged(): void {
-        this.file = this.fileUpload.fileInput.nativeElement.files[0] || false;
+        this.file = this.fileUpload().fileInput.nativeElement.files[0] || false;
     }
 
     upload(): void {

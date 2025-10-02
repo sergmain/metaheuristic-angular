@@ -8,9 +8,6 @@ import { Component, OnInit } from '@angular/core';
     styleUrls: ['./ct-cols.component.scss']
 })
 export class CtColsComponent implements OnInit {
-
-  constructor() { }
-
   ngOnInit() {
   }
 

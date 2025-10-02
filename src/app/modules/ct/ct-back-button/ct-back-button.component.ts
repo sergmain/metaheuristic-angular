@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit, inject } from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Subscription} from 'rxjs';
 
@@ -20,15 +20,11 @@ export interface MenuItem {
     imports: [MatIconButton, MatTooltip, MatIcon]
 })
 export class CtBackButtonComponent implements OnInit, OnDestroy {
-
+      private router = inject(Router);
+      private activatedRoute = inject(ActivatedRoute);
     subs: Subscription[] = [];
 
     config: string[];
-
-    constructor(
-        private router: Router,
-        private activatedRoute: ActivatedRoute
-    ) { }
 
     ngOnInit(): void {
         this.subs.push(this.router.events.subscribe(() => {

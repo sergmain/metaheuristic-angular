@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, inject } from '@angular/core';
 import { MatTableDataSource, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow } from '@angular/material/table';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import {UIStateComponent} from '@app/models/UIStateComponent';
@@ -31,18 +31,18 @@ import { CtTablePaginationComponent } from '../../ct/ct-table-pagination/ct-tabl
     imports: [CtSectionComponent, CtSectionHeaderComponent, CtSectionHeaderRowComponent, CtHeadingComponent, MatIconButton, RouterLink, MatIcon, CtSectionBodyComponent, CtSectionBodyRowComponent, CtTableComponent, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatTooltip, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, CtSectionFooterComponent, CtSectionFooterRowComponent, CtTablePaginationComponent, DatePipe]
 })
 export class ScenariosComponent extends UIStateComponent implements OnInit {
+      public readonly dialog = inject(MatDialog);
+      private scenarioService = inject(ScenarioService);
+      private activatedRoute = inject(ActivatedRoute);
+      public readonly authenticationService = inject(AuthenticationService);
     dataSource: MatTableDataSource<SimpleScenario> = new MatTableDataSource<SimpleScenario>([]);
     columnsToDisplay: string[] = ['id', 'createdOn', 'name', 'bts'];
     scenariosResult: ScenariosResult;
     scenarioGroupId: string;
 
     constructor(
-        readonly dialog: MatDialog,
-        private scenarioService: ScenarioService,
-        private activatedRoute: ActivatedRoute,
-        readonly authenticationService: AuthenticationService
-    ) {
-        super(authenticationService);
+) {
+        super(this.authenticationService);
     }
 
     ngOnInit(): void {

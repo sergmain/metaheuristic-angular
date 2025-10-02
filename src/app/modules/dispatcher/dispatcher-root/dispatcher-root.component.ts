@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { Router, RouterLinkActive, RouterLink, RouterOutlet } from '@angular/router';
 import { UIStateComponent } from '@app/models/UIStateComponent';
 import { AuthenticationService } from '@app/services/authentication';
@@ -20,15 +20,15 @@ import { TranslateModule } from '@ngx-translate/core';
     imports: [MatSidenavContainer, MatSidenav, MatButton, RouterLinkActive, RouterLink, MatSidenavContent, CtContentComponent, RouterOutlet, CtBackButtonComponent, CopyRightComponent, TranslateModule]
 })
 export class DispatcherRootComponent extends UIStateComponent implements OnInit, OnDestroy {
+      public authenticationService = inject(AuthenticationService);
+      private router = inject(Router);
+      private settingsService = inject(SettingsService);
     settings: Settings;
     sidenavOpened: boolean;
 
     constructor(
-        public authenticationService: AuthenticationService,
-        private router: Router,
-        private settingsService: SettingsService
-    ) {
-        super(authenticationService);
+) {
+        super(this.authenticationService);
         // повторным кликом перезагружаем страницу
         this.router.routeReuseStrategy.shouldReuseRoute = () => false;
     }

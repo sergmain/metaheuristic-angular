@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, input, output } from '@angular/core';
 import { PageableDefault } from '@app/models/PageableDefault';
 
 import { MatIconButton } from '@angular/material/button';
@@ -12,10 +12,10 @@ import { MatIcon } from '@angular/material/icon';
     imports: [MatIconButton, MatIcon]
 })
 export class CtTablePaginationComponent {
-    @Output() next: EventEmitter<void> = new EventEmitter<void>();
-    @Output() prev: EventEmitter<void> = new EventEmitter<void>();
-    @Input() globalDisable: boolean;
-    @Input() pageableDefault: PageableDefault;
+    next = output<void>();
+    prev = output<void>();
+    globalDisable = input<boolean>();
+    pageableDefault = input<PageableDefault>();
 
     _next(): void {
         this.next.emit();

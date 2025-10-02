@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {Component, OnDestroy, OnInit, viewChild, inject } from '@angular/core';
 import { FormControl, FormGroup, FormGroupDirective, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButton, MatIconButton } from '@angular/material/button';
 import {MhUtils} from '@services/mh-utils/mh-utils.service';
@@ -37,11 +37,18 @@ import { MatSlideToggle } from '@angular/material/slide-toggle';
 })
 // DO NOT REMOVE '-new' FROM NAME OF COMPONENT
 export class ChatNewComponent extends UIStateComponent implements OnInit, OnDestroy {
+      private router = inject(Router);
+      private chatService = inject(ChatService);
+      private activatedRoute = inject(ActivatedRoute);
+      private translate = inject(TranslateService);
+      private settingsService = inject(SettingsService);
+      private dialog = inject(MatDialog);
+      public readonly authenticationService = inject(AuthenticationService);
     // for chat-new.component.html
     protected readonly MhUtils = MhUtils;
 
-    @ViewChild(MatButton) button: MatButton;
-    @ViewChild('formDirective') formDirective : FormGroupDirective;
+    button = viewChild(MatButton);
+    formDirective = viewChild<FormGroupDirective>('formDirective');
 
     chatsDataSource: MatTableDataSource<SimpleChat> = new MatTableDataSource<SimpleChat>([]);
     chatListColsToDisplay: string[] = ['name'];
@@ -74,15 +81,8 @@ export class ChatNewComponent extends UIStateComponent implements OnInit, OnDest
     isChatLoading: boolean = false;
 
     constructor(
-        private router: Router,
-        private chatService: ChatService,
-        private activatedRoute: ActivatedRoute,
-        private translate: TranslateService,
-        private settingsService: SettingsService,
-        private dialog: MatDialog,
-        readonly authenticationService: AuthenticationService
-    ) {
-        super(authenticationService);
+) {
+        super(this.authenticationService);
         this.chatId = this.activatedRoute.snapshot.paramMap.get('chatId');
         this.loadAssetsForChatting();
     }

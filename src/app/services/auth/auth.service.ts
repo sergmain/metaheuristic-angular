@@ -1,5 +1,5 @@
 import {HttpClient} from '@angular/common/http';
-import {Injectable} from '@angular/core';
+import {Injectable, inject } from '@angular/core';
 import {environment} from '@src/environments/environment';
 import {Observable} from 'rxjs';
 import {SimpleAuthsResult} from './SimpleAuthsResult';
@@ -13,9 +13,7 @@ const url = (s: string): string => `${environment.baseUrl}dispatcher/auth/${s}`;
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-    constructor(
-        private http: HttpClient
-    ) { }
+      private http = inject(HttpClient);
 
     getAuths(page: string): Observable<SimpleAuthsResult> {
         let newUrl = url('auths')

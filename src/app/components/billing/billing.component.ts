@@ -7,9 +7,6 @@ import { Component, OnInit } from '@angular/core';
     styleUrls: ['./billing.component.scss']
 })
 export class BillingComponent implements OnInit {
-
-  constructor() { }
-
   ngOnInit() {
   }
 

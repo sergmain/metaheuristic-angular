@@ -1,5 +1,5 @@
 import {HttpClient} from '@angular/common/http';
-import {Injectable} from '@angular/core';
+import {Injectable, inject } from '@angular/core';
 import {environment} from '@src/environments/environment';
 import {Observable} from 'rxjs';
 import {SimpleKbsResult} from './SimpleKbsResult';
@@ -12,9 +12,7 @@ const url = (s: string): string => `${environment.baseUrl}dispatcher/kb/${s}`;
 
 @Injectable({ providedIn: 'root' })
 export class KbService {
-    constructor(
-        private http: HttpClient
-    ) { }
+      private http = inject(HttpClient);
 
     getKbs(page: string): Observable<SimpleKbsResult> {
         let newUrl = url('kbs')

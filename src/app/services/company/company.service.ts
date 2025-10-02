@@ -1,5 +1,5 @@
 import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { generateFormData } from '@app/helpers/generateFormData';
 import { OperationStatusRest } from '@app/models/OperationStatusRest';
 import { environment } from '@src/environments/environment';
@@ -26,10 +26,7 @@ interface ProcessableItem {
 
 @Injectable({ providedIn: 'root' })
 export class CompanyService {
-    constructor(
-        private http: HttpClient
-    ) { }
-
+      private http = inject(HttpClient);
     companies = (page: string): Observable<SimpleCompaniesResult> =>
         this.http.get<SimpleCompaniesResult>(url('companies'), { params: { page } })
 

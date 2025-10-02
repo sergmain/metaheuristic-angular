@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { OperationStatusRest } from '@app/models/OperationStatusRest';
 import { AccountWithRoleResult } from '@app/services/company/AccountWithRoleResult';
@@ -23,7 +23,8 @@ import { CtRestStatusComponent } from '../../ct/ct-rest-status/ct-rest-status.co
     imports: [CtColsComponent, CtColComponent, CtSectionComponent, CtSectionHeaderComponent, CtSectionHeaderRowComponent, CtHeadingComponent, CtSectionBodyComponent, CtSectionBodyRowComponent, MatCheckbox, FormsModule, CtRestStatusComponent, KeyValuePipe]
 })
 export class AccountEditRolesComponent implements OnInit {
-
+      private companyService = inject(CompanyService);
+      private activatedRoute = inject(ActivatedRoute);
     accountId: string;
     companyUniqueId: string;
     accountWithRoleResult: AccountWithRoleResult;
@@ -31,11 +32,6 @@ export class AccountEditRolesComponent implements OnInit {
     roleModel: Map<string, boolean> = new Map();
 
     isLoading: boolean;
-
-    constructor(
-        private companyService: CompanyService,
-        private activatedRoute: ActivatedRoute,
-    ) { }
 
     ngOnInit(): void {
         this.isLoading = true;

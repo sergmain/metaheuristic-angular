@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { CompanyService } from '@app/services/company/company.service';
 import { OperationStatusRest } from '@app/models/OperationStatusRest';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
@@ -25,18 +25,14 @@ import { CtRestStatusComponent } from '../../ct/ct-rest-status/ct-rest-status.co
     imports: [CtColsComponent, CtColComponent, CtSectionComponent, CtSectionHeaderComponent, CtSectionHeaderRowComponent, CtHeadingComponent, CtSectionBodyComponent, CtSectionBodyRowComponent, MatFormField, MatLabel, MatInput, FormsModule, MatHint, MatButton, RouterLink, CtRestStatusComponent]
 })
 export class CompanyEditComponent implements OnInit {
-
+      private companyService = inject(CompanyService);
+      private activatedRoute = inject(ActivatedRoute);
+      private router = inject(Router);
     companyUniqueId: string;
     name: string;
     groups: string;
     operationStatusRest: OperationStatusRest;
     simpleCompanyResult: SimpleCompanyResult;
-
-    constructor(
-        private companyService: CompanyService,
-        private activatedRoute: ActivatedRoute,
-        private router: Router
-    ) { }
 
     ngOnInit(): void {
         this.companyUniqueId = this.activatedRoute.snapshot.paramMap.get('companyUniqueId');

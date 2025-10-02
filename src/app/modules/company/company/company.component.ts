@@ -7,9 +7,6 @@ import { Component, OnInit } from '@angular/core';
     styleUrls: ['./company.component.sass']
 })
 export class CompanyComponent implements OnInit {
-
-  constructor() { }
-
   ngOnInit(): void {
   }
 

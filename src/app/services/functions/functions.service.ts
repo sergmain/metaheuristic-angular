@@ -1,5 +1,5 @@
 import {HttpClient} from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { generateFormData as formData } from '@app/helpers/generateFormData';
 import { OperationStatusRest } from '@app/models/OperationStatusRest';
 import { environment } from '@src/environments/environment';
@@ -14,9 +14,7 @@ const bundleUrl = (s: string): string => `${environment.baseUrl}dispatcher/bundl
 
 @Injectable({ providedIn: 'root' })
 export class FunctionsService {
-    constructor(private http: HttpClient) { }
-
-
+      private http = inject(HttpClient);
     // @GetMapping("/functions")
     // @PreAuthorize("hasAnyRole('ADMIN', 'DATA', 'MANAGER')")
     // public FunctionData.FunctionsResult getFunctions() {

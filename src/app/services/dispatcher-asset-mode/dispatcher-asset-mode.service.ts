@@ -5,9 +5,6 @@ import { DispatcherAssetMode } from '@app/enums/DispatcherAssetMode';
     providedIn: 'root'
 })
 export class DispatcherAssetModeService {
-
-    constructor() { }
-
     isLocal(value: DispatcherAssetMode): boolean {
         if (value === DispatcherAssetMode.local) { return true; }
         return false;

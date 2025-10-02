@@ -1,5 +1,5 @@
 import {HttpClient} from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { generateFormData as formData } from '@app/helpers/generateFormData';
 import { OperationStatusRest } from '@app/models/OperationStatusRest';
 import { environment } from '@src/environments/environment';
@@ -18,9 +18,7 @@ const url = (s: string): string => `${environment.baseUrl}dispatcher/source-code
     providedIn: 'root'
 })
 export class SourceCodesService {
-    constructor(
-        private http: HttpClient
-    ) { }
+      private http = inject(HttpClient);
 
     sourceCodes(page: string): Observable<SourceCodesResult> {
         return this.http.get<SourceCodesResult>(

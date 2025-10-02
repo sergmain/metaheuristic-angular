@@ -17,9 +17,6 @@ import { CtSectionBodyRowComponent } from '../../ct/ct-section-body-row/ct-secti
     imports: [CtContentComponent, CtColsComponent, CtColComponent, CtSectionComponent, CtSectionHeaderComponent, CtSectionHeaderRowComponent, CtHeadingComponent, CtSectionBodyComponent, CtSectionBodyRowComponent]
 })
 export class AboutIndexComponent implements OnInit {
-
-  constructor() { }
-
   ngOnInit() {
   }
 

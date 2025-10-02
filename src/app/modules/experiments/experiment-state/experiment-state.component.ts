@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CtStateOfTasksComponent } from '../../ct/ct-state-of-tasks/ct-state-of-tasks.component';
 
@@ -10,12 +10,9 @@ import { CtStateOfTasksComponent } from '../../ct/ct-state-of-tasks/ct-state-of-
     imports: [CtStateOfTasksComponent]
 })
 export class ExperimentStateComponent implements OnInit {
+      private activatedRoute = inject(ActivatedRoute);
     sourceCodeId: string;
     execContextId: string;
-
-    constructor(
-        private activatedRoute: ActivatedRoute
-    ) { }
 
     ngOnInit(): void {
         this.sourceCodeId = this.activatedRoute.snapshot.paramMap.get('sourceCodeId');

@@ -8,5 +8,4 @@ import { Component } from '@angular/core';
     styleUrls: ['./settings-index.component.sass']
 })
 export class SettingsIndexComponent {
-  constructor() { }
 }

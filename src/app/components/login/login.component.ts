@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormControl, FormGroup, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AuthenticationService } from '@app/services/authentication/authentication.service';
 import {environment} from '@src/environments/environment';
@@ -22,7 +22,7 @@ import { MatButton } from '@angular/material/button';
     imports: [CtSectionComponent, FormsModule, ReactiveFormsModule, CtSectionHeaderComponent, CtSectionHeaderRowComponent, CtHeadingComponent, CtSectionBodyComponent, CtSectionBodyRowComponent, CtSectionContentComponent, MatFormField, MatLabel, MatInput, CtSectionFooterComponent, CtSectionFooterRowComponent, MatButton]
 })
 export class LoginComponent {
-
+      private authenticationService = inject(AuthenticationService);
     username: string = '';
     password: string = '';
 
@@ -30,10 +30,6 @@ export class LoginComponent {
         username: new FormControl('', [Validators.required, Validators.minLength(1)]),
         password: new FormControl('', [Validators.required, Validators.minLength(1)]),
     });
-
-    constructor(
-        private authenticationService: AuthenticationService,
-    ) { }
 
     login(): void {
         if (this.form.valid) {

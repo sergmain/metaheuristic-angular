@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {SettingsService, SettingsServiceEventChange} from '@services/settings/settings.service';
 import {ActivatedRoute, Router} from '@angular/router';
@@ -38,7 +38,13 @@ export enum MoveState {
     imports: [CtSectionComponent, CtSectionBodyComponent, CtSectionBodyRowComponent, FormsModule, ReactiveFormsModule, MatFormField, MatLabel, MatSelect, MatOption, CtSectionFooterComponent, CtSectionFooterRowComponent, MatButton]
 })
 export class ScenarioMoveComponent extends UIStateComponent implements OnInit, OnDestroy {
-
+      private router = inject(Router);
+      private scenarioService = inject(ScenarioService);
+      private activatedRoute = inject(ActivatedRoute);
+      private translate = inject(TranslateService);
+      private settingsService = inject(SettingsService);
+      private dialog = inject(MatDialog);
+      public readonly authenticationService = inject(AuthenticationService);
     simpleScenarioGroupsAllResult: SimpleScenarioGroupsAllResult;
     scenarioGroupId: string;
     scenarioId: string;
@@ -47,15 +53,8 @@ export class ScenarioMoveComponent extends UIStateComponent implements OnInit, O
     form: FormGroup;
 
     constructor(
-        private router: Router,
-        private scenarioService: ScenarioService,
-        private activatedRoute: ActivatedRoute,
-        private translate: TranslateService,
-        private settingsService: SettingsService,
-        private dialog: MatDialog,
-        readonly authenticationService: AuthenticationService
-    ) {
-        super(authenticationService);
+) {
+        super(this.authenticationService);
     }
 
     ngOnInit(): void {

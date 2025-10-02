@@ -1,5 +1,5 @@
 import {HttpClient} from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { generateFormData as formData } from '@app/helpers/generateFormData';
 import { environment } from '@src/environments/environment';
 import { Observable } from 'rxjs';
@@ -16,7 +16,7 @@ const url = (s: string): string => `${environment.baseUrl}dispatcher${s}`;
 @Injectable({ providedIn: 'root' })
 
 export class ProcessorsService {
-    constructor(private http: HttpClient) { }
+      private http = inject(HttpClient);
 
     init(page: string): Observable<ProcessorsResult> {
         return this.http.get<ProcessorsResult>(url(`/processors`), { params: { page } });

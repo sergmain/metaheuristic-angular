@@ -3,9 +3,7 @@ import {
     OnInit,
     OnDestroy,
     ChangeDetectorRef,
-    Input,
-    OnChanges
-} from '@angular/core';
+    OnChanges, input, inject } from '@angular/core';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
 
 @Component({
@@ -16,7 +14,8 @@ import { MatProgressSpinner } from '@angular/material/progress-spinner';
     imports: [MatProgressSpinner]
 })
 export class CtTableComponent implements OnInit, OnDestroy, OnChanges {
-    @Input() isWaiting: boolean;
+      private changeDetector = inject(ChangeDetectorRef);
+    isWaiting = input<boolean>();
 
     state = {
         wait: false
@@ -24,14 +23,12 @@ export class CtTableComponent implements OnInit, OnDestroy, OnChanges {
 
     isFnMode: boolean;
 
-    constructor(private changeDetector: ChangeDetectorRef) { }
-
     ngOnInit(): void {
-        if (this.isWaiting === undefined) {
+        if (this.isWaiting() === undefined) {
             this.isFnMode = true;
         } else {
             this.isFnMode = false;
-            this.state.wait = this.isWaiting;
+            this.state.wait = this.isWaiting();
         }
     }
 
@@ -44,7 +41,7 @@ export class CtTableComponent implements OnInit, OnDestroy, OnChanges {
         if (this.isFnMode) {
 
         } else {
-            this.state.wait = this.isWaiting;
+            this.state.wait = this.isWaiting();
         }
     }
 

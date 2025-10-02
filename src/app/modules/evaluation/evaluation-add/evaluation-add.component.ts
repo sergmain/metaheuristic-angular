@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {Component, OnDestroy, OnInit, viewChild, inject } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import {LoadStates} from '@app/enums/LoadStates';
 import { TranslateService, TranslateModule } from '@ngx-translate/core';
@@ -44,6 +44,12 @@ import { CtRestStatusComponent } from '../../ct/ct-rest-status/ct-rest-status.co
 })
 
 export class EvaluationAddComponent extends UIStateComponent implements OnInit, OnDestroy {
+      private evaluationService = inject(EvaluationService);
+      private router = inject(Router);
+      private route = inject(ActivatedRoute);
+      private translate = inject(TranslateService);
+      private settingsService = inject(SettingsService);
+      public readonly authenticationService = inject(AuthenticationService);
     readonly states = LoadStates;
 
     currentStates: Set<LoadStates> = new Set();
@@ -62,17 +68,11 @@ export class EvaluationAddComponent extends UIStateComponent implements OnInit, 
     });
 
     constructor(
-        private evaluationService: EvaluationService,
-        private router: Router,
-        private route: ActivatedRoute,
-        private translate: TranslateService,
-        private settingsService: SettingsService,
-        readonly authenticationService: AuthenticationService,
-    ) {
-        super(authenticationService);
+) {
+        super(this.authenticationService);
     }
 
-    @ViewChild(MatButton) button: MatButton;
+    button = viewChild(MatButton);
 
     ngOnInit(): void {
         this.subscribeSubscription(this.settingsService.events.subscribe(event => {
@@ -111,7 +111,7 @@ export class EvaluationAddComponent extends UIStateComponent implements OnInit, 
     }
 
     create(): void {
-        this.button.disabled = true;
+        this.button().disabled = true;
         this.currentStates.add(this.states.wait);
         const subscribe: Subscription = this.evaluationService
             .addFormCommit(

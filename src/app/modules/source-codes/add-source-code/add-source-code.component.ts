@@ -1,5 +1,5 @@
 import { Location } from '@angular/common';
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, viewChild, inject } from '@angular/core';
 import { OperationStatus } from '@app/enums/OperationStatus';
 import { SourceCodeResult } from '@app/services/source-codes/SourceCodeResult';
 import { CardFormAddSourceCodeComponent } from '../card-form-add-source-code/card-form-add-source-code.component';
@@ -17,17 +17,14 @@ import { CtRestStatusComponent } from '../../ct/ct-rest-status/ct-rest-status.co
 })
 
 export class AddSourceCodeComponent {
-    @ViewChild(CardFormAddSourceCodeComponent) cardFormAddSourceCode: CardFormAddSourceCodeComponent;
-    @ViewChild(CardFormUploadSourceCodeComponent) cardFormUploadSourceCode: CardFormUploadSourceCodeComponent;
+      private router = inject(Router);
+      private activatedRoute = inject(ActivatedRoute);
+      private elRef = inject(ElementRef);
+    cardFormAddSourceCode = viewChild(CardFormAddSourceCodeComponent);
+    cardFormUploadSourceCode = viewChild(CardFormUploadSourceCodeComponent);
 
     newSourceCodeResponse: SourceCodeResult;
     uploadSourceCodeResponse: SourceCodeResult;
-
-    constructor(
-        private router: Router,
-        private activatedRoute: ActivatedRoute,
-        private elRef: ElementRef
-    ) { }
 
     afterNewSourceCode(response: SourceCodeResult): void {
         this.newSourceCodeResponse = response;

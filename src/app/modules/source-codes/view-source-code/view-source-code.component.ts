@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SourceCodesService } from '@app/services/source-codes/source-codes.service';
 import { SourceCode } from '@app/services/source-codes/SourceCode';
@@ -27,18 +27,13 @@ import { CtRestStatusComponent } from '../../ct/ct-rest-status/ct-rest-status.co
     imports: [CtColsComponent, CtColComponent, CtSectionComponent, CtSectionHeaderComponent, CtSectionHeaderRowComponent, CtHeadingComponent, CtSectionBodyComponent, CtSectionBodyRowComponent, CtSectionContentComponent, CtPreComponent, CtSectionFooterComponent, CtSectionFooterRowComponent, MatButton, CtRestStatusComponent]
 })
 export class ViewSourceCodeComponent implements OnInit {
-
+      private route = inject(ActivatedRoute);
+      private sourceCodesService = inject(SourceCodesService);
+      private router = inject(Router);
+      private elRef = inject(ElementRef);
     sourceCode: SourceCode;
     sourceCodeResponse: SourceCodeResult;
     sourceCodeResponseForValidate: SourceCodeResult;
-
-
-    constructor(
-        private route: ActivatedRoute,
-        private sourceCodesService: SourceCodesService,
-        private router: Router,
-        private elRef: ElementRef
-    ) { }
 
     ngOnInit(): void {
         this.updateResponse();

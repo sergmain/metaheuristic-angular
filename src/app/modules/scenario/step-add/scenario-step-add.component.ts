@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {Component, OnDestroy, OnInit, viewChild, inject } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import {LoadStates} from '@app/enums/LoadStates';
 import { TranslateService, TranslateModule } from '@ngx-translate/core';
@@ -36,6 +36,12 @@ import { CtSectionFooterRowComponent } from '../../ct/ct-section-footer-row/ct-s
 })
 
 export class ScenarioStepAddComponent extends UIStateComponent implements OnInit, OnDestroy {
+      private scenarioService = inject(ScenarioService);
+      private router = inject(Router);
+      private activatedRoute = inject(ActivatedRoute);
+      private translate = inject(TranslateService);
+      private settingsService = inject(SettingsService);
+      public readonly authenticationService = inject(AuthenticationService);
     readonly states = LoadStates;
 
     currentStates: Set<LoadStates> = new Set();
@@ -51,17 +57,11 @@ export class ScenarioStepAddComponent extends UIStateComponent implements OnInit
     });
 
     constructor(
-        private scenarioService: ScenarioService,
-        private router: Router,
-        private activatedRoute: ActivatedRoute,
-        private translate: TranslateService,
-        private settingsService: SettingsService,
-        readonly authenticationService: AuthenticationService,
-    ) {
-        super(authenticationService);
+) {
+        super(this.authenticationService);
     }
 
-    @ViewChild(MatButton) button: MatButton;
+    button = viewChild(MatButton);
 
     ngOnInit(): void {
         this.scenarioGroupId = this.activatedRoute.snapshot.paramMap.get('scenarioGroupId');
@@ -90,7 +90,7 @@ export class ScenarioStepAddComponent extends UIStateComponent implements OnInit
     }
 
     create(): void {
-        this.button.disabled = true;
+        this.button().disabled = true;
         this.currentStates.add(this.states.wait);
         const subscribe: Subscription = this.scenarioService
             .addOrSaveScenarioStepFormCommit(

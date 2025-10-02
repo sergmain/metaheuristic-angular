@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, inject } from '@angular/core';
 import { MatButton } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow } from '@angular/material/table';
@@ -31,17 +31,17 @@ import { CtTablePaginationComponent } from '../../ct/ct-table-pagination/ct-tabl
     imports: [CtSectionComponent, CtSectionHeaderComponent, CtSectionHeaderRowComponent, CtHeadingComponent, CtSectionBodyComponent, CtSectionBodyRowComponent, CtTableComponent, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatButton, MatIcon, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, CtSectionFooterComponent, CtSectionFooterRowComponent, CtTablePaginationComponent, DatePipe]
 })
 export class SourceCodesArchiveComponent extends UIStateComponent implements OnInit {
+      public readonly dialog = inject(MatDialog);
+      private sourceCodesService = inject(SourceCodesService);
+      public readonly authenticationService = inject(AuthenticationService);
     sourceCodesResult: SourceCodesResult;
     dataSource = new MatTableDataSource<SourceCode>([]);
     columnsToDisplay = ['id', 'uid', 'createdOn', 'valid', 'locked', 'bts'];
     deletedRows: SourceCode[] = [];
 
     constructor(
-        readonly dialog: MatDialog,
-        private sourceCodesService: SourceCodesService,
-        readonly authenticationService: AuthenticationService
-    ) {
-        super(authenticationService);
+) {
+        super(this.authenticationService);
     }
 
     ngOnInit(): void {

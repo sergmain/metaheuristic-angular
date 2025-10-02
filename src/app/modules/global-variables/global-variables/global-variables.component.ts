@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ChangeDetectorRef, inject } from '@angular/core';
 import { MatTableDataSource, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow } from '@angular/material/table';
 import { MatDialog, } from '@angular/material/dialog';
 import { ConfirmationDialogMethod } from '@app/components/app-dialog-confirmation/app-dialog-confirmation.component';
@@ -30,18 +30,15 @@ import { RouterLink } from '@angular/router';
 })
 
 export class GlobalVariablesComponent implements OnInit {
+      private dialog = inject(MatDialog);
+      private globalVariablesService = inject(GlobalVariablesService);
+      private changeDetectorRef = inject(ChangeDetectorRef);
     isLoading: boolean;
 
     globalVariablesResult: GlobalVariablesResult;
     deletedRows: GlobalVariable[] = [];
     dataSource: MatTableDataSource<GlobalVariable> = new MatTableDataSource<GlobalVariable>([]);
     columnsToDisplay: (string)[] = ['id', 'variable', 'uploadTs', 'filename', 'params', 'bts'];
-
-    constructor(
-        private dialog: MatDialog,
-        private globalVariablesService: GlobalVariablesService,
-        private changeDetectorRef: ChangeDetectorRef
-    ) { }
 
     ngOnInit(): void {
         this.updateTable(0);

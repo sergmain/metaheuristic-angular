@@ -1,5 +1,5 @@
 import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { generateFormData as formData } from '@app/helpers/generateFormData';
 import { environment } from '@src/environments/environment';
@@ -11,8 +11,7 @@ const url = (s: string): string => `${environment.baseUrl}dispatcher/experiment-
 
 @Injectable({ providedIn: 'root' })
 export class ExperimentResultService {
-
-    constructor(private http: HttpClient) { }
+      private http = inject(HttpClient);
 
     uploadFromFile(file: File): Observable<OperationStatusRest> {
         return this.http.post<OperationStatusRest>(

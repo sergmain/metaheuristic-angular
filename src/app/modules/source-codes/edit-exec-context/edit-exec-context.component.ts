@@ -8,9 +8,6 @@ import { Component, OnInit } from '@angular/core';
     styleUrls: ['./edit-exec-context.component.scss']
 })
 export class EditExecContextComponent implements OnInit {
-
-  constructor() { }
-
   ngOnInit() {
   }
 

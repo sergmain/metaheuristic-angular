@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow } from '@angular/material/table';
 import { ConfirmationDialogMethod } from '@app/components/app-dialog-confirmation/app-dialog-confirmation.component';
@@ -34,6 +34,10 @@ import { RouterLink } from '@angular/router';
     imports: [CtSectionComponent, CtSectionHeaderComponent, CtSectionHeaderRowComponent, CtHeadingComponent, MatSlideToggle, FormsModule, NgTemplateOutlet, CtAlertComponent, CtSectionBodyComponent, CtSectionBodyRowComponent, CtSectionFooterComponent, CtSectionFooterRowComponent, CtTableComponent, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, CtPreComponent, MatButton, MatIcon, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, RouterLink]
 })
 export class FunctionsComponent extends UIStateComponent implements OnInit {
+      private functionService = inject(FunctionsService);
+      public dispatcherAssetModeService = inject(DispatcherAssetModeService);
+      public readonly dialog = inject(MatDialog);
+      public readonly authenticationService = inject(AuthenticationService);
     functionsResult: FunctionsResult;
     dataSource = new MatTableDataSource<FunctionEntity>([]);
     columnsToDisplay: string[] = ['code', 'type', 'params', 'bts'];
@@ -41,12 +45,8 @@ export class FunctionsComponent extends UIStateComponent implements OnInit {
     showParams: boolean = false;
 
     constructor(
-        private functionService: FunctionsService,
-        public dispatcherAssetModeService: DispatcherAssetModeService,
-        readonly dialog: MatDialog,
-        readonly authenticationService: AuthenticationService
-    ) {
-        super(authenticationService);
+) {
+        super(this.authenticationService);
     }
 
     ngOnInit() {

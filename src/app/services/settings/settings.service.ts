@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { AuthenticationService, AuthenticationServiceEventChange, AuthenticationServiceEventLogin } from '../authentication';
 import { defaultSettings, Settings, SettingsLanguage, SettingsTheme } from './Settings';
@@ -13,14 +13,14 @@ const STORAGE_NAME: string = "metaheuristic-settings";
 
 @Injectable({ providedIn: 'root' })
 export class SettingsService {
+      private authenticationService = inject(AuthenticationService);
     private localStorageName: string;
     private storageDefaultData: Settings = defaultSettings;
 
     events: BehaviorSubject<SettingsServiceEvent> = new BehaviorSubject<SettingsServiceEvent>(null);
 
     constructor(
-        private authenticationService: AuthenticationService
-    ) {
+) {
         this.authenticationService.events.subscribe(event => {
             if (event instanceof AuthenticationServiceEventChange) {
                 if (event.user && event.user.username) {

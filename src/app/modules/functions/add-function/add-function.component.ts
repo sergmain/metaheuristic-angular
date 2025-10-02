@@ -1,4 +1,4 @@
-import {Component, ViewChild} from '@angular/core';
+import {Component, viewChild, inject } from '@angular/core';
 import {Router} from '@angular/router';
 import {FunctionsService} from '@app/services/functions/functions.service';
 import {CtFileUploadComponent} from '@app/modules/ct/ct-file-upload/ct-file-upload.component';
@@ -29,11 +29,12 @@ import { MatFormField, MatLabel, MatInput } from '@angular/material/input';
 })
 
 export class AddFunctionComponent {
-
+      private functionsService = inject(FunctionsService);
+      private router = inject(Router);
     response: UploadingStatus;
 
-    @ViewChild('fileUpload', { static: true }) fileUpload: CtFileUploadComponent;
-    @ViewChild(MatButton) button: MatButton;
+    fileUpload = viewChild<CtFileUploadComponent>('fileUpload');
+    button = viewChild(MatButton);
 
     form: FormGroup = new FormGroup({
         repo: new FormControl('', [Validators.required, Validators.minLength(10), Validators.pattern('https?:\\/\\/.*')]),
@@ -42,18 +43,13 @@ export class AddFunctionComponent {
         path: new FormControl('' )
     });
 
-    constructor(
-        private functionsService: FunctionsService,
-        private router: Router,
-    ) { }
-
     cancel(): void {
         this.router.navigate(['/dispatcher', 'functions']);
     }
 
     upload(): void {
         this.functionsService
-            .uploadBundle(this.fileUpload.fileInput.nativeElement.files[0])
+            .uploadBundle(this.fileUpload().fileInput.nativeElement.files[0])
             .subscribe(
                 (response) => {
                     this.response = response;
@@ -65,11 +61,11 @@ export class AddFunctionComponent {
     }
 
     uploadFromGit(): void {
-        this.button.disabled = true;
+        this.button().disabled = true;
         this.functionsService
             .uploadFromGit(this.form.value.repo, this.form.value.branch, this.form.value.commit, this.form.value.path)
             .subscribe(sourceCodeResult => {
-                this.button.disabled = false;
+                this.button().disabled = false;
                 // this.responseChange.emit(sourceCodeResult);
             });
     }

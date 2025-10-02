@@ -7,9 +7,6 @@ import { Component, OnInit } from '@angular/core';
     styleUrls: ['./pilot.component.scss']
 })
 export class PilotComponent implements OnInit {
-
-  constructor() { }
-
   ngOnInit() {
   }
 

@@ -1,5 +1,5 @@
 import {HttpClient} from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { generateFormData as formData } from '@app/helpers/generateFormData';
 import { environment } from '@src/environments/environment';
 import { Observable } from 'rxjs';
@@ -13,7 +13,7 @@ const url = (s: string): string => `${environment.baseUrl}dispatcher/account/${s
 
 @Injectable({ providedIn: 'root' })
 export class AccountsService {
-    constructor(private http: HttpClient) { }
+      private http = inject(HttpClient);
 
     accounts(page: string): Observable<AccountsResult> {
         return this.http.get<AccountsResult>(url(`accounts`), { params: { page } });

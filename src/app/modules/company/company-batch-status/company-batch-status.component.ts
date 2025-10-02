@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { BatchData } from '@app/services/batch/BatchData';
 import { CompanyService } from '@app/services/company/company.service';
@@ -18,15 +18,12 @@ import { CtPreComponent } from '../../ct/ct-pre/ct-pre.component';
     imports: [CtSectionComponent, CtSectionHeaderComponent, CtSectionHeaderRowComponent, CtHeadingComponent, CtSectionBodyComponent, CtSectionBodyRowComponent, CtPreComponent]
 })
 export class CompanyBatchStatusComponent implements OnInit {
+      private companyService = inject(CompanyService);
+      private activatedRoute = inject(ActivatedRoute);
     isLoading: boolean;
     companyUniqueId: string;
     batchId: string;
     batchDataStatus: BatchData.Status;
-
-    constructor(
-        private companyService: CompanyService,
-        private activatedRoute: ActivatedRoute
-    ) { }
 
     ngOnInit(): void {
         this.isLoading = true;

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormControl, FormGroup, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { LoadStates } from '@app/enums/LoadStates';
@@ -29,6 +29,8 @@ import { MatButton } from '@angular/material/button';
 })
 
 export class AccountAddComponent {
+      private accountsService = inject(AccountsService);
+      private router = inject(Router);
     readonly states = LoadStates;
     currentStates = new Set();
     response: DefaultResponse;
@@ -50,12 +52,6 @@ export class AccountAddComponent {
         ]),
         publicName: new FormControl('', [Validators.required, Validators.minLength(3)]),
     });
-
-    constructor(
-        private accountsService: AccountsService,
-        private router: Router,
-    ) { }
-
 
     create(): void {
         this.currentStates.add(this.states.wait);

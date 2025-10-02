@@ -1,4 +1,4 @@
-import {Component, Input, OnInit, TemplateRef, ViewChild} from '@angular/core';
+import {Component, OnInit, TemplateRef, input, viewChild, inject } from '@angular/core';
 import {MatButton, MatIconButton} from '@angular/material/button';
 import {MatDialog, MatDialogActions, MatDialogClose} from '@angular/material/dialog';
 import {
@@ -44,14 +44,19 @@ import {CtStateOfTasksComponent} from '../ct-state-of-tasks/ct-state-of-tasks.co
     imports: [CtSectionComponent, CtSectionHeaderComponent, CtSectionHeaderRowComponent, CtHeadingComponent, CtSectionBodyComponent, CtSectionBodyRowComponent, CtTableComponent, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatButton, MatIconButton, MatIcon, MatTooltip, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, CtSectionFooterComponent, CtSectionFooterRowComponent, RouterLink, MatDialogActions, MatDialogClose, CtStateOfTasksComponent, DatePipe]
 })
 export class CtExecContextsComponent implements OnInit {
-    @ViewChild('stateOfTasksTemplate') stateOfTasksTemplate: TemplateRef<any>;
-    @ViewChild('errorDialogTemplate') errorDialogTemplate: TemplateRef<any>;
+      private route = inject(ActivatedRoute);
+      private dialog = inject(MatDialog);
+      private execContextService = inject(ExecContextService);
+      private sourceCodesService = inject(SourceCodesService);
+      private router = inject(Router);
+    stateOfTasksTemplate = viewChild<TemplateRef<any>>('stateOfTasksTemplate');
+    errorDialogTemplate = viewChild<TemplateRef<any>>('errorDialogTemplate');
 
-    @Input() sourceCodeId: string;
-    @Input() modal: boolean;
+    sourceCodeId = input<string>();
+    modal = input<boolean>();
 
-    @ViewChild('nextTable', { static: true }) nextTable: MatButton;
-    @ViewChild('prevTable', { static: true }) prevTable: MatButton;
+    nextTable = viewChild<MatButton>('nextTable');
+    prevTable = viewChild<MatButton>('prevTable');
 
     readonly execState = ExecContextState;
 
@@ -68,15 +73,6 @@ export class CtExecContextsComponent implements OnInit {
 
     execContextId: string;
 
-    constructor(
-        private route: ActivatedRoute,
-        private dialog: MatDialog,
-        private execContextService: ExecContextService,
-        private sourceCodesService: SourceCodesService,
-        private router: Router
-    ) {
-    }
-
     ngOnInit(): void {
         //console.log("modal, modalBool", this.modal);
 
@@ -86,13 +82,13 @@ export class CtExecContextsComponent implements OnInit {
 
     getExecContexts(page: number): void {
         this.execContextService
-            .execContexts(this.sourceCodeId, page.toString())
+            .execContexts(this.sourceCodeId(), page.toString())
             .subscribe(execContextsResult => {
                 this.response = execContextsResult;
                 if (execContextsResult) {
                     this.execContextTableSource = new MatTableDataSource(execContextsResult.instances.content);
-                    this.prevTable.disabled = execContextsResult.instances.first;
-                    this.nextTable.disabled = execContextsResult.instances.last;
+                    this.prevTable().disabled = execContextsResult.instances.first;
+                    this.nextTable().disabled = execContextsResult.instances.last;
                 }
             });
     }
@@ -105,7 +101,7 @@ export class CtExecContextsComponent implements OnInit {
     })
     delete(execContext: ExecContext): void {
         this.execContextService
-            .execContextDeleteCommit(this.sourceCodeId, execContext.id?.toString?.())
+            .execContextDeleteCommit(this.sourceCodeId(), execContext.id?.toString?.())
             .subscribe(v => this.getExecContexts(this.response.instances.number));
     }
 
@@ -119,7 +115,7 @@ export class CtExecContextsComponent implements OnInit {
 
     runExecState(id, state): void {
         this.execContextService
-            .execContextTargetState(this.sourceCodeId, state, id)
+            .execContextTargetState(this.sourceCodeId(), state, id)
             .subscribe(v => this.getExecContexts(this.response.instances.number));
     }
 
@@ -142,7 +138,7 @@ export class CtExecContextsComponent implements OnInit {
     stateOfTasks(el) {
         this.dialog.closeAll();
         this.execContextId = el.id;
-        this.dialog.open(this.stateOfTasksTemplate, {
+        this.dialog.open(this.stateOfTasksTemplate(), {
             width: '90%'
         });
     }

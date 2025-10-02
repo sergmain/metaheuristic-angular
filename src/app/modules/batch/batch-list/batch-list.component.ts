@@ -1,5 +1,5 @@
 import { HttpResponse } from '@angular/common/http';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow } from '@angular/material/table';
 import { marker } from '@biesbjerg/ngx-translate-extract-marker';
@@ -38,20 +38,20 @@ import { CtTablePaginationComponent } from '../../ct/ct-table-pagination/ct-tabl
     imports: [CtSectionComponent, CtSectionHeaderComponent, CtSectionHeaderRowComponent, CtHeadingComponent, NgTemplateOutlet, MatButton, CtSectionBodyComponent, CtSectionBodyRowComponent, CtTableComponent, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, RouterLink, MatIcon, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, CtSectionFooterComponent, CtSectionFooterRowComponent, CtTablePaginationComponent, DatePipe, TranslateModule]
 })
 export class BatchListComponent extends UIStateComponent implements OnInit, OnDestroy {
+      private batchService = inject(BatchService);
+      public readonly authenticationService = inject(AuthenticationService);
+      public readonly dialog = inject(MatDialog);
+      public readonly translate = inject(TranslateService);
+      private batchExexStatusService = inject(BatchExecStatusService);
+      private settingsService = inject(SettingsService);
     batchesResult: BatchesResult;
     isFiltered: boolean;
     dataSource: MatTableDataSource<BatchData.BatchExecInfo> = new MatTableDataSource([]);
     columnsToDisplay: string[] = ['id', 'createdOn', 'Owner', 'isBatchConsistent', 'sourceCode', 'execState', 'bts'];
 
     constructor(
-        private batchService: BatchService,
-        readonly authenticationService: AuthenticationService,
-        readonly dialog: MatDialog,
-        readonly translate: TranslateService,
-        private batchExexStatusService: BatchExecStatusService,
-        private settingsService: SettingsService
-    ) {
-        super(authenticationService);
+) {
+        super(this.authenticationService);
     }
 
     ngOnInit(): void {

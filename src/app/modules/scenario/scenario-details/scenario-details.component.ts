@@ -1,5 +1,5 @@
 import {FlatTreeControl} from '@angular/cdk/tree';
-import {AfterViewInit, Component, OnDestroy, OnInit, TemplateRef, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, OnDestroy, OnInit, TemplateRef, viewChild, inject } from '@angular/core';
 import { MatTreeFlatDataSource, MatTreeFlattener, MatTree, MatTreeNodeDef, MatTreeNode, MatTreeNodePadding, MatTreeNodeToggle } from '@angular/material/tree';
 import {BehaviorSubject, Observable, of as observableOf, Subscription} from 'rxjs';
 import { CdkDragDrop, CdkDropList, CdkDrag } from '@angular/cdk/drag-drop';
@@ -110,10 +110,17 @@ export class StepEvaluationState {
     imports: [CtSectionComponent, CtSectionBodyComponent, CtSectionBodyRowComponent, MatIconButton, MatTooltip, MatIcon, FormsModule, ReactiveFormsModule, MatFormField, MatLabel, MatInput, CdkTextareaAutosize, CtSectionFooterComponent, CtSectionFooterRowComponent, MatButton, CtColsComponent, CtColComponent, CtSectionHeaderComponent, CtSectionHeaderRowComponent, CtHeadingComponent, MatSelect, MatOption, MatHint, NgTemplateOutlet, MatTree, CdkDropList, MatTreeNodeDef, MatTreeNode, MatTreeNodePadding, CdkDrag, MatSlideToggle, MatTreeNodeToggle, NgClass, CtExecContextsComponent, TranslateModule]
 })
 export class ScenarioDetailsComponent extends UIStateComponent implements OnInit, OnDestroy, AfterViewInit {
+      private router = inject(Router);
+      private scenarioService = inject(ScenarioService);
+      private activatedRoute = inject(ActivatedRoute);
+      private translate = inject(TranslateService);
+      private settingsService = inject(SettingsService);
+      private dialog = inject(MatDialog);
+      public readonly authenticationService = inject(AuthenticationService);
     // for scenario-details.component.html
     protected readonly MhUtils = MhUtils;
 
-    @ViewChild('execContexts') execContexts: TemplateRef<any>;
+    execContexts = viewChild<TemplateRef<any>>('execContexts');
 
     treeControl: FlatTreeControl<StepFlatNode>;
     treeFlattener: MatTreeFlattener<SimpleScenarioStep, StepFlatNode>;
@@ -191,7 +198,7 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
         // return this.evalStepForm.value.variables as FormArray
     }
 
-    @ViewChild('formDirective') formDirective : FormGroupDirective;
+    formDirective = viewChild<FormGroupDirective>('formDirective');
     currentStates: Set<LoadStates> = new Set();
     readonly states = LoadStates;
 
@@ -219,15 +226,8 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
     }
 
     constructor(
-                private router: Router,
-                private scenarioService: ScenarioService,
-                private activatedRoute: ActivatedRoute,
-                private translate: TranslateService,
-                private settingsService: SettingsService,
-                private dialog: MatDialog,
-                readonly authenticationService: AuthenticationService
-                ) {
-        super(authenticationService);
+) {
+        super(this.authenticationService);
 
         this.treeFlattener = new MatTreeFlattener(this.transformer, this._getLevel, this._isExpandable, this._getChildren);
         this.treeControl = new FlatTreeControl<StepFlatNode>(this._getLevel, this._isExpandable);
@@ -236,7 +236,7 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
         this.dataChange.subscribe(data => this.rebuildTreeForData(data));
     }
 
-    @ViewChild(MatButton) button: MatButton;
+    button = viewChild(MatButton);
 
     notToCreate() {
         let b1 = MhUtils.isNull(this.form.value.apiUid) && MhUtils.isNull(this.form.value.processingFunction)
@@ -855,7 +855,7 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
     }
 
     private saveStepInternal(uuid:string, parentUuid: string) {
-        this.button.disabled = true;
+        this.button().disabled = true;
         this.currentStates.add(this.states.wait);
 
         // console.log("saveStepInternal() #1");
@@ -869,7 +869,7 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
         let isCachable=  MhUtils.isNull(this.form.value.cachable) ? false : this.form.value.cachable;
 
         // console.log("saveStepInternal() #2");
-        this.formDirective.resetForm();
+        this.formDirective().resetForm();
         // console.log("saveStepInternal() #3");
         this.form.reset();
 
@@ -930,7 +930,7 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
         let detailNode = this.findInTree(node);
         console.log("10.21", detailNode)
         this.deleteNode(detailNode);
-        this.formDirective.resetForm();
+        this.formDirective().resetForm();
         this.form.reset();
     }
 
@@ -1046,7 +1046,7 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
         let detailNode = this.findInTree(node);
         detailNode.node.mode = NodeMode.show;
         detailNode.node.isNew = false;
-        this.formDirective.resetForm();
+        this.formDirective().resetForm();
         this.form.reset();
         this.dataChange.next(this.dataTree);
     }
@@ -1078,7 +1078,7 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
     }
 
     stateOfTasks() {
-        this.dialog.open(this.execContexts, {
+        this.dialog.open(this.execContexts(), {
             width: '100%'
         });
     }

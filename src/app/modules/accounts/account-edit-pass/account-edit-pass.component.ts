@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { Location } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AccountsService } from '@app/services/accounts/accounts.service';
@@ -27,6 +27,10 @@ import { MatButton } from '@angular/material/button';
 })
 
 export class AccountEditPassComponent implements OnInit {
+      private route = inject(ActivatedRoute);
+      private router = inject(Router);
+      private accountsService = inject(AccountsService);
+      private location = inject(Location);
     readonly states = LoadStates;
     currentStates = new Set();
     response;
@@ -51,13 +55,6 @@ export class AccountEditPassComponent implements OnInit {
             }
         ]),
     });
-
-    constructor(
-        private route: ActivatedRoute,
-        private router: Router,
-        private accountsService: AccountsService,
-        private location: Location
-    ) { }
 
     ngOnInit() {
         this.currentStates.add(this.states.firstLoading);

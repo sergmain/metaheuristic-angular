@@ -1,7 +1,7 @@
 <ct-section>
   <ct-section-header>
     <ct-section-header-row>
-      <ct-heading>Exec Contexts in Source Code #{{ sourceCodeId }}</ct-heading>
+      <ct-heading>Exec Contexts in Source Code #{{ sourceCodeId() }}</ct-heading>
     </ct-section-header-row>
     @if (response) {
       <ct-section-header-row>
@@ -104,11 +104,11 @@
           </button>
         </div>
         <a mat-flat-button="mat-flat-button" color="primary" [disabled]="!response"
-          [routerLink]="['/dispatcher','source-codes',sourceCodeId,'exec-context','add']">Add Exec
+          [routerLink]="['/dispatcher','source-codes',sourceCodeId(),'exec-context','add']">Add Exec
         Context</a>
       </div>
     </ct-section-footer-row>
-    @if (modal) {
+    @if (modal()) {
       <ct-section-footer-row>
         <mat-dialog-actions align="end">
           <button mat-flat-button color="primary" mat-dialog-close>Close</button>
@@ -121,6 +121,6 @@
 
 <ng-template #stateOfTasksTemplate>
   <ng-container>
-    <ct-state-of-tasks [sourceCodeId]="sourceCodeId" [execContextId]="execContextId"></ct-state-of-tasks>
+    <ct-state-of-tasks [sourceCodeId]="sourceCodeId()" [execContextId]="execContextId"></ct-state-of-tasks>
   </ng-container>
 </ng-template>

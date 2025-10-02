@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { MatTableDataSource, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow } from '@angular/material/table';
 import { AccountsService } from '@app/services/accounts/accounts.service';
 import { DispatcherAssetMode } from '@app/enums/DispatcherAssetMode';
@@ -30,16 +30,16 @@ import { CtTablePaginationComponent } from '../../ct/ct-table-pagination/ct-tabl
 })
 
 export class AccountsComponent extends UIStateComponent implements OnInit {
+      private accountsService = inject(AccountsService);
+      public dispatcherAssetModeService = inject(DispatcherAssetModeService);
+      public readonly authenticationService = inject(AuthenticationService);
     dataSource = new MatTableDataSource<SimpleAccount>([]);
     columnsToDisplay = ['id', 'isEnabled', 'login', 'publicName', 'createdOn', 'roles', 'bts'];
     accountsResult: AccountsResult;
 
     constructor(
-        private accountsService: AccountsService,
-        public dispatcherAssetModeService: DispatcherAssetModeService,
-        readonly authenticationService: AuthenticationService
-    ) {
-        super(authenticationService)
+) {
+        super(this.authenticationService)
     }
 
     ngOnInit() {

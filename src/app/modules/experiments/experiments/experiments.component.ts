@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow } from '@angular/material/table';
 import { ConfirmationDialogMethod } from '@app/components/app-dialog-confirmation/app-dialog-confirmation.component';
@@ -31,18 +31,17 @@ import { MatIcon } from '@angular/material/icon';
 })
 
 export class ExperimentsComponent extends UIStateComponent implements OnInit {
+      public readonly dialog = inject(MatDialog);
+      private experimentsService = inject(ExperimentsService);
+      public readonly authenticationService = inject(AuthenticationService);
     ExecContextState: typeof ExecContextState = ExecContextState;
     experimentsResult: ExperimentApiData.ExperimentsResult;
     dataSource: MatTableDataSource<ExperimentApiData.ExperimentResult> = new MatTableDataSource<ExperimentApiData.ExperimentResult>([]);
     columnsToDisplay: string[] = ['id', 'name', 'createdOn', 'code', 'description', 'execState', 'bts'];
 
     constructor(
-        readonly dialog: MatDialog,
-        private experimentsService: ExperimentsService,
-        readonly authenticationService: AuthenticationService
-
-    ) {
-        super(authenticationService);
+) {
+        super(this.authenticationService);
     }
 
     ngOnInit(): void {

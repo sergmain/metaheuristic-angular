@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CompanyService } from '@app/services/company/company.service';
 import { OperationStatusRest } from '@app/models/OperationStatusRest';
 import { FormControl, FormGroup, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -23,6 +23,9 @@ import { CtRestStatusComponent } from '../../ct/ct-rest-status/ct-rest-status.co
     imports: [CtColsComponent, CtColComponent, CtSectionComponent, CtSectionHeaderComponent, CtSectionHeaderRowComponent, CtHeadingComponent, CtSectionBodyComponent, FormsModule, ReactiveFormsModule, CtSectionBodyRowComponent, MatFormField, MatLabel, MatInput, MatHint, MatButton, RouterLink, CtRestStatusComponent]
 })
 export class CompanyAddComponent {
+      private companyService = inject(CompanyService);
+      private router = inject(Router);
+      private activatedRoute = inject(ActivatedRoute);
     operationStatusRest: OperationStatusRest;
 
     form: FormGroup = new FormGroup({
@@ -31,12 +34,6 @@ export class CompanyAddComponent {
             Validators.minLength(1)
         ]),
     });
-
-    constructor(
-        private companyService: CompanyService,
-        private router: Router,
-        private activatedRoute: ActivatedRoute
-    ) { }
 
     createCompany(): void {
         this.companyService

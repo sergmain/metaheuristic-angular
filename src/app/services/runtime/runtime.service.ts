@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {Injectable, inject } from '@angular/core';
 import {environment} from '@src/environments/environment';
 import {AuthenticationService} from '@services/authentication';
 import {BehaviorSubject} from 'rxjs';
@@ -31,7 +31,8 @@ export class MhStatuses {
 
 @Injectable({ providedIn: 'root' })
 export class RuntimeService {
-
+      private authenticationService = inject(AuthenticationService);
+      private _http = inject(HttpClient);
     private serverReady: boolean = false;
     private mhStatusesData: MhStatuses = new MhStatuses([
         {stage: Stage.metaheuristic, status: Status.started},
@@ -50,12 +51,6 @@ export class RuntimeService {
 */
 
     private _mhStatuses = new BehaviorSubject<MhStatuses>(this.mhStatusesData);
-
-    constructor(
-        private authenticationService: AuthenticationService,
-        private _http: HttpClient
-    ) {
-    }
 
     setServerReady(url: string) {
         let startsWith = url.startsWith(environment.baseUrl);

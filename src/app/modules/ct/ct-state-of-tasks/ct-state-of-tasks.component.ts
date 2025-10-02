@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { Component, OnInit, TemplateRef, input, viewChild, inject } from '@angular/core';
 import { MatDialog, MatDialogContent, MatDialogActions, MatDialogClose } from '@angular/material/dialog';
 import { TaskExecState } from '@app/enums/TaskExecState';
 import { ExecContextService } from '@app/services/exec-context/exec-context.service';
@@ -25,27 +25,24 @@ import { CtPreComponent } from '../ct-pre/ct-pre.component';
     imports: [CtSectionComponent, CtSectionBodyComponent, CtSectionBodyRowComponent, MatIconButton, MatTooltip, MatIcon, NgTemplateOutlet, CdkScrollable, MatDialogContent, CtPreComponent, MatDialogActions, MatButton, MatDialogClose]
 })
 export class CtStateOfTasksComponent implements OnInit {
-  @ViewChild('errorDialogTemplate') errorDialogTemplate: TemplateRef<any>;
-  @Input() sourceCodeId: string;
-  @Input() execContextId: string;
+      private execContextService = inject(ExecContextService);
+      public readonly dialog = inject(MatDialog);
+  errorDialogTemplate = viewChild<TemplateRef<any>>('errorDialogTemplate');
+  sourceCodeId = input<string>();
+  execContextId = input<string>();
 
   response: ExecContextStateResult;
   taskExecInfo: TaskExecInfo;
   readonly TaskExecState: { [value: string]: string } = TaskExecState;
-
-  constructor(
-      private execContextService: ExecContextService,
-      readonly dialog: MatDialog,
-  ) { }
 
   ngOnInit(): void {
     this.reload();
   }
 
   reload() {
-    if (this.sourceCodeId && this.execContextId) {
+    if (this.sourceCodeId() && this.execContextId()) {
       this.execContextService
-          .execContextsState(this.sourceCodeId, this.execContextId)
+          .execContextsState(this.sourceCodeId(), this.execContextId())
           .subscribe(response => {
             this.response = response;
           });
@@ -54,11 +51,11 @@ export class CtStateOfTasksComponent implements OnInit {
 
   openError(taskId: string): void {
     this.taskExecInfo = null;
-    this.dialog.open(this.errorDialogTemplate, {
+    this.dialog.open(this.errorDialogTemplate(), {
       width: '100%'
     });
     this.execContextService
-        .taskExecInfo(this.sourceCodeId, this.execContextId, taskId)
+        .taskExecInfo(this.sourceCodeId(), this.execContextId(), taskId)
         .subscribe(taskExecInfo => {
           this.taskExecInfo = taskExecInfo;
         });
@@ -75,7 +72,7 @@ export class CtStateOfTasksComponent implements OnInit {
   }): void {
     console.log('Start downloading file');
     this.execContextService
-        .downloadVariable(this.execContextId, out.id.toString())
+        .downloadVariable(this.execContextId(), out.id.toString())
         .subscribe(response => {
             MhUtils.printHeaders(response.headers);
             let contentDisposition = response.headers.get('Content-Disposition');
@@ -106,5 +103,4 @@ export class CtStateOfTasksComponent implements OnInit {
           //
         });
   }
-
 }

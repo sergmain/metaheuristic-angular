@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { FormControl, FormGroup, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ExperimentsService } from '@app/services/experiments/experiments.service';
@@ -31,6 +31,9 @@ import { CtRestStatusComponent } from '../../ct/ct-rest-status/ct-rest-status.co
 })
 
 export class ExperimentAddComponent implements OnInit {
+      private experimentsService = inject(ExperimentsService);
+      private router = inject(Router);
+      private activatedRoute = inject(ActivatedRoute);
     form: FormGroup = new FormGroup({
         sourceCodeUID: new FormControl('', [Validators.required, Validators.minLength(1)]),
         name: new FormControl('', [Validators.required, Validators.minLength(3)]),
@@ -39,12 +42,6 @@ export class ExperimentAddComponent implements OnInit {
     });
     operationStatusRest: OperationStatusRest;
     sourceCodeUidsForCompany: SourceCodeUidsForCompany;
-
-    constructor(
-        private experimentsService: ExperimentsService,
-        private router: Router,
-        private activatedRoute: ActivatedRoute,
-    ) { }
 
     ngOnInit(): void {
         this.experimentsService

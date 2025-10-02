@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { MatTableDataSource, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow } from '@angular/material/table';
 import { UIStateComponent } from '@app/models/UIStateComponent';
 import { AuthenticationService } from '@app/services/authentication';
@@ -31,6 +31,9 @@ import { TranslateModule } from '@ngx-translate/core';
     imports: [CtSectionComponent, CtSectionHeaderComponent, CtSectionHeaderRowComponent, CtHeadingComponent, CtSectionBodyComponent, CtSectionBodyRowComponent, NgTemplateOutlet, CtSectionFooterComponent, CtSectionFooterRowComponent, CtTablePaginationComponent, CtTableComponent, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatButton, RouterLink, MatIcon, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, DatePipe, TranslateModule]
 })
 export class SessionsComponent extends UIStateComponent implements OnInit {
+      public readonly dialog = inject(MatDialog);
+      public readonly authenticationService = inject(AuthenticationService);
+      private sessionService = inject(SessionService);
 //   columnsToDisplay: string[] = ['sessionId', 'startedOn', 'finishedOn',
 //     'sessionStatus', 'safe', 'normalPercent', 'failPercent', 'errorPercent', 'providerCode', 'modelInfo'];
   columnsToDisplay: string[] = ['sessionId', 'startedOn', 'providerCode',
@@ -39,11 +42,8 @@ export class SessionsComponent extends UIStateComponent implements OnInit {
   dataSource = new MatTableDataSource<SimpleSession>([]);
 
   constructor(
-      readonly dialog: MatDialog,
-      readonly authenticationService: AuthenticationService,
-      private sessionService: SessionService,
-  ) {
-    super(authenticationService);
+) {
+    super(this.authenticationService);
   }
 
   ngOnInit(): void {

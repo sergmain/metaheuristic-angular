@@ -1,5 +1,5 @@
 import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpResponse } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { DefaultResponse } from './models/DefaultResponse';
@@ -9,11 +9,8 @@ import {RuntimeService} from '@services/runtime/runtime.service';
 
 @Injectable()
 export class NotificationsInterceptor implements HttpInterceptor {
-
-    constructor(
-        private runtimeService: RuntimeService,
-        private toastr: ToastrService
-    ) { }
+      private runtimeService = inject(RuntimeService);
+      private toastr = inject(ToastrService);
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 

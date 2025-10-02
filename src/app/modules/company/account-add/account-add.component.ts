@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { AccountResult } from '@app/services/accounts';
 import { OperationStatusRest } from '@app/models/OperationStatusRest';
 import { FormGroup, FormControl, Validators, ValidationErrors, FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -26,6 +26,9 @@ import { CtRestStatusComponent } from '../../ct/ct-rest-status/ct-rest-status.co
     imports: [CtColsComponent, CtColComponent, CtSectionComponent, CtSectionHeaderComponent, CtSectionHeaderRowComponent, CtHeadingComponent, CtSectionBodyComponent, CtSectionBodyRowComponent, FormsModule, ReactiveFormsModule, MatFormField, MatLabel, MatInput, MatHint, CtSectionFooterComponent, CtSectionFooterRowComponent, MatButton, CtRestStatusComponent]
 })
 export class AccountAddComponent implements OnInit {
+      private activatedRoute = inject(ActivatedRoute);
+      private companyService = inject(CompanyService);
+      private router = inject(Router);
     accountResult: AccountResult;
     companyUniqueId: string;
     operationStatusRest: OperationStatusRest;
@@ -59,12 +62,6 @@ export class AccountAddComponent implements OnInit {
             }
         ]),
     });
-
-    constructor(
-        private activatedRoute: ActivatedRoute,
-        private companyService: CompanyService,
-        private router: Router
-    ) { }
 
     ngOnInit(): void {
         this.isDone = false;

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { CompanyService } from '@app/services/company/company.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AccountResult } from '@app/services/accounts';
@@ -28,7 +28,9 @@ import { CtRestStatusComponent } from '../../ct/ct-rest-status/ct-rest-status.co
     imports: [CtColsComponent, CtColComponent, CtSectionComponent, CtSectionHeaderComponent, CtSectionHeaderRowComponent, CtHeadingComponent, CtSectionBodyComponent, CtSectionBodyRowComponent, MatFormField, MatLabel, MatInput, FormsModule, MatCheckbox, CtSectionFooterComponent, CtSectionFooterRowComponent, MatButton, CtRestStatusComponent]
 })
 export class AccountEditComponent implements OnInit {
-
+      private companyService = inject(CompanyService);
+      private activatedRoute = inject(ActivatedRoute);
+      private router = inject(Router);
     companyUniqueId: string;
     accountId: string;
     accountResult: AccountResult;
@@ -36,12 +38,6 @@ export class AccountEditComponent implements OnInit {
     isEnabled: boolean;
     publicName: string;
     username: string;
-
-    constructor(
-        private companyService: CompanyService,
-        private activatedRoute: ActivatedRoute,
-        private router: Router
-    ) { }
 
     ngOnInit(): void {
         this.companyUniqueId = this.activatedRoute.snapshot.paramMap.get('companyUniqueId');

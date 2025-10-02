@@ -1,5 +1,5 @@
 import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { generateFormData } from '@app/helpers/generateFormData';
 import { OperationStatusRest } from '@app/models/OperationStatusRest';
 import { environment } from '@src/environments/environment';
@@ -23,14 +23,14 @@ export interface GetBatchesParams {
 
 @Injectable({ providedIn: 'root' })
 export class BatchService {
+      private http = inject(HttpClient);
     batchDownloader: BatchDownloader;
     batchExexStatusComparer: BatchExexStatusComparer;
     finishedNotification: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
     constructor(
-        private http: HttpClient,
-    ) {
-        this.batchDownloader = new BatchDownloader(http, url);
+) {
+        this.batchDownloader = new BatchDownloader(this.http, url);
         this.batchExexStatusComparer = new BatchExexStatusComparer([FINISHED_STATE, ERROR_STATE]);
         this.batchExexStatusComparer.notification.subscribe((s: boolean) => {
             this.finishedNotification.next(s);

@@ -1,4 +1,4 @@
-import { Component, ViewChild, Output, EventEmitter } from '@angular/core';
+import { Component, output, viewChild, inject } from '@angular/core';
 import { SourceCodesService } from '@app/services/source-codes/source-codes.service';
 import { MatButton } from '@angular/material/button';
 import { SourceCodeResult } from '@app/services/source-codes/SourceCodeResult';
@@ -20,19 +20,15 @@ import { CtSectionFooterRowComponent } from '../../ct/ct-section-footer-row/ct-s
     imports: [CtSectionComponent, CtSectionHeaderComponent, CtSectionHeaderRowComponent, CtHeadingComponent, CtSectionBodyComponent, CtSectionBodyRowComponent, CtFileUploadComponent, CtSectionFooterComponent, CtSectionFooterRowComponent, MatButton]
 })
 export class CardFormUploadSourceCodeComponent {
-    @ViewChild(MatButton) button: MatButton;
-    @ViewChild(CtFileUploadComponent) file: CtFileUploadComponent;
-    @Output() responseChange: EventEmitter<SourceCodeResult> = new EventEmitter<SourceCodeResult>();
-    @Output() abort: EventEmitter<void> = new EventEmitter<void>();
-
-
-    constructor(
-        private sourceCodesService: SourceCodesService
-    ) { }
+      private sourceCodesService = inject(SourceCodesService);
+    button = viewChild(MatButton);
+    file = viewChild(CtFileUploadComponent);
+    responseChange = output<SourceCodeResult>();
+    abort = output<void>();
 
     upload(): void {
         this.sourceCodesService
-            .uploadSourceCode(this.file.fileInput.nativeElement.files[0])
+            .uploadSourceCode(this.file().fileInput.nativeElement.files[0])
             .subscribe(response => {
                 this.responseChange.emit(response);
             });
@@ -43,10 +39,10 @@ export class CardFormUploadSourceCodeComponent {
     }
 
     changed(value: string): void {
-        if ((this.file.fileInput.nativeElement as HTMLInputElement).files.length) {
-            this.button.disabled = false;
+        if ((this.file().fileInput.nativeElement as HTMLInputElement).files.length) {
+            this.button().disabled = false;
         } else {
-            this.button.disabled = true;
+            this.button().disabled = true;
         }
     }
 }

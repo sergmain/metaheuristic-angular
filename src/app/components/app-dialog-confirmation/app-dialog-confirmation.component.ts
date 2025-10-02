@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { forkJoin } from 'rxjs';
 import {MhUtils} from '@services/mh-utils/mh-utils.service';
@@ -29,12 +29,8 @@ export interface ConfirmationDialogInterface {
     imports: [MatButton]
 })
 export class AppDialogConfirmationComponent {
-    constructor(
-        public dialogRef: MatDialogRef < AppDialogConfirmationComponent > ,
-        @Inject(MAT_DIALOG_DATA) public data: any
-    ) {
-        // console.log(data);
-    }
+      public dialogRef = inject<MatDialogRef < AppDialogConfirmationComponent >>(MatDialogRef < AppDialogConfirmationComponent >);
+      public data = inject<any>(MAT_DIALOG_DATA);
 
     onNoClick(): void {
         this.dialogRef.close(0);

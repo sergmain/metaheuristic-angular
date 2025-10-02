@@ -1,4 +1,4 @@
-import {Component, ViewChild} from '@angular/core';
+import {Component, ViewChild, inject } from '@angular/core';
 import {DefaultResponse} from '@app/models/DefaultResponse';
 import { FormControl, FormGroup, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
@@ -25,6 +25,9 @@ import { TranslateModule } from '@ngx-translate/core';
     imports: [CtColsComponent, CtColComponent, CtSectionComponent, CtSectionHeaderComponent, CtSectionHeaderRowComponent, CtHeadingComponent, CtSectionBodyComponent, FormsModule, ReactiveFormsModule, MatFormField, MatLabel, MatInput, CtSectionFooterComponent, CtSectionFooterRowComponent, MatButton, RouterLink, TranslateModule]
 })
 export class SettingsSecurityIndexComponent {
+      private settingsService = inject(SettingsService);
+      private router = inject(Router);
+      private activatedRoute = inject(ActivatedRoute);
     response: DefaultResponse;
     status: string;
     passwordForm = new FormGroup({
@@ -32,12 +35,6 @@ export class SettingsSecurityIndexComponent {
         newPassword: new FormControl('', [Validators.required, Validators.minLength(3)]),
         newPassword2: new FormControl('', [Validators.required, Validators.minLength(3)]),
     });
-
-    constructor(
-        private settingsService: SettingsService,
-        private router: Router,
-        private activatedRoute: ActivatedRoute
-    ) { }
 
     changePassword(): void {
         this.settingsService
