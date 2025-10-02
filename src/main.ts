@@ -14,7 +14,7 @@ import {provideAnimations} from '@angular/platform-browser/animations';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
 import {HttpLoaderFactory} from './app/app.module';
-import {SimpleNotificationsModule} from './app/modules/angular2-notifications/simple-notifications.module';
+import { provideToastr } from 'ngx-toastr';
 import {AppComponent} from './app/app.component';
 import { Observable, map } from 'rxjs';
 import { parse } from 'yaml';
@@ -58,7 +58,6 @@ bootstrapApplication(AppComponent, {
                     deps: [HttpClient]
                 }
             }),
-            SimpleNotificationsModule.forRoot()
         ),
         // Add the new router provider
         provideRouter(
@@ -77,7 +76,14 @@ bootstrapApplication(AppComponent, {
             multi: true
         },
         provideHttpClient(withInterceptorsFromDi()),
-        provideAnimations()
+        provideAnimations(),
+        provideToastr({
+            timeOut: 10000,
+            positionClass: 'toast-bottom-right',
+            progressBar: true,
+            closeButton: true,
+            preventDuplicates: true,
+        })
     ]
 })
     .catch(err => console.error(err));

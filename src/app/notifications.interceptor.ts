@@ -4,22 +4,15 @@ import { Observable, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { DefaultResponse } from './models/DefaultResponse';
 import { OperationStatus } from './enums/OperationStatus';
-import { NotificationsService } from './modules/angular2-notifications/services/notifications.service';
+import { ToastrService } from 'ngx-toastr';
 import {RuntimeService} from '@services/runtime/runtime.service';
 
 @Injectable()
 export class NotificationsInterceptor implements HttpInterceptor {
 
-    options: { showProgressBar: boolean; pauseOnHover: boolean; timeOut: number; clickToClose: boolean } = {
-        timeOut: 10000,
-        showProgressBar: true,
-        pauseOnHover: true,
-        clickToClose: false,
-    };
-
     constructor(
         private runtimeService: RuntimeService,
-        private notificationsService: NotificationsService
+        private toastr: ToastrService
     ) { }
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -41,11 +34,10 @@ export class NotificationsInterceptor implements HttpInterceptor {
                     if (error.error) {
                         const title: string = error.error.status ? error.error.status : error.status;
                         const content: string = error.error.message ? error.error.message : error.message;
-                        this.notificationsService.error(title, content, {
-                            // timeOut: 10000,
-                            // showProgressBar: true,
-                            pauseOnHover: true,
-                            clickToClose: true,
+                        this.toastr.error(content, title, {
+                            timeOut: 10000,
+                            progressBar: true,
+                            enableHtml: true
                         });
                     }
                 }
@@ -54,11 +46,10 @@ export class NotificationsInterceptor implements HttpInterceptor {
                     if (serverReady) {
                         const title: string = 'Server offline';
                         const content: string = '';
-                        this.notificationsService.error(title, content, {
-                            // timeOut: 10000,
-                            // showProgressBar: true,
-                            pauseOnHover: true,
-                            clickToClose: true,
+                        this.toastr.error(content, title, {
+                            timeOut: 10000,
+                            progressBar: true,
+                            enableHtml: true
                         });
                     }
                     else {
@@ -76,38 +67,34 @@ export class NotificationsInterceptor implements HttpInterceptor {
         const infos: string[] = response.infoMessages || [];
 
         errors.forEach((err: string) => {
-            this.notificationsService.error(status, err, {
-                // timeOut: 10000,
-                // showProgressBar: true,
-                pauseOnHover: true,
-                clickToClose: true,
+            this.toastr.error(err, status, {
+                timeOut: 10000,
+                progressBar: true,
+                enableHtml: true
             });
         });
 
         infos.forEach((info: string) => {
             if (status === OperationStatus.OK) {
-                this.notificationsService.success(status, info, {
+                this.toastr.success(info, status, {
                     timeOut: 10000,
-                    showProgressBar: true,
-                    pauseOnHover: true,
-                    clickToClose: true,
+                    progressBar: true,
+                    enableHtml: true
                 });
             } else {
-                this.notificationsService.info(status, info, {
-                    // timeOut: 10000,
-                    // showProgressBar: true,
-                    pauseOnHover: true,
-                    clickToClose: true,
+                this.toastr.info(info, status, {
+                    timeOut: 10000,
+                    progressBar: true,
+                    enableHtml: true
                 });
             }
         });
 
         if (errors.length === 0 && infos.length === 0 && status) {
-            this.notificationsService.success(status, null, {
+            this.toastr.success('', status, {
                 timeOut: 10000,
-                showProgressBar: true,
-                pauseOnHover: true,
-                clickToClose: true,
+                progressBar: true,
+                enableHtml: true
             });
         }
     }
