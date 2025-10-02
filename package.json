@@ -60,7 +60,9 @@
     "npm uninstall @biesbjerg/ngx-translate-extract": "npm uninstall @biesbjerg/ngx-translate-extract --force",
     "npm install @vendure/ngx-translate-extract@^9 --save-dev": "npm install @vendure/ngx-translate-extract@^9 --save-dev",
     "npm install yaml": "npm install yaml",
-    "ng g @angular/core:control-flow": "ng g @angular/core:control-flow"
+    "ng g @angular/core:control-flow": "ng g @angular/core:control-flow",
+    "npm install ngxtension": "npm install ngxtension",
+    "ng update electron": "ng update electron@latest"
   },
   "engines": {
     "node": ">=18.18.2",
@@ -88,6 +90,7 @@
     "jszip": "3.10.1",
     "material-icons": "^1.13.12",
     "ngx-toastr": "^19.1.0",
+    "ngxtension": "^6.0.0",
     "normalize.css": "8.0.1",
     "rxjs": "7.8.1",
     "tslib": "^2.6.2",
