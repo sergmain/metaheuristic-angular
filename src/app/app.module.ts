@@ -21,8 +21,6 @@ import { PilotComponent } from './components/pilot/pilot.component';
 import { JwtInterceptor } from './jwt.interceptor';
 import { SimpleNotificationsModule } from './modules/angular2-notifications/simple-notifications.module';
 
-// import { CtModule } from './modules/ct/ct.module';
-
 import { NotificationsInterceptor } from './notifications.interceptor';
 
 export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
