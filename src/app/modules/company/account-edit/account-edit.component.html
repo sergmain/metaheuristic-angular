@@ -1,36 +1,38 @@
-<ct-cols align-items="baseline" *ngIf="accountResult">
+@if (accountResult) {
+  <ct-cols align-items="baseline">
     <ct-col size="6">
-        <ct-section>
-            <ct-section-header>
-                <ct-section-header-row>
-                    <ct-heading>Edit Account #{{accountId}} </ct-heading>
-                </ct-section-header-row>
-            </ct-section-header>
-            <ct-section-body>
-                <ct-section-body-row>
-                    <mat-form-field appearance="outline" style="width: 100%;" disabled>
-                        <mat-label>Username</mat-label>
-                        <input matInput [value]="accountResult.account.username" disabled />
-                    </mat-form-field>
-                    <mat-form-field appearance="outline" style="width: 100%;">
-                        <mat-label>Public Name</mat-label>
-                        <input matInput [(ngModel)]="publicName" />
-                    </mat-form-field>
-                    <br>
-                    <mat-checkbox [(ngModel)]="isEnabled">Is account enabled?</mat-checkbox>
-                </ct-section-body-row>
-            </ct-section-body>
-            <ct-section-footer>
-                <ct-section-footer-row>
-                    <div class="flex justify-content-flex-end gap-8px">
-                        <button mat-stroked-button (click)="back()">Cancel</button>
-                        <button mat-flat-button (click)="saveChanges()" color="primary">Save Changes</button>
-                    </div>
-                </ct-section-footer-row>
-            </ct-section-footer>
+      <ct-section>
+        <ct-section-header>
+          <ct-section-header-row>
+            <ct-heading>Edit Account #{{accountId}} </ct-heading>
+          </ct-section-header-row>
+        </ct-section-header>
+        <ct-section-body>
+          <ct-section-body-row>
+            <mat-form-field appearance="outline" style="width: 100%;" disabled>
+              <mat-label>Username</mat-label>
+              <input matInput [value]="accountResult.account.username" disabled />
+            </mat-form-field>
+            <mat-form-field appearance="outline" style="width: 100%;">
+              <mat-label>Public Name</mat-label>
+              <input matInput [(ngModel)]="publicName" />
+            </mat-form-field>
+            <br>
+              <mat-checkbox [(ngModel)]="isEnabled">Is account enabled?</mat-checkbox>
+            </ct-section-body-row>
+          </ct-section-body>
+          <ct-section-footer>
+            <ct-section-footer-row>
+              <div class="flex justify-content-flex-end gap-8px">
+                <button mat-stroked-button (click)="back()">Cancel</button>
+                <button mat-flat-button (click)="saveChanges()" color="primary">Save Changes</button>
+              </div>
+            </ct-section-footer-row>
+          </ct-section-footer>
         </ct-section>
-    </ct-col>
-    <ct-col size="6">
+      </ct-col>
+      <ct-col size="6">
         <ct-rest-status [content]=""></ct-rest-status>
-    </ct-col>
-</ct-cols>
+      </ct-col>
+    </ct-cols>
+  }

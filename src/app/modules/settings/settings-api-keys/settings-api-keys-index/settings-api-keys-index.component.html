@@ -1,71 +1,70 @@
 <ct-section>
-    <ct-section-body>
-        <ct-section-body-row >
-            <div class="flex gap-16px">
-                OPENAI_API_KEY:
-                <div *ngIf="editFormActive(); then editOpenaiKey else showOpenaiKey">here is ignored</div>
-                <ng-template #editOpenaiKey>
-                    <form [formGroup]="predefinedApiKeyForm" novalidate="novalidate">
-    <mat-form-field appearance="outline" style="width: 100%;">
-        <mat-label>OPENAI_API_KEY, required</mat-label>
-        <input matInput type="text" autocomplete="off" formControlName="openaiKey"/>
-    </mat-form-field>
-</form>
-                    <button mat-icon-button (click)="saveOpenaiKey()" matTooltip="Save OpenAI key" color="primary">
-    <mat-icon>save</mat-icon>
-</button>
-<button mat-icon-button (click)="cancelEditingOpenaiKey()" matTooltip="Cancel editing" color="primary">
-    <mat-icon>cancel</mat-icon>
-</button>
-                </ng-template>
-                <ng-template #showOpenaiKey>
-                    {{apiKeys.openaiKey}}
-                    <button mat-icon-button (click)="startEditingOpenaiKey()" matTooltip="Edit OPENAI_API_KEY" color="primary">
-    <mat-icon>edit_document</mat-icon>
-</button>
-                </ng-template>
+  <ct-section-body>
+    <ct-section-body-row >
+      <div class="flex gap-16px">
+        OPENAI_API_KEY:
+        @if (editFormActive()) {
+          <form [formGroup]="predefinedApiKeyForm" novalidate="novalidate">
+            <mat-form-field appearance="outline" style="width: 100%;">
+              <mat-label>OPENAI_API_KEY, required</mat-label>
+              <input matInput type="text" autocomplete="off" formControlName="openaiKey"/>
+            </mat-form-field>
+          </form>
+          <button mat-icon-button (click)="saveOpenaiKey()" matTooltip="Save OpenAI key" color="primary">
+            <mat-icon>save</mat-icon>
+          </button>
+          <button mat-icon-button (click)="cancelEditingOpenaiKey()" matTooltip="Cancel editing" color="primary">
+            <mat-icon>cancel</mat-icon>
+          </button>
+        } @else {
+          {{apiKeys.openaiKey}}
+          <button mat-icon-button (click)="startEditingOpenaiKey()" matTooltip="Edit OPENAI_API_KEY" color="primary">
+            <mat-icon>edit_document</mat-icon>
+          </button>
+        }
 
-            </div>
-        </ct-section-body-row>
-    </ct-section-body>
+      </div>
+    </ct-section-body-row>
+  </ct-section-body>
 </ct-section>
 
 
-<ct-cols align-items="baseline" *ngIf="false">
+@if (false) {
+  <ct-cols align-items="baseline">
     <ct-col size="6">
-        <ct-section>
-            <ct-section-header>
-                <ct-section-header-row>
-                    <ct-heading>Configure keys for API</ct-heading>
-                </ct-section-header-row>
-            </ct-section-header>
-            <ct-section-body>
-                <form [formGroup]="customApiKeyForm" novalidate="novalidate">
-                    <mat-form-field appearance="outline" style="width: 100%;">
-                        <mat-label>Name of API key, required</mat-label>
-                        <input matInput="matInput" type="text" autocomplete="off" formControlName="oldPassword" />
-                    </mat-form-field>
-                    <br>
-                    <mat-form-field appearance="outline" style="width: 100%;">
-                        <mat-label>Value of API key, required</mat-label>
-                        <input matInput="matInput" type="text" autocomplete="off" formControlName="newPassword" />
-                    </mat-form-field>
-                    <br>
-                </form>
+      <ct-section>
+        <ct-section-header>
+          <ct-section-header-row>
+            <ct-heading>Configure keys for API</ct-heading>
+          </ct-section-header-row>
+        </ct-section-header>
+        <ct-section-body>
+          <form [formGroup]="customApiKeyForm" novalidate="novalidate">
+            <mat-form-field appearance="outline" style="width: 100%;">
+              <mat-label>Name of API key, required</mat-label>
+              <input matInput="matInput" type="text" autocomplete="off" formControlName="oldPassword" />
+            </mat-form-field>
+            <br>
+              <mat-form-field appearance="outline" style="width: 100%;">
+                <mat-label>Value of API key, required</mat-label>
+                <input matInput="matInput" type="text" autocomplete="off" formControlName="newPassword" />
+              </mat-form-field>
+              <br>
+              </form>
             </ct-section-body>
-
             <ct-section-footer>
-                <ct-section-footer-row>
-                    <div class="flex justify-content-flex-end gap-8px">
-                        <button mat-stroked-button="mat-stroked-button" routerLink="/settings">
-    {{ 'main.Cancel' | translate }}</button>
-                        <button mat-flat-button="mat-flat-button" (click)="createKey()" color="primary"
-        [disabled]="notToCreateCustomForm()">{{ 'main.Change' | translate }}</button>
-                    </div>
-                </ct-section-footer-row>
+              <ct-section-footer-row>
+                <div class="flex justify-content-flex-end gap-8px">
+                  <button mat-stroked-button="mat-stroked-button" routerLink="/settings">
+                  {{ 'main.Cancel' | translate }}</button>
+                  <button mat-flat-button="mat-flat-button" (click)="createKey()" color="primary"
+                  [disabled]="notToCreateCustomForm()">{{ 'main.Change' | translate }}</button>
+                </div>
+              </ct-section-footer-row>
             </ct-section-footer>
-        </ct-section>
-    </ct-col>
-</ct-cols>
+          </ct-section>
+        </ct-col>
+      </ct-cols>
+    }
 
 

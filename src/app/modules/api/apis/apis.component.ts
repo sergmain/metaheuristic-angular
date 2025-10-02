@@ -7,7 +7,7 @@ import {MatDialog} from "@angular/material/dialog";
 import {SimpleApisResult} from "@services/api/SimpleApisResult";
 import {SimpleApi} from "@services/api/SimpleApi";
 import {ApiService} from "@services/api/api.service";
-import { NgIf, NgTemplateOutlet } from '@angular/common';
+import { NgTemplateOutlet } from '@angular/common';
 import { CtSectionComponent } from '../../ct/ct-section/ct-section.component';
 import { CtSectionHeaderComponent } from '../../ct/ct-section-header/ct-section-header.component';
 import { CtSectionHeaderRowComponent } from '../../ct/ct-section-header-row/ct-section-header-row.component';
@@ -30,7 +30,7 @@ import { TranslateModule } from '@ngx-translate/core';
     selector: 'apis',
     templateUrl: './apis.component.html',
     styleUrls: ['./apis.component.scss'],
-    imports: [NgIf, CtSectionComponent, CtSectionHeaderComponent, CtSectionHeaderRowComponent, CtHeadingComponent, MatSlideToggle, FormsModule, MatButton, RouterLink, CtSectionBodyComponent, CtSectionBodyRowComponent, NgTemplateOutlet, CtSectionFooterComponent, CtSectionFooterRowComponent, CtTablePaginationComponent, CtTableComponent, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, CtPre10pxComponent, MatIcon, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, TranslateModule]
+    imports: [CtSectionComponent, CtSectionHeaderComponent, CtSectionHeaderRowComponent, CtHeadingComponent, MatSlideToggle, FormsModule, MatButton, RouterLink, CtSectionBodyComponent, CtSectionBodyRowComponent, NgTemplateOutlet, CtSectionFooterComponent, CtSectionFooterRowComponent, CtTablePaginationComponent, CtTableComponent, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, CtPre10pxComponent, MatIcon, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, TranslateModule]
 })
 export class ApisComponent extends UIStateComponent implements OnInit, ConfirmationDialogInterface {
   columnsToDisplay: string[] = ['id', 'name', 'code', 'bts'];

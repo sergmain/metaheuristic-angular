@@ -6,7 +6,7 @@ import { UIStateComponent } from '@app/models/UIStateComponent';
 import { AccountsResult, SimpleAccount } from '@app/services/accounts';
 import { AuthenticationService } from '@app/services/authentication';
 import { DispatcherAssetModeService } from '@app/services/dispatcher-asset-mode/dispatcher-asset-mode.service';
-import { NgIf, DatePipe } from '@angular/common';
+import { DatePipe } from '@angular/common';
 import { CtSectionComponent } from '../../ct/ct-section/ct-section.component';
 import { CtSectionHeaderComponent } from '../../ct/ct-section-header/ct-section-header.component';
 import { CtSectionHeaderRowComponent } from '../../ct/ct-section-header-row/ct-section-header-row.component';
@@ -26,7 +26,7 @@ import { CtTablePaginationComponent } from '../../ct/ct-table-pagination/ct-tabl
     selector: 'accounts-view',
     templateUrl: './accounts.component.html',
     styleUrls: ['./accounts.component.scss'],
-    imports: [NgIf, CtSectionComponent, CtSectionHeaderComponent, CtSectionHeaderRowComponent, CtHeadingComponent, CtAlertComponent, CtSectionBodyComponent, CtSectionBodyRowComponent, CtTableComponent, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatButton, RouterLink, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, CtSectionFooterComponent, CtSectionFooterRowComponent, CtTablePaginationComponent, DatePipe]
+    imports: [CtSectionComponent, CtSectionHeaderComponent, CtSectionHeaderRowComponent, CtHeadingComponent, CtAlertComponent, CtSectionBodyComponent, CtSectionBodyRowComponent, CtTableComponent, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatButton, RouterLink, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, CtSectionFooterComponent, CtSectionFooterRowComponent, CtTablePaginationComponent, DatePipe]
 })
 
 export class AccountsComponent extends UIStateComponent implements OnInit {

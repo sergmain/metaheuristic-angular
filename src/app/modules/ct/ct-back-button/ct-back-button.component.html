@@ -1,7 +1,9 @@
-<div *ngIf="config">
+@if (config) {
+  <div>
     <div class="flex justify-content-flex-end">
-<!--    <div class="flex justify-content-flex-start gap-8px">-->
-<!--            <button mat-fab color="primary" (click)="back()">{{'ctBackButton.back' | translate}} </button>-->
-            <button mat-icon-button color="primary" (click)="back()" matTooltip="Back to previous page"><mat-icon>arrow_back</mat-icon></button>
+      <!--    <div class="flex justify-content-flex-start gap-8px">-->
+      <!--            <button mat-fab color="primary" (click)="back()">{{'ctBackButton.back' | translate}} </button>-->
+      <button mat-icon-button color="primary" (click)="back()" matTooltip="Back to previous page"><mat-icon>arrow_back</mat-icon></button>
     </div>
-</div>
+  </div>
+}

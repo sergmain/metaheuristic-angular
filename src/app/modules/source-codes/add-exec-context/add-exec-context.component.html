@@ -1,40 +1,46 @@
-<ng-template [ngIf]="sourceCodeResponse">
-    <ct-cols align-items="flex-start">
-        <ct-col size="6">
-            <ct-section>
-                <ct-section-header>
-                    <ct-section-header-row>
-                        <div>Source Code: #{{ sourceCodeResponse.id }}</div>
-                        <ct-heading> {{ sourceCodeResponse.uid }}</ct-heading>
-                    </ct-section-header-row>
-                </ct-section-header>
-                <ct-section-body>
-                    <ct-section-body-row>
-                        <p>New execContext with Single Input</p>
-                    </ct-section-body-row>
-                </ct-section-body>
-                <ct-section-footer>
-                    <ct-section-footer-row>
-                        <div class="flex justify-content-flex-end gap-8px">
-                            <button mat-stroked-button="mat-stroked-button" (click)="cancel()">Back </button>
-                            <button mat-flat-button="mat-flat-button" (click)="createWithVariable()" color="primary"
-    [disabled]="currentStates.has(states.loading)">Create </button>
-                        </div>
-                    </ct-section-footer-row>
-                </ct-section-footer>
-            </ct-section>
-        </ct-col>
-        <ct-col size="6">
-            <ct-section *ngIf="responseSingle">
-                <ct-section-body>
-                    <ct-section-body-row>
-                        <ct-section-content>
-                            <p *ngFor="let info of responseSingle.infoMessages; index as i; ">{{info}}</p>
-                            <p *ngFor="let error of responseSingle.errorMessages; index as i; ">{{error}}</p>
-                        </ct-section-content>
-                    </ct-section-body-row>
-                </ct-section-body>
-            </ct-section>
-        </ct-col>
-    </ct-cols>
-</ng-template>
+@if (sourceCodeResponse) {
+  <ct-cols align-items="flex-start">
+    <ct-col size="6">
+      <ct-section>
+        <ct-section-header>
+          <ct-section-header-row>
+            <div>Source Code: #{{ sourceCodeResponse.id }}</div>
+            <ct-heading> {{ sourceCodeResponse.uid }}</ct-heading>
+          </ct-section-header-row>
+        </ct-section-header>
+        <ct-section-body>
+          <ct-section-body-row>
+            <p>New execContext with Single Input</p>
+          </ct-section-body-row>
+        </ct-section-body>
+        <ct-section-footer>
+          <ct-section-footer-row>
+            <div class="flex justify-content-flex-end gap-8px">
+              <button mat-stroked-button="mat-stroked-button" (click)="cancel()">Back </button>
+              <button mat-flat-button="mat-flat-button" (click)="createWithVariable()" color="primary"
+              [disabled]="currentStates.has(states.loading)">Create </button>
+            </div>
+          </ct-section-footer-row>
+        </ct-section-footer>
+      </ct-section>
+    </ct-col>
+    <ct-col size="6">
+      @if (responseSingle) {
+        <ct-section>
+          <ct-section-body>
+            <ct-section-body-row>
+              <ct-section-content>
+                @for (info of responseSingle.infoMessages; track info; let i = $index) {
+                  <p>{{info}}</p>
+                }
+                @for (error of responseSingle.errorMessages; track error; let i = $index) {
+                  <p>{{error}}</p>
+                }
+              </ct-section-content>
+            </ct-section-body-row>
+          </ct-section-body>
+        </ct-section>
+      }
+    </ct-col>
+  </ct-cols>
+}

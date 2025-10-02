@@ -2,14 +2,16 @@
 <ct-section>
   <ct-section-header>
     <ct-section-header-row>
-      <ct-heading>  
+      <ct-heading>
         <div>{{ 'batch-status.Status of execution of batch _batchId_' | translate:{batchId: batchId} }} </div>
       </ct-heading>
     </ct-section-header-row>
   </ct-section-header>
   <ct-section-body>
-    <ct-section-body-row *ngIf="[states.wait,states.show].includes(currentState)"> 
-      <ct-pre>{{response.console}}</ct-pre>
-    </ct-section-body-row>
+    @if ([states.wait,states.show].includes(currentState)) {
+      <ct-section-body-row>
+        <ct-pre>{{response.console}}</ct-pre>
+      </ct-section-body-row>
+    }
   </ct-section-body>
 </ct-section>

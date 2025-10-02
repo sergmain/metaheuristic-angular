@@ -6,7 +6,7 @@ import { CompanyService } from '@app/services/company/company.service';
 import { SimpleCompaniesResult } from '@app/services/company/SimpleCompaniesResult';
 import { SimpleCompany } from '@app/services/company/SimpleCompany';
 import { DispatcherAssetModeService } from '@app/services/dispatcher-asset-mode/dispatcher-asset-mode.service';
-import { NgIf, NgTemplateOutlet } from '@angular/common';
+import { NgTemplateOutlet } from '@angular/common';
 import { CtSectionComponent } from '../../ct/ct-section/ct-section.component';
 import { CtSectionHeaderComponent } from '../../ct/ct-section-header/ct-section-header.component';
 import { CtSectionHeaderRowComponent } from '../../ct/ct-section-header-row/ct-section-header-row.component';
@@ -25,7 +25,7 @@ import { RouterLink } from '@angular/router';
     selector: 'companies',
     templateUrl: './companies.component.html',
     styleUrls: ['./companies.component.sass'],
-    imports: [NgIf, CtSectionComponent, CtSectionHeaderComponent, CtSectionHeaderRowComponent, CtHeadingComponent, NgTemplateOutlet, CtAlertComponent, CtSectionBodyComponent, CtSectionBodyRowComponent, CtSectionFooterComponent, CtSectionFooterRowComponent, CtTablePaginationComponent, CtTableComponent, MatTable, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatButton, RouterLink]
+    imports: [CtSectionComponent, CtSectionHeaderComponent, CtSectionHeaderRowComponent, CtHeadingComponent, NgTemplateOutlet, CtAlertComponent, CtSectionBodyComponent, CtSectionBodyRowComponent, CtSectionFooterComponent, CtSectionFooterRowComponent, CtTablePaginationComponent, CtTableComponent, MatTable, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatButton, RouterLink]
 })
 export class CompaniesComponent extends UIStateComponent implements OnInit {
     columnsToDisplay: string[] = ['uniqueId', 'name', 'bts'];

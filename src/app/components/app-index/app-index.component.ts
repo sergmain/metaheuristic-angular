@@ -5,7 +5,7 @@ import { MatTableDataSource, MatTable, MatColumnDef, MatHeaderCellDef, MatHeader
 import {map, Observable} from 'rxjs';
 import {Clipboard} from '@angular/cdk/clipboard';
 import {environment} from '@src/environments/environment';
-import { NgIf, AsyncPipe } from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 import { CtContentComponent } from '../../modules/ct/ct-content/ct-content.component';
 import { CtColsComponent } from '../../modules/ct/ct-cols/ct-cols.component';
 import { CtColComponent } from '../../modules/ct/ct-col/ct-col.component';
@@ -22,7 +22,7 @@ import { CopyRightComponent } from '../../modules/copy-right/copy-right/copy-rig
     selector: 'app-index',
     templateUrl: './app-index.component.html',
     styleUrls: ['./app-index.component.scss'],
-    imports: [NgIf, CtContentComponent, CtColsComponent, CtColComponent, CtSectionComponent, CtSectionBodyComponent, CtSectionBodyRowComponent, CtEnvMsgOuterComponent, MatButton, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatTooltip, MatIcon, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, MatIconButton, CopyRightComponent, AsyncPipe]
+    imports: [CtContentComponent, CtColsComponent, CtColComponent, CtSectionComponent, CtSectionBodyComponent, CtSectionBodyRowComponent, CtEnvMsgOuterComponent, MatButton, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatTooltip, MatIcon, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, MatIconButton, CopyRightComponent, AsyncPipe]
 })
 export class AppIndexComponent {
 

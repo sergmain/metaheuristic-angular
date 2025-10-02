@@ -17,7 +17,7 @@ import {SelectionModel} from "@angular/cdk/collections";
 import { MatTableDataSource, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow } from "@angular/material/table";
 import { FormControl, FormGroup, Validators, FormsModule, ReactiveFormsModule } from "@angular/forms";
 import {MhUtils} from '@services/mh-utils/mh-utils.service';
-import { NgIf, NgFor } from '@angular/common';
+
 import { CtColsComponent } from '../../ct/ct-cols/ct-cols.component';
 import { CtColComponent } from '../../ct/ct-col/ct-col.component';
 import { CtSectionComponent } from '../../ct/ct-section/ct-section.component';
@@ -40,7 +40,7 @@ import { CtRestStatusComponent } from '../../ct/ct-rest-status/ct-rest-status.co
     selector: 'evaluation-add',
     templateUrl: './evaluation-add.component.html',
     styleUrls: ['./evaluation-add.component.scss'],
-    imports: [NgIf, CtColsComponent, CtColComponent, CtSectionComponent, CtSectionHeaderComponent, CtSectionHeaderRowComponent, CtHeadingComponent, CtSectionBodyComponent, CtSectionBodyRowComponent, FormsModule, ReactiveFormsModule, MatFormField, MatLabel, MatInput, MatHint, MatSelect, NgFor, MatOption, CtTableComponent, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCheckbox, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, CtSectionFooterComponent, CtSectionFooterRowComponent, MatButton, RouterLink, CtRestStatusComponent, TranslateModule]
+    imports: [CtColsComponent, CtColComponent, CtSectionComponent, CtSectionHeaderComponent, CtSectionHeaderRowComponent, CtHeadingComponent, CtSectionBodyComponent, CtSectionBodyRowComponent, FormsModule, ReactiveFormsModule, MatFormField, MatLabel, MatInput, MatHint, MatSelect, MatOption, CtTableComponent, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCheckbox, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, CtSectionFooterComponent, CtSectionFooterRowComponent, MatButton, RouterLink, CtRestStatusComponent, TranslateModule]
 })
 
 export class EvaluationAddComponent extends UIStateComponent implements OnInit, OnDestroy {

@@ -16,7 +16,7 @@ import {MIN_PROMPT_LEN} from '@app/modules/mh-consts';
 import {Subscription} from 'rxjs';
 import { CtColsComponent } from '../../ct/ct-cols/ct-cols.component';
 import { CtColComponent } from '../../ct/ct-col/ct-col.component';
-import { NgTemplateOutlet, NgIf } from '@angular/common';
+import { NgTemplateOutlet } from '@angular/common';
 import { CtSectionComponent } from '../../ct/ct-section/ct-section.component';
 import { CtSectionBodyComponent } from '../../ct/ct-section-body/ct-section-body.component';
 import { CtSectionBodyRowComponent } from '../../ct/ct-section-body-row/ct-section-body-row.component';
@@ -33,7 +33,7 @@ import { MatSlideToggle } from '@angular/material/slide-toggle';
     selector: 'chat-new',
     templateUrl: './chat-new.component.html',
     styleUrls: ['./chat-new.component.scss'],
-    imports: [CtColsComponent, CtColComponent, NgTemplateOutlet, CtSectionComponent, CtSectionBodyComponent, CtSectionBodyRowComponent, MatIconButton, RouterLink, MatIcon, CtTableComponent, MatTable, MatColumnDef, MatCellDef, MatCell, MatRowDef, MatRow, NgIf, FormsModule, ReactiveFormsModule, MatFormField, MatLabel, MatInput, CdkTextareaAutosize, CtSectionFooterComponent, CtSectionFooterRowComponent, MatButton, MatTooltip, MatSlideToggle]
+    imports: [CtColsComponent, CtColComponent, NgTemplateOutlet, CtSectionComponent, CtSectionBodyComponent, CtSectionBodyRowComponent, MatIconButton, RouterLink, MatIcon, CtTableComponent, MatTable, MatColumnDef, MatCellDef, MatCell, MatRowDef, MatRow, FormsModule, ReactiveFormsModule, MatFormField, MatLabel, MatInput, CdkTextareaAutosize, CtSectionFooterComponent, CtSectionFooterRowComponent, MatButton, MatTooltip, MatSlideToggle]
 })
 // DO NOT REMOVE '-new' FROM NAME OF COMPONENT
 export class ChatNewComponent extends UIStateComponent implements OnInit, OnDestroy {

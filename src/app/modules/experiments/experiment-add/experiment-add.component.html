@@ -1,61 +1,63 @@
 <ct-cols>
-    <ct-col size="6">
-        <ct-section>
-            <ct-section-header>
-                <ct-section-header-row>
-                    <ct-heading>New Experiment</ct-heading>
-                </ct-section-header-row>
-            </ct-section-header>
-            <ct-section-body>
-                <ct-section-body-row>
-                    <form [formGroup]="form" novalidate="novalidate">
+  <ct-col size="6">
+    <ct-section>
+      <ct-section-header>
+        <ct-section-header-row>
+          <ct-heading>New Experiment</ct-heading>
+        </ct-section-header-row>
+      </ct-section-header>
+      <ct-section-body>
+        <ct-section-body-row>
+          <form [formGroup]="form" novalidate="novalidate">
+            <mat-form-field appearance="outline">
+              <mat-label>List of Uids of source codes</mat-label>
+              <mat-select formControlName="sourceCodeUID">
+                @for (sourceCode of sourceCodeUidsForCompany?.items; track sourceCode) {
+                  <div>
+                    <mat-option [value]="sourceCode.uid">{{sourceCode.uid}}</mat-option>
+                  </div>
+                }
+              </mat-select>
+              <mat-hint>This is a required field.</mat-hint>
+            </mat-form-field>
+            <br>
+              <br>
+                <mat-form-field appearance="outline">
+                  <mat-label>Name</mat-label>
+                  <input matInput="matInput" formControlName="name" />
+                  <mat-hint>This is a required field.</mat-hint>
+                </mat-form-field>
+                <br>
+                  <br>
+                    <mat-form-field appearance="outline">
+                      <mat-label>Description</mat-label>
+                      <textarea matInput="matInput" formControlName="description"
+                      cdkTextareaAutosize="cdkTextareaAutosize" cdkAutosizeMinRows="5"></textarea>
+                      <mat-hint>This is a required field.</mat-hint>
+                    </mat-form-field>
+                    <br>
+                      <br>
                         <mat-form-field appearance="outline">
-                            <mat-label>List of Uids of source codes</mat-label>
-                            <mat-select formControlName="sourceCodeUID">
-                                <div *ngFor="let sourceCode of sourceCodeUidsForCompany?.items">
-                                    <mat-option [value]="sourceCode.uid">{{sourceCode.uid}}</mat-option>
-                                </div>
-                            </mat-select>
-                            <mat-hint>This is a required field.</mat-hint>
+                          <mat-label>Experiment code</mat-label>
+                          <textarea matInput="matInput" formControlName="experimentCode"
+                          cdkTextareaAutosize="cdkTextareaAutosize" cdkAutosizeMinRows="5"></textarea>
+                          <mat-hint>This is a required field.</mat-hint>
                         </mat-form-field>
-                        <br>
-                        <br>
-                        <mat-form-field appearance="outline">
-                            <mat-label>Name</mat-label>
-                            <input matInput="matInput" formControlName="name" />
-                            <mat-hint>This is a required field.</mat-hint>
-                        </mat-form-field>
-                        <br>
-                        <br>
-                        <mat-form-field appearance="outline">
-                            <mat-label>Description</mat-label>
-                            <textarea matInput="matInput" formControlName="description"
-                                cdkTextareaAutosize="cdkTextareaAutosize" cdkAutosizeMinRows="5"></textarea>
-                            <mat-hint>This is a required field.</mat-hint>
-                        </mat-form-field>
-                        <br>
-                        <br>
-                        <mat-form-field appearance="outline">
-                            <mat-label>Experiment code</mat-label>
-                            <textarea matInput="matInput" formControlName="experimentCode"
-                                cdkTextareaAutosize="cdkTextareaAutosize" cdkAutosizeMinRows="5"></textarea>
-                            <mat-hint>This is a required field.</mat-hint>
-                        </mat-form-field>
-                    </form>
-                </ct-section-body-row>
-            </ct-section-body>
-            <ct-section-footer>
-                <ct-section-footer-row>
-                    <div class="flex justify-content-flex-end gap-8px">
+                      </form>
+                    </ct-section-body-row>
+                  </ct-section-body>
+                  <ct-section-footer>
+                    <ct-section-footer-row>
+                      <div class="flex justify-content-flex-end gap-8px">
                         <button mat-stroked-button="mat-stroked-button" (click)="cancel()">Cancel</button>
                         <button mat-flat-button="mat-flat-button" (click)="create()" color="primary"
-                            [disabled]="form.invalid">Create</button>
-                    </div>
-                </ct-section-footer-row>
-            </ct-section-footer>
-        </ct-section>
-    </ct-col>
-    <ct-col size="6">
-        <ct-rest-status [content]="operationStatusRest"></ct-rest-status>
-    </ct-col>
-</ct-cols>
+                        [disabled]="form.invalid">Create</button>
+                      </div>
+                    </ct-section-footer-row>
+                  </ct-section-footer>
+                </ct-section>
+              </ct-col>
+              <ct-col size="6">
+                <ct-rest-status [content]="operationStatusRest"></ct-rest-status>
+              </ct-col>
+            </ct-cols>

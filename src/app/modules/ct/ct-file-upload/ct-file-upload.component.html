@@ -1,9 +1,13 @@
 <input #fileInput hidden="hidden" type="file" name="file" (change)="fileChanged()" accept="{{acceptTypes}}" />
-<button *ngIf="!value" mat-flat-button="mat-flat-button" wide="wide" color="primary"
-    (click)="fileInput.click()">{{buttonTitleString}}</button>
-<div class="file" *ngIf="value">
+@if (!value) {
+  <button mat-flat-button="mat-flat-button" wide="wide" color="primary"
+  (click)="fileInput.click()">{{buttonTitleString}}</button>
+}
+@if (value) {
+  <div class="file">
     <div class="file__value">{{value}}</div>
     <div class="file__close" (click)="removeFile()">
-        <mat-icon>close</mat-icon>
+      <mat-icon>close</mat-icon>
     </div>
-</div>
+  </div>
+}

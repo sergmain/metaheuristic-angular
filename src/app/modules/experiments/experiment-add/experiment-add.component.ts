@@ -15,7 +15,7 @@ import { CtSectionBodyComponent } from '../../ct/ct-section-body/ct-section-body
 import { CtSectionBodyRowComponent } from '../../ct/ct-section-body-row/ct-section-body-row.component';
 import { MatFormField, MatLabel, MatHint, MatInput } from '@angular/material/input';
 import { MatSelect } from '@angular/material/select';
-import { NgFor } from '@angular/common';
+
 import { MatOption } from '@angular/material/autocomplete';
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import { CtSectionFooterComponent } from '../../ct/ct-section-footer/ct-section-footer.component';
@@ -27,7 +27,7 @@ import { CtRestStatusComponent } from '../../ct/ct-rest-status/ct-rest-status.co
     selector: 'experiment-add',
     templateUrl: './experiment-add.component.html',
     styleUrls: ['./experiment-add.component.scss'],
-    imports: [CtColsComponent, CtColComponent, CtSectionComponent, CtSectionHeaderComponent, CtSectionHeaderRowComponent, CtHeadingComponent, CtSectionBodyComponent, CtSectionBodyRowComponent, FormsModule, ReactiveFormsModule, MatFormField, MatLabel, MatSelect, NgFor, MatOption, MatHint, MatInput, CdkTextareaAutosize, CtSectionFooterComponent, CtSectionFooterRowComponent, MatButton, CtRestStatusComponent]
+    imports: [CtColsComponent, CtColComponent, CtSectionComponent, CtSectionHeaderComponent, CtSectionHeaderRowComponent, CtHeadingComponent, CtSectionBodyComponent, CtSectionBodyRowComponent, FormsModule, ReactiveFormsModule, MatFormField, MatLabel, MatSelect, MatOption, MatHint, MatInput, CdkTextareaAutosize, CtSectionFooterComponent, CtSectionFooterRowComponent, MatButton, CtRestStatusComponent]
 })
 
 export class ExperimentAddComponent implements OnInit {

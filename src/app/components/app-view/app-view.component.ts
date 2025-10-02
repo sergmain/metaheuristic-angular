@@ -10,7 +10,7 @@ import {SettingsService, SettingsServiceEventChange} from '@app/services/setting
 import {environment} from '@src/environments/environment';
 import {RuntimeService} from '@services/runtime/runtime.service';
 import {MhUtils} from '@services/mh-utils/mh-utils.service';
-import { NgIf, NgTemplateOutlet, NgFor } from '@angular/common';
+import { NgTemplateOutlet } from '@angular/common';
 import { MatToolbar, MatToolbarRow } from '@angular/material/toolbar';
 import { CtContentComponent } from '../../modules/ct/ct-content/ct-content.component';
 import { CtSectionComponent } from '../../modules/ct/ct-section/ct-section.component';
@@ -33,7 +33,7 @@ declare function initQuitProcess(): any;
     selector: 'app-view',
     templateUrl: './app-view.component.html',
     styleUrls: ['./app-view.component.scss'],
-    imports: [NgIf, MatToolbar, MatToolbarRow, NgTemplateOutlet, RouterOutlet, CtContentComponent, CtSectionComponent, CtSectionBodyComponent, CtSectionBodyRowComponent, LoginComponent, MatButton, MatIcon, RouterLinkActive, RouterLink, BatchChangeNotificationComponent, MatSelect, NgFor, MatOption, MatIconButton, MatTooltip, TranslateModule, ThemeToggleComponent]
+    imports: [MatToolbar, MatToolbarRow, NgTemplateOutlet, RouterOutlet, CtContentComponent, CtSectionComponent, CtSectionBodyComponent, CtSectionBodyRowComponent, LoginComponent, MatButton, MatIcon, RouterLinkActive, RouterLink, BatchChangeNotificationComponent, MatSelect, MatOption, MatIconButton, MatTooltip, TranslateModule, ThemeToggleComponent]
 })
 
 export class AppViewComponent extends UIStateComponent implements OnInit, OnDestroy {

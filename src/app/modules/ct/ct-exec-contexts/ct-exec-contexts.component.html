@@ -1,112 +1,126 @@
 <ct-section>
-    <ct-section-header>
-        <ct-section-header-row>
-            <ct-heading>Exec Contexts in Source Code #{{ sourceCodeId }}</ct-heading>
-        </ct-section-header-row>
-        <ct-section-header-row *ngIf="response">
-            <table>
-                <tr>
-                    <td>UID: </td>
-                    <td>{{response.sourceCodeUid}}</td>
-                </tr>
-                <tr>
-                    <td>Is valid:</td>
-                    <td>{{response.sourceCodeValid}}</td>
-                </tr>
-                <tr>
-                    <td>Type: </td>
-                    <td>{{response.sourceCodeType}}</td>
-                </tr>
-            </table>
-        </ct-section-header-row>
-    </ct-section-header>
-    <ct-section-body>
-        <ct-section-body-row *ngIf="response">
-            <ct-table>
-                <table class="mat-table" mat-table="mat-table" [dataSource]="execContextTableSource">
-                    <ng-container matColumnDef="id">
-                        <th mat-header-cell="mat-header-cell" *matHeaderCellDef>Id</th>
-                        <td mat-cell="mat-cell" *matCellDef="let el">{{el.id}}</td>
-                    </ng-container>
-                    <ng-container matColumnDef="createdOn">
-                        <th mat-header-cell="mat-header-cell" *matHeaderCellDef>Created On</th>
-                        <td mat-cell="mat-cell" *matCellDef="let el">{{el.createdOn | date:'MMM d, yyyy HH:mm:ss'}}
-                        </td>
-                    </ng-container>
-                    <ng-container matColumnDef="isExecContextValid">
-                        <th mat-header-cell="mat-header-cell" *matHeaderCellDef>Is execContext<br>Valid</th>
-                        <td mat-cell="mat-cell" *matCellDef="let el">{{el.valid}}</td>
-                    </ng-container>
-                    <ng-container matColumnDef="execState">
-                        <th mat-header-cell="mat-header-cell" *matHeaderCellDef>ExecState</th>
-                        <td mat-cell="mat-cell" *matCellDef="let el">{{execState[el.execState]}}</td>
-                    </ng-container>
-                    <ng-container matColumnDef="completedOn">
-                        <th mat-header-cell="mat-header-cell" *matHeaderCellDef>Completed on</th>
-                        <td mat-cell="mat-cell" *matCellDef="let el">
-                            <span *ngIf="el.completedOn !== null">
-                                {{el.completedOn | date:'MMM d, yyyy HH:mm:ss'}}
-                            </span>
-                        </td>
-                    </ng-container>
-                    <ng-container matColumnDef="bts">
-                        <th mat-header-cell="mat-header-cell" *matHeaderCellDef></th>
-                        <td mat-cell="mat-cell" *matCellDef="let el">
-                            <div class="flex justify-content-flex-end gap-9px">
-                                <button mat-flat-button="mat-flat-button" size="forTableRow" color="primary"
-    (click)="produce(el,$event)" *ngIf="(el.execState == execState.NONE) && (el.valid) && (response.sourceCodeValid)">Produce</button>
-                                <button mat-icon-button size="forTableRow" color="primary"
-    (click)="start(el,$event)" *ngIf="(el.execState == execState.PRODUCED) || (el.execState == execState.STOPPED)">
-    <mat-icon>play_arrow</mat-icon>
-</button>
-                                <button mat-icon-button size="forTableRow" color="primary"
-    (click)="stop(el,$event)" *ngIf="(el.execState == execState.STARTED)">
-    <mat-icon>stop</mat-icon>
-</button>
-                                <button mat-icon-button (click)="stateOfTasks(el)" matTooltip="Tasks" color="primary">
-    <mat-icon>list</mat-icon>
-</button>
-                                <button mat-icon-button color="warn" size="forTableRow" matTooltip="Delete ExecContext"
-    [disabled]="el.__deleted" (click)="delete(el)">
-    <mat-icon>delete_forever</mat-icon>
-</button>
-                            </div>
-                        </td>
-                    </ng-container>
-                    <tr mat-header-row="mat-header-row" *matHeaderRowDef="execContextColumnsToDisplay"></tr>
-                    <tr mat-row="mat-row" [class.mat-row--deleted]="row.__deleted"
-                        *matRowDef="let row; columns: execContextColumnsToDisplay;"></tr>
-                </table>
-            </ct-table>
-        </ct-section-body-row>
-    </ct-section-body>
-    <ct-section-footer>
-        <ct-section-footer-row>
-            <div class="flex justify-content-space-between">
-                <div class="flex justify-content-flex-start gap-8px">
-            <button mat-flat-button="mat-flat-button" #prevTable (click)="prev()" disabled="disabled">
+  <ct-section-header>
+    <ct-section-header-row>
+      <ct-heading>Exec Contexts in Source Code #{{ sourceCodeId }}</ct-heading>
+    </ct-section-header-row>
+    @if (response) {
+      <ct-section-header-row>
+        <table>
+          <tr>
+            <td>UID: </td>
+            <td>{{response.sourceCodeUid}}</td>
+          </tr>
+          <tr>
+            <td>Is valid:</td>
+            <td>{{response.sourceCodeValid}}</td>
+          </tr>
+          <tr>
+            <td>Type: </td>
+            <td>{{response.sourceCodeType}}</td>
+          </tr>
+        </table>
+      </ct-section-header-row>
+    }
+  </ct-section-header>
+  <ct-section-body>
+    @if (response) {
+      <ct-section-body-row>
+        <ct-table>
+          <table class="mat-table" mat-table="mat-table" [dataSource]="execContextTableSource">
+            <ng-container matColumnDef="id">
+              <th mat-header-cell="mat-header-cell" *matHeaderCellDef>Id</th>
+              <td mat-cell="mat-cell" *matCellDef="let el">{{el.id}}</td>
+            </ng-container>
+            <ng-container matColumnDef="createdOn">
+              <th mat-header-cell="mat-header-cell" *matHeaderCellDef>Created On</th>
+              <td mat-cell="mat-cell" *matCellDef="let el">{{el.createdOn | date:'MMM d, yyyy HH:mm:ss'}}
+              </td>
+            </ng-container>
+            <ng-container matColumnDef="isExecContextValid">
+              <th mat-header-cell="mat-header-cell" *matHeaderCellDef>Is execContext<br>Valid</th>
+              <td mat-cell="mat-cell" *matCellDef="let el">{{el.valid}}</td>
+            </ng-container>
+            <ng-container matColumnDef="execState">
+              <th mat-header-cell="mat-header-cell" *matHeaderCellDef>ExecState</th>
+              <td mat-cell="mat-cell" *matCellDef="let el">{{execState[el.execState]}}</td>
+            </ng-container>
+            <ng-container matColumnDef="completedOn">
+              <th mat-header-cell="mat-header-cell" *matHeaderCellDef>Completed on</th>
+              <td mat-cell="mat-cell" *matCellDef="let el">
+                @if (el.completedOn !== null) {
+                  <span>
+                    {{el.completedOn | date:'MMM d, yyyy HH:mm:ss'}}
+                  </span>
+                }
+              </td>
+            </ng-container>
+            <ng-container matColumnDef="bts">
+              <th mat-header-cell="mat-header-cell" *matHeaderCellDef></th>
+              <td mat-cell="mat-cell" *matCellDef="let el">
+                <div class="flex justify-content-flex-end gap-9px">
+                  @if ((el.execState == execState.NONE) && (el.valid) && (response.sourceCodeValid)) {
+                    <button mat-flat-button="mat-flat-button" size="forTableRow" color="primary"
+                    (click)="produce(el,$event)">Produce</button>
+                  }
+                  @if ((el.execState == execState.PRODUCED) || (el.execState == execState.STOPPED)) {
+                    <button mat-icon-button size="forTableRow" color="primary"
+                      (click)="start(el,$event)">
+                      <mat-icon>play_arrow</mat-icon>
+                    </button>
+                  }
+                  @if ((el.execState == execState.STARTED)) {
+                    <button mat-icon-button size="forTableRow" color="primary"
+                      (click)="stop(el,$event)">
+                      <mat-icon>stop</mat-icon>
+                    </button>
+                  }
+                  <button mat-icon-button (click)="stateOfTasks(el)" matTooltip="Tasks" color="primary">
+                    <mat-icon>list</mat-icon>
+                  </button>
+                  <button mat-icon-button color="warn" size="forTableRow" matTooltip="Delete ExecContext"
+                    [disabled]="el.__deleted" (click)="delete(el)">
+                    <mat-icon>delete_forever</mat-icon>
+                  </button>
+                </div>
+              </td>
+            </ng-container>
+            <tr mat-header-row="mat-header-row" *matHeaderRowDef="execContextColumnsToDisplay"></tr>
+            <tr mat-row="mat-row" [class.mat-row--deleted]="row.__deleted"
+            *matRowDef="let row; columns: execContextColumnsToDisplay;"></tr>
+          </table>
+        </ct-table>
+      </ct-section-body-row>
+    }
+  </ct-section-body>
+  <ct-section-footer>
+    <ct-section-footer-row>
+      <div class="flex justify-content-space-between">
+        <div class="flex justify-content-flex-start gap-8px">
+          <button mat-flat-button="mat-flat-button" #prevTable (click)="prev()" disabled="disabled">
             <mat-icon>arrow_back_ios</mat-icon>
-        </button>
-                        <button mat-flat-button="mat-flat-button" #nextTable (click)="next()" disabled="disabled">
-    <mat-icon>arrow_forward_ios</mat-icon>
-</button>
-                    </div>
-                <a mat-flat-button="mat-flat-button" color="primary" [disabled]="!response"
-    [routerLink]="['/dispatcher','source-codes',sourceCodeId,'exec-context','add']">Add Exec
-    Context</a>
-            </div>
-        </ct-section-footer-row>
-        <ct-section-footer-row *ngIf="modal">
-            <mat-dialog-actions align="end">
-                <button mat-flat-button color="primary" mat-dialog-close>Close</button>
-            </mat-dialog-actions>
-        </ct-section-footer-row>
-    </ct-section-footer>
+          </button>
+          <button mat-flat-button="mat-flat-button" #nextTable (click)="next()" disabled="disabled">
+            <mat-icon>arrow_forward_ios</mat-icon>
+          </button>
+        </div>
+        <a mat-flat-button="mat-flat-button" color="primary" [disabled]="!response"
+          [routerLink]="['/dispatcher','source-codes',sourceCodeId,'exec-context','add']">Add Exec
+        Context</a>
+      </div>
+    </ct-section-footer-row>
+    @if (modal) {
+      <ct-section-footer-row>
+        <mat-dialog-actions align="end">
+          <button mat-flat-button color="primary" mat-dialog-close>Close</button>
+        </mat-dialog-actions>
+      </ct-section-footer-row>
+    }
+  </ct-section-footer>
 </ct-section>
 
 
 <ng-template #stateOfTasksTemplate>
-    <ng-container>
-        <ct-state-of-tasks [sourceCodeId]="sourceCodeId" [execContextId]="execContextId"></ct-state-of-tasks>
-    </ng-container>
+  <ng-container>
+    <ct-state-of-tasks [sourceCodeId]="sourceCodeId" [execContextId]="execContextId"></ct-state-of-tasks>
+  </ng-container>
 </ng-template>

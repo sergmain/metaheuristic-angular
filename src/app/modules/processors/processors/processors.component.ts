@@ -8,7 +8,7 @@ import { ProcessorStatus } from '@app/services/processors/ProcessorStatus';
 import { SelectionModel } from '@angular/cdk/collections';
 import { UIStateComponent } from '@app/models/UIStateComponent';
 import { AuthenticationService } from '@app/services/authentication';
-import { NgIf, NgFor, DatePipe } from '@angular/common';
+import { DatePipe } from '@angular/common';
 import { CtSectionComponent } from '../../ct/ct-section/ct-section.component';
 import { CtSectionHeaderComponent } from '../../ct/ct-section-header/ct-section-header.component';
 import { CtSectionHeaderRowComponent } from '../../ct/ct-section-header-row/ct-section-header-row.component';
@@ -33,7 +33,7 @@ import { CtTablePaginationComponent } from '../../ct/ct-table-pagination/ct-tabl
     selector: 'processors',
     templateUrl: './processors.component.html',
     styleUrls: ['./processors.component.scss'],
-    imports: [NgIf, CtSectionComponent, CtSectionHeaderComponent, CtSectionHeaderRowComponent, CtHeadingComponent, MatSlideToggle, FormsModule, CtSectionBodyComponent, CtSectionBodyRowComponent, CtTableComponent, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCheckbox, MatCellDef, MatCell, CtPre10pxComponent, NgFor, MatIconButton, RouterLink, MatIcon, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, CtSectionFooterComponent, CtSectionFooterRowComponent, MatButton, CtTablePaginationComponent, DatePipe]
+    imports: [CtSectionComponent, CtSectionHeaderComponent, CtSectionHeaderRowComponent, CtHeadingComponent, MatSlideToggle, FormsModule, CtSectionBodyComponent, CtSectionBodyRowComponent, CtTableComponent, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCheckbox, MatCellDef, MatCell, CtPre10pxComponent, MatIconButton, RouterLink, MatIcon, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, CtSectionFooterComponent, CtSectionFooterRowComponent, MatButton, CtTablePaginationComponent, DatePipe]
 })
 
 export class ProcessorsComponent extends UIStateComponent implements OnInit, ConfirmationDialogInterface {

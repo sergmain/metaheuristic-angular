@@ -1,152 +1,150 @@
-<div class="app-view" *ngIf="isAuth()">
+@if (isAuth()) {
+  <div class="app-view">
     <div class="app-view__header">
-        <mat-toolbar class="toolbar" color="primary">
-            <mat-toolbar-row>
-                <ng-container *ngTemplateOutlet="isAuthToolbar"></ng-container>
-            </mat-toolbar-row>
-        </mat-toolbar>
+      <mat-toolbar class="toolbar" color="primary">
+        <mat-toolbar-row>
+          <ng-container *ngTemplateOutlet="isAuthToolbar"></ng-container>
+        </mat-toolbar-row>
+      </mat-toolbar>
     </div>
     <div class="app-view__body">
-        <router-outlet></router-outlet>
+      <router-outlet></router-outlet>
     </div>
-</div>
+  </div>
+}
 
-<div class="app-view" *ngIf="!isAuth()">
+@if (!isAuth()) {
+  <div class="app-view">
     <div class="app-view__header">
-        <mat-toolbar class="toolbar" color="primary">
-            <mat-toolbar-row class="toolbar__row">
-                <div class="flex justify-content-space-between align-items-center">
-                    <ng-container *ngTemplateOutlet="anonymous_header_template"></ng-container>
-                </div>
-            </mat-toolbar-row>
-        </mat-toolbar>
+      <mat-toolbar class="toolbar" color="primary">
+        <mat-toolbar-row class="toolbar__row">
+          <div class="flex justify-content-space-between align-items-center">
+            <ng-container *ngTemplateOutlet="anonymous_header_template"></ng-container>
+          </div>
+        </mat-toolbar-row>
+      </mat-toolbar>
     </div>
     <div class="app-view__body">
-        <ct-content>
-            <div class="flex justify-content-flex-start align-items-flex-start gap-9px">
-                <ct-section class="flex-2">
-    <ct-section-body>
-        <ct-section-body-row>
-            <div [innerHtml]="htmlContent"></div>
-        </ct-section-body-row>
-    </ct-section-body>
-</ct-section>
-
-                <login-view class="flex-1" *ngIf="serverReady()"> </login-view>
-
-            </div>
-        </ct-content>
+      <ct-content>
+        <div class="flex justify-content-flex-start align-items-flex-start gap-9px">
+          <ct-section class="flex-2">
+            <ct-section-body>
+              <ct-section-body-row>
+                <div [innerHtml]="htmlContent"></div>
+              </ct-section-body-row>
+            </ct-section-body>
+          </ct-section>
+          @if (serverReady()) {
+            <login-view class="flex-1"> </login-view>
+          }
+        </div>
+      </ct-content>
     </div>
     <div class="app-view__footer">
-        <div class="flex justify-content-center">
-            Powered by Metaheuristic
-        </div>
+      <div class="flex justify-content-center">
+        Powered by Metaheuristic
+      </div>
     </div>
-</div>
+  </div>
+}
 
 
 <ng-template #isAuthToolbar>
-    <div class="flex justify-content-space-between align-items-center">
-        <div *ngIf="serverReady()
-        then auth_content_template
-        else anonymous_header_template">here is ignored</div>
-    </div>
+  <div class="flex justify-content-space-between align-items-center">
+    @if (serverReady()
+      ) {
+      <div class="flex justify-content-flex-start gap-9px align-items-center">
+        <button
+          class="mat-button mat-button--sidenav"
+          [class.active]="sidenav"
+          mat-button
+          [disabled]="sidenavButtonDisable"
+          (click)="toggleSideNav()">
+          <mat-icon class="mat-icon">menu</mat-icon>
+        </button>
+        <button class="mat-button mat-button--menu-item" mat-button routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" routerLink="">{{brandingTitle}}</button>
+        @if (
+          false && (isRole.Admin ||
+          isRole.Data ||
+          isRole.Manager) ) {
+          <button class="mat-button mat-button--menu-item" mat-button routerLinkActive="active" routerLink="/ai">{{ 'app-view.Ai' | translate }}</button>
+        }
+        @if (
+          isRole.Admin ||
+          isRole.Data ||
+          isRole.Manager ||
+          isRole.Operator ) {
+          <button class="mat-button mat-button--menu-item" mat-button routerLinkActive="active" routerLink="/batch">{{ 'app-view.Batch' | translate }}</button>
+        }
+        @if (
+          isRole.MasterAdmin ||
+          isRole.MasterOperator ||
+          isRole.MasterSupport ||
+          isRole.MasterAssetManager ||
+          isRole.Admin ||
+          isRole.Data ||
+          isRole.Manager ) {
+          <button class="mat-button mat-button--menu-item" mat-button routerLinkActive="active" routerLink="/dispatcher">{{ 'app-view.Dispatcher' | translate }}</button>
+        }
+        @if (
+          isRole.Admin ||
+          isRole.Data ||
+          isRole.Manager ) {
+          <button class="mat-button mat-button--menu-item" mat-button routerLinkActive="active" routerLink="/mhbp">{{ 'app-view.Mhbp' | translate }}</button>
+        }
+      </div>
+      <batch-change-notification></batch-change-notification>
+      <div class="flex justify-content-flex-end align-items-center">
+        <theme-toggle [checked]="theme === 'dark'" (checkedChange)="toggleTheme($event)"></theme-toggle>
+        <mat-select #matSelectLanguage [(value)]="lang.current" (selectionChange)="toggleLanguage($event)">
+          @for (language of lang.list; track language) {
+            <mat-option [value]="language">{{language}}
+            </mat-option>
+          }
+        </mat-select>
+        <button mat-icon-button matTooltip="{{ 'app-view.About' | translate }}" routerLinkActive="active" routerLink="/about">
+          <mat-icon>help_outline</mat-icon>
+        </button>
+        <button mat-icon-button matTooltip="{{ 'app-view.Settings' | translate }}" routerLinkActive="active" routerLink="/settings">
+          <mat-icon>settings</mat-icon>
+        </button>
+        <button mat-icon-button matTooltip="Log out" (click)="logout()" >
+          <mat-icon>logout</mat-icon>
+        </button>
+        <button mat-icon-button matTooltip="Close Metaheuristic"  (click)="shutdown()" >
+          <mat-icon>power_settings_new</mat-icon>
+        </button>
+      </div>
+    } @else {
+      <div class="flex justify-content-flex-start gap-9px align-items-center">
+        <button class="mat-button mat-button--menu-item" mat-button routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" routerLink="">{{brandingTitle}}</button>
+      </div>
+      <div class="flex justify-content-flex-end align-items-center">
+        <theme-toggle [checked]="theme === 'dark'" (checkedChange)="toggleTheme($event)"></theme-toggle>
+        <button mat-icon-button matTooltip="Close Metaheuristic"  (click)="shutdown()" >
+          <mat-icon>power_settings_new</mat-icon>
+        </button>
+      </div>
+    }
+  </div>
 </ng-template>
 
 
-<ng-template #auth_content_template>
-    <div class="flex justify-content-flex-start gap-9px align-items-center">
-
-    <button
-        class="mat-button mat-button--sidenav"
-        [class.active]="sidenav"
-        mat-button
-        [disabled]="sidenavButtonDisable"
-        (click)="toggleSideNav()">
-    <mat-icon class="mat-icon">menu</mat-icon>
-</button>
-
-
-    <button class="mat-button mat-button--menu-item" mat-button routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" routerLink="">{{brandingTitle}}</button>
-
-
-    <button class="mat-button mat-button--menu-item" mat-button routerLinkActive="active" routerLink="/ai" *ngIf="
-            false && (isRole.Admin ||
-            isRole.Data ||
-            isRole.Manager) ">{{ 'app-view.Ai' | translate }}</button>
-
-
-    <button class="mat-button mat-button--menu-item" mat-button routerLinkActive="active" routerLink="/batch" *ngIf="
-            isRole.Admin ||
-            isRole.Data ||
-            isRole.Manager ||
-            isRole.Operator ">{{ 'app-view.Batch' | translate }}</button>
-
-
-    <button class="mat-button mat-button--menu-item" mat-button routerLinkActive="active" routerLink="/dispatcher" *ngIf="
-            isRole.MasterAdmin ||
-            isRole.MasterOperator ||
-            isRole.MasterSupport ||
-            isRole.MasterAssetManager ||
-            isRole.Admin ||
-            isRole.Data ||
-            isRole.Manager ">{{ 'app-view.Dispatcher' | translate }}</button>
-
-
-    <button class="mat-button mat-button--menu-item" mat-button routerLinkActive="active" routerLink="/mhbp" *ngIf="
-            isRole.Admin ||
-            isRole.Data ||
-            isRole.Manager ">{{ 'app-view.Mhbp' | translate }}</button>
-
-
-</div>
-
-
-    <batch-change-notification></batch-change-notification>
-
-
-    <div class="flex justify-content-flex-end align-items-center">
-            <theme-toggle [checked]="theme === 'dark'" (checkedChange)="toggleTheme($event)"></theme-toggle>
-
-            <mat-select #matSelectLanguage [(value)]="lang.current" (selectionChange)="toggleLanguage($event)">
-    <mat-option *ngFor="let language of lang.list" [value]="language">{{language}}
-    </mat-option>
-</mat-select>
-
-            <button mat-icon-button matTooltip="{{ 'app-view.About' | translate }}" routerLinkActive="active" routerLink="/about">
-    <mat-icon>help_outline</mat-icon>
-</button>
-
-            <button mat-icon-button matTooltip="{{ 'app-view.Settings' | translate }}" routerLinkActive="active" routerLink="/settings">
-    <mat-icon>settings</mat-icon>
-</button>
-
-            <button mat-icon-button matTooltip="Log out" (click)="logout()" >
-    <mat-icon>logout</mat-icon>
-</button>
-
-            <button mat-icon-button matTooltip="Close Metaheuristic"  (click)="shutdown()" >
-    <mat-icon>power_settings_new</mat-icon>
-</button>
-
-        </div>
-
-</ng-template>
 
 
 <ng-template #anonymous_header_template>
-    <div class="flex justify-content-flex-start gap-9px align-items-center">
+  <div class="flex justify-content-flex-start gap-9px align-items-center">
     <button class="mat-button mat-button--menu-item" mat-button routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" routerLink="">{{brandingTitle}}</button>
 
-</div>
+  </div>
 
-    <div class="flex justify-content-flex-end align-items-center">
-            <theme-toggle [checked]="theme === 'dark'" (checkedChange)="toggleTheme($event)"></theme-toggle>
+  <div class="flex justify-content-flex-end align-items-center">
+    <theme-toggle [checked]="theme === 'dark'" (checkedChange)="toggleTheme($event)"></theme-toggle>
 
-            <button mat-icon-button matTooltip="Close Metaheuristic"  (click)="shutdown()" >
-    <mat-icon>power_settings_new</mat-icon>
-</button>
+    <button mat-icon-button matTooltip="Close Metaheuristic"  (click)="shutdown()" >
+      <mat-icon>power_settings_new</mat-icon>
+    </button>
 
-        </div>
+  </div>
 
 </ng-template>

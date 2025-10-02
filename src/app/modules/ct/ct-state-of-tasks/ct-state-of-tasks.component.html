@@ -6,115 +6,132 @@ TODO p0 2023-05-20 implement
 <p th:text="${'Source code UID: ' + result.sourceCodeUid}"></p>
 <p th:text="${'Source code is valid: ' + result.sourceCodeValid}"></p>
 <div th:remove="tag" th:if="${result.taskStateInfos!=null}">
-    <table class="pure-table pure-table-bordered" id="exec-state-table">
-        <thead>
-        <tr>
-            <th><div class="no-wrap">ExecState of tasks</div></th>
-            <th><div class="no-wrap">Count of tasks</div></th>
+  <table class="pure-table pure-table-bordered" id="exec-state-table">
+    <thead>
+      <tr>
+        <th><div class="no-wrap">ExecState of tasks</div></th>
+        <th><div class="no-wrap">Count of tasks</div></th>
         <tr>
         </thead>
 
         <tbody>
-        <tr th:each="l : ${result.taskStateInfos.taskInfos}">
+          <tr th:each="l : ${result.taskStateInfos.taskInfos}">
             <td th:text="${l.execState}">State</td>
             <td th:text="${l.count}">State</td>
-        </tr>
+          </tr>
         </tbody>
-    </table>
-    <p th:text="${'Total tasks: ' + result.taskStateInfos.totalTasks}"></p>
-    <p th:if="${result.taskStateInfos.nonLongRunning.lastTaskFinished!=null}" th:text="${'The last task was finished on: ' + #dates.format(result.taskStateInfos.nonLongRunning.lastTaskFinished, 'dd-MMM-yy HH:mm')}">lastTaskFinished</p>
-    <p th:if="${result.taskStateInfos.nonLongRunning.lastTaskFinished==null}">There isn't any finished task</p>
-    <p th:text="${'Non-long-running tasks in progress: ' + result.taskStateInfos.nonLongRunning.inProgressCount}"></p>
-</div>
-<p>&nbsp;</p>
--->
+      </table>
+      <p th:text="${'Total tasks: ' + result.taskStateInfos.totalTasks}"></p>
+      <p th:if="${result.taskStateInfos.nonLongRunning.lastTaskFinished!=null}" th:text="${'The last task was finished on: ' + #dates.format(result.taskStateInfos.nonLongRunning.lastTaskFinished, 'dd-MMM-yy HH:mm')}">lastTaskFinished</p>
+      <p th:if="${result.taskStateInfos.nonLongRunning.lastTaskFinished==null}">There isn't any finished task</p>
+      <p th:text="${'Non-long-running tasks in progress: ' + result.taskStateInfos.nonLongRunning.inProgressCount}"></p>
+    </div>
+    <p>&nbsp;</p>
+    -->
 
-<ct-section *ngIf="response">
-    <ct-section-body>
-        <ct-section-body-row>
+    @if (response) {
+      <ct-section>
+        <ct-section-body>
+          <ct-section-body-row>
             <div class="flex justify-content-space-between">
-                <table>
-                    <tr>
-                        <td>UID: </td>
-                        <td>{{response.sourceCodeUid}}</td>
-                    </tr>
-                    <tr>
-                        <td>Is valid:</td>
-                        <td>{{response.sourceCodeValid}}</td>
-                    </tr>
-                    <tr>
-                        <td>Type: </td>
-                        <td>{{response.sourceCodeType}}</td>
-                    </tr>
-                </table>
-                <button mat-icon-button (click)="reload()" matTooltip="Reload">
-                    <mat-icon>sync</mat-icon>
-                </button>
+              <table>
+                <tr>
+                  <td>UID: </td>
+                  <td>{{response.sourceCodeUid}}</td>
+                </tr>
+                <tr>
+                  <td>Is valid:</td>
+                  <td>{{response.sourceCodeValid}}</td>
+                </tr>
+                <tr>
+                  <td>Type: </td>
+                  <td>{{response.sourceCodeType}}</td>
+                </tr>
+              </table>
+              <button mat-icon-button (click)="reload()" matTooltip="Reload">
+                <mat-icon>sync</mat-icon>
+              </button>
             </div>
-        </ct-section-body-row>
-    </ct-section-body>
+          </ct-section-body-row>
+        </ct-section-body>
+        <table class="state-table">
+          <thead>
+            <tr>
+              <td></td>
+              @for (elem of response.header; track elem) {
+                <td>
+                  <div>{{elem.process}}</div>
+                  <div>{{elem.functionCode}}</div>
+                </td>
+              }
+            </tr>
+          </thead>
+          <tbody>
+            @for (row of response.lines; track row) {
+              <tr>
+                <td>{{row.context}}</td>
+                @for (cell of row.cells; track cell) {
+                  <td>
+                    @if (!cell.empty) {
+                      <div>
+                        @if (!cell.fromCache) {
+                          <div>{{cell.taskId}},&nbsp;{{cell.state}}</div>
+                        }
+                        @if (cell.fromCache) {
+                          <div>{{cell.taskId}},&nbsp;{{cell.state}},&nbsp;
+                            <span class="link" (click)="clearCache(cell.taskId)">CACHED</span>
+                          </div>
+                        }
+                        <ng-container *ngTemplateOutlet="stateOkTemplate; context:{cell:cell}"></ng-container>
+                        <ng-container *ngTemplateOutlet="stateErrorTemplate; context:{cell:cell}"></ng-container>
+                      </div>
+                    }
+                  </td>
+                }
+              </tr>
+            }
+          </tbody>
+        </table>
+      </ct-section>
+    }
 
-    <table class="state-table">
-        <thead>
-        <tr>
-            <td></td>
-            <td *ngFor="let elem of response.header">
-                <div>{{elem.process}}</div>
-                <div>{{elem.functionCode}}</div>
-            </td>
-        </tr>
-        </thead>
-        <tbody>
-        <tr *ngFor="let row of response.lines">
-            <td>{{row.context}}</td>
-            <td *ngFor="let cell of row.cells">
-                <div *ngIf="!cell.empty">
-                    <div *ngIf="!cell.fromCache">{{cell.taskId}},&nbsp;{{cell.state}}</div>
-                    <div *ngIf="cell.fromCache">{{cell.taskId}},&nbsp;{{cell.state}},&nbsp;
-                        <span class="link" (click)="clearCache(cell.taskId)">CACHED</span>
-                    </div>
-                    <ng-container *ngTemplateOutlet="stateOkTemplate; context:{cell:cell}"></ng-container>
-                    <ng-container *ngTemplateOutlet="stateErrorTemplate; context:{cell:cell}"></ng-container>
-                </div>
-            </td>
-        </tr>
-        </tbody>
-    </table>
-</ct-section>
 
-
-<ng-template #stateOkTemplate let-cell="cell">
-    <ng-container *ngIf="cell.state === TaskExecState.OK">
-        <ng-container *ngFor="let out of cell.outs">
-            <div *ngIf="!out.n">
-                <span class="link" (click)="downloadFile(out)">{{out.id}}, {{out.nm}}</span>
+    <ng-template #stateOkTemplate let-cell="cell">
+      @if (cell.state === TaskExecState.OK) {
+        @for (out of cell.outs; track out) {
+          @if (!out.n) {
+            <div>
+              <span class="link" (click)="downloadFile(out)">{{out.id}}, {{out.nm}}</span>
             </div>
-            <div *ngIf="out.n">
-                {{out.id}}, {{out.nm}}
+          }
+          @if (out.n) {
+            <div>
+              {{out.id}}, {{out.nm}}
             </div>
-        </ng-container>
-    </ng-container>
-</ng-template>
+          }
+        }
+      }
+    </ng-template>
 
-<ng-template #stateErrorTemplate let-cell="cell">
-    <ng-container *ngIf="cell.state === TaskExecState.ERROR">
+    <ng-template #stateErrorTemplate let-cell="cell">
+      @if (cell.state === TaskExecState.ERROR) {
         <span class="link" (click)="openError(cell.taskId)">Task exec info</span>
-    </ng-container>
-</ng-template>
+      }
+    </ng-template>
 
 
-<ng-template #errorDialogTemplate>
-    <ng-container *ngIf="taskExecInfo">
+    <ng-template #errorDialogTemplate>
+      @if (taskExecInfo) {
         <div> <b>Task Exec Info</b> </div>
         <div> taskId: {{taskExecInfo.taskId}} </div>
         <div> execState: {{taskExecInfo.execState}} </div>
         <mat-dialog-content>
-            <ct-pre style="font-size: 80%;">
-                {{taskExecInfo.console}}
-            </ct-pre>
+          <ct-pre style="font-size: 80%;">
+            {{taskExecInfo.console}}
+          </ct-pre>
         </mat-dialog-content>
         <mat-dialog-actions align="end">
-            <button mat-flat-button color="primary" mat-dialog-close>Close</button>
+          <button mat-flat-button color="primary" mat-dialog-close>Close</button>
         </mat-dialog-actions>
-    </ng-container>
-</ng-template>
+      }
+    </ng-template>

@@ -1,52 +1,56 @@
 <mat-sidenav-container>
-    <mat-sidenav mode="side" [opened]="sidenavOpened">
-        <div class="navigation">
+  <mat-sidenav mode="side" [opened]="sidenavOpened">
+    <div class="navigation">
 
+      @if (
+        isRole.Admin ||
+        isRole.Data ||
+        isRole.Operator ||
+        isRole.Manager
+        ) {
+        <button
+          mat-button
+          routerLinkActive="active"
+          routerLink="/settings/security">
+          {{ 'settings-menu.Security' | translate }}
+        </button>
+      }
+
+      @if (
+        isRole.Admin ||
+        isRole.Data ||
+        isRole.Operator ||
+        isRole.Manager
+        ) {
+        <button
+          mat-button
+          routerLinkActive="active"
+          routerLink="/settings/api-keys">
+          {{ 'settings-menu.ApiKeys' | translate }}
+        </button>
+      }
+
+      <!--
             <button *ngIf="
                     isRole.Admin ||
                     isRole.Data ||
                     isRole.Operator ||
                     isRole.Manager
                 "
-                    mat-button
-                    routerLinkActive="active"
-                    routerLink="/settings/security">
-                {{ 'settings-menu.Security' | translate }}
-            </button>
+        mat-button
+        routerLinkActive="active"
+        routerLink="/settings/languages">
+        {{ 'settings-menu.Languages' | translate }}
+      </button>
+      -->
 
-            <button *ngIf="
-                    isRole.Admin ||
-                    isRole.Data ||
-                    isRole.Operator ||
-                    isRole.Manager
-                "
-                    mat-button
-                    routerLinkActive="active"
-                    routerLink="/settings/api-keys">
-                {{ 'settings-menu.ApiKeys' | translate }}
-            </button>
-
-<!--
-            <button *ngIf="
-                    isRole.Admin ||
-                    isRole.Data ||
-                    isRole.Operator ||
-                    isRole.Manager
-                "
-                    mat-button
-                    routerLinkActive="active"
-                    routerLink="/settings/languages">
-                {{ 'settings-menu.Languages' | translate }}
-            </button>
--->
-
-        </div>
-    </mat-sidenav>
-    <mat-sidenav-content>
-        <ct-content>
-            <router-outlet></router-outlet>
-            <ct-back-button></ct-back-button>
-            <copy-right></copy-right>
-        </ct-content>
-    </mat-sidenav-content>
+    </div>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <ct-content>
+      <router-outlet></router-outlet>
+      <ct-back-button></ct-back-button>
+      <copy-right></copy-right>
+    </ct-content>
+  </mat-sidenav-content>
 </mat-sidenav-container>

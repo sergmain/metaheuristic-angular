@@ -7,7 +7,7 @@ import {ChatService} from '@app/modules/chat-new/chat-service';
 import {MatDialog} from '@angular/material/dialog';
 import {ConfirmationDialogMethod} from '@app/components/app-dialog-confirmation/app-dialog-confirmation.component';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { NgIf, DatePipe } from '@angular/common';
+import { DatePipe } from '@angular/common';
 import { CtSectionComponent } from '../../ct/ct-section/ct-section.component';
 import { CtSectionHeaderComponent } from '../../ct/ct-section-header/ct-section-header.component';
 import { CtSectionHeaderRowComponent } from '../../ct/ct-section-header-row/ct-section-header-row.component';
@@ -26,7 +26,7 @@ import { CtTablePaginationComponent } from '../../ct/ct-table-pagination/ct-tabl
     selector: 'chats-new',
     templateUrl: './chats-new.component.html',
     styleUrls: ['./chats-new.component.scss'],
-    imports: [NgIf, CtSectionComponent, CtSectionHeaderComponent, CtSectionHeaderRowComponent, CtHeadingComponent, MatIconButton, RouterLink, MatIcon, CtSectionBodyComponent, CtSectionBodyRowComponent, CtTableComponent, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatTooltip, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, CtSectionFooterComponent, CtSectionFooterRowComponent, CtTablePaginationComponent, DatePipe]
+    imports: [CtSectionComponent, CtSectionHeaderComponent, CtSectionHeaderRowComponent, CtHeadingComponent, MatIconButton, RouterLink, MatIcon, CtSectionBodyComponent, CtSectionBodyRowComponent, CtTableComponent, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatTooltip, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, CtSectionFooterComponent, CtSectionFooterRowComponent, CtTablePaginationComponent, DatePipe]
 })
 // DO NOT REMOVE '-new' FROM NAME OF COMPONENT
 export class ChatsNewComponent extends UIStateComponent implements OnInit {

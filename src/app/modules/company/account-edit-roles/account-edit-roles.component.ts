@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { OperationStatusRest } from '@app/models/OperationStatusRest';
 import { AccountWithRoleResult } from '@app/services/company/AccountWithRoleResult';
 import { CompanyService } from '@app/services/company/company.service';
-import { NgIf, NgFor, KeyValuePipe } from '@angular/common';
+import { KeyValuePipe } from '@angular/common';
 import { CtColsComponent } from '../../ct/ct-cols/ct-cols.component';
 import { CtColComponent } from '../../ct/ct-col/ct-col.component';
 import { CtSectionComponent } from '../../ct/ct-section/ct-section.component';
@@ -20,7 +20,7 @@ import { CtRestStatusComponent } from '../../ct/ct-rest-status/ct-rest-status.co
     selector: 'account-edit-roles',
     templateUrl: './account-edit-roles.component.html',
     styleUrls: ['./account-edit-roles.component.sass'],
-    imports: [NgIf, CtColsComponent, CtColComponent, CtSectionComponent, CtSectionHeaderComponent, CtSectionHeaderRowComponent, CtHeadingComponent, CtSectionBodyComponent, CtSectionBodyRowComponent, NgFor, MatCheckbox, FormsModule, CtRestStatusComponent, KeyValuePipe]
+    imports: [CtColsComponent, CtColComponent, CtSectionComponent, CtSectionHeaderComponent, CtSectionHeaderRowComponent, CtHeadingComponent, CtSectionBodyComponent, CtSectionBodyRowComponent, MatCheckbox, FormsModule, CtRestStatusComponent, KeyValuePipe]
 })
 export class AccountEditRolesComponent implements OnInit {
 

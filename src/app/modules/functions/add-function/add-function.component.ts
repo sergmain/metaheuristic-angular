@@ -16,7 +16,7 @@ import { CtSectionBodyRowComponent } from '../../ct/ct-section-body-row/ct-secti
 import { CtFileUploadComponent as CtFileUploadComponent_1 } from '../../ct/ct-file-upload/ct-file-upload.component';
 import { CtSectionFooterComponent } from '../../ct/ct-section-footer/ct-section-footer.component';
 import { CtSectionFooterRowComponent } from '../../ct/ct-section-footer-row/ct-section-footer-row.component';
-import { NgIf } from '@angular/common';
+
 import { CtRestStatusComponent } from '../../ct/ct-rest-status/ct-rest-status.component';
 import { MatFormField, MatLabel, MatInput } from '@angular/material/input';
 
@@ -25,7 +25,7 @@ import { MatFormField, MatLabel, MatInput } from '@angular/material/input';
     selector: 'add-function',
     templateUrl: './add-function.component.html',
     styleUrls: ['./add-function.component.scss'],
-    imports: [CtColsComponent, CtColComponent, CtSectionComponent, CtSectionHeaderComponent, CtSectionHeaderRowComponent, CtHeadingComponent, CtSectionBodyComponent, CtSectionBodyRowComponent, CtFileUploadComponent_1, CtSectionFooterComponent, CtSectionFooterRowComponent, MatButton, NgIf, CtRestStatusComponent, FormsModule, ReactiveFormsModule, MatFormField, MatLabel, MatInput]
+    imports: [CtColsComponent, CtColComponent, CtSectionComponent, CtSectionHeaderComponent, CtSectionHeaderRowComponent, CtHeadingComponent, CtSectionBodyComponent, CtSectionBodyRowComponent, CtFileUploadComponent_1, CtSectionFooterComponent, CtSectionFooterRowComponent, MatButton, CtRestStatusComponent, FormsModule, ReactiveFormsModule, MatFormField, MatLabel, MatInput]
 })
 
 export class AddFunctionComponent {

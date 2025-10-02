@@ -6,7 +6,7 @@ import { ExperimentsService } from '@app/services/experiments/experiments.servic
 import { SimpleExperiment } from '@app/services/experiments/SimpleExperiment';
 import { UIStateComponent } from '@app/models/UIStateComponent';
 import { AuthenticationService } from '@app/services/authentication';
-import { NgIf } from '@angular/common';
+
 import { CtColsComponent } from '../../ct/ct-cols/ct-cols.component';
 import { CtColComponent } from '../../ct/ct-col/ct-col.component';
 import { CtSectionComponent } from '../../ct/ct-section/ct-section.component';
@@ -28,7 +28,7 @@ import { CtRestStatusComponent } from '../../ct/ct-rest-status/ct-rest-status.co
     selector: 'experiment-edit',
     templateUrl: './experiment-edit.component.html',
     styleUrls: ['./experiment-edit.component.scss'],
-    imports: [NgIf, CtColsComponent, CtColComponent, CtSectionComponent, CtSectionHeaderComponent, CtSectionHeaderRowComponent, CtHeadingComponent, CtSectionBodyComponent, CtSectionBodyRowComponent, MatFormField, MatLabel, MatInput, FormsModule, MatHint, CdkTextareaAutosize, CtSectionFooterComponent, CtSectionFooterRowComponent, MatButton, CtRestStatusComponent]
+    imports: [CtColsComponent, CtColComponent, CtSectionComponent, CtSectionHeaderComponent, CtSectionHeaderRowComponent, CtHeadingComponent, CtSectionBodyComponent, CtSectionBodyRowComponent, MatFormField, MatLabel, MatInput, FormsModule, MatHint, CdkTextareaAutosize, CtSectionFooterComponent, CtSectionFooterRowComponent, MatButton, CtRestStatusComponent]
 })
 
 export class ExperimentEditComponent extends UIStateComponent implements OnInit {

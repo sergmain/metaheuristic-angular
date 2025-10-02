@@ -1,75 +1,77 @@
 <ct-cols>
+  <ct-col size="6">
+    <ct-section>
+      <ct-section-header>
+        <ct-section-header-row>
+          <ct-heading>Upload bundle</ct-heading>
+        </ct-section-header-row>
+      </ct-section-header>
+      <ct-section-body>
+        <ct-section-body-row>
+          <ct-file-upload #fileUpload></ct-file-upload>
+        </ct-section-body-row>
+      </ct-section-body>
+      <ct-section-footer>
+        <ct-section-footer-row>
+          <div class="flex justify-content-flex-end gap-8px">
+            <button mat-stroked-button="mat-stroked-button" (click)="cancel()">Cancel </button>
+            <button mat-flat-button="mat-flat-button" (click)="upload()" color="primary"
+              [disabled]="!fileUpload?.fileInput?.nativeElement?.files?.length">Upload
+            bundle</button>
+          </div>
+        </ct-section-footer-row>
+      </ct-section-footer>
+    </ct-section>
+  </ct-col>
+  @if (response) {
     <ct-col size="6">
-        <ct-section>
-            <ct-section-header>
-                <ct-section-header-row>
-                    <ct-heading>Upload bundle</ct-heading>
-                </ct-section-header-row>
-            </ct-section-header>
-            <ct-section-body>
-                <ct-section-body-row>
-                    <ct-file-upload #fileUpload></ct-file-upload>
-                </ct-section-body-row>
-            </ct-section-body>
-            <ct-section-footer>
-                <ct-section-footer-row>
-                    <div class="flex justify-content-flex-end gap-8px">
-                        <button mat-stroked-button="mat-stroked-button" (click)="cancel()">Cancel </button>
-                        <button mat-flat-button="mat-flat-button" (click)="upload()" color="primary"
-                            [disabled]="!fileUpload?.fileInput?.nativeElement?.files?.length">Upload
-                            bundle</button>
-                    </div>
-                </ct-section-footer-row>
-            </ct-section-footer>
-        </ct-section>
+      <ct-rest-status [content]="response"></ct-rest-status>
     </ct-col>
-    <ct-col size="6" *ngIf="response">
-        <ct-rest-status [content]="response"></ct-rest-status>
-    </ct-col>
+  }
 </ct-cols>
 
 <hr>
 
-<ct-cols>
+  <ct-cols>
     <ct-col size="6">
-        <ct-section>
-            <ct-section-header>
-                <ct-section-header-row>
-                    <ct-heading>Upload Functions and SourceCodes from git</ct-heading>
-                </ct-section-header-row>
-            </ct-section-header>
-            <ct-section-body>
-                <form [formGroup]="form" novalidate="novalidate">
-                    <ct-section-body-row>
-                        <mat-form-field appearance="outline" style="width: 100%;">
-                            <mat-label>Repository URL, required</mat-label>
-                            <input type="text" matInput="matInput" autocomplete="off" formControlName="repo"/>
-                        </mat-form-field>
-                        <mat-form-field appearance="outline" style="width: 100%;">
-                            <mat-label>Branch, required</mat-label>
-                            <input type="text" matInput="matInput" autocomplete="off" formControlName="branch"/>
-                        </mat-form-field>
-                        <mat-form-field appearance="outline" style="width: 100%;">
-                            <mat-label>Commit, required</mat-label>
-                            <input type="text" matInput="matInput" autocomplete="off" formControlName="commit"/>
-                        </mat-form-field>
-                        <mat-form-field appearance="outline" style="width: 100%;">
-                            <mat-label>Path</mat-label>
-                            <input type="text" matInput="matInput" autocomplete="off" formControlName="path"/>
-                        </mat-form-field>
-                    </ct-section-body-row>
-                </form>
-            </ct-section-body>
-            <ct-section-footer>
-                <ct-section-footer-row>
-                    <div class="flex justify-content-flex-end gap-8px">
-                        <button mat-stroked-button (click)="cancel()">Cancel</button>
-                        <button #button mat-flat-button="mat-flat-button" (click)="uploadFromGit()" color="primary"
-                                [disabled]="!form.valid">Upload</button>
-                    </div>
-                </ct-section-footer-row>
-            </ct-section-footer>
-        </ct-section>
+      <ct-section>
+        <ct-section-header>
+          <ct-section-header-row>
+            <ct-heading>Upload Functions and SourceCodes from git</ct-heading>
+          </ct-section-header-row>
+        </ct-section-header>
+        <ct-section-body>
+          <form [formGroup]="form" novalidate="novalidate">
+            <ct-section-body-row>
+              <mat-form-field appearance="outline" style="width: 100%;">
+                <mat-label>Repository URL, required</mat-label>
+                <input type="text" matInput="matInput" autocomplete="off" formControlName="repo"/>
+              </mat-form-field>
+              <mat-form-field appearance="outline" style="width: 100%;">
+                <mat-label>Branch, required</mat-label>
+                <input type="text" matInput="matInput" autocomplete="off" formControlName="branch"/>
+              </mat-form-field>
+              <mat-form-field appearance="outline" style="width: 100%;">
+                <mat-label>Commit, required</mat-label>
+                <input type="text" matInput="matInput" autocomplete="off" formControlName="commit"/>
+              </mat-form-field>
+              <mat-form-field appearance="outline" style="width: 100%;">
+                <mat-label>Path</mat-label>
+                <input type="text" matInput="matInput" autocomplete="off" formControlName="path"/>
+              </mat-form-field>
+            </ct-section-body-row>
+          </form>
+        </ct-section-body>
+        <ct-section-footer>
+          <ct-section-footer-row>
+            <div class="flex justify-content-flex-end gap-8px">
+              <button mat-stroked-button (click)="cancel()">Cancel</button>
+              <button #button mat-flat-button="mat-flat-button" (click)="uploadFromGit()" color="primary"
+              [disabled]="!form.valid">Upload</button>
+            </div>
+          </ct-section-footer-row>
+        </ct-section-footer>
+      </ct-section>
     </ct-col>
-</ct-cols>
+  </ct-cols>
 

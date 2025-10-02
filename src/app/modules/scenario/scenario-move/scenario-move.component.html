@@ -1,43 +1,51 @@
-<ct-section *ngIf="isInit()">
+@if (isInit()) {
+  <ct-section>
     <ct-section-body style="width: 50%;">
-        <ct-section-body-row>
-            Data is loading.
-        </ct-section-body-row>
+      <ct-section-body-row>
+        Data is loading.
+      </ct-section-body-row>
     </ct-section-body>
-</ct-section>
+  </ct-section>
+}
 
 
-<ct-section *ngIf="isSelect()">
+@if (isSelect()) {
+  <ct-section>
     <ct-section-body style="width: 50%;">
-        <ct-section-body-row>
-            <form [formGroup]="form" novalidate="novalidate">
-                <mat-form-field appearance="outline">
-                    <mat-label>Select a new scenario group</mat-label>
-                    <mat-select formControlName="group">
-                        <mat-option  *ngFor="let group of simpleScenarioGroupsAllResult.scenarioGroups" [value]="group">
-                            {{group.scenarioGroupId}}, {{group.name}}
-                        </mat-option>
-                    </mat-select>
-                </mat-form-field>
-            </form>
-        </ct-section-body-row>
+      <ct-section-body-row>
+        <form [formGroup]="form" novalidate="novalidate">
+          <mat-form-field appearance="outline">
+            <mat-label>Select a new scenario group</mat-label>
+            <mat-select formControlName="group">
+              @for (group of simpleScenarioGroupsAllResult.scenarioGroups; track group) {
+                <mat-option  [value]="group">
+                  {{group.scenarioGroupId}}, {{group.name}}
+                </mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
+        </form>
+      </ct-section-body-row>
     </ct-section-body>
     <ct-section-footer style="width: 50%;">
-        <ct-section-footer-row>
-            <div class="flex justify-content-flex-end gap-8px">
-                <button mat-flat-button color="primary" size="forTableRow"
-        (click)="moveScenarioCommit()" [disabled]="notToMoveScenario()">
-    Move</button>
-            </div>
-        </ct-section-footer-row>
+      <ct-section-footer-row>
+        <div class="flex justify-content-flex-end gap-8px">
+          <button mat-flat-button color="primary" size="forTableRow"
+            (click)="moveScenarioCommit()" [disabled]="notToMoveScenario()">
+          Move</button>
+        </div>
+      </ct-section-footer-row>
     </ct-section-footer>
-</ct-section>
+  </ct-section>
+}
 
-<ct-section *ngIf="isDone()">
+@if (isDone()) {
+  <ct-section>
     <ct-section-body style="width: 50%;">
-        <ct-section-body-row>
-            Scenario was moved.
-        </ct-section-body-row>
+      <ct-section-body-row>
+        Scenario was moved.
+      </ct-section-body-row>
     </ct-section-body>
-</ct-section>
+  </ct-section>
+}
 

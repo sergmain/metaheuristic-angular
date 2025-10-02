@@ -10,7 +10,7 @@ import { SourceCodesService } from '@app/services/source-codes/source-codes.serv
 import { SourceCode } from '@app/services/source-codes/SourceCode';
 import { SourceCodesResult } from '@app/services/source-codes/SourceCodesResult';
 import { CtTableComponent } from '../../ct/ct-table/ct-table.component';
-import { NgIf, DatePipe } from '@angular/common';
+import { DatePipe } from '@angular/common';
 import { CtSectionComponent } from '../../ct/ct-section/ct-section.component';
 import { CtSectionHeaderComponent } from '../../ct/ct-section-header/ct-section-header.component';
 import { CtSectionHeaderRowComponent } from '../../ct/ct-section-header-row/ct-section-header-row.component';
@@ -28,7 +28,7 @@ import { CtTablePaginationComponent } from '../../ct/ct-table-pagination/ct-tabl
     selector: 'source-codes-archive',
     templateUrl: './source-codes-archive.component.html',
     styleUrls: ['./source-codes-archive.component.sass'],
-    imports: [NgIf, CtSectionComponent, CtSectionHeaderComponent, CtSectionHeaderRowComponent, CtHeadingComponent, CtSectionBodyComponent, CtSectionBodyRowComponent, CtTableComponent, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatButton, MatIcon, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, CtSectionFooterComponent, CtSectionFooterRowComponent, CtTablePaginationComponent, DatePipe]
+    imports: [CtSectionComponent, CtSectionHeaderComponent, CtSectionHeaderRowComponent, CtHeadingComponent, CtSectionBodyComponent, CtSectionBodyRowComponent, CtTableComponent, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatButton, MatIcon, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, CtSectionFooterComponent, CtSectionFooterRowComponent, CtTablePaginationComponent, DatePipe]
 })
 export class SourceCodesArchiveComponent extends UIStateComponent implements OnInit {
     sourceCodesResult: SourceCodesResult;

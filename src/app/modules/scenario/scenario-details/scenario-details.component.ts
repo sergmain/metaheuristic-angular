@@ -26,7 +26,7 @@ import {StepEvaluationPrepareResult} from '@services/scenario/StepEvaluationPrep
 import {StepEvaluation} from '@services/scenario/StepEvaluation';
 import {StepVariable} from '@services/scenario/StepVariable';
 import {MIN_PROMPT_LEN} from '@app/modules/mh-consts';
-import { NgIf, NgFor, NgTemplateOutlet, NgClass } from '@angular/common';
+import { NgTemplateOutlet, NgClass } from '@angular/common';
 import { CtSectionComponent } from '../../ct/ct-section/ct-section.component';
 import { CtSectionBodyComponent } from '../../ct/ct-section-body/ct-section-body.component';
 import { CtSectionBodyRowComponent } from '../../ct/ct-section-body-row/ct-section-body-row.component';
@@ -107,7 +107,7 @@ export class StepEvaluationState {
     selector: 'scenario-details',
     templateUrl: 'scenario-details.component.html',
     styleUrls: ['scenario-details.component.scss'],
-    imports: [NgIf, CtSectionComponent, CtSectionBodyComponent, CtSectionBodyRowComponent, MatIconButton, MatTooltip, MatIcon, FormsModule, ReactiveFormsModule, MatFormField, MatLabel, MatInput, CdkTextareaAutosize, CtSectionFooterComponent, CtSectionFooterRowComponent, MatButton, CtColsComponent, CtColComponent, CtSectionHeaderComponent, CtSectionHeaderRowComponent, CtHeadingComponent, MatSelect, NgFor, MatOption, MatHint, NgTemplateOutlet, MatTree, CdkDropList, MatTreeNodeDef, MatTreeNode, MatTreeNodePadding, CdkDrag, MatSlideToggle, MatTreeNodeToggle, NgClass, CtExecContextsComponent, TranslateModule]
+    imports: [CtSectionComponent, CtSectionBodyComponent, CtSectionBodyRowComponent, MatIconButton, MatTooltip, MatIcon, FormsModule, ReactiveFormsModule, MatFormField, MatLabel, MatInput, CdkTextareaAutosize, CtSectionFooterComponent, CtSectionFooterRowComponent, MatButton, CtColsComponent, CtColComponent, CtSectionHeaderComponent, CtSectionHeaderRowComponent, CtHeadingComponent, MatSelect, MatOption, MatHint, NgTemplateOutlet, MatTree, CdkDropList, MatTreeNodeDef, MatTreeNode, MatTreeNodePadding, CdkDrag, MatSlideToggle, MatTreeNodeToggle, NgClass, CtExecContextsComponent, TranslateModule]
 })
 export class ScenarioDetailsComponent extends UIStateComponent implements OnInit, OnDestroy, AfterViewInit {
     // for scenario-details.component.html

@@ -14,7 +14,7 @@ import {UIStateComponent} from '@app/models/UIStateComponent';
 import {ChatService} from '@app/modules/chat-new/chat-service';
 import {ApiForCompany} from '@app/modules/chat-new/chat-data';
 import {MhUtils} from '@services/mh-utils/mh-utils.service';
-import { NgIf, NgFor } from '@angular/common';
+
 import { CtColsComponent } from '../../ct/ct-cols/ct-cols.component';
 import { CtColComponent } from '../../ct/ct-col/ct-col.component';
 import { CtSectionComponent } from '../../ct/ct-section/ct-section.component';
@@ -34,7 +34,7 @@ import { CtRestStatusComponent } from '../../ct/ct-rest-status/ct-rest-status.co
     selector: 'chat-new-add',
     templateUrl: './chat-new-add.component.html',
     styleUrls: ['./chat-new-add.component.scss'],
-    imports: [NgIf, CtColsComponent, CtColComponent, CtSectionComponent, CtSectionHeaderComponent, CtSectionHeaderRowComponent, CtHeadingComponent, CtSectionBodyComponent, CtSectionBodyRowComponent, FormsModule, ReactiveFormsModule, MatFormField, MatLabel, MatInput, MatHint, MatSelect, NgFor, MatOption, CtSectionFooterComponent, CtSectionFooterRowComponent, MatButton, RouterLink, CtRestStatusComponent, TranslateModule]
+    imports: [CtColsComponent, CtColComponent, CtSectionComponent, CtSectionHeaderComponent, CtSectionHeaderRowComponent, CtHeadingComponent, CtSectionBodyComponent, CtSectionBodyRowComponent, FormsModule, ReactiveFormsModule, MatFormField, MatLabel, MatInput, MatHint, MatSelect, MatOption, CtSectionFooterComponent, CtSectionFooterRowComponent, MatButton, RouterLink, CtRestStatusComponent, TranslateModule]
 })
 
 export class ChatNewAddComponent extends UIStateComponent implements OnInit, OnDestroy {

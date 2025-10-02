@@ -7,7 +7,7 @@ import { SourceCode } from '@app/services/source-codes/SourceCode';
 import { SourceCodesForCompany } from '@app/services/source-codes/SourceCodesForCompany';
 import { SourceCodeUidsForCompany } from '@app/services/source-codes/SourceCodeUidsForCompany';
 import { CtFileUploadComponent } from '../../ct/ct-file-upload/ct-file-upload.component';
-import { NgIf, NgFor } from '@angular/common';
+
 import { CtColsComponent } from '../../ct/ct-cols/ct-cols.component';
 import { CtColComponent } from '../../ct/ct-col/ct-col.component';
 import { CtSectionComponent } from '../../ct/ct-section/ct-section.component';
@@ -31,7 +31,7 @@ import { TranslateModule } from '@ngx-translate/core';
     selector: 'company-batch-upload',
     templateUrl: './company-batch-upload.component.html',
     styleUrls: ['./company-batch-upload.component.sass'],
-    imports: [NgIf, CtColsComponent, CtColComponent, CtSectionComponent, CtSectionHeaderComponent, CtSectionHeaderRowComponent, CtHeadingComponent, CtSectionBodyComponent, CtSectionBodyRowComponent, MatFormField, MatLabel, MatSelect, FormsModule, NgFor, MatOption, MatHint, CtFileUploadComponent, CtHintComponent, CtSectionFooterComponent, CtSectionFooterRowComponent, MatButton, CtRestStatusComponent, TranslateModule]
+    imports: [CtColsComponent, CtColComponent, CtSectionComponent, CtSectionHeaderComponent, CtSectionHeaderRowComponent, CtHeadingComponent, CtSectionBodyComponent, CtSectionBodyRowComponent, MatFormField, MatLabel, MatSelect, FormsModule, MatOption, MatHint, CtFileUploadComponent, CtHintComponent, CtSectionFooterComponent, CtSectionFooterRowComponent, MatButton, CtRestStatusComponent, TranslateModule]
 })
 export class CompanyBatchUploadComponent implements OnInit {
     @ViewChild('fileUpload') fileUpload: CtFileUploadComponent;

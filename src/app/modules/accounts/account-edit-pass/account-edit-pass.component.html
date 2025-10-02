@@ -11,13 +11,13 @@
         <ct-section-body-row>
           <form [formGroup]="form" novalidate="novalidate">
             <ct-section-content>
-              <mat-form-field appearance="outline"> 
+              <mat-form-field appearance="outline">
                 <mat-label>Password</mat-label>
                 <input matInput="matInput" type="password" autocomplete="off" formControlName="password"/>
               </mat-form-field>
             </ct-section-content>
             <ct-section-content>
-              <mat-form-field appearance="outline"> 
+              <mat-form-field appearance="outline">
                 <mat-label>Password again</mat-label>
                 <input matInput="matInput" type="password" autocomplete="off" formControlName="password2"/>
               </mat-form-field>
@@ -36,13 +36,17 @@
     </ct-section>
   </ct-col>
   <ct-col size="6">
-    <ct-section *ngIf="response">
-      <ct-section-body>
-        <ct-section-body-row>
-          <p>STATUS: {{response.status}}</p>
-          <p *ngFor="let error of response.errorMessages; index as i; ">{{error}}</p>
-        </ct-section-body-row>
-      </ct-section-body>
-    </ct-section>
+    @if (response) {
+      <ct-section>
+        <ct-section-body>
+          <ct-section-body-row>
+            <p>STATUS: {{response.status}}</p>
+            @for (error of response.errorMessages; track error; let i = $index) {
+              <p>{{error}}</p>
+            }
+          </ct-section-body-row>
+        </ct-section-body>
+      </ct-section>
+    }
   </ct-col>
 </ct-cols>

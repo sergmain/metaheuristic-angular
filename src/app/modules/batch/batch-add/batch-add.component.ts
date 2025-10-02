@@ -12,7 +12,7 @@ import { AuthenticationService } from '@app/services/authentication';
 import { SettingsService, SettingsServiceEventChange } from '@app/services/settings/settings.service';
 import { SourceCodeUidsForCompany } from '@app/services/source-codes/SourceCodeUidsForCompany';
 import { CtFileUploadComponent } from '../../ct/ct-file-upload/ct-file-upload.component';
-import { NgIf, NgFor } from '@angular/common';
+
 import { CtColsComponent } from '../../ct/ct-cols/ct-cols.component';
 import { CtColComponent } from '../../ct/ct-col/ct-col.component';
 import { CtSectionComponent } from '../../ct/ct-section/ct-section.component';
@@ -35,7 +35,7 @@ import { CtRestStatusComponent } from '../../ct/ct-rest-status/ct-rest-status.co
     selector: 'batch-add',
     templateUrl: './batch-add.component.html',
     styleUrls: ['./batch-add.component.scss'],
-    imports: [NgIf, CtColsComponent, CtColComponent, CtSectionComponent, CtSectionHeaderComponent, CtSectionHeaderRowComponent, CtHeadingComponent, CtSectionBodyComponent, CtSectionBodyRowComponent, MatFormField, MatLabel, MatSelect, FormsModule, NgFor, MatOption, MatHint, CtFileUploadComponent, CtHintComponent, CtSectionFooterComponent, CtSectionFooterRowComponent, MatButton, CtRestStatusComponent, TranslateModule]
+    imports: [CtColsComponent, CtColComponent, CtSectionComponent, CtSectionHeaderComponent, CtSectionHeaderRowComponent, CtHeadingComponent, CtSectionBodyComponent, CtSectionBodyRowComponent, MatFormField, MatLabel, MatSelect, FormsModule, MatOption, MatHint, CtFileUploadComponent, CtHintComponent, CtSectionFooterComponent, CtSectionFooterRowComponent, MatButton, CtRestStatusComponent, TranslateModule]
 })
 
 export class BatchAddComponent extends UIStateComponent implements OnInit, OnDestroy {

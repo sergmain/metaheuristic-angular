@@ -1,4 +1,4 @@
-import { Location, NgIf } from '@angular/common';
+import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProcessorsService } from '@app/services/processors/processors.service';
@@ -26,7 +26,7 @@ import { CtRestStatusComponent } from '../../ct/ct-rest-status/ct-rest-status.co
     selector: 'edit-processor',
     templateUrl: './edit-processor.component.html',
     styleUrls: ['./edit-processor.component.scss'],
-    imports: [NgIf, CtColsComponent, CtColComponent, CtSectionComponent, CtSectionHeaderComponent, CtSectionHeaderRowComponent, CtHeadingComponent, CtSectionBodyComponent, CtSectionBodyRowComponent, CtSectionContentComponent, MatFormField, MatLabel, MatInput, CdkTextareaAutosize, FormsModule, CtSectionFooterComponent, CtSectionFooterRowComponent, MatButton, CtRestStatusComponent]
+    imports: [CtColsComponent, CtColComponent, CtSectionComponent, CtSectionHeaderComponent, CtSectionHeaderRowComponent, CtHeadingComponent, CtSectionBodyComponent, CtSectionBodyRowComponent, CtSectionContentComponent, MatFormField, MatLabel, MatInput, CdkTextareaAutosize, FormsModule, CtSectionFooterComponent, CtSectionFooterRowComponent, MatButton, CtRestStatusComponent]
 })
 
 export class EditProcessorComponent implements OnInit {

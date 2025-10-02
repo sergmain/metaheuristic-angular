@@ -5,7 +5,7 @@ import { AuthenticationService } from '@app/services/authentication';
 import { Settings } from '@app/services/settings/Settings';
 import { SettingsService, SettingsServiceEventChange } from '@app/services/settings/settings.service';
 import { MatSidenavContainer, MatSidenav, MatSidenavContent } from '@angular/material/sidenav';
-import { NgIf } from '@angular/common';
+
 import { MatButton } from '@angular/material/button';
 import { CtContentComponent } from '../../ct/ct-content/ct-content.component';
 import { CtBackButtonComponent } from '../../ct/ct-back-button/ct-back-button.component';
@@ -17,7 +17,7 @@ import { TranslateModule } from '@ngx-translate/core';
     selector: 'dispatcher-root',
     templateUrl: './dispatcher-root.component.html',
     styleUrls: ['./dispatcher-root.component.sass'],
-    imports: [MatSidenavContainer, MatSidenav, NgIf, MatButton, RouterLinkActive, RouterLink, MatSidenavContent, CtContentComponent, RouterOutlet, CtBackButtonComponent, CopyRightComponent, TranslateModule]
+    imports: [MatSidenavContainer, MatSidenav, MatButton, RouterLinkActive, RouterLink, MatSidenavContent, CtContentComponent, RouterOutlet, CtBackButtonComponent, CopyRightComponent, TranslateModule]
 })
 export class DispatcherRootComponent extends UIStateComponent implements OnInit, OnDestroy {
     settings: Settings;

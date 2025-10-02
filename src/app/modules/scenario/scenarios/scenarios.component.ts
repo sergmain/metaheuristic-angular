@@ -8,7 +8,7 @@ import {ScenarioService} from '@services/scenario/scenario.service';
 import {SimpleScenario} from '@services/scenario/SimpleScenario';
 import {ConfirmationDialogMethod} from '@app/components/app-dialog-confirmation/app-dialog-confirmation.component';
 import {MatDialog} from '@angular/material/dialog';
-import { NgIf, DatePipe } from '@angular/common';
+import { DatePipe } from '@angular/common';
 import { CtSectionComponent } from '../../ct/ct-section/ct-section.component';
 import { CtSectionHeaderComponent } from '../../ct/ct-section-header/ct-section-header.component';
 import { CtSectionHeaderRowComponent } from '../../ct/ct-section-header-row/ct-section-header-row.component';
@@ -28,7 +28,7 @@ import { CtTablePaginationComponent } from '../../ct/ct-table-pagination/ct-tabl
     selector: 'scenarios',
     templateUrl: './scenarios.component.html',
     styleUrls: ['./scenarios.component.css'],
-    imports: [NgIf, CtSectionComponent, CtSectionHeaderComponent, CtSectionHeaderRowComponent, CtHeadingComponent, MatIconButton, RouterLink, MatIcon, CtSectionBodyComponent, CtSectionBodyRowComponent, CtTableComponent, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatTooltip, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, CtSectionFooterComponent, CtSectionFooterRowComponent, CtTablePaginationComponent, DatePipe]
+    imports: [CtSectionComponent, CtSectionHeaderComponent, CtSectionHeaderRowComponent, CtHeadingComponent, MatIconButton, RouterLink, MatIcon, CtSectionBodyComponent, CtSectionBodyRowComponent, CtTableComponent, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatTooltip, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, CtSectionFooterComponent, CtSectionFooterRowComponent, CtTablePaginationComponent, DatePipe]
 })
 export class ScenariosComponent extends UIStateComponent implements OnInit {
     dataSource: MatTableDataSource<SimpleScenario> = new MatTableDataSource<SimpleScenario>([]);

@@ -12,7 +12,7 @@ import {MatButton} from '@angular/material/button';
 import { FormControl, FormGroup, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {ScenarioService} from '@services/scenario/scenario.service';
 import {ScenarioUidsForAccount} from '@services/scenario/ScenarioUidsForAccount';
-import { NgIf, NgFor } from '@angular/common';
+
 import { CtColsComponent } from '../../ct/ct-cols/ct-cols.component';
 import { CtColComponent } from '../../ct/ct-col/ct-col.component';
 import { CtSectionComponent } from '../../ct/ct-section/ct-section.component';
@@ -32,7 +32,7 @@ import { CtSectionFooterRowComponent } from '../../ct/ct-section-footer-row/ct-s
     selector: 'scenario-step-add',
     templateUrl: './scenario-step-add.component.html',
     styleUrls: ['./scenario-step-add.component.scss'],
-    imports: [NgIf, CtColsComponent, CtColComponent, CtSectionComponent, CtSectionHeaderComponent, CtSectionHeaderRowComponent, CtHeadingComponent, CtSectionBodyComponent, CtSectionBodyRowComponent, FormsModule, ReactiveFormsModule, MatFormField, MatLabel, MatInput, MatHint, MatSelect, NgFor, MatOption, CtSectionFooterComponent, CtSectionFooterRowComponent, MatButton, RouterLink, TranslateModule]
+    imports: [CtColsComponent, CtColComponent, CtSectionComponent, CtSectionHeaderComponent, CtSectionHeaderRowComponent, CtHeadingComponent, CtSectionBodyComponent, CtSectionBodyRowComponent, FormsModule, ReactiveFormsModule, MatFormField, MatLabel, MatInput, MatHint, MatSelect, MatOption, CtSectionFooterComponent, CtSectionFooterRowComponent, MatButton, RouterLink, TranslateModule]
 })
 
 export class ScenarioStepAddComponent extends UIStateComponent implements OnInit, OnDestroy {

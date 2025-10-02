@@ -1,85 +1,87 @@
-<ct-section *ngIf="simpleCompaniesResult">
+@if (simpleCompaniesResult) {
+  <ct-section>
     <ct-section-header>
+      <ct-section-header-row>
+        <div class="flex justify-content-space-between">
+          <ct-heading>Companies</ct-heading>
+          @if (!dispatcherAssetModeService.isReplicated(simpleCompaniesResult.assetMode)) {
+            <ng-container *ngTemplateOutlet="addButtonTemplate"></ng-container>
+          }
+        </div>
+      </ct-section-header-row>
+      @if (dispatcherAssetModeService.isReplicated(simpleCompaniesResult.assetMode)) {
         <ct-section-header-row>
-            <div class="flex justify-content-space-between">
-                <ct-heading>Companies</ct-heading>
-                <ng-container *ngIf="!dispatcherAssetModeService.isReplicated(simpleCompaniesResult.assetMode)">
-  <ng-container *ngTemplateOutlet="addButtonTemplate"></ng-container>
-</ng-container>
-            </div>
+          <ct-alert theme="info">
+            Management of companies are disabled, assetMode is 'replicated'.
+          </ct-alert>
         </ct-section-header-row>
-        <ct-section-header-row *ngIf="dispatcherAssetModeService.isReplicated(simpleCompaniesResult.assetMode)">
-            <ct-alert theme="info">
-                Management of companies are disabled, assetMode is 'replicated'.
-            </ct-alert>
-        </ct-section-header-row>
+      }
     </ct-section-header>
     <ct-section-body>
-        <ct-section-body-row>
-            <ng-container *ngTemplateOutlet="mainTableTemplate"></ng-container>
-        </ct-section-body-row>
+      <ct-section-body-row>
+        <ng-container *ngTemplateOutlet="mainTableTemplate"></ng-container>
+      </ct-section-body-row>
     </ct-section-body>
     <ct-section-footer>
-        <ct-section-footer-row>
-            <div class="flex justify-content-space-between">
-                <ct-table-pagination (prev)="prevPage()" (next)="nextPage()"
-                    [pageableDefault]="simpleCompaniesResult.companies"></ct-table-pagination>
-                <ng-container *ngIf="!dispatcherAssetModeService.isReplicated(simpleCompaniesResult.assetMode)">
-  <ng-container *ngTemplateOutlet="addButtonTemplate"></ng-container>
-</ng-container>
-            </div>
-        </ct-section-footer-row>
+      <ct-section-footer-row>
+        <div class="flex justify-content-space-between">
+          <ct-table-pagination (prev)="prevPage()" (next)="nextPage()"
+          [pageableDefault]="simpleCompaniesResult.companies"></ct-table-pagination>
+          @if (!dispatcherAssetModeService.isReplicated(simpleCompaniesResult.assetMode)) {
+            <ng-container *ngTemplateOutlet="addButtonTemplate"></ng-container>
+          }
+        </div>
+      </ct-section-footer-row>
     </ct-section-footer>
-</ct-section>
+  </ct-section>
+}
 
 
 
 <ng-template #mainTableTemplate>
-    <ct-table [isWaiting]="isLoading">
-        <table class="mat-table" mat-table="mat-table" [dataSource]="dataSource">
-            <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
-            <tr mat-row *matRowDef="let row; columns: columnsToDisplay;"></tr>
-            <ng-container matColumnDef="uniqueId">
-                <th mat-header-cell *matHeaderCellDef>Id</th>
-                <td mat-cell="mat-cell" *matCellDef="let el">{{el.uniqueId}} </td>
-            </ng-container>
-            <ng-container matColumnDef="name">
-                <th mat-header-cell *matHeaderCellDef>Name</th>
-                <td mat-cell="mat-cell" *matCellDef="let el">{{el.name}} </td>
-            </ng-container>
-            <ng-container matColumnDef="bts">
-                <th mat-header-cell *matHeaderCellDef> </th>
-                <td mat-cell="mat-cell" *matCellDef="let el">
-                    <div class="flex justify-content-flex-end gap-9px">
-                        <ng-container *ngIf="authenticationService.isRoleMasterAdmin()">
-                            <ng-container
-                                *ngIf="!dispatcherAssetModeService.isReplicated(simpleCompaniesResult.assetMode)">
-                                <a mat-flat-button color="primary" size="forTableRow"
-                                    [routerLink]="['../',el.uniqueId,'edit']">Edit</a>
-                            </ng-container>
-                        </ng-container>
+  <ct-table [isWaiting]="isLoading">
+    <table class="mat-table" mat-table="mat-table" [dataSource]="dataSource">
+      <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+      <tr mat-row *matRowDef="let row; columns: columnsToDisplay;"></tr>
+      <ng-container matColumnDef="uniqueId">
+        <th mat-header-cell *matHeaderCellDef>Id</th>
+        <td mat-cell="mat-cell" *matCellDef="let el">{{el.uniqueId}} </td>
+      </ng-container>
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef>Name</th>
+        <td mat-cell="mat-cell" *matCellDef="let el">{{el.name}} </td>
+      </ng-container>
+      <ng-container matColumnDef="bts">
+        <th mat-header-cell *matHeaderCellDef> </th>
+        <td mat-cell="mat-cell" *matCellDef="let el">
+          <div class="flex justify-content-flex-end gap-9px">
+            @if (authenticationService.isRoleMasterAdmin()) {
+              @if (!dispatcherAssetModeService.isReplicated(simpleCompaniesResult.assetMode)) {
+                <a mat-flat-button color="primary" size="forTableRow"
+                [routerLink]="['../',el.uniqueId,'edit']">Edit</a>
+              }
+            }
 
-                        <ng-container *ngIf="authenticationService.isRoleMasterAdmin()">
-                            <a mat-flat-button color="primary" size="forTableRow"
-                                [routerLink]="['../',el.uniqueId,'accounts']">Accounts</a>
-                        </ng-container>
+            @if (authenticationService.isRoleMasterAdmin()) {
+              <a mat-flat-button color="primary" size="forTableRow"
+              [routerLink]="['../',el.uniqueId,'accounts']">Accounts</a>
+            }
 
-                        <ng-container
-                            *ngIf="authenticationService.isRoleMasterOperator() || authenticationService.isRoleMasterSupport()">
-                            <ng-container *ngIf="el.id !== 1">
-                                <a mat-flat-button color="primary" size="forTableRow"
-                                    [routerLink]="['../',el.uniqueId,'batches']">Batches</a>
-                            </ng-container>
-                        </ng-container>
-                    </div>
-                </td>
-            </ng-container>
-        </table>
-    </ct-table>
+            @if (authenticationService.isRoleMasterOperator() || authenticationService.isRoleMasterSupport()) {
+              @if (el.id !== 1) {
+                <a mat-flat-button color="primary" size="forTableRow"
+                [routerLink]="['../',el.uniqueId,'batches']">Batches</a>
+              }
+            }
+          </div>
+        </td>
+      </ng-container>
+    </table>
+  </ct-table>
 </ng-template>
 
 
 
 <ng-template #addButtonTemplate>
-    <button mat-flat-button color="primary" routerLink="../add"> Add New Company </button>
+  <button mat-flat-button color="primary" routerLink="../add"> Add New Company </button>
 </ng-template>

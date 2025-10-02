@@ -15,7 +15,7 @@ import { BatchExecStatusService } from '@app/services/batch/BatchExecStatusServi
 import { SettingsService } from '@app/services/settings/settings.service';
 import * as fileSaver from 'file-saver';
 import {MhUtils} from '@services/mh-utils/mh-utils.service';
-import { NgIf, NgTemplateOutlet, DatePipe } from '@angular/common';
+import { NgTemplateOutlet, DatePipe } from '@angular/common';
 import { CtSectionComponent } from '../../ct/ct-section/ct-section.component';
 import { CtSectionHeaderComponent } from '../../ct/ct-section-header/ct-section-header.component';
 import { CtSectionHeaderRowComponent } from '../../ct/ct-section-header-row/ct-section-header-row.component';
@@ -35,7 +35,7 @@ import { CtTablePaginationComponent } from '../../ct/ct-table-pagination/ct-tabl
     selector: 'batch-list',
     templateUrl: './batch-list.component.html',
     styleUrls: ['./batch-list.component.scss'],
-    imports: [NgIf, CtSectionComponent, CtSectionHeaderComponent, CtSectionHeaderRowComponent, CtHeadingComponent, NgTemplateOutlet, MatButton, CtSectionBodyComponent, CtSectionBodyRowComponent, CtTableComponent, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, RouterLink, MatIcon, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, CtSectionFooterComponent, CtSectionFooterRowComponent, CtTablePaginationComponent, DatePipe, TranslateModule]
+    imports: [CtSectionComponent, CtSectionHeaderComponent, CtSectionHeaderRowComponent, CtHeadingComponent, NgTemplateOutlet, MatButton, CtSectionBodyComponent, CtSectionBodyRowComponent, CtTableComponent, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, RouterLink, MatIcon, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, CtSectionFooterComponent, CtSectionFooterRowComponent, CtTablePaginationComponent, DatePipe, TranslateModule]
 })
 export class BatchListComponent extends UIStateComponent implements OnInit, OnDestroy {
     batchesResult: BatchesResult;

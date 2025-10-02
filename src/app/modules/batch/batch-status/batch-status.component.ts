@@ -8,7 +8,7 @@ import { CtSectionHeaderComponent } from '../../ct/ct-section-header/ct-section-
 import { CtSectionHeaderRowComponent } from '../../ct/ct-section-header-row/ct-section-header-row.component';
 import { CtHeadingComponent } from '../../ct/ct-heading/ct-heading.component';
 import { CtSectionBodyComponent } from '../../ct/ct-section-body/ct-section-body.component';
-import { NgIf } from '@angular/common';
+
 import { CtSectionBodyRowComponent } from '../../ct/ct-section-body-row/ct-section-body-row.component';
 import { CtPreComponent } from '../../ct/ct-pre/ct-pre.component';
 import { TranslateModule } from '@ngx-translate/core';
@@ -17,7 +17,7 @@ import { TranslateModule } from '@ngx-translate/core';
     selector: 'batch-status',
     templateUrl: './batch-status.component.html',
     styleUrls: ['./batch-status.component.scss'],
-    imports: [CtSectionComponent, CtSectionHeaderComponent, CtSectionHeaderRowComponent, CtHeadingComponent, CtSectionBodyComponent, NgIf, CtSectionBodyRowComponent, CtPreComponent, TranslateModule]
+    imports: [CtSectionComponent, CtSectionHeaderComponent, CtSectionHeaderRowComponent, CtHeadingComponent, CtSectionBodyComponent, CtSectionBodyRowComponent, CtPreComponent, TranslateModule]
 })
 
 export class BatchStatusComponent implements OnInit {

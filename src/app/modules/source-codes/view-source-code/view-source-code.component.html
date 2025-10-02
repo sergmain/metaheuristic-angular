@@ -1,29 +1,31 @@
-<ct-cols align-items="flex-start" *ngIf="sourceCodeResponse">
+@if (sourceCodeResponse) {
+  <ct-cols align-items="flex-start">
     <ct-col size="8">
-        <ct-section>
-            <ct-section-header>
-                <ct-section-header-row>
-                    <ct-heading>Edit SourceCode {{sourceCode ? sourceCode.id : ''}}</ct-heading>
-                </ct-section-header-row>
-            </ct-section-header>
-            <ct-section-body>
-                <ct-section-body-row>
-                    <ct-section-content>
-                        <ct-pre>{{sourceCode.source}}</ct-pre>
-                    </ct-section-content>
-                </ct-section-body-row>
-            </ct-section-body>
-            <ct-section-footer>
-                <ct-section-footer-row>
-                    <div class="flex justify-content-flex-end gap-8px">
-                        <button mat-stroked-button="mat-stroked-button" (click)="back()">Back</button>
-                        <button mat-flat-button="mat-flat-button" (click)="validate()" color="primary">Validate</button>
-                    </div>
-                </ct-section-footer-row>
-            </ct-section-footer>
-        </ct-section>
+      <ct-section>
+        <ct-section-header>
+          <ct-section-header-row>
+            <ct-heading>Edit SourceCode {{sourceCode ? sourceCode.id : ''}}</ct-heading>
+          </ct-section-header-row>
+        </ct-section-header>
+        <ct-section-body>
+          <ct-section-body-row>
+            <ct-section-content>
+              <ct-pre>{{sourceCode.source}}</ct-pre>
+            </ct-section-content>
+          </ct-section-body-row>
+        </ct-section-body>
+        <ct-section-footer>
+          <ct-section-footer-row>
+            <div class="flex justify-content-flex-end gap-8px">
+              <button mat-stroked-button="mat-stroked-button" (click)="back()">Back</button>
+              <button mat-flat-button="mat-flat-button" (click)="validate()" color="primary">Validate</button>
+            </div>
+          </ct-section-footer-row>
+        </ct-section-footer>
+      </ct-section>
     </ct-col>
     <ct-col size="4">
-        <ct-rest-status class="uploadRestStatus" [content]="sourceCodeResponseForValidate"></ct-rest-status>
+      <ct-rest-status class="uploadRestStatus" [content]="sourceCodeResponseForValidate"></ct-rest-status>
     </ct-col>
-</ct-cols>
+  </ct-cols>
+}

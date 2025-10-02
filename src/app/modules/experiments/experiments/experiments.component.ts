@@ -7,7 +7,7 @@ import { UIStateComponent } from '@app/models/UIStateComponent';
 import { AuthenticationService } from '@app/services/authentication';
 import { ExperimentApiData } from '@app/services/experiments/ExperimentApiData';
 import { ExperimentsService } from '@app/services/experiments/experiments.service';
-import { NgIf, NgTemplateOutlet, DatePipe } from '@angular/common';
+import { NgTemplateOutlet, DatePipe } from '@angular/common';
 import { CtSectionComponent } from '../../ct/ct-section/ct-section.component';
 import { CtSectionHeaderComponent } from '../../ct/ct-section-header/ct-section-header.component';
 import { CtSectionHeaderRowComponent } from '../../ct/ct-section-header-row/ct-section-header-row.component';
@@ -27,7 +27,7 @@ import { MatIcon } from '@angular/material/icon';
     selector: 'experiments-view',
     templateUrl: './experiments.component.html',
     styleUrls: ['./experiments.component.scss'],
-    imports: [NgIf, CtSectionComponent, CtSectionHeaderComponent, CtSectionHeaderRowComponent, CtHeadingComponent, CtSectionBodyComponent, CtSectionBodyRowComponent, CtTableComponent, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, NgTemplateOutlet, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, CtSectionFooterComponent, CtSectionFooterRowComponent, CtTablePaginationComponent, MatButton, RouterLink, MatIcon, DatePipe]
+    imports: [CtSectionComponent, CtSectionHeaderComponent, CtSectionHeaderRowComponent, CtHeadingComponent, CtSectionBodyComponent, CtSectionBodyRowComponent, CtTableComponent, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, NgTemplateOutlet, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, CtSectionFooterComponent, CtSectionFooterRowComponent, CtTablePaginationComponent, MatButton, RouterLink, MatIcon, DatePipe]
 })
 
 export class ExperimentsComponent extends UIStateComponent implements OnInit {

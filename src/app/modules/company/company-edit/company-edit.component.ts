@@ -4,7 +4,7 @@ import { OperationStatusRest } from '@app/models/OperationStatusRest';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { SimpleCompanyResult } from '@app/services/company/SimpleCompanyResult';
 import { OperationStatus } from '@app/enums/OperationStatus';
-import { NgIf } from '@angular/common';
+
 import { CtColsComponent } from '../../ct/ct-cols/ct-cols.component';
 import { CtColComponent } from '../../ct/ct-col/ct-col.component';
 import { CtSectionComponent } from '../../ct/ct-section/ct-section.component';
@@ -22,7 +22,7 @@ import { CtRestStatusComponent } from '../../ct/ct-rest-status/ct-rest-status.co
     selector: 'company-edit',
     templateUrl: './company-edit.component.html',
     styleUrls: ['./company-edit.component.sass'],
-    imports: [NgIf, CtColsComponent, CtColComponent, CtSectionComponent, CtSectionHeaderComponent, CtSectionHeaderRowComponent, CtHeadingComponent, CtSectionBodyComponent, CtSectionBodyRowComponent, MatFormField, MatLabel, MatInput, FormsModule, MatHint, MatButton, RouterLink, CtRestStatusComponent]
+    imports: [CtColsComponent, CtColComponent, CtSectionComponent, CtSectionHeaderComponent, CtSectionHeaderRowComponent, CtHeadingComponent, CtSectionBodyComponent, CtSectionBodyRowComponent, MatFormField, MatLabel, MatInput, FormsModule, MatHint, MatButton, RouterLink, CtRestStatusComponent]
 })
 export class CompanyEditComponent implements OnInit {
 

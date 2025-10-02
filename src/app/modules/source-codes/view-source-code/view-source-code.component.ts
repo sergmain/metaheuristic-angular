@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { SourceCodesService } from '@app/services/source-codes/source-codes.service';
 import { SourceCode } from '@app/services/source-codes/SourceCode';
 import { SourceCodeResult } from '@app/services/source-codes/SourceCodeResult';
-import { NgIf } from '@angular/common';
+
 import { CtColsComponent } from '../../ct/ct-cols/ct-cols.component';
 import { CtColComponent } from '../../ct/ct-col/ct-col.component';
 import { CtSectionComponent } from '../../ct/ct-section/ct-section.component';
@@ -24,7 +24,7 @@ import { CtRestStatusComponent } from '../../ct/ct-rest-status/ct-rest-status.co
     selector: 'view-source-code',
     templateUrl: './view-source-code.component.html',
     styleUrls: ['./view-source-code.component.scss'],
-    imports: [NgIf, CtColsComponent, CtColComponent, CtSectionComponent, CtSectionHeaderComponent, CtSectionHeaderRowComponent, CtHeadingComponent, CtSectionBodyComponent, CtSectionBodyRowComponent, CtSectionContentComponent, CtPreComponent, CtSectionFooterComponent, CtSectionFooterRowComponent, MatButton, CtRestStatusComponent]
+    imports: [CtColsComponent, CtColComponent, CtSectionComponent, CtSectionHeaderComponent, CtSectionHeaderRowComponent, CtHeadingComponent, CtSectionBodyComponent, CtSectionBodyRowComponent, CtSectionContentComponent, CtPreComponent, CtSectionFooterComponent, CtSectionFooterRowComponent, MatButton, CtRestStatusComponent]
 })
 export class ViewSourceCodeComponent implements OnInit {
 

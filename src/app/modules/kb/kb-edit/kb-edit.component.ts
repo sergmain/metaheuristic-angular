@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Location, NgIf, NgFor } from '@angular/common';
+import { Location } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LoadStates } from '@app/enums/LoadStates';
 import {SimpleKb} from "@services/kb/SimpleKb";
@@ -25,7 +25,7 @@ import { TranslateModule } from '@ngx-translate/core';
     selector: 'kb-edit',
     templateUrl: './kb-edit.component.html',
     styleUrls: ['./kb-edit.component.scss'],
-    imports: [CtColsComponent, CtColComponent, CtSectionComponent, CtSectionHeaderComponent, CtSectionHeaderRowComponent, CtHeadingComponent, NgIf, CtSectionBodyComponent, CtSectionBodyRowComponent, CtSectionContentComponent, MatFormField, MatLabel, MatInput, FormsModule, CtSectionFooterComponent, CtSectionFooterRowComponent, MatButton, NgFor, TranslateModule]
+    imports: [CtColsComponent, CtColComponent, CtSectionComponent, CtSectionHeaderComponent, CtSectionHeaderRowComponent, CtHeadingComponent, CtSectionBodyComponent, CtSectionBodyRowComponent, CtSectionContentComponent, MatFormField, MatLabel, MatInput, FormsModule, CtSectionFooterComponent, CtSectionFooterRowComponent, MatButton, TranslateModule]
 })
 
 export class KbEditComponent implements OnInit {

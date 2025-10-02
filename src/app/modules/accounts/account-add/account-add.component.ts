@@ -19,13 +19,13 @@ import { MatFormField, MatLabel, MatInput, MatHint } from '@angular/material/inp
 import { CtSectionFooterComponent } from '../../ct/ct-section-footer/ct-section-footer.component';
 import { CtSectionFooterRowComponent } from '../../ct/ct-section-footer-row/ct-section-footer-row.component';
 import { MatButton } from '@angular/material/button';
-import { NgIf, NgFor } from '@angular/common';
+
 
 @Component({
     selector: 'account-add',
     templateUrl: './account-add.component.html',
     styleUrls: ['./account-add.component.scss'],
-    imports: [CtColsComponent, CtColComponent, CtSectionComponent, CtSectionHeaderComponent, CtSectionHeaderRowComponent, CtHeadingComponent, CtSectionBodyComponent, CtSectionBodyRowComponent, FormsModule, ReactiveFormsModule, CtSectionContentComponent, MatFormField, MatLabel, MatInput, MatHint, CtSectionFooterComponent, CtSectionFooterRowComponent, MatButton, RouterLink, NgIf, NgFor]
+    imports: [CtColsComponent, CtColComponent, CtSectionComponent, CtSectionHeaderComponent, CtSectionHeaderRowComponent, CtHeadingComponent, CtSectionBodyComponent, CtSectionBodyRowComponent, FormsModule, ReactiveFormsModule, CtSectionContentComponent, MatFormField, MatLabel, MatInput, MatHint, CtSectionFooterComponent, CtSectionFooterRowComponent, MatButton, RouterLink]
 })
 
 export class AccountAddComponent {

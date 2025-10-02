@@ -25,7 +25,7 @@ import {CtSectionComponent} from '../ct-section/ct-section.component';
 import {CtSectionHeaderComponent} from '../ct-section-header/ct-section-header.component';
 import {CtSectionHeaderRowComponent} from '../ct-section-header-row/ct-section-header-row.component';
 import {CtHeadingComponent} from '../ct-heading/ct-heading.component';
-import {DatePipe, NgIf} from '@angular/common';
+import { DatePipe } from '@angular/common';
 import {CtSectionBodyComponent} from '../ct-section-body/ct-section-body.component';
 import {CtSectionBodyRowComponent} from '../ct-section-body-row/ct-section-body-row.component';
 import {CtTableComponent} from '../ct-table/ct-table.component';
@@ -41,7 +41,7 @@ import {CtStateOfTasksComponent} from '../ct-state-of-tasks/ct-state-of-tasks.co
     selector: 'ct-exec-contexts',
     templateUrl: './ct-exec-contexts.component.html',
     styleUrls: ['./ct-exec-contexts.component.scss'],
-    imports: [CtSectionComponent, CtSectionHeaderComponent, CtSectionHeaderRowComponent, CtHeadingComponent, NgIf, CtSectionBodyComponent, CtSectionBodyRowComponent, CtTableComponent, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatButton, MatIconButton, MatIcon, MatTooltip, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, CtSectionFooterComponent, CtSectionFooterRowComponent, RouterLink, MatDialogActions, MatDialogClose, CtStateOfTasksComponent, DatePipe]
+    imports: [CtSectionComponent, CtSectionHeaderComponent, CtSectionHeaderRowComponent, CtHeadingComponent, CtSectionBodyComponent, CtSectionBodyRowComponent, CtTableComponent, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatButton, MatIconButton, MatIcon, MatTooltip, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, CtSectionFooterComponent, CtSectionFooterRowComponent, RouterLink, MatDialogActions, MatDialogClose, CtStateOfTasksComponent, DatePipe]
 })
 export class CtExecContextsComponent implements OnInit {
     @ViewChild('stateOfTasksTemplate') stateOfTasksTemplate: TemplateRef<any>;

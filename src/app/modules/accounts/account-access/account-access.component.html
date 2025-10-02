@@ -1,43 +1,47 @@
-<ct-cols *ngIf="response">
+@if (response) {
+  <ct-cols>
     <ct-col size="6">
-        <ct-section>
-            <ct-section-header>
-                <ct-section-header-row>
-                    <ct-heading>
-                        Account Role id {{response.account?.id }}, login {{response.account?.username}}
-                    </ct-heading>
-                </ct-section-header-row>
-            </ct-section-header>
-            <ct-section-body>
-                <ct-section-body-row *ngIf="response" style="font-size:125%;">
-                    <ct-section-content>
-                        <mat-checkbox [(ngModel)]="isManager">Manager</mat-checkbox>
-                    </ct-section-content>
-                    <ct-section-content>
-                        <mat-checkbox [(ngModel)]="isOperator">Operator</mat-checkbox>
-                    </ct-section-content>
-                    <ct-section-content>
-                        <mat-checkbox [(ngModel)]="isBilling">Billing</mat-checkbox>
-                    </ct-section-content>
-                    <ct-section-content>
-                        <mat-checkbox [(ngModel)]="isData">Data</mat-checkbox>
-                    </ct-section-content>
-                    <ct-section-content>
-                        <mat-checkbox [(ngModel)]="isServerRestAccess">Server Rest Access</mat-checkbox>
-                    </ct-section-content>
-                    <ct-section-content>
-                        <mat-checkbox [(ngModel)]="isAdmin">Admin</mat-checkbox>
-                    </ct-section-content>
-                </ct-section-body-row>
-            </ct-section-body>
-            <ct-section-footer>
-                <ct-section-footer-row>
-                    <div class="flex justify-content-flex-end gap-8px">
-                        <button mat-stroked-button (click)="back()">Cancel</button>
-                        <button mat-flat-button color="primary" (click)="save()">Save</button>
-                    </div>
-                </ct-section-footer-row>
-            </ct-section-footer>
-        </ct-section>
+      <ct-section>
+        <ct-section-header>
+          <ct-section-header-row>
+            <ct-heading>
+              Account Role id {{response.account?.id }}, login {{response.account?.username}}
+            </ct-heading>
+          </ct-section-header-row>
+        </ct-section-header>
+        <ct-section-body>
+          @if (response) {
+            <ct-section-body-row style="font-size:125%;">
+              <ct-section-content>
+                <mat-checkbox [(ngModel)]="isManager">Manager</mat-checkbox>
+              </ct-section-content>
+              <ct-section-content>
+                <mat-checkbox [(ngModel)]="isOperator">Operator</mat-checkbox>
+              </ct-section-content>
+              <ct-section-content>
+                <mat-checkbox [(ngModel)]="isBilling">Billing</mat-checkbox>
+              </ct-section-content>
+              <ct-section-content>
+                <mat-checkbox [(ngModel)]="isData">Data</mat-checkbox>
+              </ct-section-content>
+              <ct-section-content>
+                <mat-checkbox [(ngModel)]="isServerRestAccess">Server Rest Access</mat-checkbox>
+              </ct-section-content>
+              <ct-section-content>
+                <mat-checkbox [(ngModel)]="isAdmin">Admin</mat-checkbox>
+              </ct-section-content>
+            </ct-section-body-row>
+          }
+        </ct-section-body>
+        <ct-section-footer>
+          <ct-section-footer-row>
+            <div class="flex justify-content-flex-end gap-8px">
+              <button mat-stroked-button (click)="back()">Cancel</button>
+              <button mat-flat-button color="primary" (click)="save()">Save</button>
+            </div>
+          </ct-section-footer-row>
+        </ct-section-footer>
+      </ct-section>
     </ct-col>
-</ct-cols>
+  </ct-cols>
+}

@@ -8,7 +8,7 @@ import {ConfirmationDialogMethod} from "@src/app/components/app-dialog-confirmat
 import {MatDialog} from "@angular/material/dialog";
 import {EvaluationService} from "@services/evaluation/evaluation.service";
 import {SimpleApi} from "@services/api/SimpleApi";
-import { NgIf, NgTemplateOutlet, DatePipe } from '@angular/common';
+import { NgTemplateOutlet, DatePipe } from '@angular/common';
 import { CtSectionComponent } from '../../ct/ct-section/ct-section.component';
 import { CtSectionHeaderComponent } from '../../ct/ct-section-header/ct-section-header.component';
 import { CtSectionHeaderRowComponent } from '../../ct/ct-section-header-row/ct-section-header-row.component';
@@ -30,7 +30,7 @@ import { TranslateModule } from '@ngx-translate/core';
     selector: 'evaluations',
     templateUrl: './evaluations.component.html',
     styleUrls: ['./evaluations.component.sass'],
-    imports: [NgIf, CtSectionComponent, CtSectionHeaderComponent, CtSectionHeaderRowComponent, CtHeadingComponent, MatButton, RouterLink, CtSectionBodyComponent, CtSectionBodyRowComponent, NgTemplateOutlet, CtSectionFooterComponent, CtSectionFooterRowComponent, CtTablePaginationComponent, CtTableComponent, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatTooltip, MatIcon, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, DatePipe, TranslateModule]
+    imports: [CtSectionComponent, CtSectionHeaderComponent, CtSectionHeaderRowComponent, CtHeadingComponent, MatButton, RouterLink, CtSectionBodyComponent, CtSectionBodyRowComponent, NgTemplateOutlet, CtSectionFooterComponent, CtSectionFooterRowComponent, CtTablePaginationComponent, CtTableComponent, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatTooltip, MatIcon, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, DatePipe, TranslateModule]
 })
 export class EvaluationsComponent extends UIStateComponent implements OnInit {
   columnsToDisplay: string[] = ['evaluationId', 'code', 'createdOn', 'bts'];

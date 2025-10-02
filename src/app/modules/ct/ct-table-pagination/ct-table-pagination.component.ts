@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { PageableDefault } from '@app/models/PageableDefault';
-import { NgIf } from '@angular/common';
+
 import { MatIconButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
 
@@ -9,7 +9,7 @@ import { MatIcon } from '@angular/material/icon';
     selector: 'ct-table-pagination',
     templateUrl: './ct-table-pagination.component.html',
     styleUrls: ['./ct-table-pagination.component.sass'],
-    imports: [NgIf, MatIconButton, MatIcon]
+    imports: [MatIconButton, MatIcon]
 })
 export class CtTablePaginationComponent {
     @Output() next: EventEmitter<void> = new EventEmitter<void>();

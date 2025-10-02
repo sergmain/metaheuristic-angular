@@ -5,7 +5,7 @@ import { ConfirmationDialogMethod } from '@app/components/app-dialog-confirmatio
 import { GlobalVariablesService } from '@app/services/global-variables/global-variables.service';
 import { GlobalVariable } from '@app/services/global-variables/GlobalVariables';
 import { GlobalVariablesResult } from '@app/services/global-variables/GlobalVariablesResult';
-import { NgIf, NgTemplateOutlet, DatePipe } from '@angular/common';
+import { NgTemplateOutlet, DatePipe } from '@angular/common';
 import { CtSectionComponent } from '../../ct/ct-section/ct-section.component';
 import { CtSectionHeaderComponent } from '../../ct/ct-section-header/ct-section-header.component';
 import { CtSectionHeaderRowComponent } from '../../ct/ct-section-header-row/ct-section-header-row.component';
@@ -26,7 +26,7 @@ import { RouterLink } from '@angular/router';
     selector: 'global-variables',
     templateUrl: './global-variables.component.html',
     styleUrls: ['./global-variables.component.scss'],
-    imports: [NgIf, CtSectionComponent, CtSectionHeaderComponent, CtSectionHeaderRowComponent, CtHeadingComponent, NgTemplateOutlet, CtSectionBodyComponent, CtSectionBodyRowComponent, CtTableComponent, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, CtPreComponent, MatButton, MatIcon, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, CtSectionFooterComponent, CtSectionFooterRowComponent, CtTablePaginationComponent, RouterLink, DatePipe]
+    imports: [CtSectionComponent, CtSectionHeaderComponent, CtSectionHeaderRowComponent, CtHeadingComponent, NgTemplateOutlet, CtSectionBodyComponent, CtSectionBodyRowComponent, CtTableComponent, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, CtPreComponent, MatButton, MatIcon, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, CtSectionFooterComponent, CtSectionFooterRowComponent, CtTablePaginationComponent, RouterLink, DatePipe]
 })
 
 export class GlobalVariablesComponent implements OnInit {

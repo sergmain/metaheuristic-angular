@@ -59,7 +59,8 @@
     "tem1": "npm uninstall karma karma-chrome-launcher karma-coverage karma-jasmine karma-jasmine-html-reporter jasmine-core @types/jasmine jasmine-spec-reporter karma-coverage-istanbul-reporter  --force",
     "npm uninstall @biesbjerg/ngx-translate-extract": "npm uninstall @biesbjerg/ngx-translate-extract --force",
     "npm install @vendure/ngx-translate-extract@^9 --save-dev": "npm install @vendure/ngx-translate-extract@^9 --save-dev",
-    "npm install yaml": "npm install yaml"
+    "npm install yaml": "npm install yaml",
+    "ng g @angular/core:control-flow": "ng g @angular/core:control-flow"
   },
   "engines": {
     "node": ">=18.18.2",

@@ -13,7 +13,7 @@ import {Subscription} from 'rxjs';
 import { CtSectionComponent } from '../../../ct/ct-section/ct-section.component';
 import { CtSectionBodyComponent } from '../../../ct/ct-section-body/ct-section-body.component';
 import { CtSectionBodyRowComponent } from '../../../ct/ct-section-body-row/ct-section-body-row.component';
-import { NgIf } from '@angular/common';
+
 import { MatFormField, MatLabel, MatInput } from '@angular/material/input';
 import { MatIconButton, MatButton } from '@angular/material/button';
 import { MatTooltip } from '@angular/material/tooltip';
@@ -32,7 +32,7 @@ import { TranslateModule } from '@ngx-translate/core';
     selector: "settings-api-keys-index",
     templateUrl: './settings-api-keys-index.component.html',
     styleUrls: ['./settings-api-keys-index.component.scss'],
-    imports: [CtSectionComponent, CtSectionBodyComponent, CtSectionBodyRowComponent, NgIf, FormsModule, ReactiveFormsModule, MatFormField, MatLabel, MatInput, MatIconButton, MatTooltip, MatIcon, CtColsComponent, CtColComponent, CtSectionHeaderComponent, CtSectionHeaderRowComponent, CtHeadingComponent, CtSectionFooterComponent, CtSectionFooterRowComponent, MatButton, RouterLink, TranslateModule]
+    imports: [CtSectionComponent, CtSectionBodyComponent, CtSectionBodyRowComponent, FormsModule, ReactiveFormsModule, MatFormField, MatLabel, MatInput, MatIconButton, MatTooltip, MatIcon, CtColsComponent, CtColComponent, CtSectionHeaderComponent, CtSectionHeaderRowComponent, CtHeadingComponent, CtSectionFooterComponent, CtSectionFooterRowComponent, MatButton, RouterLink, TranslateModule]
 })
 export class SettingsApiKeysIndexComponent extends UIStateComponent implements OnInit {
     protected readonly MhUtils = MhUtils;

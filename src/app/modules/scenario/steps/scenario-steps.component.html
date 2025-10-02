@@ -1,52 +1,54 @@
-<ct-section *ngIf="simpleScenarioSteps">
+@if (simpleScenarioSteps) {
+  <ct-section>
     <ct-section-header>
-        <ct-section-header-row>
-            <div class="flex justify-content-space-between">
-                <ct-heading>Steps of Scenario</ct-heading>
-            </div>
-            <div class="flex justify-content-flex-end">
-                <button mat-flat-button="mat-flat-button" color="primary"
-        [routerLink]="['../', 'scenario-step-add']">Add Scenario Step</button>
-            </div>
-        </ct-section-header-row>
+      <ct-section-header-row>
+        <div class="flex justify-content-space-between">
+          <ct-heading>Steps of Scenario</ct-heading>
+        </div>
+        <div class="flex justify-content-flex-end">
+          <button mat-flat-button="mat-flat-button" color="primary"
+          [routerLink]="['../', 'scenario-step-add']">Add Scenario Step</button>
+        </div>
+      </ct-section-header-row>
     </ct-section-header>
     <ct-section-body>
-        <ct-section-body-row>
-            <ct-table [isWaiting]="isLoading">
-                <table mat-table [dataSource]="dataSource" cdkDropList (cdkDropListDropped)="rearrangeTable($event)">
-                    <ng-container matColumnDef="api">
-                        <th mat-header-cell *matHeaderCellDef>apiCode </th>
-                        <td mat-cell *matCellDef="let el">{{el.apiCode}} </td>
-                    </ng-container>
-                    <ng-container matColumnDef="name">
-                        <th mat-header-cell *matHeaderCellDef>Name</th>
-                        <td mat-cell *matCellDef="let el">{{el.name}}</td>
-                    </ng-container>
-                    <ng-container matColumnDef="prompt">
-                        <th mat-header-cell *matHeaderCellDef>Prompt</th>
-                        <td mat-cell *matCellDef="let el">{{el.prompt}}</td>
-                    </ng-container>
-                    <ng-container matColumnDef="answer">
-                        <th mat-header-cell *matHeaderCellDef>Answer</th>
-                        <td mat-cell *matCellDef="let el">{{el.answer}} </td>
-                    </ng-container>
-                    <ng-container matColumnDef="bts">
-                        <th mat-header-cell *matHeaderCellDef></th>
-                        <td mat-cell *matCellDef="let el">
-                            <div class="flex justify-content-flex-end gap-8px">
-                                <button mat-flat-button color="primary" size="forTableRow"
-        [routerLink]="['../step', el.uuid, 'step-edit']">Edit</button>
-                                <button mat-flat-button color="warn" size="forTableRow" (click)="delete(el)">
-    <mat-icon>delete</mat-icon>
-</button>
-                            </div>
-                        </td>
-                    </ng-container>
-                    <tr mat-header-row *matHeaderRowDef="columnsToDisplay"> </tr>
-                    <tr mat-row *matRowDef="let row; columns: columnsToDisplay;" cdkDrag > </tr>
-                </table>
-            </ct-table>
-        </ct-section-body-row>
+      <ct-section-body-row>
+        <ct-table [isWaiting]="isLoading">
+          <table mat-table [dataSource]="dataSource" cdkDropList (cdkDropListDropped)="rearrangeTable($event)">
+            <ng-container matColumnDef="api">
+              <th mat-header-cell *matHeaderCellDef>apiCode </th>
+              <td mat-cell *matCellDef="let el">{{el.apiCode}} </td>
+            </ng-container>
+            <ng-container matColumnDef="name">
+              <th mat-header-cell *matHeaderCellDef>Name</th>
+              <td mat-cell *matCellDef="let el">{{el.name}}</td>
+            </ng-container>
+            <ng-container matColumnDef="prompt">
+              <th mat-header-cell *matHeaderCellDef>Prompt</th>
+              <td mat-cell *matCellDef="let el">{{el.prompt}}</td>
+            </ng-container>
+            <ng-container matColumnDef="answer">
+              <th mat-header-cell *matHeaderCellDef>Answer</th>
+              <td mat-cell *matCellDef="let el">{{el.answer}} </td>
+            </ng-container>
+            <ng-container matColumnDef="bts">
+              <th mat-header-cell *matHeaderCellDef></th>
+              <td mat-cell *matCellDef="let el">
+                <div class="flex justify-content-flex-end gap-8px">
+                  <button mat-flat-button color="primary" size="forTableRow"
+                  [routerLink]="['../step', el.uuid, 'step-edit']">Edit</button>
+                  <button mat-flat-button color="warn" size="forTableRow" (click)="delete(el)">
+                    <mat-icon>delete</mat-icon>
+                  </button>
+                </div>
+              </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="columnsToDisplay"> </tr>
+            <tr mat-row *matRowDef="let row; columns: columnsToDisplay;" cdkDrag > </tr>
+          </table>
+        </ct-table>
+      </ct-section-body-row>
     </ct-section-body>
-</ct-section>
+  </ct-section>
+}
 

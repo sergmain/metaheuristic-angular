@@ -7,7 +7,7 @@ import {MatDialog} from "@angular/material/dialog";
 import {SimpleKbsResult} from "@services/kb/SimpleKbsResult";
 import {KbService} from "@services/kb/kb.service";
 import {SimpleKb} from "@services/kb/SimpleKb";
-import { NgIf, NgTemplateOutlet } from '@angular/common';
+import { NgTemplateOutlet } from '@angular/common';
 import { CtSectionComponent } from '../../ct/ct-section/ct-section.component';
 import { CtSectionHeaderComponent } from '../../ct/ct-section-header/ct-section-header.component';
 import { CtSectionHeaderRowComponent } from '../../ct/ct-section-header-row/ct-section-header-row.component';
@@ -31,7 +31,7 @@ import { TranslateModule } from '@ngx-translate/core';
     selector: 'kbs',
     templateUrl: './kbs.component.html',
     styleUrls: ['./kbs.component.scss'],
-    imports: [NgIf, CtSectionComponent, CtSectionHeaderComponent, CtSectionHeaderRowComponent, CtHeadingComponent, MatSlideToggle, FormsModule, MatButton, RouterLink, CtSectionBodyComponent, CtSectionBodyRowComponent, NgTemplateOutlet, CtSectionFooterComponent, CtSectionFooterRowComponent, CtTablePaginationComponent, CtTableComponent, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatIcon, CtPre10pxComponent, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, TranslateModule]
+    imports: [CtSectionComponent, CtSectionHeaderComponent, CtSectionHeaderRowComponent, CtHeadingComponent, MatSlideToggle, FormsModule, MatButton, RouterLink, CtSectionBodyComponent, CtSectionBodyRowComponent, NgTemplateOutlet, CtSectionFooterComponent, CtSectionFooterRowComponent, CtTablePaginationComponent, CtTableComponent, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatIcon, CtPre10pxComponent, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, TranslateModule]
 })
 export class KbsComponent extends UIStateComponent implements OnInit, ConfirmationDialogInterface {
   columnsToDisplay: string[] = ['id', 'code', 'status', 'bts'];

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Location, NgIf, NgFor } from '@angular/common';
+import { Location } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LoadStates } from '@app/enums/LoadStates';
 import {SimpleAuth} from "@services/auth/SimpleAuth";
@@ -25,7 +25,7 @@ import { TranslateModule } from '@ngx-translate/core';
     selector: 'auth-edit',
     templateUrl: './auth-edit.component.html',
     styleUrls: ['./auth-edit.component.scss'],
-    imports: [CtColsComponent, CtColComponent, CtSectionComponent, CtSectionHeaderComponent, CtSectionHeaderRowComponent, CtHeadingComponent, NgIf, CtSectionBodyComponent, CtSectionBodyRowComponent, FormsModule, ReactiveFormsModule, MatFormField, MatLabel, MatInput, CdkTextareaAutosize, CtSectionFooterComponent, CtSectionFooterRowComponent, MatButton, NgFor, TranslateModule]
+    imports: [CtColsComponent, CtColComponent, CtSectionComponent, CtSectionHeaderComponent, CtSectionHeaderRowComponent, CtHeadingComponent, CtSectionBodyComponent, CtSectionBodyRowComponent, FormsModule, ReactiveFormsModule, MatFormField, MatLabel, MatInput, CdkTextareaAutosize, CtSectionFooterComponent, CtSectionFooterRowComponent, MatButton, TranslateModule]
 })
 
 export class AuthEditComponent implements OnInit {

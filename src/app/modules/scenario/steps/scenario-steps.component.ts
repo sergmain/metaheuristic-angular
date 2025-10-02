@@ -12,7 +12,7 @@ import {MatButton} from "@angular/material/button";
 import { MatTableDataSource, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow } from "@angular/material/table";
 import {MatDialog} from "@angular/material/dialog";
 import { CdkDragDrop, CdkDropList, CdkDrag } from "@angular/cdk/drag-drop";
-import { NgIf } from '@angular/common';
+
 import { CtSectionComponent } from '../../ct/ct-section/ct-section.component';
 import { CtSectionHeaderComponent } from '../../ct/ct-section-header/ct-section-header.component';
 import { CtSectionHeaderRowComponent } from '../../ct/ct-section-header-row/ct-section-header-row.component';
@@ -28,7 +28,7 @@ import { MatIcon } from '@angular/material/icon';
     selector: 'scenario-steps',
     templateUrl: './scenario-steps.component.html',
     styleUrls: ['./scenario-steps.component.sass'],
-    imports: [NgIf, CtSectionComponent, CtSectionHeaderComponent, CtSectionHeaderRowComponent, CtHeadingComponent, MatButton, RouterLink, CtSectionBodyComponent, CtSectionBodyRowComponent, CtTableComponent, MatTable, CdkDropList, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatIcon, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, CdkDrag]
+    imports: [CtSectionComponent, CtSectionHeaderComponent, CtSectionHeaderRowComponent, CtHeadingComponent, MatButton, RouterLink, CtSectionBodyComponent, CtSectionBodyRowComponent, CtTableComponent, MatTable, CdkDropList, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatIcon, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, CdkDrag]
 })
 export class ScenarioStepsComponent extends UIStateComponent implements OnInit {
     readonly states = LoadStates;

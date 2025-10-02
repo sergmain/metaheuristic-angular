@@ -1,97 +1,95 @@
-<ct-section *ngIf="accountsResult">
+@if (accountsResult) {
+  <ct-section>
     <ct-section-header>
+      <ct-section-header-row>
+        <ct-heading>
+          Accounts
+        </ct-heading>
+      </ct-section-header-row>
+      @if (dispatcherAssetModeService.isReplicated(accountsResult.assetMode)) {
         <ct-section-header-row>
-            <ct-heading>
-                Accounts
-            </ct-heading>
+          <ct-alert theme="info">Creating and editing of accounts are disabled, assetMode is 'replicated'.
+          </ct-alert>
         </ct-section-header-row>
-
-        <ng-container *ngIf="dispatcherAssetModeService.isReplicated(accountsResult.assetMode)">
-            <ct-section-header-row>
-                <ct-alert theme="info">Creating and editing of accounts are disabled, assetMode is 'replicated'.
-                </ct-alert>
-            </ct-section-header-row>
-        </ng-container>
+      }
     </ct-section-header>
-
     <ct-section-body>
-        <ct-section-body-row>
-            <ct-table [isWaiting]="isLoading">
-                <table class="mat-table" mat-table [dataSource]="dataSource">
-                    <ng-container matColumnDef="id">
-                        <th mat-header-cell *matHeaderCellDef>ID </th>
-                        <td mat-cell *matCellDef="let el">{{el.id}} </td>
-                    </ng-container>
-                    <ng-container matColumnDef="isEnabled">
-                        <th mat-header-cell *matHeaderCellDef>Is enabled </th>
-                        <td mat-cell *matCellDef="let el">{{el.enabled ? 'Yes':'No'}} </td>
-                    </ng-container>
-                    <ng-container matColumnDef="login">
-                        <th mat-header-cell *matHeaderCellDef>Login </th>
-                        <td mat-cell *matCellDef="let el">{{el.username}} </td>
-                    </ng-container>
-                    <ng-container matColumnDef="publicName">
-                        <th mat-header-cell *matHeaderCellDef>Public name </th>
-                        <td mat-cell *matCellDef="let el">{{el.publicName}} </td>
-                    </ng-container>
-                    <ng-container matColumnDef="createdOn">
-                        <th mat-header-cell *matHeaderCellDef>Created On </th>
-                        <td mat-cell *matCellDef="let el">
-                            {{el.createdOn | date:'HH:mm, MMM&nbsp;d,&nbsp;yyyy'}} </td>
-                    </ng-container>
-                    <ng-container matColumnDef="roles">
-                        <th mat-header-cell *matHeaderCellDef>Public name </th>
-                        <td mat-cell *matCellDef="let el">{{el.roles}} </td>
-                    </ng-container>
-                    <ng-container matColumnDef="bts">
-                        <th mat-header-cell *matHeaderCellDef> </th>
-                        <td mat-cell *matCellDef="let el">
-                            <ng-container *ngIf="!dispatcherAssetModeService.isReplicated(accountsResult.assetMode)">
-                                <div class="flex justify-content-flex-end gap-9px">
-                                    <button mat-flat-button size="forTableRow"
-                                        [routerLink]="['/dispatcher/accounts/edit/',el.id]" color="primary">
-                                        Edit</button>
-                                    <!-- issue-1249 -->
-                                    <!-- <button mat-flat-button size="forTableRow"
-                                        [routerLink]="['/dispatcher/accounts/access/',el.id]" color="primary">
-                                        Access</button> -->
-                                    <button mat-flat-button size="forTableRow"
-                                        [routerLink]="['/dispatcher/accounts/edit-password/',el.id]"
-                                        color="primary">
-                                        Change Password</button>
-                                </div>
-                            </ng-container>
-                        </td>
-                    </ng-container>
-                    <tr mat-header-row *matHeaderRowDef="columnsToDisplay"> </tr>
-                    <tr mat-row *matRowDef="let row; columns: columnsToDisplay;"> </tr>
-                </table>
-            </ct-table>
-        </ct-section-body-row>
-    </ct-section-body>
-
-    <ct-section-footer>
-        <ct-section-footer-row>
-            <div class="flex justify-content-space-between">
-                <div class="flex justify-content-flex-start gap-8px">
-                    <ct-table-pagination 
-                        [pageableDefault]="accountsResult.accounts" 
-                        [globalDisable]="isLoading"
-                        (next)="nextPage()" 
-                        (prev)="prevPage()">
-                    </ct-table-pagination>
+      <ct-section-body-row>
+        <ct-table [isWaiting]="isLoading">
+          <table class="mat-table" mat-table [dataSource]="dataSource">
+            <ng-container matColumnDef="id">
+              <th mat-header-cell *matHeaderCellDef>ID </th>
+              <td mat-cell *matCellDef="let el">{{el.id}} </td>
+            </ng-container>
+            <ng-container matColumnDef="isEnabled">
+              <th mat-header-cell *matHeaderCellDef>Is enabled </th>
+              <td mat-cell *matCellDef="let el">{{el.enabled ? 'Yes':'No'}} </td>
+            </ng-container>
+            <ng-container matColumnDef="login">
+              <th mat-header-cell *matHeaderCellDef>Login </th>
+              <td mat-cell *matCellDef="let el">{{el.username}} </td>
+            </ng-container>
+            <ng-container matColumnDef="publicName">
+              <th mat-header-cell *matHeaderCellDef>Public name </th>
+              <td mat-cell *matCellDef="let el">{{el.publicName}} </td>
+            </ng-container>
+            <ng-container matColumnDef="createdOn">
+              <th mat-header-cell *matHeaderCellDef>Created On </th>
+              <td mat-cell *matCellDef="let el">
+              {{el.createdOn | date:'HH:mm, MMM&nbsp;d,&nbsp;yyyy'}} </td>
+            </ng-container>
+            <ng-container matColumnDef="roles">
+              <th mat-header-cell *matHeaderCellDef>Public name </th>
+              <td mat-cell *matCellDef="let el">{{el.roles}} </td>
+            </ng-container>
+            <ng-container matColumnDef="bts">
+              <th mat-header-cell *matHeaderCellDef> </th>
+              <td mat-cell *matCellDef="let el">
+                @if (!dispatcherAssetModeService.isReplicated(accountsResult.assetMode)) {
+                  <div class="flex justify-content-flex-end gap-9px">
+                    <button mat-flat-button size="forTableRow"
+                      [routerLink]="['/dispatcher/accounts/edit/',el.id]" color="primary">
+                    Edit</button>
+                    <!-- issue-1249 -->
+                    <!-- <button mat-flat-button size="forTableRow"
+                    [routerLink]="['/dispatcher/accounts/access/',el.id]" color="primary">
+                  Access</button> -->
+                  <button mat-flat-button size="forTableRow"
+                    [routerLink]="['/dispatcher/accounts/edit-password/',el.id]"
+                    color="primary">
+                  Change Password</button>
                 </div>
-
-                <ng-container *ngIf="!dispatcherAssetModeService.isReplicated(accountsResult.assetMode)">
-                    <button mat-flat-button 
-                        color="primary" 
-                        wide="wide" 
-                        [disabled]="isLoading"
-                        routerLink="/dispatcher/accounts/add/">
-                            Add New Account 
-                    </button>
-                </ng-container>
-            </div>
-        </ct-section-footer-row>
-    </ct-section-footer>
+              }
+            </td>
+          </ng-container>
+          <tr mat-header-row *matHeaderRowDef="columnsToDisplay"> </tr>
+          <tr mat-row *matRowDef="let row; columns: columnsToDisplay;"> </tr>
+        </table>
+      </ct-table>
+    </ct-section-body-row>
+  </ct-section-body>
+  <ct-section-footer>
+    <ct-section-footer-row>
+      <div class="flex justify-content-space-between">
+        <div class="flex justify-content-flex-start gap-8px">
+          <ct-table-pagination
+            [pageableDefault]="accountsResult.accounts"
+            [globalDisable]="isLoading"
+            (next)="nextPage()"
+            (prev)="prevPage()">
+          </ct-table-pagination>
+        </div>
+        @if (!dispatcherAssetModeService.isReplicated(accountsResult.assetMode)) {
+          <button mat-flat-button
+            color="primary"
+            wide="wide"
+            [disabled]="isLoading"
+            routerLink="/dispatcher/accounts/add/">
+            Add New Account
+          </button>
+        }
+      </div>
+    </ct-section-footer-row>
+  </ct-section-footer>
 </ct-section>
+}

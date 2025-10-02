@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Location, NgIf, NgFor } from '@angular/common';
+import { Location } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AccountsService } from '@app/services/accounts/accounts.service';
 import { LoadStates } from '@app/enums/LoadStates';
@@ -24,7 +24,7 @@ import { MatButton } from '@angular/material/button';
     selector: 'account-edit',
     templateUrl: './account-edit.component.html',
     styleUrls: ['./account-edit.component.scss'],
-    imports: [CtColsComponent, CtColComponent, CtSectionComponent, CtSectionHeaderComponent, CtSectionHeaderRowComponent, CtHeadingComponent, NgIf, CtSectionBodyComponent, CtSectionBodyRowComponent, CtSectionContentComponent, MatFormField, MatLabel, MatInput, FormsModule, MatCheckbox, CtSectionFooterComponent, CtSectionFooterRowComponent, MatButton, NgFor]
+    imports: [CtColsComponent, CtColComponent, CtSectionComponent, CtSectionHeaderComponent, CtSectionHeaderRowComponent, CtHeadingComponent, CtSectionBodyComponent, CtSectionBodyRowComponent, CtSectionContentComponent, MatFormField, MatLabel, MatInput, FormsModule, MatCheckbox, CtSectionFooterComponent, CtSectionFooterRowComponent, MatButton]
 })
 export class AccountEditComponent implements OnInit {
     readonly states = LoadStates;

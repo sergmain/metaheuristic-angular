@@ -14,7 +14,7 @@ import { MhUtils } from '@app/services/mh-utils/mh-utils.service';
 import { CtSectionComponent } from '../../../ct/ct-section/ct-section.component';
 import { CtSectionBodyComponent } from '../../../ct/ct-section-body/ct-section-body.component';
 import { CtSectionBodyRowComponent } from '../../../ct/ct-section-body-row/ct-section-body-row.component';
-import { NgIf, NgFor } from '@angular/common';
+
 import { MatFormField, MatLabel, MatHint } from '@angular/material/input';
 import { MatSelect } from '@angular/material/select';
 import { MatOption } from '@angular/material/autocomplete';
@@ -28,7 +28,7 @@ import { TranslateModule } from '@ngx-translate/core';
     selector: "settings-languages-index",
     templateUrl: './settings-languages-index.component.html',
     styleUrls: ['./settings-languages-index.component.scss'],
-    imports: [CtSectionComponent, CtSectionBodyComponent, CtSectionBodyRowComponent, NgIf, MatFormField, MatLabel, MatSelect, FormsModule, NgFor, MatOption, MatHint, MatIconButton, MatTooltip, MatIcon, TranslateModule]
+    imports: [CtSectionComponent, CtSectionBodyComponent, CtSectionBodyRowComponent, MatFormField, MatLabel, MatSelect, FormsModule, MatOption, MatHint, MatIconButton, MatTooltip, MatIcon, TranslateModule]
 })
 export class SettingsLanguagesIndexComponent extends UIStateComponent implements OnInit {
     protected readonly MhUtils = MhUtils;

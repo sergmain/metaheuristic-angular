@@ -1,347 +1,408 @@
-<ct-section *ngIf="MhUtils.isNotNull(simpleScenarioSteps)">
+@if (MhUtils.isNotNull(simpleScenarioSteps)) {
+  <ct-section>
     <ct-section-body style="width: 50%;">
+      <ct-section-body-row>
+        <div class="flex gap-8px justify-content-space-between">
+          Scenario: {{simpleScenarioSteps.scenarioInfo.name}}<br/>
+          {{simpleScenarioSteps.scenarioInfo.description}}
+          @if (!newNodePresent() && !isFormActive) {
+            <button mat-icon-button (click)="startEditingScenarioInfo()" matTooltip="Edit scenario info" color="primary">
+              <mat-icon>edit_document</mat-icon>
+            </button>
+          }
+          <button mat-icon-button (click)="runScenario()" matTooltip="Execute scenario" color="primary">
+            <mat-icon>play_arrow</mat-icon>
+          </button>
+          @if (isSourceCodeId()) {
+            <button mat-icon-button (click)="stateOfTasks()" matTooltip="Tasks" color="primary"
+              >
+              <mat-icon>list</mat-icon>
+            </button>
+          }
+        </div>
+      </ct-section-body-row>
+      @if (isFormActive) {
         <ct-section-body-row>
-            <div class="flex gap-8px justify-content-space-between">
-                Scenario: {{simpleScenarioSteps.scenarioInfo.name}}<br/>
-{{simpleScenarioSteps.scenarioInfo.description}}
-                <button mat-icon-button (click)="startEditingScenarioInfo()" matTooltip="Edit scenario info" color="primary" *ngIf="!newNodePresent() && !isFormActive">
-    <mat-icon>edit_document</mat-icon>
-</button>
-<button mat-icon-button (click)="runScenario()" matTooltip="Execute scenario" color="primary">
-    <mat-icon>play_arrow</mat-icon>
-</button>
-<button mat-icon-button (click)="stateOfTasks()" matTooltip="Tasks" color="primary"
-        *ngIf="isSourceCodeId()">
-    <mat-icon>list</mat-icon>
-</button>
-            </div>
+          <form [formGroup]="scenarioForm" novalidate="novalidate">
+            <mat-form-field appearance="outline" style="width: 100%;">
+              <mat-label>Name of Scenario, min 5 chars, required</mat-label>
+              <input matInput type="text" autocomplete="off" formControlName="name" />
+            </mat-form-field>
+            <mat-form-field appearance="outline" style="width: 100%;">
+              <mat-label>Description of Scenario, min 5 chars, required</mat-label>
+              <textarea formControlName="description" matInput="matInput" cdkTextareaAutosize="cdkTextareaAutosize"
+              cdkAutosizeMinRows="5" value="" autocomplete="off"></textarea>
+            </mat-form-field>
+          </form>
         </ct-section-body-row>
-        <ct-section-body-row *ngIf="isFormActive">
-            <form [formGroup]="scenarioForm" novalidate="novalidate">
-                <mat-form-field appearance="outline" style="width: 100%;">
-                    <mat-label>Name of Scenario, min 5 chars, required</mat-label>
-                    <input matInput type="text" autocomplete="off" formControlName="name" />
-                </mat-form-field>
-                <mat-form-field appearance="outline" style="width: 100%;">
-                    <mat-label>Description of Scenario, min 5 chars, required</mat-label>
-                    <textarea formControlName="description" matInput="matInput" cdkTextareaAutosize="cdkTextareaAutosize"
-                              cdkAutosizeMinRows="5" value="" autocomplete="off"></textarea>
-                </mat-form-field>
-            </form>
-        </ct-section-body-row>
+      }
     </ct-section-body>
-    <ct-section-footer *ngIf="isFormActive" style="width: 50%;">
+    @if (isFormActive) {
+      <ct-section-footer style="width: 50%;">
         <ct-section-footer-row>
-            <div class="flex justify-content-flex-end gap-8px">
-                <button mat-flat-button color="primary" size="forTableRow"
-        (click)="isFormActive=false; updateScenarioInfo()" [disabled]="notToUpdateScenarioInfo()">
-    Save</button>
-                <button mat-flat-button color="accent" size="forTableRow" (click)="cancelUpdatingScenarioInfo()">
-    Cancel</button>
-            </div>
+          <div class="flex justify-content-flex-end gap-8px">
+            <button mat-flat-button color="primary" size="forTableRow"
+              (click)="isFormActive=false; updateScenarioInfo()" [disabled]="notToUpdateScenarioInfo()">
+            Save</button>
+            <button mat-flat-button color="accent" size="forTableRow" (click)="cancelUpdatingScenarioInfo()">
+            Cancel</button>
+          </div>
         </ct-section-footer-row>
-    </ct-section-footer>
-</ct-section>
+      </ct-section-footer>
+    }
+  </ct-section>
+}
 
-<ct-cols align-items="baseline" *ngIf="dataSourceEmpty()" style="width: 100%;">
+@if (dataSourceEmpty()) {
+  <ct-cols align-items="baseline" style="width: 100%;">
     <ct-col style="width: 80%;">
-        <ct-section>
-            <ct-section-header>
-                <ct-section-header-row>
-                    <ct-heading>Add the first step to Scenario</ct-heading>
-                </ct-section-header-row>
-            </ct-section-header>
-            <ct-section-body>
-                <form [formGroup]="form" #formDirective="ngForm"  novalidate="novalidate">
-                    <mat-form-field appearance="outline">
-                        <mat-label> {{ 'evaluation-add.List of APIs' | translate }}</mat-label>
-                        <mat-select formControlName="apiUid">
-                            <mat-option  *ngFor="let apiOption of listOfApis" [value]="apiOption">
-                                {{apiOption.id}}, {{apiOption.uid}}
-                            </mat-option>
-                        </mat-select>
-                        <mat-hint>{{ 'main.This is a required field' | translate }}</mat-hint>
-                    </mat-form-field>
-                    <mat-form-field appearance="outline" style="width: 100%;">
-                        <mat-label>Prompt name, min 5 chars, required</mat-label>
-                        <input matInput type="text" autocomplete="off" formControlName="name" />
-                    </mat-form-field>
-                    <mat-form-field appearance="outline" style="width: 100%;">
-                        <mat-label>Prompt, min 3 chars, required</mat-label>
-                        <textarea formControlName="prompt" matInput="matInput" cdkTextareaAutosize="cdkTextareaAutosize"
-                                  cdkAutosizeMinRows="10" value="" autocomplete="off"></textarea>
-                    </mat-form-field>
-                    <mat-form-field appearance="outline" style="width: 100%;">
-                        <mat-label>Code of result, min 3 chars, required</mat-label>
-                        <input matInput type="text" autocomplete="off" formControlName="resultCode" />
-                    </mat-form-field>
-                </form>
-            </ct-section-body>
-            <ct-section-footer>
-                <ct-section-footer-row>
-                    <div class="flex justify-content-flex-end gap-8px">
-                        <button #button mat-flat-button="mat-flat-button" (click)="createFirstDetail()" color="primary"
-        [disabled]="notToCreate()">Create</button>
-                    </div>
-                </ct-section-footer-row>
-            </ct-section-footer>
-        </ct-section>
+      <ct-section>
+        <ct-section-header>
+          <ct-section-header-row>
+            <ct-heading>Add the first step to Scenario</ct-heading>
+          </ct-section-header-row>
+        </ct-section-header>
+        <ct-section-body>
+          <form [formGroup]="form" #formDirective="ngForm"  novalidate="novalidate">
+            <mat-form-field appearance="outline">
+              <mat-label> {{ 'evaluation-add.List of APIs' | translate }}</mat-label>
+              <mat-select formControlName="apiUid">
+                @for (apiOption of listOfApis; track apiOption) {
+                  <mat-option  [value]="apiOption">
+                    {{apiOption.id}}, {{apiOption.uid}}
+                  </mat-option>
+                }
+              </mat-select>
+              <mat-hint>{{ 'main.This is a required field' | translate }}</mat-hint>
+            </mat-form-field>
+            <mat-form-field appearance="outline" style="width: 100%;">
+              <mat-label>Prompt name, min 5 chars, required</mat-label>
+              <input matInput type="text" autocomplete="off" formControlName="name" />
+            </mat-form-field>
+            <mat-form-field appearance="outline" style="width: 100%;">
+              <mat-label>Prompt, min 3 chars, required</mat-label>
+              <textarea formControlName="prompt" matInput="matInput" cdkTextareaAutosize="cdkTextareaAutosize"
+              cdkAutosizeMinRows="10" value="" autocomplete="off"></textarea>
+            </mat-form-field>
+            <mat-form-field appearance="outline" style="width: 100%;">
+              <mat-label>Code of result, min 3 chars, required</mat-label>
+              <input matInput type="text" autocomplete="off" formControlName="resultCode" />
+            </mat-form-field>
+          </form>
+        </ct-section-body>
+        <ct-section-footer>
+          <ct-section-footer-row>
+            <div class="flex justify-content-flex-end gap-8px">
+              <button #button mat-flat-button="mat-flat-button" (click)="createFirstDetail()" color="primary"
+              [disabled]="notToCreate()">Create</button>
+            </div>
+          </ct-section-footer-row>
+        </ct-section-footer>
+      </ct-section>
     </ct-col>
-</ct-cols>
+  </ct-cols>
+}
 
 <ct-section>
-    <ct-section-body style="width: 100%;">
-        <ct-section-body-row>
-            <div class="flex gap-8px justify-content-flex-start">
-                <ng-container *ngTemplateOutlet="scenarioTree"></ng-container>
-            </div>
-        </ct-section-body-row>
-    </ct-section-body>
+  <ct-section-body style="width: 100%;">
+    <ct-section-body-row>
+      <div class="flex gap-8px justify-content-flex-start">
+        <ng-container *ngTemplateOutlet="scenarioTree"></ng-container>
+      </div>
+    </ct-section-body-row>
+  </ct-section-body>
 </ct-section>
 
 <ng-template #scenarioTree>
-    <mat-tree [dataSource]="dataSource" [treeControl]="treeControl" cdkDropList (cdkDropListDropped)="drop($event)">
-        <mat-tree-node *matTreeNodeDef="let node; when: modeEditOrNewNode" matTreeNodePadding
-                       cdkDrag [cdkDragData]="node" (mouseenter)="dragHover(node)"
-                       (mouseleave)="dragHoverEnd()" (cdkDragStarted)="dragStart()" (cdkDragReleased)="dragEnd()"
-        >
-            <button mat-icon-button disabled></button>
+  <mat-tree [dataSource]="dataSource" [treeControl]="treeControl" cdkDropList (cdkDropListDropped)="drop($event)">
+    <mat-tree-node *matTreeNodeDef="let node; when: modeEditOrNewNode" matTreeNodePadding
+      cdkDrag [cdkDragData]="node" (mouseenter)="dragHover(node)"
+      (mouseleave)="dragHoverEnd()" (cdkDragStarted)="dragStart()" (cdkDragReleased)="dragEnd()"
+      >
+      <button mat-icon-button disabled></button>
 
-            <ct-cols style="width: 100%;" *ngIf="showMyContainer">
-                <ct-col style="width: 75%;">
-                    <ct-section>
-                        <ct-section-header>
-                            <ct-section-header-row>
-                                <ct-section-header-row>
-                                    <div class="flex justify-content-space-between gap-9px">
-                                        <ct-heading *ngIf="modeNewNode(node)">New step</ct-heading>
-<ct-heading *ngIf="modeEditNode(node)">Edit step</ct-heading>
-                                        <div class="flex justify-content-flex-end gap-8px">
-            <button mat-flat-button="mat-flat-button" color="primary"
-                [disabled]="isApi" (click)="isApi=!isApi"
-        >API</button>
-                                                <button mat-flat-button="mat-flat-button" color="primary"
-        [disabled]="!isApi" (click)="isApi=!isApi"
->Processing</button>
-                                            </div>
-                                    </div>
-                                </ct-section-header-row>
-                            </ct-section-header-row>
-                        </ct-section-header>
-                        <ct-section-body>
-                            <ct-section-body-row>
-                                <form [formGroup]="form" #formDirective="ngForm"  novalidate="novalidate">
-                                    <mat-form-field appearance="outline" *ngIf="!isApi" style="width: 50%;">
-                                        <mat-label>Type of processing, required</mat-label>
-                                        <mat-select formControlName="processingFunction">
-                                            <mat-option *ngFor="let f of listOfFunctions" [value]="f">{{ f.code }}</mat-option>
-                                        </mat-select>
-                                    </mat-form-field>
-                                    <div class="flex gap-8px justify-content-space-between">
-                                        <mat-form-field appearance="outline" *ngIf="isApiNeeded()" style="width: 50%;">
-    <mat-label>{{ 'scenario.API' | translate }}</mat-label>
-    <mat-select formControlName="apiUid">
-        <mat-option *ngFor="let api of listOfApis" [value]="api">{{api.uid}}</mat-option>
-    </mat-select>
-</mat-form-field>
-                                        <mat-label *ngIf="isApi">{{ 'scenario.Use cache' | translate }}</mat-label>
-<mat-slide-toggle formControlName="cachable"></mat-slide-toggle>
-                                    </div>
-
-                                    <mat-form-field appearance="outline" style="width: 100%;">
-                                        <mat-label *ngIf="isApi">Prompt name, min 5 chars, required</mat-label>
-                                        <mat-label *ngIf="!isApi">Name of process, min 5 chars, required</mat-label>
-                                        <input matInput type="text" autocomplete="off" formControlName="name"/>
-                                    </mat-form-field>
-                                    <mat-form-field appearance="outline" style="width: 100%;" *ngIf="isApi">
-                                        <mat-label>Prompt, min 3 chars, required</mat-label>
-                                        <textarea formControlName="prompt" matInput="matInput" cdkTextareaAutosize="cdkTextareaAutosize"
-                                                  cdkAutosizeMinRows="10" value="" autocomplete="off"></textarea>
-                                    </mat-form-field>
-                                    <mat-form-field appearance="outline" style="width: 100%;" *ngIf="!isApi">
-                                        <mat-label>Input data, must be defined before, min 3 chars, required</mat-label>
-                                        <textarea formControlName="prompt" matInput cdkTextareaAutosize
-                                                  cdkAutosizeMinRows="10" value="" autocomplete="off"></textarea>
-                                    </mat-form-field>
-                                    <mat-form-field appearance="outline" style="width: 100%;">
-                                        <mat-label>Code of result, min 3 chars, required</mat-label>
-                                        <input matInput type="text" autocomplete="off" formControlName="resultCode" />
-                                    </mat-form-field>
-                                    <mat-form-field appearance="outline" style="width: 100%;" *ngIf="isAcceptanceTestFunc()" >
-                                        <mat-label>Expected result of calling API, min 1 chars, required</mat-label>
-                                        <input matInput type="text" autocomplete="off" formControlName="expected" />
-                                    </mat-form-field>
-                                    <mat-form-field appearance="outline" *ngIf="isMhAggregateFunc()" style="width: 50%;">
-                                        <mat-label>{{ 'evaluation-add.Type of aggregation' | translate }}</mat-label>
-                                        <mat-select formControlName="aggregateType">
-                                            <mat-option *ngFor="let aggregate of listOfAggregateTypes" [value]="aggregate">{{aggregate}}</mat-option>
-                                        </mat-select>
-                                        <mat-hint>{{ 'main.This is a required field' | translate }}</mat-hint>
-                                    </mat-form-field>
-                                </form>
-                            </ct-section-body-row>
-                        </ct-section-body>
-                        <ct-section-footer>
-                            <ct-section-footer-row>
-                                <div class="flex justify-content-flex-end gap-8px ngif-modeNewNode(node)">
-                                    <button mat-flat-button color="primary" size="forTableRow"
-        (click)="showMyContainer=false; saveNode(node)" [disabled]="notToCreate()">
-    Create</button>
-                                    <button mat-flat-button color="accent" size="forTableRow" (click)="deleteNewNode(node)">
-    Delete</button>
-                                </div>
-                                <div class="flex justify-content-flex-end gap-8px ngif-modeEditNode(node)">
-                                    <button mat-flat-button color="primary" size="forTableRow"
-        (click)="showMyContainer=false; saveNode(node)" [disabled]="notToCreate()">
-    Save</button>
-                                    <button mat-flat-button color="accent" size="forTableRow" (click)="setModeToShow(node)">
-    Cancel</button>
-                                </div>
-                            </ct-section-footer-row>
-                        </ct-section-footer>
-                    </ct-section>
-                </ct-col>
-            </ct-cols>
-        </mat-tree-node>
-
-        <mat-tree-node *matTreeNodeDef="let node; when: hasNewNodePresent" matTreeNodeToggle matTreeNodePadding
-                       cdkDrag [cdkDragData]="node" (mouseenter)="dragHover(node)" (mouseleave)="dragHoverEnd()"
-                       (cdkDragStarted)="dragStart()" (cdkDragReleased)="dragEnd()">
-            <button mat-icon-button
-                    matTreeNodeToggle (click)="expansionModel.toggle(node.uuid)"
-                    [attr.aria-label]="'toggle ' + node.uuid"  matTooltip="Expand node">
-                <mat-icon class="mat-icon-rtl-mirror">
-                    {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
-                </mat-icon>
-            </button>
-            {{node.name}}<br/> {{node.prompt}}<br/>Result code: [[{{node.resultCode}}]]
-        </mat-tree-node>
-
-        <mat-tree-node *matTreeNodeDef="let node; when: hasNewNodeAbsentAndNotEvaluation" matTreeNodeToggle matTreeNodePadding
-                       cdkDrag [cdkDragData]="node" (mouseenter)="dragHover(node)" (mouseleave)="dragHoverEnd()"
-                       (cdkDragStarted)="dragStart()" (cdkDragReleased)="dragEnd()"
-
-        >
-            <ct-section-body style="width: 100%;">
-                <ct-section-body-row [ngClass]="{ 'background-highlight': isActiveNode(node) }">
-                    <div class="flex">
-                        <!--normal item -->
-                        <button mat-icon-button
-                                matTreeNodeToggle (click)="expansionModel.toggle(node.uuid)"
-                                [attr.aria-label]="'toggle ' + node.uuid">
-                            <mat-icon class="mat-icon-rtl-mirror">
-                                {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
-                            </mat-icon>
-                        </button>
-                        <div *ngIf="isEnhanceText(node);then content else other_content">here is ignored</div>
-                        <ng-template #content>
-                            [[{{node.resultCode}}]] = {{node.prompt}}
-                        </ng-template>
-                        <ng-template #other_content>
-                            Type: {{MhUtils.isNull(node.functionCode) ? 'API: '+ node.apiCode : 'Process: ' + node.functionCode}}, Name: {{node.name}}<br/>{{node.prompt}}<br/>Result code: [[{{node.resultCode}}]]
-                        </ng-template>
-                        <ng-container *ngIf="isMhAcceptanceTestNode(node)" ><br/>expected: {{node.expected}}</ng-container>
-                        <button mat-icon-button (click)="addNewStubItem(node)" matTooltip="Add new step" color="primary"
-                                *ngIf="!stepEvaluation()">
-                            <mat-icon>add</mat-icon></button>
-                        <button mat-icon-button (click)="startEditingNode(node)" matTooltip="Edit step" color="primary"
-                                *ngIf="!stepEvaluation()">
-                            <mat-icon>edit_document</mat-icon>
-                        </button>
-                        <button mat-icon-button (click)="startStepEvaluation(node)" matTooltip="Evaluate step" color="primary"
-                                *ngIf="!stepEvaluation() && canBeEvaluated(node)">
-                            <mat-icon>chat_paste_go</mat-icon>
-                        </button>
-                        <button mat-icon-button (click)="delete(node)" matTooltip="Delete step" color="warn"
-                                *ngIf="!stepEvaluation()">
-                            <mat-icon>delete_forever</mat-icon>
-                        </button>
-                    </div>
-                </ct-section-body-row>
-                <ct-section-body-row>
-                    <div class="flex ngif-stepEvaluation() && isActiveNode(node)">
-                        <ng-container *ngTemplateOutlet="stepEvaluationTemplate"></ng-container>
-                    </div>
-                </ct-section-body-row>
-            </ct-section-body>
-        </mat-tree-node>
-    </mat-tree>
-</ng-template>
-
-<ng-template #stepEvaluationTemplate>
-    <ct-cols style="width: 100%;">
-        <ct-col style="width: 75%;">
+      @if (showMyContainer) {
+        <ct-cols style="width: 100%;">
+          <ct-col style="width: 75%;">
             <ct-section>
-                <ct-section-header>
-                    <ct-section-header-row>
-                        <ct-section-header-row>
-                            <div class="flex justify-content-space-between gap-5px">
-                                <ct-heading>Evaluate step</ct-heading>
-                                <button mat-flat-button color="primary" (click)="runStepEvaluation()" [disabled]="dontDoStepEvaluation()">
-    Evaluate
-</button>
-<button mat-flat-button color="primary" (click)="acceptStepEvaluation()" [disabled]="dontAcceptStepEvaluation()">
-    Accept
-</button>
-<button mat-flat-button color="accent" (click)="cancelStepEvaluation()">
-    Cancel
-</button>
-                            </div>
-                        </ct-section-header-row>
-                    </ct-section-header-row>
-                </ct-section-header>
-                <ct-section-body>
-                    <ct-section-body-row>
-                        <form [formGroup]="evalStepForm" novalidate="novalidate">
-                            <ng-container formArrayName="variables" *ngFor="let variableForm of evalStepForm.controls.variables?.value;let i = index; trackBy:trackByFn">
-                                <div class="flex justify-content-flex-start gap-8px style-width: 100%;">
-                                    <mat-form-field appearance="outline" style="width: 100%;">
-    <mat-label>Variable {{getNameOfField(i)}}, min 1 chars, required</mat-label>
-    <input matInput type="text" autocomplete="off" formControlName="value" placeholder="Value for variable"/>
-</mat-form-field>
-                                </div>
-                            </ng-container>
-                            <mat-form-field appearance="outline" style="width: 100%;">
-                                <mat-label>Prompt for evaluating, min 3 chars, required</mat-label>
-                                <textarea formControlName="prompt" matInput="matInput" cdkTextareaAutosize="cdkTextareaAutosize"
-                                          cdkAutosizeMinRows="10" value="" autocomplete="off"></textarea>
-                            </mat-form-field>
-                        </form>
-                    </ct-section-body-row>
-                </ct-section-body>
-                <ct-section-footer>
-                    <ct-section-footer-row>
-                        <div class="flex">
-                            <mat-form-field appearance="outline" style="width: 100%;" disabled *ngIf="MhUtils.isNotNull(stepEvaluationState.prompt)">
-    <mat-label>Actual prompt:</mat-label>
-    <textarea matInput [value]="stepEvaluationState.prompt" cdkTextareaAutosize="cdkTextareaAutosize"
-              style="overflow:hidden" autocomplete="off" disabled></textarea>
-</mat-form-field>
-<mat-form-field appearance="outline" style="width: 100%;" disabled *ngIf="MhUtils.isNotNull(stepEvaluationState.result)">
-    <mat-label>Result of evaluation:</mat-label>
-    <textarea matInput [value]="stepEvaluationState.result" cdkTextareaAutosize="cdkTextareaAutosize"
-              style="overflow:hidden" autocomplete="off" disabled></textarea>
-</mat-form-field>
-<mat-form-field appearance="outline" style="width: 100%;" disabled *ngIf="MhUtils.isNotNull(stepEvaluationState.rawResult)">
-    <mat-label>Raw result of evaluation:</mat-label>
-    <textarea matInput [value]="stepEvaluationState.rawResult" cdkTextareaAutosize="cdkTextareaAutosize"
-              style="overflow:hidden" autocomplete="off" disabled></textarea>
-</mat-form-field>
-<mat-form-field appearance="outline" style="width: 100%;" disabled *ngIf="MhUtils.isNotNull(stepEvaluationState.error)">
-    <mat-label>Error:</mat-label>
-    <textarea matInput [value]="stepEvaluationState.error" cdkTextareaAutosize="cdkTextareaAutosize"
-              style="overflow:hidden" autocomplete="off" disabled></textarea>
-</mat-form-field>
-                        </div>
-                    </ct-section-footer-row>
-                </ct-section-footer>
+              <ct-section-header>
+                <ct-section-header-row>
+                  <ct-section-header-row>
+                    <div class="flex justify-content-space-between gap-9px">
+                      @if (modeNewNode(node)) {
+                        <ct-heading>New step</ct-heading>
+                      }
+                      @if (modeEditNode(node)) {
+                        <ct-heading>Edit step</ct-heading>
+                      }
+                      <div class="flex justify-content-flex-end gap-8px">
+                        <button mat-flat-button="mat-flat-button" color="primary"
+                          [disabled]="isApi" (click)="isApi=!isApi"
+                        >API</button>
+                        <button mat-flat-button="mat-flat-button" color="primary"
+                          [disabled]="!isApi" (click)="isApi=!isApi"
+                        >Processing</button>
+                      </div>
+                    </div>
+                  </ct-section-header-row>
+                </ct-section-header-row>
+              </ct-section-header>
+              <ct-section-body>
+                <ct-section-body-row>
+                  <form [formGroup]="form" #formDirective="ngForm"  novalidate="novalidate">
+                    @if (!isApi) {
+                      <mat-form-field appearance="outline" style="width: 50%;">
+                        <mat-label>Type of processing, required</mat-label>
+                        <mat-select formControlName="processingFunction">
+                          @for (f of listOfFunctions; track f) {
+                            <mat-option [value]="f">{{ f.code }}</mat-option>
+                          }
+                        </mat-select>
+                      </mat-form-field>
+                    }
+                    <div class="flex gap-8px justify-content-space-between">
+                      @if (isApiNeeded()) {
+                        <mat-form-field appearance="outline" style="width: 50%;">
+                          <mat-label>{{ 'scenario.API' | translate }}</mat-label>
+                          <mat-select formControlName="apiUid">
+                            @for (api of listOfApis; track api) {
+                              <mat-option [value]="api">{{api.uid}}</mat-option>
+                            }
+                          </mat-select>
+                        </mat-form-field>
+                      }
+                      @if (isApi) {
+                        <mat-label>{{ 'scenario.Use cache' | translate }}</mat-label>
+                      }
+                      <mat-slide-toggle formControlName="cachable"></mat-slide-toggle>
+                    </div>
+                    <mat-form-field appearance="outline" style="width: 100%;">
+                      @if (isApi) {
+                        <mat-label>Prompt name, min 5 chars, required</mat-label>
+                      }
+                      @if (!isApi) {
+                        <mat-label>Name of process, min 5 chars, required</mat-label>
+                      }
+                      <input matInput type="text" autocomplete="off" formControlName="name"/>
+                    </mat-form-field>
+                    @if (isApi) {
+                      <mat-form-field appearance="outline" style="width: 100%;">
+                        <mat-label>Prompt, min 3 chars, required</mat-label>
+                        <textarea formControlName="prompt" matInput="matInput" cdkTextareaAutosize="cdkTextareaAutosize"
+                        cdkAutosizeMinRows="10" value="" autocomplete="off"></textarea>
+                      </mat-form-field>
+                    }
+                    @if (!isApi) {
+                      <mat-form-field appearance="outline" style="width: 100%;">
+                        <mat-label>Input data, must be defined before, min 3 chars, required</mat-label>
+                        <textarea formControlName="prompt" matInput cdkTextareaAutosize
+                        cdkAutosizeMinRows="10" value="" autocomplete="off"></textarea>
+                      </mat-form-field>
+                    }
+                    <mat-form-field appearance="outline" style="width: 100%;">
+                      <mat-label>Code of result, min 3 chars, required</mat-label>
+                      <input matInput type="text" autocomplete="off" formControlName="resultCode" />
+                    </mat-form-field>
+                    @if (isAcceptanceTestFunc()) {
+                      <mat-form-field appearance="outline" style="width: 100%;" >
+                        <mat-label>Expected result of calling API, min 1 chars, required</mat-label>
+                        <input matInput type="text" autocomplete="off" formControlName="expected" />
+                      </mat-form-field>
+                    }
+                    @if (isMhAggregateFunc()) {
+                      <mat-form-field appearance="outline" style="width: 50%;">
+                        <mat-label>{{ 'evaluation-add.Type of aggregation' | translate }}</mat-label>
+                        <mat-select formControlName="aggregateType">
+                          @for (aggregate of listOfAggregateTypes; track aggregate) {
+                            <mat-option [value]="aggregate">{{aggregate}}</mat-option>
+                          }
+                        </mat-select>
+                        <mat-hint>{{ 'main.This is a required field' | translate }}</mat-hint>
+                      </mat-form-field>
+                    }
+                  </form>
+                </ct-section-body-row>
+              </ct-section-body>
+              <ct-section-footer>
+                <ct-section-footer-row>
+                  <div class="flex justify-content-flex-end gap-8px ngif-modeNewNode(node)">
+                    <button mat-flat-button color="primary" size="forTableRow"
+                      (click)="showMyContainer=false; saveNode(node)" [disabled]="notToCreate()">
+                    Create</button>
+                    <button mat-flat-button color="accent" size="forTableRow" (click)="deleteNewNode(node)">
+                    Delete</button>
+                  </div>
+                  <div class="flex justify-content-flex-end gap-8px ngif-modeEditNode(node)">
+                    <button mat-flat-button color="primary" size="forTableRow"
+                      (click)="showMyContainer=false; saveNode(node)" [disabled]="notToCreate()">
+                    Save</button>
+                    <button mat-flat-button color="accent" size="forTableRow" (click)="setModeToShow(node)">
+                    Cancel</button>
+                  </div>
+                </ct-section-footer-row>
+              </ct-section-footer>
             </ct-section>
-        </ct-col>
-    </ct-cols>
-</ng-template>
+          </ct-col>
+        </ct-cols>
+      }
+    </mat-tree-node>
 
-<ng-template #execContexts>
+    <mat-tree-node *matTreeNodeDef="let node; when: hasNewNodePresent" matTreeNodeToggle matTreeNodePadding
+      cdkDrag [cdkDragData]="node" (mouseenter)="dragHover(node)" (mouseleave)="dragHoverEnd()"
+      (cdkDragStarted)="dragStart()" (cdkDragReleased)="dragEnd()">
+      <button mat-icon-button
+        matTreeNodeToggle (click)="expansionModel.toggle(node.uuid)"
+        [attr.aria-label]="'toggle ' + node.uuid"  matTooltip="Expand node">
+        <mat-icon class="mat-icon-rtl-mirror">
+          {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+        </mat-icon>
+      </button>
+      {{node.name}}<br/> {{node.prompt}}<br/>Result code: [[{{node.resultCode}}]]
+    </mat-tree-node>
+
+    <mat-tree-node *matTreeNodeDef="let node; when: hasNewNodeAbsentAndNotEvaluation" matTreeNodeToggle matTreeNodePadding
+      cdkDrag [cdkDragData]="node" (mouseenter)="dragHover(node)" (mouseleave)="dragHoverEnd()"
+      (cdkDragStarted)="dragStart()" (cdkDragReleased)="dragEnd()"
+
+      >
+      <ct-section-body style="width: 100%;">
+        <ct-section-body-row [ngClass]="{ 'background-highlight': isActiveNode(node) }">
+          <div class="flex">
+            <!--normal item -->
+            <button mat-icon-button
+              matTreeNodeToggle (click)="expansionModel.toggle(node.uuid)"
+              [attr.aria-label]="'toggle ' + node.uuid">
+              <mat-icon class="mat-icon-rtl-mirror">
+                {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+              </mat-icon>
+            </button>
+            @if (isEnhanceText(node)) {
+              [[{{node.resultCode}}]] = {{node.prompt}}
+            } @else {
+              Type: {{MhUtils.isNull(node.functionCode) ? 'API: '+ node.apiCode : 'Process: ' + node.functionCode}}, Name: {{node.name}}<br/>{{node.prompt}}<br/>Result code: [[{{node.resultCode}}]]
+            }
+            @if (isMhAcceptanceTestNode(node)) {
+              <br/>expected: {{node.expected}}
+            }
+            @if (!stepEvaluation()) {
+              <button mat-icon-button (click)="addNewStubItem(node)" matTooltip="Add new step" color="primary"
+                >
+                <mat-icon>add</mat-icon></button>
+              }
+              @if (!stepEvaluation()) {
+                <button mat-icon-button (click)="startEditingNode(node)" matTooltip="Edit step" color="primary"
+                  >
+                  <mat-icon>edit_document</mat-icon>
+                </button>
+              }
+              @if (!stepEvaluation() && canBeEvaluated(node)) {
+                <button mat-icon-button (click)="startStepEvaluation(node)" matTooltip="Evaluate step" color="primary"
+                  >
+                  <mat-icon>chat_paste_go</mat-icon>
+                </button>
+              }
+              @if (!stepEvaluation()) {
+                <button mat-icon-button (click)="delete(node)" matTooltip="Delete step" color="warn"
+                  >
+                  <mat-icon>delete_forever</mat-icon>
+                </button>
+              }
+            </div>
+          </ct-section-body-row>
+          <ct-section-body-row>
+            <div class="flex ngif-stepEvaluation() && isActiveNode(node)">
+              <ng-container *ngTemplateOutlet="stepEvaluationTemplate"></ng-container>
+            </div>
+          </ct-section-body-row>
+        </ct-section-body>
+      </mat-tree-node>
+    </mat-tree>
+  </ng-template>
+
+  <ng-template #stepEvaluationTemplate>
+    <ct-cols style="width: 100%;">
+      <ct-col style="width: 75%;">
+        <ct-section>
+          <ct-section-header>
+            <ct-section-header-row>
+              <ct-section-header-row>
+                <div class="flex justify-content-space-between gap-5px">
+                  <ct-heading>Evaluate step</ct-heading>
+                  <button mat-flat-button color="primary" (click)="runStepEvaluation()" [disabled]="dontDoStepEvaluation()">
+                    Evaluate
+                  </button>
+                  <button mat-flat-button color="primary" (click)="acceptStepEvaluation()" [disabled]="dontAcceptStepEvaluation()">
+                    Accept
+                  </button>
+                  <button mat-flat-button color="accent" (click)="cancelStepEvaluation()">
+                    Cancel
+                  </button>
+                </div>
+              </ct-section-header-row>
+            </ct-section-header-row>
+          </ct-section-header>
+          <ct-section-body>
+            <ct-section-body-row>
+              <form [formGroup]="evalStepForm" novalidate="novalidate">
+                @for (variableForm of evalStepForm.controls.variables?.value; track trackByFn(i, variableForm); let i = $index) {
+                  <ng-container formArrayName="variables">
+                    <div class="flex justify-content-flex-start gap-8px style-width: 100%;">
+                      <mat-form-field appearance="outline" style="width: 100%;">
+                        <mat-label>Variable {{getNameOfField(i)}}, min 1 chars, required</mat-label>
+                        <input matInput type="text" autocomplete="off" formControlName="value" placeholder="Value for variable"/>
+                      </mat-form-field>
+                    </div>
+                  </ng-container>
+                }
+                <mat-form-field appearance="outline" style="width: 100%;">
+                  <mat-label>Prompt for evaluating, min 3 chars, required</mat-label>
+                  <textarea formControlName="prompt" matInput="matInput" cdkTextareaAutosize="cdkTextareaAutosize"
+                  cdkAutosizeMinRows="10" value="" autocomplete="off"></textarea>
+                </mat-form-field>
+              </form>
+            </ct-section-body-row>
+          </ct-section-body>
+          <ct-section-footer>
+            <ct-section-footer-row>
+              <div class="flex">
+                @if (MhUtils.isNotNull(stepEvaluationState.prompt)) {
+                  <mat-form-field appearance="outline" style="width: 100%;" disabled>
+                    <mat-label>Actual prompt:</mat-label>
+                    <textarea matInput [value]="stepEvaluationState.prompt" cdkTextareaAutosize="cdkTextareaAutosize"
+                    style="overflow:hidden" autocomplete="off" disabled></textarea>
+                  </mat-form-field>
+                }
+                @if (MhUtils.isNotNull(stepEvaluationState.result)) {
+                  <mat-form-field appearance="outline" style="width: 100%;" disabled>
+                    <mat-label>Result of evaluation:</mat-label>
+                    <textarea matInput [value]="stepEvaluationState.result" cdkTextareaAutosize="cdkTextareaAutosize"
+                    style="overflow:hidden" autocomplete="off" disabled></textarea>
+                  </mat-form-field>
+                }
+                @if (MhUtils.isNotNull(stepEvaluationState.rawResult)) {
+                  <mat-form-field appearance="outline" style="width: 100%;" disabled>
+                    <mat-label>Raw result of evaluation:</mat-label>
+                    <textarea matInput [value]="stepEvaluationState.rawResult" cdkTextareaAutosize="cdkTextareaAutosize"
+                    style="overflow:hidden" autocomplete="off" disabled></textarea>
+                  </mat-form-field>
+                }
+                @if (MhUtils.isNotNull(stepEvaluationState.error)) {
+                  <mat-form-field appearance="outline" style="width: 100%;" disabled>
+                    <mat-label>Error:</mat-label>
+                    <textarea matInput [value]="stepEvaluationState.error" cdkTextareaAutosize="cdkTextareaAutosize"
+                    style="overflow:hidden" autocomplete="off" disabled></textarea>
+                  </mat-form-field>
+                }
+              </div>
+            </ct-section-footer-row>
+          </ct-section-footer>
+        </ct-section>
+      </ct-col>
+    </ct-cols>
+  </ng-template>
+
+  <ng-template #execContexts>
     <ng-container>
-        <ct-exec-contexts [sourceCodeId]="sourceCodeId" [modal]="true"></ct-exec-contexts>
+      <ct-exec-contexts [sourceCodeId]="sourceCodeId" [modal]="true"></ct-exec-contexts>
     </ng-container>
-</ng-template>
+  </ng-template>

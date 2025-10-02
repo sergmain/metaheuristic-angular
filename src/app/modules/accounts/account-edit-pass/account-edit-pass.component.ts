@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Location, NgIf, NgFor } from '@angular/common';
+import { Location } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AccountsService } from '@app/services/accounts/accounts.service';
 import { LoadStates } from '@app/enums/LoadStates';
@@ -23,7 +23,7 @@ import { MatButton } from '@angular/material/button';
     selector: 'account-edit-pass',
     templateUrl: './account-edit-pass.component.html',
     styleUrls: ['./account-edit-pass.component.scss'],
-    imports: [CtColsComponent, CtColComponent, CtSectionComponent, CtSectionHeaderComponent, CtSectionHeaderRowComponent, CtHeadingComponent, CtSectionBodyComponent, CtSectionBodyRowComponent, FormsModule, ReactiveFormsModule, CtSectionContentComponent, MatFormField, MatLabel, MatInput, CtSectionFooterComponent, CtSectionFooterRowComponent, MatButton, NgIf, NgFor]
+    imports: [CtColsComponent, CtColComponent, CtSectionComponent, CtSectionHeaderComponent, CtSectionHeaderRowComponent, CtHeadingComponent, CtSectionBodyComponent, CtSectionBodyRowComponent, FormsModule, ReactiveFormsModule, CtSectionContentComponent, MatFormField, MatLabel, MatInput, CtSectionFooterComponent, CtSectionFooterRowComponent, MatButton]
 })
 
 export class AccountEditPassComponent implements OnInit {

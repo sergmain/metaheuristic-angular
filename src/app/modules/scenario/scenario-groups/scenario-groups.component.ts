@@ -7,7 +7,7 @@ import {ConfirmationDialogMethod} from "@src/app/components/app-dialog-confirmat
 import {MatDialog} from "@angular/material/dialog";
 import {ScenarioService} from "@services/scenario/scenario.service";
 import {SimpleScenarioGroupsResult} from '@services/scenario/ScenarioData';
-import { NgIf, NgTemplateOutlet, DatePipe } from '@angular/common';
+import { NgTemplateOutlet, DatePipe } from '@angular/common';
 import { CtSectionComponent } from '../../ct/ct-section/ct-section.component';
 import { CtSectionHeaderComponent } from '../../ct/ct-section-header/ct-section-header.component';
 import { CtSectionHeaderRowComponent } from '../../ct/ct-section-header-row/ct-section-header-row.component';
@@ -28,7 +28,7 @@ import { TranslateModule } from '@ngx-translate/core';
     selector: 'scenario-groups',
     templateUrl: './scenario-groups.component.html',
     styleUrls: ['./scenario-groups.component.sass'],
-    imports: [NgIf, CtSectionComponent, CtSectionHeaderComponent, CtSectionHeaderRowComponent, CtHeadingComponent, MatButton, RouterLink, CtSectionBodyComponent, CtSectionBodyRowComponent, NgTemplateOutlet, CtSectionFooterComponent, CtSectionFooterRowComponent, CtTablePaginationComponent, CtTableComponent, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatIcon, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, DatePipe, TranslateModule]
+    imports: [CtSectionComponent, CtSectionHeaderComponent, CtSectionHeaderRowComponent, CtHeadingComponent, MatButton, RouterLink, CtSectionBodyComponent, CtSectionBodyRowComponent, NgTemplateOutlet, CtSectionFooterComponent, CtSectionFooterRowComponent, CtTablePaginationComponent, CtTableComponent, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatIcon, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, DatePipe, TranslateModule]
 })
 export class ScenarioGroupsComponent extends UIStateComponent implements OnInit {
   columnsToDisplay: string[] = ['scenarioGroupId', 'createdOn', 'name', 'bts'];

@@ -12,7 +12,7 @@ import { SourceCodesService } from '@app/services/source-codes/source-codes.serv
 import { SourceCode } from '@app/services/source-codes/SourceCode';
 import { SourceCodesResult } from '@app/services/source-codes/SourceCodesResult';
 import { SourceCodesArchiveComponent } from '../source-codes-archive/source-codes-archive.component';
-import { NgIf, NgTemplateOutlet, DatePipe } from '@angular/common';
+import { NgTemplateOutlet, DatePipe } from '@angular/common';
 import { CtSectionComponent } from '../../ct/ct-section/ct-section.component';
 import { CtSectionHeaderComponent } from '../../ct/ct-section-header/ct-section-header.component';
 import { CtSectionHeaderRowComponent } from '../../ct/ct-section-header-row/ct-section-header-row.component';
@@ -33,7 +33,7 @@ import { MatIcon } from '@angular/material/icon';
     selector: 'source-codes',
     templateUrl: './source-codes.component.html',
     styleUrls: ['./source-codes.component.sass'],
-    imports: [MatTabGroup, MatTab, NgIf, CtSectionComponent, CtSectionHeaderComponent, CtSectionHeaderRowComponent, CtHeadingComponent, NgTemplateOutlet, CtAlertComponent, CtSectionBodyComponent, CtSectionBodyRowComponent, CtSectionFooterComponent, CtSectionFooterRowComponent, CtTablePaginationComponent, SourceCodesArchiveComponent, CtTableComponent, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatButton, RouterLink, MatIcon, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, DatePipe]
+    imports: [MatTabGroup, MatTab, CtSectionComponent, CtSectionHeaderComponent, CtSectionHeaderRowComponent, CtHeadingComponent, NgTemplateOutlet, CtAlertComponent, CtSectionBodyComponent, CtSectionBodyRowComponent, CtSectionFooterComponent, CtSectionFooterRowComponent, CtTablePaginationComponent, SourceCodesArchiveComponent, CtTableComponent, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatButton, RouterLink, MatIcon, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, DatePipe]
 })
 export class SourceCodesComponent extends UIStateComponent implements OnInit {
 

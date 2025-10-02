@@ -10,7 +10,7 @@ import {ConfirmationDialogMethod} from '@app/components/app-dialog-confirmation/
 import {SimpleScenarioGroupsAllResult} from '@services/scenario/ScenarioData';
 import {MhUtils} from '@services/mh-utils/mh-utils.service';
 import {MatDialog} from '@angular/material/dialog';
-import { NgIf, NgFor } from '@angular/common';
+
 import { CtSectionComponent } from '../../ct/ct-section/ct-section.component';
 import { CtSectionBodyComponent } from '../../ct/ct-section-body/ct-section-body.component';
 import { CtSectionBodyRowComponent } from '../../ct/ct-section-body-row/ct-section-body-row.component';
@@ -35,7 +35,7 @@ export enum MoveState {
     selector: 'scenario-move',
     templateUrl: 'scenario-move.component.html',
     styleUrls: ['scenario-move.component.scss'],
-    imports: [NgIf, CtSectionComponent, CtSectionBodyComponent, CtSectionBodyRowComponent, FormsModule, ReactiveFormsModule, MatFormField, MatLabel, MatSelect, NgFor, MatOption, CtSectionFooterComponent, CtSectionFooterRowComponent, MatButton]
+    imports: [CtSectionComponent, CtSectionBodyComponent, CtSectionBodyRowComponent, FormsModule, ReactiveFormsModule, MatFormField, MatLabel, MatSelect, MatOption, CtSectionFooterComponent, CtSectionFooterRowComponent, MatButton]
 })
 export class ScenarioMoveComponent extends UIStateComponent implements OnInit, OnDestroy {
 

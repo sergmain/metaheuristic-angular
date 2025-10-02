@@ -4,9 +4,8 @@
 #
 # For IE 9-11 support, please remove 'not' from the last line of the file and adjust as needed
 
-> 0.5%
-last 2 versions
-Firefox ESR
-Firefox > 51
-not dead
-not IE 9-11
+Chrome >= 64
+Firefox >= 62
+Safari >= 11.1
+Edge >= 79
+electron >= 30.0.0
