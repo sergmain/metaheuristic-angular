@@ -194,19 +194,18 @@ export class CompanyService {
     private parseProcessableItemOperator(item: ProcessableItem): (source: Observable<HttpResponse<Blob>>) => Observable<Subscription> {
         return (source: Observable<HttpResponse<Blob>>) =>
             new Observable<Subscription>(observer => {
-                return source.subscribe(
-                    {
+                const subscription =  source.subscribe({
                         next: response => {
                             item.response = response;
                             item.fileName = response.ok ?
                                 `${item.id}.zip` :
                                 `${item.id} error`;
-                            observer.next();
+                            observer.next(subscription);
                         },
                         error: error => observer.error(error),
                         complete: () => observer.complete(),
-                    }
-                );
+                });
+                return subscription; // Return the subscription to allow unsubscribing
             });
     }
 }
