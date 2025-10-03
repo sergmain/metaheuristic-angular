@@ -17,6 +17,7 @@ import { FormsModule } from '@angular/forms';
 import { CtRestStatusComponent } from '../../ct/ct-rest-status/ct-rest-status.component';
 
 @Component({
+    standalone: true,
     selector: 'account-edit-roles',
     templateUrl: './account-edit-roles.component.html',
     styleUrls: ['./account-edit-roles.component.sass'],
@@ -41,10 +42,10 @@ export class AccountEditRolesComponent implements OnInit {
             .editRoles(this.accountId(), this.companyUniqueId)
             .subscribe(accountWithRoleResult => {
                 this.accountWithRoleResult.set(accountWithRoleResult);
-                this.accountWithRoleResult().possibleRoles.forEach(r => this.roleModel.set(r, false));
+                this.accountWithRoleResult().possibleRoles.forEach(r => this.roleModel().set(r, false));
                 this.accountWithRoleResult().account.authorities.forEach(a => {
                     if (this.roleModel().has(a.authority)) {
-                        this.roleModel.set(a.authority, true);
+                        this.roleModel().set(a.authority, true);
                     }
                 });
                 this.isLoading.set(false);

@@ -143,8 +143,8 @@ export class AuthenticationService {
         }
     }
 
-    logout(): Observable<null> {
-        return new Observable(subscriber => {
+    logout(): Observable<void> {
+        return new Observable<void>(subscriber => {
             localStorage.removeItem(this.localStorageName);
             localStorage.removeItem(this.userLifeTimeExpiredName);
             sessionStorage.clear();

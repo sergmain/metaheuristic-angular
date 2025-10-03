@@ -52,9 +52,9 @@ export class BatchDownloader extends BatchSelector {
 
     }
 
-    private parseProcessableItemOperator(item: ProcessableItem): (source: Observable<HttpResponse<Blob>>) => Observable<Subscription> {
+    private parseProcessableItemOperator(item: ProcessableItem): (source: Observable<HttpResponse<Blob>>) => Observable<void> {
         return (source: Observable<HttpResponse<Blob>>) =>
-            new Observable<Subscription>(observer => {
+            new Observable<void>(observer => {
                 return source.subscribe(
                     {
                         next: response => {
