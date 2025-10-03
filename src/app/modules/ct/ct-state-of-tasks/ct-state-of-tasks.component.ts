@@ -1,4 +1,4 @@
-import { Component, OnInit, TemplateRef, input, viewChild, inject } from '@angular/core';
+import { Component, OnInit, TemplateRef, input, viewChild, inject, signal } from '@angular/core';
 import { MatDialog, MatDialogContent, MatDialogActions, MatDialogClose } from '@angular/material/dialog';
 import { TaskExecState } from '@app/enums/TaskExecState';
 import { ExecContextService } from '@app/services/exec-context/exec-context.service';
@@ -31,8 +31,8 @@ export class CtStateOfTasksComponent implements OnInit {
   sourceCodeId = input<string>();
   execContextId = input<string>();
 
-  response: ExecContextStateResult;
-  taskExecInfo: TaskExecInfo;
+  response = signal<ExecContextStateResult | undefined>(undefined);
+  taskExecInfo = signal<TaskExecInfo | undefined>(undefined);
   readonly TaskExecState: { [value: string]: string } = TaskExecState;
 
   ngOnInit(): void {
@@ -44,20 +44,20 @@ export class CtStateOfTasksComponent implements OnInit {
       this.execContextService
           .execContextsState(this.sourceCodeId(), this.execContextId())
           .subscribe(response => {
-            this.response = response;
+            this.response.set(response);
           });
     }
   }
 
   openError(taskId: string): void {
-    this.taskExecInfo = null;
+    this.taskExecInfo.set(null);
     this.dialog.open(this.errorDialogTemplate(), {
       width: '100%'
     });
     this.execContextService
         .taskExecInfo(this.sourceCodeId(), this.execContextId(), taskId)
         .subscribe(taskExecInfo => {
-          this.taskExecInfo = taskExecInfo;
+          this.taskExecInfo.set(taskExecInfo);
         });
 
   }

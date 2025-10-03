@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { OperationStatusRest } from '@app/models/OperationStatusRest';
 import { Router, ActivatedRoute } from '@angular/router';
 import { OperationStatus } from '@app/enums/OperationStatus';
@@ -19,12 +19,12 @@ import { CardFormAddVariableWithStorageComponent } from '../card-form-add-variab
 export class AddGlobalVariableComponent {
       private router = inject(Router);
       private route = inject(ActivatedRoute);
-    addVariableResponse: OperationStatusRest;
-    addVariableStorageResponse: OperationStatusRest;
+    addVariableResponse = signal<OperationStatusRest | undefined>(undefined);
+    addVariableStorageResponse = signal<OperationStatusRest | undefined>(undefined);
 
     updateStatusAfterAddVarible(response: OperationStatusRest): void {
         if (response.status !== OperationStatus.OK) {
-            this.addVariableResponse = response;
+            this.addVariableResponse.set(response);
         } else {
             this.back();
         }
@@ -32,7 +32,7 @@ export class AddGlobalVariableComponent {
 
     updateStatusAfterAddVaribleStorage(response: OperationStatusRest): void {
         if (response.status !== OperationStatus.OK) {
-            this.addVariableStorageResponse = response;
+            this.addVariableStorageResponse.set(response);
         } else {
             this.back();
         }

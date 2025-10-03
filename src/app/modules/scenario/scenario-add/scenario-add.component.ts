@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit, viewChild, inject } from '@angular/core';
+import { Component, OnDestroy, OnInit, viewChild, inject, signal } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import {LoadStates} from '@app/enums/LoadStates';
 import { TranslateService, TranslateModule } from '@ngx-translate/core';
@@ -39,7 +39,7 @@ export class ScenarioAddComponent extends UIStateComponent implements OnInit, On
     readonly states = LoadStates;
 
     currentStates: Set<LoadStates> = new Set();
-    scenarioGroupId: string;
+    scenarioGroupId = signal<string | undefined>(undefined);
 
     form = new FormGroup({
         name: new FormControl('', [Validators.required, Validators.minLength(5)]),
@@ -53,7 +53,7 @@ export class ScenarioAddComponent extends UIStateComponent implements OnInit, On
     button = viewChild(MatButton);
 
     ngOnInit(): void {
-        this.scenarioGroupId = this.activatedRoute.snapshot.paramMap.get('scenarioGroupId');
+        this.scenarioGroupId.set(this.activatedRoute.snapshot.paramMap.get('scenarioGroupId'));
         this.subscribeSubscription(this.settingsService.events.subscribe(event => {
             if (event instanceof SettingsServiceEventChange) {
                 this.translate.use(event.settings.language);
@@ -75,7 +75,7 @@ export class ScenarioAddComponent extends UIStateComponent implements OnInit, On
         this.currentStates.add(this.states.wait);
         const subscribe: Subscription = this.scenarioService
             .addScenarioFormCommit(
-                this.scenarioGroupId,
+                this.scenarioGroupId(),
                 this.form.value.name,
                 this.form.value.description
             )

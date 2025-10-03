@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, signal } from '@angular/core';
 import { MatTableDataSource, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow } from '@angular/material/table';
 import { UIStateComponent } from '@app/models/UIStateComponent';
 import { AuthenticationService } from '@app/services/authentication';
@@ -37,7 +37,7 @@ export class SessionsComponent extends UIStateComponent implements OnInit {
 //     'sessionStatus', 'safe', 'normalPercent', 'failPercent', 'errorPercent', 'providerCode', 'modelInfo'];
   columnsToDisplay: string[] = ['sessionId', 'startedOn', 'providerCode',
     'normalPercent', 'failPercent', 'errorPercent', 'bts'];
-  simpleSessionsResult: SimpleSessionsResult;
+  simpleSessionsResult = signal<SimpleSessionsResult | undefined>(undefined);
   dataSource = new MatTableDataSource<SimpleSession>([]);
 
   constructor(public readonly authenticationService: AuthenticationService = inject(AuthenticationService)) {
@@ -55,9 +55,9 @@ export class SessionsComponent extends UIStateComponent implements OnInit {
         .getSessions(pageNumber.toString())
         .subscribe({
           next: simpleSessionsResult => {
-            this.simpleSessionsResult = simpleSessionsResult;
-            // console.log('SessionsComponent.simpleSessionsResult: ' + JSON.stringify(this.simpleSessionsResult));
-            this.dataSource = new MatTableDataSource(this.simpleSessionsResult.sessions.content || []);
+            this.simpleSessionsResult.set(simpleSessionsResult);
+            // console.log('SessionsComponent.simpleSessionsResult: ' + JSON.stringify(this.simpleSessionsResult()));
+            this.dataSource = new MatTableDataSource(this.simpleSessionsResult().sessions.content || []);
             // console.log('SessionsComponent.simpleSessionsResult: #3');
           },
           complete: () => {
@@ -76,14 +76,14 @@ export class SessionsComponent extends UIStateComponent implements OnInit {
   delete(session: SimpleSession): void {
     this.sessionService
         .sessionDeleteCommit(session.sessionId.toString())
-        .subscribe(v => this.getEvaluations(this.simpleSessionsResult.sessions.number));
+        .subscribe(v => this.getEvaluations(this.simpleSessionsResult().sessions.number));
   }
 
   prevPage(): void {
-    this.getEvaluations((this.simpleSessionsResult.sessions.number - 1));
+    this.getEvaluations((this.simpleSessionsResult().sessions.number - 1));
   }
 
   nextPage(): void {
-    this.getEvaluations((this.simpleSessionsResult.sessions.number + 1));
+    this.getEvaluations((this.simpleSessionsResult().sessions.number + 1));
   }
 }

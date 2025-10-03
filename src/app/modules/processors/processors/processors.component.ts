@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, inject } from '@angular/core';
+import { Component, OnInit, ViewChild, inject, signal } from '@angular/core';
 import { MatTableDataSource, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow } from '@angular/material/table';
 import { MatDialog, } from '@angular/material/dialog';
 import { ConfirmationDialogMethod, ConfirmationDialogInterface } from '@app/components/app-dialog-confirmation/app-dialog-confirmation.component';
@@ -39,12 +39,12 @@ import { CtTablePaginationComponent } from '../../ct/ct-table-pagination/ct-tabl
 export class ProcessorsComponent extends UIStateComponent implements OnInit, ConfirmationDialogInterface {
       public readonly dialog = inject(MatDialog);
       private processorsService = inject(ProcessorsService);
-    processorResult: ProcessorsResult;
-    showStatusOfProcessor: boolean = false;
-    dataSource: MatTableDataSource<ProcessorStatus> = new MatTableDataSource<ProcessorStatus>([]);
-    selection: SelectionModel<ProcessorStatus> = new SelectionModel<ProcessorStatus>(true, []);
-    columnsToDisplay: string[] = ['check', 'id', 'ip', 'description', 'reason', 'cores', 'bts'];
-    secondColumnsToDisplay: string[] = ['empty', 'env'];
+    processorResult = signal<ProcessorsResult | undefined>(undefined);
+    showStatusOfProcessor = signal<boolean>(false);
+    dataSource = signal<MatTableDataSource<ProcessorStatus>>(new MatTableDataSource<ProcessorStatus>([]));
+    selection = signal<SelectionModel<ProcessorStatus>>(new SelectionModel<ProcessorStatus>(true, []));
+    columnsToDisplay = signal<string[]>(['check', 'id', 'ip', 'description', 'reason', 'cores', 'bts']);
+    secondColumnsToDisplay = signal<string[]>(['empty', 'env']);
 
     constructor(public readonly authenticationService: AuthenticationService = inject(AuthenticationService)) {
         super(authenticationService);
@@ -59,35 +59,35 @@ export class ProcessorsComponent extends UIStateComponent implements OnInit, Con
         this.processorsService
             .init(page.toString())
             .subscribe(processorResult => {
-                this.processorResult = processorResult;
+                this.processorResult.set(processorResult);
                 const items: ProcessorStatus[] = processorResult.items.content || [];
                 if (items.length) {
-                    this.dataSource = new MatTableDataSource(items);
+                    this.dataSource.set(new MatTableDataSource(items));
                 }
                 this.isLoading = false;
             });
     }
 
     applyFilter(filterValue: string): void {
-        this.dataSource.filter = filterValue.trim().toLowerCase();
+        this.dataSource().filter = filterValue.trim().toLowerCase();
     }
 
     isAllSelected(): boolean {
-        return this.selection.selected.length === this.dataSource.data.length;
+        return this.selection().selected.length === this.dataSource().data.length;
     }
 
     masterToggle(): void {
         this.isAllSelected() ?
-            this.selection.clear() :
-            this.dataSource.data.forEach(row => this.selection.select(row));
+            this.selection().clear() :
+            this.dataSource().data.forEach(row => this.selection().select(row));
     }
 
     nextPage(): void {
-        this.updateTable(this.processorResult.items.number + 1);
+        this.updateTable(this.processorResult().items.number + 1);
     }
 
     prevPage(): void {
-        this.updateTable(this.processorResult.items.number - 1);
+        this.updateTable(this.processorResult().items.number - 1);
     }
 
     @ConfirmationDialogMethod({
@@ -99,7 +99,7 @@ export class ProcessorsComponent extends UIStateComponent implements OnInit, Con
     delete(processor: ProcessorStatus): void {
         this.processorsService
             .deleteProcessorCommit(processor.processor.id.toString())
-            .subscribe(() => this.updateTable(this.processorResult.items.number));
+            .subscribe(() => this.updateTable(this.processorResult().items.number));
     }
 
     @ConfirmationDialogMethod({
@@ -109,7 +109,7 @@ export class ProcessorsComponent extends UIStateComponent implements OnInit, Con
     })
     deleteMany(): void {
         this.processorsService
-            .processProcessorBulkDeleteCommit(this.selection.selected.map(v => v.processor.id.toString()))
-            .subscribe(() => this.updateTable(this.processorResult.items.number));
+            .processProcessorBulkDeleteCommit(this.selection().selected.map(v => v.processor.id.toString()))
+            .subscribe(() => this.updateTable(this.processorResult().items.number));
     }
 }

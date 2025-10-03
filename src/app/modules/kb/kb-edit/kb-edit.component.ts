@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, signal } from '@angular/core';
 import { Location } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LoadStates } from '@app/enums/LoadStates';
@@ -36,7 +36,7 @@ export class KbEditComponent implements OnInit {
     readonly states = LoadStates;
     currentStates = new Set();
     response;
-    kb: SimpleKb;
+    kb = signal<SimpleKb | undefined>(undefined);
 
     ngOnInit() {
         this.currentStates.add(this.states.firstLoading);
@@ -49,7 +49,7 @@ export class KbEditComponent implements OnInit {
             .getKb(id)
             .subscribe(
                 (response) => {
-                    this.kb = response.kb;
+                    this.kb.set(response.kb);
                 },
                 () => { },
                 () => {
@@ -65,7 +65,7 @@ export class KbEditComponent implements OnInit {
     save() {
         this.currentStates.add(this.states.wait);
         this.kbService
-            .editFormCommit(this.kb.id.toString(), this.kb.params)
+            .editFormCommit(this.kb().id.toString(), this.kb().params)
             .subscribe(
                 (response) => {
                     this.router.navigate(['/dispatcher', 'kbs']);

@@ -1,4 +1,4 @@
-import {Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import { CtExecContextsComponent } from '../../ct/ct-exec-contexts/ct-exec-contexts.component';
 
@@ -12,11 +12,11 @@ import { CtExecContextsComponent } from '../../ct/ct-exec-contexts/ct-exec-conte
 })
 export class ExecContextsComponent {
       private route = inject(ActivatedRoute);
-    sourceCodeId: string;
+    sourceCodeId = signal<string | undefined>(undefined);
 
     constructor(
 ) {
-        this.sourceCodeId = this.route.snapshot.paramMap.get('sourceCodeId');
+        this.sourceCodeId.set(this.route.snapshot.paramMap.get('sourceCodeId'));
     }
 
 }

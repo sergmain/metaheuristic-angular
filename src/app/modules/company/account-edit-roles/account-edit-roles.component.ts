@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, signal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { OperationStatusRest } from '@app/models/OperationStatusRest';
 import { AccountWithRoleResult } from '@app/services/company/AccountWithRoleResult';
@@ -25,39 +25,39 @@ import { CtRestStatusComponent } from '../../ct/ct-rest-status/ct-rest-status.co
 export class AccountEditRolesComponent implements OnInit {
       private companyService = inject(CompanyService);
       private activatedRoute = inject(ActivatedRoute);
-    accountId: string;
+    accountId = signal<string | undefined>(undefined);
     companyUniqueId: string;
-    accountWithRoleResult: AccountWithRoleResult;
-    operationStatusRest: OperationStatusRest;
-    roleModel: Map<string, boolean> = new Map();
+    accountWithRoleResult = signal<AccountWithRoleResult | undefined>(undefined);
+    operationStatusRest = signal<OperationStatusRest | undefined>(undefined);
+    roleModel = signal<Map<string, boolean>>(new Map());
 
-    isLoading: boolean;
+    isLoading = signal<boolean | undefined>(undefined);
 
     ngOnInit(): void {
-        this.isLoading = true;
-        this.accountId = this.activatedRoute.snapshot.paramMap.get('accountId');
+        this.isLoading.set(true);
+        this.accountId.set(this.activatedRoute.snapshot.paramMap.get('accountId'));
         this.companyUniqueId = this.activatedRoute.snapshot.paramMap.get('companyUniqueId');
         this.companyService
-            .editRoles(this.accountId, this.companyUniqueId)
+            .editRoles(this.accountId(), this.companyUniqueId)
             .subscribe(accountWithRoleResult => {
-                this.accountWithRoleResult = accountWithRoleResult;
-                this.accountWithRoleResult.possibleRoles.forEach(r => this.roleModel.set(r, false));
-                this.accountWithRoleResult.account.authorities.forEach(a => {
-                    if (this.roleModel.has(a.authority)) {
+                this.accountWithRoleResult.set(accountWithRoleResult);
+                this.accountWithRoleResult().possibleRoles.forEach(r => this.roleModel.set(r, false));
+                this.accountWithRoleResult().account.authorities.forEach(a => {
+                    if (this.roleModel().has(a.authority)) {
                         this.roleModel.set(a.authority, true);
                     }
                 });
-                this.isLoading = false;
+                this.isLoading.set(false);
             });
     }
 
     save(role: { key: string, value: boolean }): void {
-        this.isLoading = true;
+        this.isLoading.set(true);
         this.companyService
-            .rolesEditFormCommit(this.accountId, role.key, role.value, this.companyUniqueId)
+            .rolesEditFormCommit(this.accountId(), role.key, role.value, this.companyUniqueId)
             .subscribe((operationStatusRest: OperationStatusRest) => {
-                this.operationStatusRest = operationStatusRest;
-                this.isLoading = false;
+                this.operationStatusRest.set(operationStatusRest);
+                this.isLoading.set(false);
             });
     }
 }

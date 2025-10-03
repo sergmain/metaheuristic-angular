@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, signal } from '@angular/core';
 import { environment } from '@src/environments/environment';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { CtContentComponent } from '../../modules/ct/ct-content/ct-content.component';
@@ -20,8 +20,8 @@ import { CopyRightComponent } from '../../modules/copy-right/copy-right/copy-rig
 })
 export class LoremIndexComponent {
       private domSanitizer = inject(DomSanitizer);
-    content: SafeHtml;
+    content = signal<SafeHtml | undefined>(undefined);
     constructor() {
-        this.content = this.domSanitizer.bypassSecurityTrustHtml(environment.brandingMsg);
+        this.content.set(this.domSanitizer.bypassSecurityTrustHtml(environment.brandingMsg));
     }
 }

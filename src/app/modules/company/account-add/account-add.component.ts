@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, signal } from '@angular/core';
 import { AccountResult } from '@app/services/accounts';
 import { OperationStatusRest } from '@app/models/OperationStatusRest';
 import { FormGroup, FormControl, Validators, ValidationErrors, FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -31,9 +31,9 @@ export class AccountAddComponent implements OnInit {
       private router = inject(Router);
     accountResult: AccountResult;
     companyUniqueId: string;
-    operationStatusRest: OperationStatusRest;
-    isLoading: boolean;
-    isDone: boolean;
+    operationStatusRest = signal<OperationStatusRest | undefined>(undefined);
+    isLoading = signal<boolean | undefined>(undefined);
+    isDone = signal<boolean | undefined>(undefined);
 
     form = new FormGroup({
         publicName: new FormControl('', [
@@ -64,10 +64,10 @@ export class AccountAddComponent implements OnInit {
     });
 
     ngOnInit(): void {
-        this.isDone = false;
-        this.isLoading = true;
+        this.isDone.set(false);
+        this.isLoading.set(true);
         this.companyUniqueId = this.activatedRoute.snapshot.paramMap.get('companyUniqueId');
-        this.isLoading = false;
+        this.isLoading.set(false);
 
     }
 
@@ -76,7 +76,7 @@ export class AccountAddComponent implements OnInit {
     }
 
     createAccount(): void {
-        this.isLoading = true;
+        this.isLoading.set(true);
         this.companyService
             .addFormCommitNewAccount({
                 username: this.form.value.username,
@@ -85,13 +85,13 @@ export class AccountAddComponent implements OnInit {
                 publicName: this.form.value.publicName
             }, this.companyUniqueId)
             .subscribe({
-                next: (operationStatusRest) => this.operationStatusRest = operationStatusRest,
+                next: (operationStatusRest) => this.operationStatusRest.set(operationStatusRest,
                 complete: () => {
-                    if (this.operationStatusRest.status === OperationStatus.OK) {
-                        this.isDone = true;
+                    if (this.operationStatusRest().status === OperationStatus.OK) {
+                        this.isDone.set(true));
                         this.form.reset();
                     }
-                    this.isLoading = false;
+                    this.isLoading.set(false);
                 }
             });
     }

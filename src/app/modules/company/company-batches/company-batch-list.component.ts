@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, signal, computed } from '@angular/core';
 import { CompanyService } from '@app/services/company/company.service';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { BatchesResult } from '@app/services/batch/BatchesResult';
@@ -46,12 +46,12 @@ export class CompanyBatchListComponent extends UIStateComponent implements OnIni
       public readonly dialog = inject(MatDialog);
       public readonly translate = inject(TranslateService);
     companyUniqueId: string;
-    batchesResult: BatchesResult;
-    batches: BatchData.BatchExecInfo[];
-    dataSource: MatTableDataSource<BatchData.BatchExecInfo> = new MatTableDataSource([]);
-    selection: SelectionModel<BatchData.BatchExecInfo> = new SelectionModel<BatchData.BatchExecInfo>(true, []);
+    batchesResult = signal<BatchesResult | undefined>(undefined);
+    batches = signal<BatchData.BatchExecInfo[] | undefined>(undefined);
+    dataSource = signal<MatTableDataSource<BatchData.BatchExecInfo>>(new MatTableDataSource([]));
+    selection = signal<SelectionModel<BatchData.BatchExecInfo>>(new SelectionModel<BatchData.BatchExecInfo>(true, []));
 
-    downloadSelector: BatchSelector = new BatchSelector();
+    downloadSelector = signal<BatchSelector>(new BatchSelector());
 
     constructor(public readonly authenticationService: AuthenticationService = inject(AuthenticationService)) {
         super(authenticationService);
@@ -62,7 +62,7 @@ export class CompanyBatchListComponent extends UIStateComponent implements OnIni
             this.isFinished(batch) &&
             !this.isExecContextDeleted(batch)
         ) {
-            this.downloadSelector.toggle(batch);
+            this.downloadSelector().toggle(batch);
         }
     }
 
@@ -72,17 +72,17 @@ export class CompanyBatchListComponent extends UIStateComponent implements OnIni
     }
 
     isAllSelected(): boolean {
-        return this.selection.selected.length === this.dataSource.data.filter(b => b.batch.deleted).length;
+        return this.selection().selected.length === this.dataSource().data.filter(b => b.batch.deleted).length;
     }
 
     masterToggle(): void {
         this.isAllSelected() ?
-            this.selection.clear() :
-            this.dataSource.data.filter(b => b.batch.deleted).forEach(row => this.selection.select(row));
+            this.selection().clear() :
+            this.dataSource().data.filter(b => b.batch.deleted).forEach(row => this.selection().select(row));
     }
 
-    get columnsToDisplay(): string[] {
-        if (this.isRole.MasterOperator) {
+    columnsToDisplay = computed(() => {
+        if (this.isRole()?.MasterOperator) {
             return [
                 'check',
                 'id',
@@ -103,7 +103,7 @@ export class CompanyBatchListComponent extends UIStateComponent implements OnIni
                 'bts'
             ];
         }
-    }
+    });
 
     updateTable(pageNumber: string): void {
         this.isLoading = true;
@@ -111,10 +111,10 @@ export class CompanyBatchListComponent extends UIStateComponent implements OnIni
             .batches(pageNumber, this.companyUniqueId)
             .subscribe({
                 next: (batchesResult) => {
-                    this.batchesResult = batchesResult;
-                    this.batches = this.batchesResult.batches.content;
-                    this.dataSource = new MatTableDataSource(this.batches);
-                    this.selection.clear();
+                    this.batchesResult.set(batchesResult);
+                    this.batches.set(this.batchesResult().batches.content);
+                    this.dataSource.set(new MatTableDataSource(this.batches()));
+                    this.selection().clear();
                 },
                 complete: () => this.isLoading = false,
             });
@@ -134,11 +134,11 @@ export class CompanyBatchListComponent extends UIStateComponent implements OnIni
     }
 
     prevPage(): void {
-        this.updateTable((this.batchesResult.batches.number - 1).toString());
+        this.updateTable((this.batchesResult().batches.number - 1).toString());
     }
 
     nextPage(): void {
-        this.updateTable((this.batchesResult.batches.number + 1).toString());
+        this.updateTable((this.batchesResult().batches.number + 1).toString());
     }
 
     @ConfirmationDialogMethod({
@@ -158,7 +158,7 @@ export class CompanyBatchListComponent extends UIStateComponent implements OnIni
             .processBatchDeleteCommit(this.companyUniqueId, batch.batch.id.toString())
             .subscribe({
                 complete: () => {
-                    this.updateTable(this.batchesResult.batches.number.toString());
+                    this.updateTable(this.batchesResult().batches.number.toString());
                 }
             });
     }
@@ -178,12 +178,12 @@ export class CompanyBatchListComponent extends UIStateComponent implements OnIni
         this.companyService
             .processBatchesBulkDeleteCommit(
                 this.companyUniqueId,
-                this.selection.selected
+                this.selection().selected
                     .map(b => b.batch.id).toString()
             )
             .subscribe({
                 next: () => {
-                    this.updateTable(this.batchesResult.batches.number.toString());
+                    this.updateTable(this.batchesResult().batches.number.toString());
                 }
             });
     }
@@ -221,11 +221,11 @@ export class CompanyBatchListComponent extends UIStateComponent implements OnIni
     downloadResults(): void {
         this.isLoading = true;
         this.companyService.downloadProcessingResults(
-            this.downloadSelector.getList(),
+            this.downloadSelector().getList(),
             this.companyUniqueId
         ).subscribe(() => {
             this.isLoading = false;
-            this.downloadSelector.clear();
+            this.downloadSelector().clear();
         });
     }
 }

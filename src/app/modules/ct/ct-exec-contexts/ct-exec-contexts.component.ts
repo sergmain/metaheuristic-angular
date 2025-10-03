@@ -1,4 +1,4 @@
-import {Component, OnInit, TemplateRef, input, viewChild, inject } from '@angular/core';
+import { Component, OnInit, TemplateRef, input, viewChild, inject, signal } from '@angular/core';
 import {MatButton, MatIconButton} from '@angular/material/button';
 import {MatDialog, MatDialogActions, MatDialogClose} from '@angular/material/dialog';
 import {
@@ -60,8 +60,8 @@ export class CtExecContextsComponent implements OnInit {
 
     readonly execState = ExecContextState;
 
-    response: ExecContextsResult;
-    execContextTableSource: MatTableDataSource<ExecContext> = new MatTableDataSource<ExecContext>([]);
+    response = signal<ExecContextsResult | undefined>(undefined);
+    execContextTableSource = signal<MatTableDataSource<ExecContext>>(new MatTableDataSource<ExecContext>([]));
     execContextColumnsToDisplay: string[] = [
         'id',
         'createdOn',
@@ -71,12 +71,12 @@ export class CtExecContextsComponent implements OnInit {
         'bts'
     ];
 
-    execContextId: string;
+    execContextId = signal<string | undefined>(undefined);
 
     ngOnInit(): void {
         //console.log("modal, modalBool", this.modal);
 
-        // this.sourceCodeId = this.route.snapshot.paramMap.get('sourceCodeId');
+        // this.sourceCodeId.set(this.route.snapshot.paramMap.get('sourceCodeId'));
         this.getExecContexts(0);
     }
 
@@ -84,9 +84,9 @@ export class CtExecContextsComponent implements OnInit {
         this.execContextService
             .execContexts(this.sourceCodeId(), page.toString())
             .subscribe(execContextsResult => {
-                this.response = execContextsResult;
+                this.response.set(execContextsResult);
                 if (execContextsResult) {
-                    this.execContextTableSource = new MatTableDataSource(execContextsResult.instances.content);
+                    this.execContextTableSource.set(new MatTableDataSource(execContextsResult.instances.content));
                     this.prevTable().disabled = execContextsResult.instances.first;
                     this.nextTable().disabled = execContextsResult.instances.last;
                 }
@@ -102,21 +102,21 @@ export class CtExecContextsComponent implements OnInit {
     delete(execContext: ExecContext): void {
         this.execContextService
             .execContextDeleteCommit(this.sourceCodeId(), execContext.id?.toString?.())
-            .subscribe(v => this.getExecContexts(this.response.instances.number));
+            .subscribe(v => this.getExecContexts(this.response().instances.number));
     }
 
     next(): void {
-        this.getExecContexts(this.response.instances.number + 1);
+        this.getExecContexts(this.response().instances.number + 1);
     }
 
     prev(): void {
-        this.getExecContexts(this.response.instances.number - 1);
+        this.getExecContexts(this.response().instances.number - 1);
     }
 
     runExecState(id, state): void {
         this.execContextService
             .execContextTargetState(this.sourceCodeId(), state, id)
-            .subscribe(v => this.getExecContexts(this.response.instances.number));
+            .subscribe(v => this.getExecContexts(this.response().instances.number));
     }
 
     stop(el, event): void {
@@ -137,7 +137,7 @@ export class CtExecContextsComponent implements OnInit {
 
     stateOfTasks(el) {
         this.dialog.closeAll();
-        this.execContextId = el.id;
+        this.execContextId.set(el.id);
         this.dialog.open(this.stateOfTasksTemplate(), {
             width: '90%'
         });

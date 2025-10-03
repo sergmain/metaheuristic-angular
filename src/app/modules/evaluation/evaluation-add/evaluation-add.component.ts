@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit, viewChild, inject } from '@angular/core';
+import { Component, OnDestroy, OnInit, viewChild, inject, signal } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import {LoadStates} from '@app/enums/LoadStates';
 import { TranslateService, TranslateModule } from '@ngx-translate/core';
@@ -52,15 +52,15 @@ export class EvaluationAddComponent extends UIStateComponent implements OnInit, 
     readonly states = LoadStates;
 
     currentStates: Set<LoadStates> = new Set();
-    response: EvaluationUidsForCompany;
-    uploadResponse: OperationStatusRest;
+    response = signal<EvaluationUidsForCompany | undefined>(undefined);
+    uploadResponse = signal<OperationStatusRest | undefined>(undefined);
 
-    selection: SelectionModel<ChapterUid> = new SelectionModel<ChapterUid>(true, []);
-    dataSource: MatTableDataSource<ChapterUid> = new MatTableDataSource<ChapterUid>([]);
-    columnsToDisplay: string[] = ['check', 'id', 'uid'];
+    selection = signal<SelectionModel<ChapterUid>>(new SelectionModel<ChapterUid>(true, []));
+    dataSource = signal<MatTableDataSource<ChapterUid>>(new MatTableDataSource<ChapterUid>([]));
+    columnsToDisplay = signal<string[]>(['check', 'id', 'uid']);
 
-    apiUid: ApiUid;
-    listOfApis: ApiUid[] = [];
+    apiUid = signal<ApiUid | undefined>(undefined);
+    listOfApis = signal<ApiUid[]>([]);
     listOfChapters: ChapterUid[] = [];
     form = new FormGroup({
         code: new FormControl('', [Validators.required, Validators.minLength(3)]),
@@ -90,22 +90,22 @@ export class EvaluationAddComponent extends UIStateComponent implements OnInit, 
         this.evaluationService
             .evaluationAdd()
             .subscribe((response) => {
-                this.response = response;
-                this.listOfApis = this.response.apis;
-                this.listOfChapters = this.response.chapters;
-                this.dataSource = new MatTableDataSource(this.listOfChapters || []);
+                this.response.set(response);
+                this.listOfApis.set(this.response().apis);
+                this.listOfChapters = this.response().chapters;
+                this.dataSource.set(new MatTableDataSource(this.listOfChapters || []));
                 this.isLoading = false;
             });
     }
 
     isAllSelected(): boolean {
-        return this.selection.selected.length === this.dataSource.data.length;
+        return this.selection().selected.length === this.dataSource().data.length;
     }
 
     masterToggle(): void {
         this.isAllSelected() ?
-            this.selection.clear() :
-            this.dataSource.data.forEach(row => this.selection.select(row));
+            this.selection().clear() :
+            this.dataSource().data.forEach(row => this.selection().select(row));
     }
 
     create(): void {
@@ -114,8 +114,8 @@ export class EvaluationAddComponent extends UIStateComponent implements OnInit, 
         const subscribe: Subscription = this.evaluationService
             .addFormCommit(
                 this.form.value.code,
-                this.apiUid.id.toString(),
-                this.selection.selected.map(v => v.id.toString())
+                this.apiUid().id.toString(),
+                this.selection().selected.map(v => v.id.toString())
             )
             .subscribe(
                 (response) => {
@@ -136,6 +136,6 @@ export class EvaluationAddComponent extends UIStateComponent implements OnInit, 
     }
 
     notToCreate() {
-        return MhUtils.isNull(this.apiUid) || this.selection.isEmpty() || this.form.invalid;
+        return MhUtils.isNull(this.apiUid()) || this.selection().isEmpty() || this.form.invalid;
     }
 }

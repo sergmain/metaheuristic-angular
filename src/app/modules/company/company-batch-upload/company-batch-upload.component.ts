@@ -1,4 +1,4 @@
-import { Component, OnInit, viewChild, inject } from '@angular/core';
+import { Component, OnInit, viewChild, inject, signal } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BatchData } from '@app/services/batch/BatchData';
 import { BatchService } from '@app/services/batch/batch.service';
@@ -41,10 +41,10 @@ export class CompanyBatchUploadComponent implements OnInit {
 
     batchId: string;
     companyUniqueId: string;
-    sourceCodesForCompany: SourceCodesForCompany;
-    sourceCode: SourceCode;
-    file: File;
-    batchDataUploadingStatus: BatchData.UploadingStatus;
+    sourceCodesForCompany = signal<SourceCodesForCompany | undefined>(undefined);
+    sourceCode = signal<SourceCode | undefined>(undefined);
+    file = signal<File | undefined>(undefined);
+    batchDataUploadingStatus = signal<BatchData.UploadingStatus | undefined>(undefined);
 
     ngOnInit(): void {
         this.batchId = this.activatedRoute.snapshot.paramMap.get('batchId');
@@ -53,19 +53,19 @@ export class CompanyBatchUploadComponent implements OnInit {
         this.companyService
             .sourceCodesForCompany(this.companyUniqueId)
             .subscribe(sourceCodesForCompany => {
-                this.sourceCodesForCompany = sourceCodesForCompany;
+                this.sourceCodesForCompany.set(sourceCodesForCompany);
             });
     }
 
     fileUploadChanged(): void {
-        this.file = this.fileUpload().fileInput.nativeElement.files[0] || false;
+        this.file.set(this.fileUpload().fileInput.nativeElement.files[0] || false);
     }
 
     upload(): void {
         this.companyService
-            .uploadFile(this.companyUniqueId, this.sourceCode.id.toString(), this.file)
+            .uploadFile(this.companyUniqueId, this.sourceCode().id.toString(), this.file())
             .subscribe(batchDataUploadingStatus => {
-                this.batchDataUploadingStatus = batchDataUploadingStatus;
+                this.batchDataUploadingStatus.set(batchDataUploadingStatus);
             });
     }
 

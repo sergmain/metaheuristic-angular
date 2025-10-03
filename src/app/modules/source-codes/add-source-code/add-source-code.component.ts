@@ -1,5 +1,5 @@
 import { Location } from '@angular/common';
-import { Component, ElementRef, viewChild, inject } from '@angular/core';
+import { Component, ElementRef, viewChild, inject, signal } from '@angular/core';
 import { OperationStatus } from '@app/enums/OperationStatus';
 import { SourceCodeResult } from '@app/services/source-codes/SourceCodeResult';
 import { CardFormAddSourceCodeComponent } from '../card-form-add-source-code/card-form-add-source-code.component';
@@ -23,11 +23,11 @@ export class AddSourceCodeComponent {
     cardFormAddSourceCode = viewChild(CardFormAddSourceCodeComponent);
     cardFormUploadSourceCode = viewChild(CardFormUploadSourceCodeComponent);
 
-    newSourceCodeResponse: SourceCodeResult;
-    uploadSourceCodeResponse: SourceCodeResult;
+    newSourceCodeResponse = signal<SourceCodeResult | undefined>(undefined);
+    uploadSourceCodeResponse = signal<SourceCodeResult | undefined>(undefined);
 
     afterNewSourceCode(response: SourceCodeResult): void {
-        this.newSourceCodeResponse = response;
+        this.newSourceCodeResponse.set(response);
         if (response.status === OperationStatus.OK) {
             this.back();
         } else {
@@ -37,7 +37,7 @@ export class AddSourceCodeComponent {
     }
 
     afterUploadSourceCode(response: SourceCodeResult): void {
-        this.uploadSourceCodeResponse = response;
+        this.uploadSourceCodeResponse.set(response);
         if (response.status === OperationStatus.OK) {
             this.back();
         } else {

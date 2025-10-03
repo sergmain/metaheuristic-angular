@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, signal } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LoadStates } from '@app/enums/LoadStates';
 import { BatchService } from '@app/services/batch/batch.service';
@@ -25,21 +25,21 @@ export class BatchStatusComponent implements OnInit {
       private batchService = inject(BatchService);
       private router = inject(Router);
     readonly states = LoadStates;
-    currentState: LoadStates = LoadStates.firstLoading;
+    currentState = signal<LoadStates>(LoadStates.firstLoading);
 
-    response: Status;
-    batchId: string;
+    response = signal<Status | undefined>(undefined);
+    batchId = signal<string | undefined>(undefined);
 
     ngOnInit() {
-        this.batchId = this.route.snapshot.paramMap.get('batchId');
+        this.batchId.set(this.route.snapshot.paramMap.get('batchId'));
         this.updateResponse();
     }
     updateResponse() {
         this.batchService
-            .getProcessingResourceStatus(this.batchId)
+            .getProcessingResourceStatus(this.batchId())
             .subscribe(response => {
-                this.response = response;
-                this.currentState = this.states.show;
+                this.response.set(response);
+                this.currentState.set(this.states.show);
             });
     }
 }

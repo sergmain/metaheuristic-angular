@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, signal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CtSectionComponent } from '../../ct/ct-section/ct-section.component';
 import { CtSectionHeaderComponent } from '../../ct/ct-section-header/ct-section-header.component';
@@ -17,13 +17,13 @@ import { CtStateOfTasksComponent } from '../../ct/ct-state-of-tasks/ct-state-of-
 })
 export class ExecContextStatesComponent implements OnInit {
       private route = inject(ActivatedRoute);
-    sourceCodeId: string;
-    execContextId: string;
+    sourceCodeId = signal<string | undefined>(undefined);
+    execContextId = signal<string | undefined>(undefined);
 
     constructor(
 ) {
-        this.sourceCodeId = this.route.snapshot.paramMap.get('sourceCodeId');
-        this.execContextId = this.route.snapshot.paramMap.get('execContextId');
+        this.sourceCodeId.set(this.route.snapshot.paramMap.get('sourceCodeId'));
+        this.execContextId.set(this.route.snapshot.paramMap.get('execContextId'));
     }
 
     ngOnInit(): void { }

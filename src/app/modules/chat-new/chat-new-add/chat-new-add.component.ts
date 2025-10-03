@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit, viewChild, inject } from '@angular/core';
+import { Component, OnDestroy, OnInit, viewChild, inject, signal } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import {LoadStates} from '@app/enums/LoadStates';
 import {OperationStatusRest} from '@app/models/OperationStatusRest';
@@ -46,11 +46,11 @@ export class ChatNewAddComponent extends UIStateComponent implements OnInit, OnD
     readonly states = LoadStates;
 
     currentStates: Set<LoadStates> = new Set();
-    response: ApiForCompany;
-    uploadResponse: OperationStatusRest;
+    response = signal<ApiForCompany | undefined>(undefined);
+    uploadResponse = signal<OperationStatusRest | undefined>(undefined);
 
-    apiUid: ApiUid;
-    listOfApis: ApiUid[] = [];
+    apiUid = signal<ApiUid | undefined>(undefined);
+    listOfApis = signal<ApiUid[]>([]);
     form = new FormGroup({
         name: new FormControl('', [Validators.required, Validators.minLength(3)]),
     });
@@ -79,8 +79,8 @@ export class ChatNewAddComponent extends UIStateComponent implements OnInit, OnD
         this.chatService
             .chatAdd()
             .subscribe((response) => {
-                this.response = response;
-                this.listOfApis = this.response.apis;
+                this.response.set(response);
+                this.listOfApis.set(this.response().apis);
                 this.isLoading = false;
             });
     }
@@ -91,7 +91,7 @@ export class ChatNewAddComponent extends UIStateComponent implements OnInit, OnD
         const subscribe: Subscription = this.chatService
             .chatAddCommit(
                 this.form.value.name,
-                this.apiUid.id.toString(),
+                this.apiUid().id.toString(),
             )
             .subscribe({
                     next: (response)=> {
@@ -112,6 +112,6 @@ export class ChatNewAddComponent extends UIStateComponent implements OnInit, OnD
     }
 
     notToCreate() {
-        return MhUtils.isNull(this.apiUid) || this.form.invalid;
+        return MhUtils.isNull(this.apiUid()) || this.form.invalid;
     }
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, signal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { BatchData } from '@app/services/batch/BatchData';
 import { CompanyService } from '@app/services/company/company.service';
@@ -20,21 +20,21 @@ import { CtPreComponent } from '../../ct/ct-pre/ct-pre.component';
 export class CompanyBatchStatusComponent implements OnInit {
       private companyService = inject(CompanyService);
       private activatedRoute = inject(ActivatedRoute);
-    isLoading: boolean;
+    isLoading = signal<boolean | undefined>(undefined);
     companyUniqueId: string;
-    batchId: string;
-    batchDataStatus: BatchData.Status;
+    batchId = signal<string | undefined>(undefined);
+    batchDataStatus = signal<BatchData.Status | undefined>(undefined);
 
     ngOnInit(): void {
-        this.isLoading = true;
+        this.isLoading.set(true);
         this.companyUniqueId = this.activatedRoute.snapshot.paramMap.get('companyUniqueId');
-        this.batchId = this.activatedRoute.snapshot.paramMap.get('batchId');
+        this.batchId.set(this.activatedRoute.snapshot.paramMap.get('batchId'));
         this.companyService
-            .getBatchStatus(this.companyUniqueId, this.batchId)
+            .getBatchStatus(this.companyUniqueId, this.batchId())
             .subscribe({
-                next: (batchDataStatus) => this.batchDataStatus = batchDataStatus,
-                error: () => this.isLoading = false,
-                complete: () => this.isLoading = false
-            });
+                next: (batchDataStatus) => this.batchDataStatus.set(batchDataStatus,
+                error: () => this.isLoading.set(false,
+                complete: () => this.isLoading() = false
+            })));
     }
 }

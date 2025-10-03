@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit, viewChild, inject } from '@angular/core';
+import { Component, OnDestroy, OnInit, viewChild, inject, signal } from '@angular/core';
 import {MatSelect, MatSelectChange} from '@angular/material/select';
 import {MatDialog} from '@angular/material/dialog';
 import {DomSanitizer, SafeHtml} from '@angular/platform-browser';
@@ -42,15 +42,15 @@ export class AppViewComponent extends UIStateComponent implements OnInit, OnDest
       private runtimeService = inject(RuntimeService);
       private router = inject(Router);
       private dialog = inject(MatDialog);
-    htmlContent: SafeHtml;
-    sidenavButtonDisable: boolean = false;
-    sidenav: boolean = false;
-    theme: SettingsTheme;
+    htmlContent = signal<SafeHtml | undefined>(undefined);
+    sidenavButtonDisable = signal<boolean>(false);
+    sidenav = signal<boolean>(false);
+    theme = signal<SettingsTheme | undefined>(undefined);
     lang: {
         list?: Set<SettingsLanguage>;
         current?: SettingsLanguage;
     } = {};
-    brandingTitle: string = environment.brandingTitle;
+    brandingTitle = signal<string>(environment.brandingTitle);
 
     matSelectLanguage = viewChild<MatSelect>('matSelectLanguage');
 
@@ -59,21 +59,21 @@ export class AppViewComponent extends UIStateComponent implements OnInit, OnDest
     }
 
     ngOnInit(): void {
-        this.htmlContent = this.domSanitizer.bypassSecurityTrustHtml(
+        this.htmlContent.set(this.domSanitizer.bypassSecurityTrustHtml(
             environment.brandingMsgIndex
-        );
+        ));
         this.lang.list = setOfLanguages;
         this.subscribeSubscription(this.router.events.subscribe((event) => {
             if (event instanceof ActivationEnd) {
-                this.sidenavButtonDisable = !event.snapshot?.data?.sidenavExist;
+                this.sidenavButtonDisable.set(!event.snapshot?.data?.sidenavExist);
             }
         }));
         this.subscribeSubscription(
             this.settingsService.events.subscribe(event => {
                 if (event instanceof SettingsServiceEventChange) {
-                    this.theme = event.settings.theme;
+                    this.theme.set(event.settings.theme);
                     this.lang.current = event.settings.language;
-                    this.sidenav = event.settings.sidenav;
+                    this.sidenav.set(event.settings.sidenav);
                 }
             })
         );

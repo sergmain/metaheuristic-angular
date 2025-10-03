@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit, inject } from '@angular/core';
+import { Component, OnDestroy, OnInit, inject, signal } from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Subscription} from 'rxjs';
 
@@ -24,7 +24,7 @@ export class CtBackButtonComponent implements OnInit, OnDestroy {
       private activatedRoute = inject(ActivatedRoute);
     subs: Subscription[] = [];
 
-    config: string[];
+    config = signal<string[] | undefined>(undefined);
 
     ngOnInit(): void {
         this.subs.push(this.router.events.subscribe(() => {
@@ -35,7 +35,7 @@ export class CtBackButtonComponent implements OnInit, OnDestroy {
         }));
     }
     setConfig(): void {
-        this.config = this.activatedRoute?.snapshot?.firstChild?.data?.backConfig;
+        this.config.set(this.activatedRoute?.snapshot?.firstChild?.data?.backConfig);
     }
 
     ngOnDestroy(): void {
@@ -43,7 +43,7 @@ export class CtBackButtonComponent implements OnInit, OnDestroy {
     }
 
     back(): void {
-        this.router.navigate(this.serialize(this.config));
+        this.router.navigate(this.serialize(this.config()));
     }
 
     serialize(config: string[]): string[] {

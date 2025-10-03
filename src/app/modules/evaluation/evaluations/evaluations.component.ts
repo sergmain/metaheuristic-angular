@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, signal } from '@angular/core';
 import { MatTableDataSource, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow } from '@angular/material/table';
 import { UIStateComponent } from '@app/models/UIStateComponent';
 import { AuthenticationService } from '@app/services/authentication';
@@ -35,8 +35,8 @@ import { TranslateModule } from '@ngx-translate/core';
 export class EvaluationsComponent extends UIStateComponent implements OnInit {
       public readonly dialog = inject(MatDialog);
       private evaluationService = inject(EvaluationService);
-  columnsToDisplay: string[] = ['evaluationId', 'code', 'createdOn', 'bts'];
-  simpleEvaluationsResult: SimpleEvaluationsResult;
+  columnsToDisplay = signal<string[]>(['evaluationId', 'code', 'createdOn', 'bts']);
+  simpleEvaluationsResult = signal<SimpleEvaluationsResult | undefined>(undefined);
   dataSource = new MatTableDataSource<SimpleEvaluation>([]);
 
   constructor(public readonly authenticationService: AuthenticationService = inject(AuthenticationService)) {
@@ -54,9 +54,9 @@ export class EvaluationsComponent extends UIStateComponent implements OnInit {
         .getEvaluations(pageNumber.toString())
         .subscribe({
           next: simpleEvaluationsResult => {
-            this.simpleEvaluationsResult = simpleEvaluationsResult;
-            // console.log('EvaluationsComponent.simpleEvaluationsResult: ' + JSON.stringify(this.simpleEvaluationsResult));
-            this.dataSource = new MatTableDataSource(this.simpleEvaluationsResult.evaluations.content || []);
+            this.simpleEvaluationsResult.set(simpleEvaluationsResult);
+            // console.log('EvaluationsComponent.simpleEvaluationsResult: ' + JSON.stringify(this.simpleEvaluationsResult()));
+            this.dataSource = new MatTableDataSource(this.simpleEvaluationsResult().evaluations.content || []);
             // console.log('EvaluationsComponent.simpleEvaluationsResult: #3');
           },
           complete: () => {
@@ -75,7 +75,7 @@ export class EvaluationsComponent extends UIStateComponent implements OnInit {
   delete(evaluation: SimpleEvaluation): void {
     this.evaluationService
         .evaluationDeleteCommit(evaluation.evaluationId.toString())
-        .subscribe(v => this.getEvaluations(this.simpleEvaluationsResult.evaluations.number));
+        .subscribe(v => this.getEvaluations(this.simpleEvaluationsResult().evaluations.number));
   }
 
   @ConfirmationDialogMethod({
@@ -87,7 +87,7 @@ export class EvaluationsComponent extends UIStateComponent implements OnInit {
   runEvaluation(evaluation: SimpleEvaluation): void {
     this.evaluationService
         .runEvaluation(evaluation.evaluationId.toString())
-        .subscribe(v => this.getEvaluations(this.simpleEvaluationsResult.evaluations.number));
+        .subscribe(v => this.getEvaluations(this.simpleEvaluationsResult().evaluations.number));
   }
 
   @ConfirmationDialogMethod({
@@ -99,14 +99,14 @@ export class EvaluationsComponent extends UIStateComponent implements OnInit {
   runTestEvaluation(evaluation: SimpleEvaluation): void {
     this.evaluationService
         .runTestEvaluation(evaluation.evaluationId.toString())
-        .subscribe(v => this.getEvaluations(this.simpleEvaluationsResult.evaluations.number));
+        .subscribe(v => this.getEvaluations(this.simpleEvaluationsResult().evaluations.number));
   }
 
   prevPage(): void {
-    this.getEvaluations((this.simpleEvaluationsResult.evaluations.number - 1));
+    this.getEvaluations((this.simpleEvaluationsResult().evaluations.number - 1));
   }
 
   nextPage(): void {
-    this.getEvaluations((this.simpleEvaluationsResult.evaluations.number + 1));
+    this.getEvaluations((this.simpleEvaluationsResult().evaluations.number + 1));
   }
 }

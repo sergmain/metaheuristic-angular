@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, signal } from '@angular/core';
 import { MatTableDataSource, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow } from '@angular/material/table';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { DispatcherAssetMode } from '@app/enums/DispatcherAssetMode';
@@ -32,9 +32,9 @@ export class AccountsComponent extends UIStateComponent implements OnInit {
       private companyService = inject(CompanyService);
       private activatedRoute = inject(ActivatedRoute);
       public dispatcherAssetModeService = inject(DispatcherAssetModeService);
-    dataSource: MatTableDataSource<SimpleAccount> = new MatTableDataSource<SimpleAccount>([]);
-    columnsToDisplay: string[] = ['id', 'isEnabled', 'login', 'publicName', 'role', 'createdOn', 'bts'];
-    accountsResult: AccountsResult;
+    dataSource = signal<MatTableDataSource<SimpleAccount>>(new MatTableDataSource<SimpleAccount>([]));
+    columnsToDisplay = signal<string[]>(['id', 'isEnabled', 'login', 'publicName', 'role', 'createdOn', 'bts']);
+    accountsResult = signal<AccountsResult | undefined>(undefined);
     companyUniqueId: string;
 
     constructor(public readonly authenticationService: AuthenticationService = inject(AuthenticationService)) {
@@ -52,8 +52,8 @@ export class AccountsComponent extends UIStateComponent implements OnInit {
             .accounts(page.toString(), this.companyUniqueId)
             .subscribe({
                 next: accountsResult => {
-                    this.accountsResult = accountsResult;
-                    this.dataSource = new MatTableDataSource(this.accountsResult.accounts.content || []);
+                    this.accountsResult.set(accountsResult);
+                    this.dataSource.set(new MatTableDataSource(this.accountsResult().accounts.content || []));
                 },
                 complete: () => {
                     this.setIsLoadingEnd();
@@ -62,10 +62,10 @@ export class AccountsComponent extends UIStateComponent implements OnInit {
     }
 
     nextPage(): void {
-        this.updateTable(this.accountsResult.accounts.number + 1);
+        this.updateTable(this.accountsResult().accounts.number + 1);
     }
 
     prevPage(): void {
-        this.updateTable(this.accountsResult.accounts.number - 1);
+        this.updateTable(this.accountsResult().accounts.number - 1);
     }
 }

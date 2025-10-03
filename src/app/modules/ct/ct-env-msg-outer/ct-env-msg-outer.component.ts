@@ -1,4 +1,4 @@
-import { Component, OnInit, input, inject } from '@angular/core';
+import { Component, OnInit, input, inject, signal } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { environment } from '@src/environments/environment';
 
@@ -12,11 +12,11 @@ import { environment } from '@src/environments/environment';
 export class CtEnvMsgOuterComponent implements OnInit {
       private domSanitizer = inject(DomSanitizer);
   propertyName = input<string>();
-  content: SafeHtml;
+  content = signal<SafeHtml | undefined>(undefined);
 
   ngOnInit(): void {
     if (this.propertyName()) {
-      this.content = this.domSanitizer.bypassSecurityTrustHtml(environment[this.propertyName()!]);
+      this.content.set(this.domSanitizer.bypassSecurityTrustHtml(environment[this.propertyName()!]));
     }
   }
 }

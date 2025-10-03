@@ -1,5 +1,5 @@
 import { Location } from '@angular/common';
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, signal } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProcessorsService } from '@app/services/processors/processors.service';
 import { Processor } from '@app/services/processors/Processor';
@@ -33,24 +33,24 @@ export class EditProcessorComponent implements OnInit {
       private route = inject(ActivatedRoute);
       private processorsService = inject(ProcessorsService);
       private router = inject(Router);
-    processor: Processor;
-    processorResponse: ProcessorResult;
+    processor = signal<Processor | undefined>(undefined);
+    processorResponse = signal<ProcessorResult | undefined>(undefined);
 
     ngOnInit(): void {
         this.processorsService
             .getProcessor(this.route.snapshot.paramMap.get('id'))
             .subscribe((response) => {
-                this.processorResponse = response;
-                this.processor = response.processor;
+                this.processorResponse.set(response);
+                this.processor.set(response.processor);
             });
     }
 
     save(): void {
         this.processorsService
-            .formCommit(this.processor)
+            .formCommit(this.processor())
             .subscribe((response) => {
                 if (response.errorMessages?.length) {
-                    this.processorResponse = response;
+                    this.processorResponse.set(response);
                 } else {
                     this.back();
                 }

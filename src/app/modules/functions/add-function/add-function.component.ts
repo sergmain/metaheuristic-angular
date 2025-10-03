@@ -1,4 +1,4 @@
-import {Component, viewChild, inject } from '@angular/core';
+import { Component, viewChild, inject, signal } from '@angular/core';
 import {Router} from '@angular/router';
 import {FunctionsService} from '@app/services/functions/functions.service';
 import {CtFileUploadComponent} from '@app/modules/ct/ct-file-upload/ct-file-upload.component';
@@ -31,7 +31,7 @@ import { MatFormField, MatLabel, MatInput } from '@angular/material/input';
 export class AddFunctionComponent {
       private functionsService = inject(FunctionsService);
       private router = inject(Router);
-    response: UploadingStatus;
+    response = signal<UploadingStatus | undefined>(undefined);
 
     fileUpload = viewChild<CtFileUploadComponent>('fileUpload');
     button = viewChild(MatButton);
@@ -52,7 +52,7 @@ export class AddFunctionComponent {
             .uploadBundle(this.fileUpload().fileInput.nativeElement.files[0])
             .subscribe(
                 (response) => {
-                    this.response = response;
+                    this.response.set(response);
                     if (!response.errorMessages && !response.infoMessages) {
                         this.cancel();
                     }

@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, signal } from '@angular/core';
 import { MatTableDataSource, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow } from '@angular/material/table';
 import { UIStateComponent } from '@app/models/UIStateComponent';
 import { AuthenticationService } from '@app/services/authentication';
@@ -35,11 +35,11 @@ import { TranslateModule } from '@ngx-translate/core';
 export class ApisComponent extends UIStateComponent implements OnInit, ConfirmationDialogInterface {
       public readonly dialog = inject(MatDialog);
       private apiService = inject(ApiService);
-  columnsToDisplay: string[] = ['id', 'name', 'code', 'bts'];
-  secondColumnsToDisplay: string[] = ['empty', 'scheme'];
-  simpleApisResult: SimpleApisResult;
+  columnsToDisplay = signal<string[]>(['id', 'name', 'code', 'bts']);
+  secondColumnsToDisplay = signal<string[]>(['empty', 'scheme']);
+  simpleApisResult = signal<SimpleApisResult | undefined>(undefined);
   dataSource = new MatTableDataSource<SimpleApi>([]);
-  expandParams: boolean = false;
+  expandParams = signal<boolean>(false);
 
   constructor(public readonly authenticationService: AuthenticationService = inject(AuthenticationService)) {
     super(authenticationService);
@@ -56,9 +56,9 @@ export class ApisComponent extends UIStateComponent implements OnInit, Confirmat
         .getApis(pageNumber.toString())
         .subscribe({
           next: simpleApisResult => {
-            this.simpleApisResult = simpleApisResult;
-            // console.log('ApisComponent.simpleApisResult: ' + JSON.stringify(this.simpleApisResult));
-            this.dataSource = new MatTableDataSource(this.simpleApisResult.apis.content || []);
+            this.simpleApisResult.set(simpleApisResult);
+            // console.log('ApisComponent.simpleApisResult: ' + JSON.stringify(this.simpleApisResult()));
+            this.dataSource = new MatTableDataSource(this.simpleApisResult().apis.content || []);
             // console.log('ApisComponent.simpleApisResult: #3');
           },
           complete: () => {
@@ -77,14 +77,14 @@ export class ApisComponent extends UIStateComponent implements OnInit, Confirmat
   delete(api: SimpleApi): void {
     this.apiService
         .apiDeleteCommit(api.id.toString())
-        .subscribe(v => this.getApis(this.simpleApisResult.apis.number));
+        .subscribe(v => this.getApis(this.simpleApisResult().apis.number));
   }
 
   prevPage(): void {
-    this.getApis((this.simpleApisResult.apis.number - 1));
+    this.getApis((this.simpleApisResult().apis.number - 1));
   }
 
   nextPage(): void {
-    this.getApis((this.simpleApisResult.apis.number + 1));
+    this.getApis((this.simpleApisResult().apis.number + 1));
   }
 }

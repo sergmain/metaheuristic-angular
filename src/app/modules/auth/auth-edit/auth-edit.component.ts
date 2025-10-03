@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, signal } from '@angular/core';
 import { Location } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LoadStates } from '@app/enums/LoadStates';
@@ -36,7 +36,7 @@ export class AuthEditComponent implements OnInit {
     readonly states = LoadStates;
     currentStates = new Set();
     response;
-    auth: SimpleAuth;
+    auth = signal<SimpleAuth | undefined>(undefined);
     authId: string;
 
     form = new FormGroup({
@@ -54,9 +54,9 @@ export class AuthEditComponent implements OnInit {
             .getAuth(this.authId)
             .subscribe(
                 (response) => {
-                    this.auth = response.auth;
+                    this.auth.set(response.auth);
                     this.form = new FormGroup({
-                        params: new FormControl(this.auth.params, [Validators.required, Validators.minLength(5)]),
+                        params: new FormControl(this.auth().params, [Validators.required, Validators.minLength(5)]),
                     });
 
                 },

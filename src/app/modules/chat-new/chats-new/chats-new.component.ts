@@ -1,4 +1,4 @@
-import {Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, signal } from '@angular/core';
 import { MatTableDataSource, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow } from '@angular/material/table';
 import {UIStateComponent} from '@app/models/UIStateComponent';
 import {AuthenticationService} from '@app/services/authentication';
@@ -34,9 +34,9 @@ export class ChatsNewComponent extends UIStateComponent implements OnInit {
       private chatService = inject(ChatService);
       private router = inject(Router);
       private activatedRoute = inject(ActivatedRoute);
-    dataSource: MatTableDataSource<SimpleChat> = new MatTableDataSource<SimpleChat>([]);
-    columnsToDisplay: string[] = ['id', 'createdOn', 'name', 'bts'];
-    chats: ChatsResult;
+    dataSource = signal<MatTableDataSource<SimpleChat>>(new MatTableDataSource<SimpleChat>([]));
+    columnsToDisplay = signal<string[]>(['id', 'createdOn', 'name', 'bts']);
+    chats = signal<ChatsResult | undefined>(undefined);
 
     constructor(public readonly authenticationService: AuthenticationService = inject(AuthenticationService)) {
         super(authenticationService)
@@ -54,8 +54,8 @@ export class ChatsNewComponent extends UIStateComponent implements OnInit {
             .subscribe({
                 next: chats => {
                     //console.log("ChatsNewComponent.updateTable() #1", JSON.stringify(chats));
-                    this.chats = chats;
-                    this.dataSource = new MatTableDataSource(this.chats.chats.content || []);
+                    this.chats.set(chats);
+                    this.dataSource.set(new MatTableDataSource(this.chats().chats.content || []));
                 },
                 complete: () => {
                     this.setIsLoadingEnd();
@@ -73,15 +73,15 @@ export class ChatsNewComponent extends UIStateComponent implements OnInit {
     delete(chat: SimpleChat): void {
         this.chatService
             .chatDeleteCommit(chat.chatId.toString())
-            .subscribe(v => this.updateTable(this.chats.chats.number));
+            .subscribe(v => this.updateTable(this.chats().chats.number));
     }
 
     nextPage(): void {
-        this.updateTable(this.chats.chats.number + 1);
+        this.updateTable(this.chats().chats.number + 1);
     }
 
     prevPage(): void {
-        this.updateTable(this.chats.chats.number - 1);
+        this.updateTable(this.chats().chats.number - 1);
     }
 
     toChat(chat: SimpleChat) {

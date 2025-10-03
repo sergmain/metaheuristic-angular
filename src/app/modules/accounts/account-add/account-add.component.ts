@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { FormControl, FormGroup, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { LoadStates } from '@app/enums/LoadStates';
@@ -33,7 +33,7 @@ export class AccountAddComponent {
       private router = inject(Router);
     readonly states = LoadStates;
     currentStates = new Set();
-    response: DefaultResponse;
+    response = signal<DefaultResponse | undefined>(undefined);
     form = new FormGroup({
         username: new FormControl('', [Validators.required, Validators.minLength(3)]),
         password: new FormControl('', [Validators.required, Validators.minLength(3)]),

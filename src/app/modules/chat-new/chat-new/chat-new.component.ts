@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit, viewChild, inject } from '@angular/core';
+import { Component, OnDestroy, OnInit, viewChild, inject, signal } from '@angular/core';
 import { FormControl, FormGroup, FormGroupDirective, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButton, MatIconButton } from '@angular/material/button';
 import {MhUtils} from '@services/mh-utils/mh-utils.service';
@@ -49,20 +49,20 @@ export class ChatNewComponent extends UIStateComponent implements OnInit, OnDest
     button = viewChild(MatButton);
     formDirective = viewChild<FormGroupDirective>('formDirective');
 
-    chatsDataSource: MatTableDataSource<SimpleChat> = new MatTableDataSource<SimpleChat>([]);
-    chatListColsToDisplay: string[] = ['name'];
-    chats: ChatsAllResult;
+    chatsDataSource = signal<MatTableDataSource<SimpleChat>>(new MatTableDataSource<SimpleChat>([]));
+    chatListColsToDisplay = signal<string[]>(['name']);
+    chats = signal<ChatsAllResult | undefined>(undefined);
 
     dataSource = new MatTableDataSource<ChatPrompt>([]);
-    columnsToDisplay: string[] = ['chat'];
+    columnsToDisplay = signal<string[]>(['chat']);
 
-    fullChat: FullChat;
-    chatId: string;
-    apiUid: string;
+    fullChat = signal<FullChat | undefined>(undefined);
+    chatId = signal<string | undefined>(undefined);
+    apiUid = signal<string | undefined>(undefined);
 
-    isShowRaw: boolean = false;
-    isNotPosting: boolean = true;
-    isTextareaBased: boolean = false;
+    isShowRaw = signal<boolean>(false);
+    isNotPosting = signal<boolean>(true);
+    isTextareaBased = signal<boolean>(false);
 
     chatForm = new FormGroup({
         prompt: new FormControl('', [Validators.required, Validators.minLength(MIN_PROMPT_LEN)]),
@@ -71,39 +71,39 @@ export class ChatNewComponent extends UIStateComponent implements OnInit, OnDest
     charInfoForm = new FormGroup({
         name: new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(100)])
     });
-    isFormActive: boolean = false;
+    isFormActive = signal<boolean>(false);
 
     currentStates: Set<LoadStates> = new Set();
     readonly states = LoadStates;
 
-    isListLoading: boolean = false;
-    isChatLoading: boolean = false;
+    isListLoading = signal<boolean>(false);
+    isChatLoading = signal<boolean>(false);
 
     constructor(public readonly authenticationService: AuthenticationService = inject(AuthenticationService)) {
         super(authenticationService);
-        this.chatId = this.activatedRoute.snapshot.paramMap.get('chatId');
+        this.chatId.set(this.activatedRoute.snapshot.paramMap.get('chatId'));
         this.loadAssetsForChatting();
     }
 
     updateTable(): void {
-        this.isListLoading = true;
+        this.isListLoading.set(true);
         this.chatService
             .chatsAll()
             .subscribe({
                 next: chats => {
                     //console.log("ChatsNewComponent.updateTable() #1", JSON.stringify(chats));
-                    this.chats = chats;
-                    this.chatsDataSource = new MatTableDataSource(this.chats.chats || []);
+                    this.chats.set(chats);
+                    this.chatsDataSource.set(new MatTableDataSource(this.chats().chats || []));
                 },
                 complete: () => {
-                    this.isListLoading = false;
+                    this.isListLoading.set(false);
                 }
             });
     }
 
     ngOnInit(): void {
         console.log("ngOnInit() start");
-        // this.chatId = this.activatedRoute.snapshot.paramMap.get('chatId');
+        // this.chatId.set(this.activatedRoute.snapshot.paramMap.get('chatId'));
 
         this.subscribeSubscription(this.settingsService.events.subscribe(event => {
             if (event instanceof SettingsServiceEventChange) {
@@ -121,17 +121,17 @@ export class ChatNewComponent extends UIStateComponent implements OnInit, OnDest
 
     // load assets for creating a new step of scenario
     loadAssetsForChatting(): void {
-        this.isChatLoading = true;
+        this.isChatLoading.set(true);
         this.chatService
-            .chat(this.chatId)
+            .chat(this.chatId())
             .subscribe((response) => {
-                this.fullChat = response;
-                // console.log("loadAssetsForChatting() ", this.fullChat.prompts || []);
+                this.fullChat.set(response);
+                // console.log("loadAssetsForChatting() ", this.fullChat().prompts || []);
                 // for (const prompt of response.prompts) {
                 //     console.log("\tloadAssetsForChatting.prompt ", prompt.prompt);
                 // }
-                this.dataSource = new MatTableDataSource(this.fullChat.prompts || []);
-                this.isChatLoading = false;
+                this.dataSource = new MatTableDataSource(this.fullChat().prompts || []);
+                this.isChatLoading.set(false);
             });
     }
 
@@ -148,25 +148,25 @@ export class ChatNewComponent extends UIStateComponent implements OnInit, OnDest
     }
 
     notPosting() {
-        return this.isNotPosting;
+        return this.isNotPosting();
     }
 
     postPrompt() {
         let prompt: string = this.chatForm.value.prompt;
-        this.isNotPosting = false;
+        this.isNotPosting.set(false);
         this.chatService
-            .postPrompt(this.chatId.toString(), prompt)
+            .postPrompt(this.chatId().toString(), prompt)
             .subscribe({
                 next: prompt => {
                     // console.log("postPrompt(), response: ", JSON.stringify(prompt));
                     // console.log("getSourceCodeId(), sourceCodeId", this.sourceCodeId);
-                    this.fullChat.prompts.push(prompt);
+                    this.fullChat().prompts.push(prompt);
                     const myClonedArray = [];
-                    this.fullChat.prompts.forEach(val => myClonedArray.push(val));
+                    this.fullChat().prompts.forEach(val => myClonedArray.push(val));
                     this.dataSource.data = myClonedArray;
                 },
                 complete: () => {
-                    this.isNotPosting = true;
+                    this.isNotPosting.set(true);
                     this.resetEvalStepForm()
                 }
             });
@@ -177,16 +177,16 @@ export class ChatNewComponent extends UIStateComponent implements OnInit, OnDest
 
     updateChatInfo() {
         this.currentStates.add(this.states.wait);
-        this.isFormActive = false;
+        this.isFormActive.set(false);
 
         const subscribe: Subscription = this.chatService
             .updateChatInfoFormCommit(
-                this.chatId.toString(),
+                this.chatId().toString(),
                 this.charInfoForm.value.name
             )
             .subscribe( {
                 next: prompt => {
-                    this.fullChat.chatName = this.charInfoForm.value.name;
+                    this.fullChat().chatName = this.charInfoForm.value.name;
                     //this.updateTree();
                 },
                 complete: () => {
@@ -201,16 +201,16 @@ export class ChatNewComponent extends UIStateComponent implements OnInit, OnDest
     }
 
     cancelUpdatingChatInfo() {
-        this.isFormActive = false;
+        this.isFormActive.set(false);
     }
 
     startEditingChatDescription() {
-        let name: string = this.fullChat ? this.fullChat.chatName : '#'+this.chatId;
+        let name: string = this.fullChat() ? this.fullChat().chatName : '#'+this.chatId();
 
         this.charInfoForm = new FormGroup({
             name: new FormControl(name, [Validators.required, Validators.minLength(5)]),
         });
-        this.isFormActive = true;
+        this.isFormActive.set(true);
     }
 
     toChat(chat: SimpleChat) {

@@ -1,4 +1,4 @@
-import {Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, signal } from '@angular/core';
 import { MatTableDataSource, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow } from '@angular/material/table';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import {UIStateComponent} from '@app/models/UIStateComponent';
@@ -34,28 +34,28 @@ export class ScenariosComponent extends UIStateComponent implements OnInit {
       public readonly dialog = inject(MatDialog);
       private scenarioService = inject(ScenarioService);
       private activatedRoute = inject(ActivatedRoute);
-    dataSource: MatTableDataSource<SimpleScenario> = new MatTableDataSource<SimpleScenario>([]);
-    columnsToDisplay: string[] = ['id', 'createdOn', 'name', 'bts'];
-    scenariosResult: ScenariosResult;
-    scenarioGroupId: string;
+    dataSource = signal<MatTableDataSource<SimpleScenario>>(new MatTableDataSource<SimpleScenario>([]));
+    columnsToDisplay = signal<string[]>(['id', 'createdOn', 'name', 'bts']);
+    scenariosResult = signal<ScenariosResult | undefined>(undefined);
+    scenarioGroupId = signal<string | undefined>(undefined);
 
     constructor(public readonly authenticationService: AuthenticationService = inject(AuthenticationService)) {
         super(authenticationService);
     }
 
     ngOnInit(): void {
-        this.scenarioGroupId = this.activatedRoute.snapshot.paramMap.get('scenarioGroupId');
+        this.scenarioGroupId.set(this.activatedRoute.snapshot.paramMap.get('scenarioGroupId'));
         this.updateTable(0);
     }
 
     updateTable(page: number): void {
         this.setIsLoadingStart();
         this.scenarioService
-            .scenarios(page.toString(), this.scenarioGroupId)
+            .scenarios(page.toString(), this.scenarioGroupId())
             .subscribe({
                 next: accountsResult => {
-                    this.scenariosResult = accountsResult;
-                    this.dataSource = new MatTableDataSource(this.scenariosResult.scenarios.content || []);
+                    this.scenariosResult.set(accountsResult);
+                    this.dataSource.set(new MatTableDataSource(this.scenariosResult().scenarios.content || []));
                 },
                 complete: () => {
                     this.setIsLoadingEnd();
@@ -73,7 +73,7 @@ export class ScenariosComponent extends UIStateComponent implements OnInit {
     delete(scenario: SimpleScenario): void {
         this.scenarioService
             .scenarioDeleteCommit(scenario.scenarioId.toString())
-            .subscribe(v => this.updateTable(this.scenariosResult.scenarios.number));
+            .subscribe(v => this.updateTable(this.scenariosResult().scenarios.number));
     }
 
     @ConfirmationDialogMethod({
@@ -86,15 +86,15 @@ export class ScenariosComponent extends UIStateComponent implements OnInit {
     copyScenario(scenario: SimpleScenario) {
         this.scenarioService
             .copyScenario(scenario.scenarioGroupId.toString(), scenario.scenarioId.toString())
-            .subscribe(v => this.updateTable(this.scenariosResult.scenarios.number));
+            .subscribe(v => this.updateTable(this.scenariosResult().scenarios.number));
     }
 
     nextPage(): void {
-        this.updateTable(this.scenariosResult.scenarios.number + 1);
+        this.updateTable(this.scenariosResult().scenarios.number + 1);
     }
 
     prevPage(): void {
-        this.updateTable(this.scenariosResult.scenarios.number - 1);
+        this.updateTable(this.scenariosResult().scenarios.number - 1);
     }
 
 }

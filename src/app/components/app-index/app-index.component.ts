@@ -1,4 +1,4 @@
-import {Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import {SettingsService} from '@services/settings/settings.service';
 import {MhStatus, RuntimeService, Status} from '@services/runtime/runtime.service';
 import { MatTableDataSource, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow } from '@angular/material/table';
@@ -28,20 +28,20 @@ export class AppIndexComponent {
       private settingsService = inject(SettingsService);
       private runtimeService = inject(RuntimeService);
       private clipboard = inject(Clipboard);
-    private dataSource: MatTableDataSource<MhStatus> = new MatTableDataSource<MhStatus>([]);
+    private dataSource = signal<MatTableDataSource<MhStatus>>(new MatTableDataSource<MhStatus>([]));
 
-    columnsToDisplay: string[] = ['stage', 'status'];
+    columnsToDisplay = signal<string[]>(['stage', 'status']);
     mhStatusesAsMatTableDataSource$: Observable<MatTableDataSource<MhStatus>>;
-    error: string = undefined;
+    error = signal<string>(undefined);
 
     constructor(
 ) {
         this.mhStatusesAsMatTableDataSource$ =
             this.runtimeService.mhStatuses.pipe(
                 map((statuses) => {
-                    const dataSource = this.dataSource;
+                    const dataSource = this.dataSource();
                     dataSource.data = statuses.statuses
-                    this.error = statuses.error;
+                    this.error.set(statuses.error);
                     return dataSource;
                 })
             );

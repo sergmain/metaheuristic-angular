@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, signal } from '@angular/core';
 import { MatTableDataSource, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow } from '@angular/material/table';
 import { UIStateComponent } from '@app/models/UIStateComponent';
 import { AuthenticationService } from '@app/services/authentication';
@@ -36,11 +36,11 @@ import { TranslateModule } from '@ngx-translate/core';
 export class KbsComponent extends UIStateComponent implements OnInit, ConfirmationDialogInterface {
       public readonly dialog = inject(MatDialog);
       private kbService = inject(KbService);
-  columnsToDisplay: string[] = ['id', 'code', 'status', 'bts'];
-  secondColumnsToDisplay: string[] = ['empty', 'params'];
-  simpleKbsResult: SimpleKbsResult;
+  columnsToDisplay = signal<string[]>(['id', 'code', 'status', 'bts']);
+  secondColumnsToDisplay = signal<string[]>(['empty', 'params']);
+  simpleKbsResult = signal<SimpleKbsResult | undefined>(undefined);
   dataSource = new MatTableDataSource<SimpleKb>([]);
-  expandParams: boolean = false;
+  expandParams = signal<boolean>(false);
 
   constructor(public readonly authenticationService: AuthenticationService = inject(AuthenticationService)) {
     super(authenticationService);
@@ -57,9 +57,9 @@ export class KbsComponent extends UIStateComponent implements OnInit, Confirmati
         .getKbs(pageNumber.toString())
         .subscribe({
           next: simpleKbsResult => {
-            this.simpleKbsResult = simpleKbsResult;
-            console.log('KbsComponent.simpleKbsResult: ' + JSON.stringify(this.simpleKbsResult));
-            this.dataSource = new MatTableDataSource(this.simpleKbsResult.kbs.content || []);
+            this.simpleKbsResult.set(simpleKbsResult);
+            console.log('KbsComponent.simpleKbsResult: ' + JSON.stringify(this.simpleKbsResult()));
+            this.dataSource = new MatTableDataSource(this.simpleKbsResult().kbs.content || []);
             console.log('KbsComponent.simpleKbsResult: #3');
           },
           complete: () => {
@@ -77,7 +77,7 @@ export class KbsComponent extends UIStateComponent implements OnInit, Confirmati
   initKb(kb: SimpleKb) {
     this.kbService
         .kbInit(kb.id.toString())
-        .subscribe(v => this.getKbs(this.simpleKbsResult.kbs.number));
+        .subscribe(v => this.getKbs(this.simpleKbsResult().kbs.number));
   }
 
   @ConfirmationDialogMethod({
@@ -90,14 +90,14 @@ export class KbsComponent extends UIStateComponent implements OnInit, Confirmati
   delete(kb: SimpleKb): void {
     this.kbService
         .kbDeleteCommit(kb.id.toString())
-        .subscribe(v => this.getKbs(this.simpleKbsResult.kbs.number));
+        .subscribe(v => this.getKbs(this.simpleKbsResult().kbs.number));
   }
 
   prevPage(): void {
-    this.getKbs((this.simpleKbsResult.kbs.number - 1));
+    this.getKbs((this.simpleKbsResult().kbs.number - 1));
   }
 
   nextPage(): void {
-    this.getKbs((this.simpleKbsResult.kbs.number + 1));
+    this.getKbs((this.simpleKbsResult().kbs.number + 1));
   }
 }

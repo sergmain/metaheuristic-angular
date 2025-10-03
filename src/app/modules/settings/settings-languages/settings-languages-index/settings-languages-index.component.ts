@@ -1,4 +1,4 @@
-import {Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, signal } from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {SettingsService} from '@app/modules/settings/settings.service';
 import {UIStateComponent} from '@app/models/UIStateComponent';
@@ -40,11 +40,11 @@ export class SettingsLanguagesIndexComponent extends UIStateComponent implements
     response: DefaultResponse;
     status: string;
 
-    language: Language;
-    listOfLanguage: Language[] = [];
+    language = signal<Language | undefined>(undefined);
+    listOfLanguage = signal<Language[]>([]);
 
-    apiKeys: ApiKeysResult;
-    editingOpenai: boolean;
+    apiKeys = signal<ApiKeysResult | undefined>(undefined);
+    editingOpenai = signal<boolean | undefined>(undefined);
 
     predefinedApiKeyForm = new FormGroup({
         openaiKey: new FormControl('', [Validators.required, Validators.minLength(10)]),
@@ -69,7 +69,7 @@ export class SettingsLanguagesIndexComponent extends UIStateComponent implements
             .getApiKeys()
             .subscribe({
                 next: apiKeysResult => {
-                    this.apiKeys = apiKeysResult;
+                    this.apiKeys.set(apiKeysResult);
                     this.dataSource = new MatTableDataSource(apiKeysResult.apiKeys);
                 },
                 complete: () => {
@@ -93,13 +93,13 @@ export class SettingsLanguagesIndexComponent extends UIStateComponent implements
 
     startChangingLanguage() {
         this.predefinedApiKeyForm = new FormGroup({
-            openaiKey: new FormControl(this.apiKeys.openaiKey, [Validators.required, Validators.minLength(10)]),
+            openaiKey: new FormControl(this.apiKeys().openaiKey, [Validators.required, Validators.minLength(10)]),
         });
-        this.editingOpenai = true;
+        this.editingOpenai.set(true);
     }
 
     editFormActive() {
-        return this.editingOpenai || MhUtils.isNull(this.apiKeys) || MhUtils.isNull(this.apiKeys.openaiKey);
+        return this.editingOpenai() || MhUtils.isNull(this.apiKeys()) || MhUtils.isNull(this.apiKeys().openaiKey);
     }
 
     notToCreatePredefinedForm() {
@@ -119,8 +119,8 @@ export class SettingsLanguagesIndexComponent extends UIStateComponent implements
             .subscribe({
                     next: (response)=> {
                         if (response.status === OperationStatus.OK) {
-                            this.apiKeys.openaiKey = this.predefinedApiKeyForm.value.openaiKey;
-                            this.dataSource = new MatTableDataSource(this.apiKeys.apiKeys);
+                            this.apiKeys().openaiKey = this.predefinedApiKeyForm.value.openaiKey;
+                            this.dataSource = new MatTableDataSource(this.apiKeys().apiKeys);
                             //this.router.navigate(['../'], {relativeTo: this.activatedRoute});
                         }
                     },
@@ -131,10 +131,10 @@ export class SettingsLanguagesIndexComponent extends UIStateComponent implements
                 }
             );
 
-        this.editingOpenai = false;
+        this.editingOpenai.set(false);
     }
 
     cancelEditingOpenaiKey() {
-        this.editingOpenai = false;
+        this.editingOpenai.set(false);
     }
 }

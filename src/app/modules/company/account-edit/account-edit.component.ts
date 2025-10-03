@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, signal } from '@angular/core';
 import { CompanyService } from '@app/services/company/company.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AccountResult } from '@app/services/accounts';
@@ -32,23 +32,23 @@ export class AccountEditComponent implements OnInit {
       private activatedRoute = inject(ActivatedRoute);
       private router = inject(Router);
     companyUniqueId: string;
-    accountId: string;
-    accountResult: AccountResult;
+    accountId = signal<string | undefined>(undefined);
+    accountResult = signal<AccountResult | undefined>(undefined);
     operationStatusRest: OperationStatusRest;
-    isEnabled: boolean;
-    publicName: string;
-    username: string;
+    isEnabled = signal<boolean | undefined>(undefined);
+    publicName = signal<string | undefined>(undefined);
+    username = signal<string | undefined>(undefined);
 
     ngOnInit(): void {
         this.companyUniqueId = this.activatedRoute.snapshot.paramMap.get('companyUniqueId');
-        this.accountId = this.activatedRoute.snapshot.paramMap.get('accountId');
+        this.accountId.set(this.activatedRoute.snapshot.paramMap.get('accountId'));
         this.companyService
-            .edit(this.companyUniqueId, this.accountId)
+            .edit(this.companyUniqueId, this.accountId())
             .subscribe(accountResult => {
-                this.accountResult = accountResult;
-                this.username = accountResult.account.username;
-                this.publicName = accountResult.account.publicName;
-                this.isEnabled = accountResult.account.enabled;
+                this.accountResult.set(accountResult);
+                this.username.set(accountResult.account.username);
+                this.publicName.set(accountResult.account.publicName);
+                this.isEnabled.set(accountResult.account.enabled);
             });
     }
 
@@ -58,7 +58,7 @@ export class AccountEditComponent implements OnInit {
 
     saveChanges(): void {
         this.companyService
-            .editFormCommit(this.accountId, this.publicName, this.isEnabled, this.companyUniqueId)
+            .editFormCommit(this.accountId(), this.publicName(), this.isEnabled(), this.companyUniqueId)
             .subscribe((operationStatusRest: OperationStatusRest) => {
                 if (operationStatusRest.status === OperationStatus.OK) {
                     this.back();

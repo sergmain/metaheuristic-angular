@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, signal } from '@angular/core';
 import { MatTableDataSource, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow } from '@angular/material/table';
 import { UIStateComponent } from '@app/models/UIStateComponent';
 import { AuthenticationService } from '@app/services/authentication';
@@ -34,11 +34,11 @@ import { TranslateModule } from '@ngx-translate/core';
 })
 export class AuthsComponent extends UIStateComponent implements OnInit, ConfirmationDialogInterface {
       public readonly dialog = inject(MatDialog);
-  columnsToDisplay: string[] = ['id', 'code', 'bts'];
-  secondColumnsToDisplay: string[] = ['empty', 'params'];
-  simpleAuthsResult: SimpleAuthsResult;
+  columnsToDisplay = signal<string[]>(['id', 'code', 'bts']);
+  secondColumnsToDisplay = signal<string[]>(['empty', 'params']);
+  simpleAuthsResult = signal<SimpleAuthsResult | undefined>(undefined);
   dataSource = new MatTableDataSource<SimpleAuth>([]);
-  expandParams: boolean = false;
+  expandParams = signal<boolean>(false);
 
   constructor(
     public readonly authenticationService: AuthenticationService = inject(AuthenticationService),
@@ -58,9 +58,9 @@ export class AuthsComponent extends UIStateComponent implements OnInit, Confirma
         .getAuths(pageNumber.toString())
         .subscribe({
           next: simpleAuthsResult => {
-            this.simpleAuthsResult = simpleAuthsResult;
-            console.log('ApisComponent.simpleAuthsResult: ' + JSON.stringify(this.simpleAuthsResult));
-            this.dataSource = new MatTableDataSource(this.simpleAuthsResult.auths.content || []);
+            this.simpleAuthsResult.set(simpleAuthsResult);
+            console.log('ApisComponent.simpleAuthsResult: ' + JSON.stringify(this.simpleAuthsResult()));
+            this.dataSource = new MatTableDataSource(this.simpleAuthsResult().auths.content || []);
             console.log('ApisComponent.simpleAuthsResult: #3');
           },
           complete: () => {
@@ -79,14 +79,14 @@ export class AuthsComponent extends UIStateComponent implements OnInit, Confirma
   delete(auth: SimpleAuth): void {
     this.authService
         .authDeleteCommit(auth.id.toString())
-        .subscribe(v => this.getAuths(this.simpleAuthsResult.auths.number));
+        .subscribe(v => this.getAuths(this.simpleAuthsResult().auths.number));
   }
 
   prevPage(): void {
-    this.getAuths((this.simpleAuthsResult.auths.number - 1));
+    this.getAuths((this.simpleAuthsResult().auths.number - 1));
   }
 
   nextPage(): void {
-    this.getAuths((this.simpleAuthsResult.auths.number + 1));
+    this.getAuths((this.simpleAuthsResult().auths.number + 1));
   }
 }

@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { CompanyService } from '@app/services/company/company.service';
 import { OperationStatusRest } from '@app/models/OperationStatusRest';
 import { FormControl, FormGroup, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -26,7 +26,7 @@ export class CompanyAddComponent {
       private companyService = inject(CompanyService);
       private router = inject(Router);
       private activatedRoute = inject(ActivatedRoute);
-    operationStatusRest: OperationStatusRest;
+    operationStatusRest = signal<OperationStatusRest | undefined>(undefined);
 
     form: FormGroup = new FormGroup({
         name: new FormControl('', [
@@ -42,7 +42,7 @@ export class CompanyAddComponent {
                 if (operationStatusRest.status === OperationStatus.OK) {
                     this.back();
                 } else {
-                    this.operationStatusRest = operationStatusRest;
+                    this.operationStatusRest.set(operationStatusRest);
                 }
             });
     }

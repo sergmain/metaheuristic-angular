@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, signal } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow } from '@angular/material/table';
 import { ConfirmationDialogMethod } from '@app/components/app-dialog-confirmation/app-dialog-confirmation.component';
@@ -37,11 +37,11 @@ export class FunctionsComponent extends UIStateComponent implements OnInit {
       private functionService = inject(FunctionsService);
       public dispatcherAssetModeService = inject(DispatcherAssetModeService);
       public readonly dialog = inject(MatDialog);
-    functionsResult: FunctionsResult;
+    functionsResult = signal<FunctionsResult | undefined>(undefined);
     dataSource = new MatTableDataSource<FunctionEntity>([]);
-    columnsToDisplay: string[] = ['code', 'type', 'params', 'bts'];
-    deletedRows: FunctionEntity[] = [];
-    showParams: boolean = false;
+    columnsToDisplay = signal<string[]>(['code', 'type', 'params', 'bts']);
+    deletedRows = signal<FunctionEntity[]>([]);
+    showParams = signal<boolean>(false);
 
     constructor(public readonly authenticationService: AuthenticationService = inject(AuthenticationService)) {
         super(authenticationService);
@@ -57,7 +57,7 @@ export class FunctionsComponent extends UIStateComponent implements OnInit {
             .getFunctions(page.toString())
             .subscribe({
                 next: functionsResult => {
-                    this.functionsResult = functionsResult;
+                    this.functionsResult.set(functionsResult);
                     this.dataSource = new MatTableDataSource(functionsResult.functions);
                 },
                 complete: () => {
@@ -73,7 +73,7 @@ export class FunctionsComponent extends UIStateComponent implements OnInit {
         resolveTitle: 'Delete',
     })
     delete(functionEntity: FunctionEntity) {
-        this.deletedRows.push(functionEntity);
+        this.deletedRows().push(functionEntity);
         this.functionService.deleteCommit(functionEntity.id.toString()).subscribe();
     }
 

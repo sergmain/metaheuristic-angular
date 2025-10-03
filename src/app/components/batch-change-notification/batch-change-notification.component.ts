@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import { Component, OnDestroy, OnInit, inject, signal } from '@angular/core';
 import { AudioNotification } from '@app/services/audioNotification/audioNotification.service';
 import { BatchExecStatusService } from '@app/services/batch/BatchExecStatusService';
 import { Subscription } from 'rxjs';
@@ -15,14 +15,14 @@ import { MatIcon } from '@angular/material/icon';
 export class BatchChangeNotificationComponent implements OnInit, OnDestroy {
       private batchExecStatusService = inject(BatchExecStatusService);
       private audioNotification = inject(AudioNotification);
-    isActive: boolean = false;
+    isActive = signal<boolean>(false);
     subs: Subscription[] = [];
 
     ngOnInit(): void {
         this.batchExecStatusService.getChanges.subscribe(result => {
             if (result?.isFinished) {
                 this.audioNotification.play();
-                this.isActive = true;
+                this.isActive.set(true);
             }
         });
     }
@@ -32,6 +32,6 @@ export class BatchChangeNotificationComponent implements OnInit, OnDestroy {
     }
 
     hide(): void {
-        this.isActive = false;
+        this.isActive.set(false);
     }
 }

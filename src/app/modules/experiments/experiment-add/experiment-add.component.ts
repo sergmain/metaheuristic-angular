@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, signal } from '@angular/core';
 import { FormControl, FormGroup, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ExperimentsService } from '@app/services/experiments/experiments.service';
@@ -40,15 +40,15 @@ export class ExperimentAddComponent implements OnInit {
         description: new FormControl('', [Validators.required, Validators.minLength(3)]),
         experimentCode: new FormControl('', [Validators.required, Validators.minLength(3)]),
     });
-    operationStatusRest: OperationStatusRest;
-    sourceCodeUidsForCompany: SourceCodeUidsForCompany;
+    operationStatusRest = signal<OperationStatusRest | undefined>(undefined);
+    sourceCodeUidsForCompany = signal<SourceCodeUidsForCompany | undefined>(undefined);
 
     ngOnInit(): void {
         this.experimentsService
             .experimentAdd()
             .subscribe({
                 next: (sourceCodeUidsForCompany) => {
-                    this.sourceCodeUidsForCompany = sourceCodeUidsForCompany;
+                    this.sourceCodeUidsForCompany.set(sourceCodeUidsForCompany);
                 }
             });
     }
@@ -67,7 +67,7 @@ export class ExperimentAddComponent implements OnInit {
             )
             .subscribe({
                 next: (operationStatusRest) => {
-                    this.operationStatusRest = operationStatusRest;
+                    this.operationStatusRest.set(operationStatusRest);
                     if (operationStatusRest.status === OperationStatus.OK) {
                         this.form.reset();
                     }

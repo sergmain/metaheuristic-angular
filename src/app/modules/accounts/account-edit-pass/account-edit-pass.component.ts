@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, signal } from '@angular/core';
 import { Location } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AccountsService } from '@app/services/accounts/accounts.service';
@@ -34,7 +34,7 @@ export class AccountEditPassComponent implements OnInit {
     readonly states = LoadStates;
     currentStates = new Set();
     response;
-    account: SimpleAccount;
+    account = signal<SimpleAccount | undefined>(undefined);
 
     form = new FormGroup({
         password: new FormControl('', [
@@ -71,7 +71,7 @@ export class AccountEditPassComponent implements OnInit {
             .getAccount(id)
             .subscribe(
                 (response) => {
-                    this.account = response.account;
+                    this.account.set(response.account);
                 },
                 () => { },
                 () => {
@@ -83,7 +83,7 @@ export class AccountEditPassComponent implements OnInit {
     save() {
         this.currentStates.add(this.states.wait);
         this.accountsService
-            .passwordEditFormCommit(this.account.id.toString(), this.form.value.password, this.form.value.password2)
+            .passwordEditFormCommit(this.account().id.toString(), this.form.value.password, this.form.value.password2)
             .subscribe(
                 (response: any) => {
                     this.router.navigate(['/dispatcher', 'accounts']);

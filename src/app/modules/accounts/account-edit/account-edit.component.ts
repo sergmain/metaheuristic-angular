@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, signal } from '@angular/core';
 import { Location } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AccountsService } from '@app/services/accounts/accounts.service';
@@ -34,7 +34,7 @@ export class AccountEditComponent implements OnInit {
     readonly states = LoadStates;
     currentStates = new Set();
     response;
-    account: SimpleAccount;
+    account = signal<SimpleAccount | undefined>(undefined);
 
     ngOnInit() {
         this.currentStates.add(this.states.firstLoading);
@@ -48,7 +48,7 @@ export class AccountEditComponent implements OnInit {
             .getAccount(id)
             .subscribe(
                 (response) => {
-                    this.account = response.account;
+                    this.account.set(response.account);
                 },
                 () => { },
                 () => {
@@ -64,7 +64,7 @@ export class AccountEditComponent implements OnInit {
     save() {
         this.currentStates.add(this.states.wait);
         this.accountsService
-            .editFormCommit(this.account.id.toString(), this.account.publicName, this.account.enabled)
+            .editFormCommit(this.account().id.toString(), this.account().publicName, this.account().enabled)
             .subscribe(
                 (response) => {
                     this.router.navigate(['/dispatcher', 'accounts']);

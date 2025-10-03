@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, signal } from '@angular/core';
 import { MatTableDataSource, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
 import { UIStateComponent } from '@app/models/UIStateComponent';
@@ -28,9 +28,9 @@ import { CtTablePaginationComponent } from '../../ct/ct-table-pagination/ct-tabl
 export class ErrorsComponent extends UIStateComponent implements OnInit {
       private sessionService = inject(SessionService);
       private activatedRoute = inject(ActivatedRoute);
-    dataSource: MatTableDataSource<SimpleError> = new MatTableDataSource<SimpleError>([]);
-    columnsToDisplay: string[] = ['id', 'p', 'a'];
-    errorsResult: ErrorsResult;
+    dataSource = signal<MatTableDataSource<SimpleError>>(new MatTableDataSource<SimpleError>([]));
+    columnsToDisplay = signal<string[]>(['id', 'p', 'a']);
+    errorsResult = signal<ErrorsResult | undefined>(undefined);
     sessionId: string;
 
     constructor(public readonly authenticationService: AuthenticationService = inject(AuthenticationService)) {
@@ -48,8 +48,8 @@ export class ErrorsComponent extends UIStateComponent implements OnInit {
             .errors(page.toString(), this.sessionId)
             .subscribe({
                 next: accountsResult => {
-                    this.errorsResult = accountsResult;
-                    this.dataSource = new MatTableDataSource(this.errorsResult.errors.content || []);
+                    this.errorsResult.set(accountsResult);
+                    this.dataSource.set(new MatTableDataSource(this.errorsResult().errors.content || []));
                 },
                 complete: () => {
                     this.setIsLoadingEnd();
@@ -58,10 +58,10 @@ export class ErrorsComponent extends UIStateComponent implements OnInit {
     }
 
     nextPage(): void {
-        this.updateTable(this.errorsResult.errors.number + 1);
+        this.updateTable(this.errorsResult().errors.number + 1);
     }
 
     prevPage(): void {
-        this.updateTable(this.errorsResult.errors.number - 1);
+        this.updateTable(this.errorsResult().errors.number - 1);
     }
 }

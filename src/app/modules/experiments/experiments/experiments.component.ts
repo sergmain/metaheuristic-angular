@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, signal } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow } from '@angular/material/table';
 import { ConfirmationDialogMethod } from '@app/components/app-dialog-confirmation/app-dialog-confirmation.component';
@@ -33,10 +33,10 @@ import { MatIcon } from '@angular/material/icon';
 export class ExperimentsComponent extends UIStateComponent implements OnInit {
       public readonly dialog = inject(MatDialog);
       private experimentsService = inject(ExperimentsService);
-    ExecContextState: typeof ExecContextState = ExecContextState;
-    experimentsResult: ExperimentApiData.ExperimentsResult;
-    dataSource: MatTableDataSource<ExperimentApiData.ExperimentResult> = new MatTableDataSource<ExperimentApiData.ExperimentResult>([]);
-    columnsToDisplay: string[] = ['id', 'name', 'createdOn', 'code', 'description', 'execState', 'bts'];
+    ExecContextState = signal<typeof ExecContextState>(ExecContextState);
+    experimentsResult = signal<ExperimentApiData.ExperimentsResult | undefined>(undefined);
+    dataSource = signal<MatTableDataSource<ExperimentApiData.ExperimentResult>>(new MatTableDataSource<ExperimentApiData.ExperimentResult>([]));
+    columnsToDisplay = signal<string[]>(['id', 'name', 'createdOn', 'code', 'description', 'execState', 'bts']);
 
     constructor(public readonly authenticationService: AuthenticationService = inject(AuthenticationService)) {
         super(authenticationService);
@@ -52,8 +52,8 @@ export class ExperimentsComponent extends UIStateComponent implements OnInit {
             .getExperiments(page.toString())
             .subscribe({
                 next: experimentsResult => {
-                    this.experimentsResult = experimentsResult;
-                    this.dataSource = new MatTableDataSource(experimentsResult.items.content || []);
+                    this.experimentsResult.set(experimentsResult);
+                    this.dataSource.set(new MatTableDataSource(experimentsResult.items.content || []));
                 },
                 complete: () => {
                     this.setIsLoadingEnd();
@@ -71,7 +71,7 @@ export class ExperimentsComponent extends UIStateComponent implements OnInit {
         this.experimentsService
             .deleteCommit(experiment.experiment.id.toString())
             .subscribe({
-                complete: () => this.updateTable(this.experimentsResult.items.number)
+                complete: () => this.updateTable(this.experimentsResult().items.number)
             });
     }
 
@@ -79,7 +79,7 @@ export class ExperimentsComponent extends UIStateComponent implements OnInit {
         this.experimentsService
             .experimentCloneCommit(element.experiment.id?.toString())
             .subscribe({
-                complete: () => this.updateTable(this.experimentsResult.items.number)
+                complete: () => this.updateTable(this.experimentsResult().items.number)
             });
     }
 
@@ -99,16 +99,16 @@ export class ExperimentsComponent extends UIStateComponent implements OnInit {
         this.experimentsService
             .execContextTargetExecState(id, state)
             .subscribe({
-                complete: () => this.updateTable(this.experimentsResult.items.number)
+                complete: () => this.updateTable(this.experimentsResult().items.number)
             });
     }
 
     nextPage(): void {
-        this.updateTable(this.experimentsResult.items.number + 1);
+        this.updateTable(this.experimentsResult().items.number + 1);
     }
 
     prevPage(): void {
-        this.updateTable(this.experimentsResult.items.number - 1);
+        this.updateTable(this.experimentsResult().items.number - 1);
     }
 
 }

@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import { Component, OnDestroy, OnInit, inject, signal } from '@angular/core';
 import { Router, RouterLinkActive, RouterLink, RouterOutlet } from '@angular/router';
 import { UIStateComponent } from '@app/models/UIStateComponent';
 import { AuthenticationService } from '@app/services/authentication';
@@ -23,7 +23,7 @@ export class DispatcherRootComponent extends UIStateComponent implements OnInit,
       private router = inject(Router);
       private settingsService = inject(SettingsService);
     settings: Settings;
-    sidenavOpened: boolean;
+    sidenavOpened = signal<boolean | undefined>(undefined);
 
     constructor(public authenticationService: AuthenticationService = inject(AuthenticationService)) {
         super(authenticationService);
@@ -36,7 +36,7 @@ export class DispatcherRootComponent extends UIStateComponent implements OnInit,
             this.settingsService.events.subscribe(event => {
                 if (event instanceof SettingsServiceEventChange) {
                     this.settings = event.settings;
-                    this.sidenavOpened = event.settings.sidenav;
+                    this.sidenavOpened.set(event.settings.sidenav);
                 }
             })
         );

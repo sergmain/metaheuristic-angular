@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, signal } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { OperationStatusRest } from '@app/models/OperationStatusRest';
 import { ExperimentApiData } from '@app/services/experiments/ExperimentApiData';
@@ -36,8 +36,8 @@ export class ExperimentEditComponent extends UIStateComponent implements OnInit 
       private experimentsService = inject(ExperimentsService);
       private router = inject(Router);
       private activatedRoute = inject(ActivatedRoute);
-    experimentsEditResult: ExperimentApiData.ExperimentsEditResult;
-    operationStatusRest: OperationStatusRest;
+    experimentsEditResult = signal<ExperimentApiData.ExperimentsEditResult | undefined>(undefined);
+    operationStatusRest = signal<OperationStatusRest | undefined>(undefined);
 
     simpleExperiment: SimpleExperiment = {
         name: null,
@@ -57,7 +57,7 @@ export class ExperimentEditComponent extends UIStateComponent implements OnInit 
             .edit(this.route.snapshot.paramMap.get('experimentId'))
             .subscribe({
                 next: experimentsEditResult => {
-                    this.experimentsEditResult = experimentsEditResult;
+                    this.experimentsEditResult.set(experimentsEditResult);
                     this.simpleExperiment.code = experimentsEditResult.simpleExperiment.code;
                     this.simpleExperiment.description = experimentsEditResult.simpleExperiment.description;
                     this.simpleExperiment.name = experimentsEditResult.simpleExperiment.name;
@@ -73,9 +73,9 @@ export class ExperimentEditComponent extends UIStateComponent implements OnInit 
         this.experimentsService
             .editFormCommit(this.simpleExperiment)
             .subscribe({
-                next: operationStatusRest => this.operationStatusRest = operationStatusRest,
+                next: operationStatusRest => this.operationStatusRest.set(operationStatusRest,
                 complete: () => this.setIsLoadingEnd()
-            });
+            }));
     }
 
     back(): void {

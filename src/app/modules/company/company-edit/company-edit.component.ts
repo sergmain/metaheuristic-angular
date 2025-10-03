@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, signal } from '@angular/core';
 import { CompanyService } from '@app/services/company/company.service';
 import { OperationStatusRest } from '@app/models/OperationStatusRest';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
@@ -29,30 +29,30 @@ export class CompanyEditComponent implements OnInit {
       private activatedRoute = inject(ActivatedRoute);
       private router = inject(Router);
     companyUniqueId: string;
-    name: string;
-    groups: string;
-    operationStatusRest: OperationStatusRest;
-    simpleCompanyResult: SimpleCompanyResult;
+    name = signal<string | undefined>(undefined);
+    groups = signal<string | undefined>(undefined);
+    operationStatusRest = signal<OperationStatusRest | undefined>(undefined);
+    simpleCompanyResult = signal<SimpleCompanyResult | undefined>(undefined);
 
     ngOnInit(): void {
         this.companyUniqueId = this.activatedRoute.snapshot.paramMap.get('companyUniqueId');
         this.companyService
             .editCompany(this.companyUniqueId)
             .subscribe(simpleCompanyResult => {
-                this.simpleCompanyResult = simpleCompanyResult;
-                this.name = simpleCompanyResult.company.name;
-                this.groups = simpleCompanyResult.companyAccessControl.groups;
+                this.simpleCompanyResult.set(simpleCompanyResult);
+                this.name.set(simpleCompanyResult.company.name);
+                this.groups.set(simpleCompanyResult.companyAccessControl.groups);
             });
     }
 
     saveChanges(): void {
         this.companyService
-            .editFormCommitCompany(this.companyUniqueId, this.name, this.groups)
+            .editFormCommitCompany(this.companyUniqueId, this.name(), this.groups())
             .subscribe(operationStatusRest => {
                 if (operationStatusRest.status === OperationStatus.OK) {
                     this.back();
                 } else {
-                    this.operationStatusRest = operationStatusRest;
+                    this.operationStatusRest.set(operationStatusRest);
                 }
             });
     }

@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, signal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CtStateOfTasksComponent } from '../../ct/ct-state-of-tasks/ct-state-of-tasks.component';
 
@@ -11,11 +11,11 @@ import { CtStateOfTasksComponent } from '../../ct/ct-state-of-tasks/ct-state-of-
 })
 export class ExperimentStateComponent implements OnInit {
       private activatedRoute = inject(ActivatedRoute);
-    sourceCodeId: string;
-    execContextId: string;
+    sourceCodeId = signal<string | undefined>(undefined);
+    execContextId = signal<string | undefined>(undefined);
 
     ngOnInit(): void {
-        this.sourceCodeId = this.activatedRoute.snapshot.paramMap.get('sourceCodeId');
-        this.execContextId = this.activatedRoute.snapshot.paramMap.get('execContextId');
+        this.sourceCodeId.set(this.activatedRoute.snapshot.paramMap.get('sourceCodeId'));
+        this.execContextId.set(this.activatedRoute.snapshot.paramMap.get('execContextId'));
     }
 }

@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import { Component, OnDestroy, OnInit, inject, signal } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LoadStates } from '@app/enums/LoadStates';
 import { state } from '@app/helpers/state';
@@ -33,20 +33,20 @@ export class AddExecContextComponent implements OnInit, OnDestroy {
       private sourceCodesService = inject(SourceCodesService);
       private execContextService = inject(ExecContextService);
     readonly states = LoadStates;
-    currentStates: Set<LoadStates> = new Set();
-    state: LoadStates = state;
-    currentState: LoadStates = state.show;
+    currentStates = signal<Set<LoadStates>>(new Set());
+    state = signal<LoadStates>(state);
+    currentState = signal<LoadStates>(state.show);
     variable: string;
-    responseSingle: ExecContextResult;
+    responseSingle = signal<ExecContextResult | undefined>(undefined);
     sourceCodeId: string;
-    sourceCodeResponse: SourceCodeResult;
+    sourceCodeResponse = signal<SourceCodeResult | undefined>(undefined);
 
     ngOnInit(): void {
         this.sourceCodeId = this.activatedRoute.snapshot.paramMap.get('sourceCodeId');
         this.sourceCodesService
             .edit(this.sourceCodeId)
             .subscribe(sourceCodeResult => {
-                this.sourceCodeResponse = sourceCodeResult;
+                this.sourceCodeResponse.set(sourceCodeResult);
             });
     }
 
@@ -57,16 +57,16 @@ export class AddExecContextComponent implements OnInit, OnDestroy {
     }
 
     createWithVariable(): void {
-        this.currentStates.add(this.states.loading);
+        this.currentStates().add(this.states.loading);
         this.execContextService
             .execContextAddCommit(this.sourceCodeId, this.variable)
             .subscribe(response => {
                 if (response.errorMessages) {
-                    this.responseSingle = response;
+                    this.responseSingle.set(response);
                 } else {
                     this.cancel();
                 }
-                this.currentStates.delete(this.states.loading);
+                this.currentStates().delete(this.states.loading);
             });
     }
 }

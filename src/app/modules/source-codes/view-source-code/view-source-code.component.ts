@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, inject } from '@angular/core';
+import { Component, ElementRef, OnInit, inject, signal } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SourceCodesService } from '@app/services/source-codes/source-codes.service';
 import { SourceCode } from '@app/services/source-codes/SourceCode';
@@ -31,9 +31,9 @@ export class ViewSourceCodeComponent implements OnInit {
       private sourceCodesService = inject(SourceCodesService);
       private router = inject(Router);
       private elRef = inject(ElementRef);
-    sourceCode: SourceCode;
-    sourceCodeResponse: SourceCodeResult;
-    sourceCodeResponseForValidate: SourceCodeResult;
+    sourceCode = signal<SourceCode | undefined>(undefined);
+    sourceCodeResponse = signal<SourceCodeResult | undefined>(undefined);
+    sourceCodeResponseForValidate = signal<SourceCodeResult | undefined>(undefined);
 
     ngOnInit(): void {
         this.updateResponse();
@@ -44,8 +44,8 @@ export class ViewSourceCodeComponent implements OnInit {
         this.sourceCodesService
             .edit(id)
             .subscribe(sourceCodeResult => {
-                this.sourceCodeResponse = sourceCodeResult;
-                this.sourceCode = sourceCodeResult;
+                this.sourceCodeResponse.set(sourceCodeResult);
+                this.sourceCode.set(sourceCodeResult);
             });
     }
 
@@ -58,8 +58,8 @@ export class ViewSourceCodeComponent implements OnInit {
         this.sourceCodesService
             .validate(id)
             .subscribe(sourceCodeResult => {
-                this.sourceCodeResponse = sourceCodeResult;
-                this.sourceCodeResponseForValidate = sourceCodeResult;
+                this.sourceCodeResponse.set(sourceCodeResult);
+                this.sourceCodeResponseForValidate.set(sourceCodeResult);
                 this.scrollIntoView();
             });
     }

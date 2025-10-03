@@ -1,5 +1,5 @@
 import {FlatTreeControl} from '@angular/cdk/tree';
-import {AfterViewInit, Component, OnDestroy, OnInit, TemplateRef, viewChild, inject } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit, TemplateRef, viewChild, inject, signal, computed } from '@angular/core';
 import { MatTreeFlatDataSource, MatTreeFlattener, MatTree, MatTreeNodeDef, MatTreeNode, MatTreeNodePadding, MatTreeNodeToggle } from '@angular/material/tree';
 import {BehaviorSubject, Observable, of as observableOf, Subscription} from 'rxjs';
 import { CdkDragDrop, CdkDropList, CdkDrag } from '@angular/cdk/drag-drop';
@@ -58,10 +58,10 @@ export enum NodeMode {
 
 export class SimpleScenarioStepWithParent {
     constructor(node: SimpleScenarioStep, parent: SimpleScenarioStep) {
-        this.node = node;
+        this.node.set(node);
         this.parent = parent;
     }
-    node: SimpleScenarioStep;
+    node = signal<SimpleScenarioStep | undefined>(undefined);
     parent: SimpleScenarioStep;
 }
 
@@ -92,10 +92,10 @@ export class StepFlatNode {
 export class StepEvaluationState {
     // for step evaluating
     activeNode: StepFlatNode = null;
-    prompt: string = null;
-    result: string = null;
-    rawResult: string = null;
-    error: string = null;
+    prompt = signal<string>(null);
+    result = signal<string>(null);
+    rawResult = signal<string>(null);
+    error = signal<string>(null);
     previousPrompt: string = null;
 }
 
@@ -121,38 +121,38 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
 
     execContexts = viewChild<TemplateRef<any>>('execContexts');
 
-    treeControl: FlatTreeControl<StepFlatNode>;
+    treeControl = signal<FlatTreeControl<StepFlatNode> | undefined>(undefined);
     treeFlattener: MatTreeFlattener<SimpleScenarioStep, StepFlatNode>;
-    dataSource: MatTreeFlatDataSource<SimpleScenarioStep, StepFlatNode>;
+    dataSource = signal<MatTreeFlatDataSource<SimpleScenarioStep, StepFlatNode> | undefined>(undefined);
     // expansion model tracks expansion state
     expansionModel = new SelectionModel<string>(true);
     dragging = false;
-    expandTimeout: any;
+    expandTimeout = signal<any | undefined>(undefined);
     expandDelay = 1000;
     validateDrop = false;
 
-    listOfApis: ApiUid[] = [];
-    listOfFunctions: InternalFunction[] = [];
-    listOfAggregateTypes: string[] = [];
+    listOfApis = signal<ApiUid[]>([]);
+    listOfFunctions = signal<InternalFunction[]>([]);
+    listOfAggregateTypes = signal<string[]>([]);
 
     response: ScenarioUidsForAccount;
     scenarioGroupId: string;
     scenarioId: string;
-    sourceCodeId: string;
+    sourceCodeId = signal<string | undefined>(undefined);
     needToExpandAll: boolean = true;
 
     // for fast hiding input form
-    showMyContainer: boolean = true;
-    isFormActive: boolean = false;
+    showMyContainer = signal<boolean>(true);
+    isFormActive = signal<boolean>(false);
     isStepEvaluation: boolean = false;
 
     allUuids: string[] = [];
-    isApi: boolean = true;
+    isApi = signal<boolean>(true);
 
     dataChange = new BehaviorSubject<SimpleScenarioStep[]>([]);
     dataTree :SimpleScenarioStep[]
 
-    simpleScenarioSteps: SimpleScenarioSteps = null;
+    simpleScenarioSteps = signal<SimpleScenarioSteps>(null);
 
     readonly stepEvaluationState: StepEvaluationState = new StepEvaluationState();
 
@@ -184,9 +184,9 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
         variables: new FormArray([])
     });
 
-    get variables() {
+    variables = computed(() => {
         return this.getVariables();
-    }
+    });
 
     getVariables(): FormArray {
         //(this.invoiceForm.controls['other_Partners'] as FormArray).clear();
@@ -228,8 +228,8 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
         super(authenticationService);
 
         this.treeFlattener = new MatTreeFlattener(this.transformer, this._getLevel, this._isExpandable, this._getChildren);
-        this.treeControl = new FlatTreeControl<StepFlatNode>(this._getLevel, this._isExpandable);
-        this.dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
+        this.treeControl.set(new FlatTreeControl<StepFlatNode>(this._getLevel, this._isExpandable));
+        this.dataSource.set(new MatTreeFlatDataSource(this.treeControl(), this.treeFlattener));
 
         this.dataChange.subscribe(data => this.rebuildTreeForData(data));
     }
@@ -239,18 +239,18 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
     notToCreate() {
         let b1 = MhUtils.isNull(this.form.value.apiUid) && MhUtils.isNull(this.form.value.processingFunction)
         let b2 = this.form.invalid;
-        let b3 = !this.isApi && this.isMhAcceptanceTest() && (MhUtils.len(this.form.value.expected) === 0 || MhUtils.isNull(this.form.value.apiUid));
+        let b3 = !this.isApi() && this.isMhAcceptanceTest() && (MhUtils.len(this.form.value.expected) === 0 || MhUtils.isNull(this.form.value.apiUid));
         console.log("notToCreate() ", b1, b2, b3);
         return b1
             || b2
             || b3;
         // return MhUtils.isNull(this.form.value.apiUid) && MhUtils.isNull(this.form.value.processingFunction)
         //     || this.form.invalid
-        //     || !this.isApi && this.isMhAcceptanceTest() && (MhUtils.len(this.form.value.expected) === 0 || MhUtils.isNull(this.form.value.apiUid));
+        //     || !this.isApi() && this.isMhAcceptanceTest() && (MhUtils.len(this.form.value.expected) === 0 || MhUtils.isNull(this.form.value.apiUid));
     }
 
     isApiNeeded() {
-        return this.isApi || this.isMhAcceptanceTest();
+        return this.isApi() || this.isMhAcceptanceTest();
     }
 
     // load assets for creating a new step of scenario
@@ -260,9 +260,9 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
             .scenarioStepAdd()
             .subscribe((response) => {
                 this.response = response;
-                this.listOfApis = this.response.apis;
-                this.listOfFunctions = this.response.functions;
-                this.listOfAggregateTypes = this.response.aggregateTypes;
+                this.listOfApis.set(this.response.apis);
+                this.listOfFunctions.set(this.response.functions);
+                this.listOfAggregateTypes.set(this.response.aggregateTypes);
                 this.isLoading = false;
             });
     }
@@ -302,7 +302,7 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
     };
 
     hasNewNodePresent = (_: number, _nodeData: StepFlatNode) => {
-        let b = this.newNodePresent() || this.isFormActive;
+        let b = this.newNodePresent() || this.isFormActive();
         //console.log("hasNewNodePresent()", b, _nodeData.nodeId);
         return b;
     };
@@ -319,13 +319,13 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
     }
 
     isMhAggregateFunc() {
-        let b= !this.isApi && this.isMhAggregate();
-        // console.log("isMhAggregateFunc()", b, this.isApi, this.isMhAggregate());
+        let b= !this.isApi() && this.isMhAggregate();
+        // console.log("isMhAggregateFunc()", b, this.isApi(), this.isMhAggregate());
         return b;
     }
 
     isAcceptanceTestFunc() {
-        let b= !this.isApi && this.isMhAcceptanceTest();
+        let b= !this.isApi() && this.isMhAcceptanceTest();
         //console.log("isAcceptanceTestFunc()", b, this.processingFunction);
         return b;
     }
@@ -395,12 +395,12 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
                 }
             }
         }
-        this.dataSource.data.forEach((node) => {
+        this.dataSource().data.forEach((node) => {
             addExpandedChildren(node, this.expansionModel.selected);
         });
 
-        // this.treeControl.dataNodes.forEach(n=>{
-        //     console.log("35.45 refreshTree(), expanded: ", n.uuid, this.treeControl.isExpanded(n));
+        // this.treeControl().dataNodes.forEach(n=>{
+        //     console.log("35.45 refreshTree(), expanded: ", n.uuid, this.treeControl().isExpanded(n));
         // });
 
 
@@ -447,9 +447,9 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
             .scenarioSteps(this.scenarioGroupId, this.scenarioId)
             .subscribe({
                 next: simpleScenarioSteps => {
-                    this.simpleScenarioSteps = simpleScenarioSteps;
+                    this.simpleScenarioSteps.set(simpleScenarioSteps);
                     this.dataTree = simpleScenarioSteps.steps;
-                    // console.log('ScenarioStepsComponent.simpleScenarioSteps: ' + JSON.stringify(this.simpleScenarioSteps));
+                    // console.log('ScenarioStepsComponent.simpleScenarioSteps: ' + JSON.stringify(this.simpleScenarioSteps()));
                     this.dataChange.next(this.dataTree);
                     // console.log('ScenarioStepsComponent.simpleScenarioSteps: #3');
                 },
@@ -470,15 +470,15 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
     }
     dragHover(node: StepFlatNode) {
         if (this.dragging) {
-            clearTimeout(this.expandTimeout);
-            this.expandTimeout = setTimeout(() => {
-                this.treeControl.expand(node);
+            clearTimeout(this.expandTimeout());
+            this.expandTimeout.set(setTimeout(() => {
+                this.treeControl().expand(node));
             }, this.expandDelay);
         }
     }
     dragHoverEnd() {
         if (this.dragging) {
-            clearTimeout(this.expandTimeout);
+            clearTimeout(this.expandTimeout());
         }
     }
 
@@ -488,33 +488,33 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
      */
     rebuildTreeForData(data: any) {
         //console.log("21.01 rebuildTreeForData()")
-        this.dataSource.data = data;
+        this.dataSource().data = data;
         this.refreshTree();
     }
 
     refreshTree() {
-        if (this.needToExpandAll && MhUtils.isNotNull(this.simpleScenarioSteps)) {
+        if (this.needToExpandAll && MhUtils.isNotNull(this.simpleScenarioSteps())) {
             this.needToExpandAll = false;
-            this.treeControl.expandAll();
+            this.treeControl().expandAll();
             this.allUuids.forEach(uuid=>this.expansionModel.select(uuid));
         }
         else {
-            this.treeControl.collapseAll();
+            this.treeControl().collapseAll();
         }
         // console.log("35.10 refreshTree(), expansionModel.selected: ", this.expansionModel.selected)
 
         this.expansionModel.selected.forEach((id) => {
-            const node = this.treeControl.dataNodes.find((n) => {
+            const node = this.treeControl().dataNodes.find((n) => {
                 // console.log("35.25 n.nodeId: {}, id: {}", n.uuid, id)
                 return n.uuid === id;
             });
             // console.log("35.35 refreshTree(), node: ", node)
             if (MhUtils.isNotNull(node)) {
-                this.treeControl.expand(node);
+                this.treeControl().expand(node);
             }
         });
-        // this.treeControl.dataNodes.forEach(n=>{
-        //     console.log("35.45 refreshTree(), expanded: ", n.uuid, this.treeControl.isExpanded(n));
+        // this.treeControl().dataNodes.forEach(n=>{
+        //     console.log("35.45 refreshTree(), expanded: ", n.uuid, this.treeControl().isExpanded(n));
         // });
     }
 
@@ -525,10 +525,10 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
         const idSet = new Set(ids);
         return flatNodes.forEach((node) => {
             if (idSet.has(node.nodeId)) {
-                this.treeControl.expand(node);
+                this.treeControl().expand(node);
                 let parent = this.getParentNode(node);
                 while (parent) {
-                    this.treeControl.expand(parent);
+                    this.treeControl().expand(parent);
                     parent = this.getParentNode(parent);
                 }
             }
@@ -540,9 +540,9 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
         if (currentLevel < 1) {
             return null;
         }
-        const startIndex = this.treeControl.dataNodes.indexOf(node) - 1;
+        const startIndex = this.treeControl().dataNodes.indexOf(node) - 1;
         for (let i = startIndex; i >= 0; i--) {
-            const currentNode = this.treeControl.dataNodes[i];
+            const currentNode = this.treeControl().dataNodes[i];
             if (currentNode.level < currentLevel) {
                 return currentNode;
             }
@@ -588,7 +588,7 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
     updateScenarioInfo() {
         this.currentStates.add(this.states.wait);
 
-        this.isFormActive = false;
+        this.isFormActive.set(false);
 
         const subscribe: Subscription = this.scenarioService
             .updateScenarioInfoFormCommit(
@@ -615,21 +615,21 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
     }
 
     cancelUpdatingScenarioInfo() {
-        this.isFormActive = false;
+        this.isFormActive.set(false);
         this.dataChange.next(this.dataTree);
     }
 
     startEditingScenarioInfo() {
         this.scenarioForm = new FormGroup({
-            name: new FormControl(this.simpleScenarioSteps.scenarioInfo.name, [Validators.required, Validators.minLength(5)]),
-            description: new FormControl(this.simpleScenarioSteps.scenarioInfo.description, [Validators.required, Validators.minLength(5)]),
+            name: new FormControl(this.simpleScenarioSteps().scenarioInfo.name, [Validators.required, Validators.minLength(5)]),
+            description: new FormControl(this.simpleScenarioSteps().scenarioInfo.description, [Validators.required, Validators.minLength(5)]),
         });
-        this.isFormActive = true;
+        this.isFormActive.set(true);
         this.dataChange.next(this.dataTree);
     }
 
     startEditingNode(node: StepFlatNode) {
-        this.showMyContainer = true;
+        this.showMyContainer.set(true);
         let detailNode = this.findInTree(node);
         console.log("50.10", JSON.stringify(detailNode));
         detailNode.node.isNew = true;
@@ -647,7 +647,7 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
         });
 
         // noinspection UnnecessaryLocalVariableJS
-        const apiUid = this.listOfApis.find((c) => c.uid == detailNode.node.apiCode);
+        const apiUid = this.listOfApis().find((c) => c.uid == detailNode.node.apiCode);
         // const apiUid = new class implements ApiUid {
         //     id: number = detailNode.node.apiId;
         //     uid: string = detailNode.node.apiCode;
@@ -655,16 +655,16 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
         this.form.get('apiUid').setValue(apiUid);
 
         if (MhUtils.isNull(detailNode.node.functionCode)) {
-            this.isApi = true;
+            this.isApi.set(true);
         }
         else {
-            this.isApi = false;
+            this.isApi.set(false);
             // this.processingFunction = new class implements InternalFunction {
             //     code: string = detailNode.node.functionCode;
             //     translate: string = detailNode.node.functionCode;
             // };
             // noinspection UnnecessaryLocalVariableJS
-            const processingFunction = this.listOfFunctions.find((c) => c.code == detailNode.node.functionCode);
+            const processingFunction = this.listOfFunctions().find((c) => c.code == detailNode.node.functionCode);
             // const apiUid = new class implements ApiUid {
             //     id: number = detailNode.node.apiId;
             //     uid: string = detailNode.node.apiCode;
@@ -675,15 +675,15 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
             this.form.get('aggregateType').setValue(detailNode.node.aggregateType);
 
         }
-        console.log("50.20", this.isApi, this.form.value.apiUid, this.form.value.processingFunction, this.form.value.aggregateType);
+        console.log("50.20", this.isApi(), this.form.value.apiUid, this.form.value.processingFunction, this.form.value.aggregateType);
 
         this.dataChange.next(this.dataTree);
     }
 
     addNewStubItem(node: StepFlatNode) {
-        this.showMyContainer = true;
+        this.showMyContainer.set(true);
         console.log("10.10", node);
-        this.treeControl.expand(node);
+        this.treeControl().expand(node);
         let detailNode = this.findInTree(node);
         console.log("10.11", detailNode)
         this.addNewNode(detailNode.node);
@@ -722,7 +722,7 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
             .prepareStepForEvaluation(this.scenarioId.toString(), node.uuid)
             .subscribe(o => {
                 console.log("startStepEvaluation(), response: ", JSON.stringify(o));
-                // console.log("getSourceCodeId(), sourceCodeId", this.sourceCodeId);
+                // console.log("getSourceCodeId(), sourceCodeId", this.sourceCodeId());
                 this.preparedStep = o;
                 if (MhUtils.isNull(o.errorMessagesAsStr)) {
                     this.isStepEvaluation = true;
@@ -765,7 +765,7 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
             .runStepEvaluation(this.scenarioId.toString(), se)
             .subscribe(o => {
                 console.log("runStepEvaluation(), response: ", JSON.stringify(o));
-                // console.log("getSourceCodeId(), sourceCodeId", this.sourceCodeId);
+                // console.log("getSourceCodeId(), sourceCodeId", this.sourceCodeId());
 
                 this.stepEvaluationState.prompt = o.prompt;
                 this.stepEvaluationState.result = o.result;
@@ -1068,10 +1068,10 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
             .querySourceCodeId(this.scenarioGroupId.toString(), this.scenarioId.toString())
             .subscribe(o => {
                 // console.log("getSourceCodeId(), response: ", JSON.stringify(o));
-                this.sourceCodeId = MhUtils.isNotNull(o) && MhUtils.isNotNull(o.simpleSourceCode)
+                this.sourceCodeId.set(MhUtils.isNotNull(o) && MhUtils.isNotNull(o.simpleSourceCode)
                     ? o.simpleSourceCode.id.toString()
-                    : null;
-                // console.log("getSourceCodeId(), sourceCodeId", this.sourceCodeId);
+                    : null);
+                // console.log("getSourceCodeId(), sourceCodeId", this.sourceCodeId());
             });
     }
 
@@ -1082,7 +1082,7 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
     }
 
     isSourceCodeId() {
-        return MhUtils.isNotNull(this.sourceCodeId);
+        return MhUtils.isNotNull(this.sourceCodeId());
     }
 
     isEnhanceText(node: StepFlatNode): boolean {

@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, signal } from '@angular/core';
 import { MatTableDataSource, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow } from '@angular/material/table';
 import { AccountsService } from '@app/services/accounts/accounts.service';
 import { DispatcherAssetMode } from '@app/enums/DispatcherAssetMode';
@@ -34,7 +34,7 @@ export class AccountsComponent extends UIStateComponent implements OnInit {
       public dispatcherAssetModeService = inject(DispatcherAssetModeService);
     dataSource = new MatTableDataSource<SimpleAccount>([]);
     columnsToDisplay = ['id', 'isEnabled', 'login', 'publicName', 'createdOn', 'roles', 'bts'];
-    accountsResult: AccountsResult;
+    accountsResult = signal<AccountsResult | undefined>(undefined);
 
     constructor(public readonly authenticationService: AuthenticationService = inject(AuthenticationService)) {
         super(authenticationService)
@@ -50,8 +50,8 @@ export class AccountsComponent extends UIStateComponent implements OnInit {
             .accounts(page.toString())
             .subscribe({
                 next: accountsResult => {
-                    this.accountsResult = accountsResult;
-                    this.dataSource = new MatTableDataSource(this.accountsResult.accounts.content || []);
+                    this.accountsResult.set(accountsResult);
+                    this.dataSource = new MatTableDataSource(this.accountsResult().accounts.content || []);
                 },
                 complete: () => {
                     this.setIsLoadingEnd()
@@ -60,11 +60,11 @@ export class AccountsComponent extends UIStateComponent implements OnInit {
     }
 
     nextPage() {
-        this.updateTable(this.accountsResult.accounts.number + 1);
+        this.updateTable(this.accountsResult().accounts.number + 1);
     }
 
     prevPage() {
-        this.updateTable(this.accountsResult.accounts.number - 1);
+        this.updateTable(this.accountsResult().accounts.number - 1);
     }
 
 }

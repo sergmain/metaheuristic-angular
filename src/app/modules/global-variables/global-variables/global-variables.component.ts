@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ChangeDetectorRef, inject } from '@angular/core';
+import { Component, OnInit, ViewChild, ChangeDetectorRef, inject, signal } from '@angular/core';
 import { MatTableDataSource, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow } from '@angular/material/table';
 import { MatDialog, } from '@angular/material/dialog';
 import { ConfirmationDialogMethod } from '@app/components/app-dialog-confirmation/app-dialog-confirmation.component';
@@ -33,26 +33,26 @@ export class GlobalVariablesComponent implements OnInit {
       private dialog = inject(MatDialog);
       private globalVariablesService = inject(GlobalVariablesService);
       private changeDetectorRef = inject(ChangeDetectorRef);
-    isLoading: boolean;
+    isLoading = signal<boolean | undefined>(undefined);
 
-    globalVariablesResult: GlobalVariablesResult;
-    deletedRows: GlobalVariable[] = [];
-    dataSource: MatTableDataSource<GlobalVariable> = new MatTableDataSource<GlobalVariable>([]);
-    columnsToDisplay: (string)[] = ['id', 'variable', 'uploadTs', 'filename', 'params', 'bts'];
+    globalVariablesResult = signal<GlobalVariablesResult | undefined>(undefined);
+    deletedRows = signal<GlobalVariable[]>([]);
+    dataSource = signal<MatTableDataSource<GlobalVariable>>(new MatTableDataSource<GlobalVariable>([]));
+    columnsToDisplay = signal<(string)[]>(['id', 'variable', 'uploadTs', 'filename', 'params', 'bts']);
 
     ngOnInit(): void {
         this.updateTable(0);
     }
 
     updateTable(page: number): void {
-        this.isLoading = true;
+        this.isLoading.set(true);
         this.globalVariablesService
             .getResources(page.toString())
             .subscribe(globalVariablesResult => {
-                this.globalVariablesResult = globalVariablesResult;
+                this.globalVariablesResult.set(globalVariablesResult);
                 this.changeDetectorRef.detectChanges();
-                this.dataSource = new MatTableDataSource(globalVariablesResult.items.content || []);
-                this.isLoading = false;
+                this.dataSource.set(new MatTableDataSource(globalVariablesResult.items.content || []));
+                this.isLoading.set(false);
             });
     }
 
@@ -63,17 +63,17 @@ export class GlobalVariablesComponent implements OnInit {
         resolveTitle: 'Delete'
     })
     delete(globalVariable: GlobalVariable): void {
-        this.deletedRows.push(globalVariable);
+        this.deletedRows().push(globalVariable);
         this.globalVariablesService
             .deleteResource(globalVariable.id.toString())
             .subscribe();
     }
 
     nextPage(): void {
-        this.updateTable(this.globalVariablesResult.items.number + 1);
+        this.updateTable(this.globalVariablesResult().items.number + 1);
     }
 
     prevPage(): void {
-        this.updateTable(this.globalVariablesResult.items.number - 1);
+        this.updateTable(this.globalVariablesResult().items.number - 1);
     }
 }

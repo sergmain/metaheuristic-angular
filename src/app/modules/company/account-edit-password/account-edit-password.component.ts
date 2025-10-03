@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, signal } from '@angular/core';
 import { CompanyService } from '@app/services/company/company.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormGroup, FormControl, Validators, ValidationErrors, FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -29,10 +29,10 @@ export class AccountEditPasswordComponent implements OnInit {
       private activatedRoute = inject(ActivatedRoute);
       private companyService = inject(CompanyService);
       private router = inject(Router);
-    accountResult: AccountResult;
+    accountResult = signal<AccountResult | undefined>(undefined);
     accoundId: string;
     companyUniqueId: string;
-    operationStatusRest: OperationStatusRest;
+    operationStatusRest = signal<OperationStatusRest | undefined>(undefined);
 
     form = new FormGroup({
         password: new FormControl('', [
@@ -54,18 +54,18 @@ export class AccountEditPasswordComponent implements OnInit {
         ]),
     });
 
-    isLoading: boolean;
+    isLoading = signal<boolean | undefined>(undefined);
 
     ngOnInit(): void {
-        this.isLoading = true;
+        this.isLoading.set(true);
         this.accoundId = this.activatedRoute.snapshot.paramMap.get('accountId');
         this.companyUniqueId = this.activatedRoute.snapshot.paramMap.get('companyUniqueId');
         this.companyService
             .passwordEdit(this.accoundId, this.companyUniqueId)
             .subscribe({
-                next: accountResult => this.accountResult = accountResult,
-                complete: () => this.isLoading = false
-            });
+                next: accountResult => this.accountResult.set(accountResult,
+                complete: () => this.isLoading.set(false
+            })));
     }
 
 
@@ -74,13 +74,13 @@ export class AccountEditPasswordComponent implements OnInit {
     }
 
     saveChanges(): void {
-        this.isLoading = true;
+        this.isLoading.set(true);
         this.companyService
             .passwordEditFormCommit(this.accoundId, this.form.value.password, this.form.value.password2, this.companyUniqueId)
             .subscribe({
-                next: operationStatusRest => this.operationStatusRest = operationStatusRest,
-                complete: () => this.isLoading = false
-            });
+                next: operationStatusRest => this.operationStatusRest.set(operationStatusRest,
+                complete: () => this.isLoading.set(false
+            })));
     }
 
 }

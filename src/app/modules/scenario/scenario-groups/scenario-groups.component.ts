@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, signal } from '@angular/core';
 import { MatTableDataSource, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow } from '@angular/material/table';
 import { UIStateComponent } from '@app/models/UIStateComponent';
 import { AuthenticationService } from '@app/services/authentication';
@@ -33,8 +33,8 @@ import { TranslateModule } from '@ngx-translate/core';
 export class ScenarioGroupsComponent extends UIStateComponent implements OnInit {
       public readonly dialog = inject(MatDialog);
       private scenarioService = inject(ScenarioService);
-  columnsToDisplay: string[] = ['scenarioGroupId', 'createdOn', 'name', 'bts'];
-  simpleScenarioGroupsResult: SimpleScenarioGroupsResult;
+  columnsToDisplay = signal<string[]>(['scenarioGroupId', 'createdOn', 'name', 'bts']);
+  simpleScenarioGroupsResult = signal<SimpleScenarioGroupsResult | undefined>(undefined);
   dataSource = new MatTableDataSource<SimpleScenarioGroup>([]);
 
   constructor(public readonly authenticationService: AuthenticationService = inject(AuthenticationService)) {
@@ -52,9 +52,9 @@ export class ScenarioGroupsComponent extends UIStateComponent implements OnInit 
         .getScenarioGroups(pageNumber.toString())
         .subscribe({
           next: simpleScenarioGroupsResult => {
-            this.simpleScenarioGroupsResult = simpleScenarioGroupsResult;
-            // console.log('ScenarioGroupsComponent.simpleScenarioGroupsResult: ' + JSON.stringify(this.simpleScenarioGroupsResult));
-            this.dataSource = new MatTableDataSource(this.simpleScenarioGroupsResult.scenarioGroups.content || []);
+            this.simpleScenarioGroupsResult.set(simpleScenarioGroupsResult);
+            // console.log('ScenarioGroupsComponent.simpleScenarioGroupsResult: ' + JSON.stringify(this.simpleScenarioGroupsResult()));
+            this.dataSource = new MatTableDataSource(this.simpleScenarioGroupsResult().scenarioGroups.content || []);
             // console.log('ScenarioGroupsComponent.simpleScenarioGroupsResult: #3');
           },
           complete: () => {
@@ -73,14 +73,14 @@ export class ScenarioGroupsComponent extends UIStateComponent implements OnInit 
   delete(scenarioGroup: SimpleScenarioGroup): void {
     this.scenarioService
         .scenarioGroupDeleteCommit(scenarioGroup.scenarioGroupId.toString())
-        .subscribe(v => this.getScenarioGroups(this.simpleScenarioGroupsResult.scenarioGroups.number));
+        .subscribe(v => this.getScenarioGroups(this.simpleScenarioGroupsResult().scenarioGroups.number));
   }
 
   prevPage(): void {
-    this.getScenarioGroups((this.simpleScenarioGroupsResult.scenarioGroups.number - 1));
+    this.getScenarioGroups((this.simpleScenarioGroupsResult().scenarioGroups.number - 1));
   }
 
   nextPage(): void {
-    this.getScenarioGroups((this.simpleScenarioGroupsResult.scenarioGroups.number + 1));
+    this.getScenarioGroups((this.simpleScenarioGroupsResult().scenarioGroups.number + 1));
   }
 }

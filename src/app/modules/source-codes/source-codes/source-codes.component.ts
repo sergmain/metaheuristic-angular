@@ -1,4 +1,4 @@
-import { Component, OnInit, viewChild, inject } from '@angular/core';
+import { Component, OnInit, viewChild, inject, signal } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow } from '@angular/material/table';
 import { MatTabGroup, MatTab } from '@angular/material/tabs';
@@ -41,11 +41,11 @@ export class SourceCodesComponent extends UIStateComponent implements OnInit {
       public dispatcherAssetModeService = inject(DispatcherAssetModeService);
     TABINDEX: number = 0;
 
-    sourceCodesResult: SourceCodesResult;
-    dataSource: MatTableDataSource<SourceCode> = new MatTableDataSource<SourceCode>([]);
-    columnsToDisplay: string[] = ['id', 'uid', 'type', 'createdOn', 'valid', 'bts'];
-    deletedSourceCodes: SourceCode[] = [];
-    archivedSourceCodes: SourceCode[] = [];
+    sourceCodesResult = signal<SourceCodesResult | undefined>(undefined);
+    dataSource = signal<MatTableDataSource<SourceCode>>(new MatTableDataSource<SourceCode>([]));
+    columnsToDisplay = signal<string[]>(['id', 'uid', 'type', 'createdOn', 'valid', 'bts']);
+    deletedSourceCodes = signal<SourceCode[]>([]);
+    archivedSourceCodes = signal<SourceCode[]>([]);
 
     matTabGroup = viewChild<MatTabGroup>('matTabGroup');
     sourceCodesArchive = viewChild<SourceCodesArchiveComponent>('sourceCodesArchive');
@@ -64,8 +64,8 @@ export class SourceCodesComponent extends UIStateComponent implements OnInit {
             .sourceCodes(page.toString())
             .subscribe({
                 next: sourceCodesResult => {
-                    this.sourceCodesResult = sourceCodesResult;
-                    this.dataSource = new MatTableDataSource(sourceCodesResult.items.content || []);
+                    this.sourceCodesResult.set(sourceCodesResult);
+                    this.dataSource.set(new MatTableDataSource(sourceCodesResult.items.content || []));
                 },
                 complete: () => {
                     this.setIsLoadingEnd();
@@ -80,7 +80,7 @@ export class SourceCodesComponent extends UIStateComponent implements OnInit {
         resolveTitle: 'Delete'
     })
     delete(sourceCode: SourceCode): void {
-        this.deletedSourceCodes.push(sourceCode);
+        this.deletedSourceCodes().push(sourceCode);
         this.sourceCodesService
             .deleteCommit(sourceCode.id.toString())
             .subscribe();
@@ -93,7 +93,7 @@ export class SourceCodesComponent extends UIStateComponent implements OnInit {
         resolveTitle: 'Archive'
     })
     archive(sourceCode: SourceCode): void {
-        this.archivedSourceCodes.push(sourceCode);
+        this.archivedSourceCodes().push(sourceCode);
         this.sourceCodesService
             .archiveCommit(sourceCode.id.toString())
             .subscribe();
@@ -106,14 +106,14 @@ export class SourceCodesComponent extends UIStateComponent implements OnInit {
     }
 
     nextPage(): void {
-        this.updateTable(this.sourceCodesResult.items.number + 1);
+        this.updateTable(this.sourceCodesResult().items.number + 1);
     }
 
     prevPage(): void {
-        this.updateTable(this.sourceCodesResult.items.number - 1);
+        this.updateTable(this.sourceCodesResult().items.number - 1);
     }
 
     getType(uid: string): SourceCodeType {
-        return this.sourceCodesService.getSourceCodeType(uid, this.sourceCodesResult);
+        return this.sourceCodesService.getSourceCodeType(uid, this.sourceCodesResult());
     }
 }

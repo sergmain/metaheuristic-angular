@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit, inject } from '@angular/core';
+import { Component, OnDestroy, OnInit, inject, signal } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {SettingsService, SettingsServiceEventChange} from '@services/settings/settings.service';
 import {ActivatedRoute, Router} from '@angular/router';
@@ -44,19 +44,19 @@ export class ScenarioMoveComponent extends UIStateComponent implements OnInit, O
       private translate = inject(TranslateService);
       private settingsService = inject(SettingsService);
       private dialog = inject(MatDialog);
-    simpleScenarioGroupsAllResult: SimpleScenarioGroupsAllResult;
-    scenarioGroupId: string;
+    simpleScenarioGroupsAllResult = signal<SimpleScenarioGroupsAllResult | undefined>(undefined);
+    scenarioGroupId = signal<string | undefined>(undefined);
     scenarioId: string;
     state: MoveState = MoveState.init;
 
-    form: FormGroup;
+    form = signal<FormGroup | undefined>(undefined);
 
     constructor(public readonly authenticationService: AuthenticationService = inject(AuthenticationService)) {
         super(authenticationService);
     }
 
     ngOnInit(): void {
-        this.scenarioGroupId = this.activatedRoute.snapshot.paramMap.get('scenarioGroupId');
+        this.scenarioGroupId.set(this.activatedRoute.snapshot.paramMap.get('scenarioGroupId'));
         this.scenarioId = this.activatedRoute.snapshot.paramMap.get('scenarioId');
         this.subscribeSubscription(this.settingsService.events.subscribe(event => {
             if (event instanceof SettingsServiceEventChange) {
@@ -65,20 +65,20 @@ export class ScenarioMoveComponent extends UIStateComponent implements OnInit, O
         }));
 
         this.scenarioService
-            .getScenarioGroupsAll(this.scenarioGroupId.toString())
+            .getScenarioGroupsAll(this.scenarioGroupId().toString())
             .subscribe(v => {
-                this.simpleScenarioGroupsAllResult = v;
-                this.simpleScenarioGroupsAllResult.scenarioGroups.forEach((element,index)=>{
-                    if(element.scenarioGroupId.toString()===this.scenarioGroupId) {
-                        this.simpleScenarioGroupsAllResult.scenarioGroups.splice(index,1);
+                this.simpleScenarioGroupsAllResult.set(v);
+                this.simpleScenarioGroupsAllResult().scenarioGroups.forEach((element,index)=>{
+                    if(element.scenarioGroupId.toString()===this.scenarioGroupId()) {
+                        this.simpleScenarioGroupsAllResult().scenarioGroups.splice(index,1);
                     }
                 });
                 this.state = MoveState.select;
             });
 
-        this.form = new FormGroup({
+        this.form.set(new FormGroup({
             group: new FormControl(null),
-        });
+        }));
     }
 
 
@@ -95,17 +95,17 @@ export class ScenarioMoveComponent extends UIStateComponent implements OnInit, O
         theme: 'primary'
     })
     moveScenarioCommit(): void {
-        // console.log("ScenarioMoveComponent.moveScenarioCommit()", JSON.stringify(this.form.value.group));
-        let groupId = this.form.value.group.scenarioGroupId.toString();
+        // console.log("ScenarioMoveComponent.moveScenarioCommit()", JSON.stringify(this.form().value.group));
+        let groupId = this.form().value.group.scenarioGroupId.toString();
         this.scenarioService
-            .moveScenario(this.scenarioGroupId, this.scenarioId, groupId)
+            .moveScenario(this.scenarioGroupId(), this.scenarioId, groupId)
             .subscribe(v => {
                 this.state = MoveState.done;
             });
     }
 
     notToMoveScenario(): boolean {
-        return  MhUtils.isNull(this.form.value.group);
+        return  MhUtils.isNull(this.form().value.group);
     }
 
     isInit() {

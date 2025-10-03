@@ -1,4 +1,4 @@
-import {Component, OnInit, viewChild, inject } from '@angular/core';
+import { Component, OnInit, viewChild, inject, signal } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import {UIStateComponent} from '@app/models/UIStateComponent';
 import {AuthenticationService} from '@app/services/authentication';
@@ -39,9 +39,9 @@ export class ScenarioStepsComponent extends UIStateComponent implements OnInit {
 
     currentStates: Set<LoadStates> = new Set();
 
-    columnsToDisplay: string[] = ['api', 'name', 'prompt', 'answer', 'bts'];
+    columnsToDisplay = signal<string[]>(['api', 'name', 'prompt', 'answer', 'bts']);
 
-    simpleScenarioSteps: SimpleScenarioSteps;
+    simpleScenarioSteps = signal<SimpleScenarioSteps | undefined>(undefined);
     scenarioGroupId: string;
     scenarioId: string;
 
@@ -67,9 +67,9 @@ export class ScenarioStepsComponent extends UIStateComponent implements OnInit {
             .scenarioSteps(this.scenarioGroupId, this.scenarioId)
             .subscribe({
                 next: simpleScenarioSteps => {
-                    this.simpleScenarioSteps = simpleScenarioSteps;
-                    // console.log('ScenarioStepsComponent.simpleScenarioSteps: ' + JSON.stringify(this.simpleScenarioSteps));
-                    this.dataSource = new MatTableDataSource(this.simpleScenarioSteps.steps || []);
+                    this.simpleScenarioSteps.set(simpleScenarioSteps);
+                    // console.log('ScenarioStepsComponent.simpleScenarioSteps: ' + JSON.stringify(this.simpleScenarioSteps()));
+                    this.dataSource = new MatTableDataSource(this.simpleScenarioSteps().steps || []);
                     // console.log('ScenarioStepsComponent.simpleScenarioSteps: #3');
                 },
                 complete: () => {
@@ -97,8 +97,8 @@ export class ScenarioStepsComponent extends UIStateComponent implements OnInit {
             return;
         }
 
-        let prevUuid = this.simpleScenarioSteps.steps[event.previousIndex].uuid;
-        let currUuid = this.simpleScenarioSteps.steps[event.currentIndex].uuid;
+        let prevUuid = this.simpleScenarioSteps().steps[event.previousIndex].uuid;
+        let currUuid = this.simpleScenarioSteps().steps[event.currentIndex].uuid;
         this.scenarioService
             .scenarioStepRearrangeTable(this.scenarioId.toString(), prevUuid, currUuid)
             .subscribe(v => this.updateTable());

@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { FormControl, FormGroup, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AuthenticationService } from '@app/services/authentication/authentication.service';
 import {environment} from '@src/environments/environment';
@@ -23,8 +23,8 @@ import { MatButton } from '@angular/material/button';
 })
 export class LoginComponent {
       private authenticationService = inject(AuthenticationService);
-    username: string = '';
-    password: string = '';
+    username = signal<string>('');
+    password = signal<string>('');
 
     form: FormGroup = new FormGroup({
         username: new FormControl('', [Validators.required, Validators.minLength(1)]),

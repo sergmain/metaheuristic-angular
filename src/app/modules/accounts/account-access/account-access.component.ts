@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, signal } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AccountsService, Authority, SimpleAccount } from '@app/services/accounts';
 import { Role } from '@app/services/authentication';
@@ -29,28 +29,28 @@ export class AccountAccessComponent implements OnInit {
       private router = inject(Router);
       private route = inject(ActivatedRoute);
       private accountsService = inject(AccountsService);
-    response: AccountResult;
+    response = signal<AccountResult | undefined>(undefined);
 
-    isManager: boolean = false;
-    isOperator: boolean = false;
-    isBilling: boolean = false;
-    isData: boolean = false;
-    isAdmin: boolean = false;
-    isServerRestAccess: boolean = false;
+    isManager = signal<boolean>(false);
+    isOperator = signal<boolean>(false);
+    isBilling = signal<boolean>(false);
+    isData = signal<boolean>(false);
+    isAdmin = signal<boolean>(false);
+    isServerRestAccess = signal<boolean>(false);
 
     ngOnInit(): void {
         this.accountsService
             .getAccount(this.route.snapshot.paramMap.get('accountId'))
             .subscribe((response) => {
-                this.response = response;
+                this.response.set(response);
                 const roles: Role[] = [];
                 response.account.authorities.forEach((authority: Authority) => roles.push(authority.authority));
-                this.isManager = roles.includes(Role.ROLE_MANAGER);
-                this.isOperator = roles.includes(Role.ROLE_OPERATOR);
-                this.isBilling = roles.includes(Role.ROLE_BILLING);
-                this.isData = roles.includes(Role.ROLE_DATA);
-                this.isAdmin = roles.includes(Role.ROLE_ADMIN);
-                this.isServerRestAccess = roles.includes(Role.ROLE_SERVER_REST_ACCESS);
+                this.isManager.set(roles.includes(Role.ROLE_MANAGER));
+                this.isOperator.set(roles.includes(Role.ROLE_OPERATOR));
+                this.isBilling.set(roles.includes(Role.ROLE_BILLING));
+                this.isData.set(roles.includes(Role.ROLE_DATA));
+                this.isAdmin.set(roles.includes(Role.ROLE_ADMIN));
+                this.isServerRestAccess.set(roles.includes(Role.ROLE_SERVER_REST_ACCESS));
             });
     }
 
@@ -58,12 +58,12 @@ export class AccountAccessComponent implements OnInit {
         const roles: string[] = [];
         const accountId: string = this.route.snapshot.paramMap.get('accountId');
 
-        if (this.isAdmin) { roles.push(Role.ROLE_ADMIN); }
-        if (this.isBilling) { roles.push(Role.ROLE_BILLING); }
-        if (this.isData) { roles.push(Role.ROLE_DATA); }
-        if (this.isManager) { roles.push(Role.ROLE_MANAGER); }
-        if (this.isOperator) { roles.push(Role.ROLE_OPERATOR); }
-        if (this.isServerRestAccess) { roles.push(Role.ROLE_SERVER_REST_ACCESS); }
+        if (this.isAdmin()) { roles.push(Role.ROLE_ADMIN); }
+        if (this.isBilling()) { roles.push(Role.ROLE_BILLING); }
+        if (this.isData()) { roles.push(Role.ROLE_DATA); }
+        if (this.isManager()) { roles.push(Role.ROLE_MANAGER); }
+        if (this.isOperator()) { roles.push(Role.ROLE_OPERATOR); }
+        if (this.isServerRestAccess()) { roles.push(Role.ROLE_SERVER_REST_ACCESS); }
 
         this.accountsService
             .roleFormCommit(accountId, roles.join(','))

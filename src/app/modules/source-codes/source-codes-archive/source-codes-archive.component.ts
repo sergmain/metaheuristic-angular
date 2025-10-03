@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, inject } from '@angular/core';
+import { Component, OnInit, ViewChild, inject, signal } from '@angular/core';
 import { MatButton } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow } from '@angular/material/table';
@@ -33,10 +33,10 @@ import { CtTablePaginationComponent } from '../../ct/ct-table-pagination/ct-tabl
 export class SourceCodesArchiveComponent extends UIStateComponent implements OnInit {
       public readonly dialog = inject(MatDialog);
       private sourceCodesService = inject(SourceCodesService);
-    sourceCodesResult: SourceCodesResult;
+    sourceCodesResult = signal<SourceCodesResult | undefined>(undefined);
     dataSource = new MatTableDataSource<SourceCode>([]);
     columnsToDisplay = ['id', 'uid', 'createdOn', 'valid', 'locked', 'bts'];
-    deletedRows: SourceCode[] = [];
+    deletedRows = signal<SourceCode[]>([]);
 
     constructor(public readonly authenticationService: AuthenticationService = inject(AuthenticationService)) {
         super(authenticationService);
@@ -52,7 +52,7 @@ export class SourceCodesArchiveComponent extends UIStateComponent implements OnI
             .sourceCodeArchivedOnly(page.toString())
             .subscribe({
                 next: sourceCodesResult => {
-                    this.sourceCodesResult = sourceCodesResult;
+                    this.sourceCodesResult.set(sourceCodesResult);
                     this.dataSource = new MatTableDataSource(sourceCodesResult.items.content || []);
                 },
                 complete: () => {
@@ -68,18 +68,18 @@ export class SourceCodesArchiveComponent extends UIStateComponent implements OnI
         resolveTitle: 'Delete'
     })
     delete(sourceCode: SourceCode): void {
-        this.deletedRows.push(sourceCode);
+        this.deletedRows().push(sourceCode);
         this.sourceCodesService
             .deleteCommit(sourceCode.id.toString())
             .subscribe();
     }
 
     nextPage(): void {
-        this.updateTable(this.sourceCodesResult.items.number + 1);
+        this.updateTable(this.sourceCodesResult().items.number + 1);
     }
 
     prevPage(): void {
-        this.updateTable(this.sourceCodesResult.items.number - 1);
+        this.updateTable(this.sourceCodesResult().items.number - 1);
     }
 
 }

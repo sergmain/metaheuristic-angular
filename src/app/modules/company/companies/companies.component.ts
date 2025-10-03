@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, signal } from '@angular/core';
 import { MatTableDataSource, MatTable, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell } from '@angular/material/table';
 import { UIStateComponent } from '@app/models/UIStateComponent';
 import { AuthenticationService } from '@app/services/authentication';
@@ -30,9 +30,9 @@ import { RouterLink } from '@angular/router';
 export class CompaniesComponent extends UIStateComponent implements OnInit {
       private companyService = inject(CompanyService);
       public dispatcherAssetModeService = inject(DispatcherAssetModeService);
-    columnsToDisplay: string[] = ['uniqueId', 'name', 'bts'];
-    simpleCompaniesResult: SimpleCompaniesResult;
-    dataSource: MatTableDataSource<SimpleCompany> = new MatTableDataSource([]);
+    columnsToDisplay = signal<string[]>(['uniqueId', 'name', 'bts']);
+    simpleCompaniesResult = signal<SimpleCompaniesResult | undefined>(undefined);
+    dataSource = signal<MatTableDataSource<SimpleCompany>>(new MatTableDataSource([]));
 
     constructor(public readonly authenticationService: AuthenticationService = inject(AuthenticationService)) {
         super(authenticationService);
@@ -48,8 +48,8 @@ export class CompaniesComponent extends UIStateComponent implements OnInit {
             .companies(pageNumber.toString())
             .subscribe({
                 next: simpleCompaniesResult => {
-                    this.simpleCompaniesResult = simpleCompaniesResult;
-                    this.dataSource = new MatTableDataSource(this.simpleCompaniesResult.companies.content);
+                    this.simpleCompaniesResult.set(simpleCompaniesResult);
+                    this.dataSource.set(new MatTableDataSource(this.simpleCompaniesResult().companies.content));
                 },
                 complete: () => {
                     this.setIsLoadingEnd();
@@ -59,10 +59,10 @@ export class CompaniesComponent extends UIStateComponent implements OnInit {
 
 
     prevPage(): void {
-        this.updateTable((this.simpleCompaniesResult.companies.number - 1));
+        this.updateTable((this.simpleCompaniesResult().companies.number - 1));
     }
 
     nextPage(): void {
-        this.updateTable((this.simpleCompaniesResult.companies.number + 1));
+        this.updateTable((this.simpleCompaniesResult().companies.number + 1));
     }
 }

@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit, viewChild, inject } from '@angular/core';
+import { Component, OnDestroy, OnInit, viewChild, inject, signal } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import {LoadStates} from '@app/enums/LoadStates';
 import { TranslateService, TranslateModule } from '@ngx-translate/core';
@@ -44,12 +44,12 @@ export class ScenarioStepAddComponent extends UIStateComponent implements OnInit
     readonly states = LoadStates;
 
     currentStates: Set<LoadStates> = new Set();
-    response: ScenarioUidsForAccount;
+    response = signal<ScenarioUidsForAccount | undefined>(undefined);
     scenarioGroupId: string;
     scenarioId: string;
 
-    apiUid: ApiUid;
-    listOfApis: ApiUid[] = [];
+    apiUid = signal<ApiUid | undefined>(undefined);
+    listOfApis = signal<ApiUid[]>([]);
     form = new FormGroup({
         name: new FormControl('', [Validators.required, Validators.minLength(5)]),
         prompt: new FormControl('', [Validators.required, Validators.minLength(5)]),
@@ -81,8 +81,8 @@ export class ScenarioStepAddComponent extends UIStateComponent implements OnInit
         this.scenarioService
             .scenarioStepAdd()
             .subscribe((response) => {
-                this.response = response;
-                this.listOfApis = this.response.apis;
+                this.response.set(response);
+                this.listOfApis.set(this.response().apis);
                 this.isLoading = false;
             });
     }
@@ -98,7 +98,7 @@ export class ScenarioStepAddComponent extends UIStateComponent implements OnInit
                 null,
                 this.form.value.name,
                 this.form.value.prompt,
-                this.apiUid.id.toString(),
+                this.apiUid().id.toString(),
                 'some code',
                 null,
                 null,

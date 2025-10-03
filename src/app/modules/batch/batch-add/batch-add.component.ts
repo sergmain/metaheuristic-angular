@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, viewChild, inject } from '@angular/core';
+import { Component, OnDestroy, OnInit, viewChild, inject, signal } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LoadStates } from '@app/enums/LoadStates';
 import { BatchService } from '@app/services/batch/batch.service';
@@ -45,12 +45,12 @@ export class BatchAddComponent extends UIStateComponent implements OnInit, OnDes
       private translate = inject(TranslateService);
       private settingsService = inject(SettingsService);
     currentStates: Set<LoadStates> = new Set();
-    response: SourceCodeUidsForCompany;
-    uploadResponse: OperationStatusRest;
+    response = signal<SourceCodeUidsForCompany | undefined>(undefined);
+    uploadResponse = signal<OperationStatusRest | undefined>(undefined);
 
-    sourceCode: SourceCode;
-    file: File;
-    listOfSourceCodes: SourceCodeUid[] = [];
+    sourceCode = signal<SourceCode | undefined>(undefined);
+    file = signal<File | undefined>(undefined);
+    listOfSourceCodes = signal<SourceCodeUid[]>([]);
     fileUpload = viewChild<CtFileUploadComponent>('fileUpload');
 
     constructor(public readonly authenticationService: AuthenticationService = inject(AuthenticationService)) {
@@ -75,8 +75,8 @@ export class BatchAddComponent extends UIStateComponent implements OnInit, OnDes
         this.batchService
             .batchAdd()
             .subscribe((response) => {
-                this.response = response;
-                this.listOfSourceCodes = this.response.items;
+                this.response.set(response);
+                this.listOfSourceCodes.set(this.response().items);
             });
     }
 
@@ -86,16 +86,16 @@ export class BatchAddComponent extends UIStateComponent implements OnInit, OnDes
 
     upload(): void {
         this.batchService
-            .uploadFile(this.sourceCode.id.toString(), this.fileUpload().fileInput.nativeElement.files[0])
+            .uploadFile(this.sourceCode().id.toString(), this.fileUpload().fileInput.nativeElement.files[0])
             .subscribe((response) => {
                 if (response.status === OperationStatus.OK) {
                     this.back();
                 }
-                this.uploadResponse = response;
+                this.uploadResponse.set(response);
             });
     }
 
     fileUploadChanged(): void {
-        this.file = this.fileUpload().fileInput.nativeElement.files[0] || false;
+        this.file.set(this.fileUpload().fileInput.nativeElement.files[0] || false);
     }
 }

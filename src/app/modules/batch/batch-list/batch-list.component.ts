@@ -1,5 +1,5 @@
 import { HttpResponse } from '@angular/common/http';
-import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import { Component, OnDestroy, OnInit, inject, signal } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow } from '@angular/material/table';
 import { marker } from '@biesbjerg/ngx-translate-extract-marker';
@@ -43,21 +43,21 @@ export class BatchListComponent extends UIStateComponent implements OnInit, OnDe
       public readonly translate = inject(TranslateService);
       private batchExexStatusService = inject(BatchExecStatusService);
       private settingsService = inject(SettingsService);
-    batchesResult: BatchesResult;
-    isFiltered: boolean;
-    dataSource: MatTableDataSource<BatchData.BatchExecInfo> = new MatTableDataSource([]);
-    columnsToDisplay: string[] = ['id', 'createdOn', 'Owner', 'isBatchConsistent', 'sourceCode', 'execState', 'bts'];
+    batchesResult = signal<BatchesResult | undefined>(undefined);
+    isFiltered = signal<boolean | undefined>(undefined);
+    dataSource = signal<MatTableDataSource<BatchData.BatchExecInfo>>(new MatTableDataSource([]));
+    columnsToDisplay = signal<string[]>(['id', 'createdOn', 'Owner', 'isBatchConsistent', 'sourceCode', 'execState', 'bts']);
 
     constructor(public readonly authenticationService: AuthenticationService = inject(AuthenticationService)) {
         super(authenticationService);
     }
 
     ngOnInit(): void {
-        this.isFiltered = this.settingsService.events.value.settings.batchFilter;
-        this.updateTable('0', this.isFiltered);
+        this.isFiltered.set(this.settingsService.events.value.settings.batchFilter);
+        this.updateTable('0', this.isFiltered());
         this.subscribeSubscription(this.batchExexStatusService.getStatuses.subscribe({
             next: statuses => {
-                this.batchExexStatusService.updateBatchesResultByStatuses(this.batchesResult, statuses);
+                this.batchExexStatusService.updateBatchesResultByStatuses(this.batchesResult(), statuses);
             }
         }));
     }
@@ -72,20 +72,20 @@ export class BatchListComponent extends UIStateComponent implements OnInit, OnDe
             .batches(pageNumbder, isFiltered)
             .subscribe({
                 next: batchesResult => {
-                    this.batchesResult = batchesResult;
-                    this.columnsToDisplay = this.authenticationService.isRoleOperator() ?
+                    this.batchesResult.set(batchesResult);
+                    this.columnsToDisplay.set(this.authenticationService.isRoleOperator() ?
                         ['id', 'createdOn', 'Owner', 'sourceCode', 'execState', 'bts'] :
-                        ['id', 'createdOn', 'Owner', 'isBatchConsistent', 'sourceCode', 'execState', 'bts'];
-                    this.dataSource = new MatTableDataSource(batchesResult.batches.content || []);
+                        ['id', 'createdOn', 'Owner', 'isBatchConsistent', 'sourceCode', 'execState', 'bts']);
+                    this.dataSource.set(new MatTableDataSource(batchesResult.batches.content || []));
                     this.isLoading = false;
                 }
             });
     }
 
     toggleFilter(): void {
-        this.isFiltered = !this.isFiltered;
-        this.settingsService.toggleBatchFilter(this.isFiltered);
-        this.updateTable('0', this.isFiltered);
+        this.isFiltered.set(!this.isFiltered());
+        this.settingsService.toggleBatchFilter(this.isFiltered());
+        this.updateTable('0', this.isFiltered());
     }
 
     isDeletedRow(b: BatchData.BatchExecInfo): boolean {
@@ -108,7 +108,7 @@ export class BatchListComponent extends UIStateComponent implements OnInit, OnDe
             .processResourceDeleteCommit(batchData.batch.id.toString())
             .subscribe({
                 next: () => {
-                    this.updateTable((this.batchesResult.batches.number).toString(), this.isFiltered);
+                    this.updateTable((this.batchesResult().batches.number).toString(), this.isFiltered());
                 }
             });
     }
@@ -156,10 +156,10 @@ export class BatchListComponent extends UIStateComponent implements OnInit, OnDe
     }
 
     nextPage(): void {
-        this.updateTable((this.batchesResult.batches.number + 1).toString(), this.isFiltered);
+        this.updateTable((this.batchesResult().batches.number + 1).toString(), this.isFiltered());
     }
 
     prevPage(): void {
-        this.updateTable((this.batchesResult.batches.number - 1).toString(), this.isFiltered);
+        this.updateTable((this.batchesResult().batches.number - 1).toString(), this.isFiltered());
     }
 }
