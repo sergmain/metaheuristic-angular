@@ -27,11 +27,23 @@ export class CardFormUploadSourceCodeComponent {
     abort = output<void>();
 
     upload(): void {
+        const fileInput = this.file()?.fileInput(); // Get the fileInput signal value
+        const file = fileInput?.nativeElement?.files?.[0];
+
+        if (file) {
+            this.sourceCodesService
+                .uploadSourceCode(file)
+                .subscribe(response => {
+                    this.responseChange.emit(response);
+                });
+        }
+/*
         this.sourceCodesService
             .uploadSourceCode(this.file().fileInput.nativeElement.files[0])
             .subscribe(response => {
                 this.responseChange.emit(response);
             });
+*/
     }
 
     cancel(): void {
@@ -39,10 +51,19 @@ export class CardFormUploadSourceCodeComponent {
     }
 
     changed(value: string): void {
+        const filesLength = this.file()?.filesLength(); // Use the computed signal
+        if (this.button()) {
+            this.button().disabled = !filesLength; // Set disabled property on MatButton
+        }
+    }
+
+    /*
+    changed(value: string): void {
         if ((this.file().fileInput.nativeElement as HTMLInputElement).files.length) {
             this.button().disabled = false;
         } else {
             this.button().disabled = true;
         }
     }
+*/
 }

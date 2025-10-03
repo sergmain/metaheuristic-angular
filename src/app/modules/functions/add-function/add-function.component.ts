@@ -25,7 +25,7 @@ import { MatFormField, MatLabel, MatInput } from '@angular/material/input';
     selector: 'add-function',
     templateUrl: './add-function.component.html',
     styleUrls: ['./add-function.component.scss'],
-    imports: [CtColsComponent, CtColComponent, CtSectionComponent, CtSectionHeaderComponent, CtSectionHeaderRowComponent, CtHeadingComponent, CtSectionBodyComponent, CtSectionBodyRowComponent, CtFileUploadComponent_1, CtSectionFooterComponent, CtSectionFooterRowComponent, MatButton, CtRestStatusComponent, FormsModule, ReactiveFormsModule, MatFormField, MatLabel, MatInput]
+    imports: [CtFileUploadComponent, CtColsComponent, CtColComponent, CtSectionComponent, CtSectionHeaderComponent, CtSectionHeaderRowComponent, CtHeadingComponent, CtSectionBodyComponent, CtSectionBodyRowComponent, CtFileUploadComponent_1, CtSectionFooterComponent, CtSectionFooterRowComponent, MatButton, CtRestStatusComponent, FormsModule, ReactiveFormsModule, MatFormField, MatLabel, MatInput]
 })
 
 export class AddFunctionComponent {
@@ -48,25 +48,46 @@ export class AddFunctionComponent {
     }
 
     upload(): void {
-        this.functionsService
-            .uploadBundle(this.fileUpload().fileInput.nativeElement.files[0])
-            .subscribe(
-                (response) => {
+        const fileInput = this.fileUpload()?.fileInput();
+        const file = fileInput?.nativeElement?.files?.[0];
+        if (file) {
+            this.functionsService
+                .uploadBundle(file)
+                .subscribe(response => {
                     this.response.set(response);
                     if (!response.errorMessages && !response.infoMessages) {
                         this.cancel();
                     }
-                }
-            );
+                });
+        }
+    }
+
+    changed(value: string): void {
+        console.log('Changed event:', value); // Debug
+        const filesLength = this.fileUpload()?.filesLength();
+        if (this.button()) {
+            this.button().disabled = !filesLength;
+        }
     }
 
     uploadFromGit(): void {
-        this.button().disabled = true;
+        if (this.button()) {
+            this.button().disabled = true;
+        }
         this.functionsService
             .uploadFromGit(this.form.value.repo, this.form.value.branch, this.form.value.commit, this.form.value.path)
-            .subscribe(sourceCodeResult => {
-                this.button().disabled = false;
-                // this.responseChange.emit(sourceCodeResult);
+            .subscribe({
+                next: sourceCodeResult => {
+                    if (this.button()) {
+                        this.button().disabled = false;
+                    }
+                    // this.responseChange.emit(sourceCodeResult); // Uncomment if needed
+                },
+                error: () => {
+                    if (this.button()) {
+                        this.button().disabled = false;
+                    }
+                },
             });
     }
 }

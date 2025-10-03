@@ -57,8 +57,13 @@ export class CompanyBatchUploadComponent implements OnInit {
             });
     }
 
+/*
     fileUploadChanged(): void {
         this.file.set(this.fileUpload().fileInput.nativeElement.files[0] || false);
+    }
+*/
+    fileUploadChanged(): void {
+        this.file.set(this.fileUpload()?.fileInput()?.nativeElement.files[0] || undefined);
     }
 
     upload(): void {

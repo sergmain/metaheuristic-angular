@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, OnChanges, input, output, viewChild, signal } from '@angular/core';
+import {Component, ElementRef, OnInit, OnChanges, input, output, viewChild, signal, computed} from '@angular/core';
 import { marker } from '@biesbjerg/ngx-translate-extract-marker';
 import { TranslateService } from '@ngx-translate/core';
 
@@ -23,6 +23,9 @@ export class CtFileUploadComponent implements OnInit, OnChanges {
     value = signal<string>('');
     buttonTitleString = signal<string | undefined>(undefined);
     accept = signal<string | undefined>(undefined);
+
+    // Expose filesLength as a computed signal
+    filesLength = computed(() => this.fileInput()?.nativeElement?.files?.length || 0);
 
     ngOnInit(): void {
         this.buttonTitleString.set(this.buttonTitle() || 'Select File');

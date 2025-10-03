@@ -32,6 +32,7 @@ import { MatButton } from '@angular/material/button';
 import { CtRestStatusComponent } from '../../ct/ct-rest-status/ct-rest-status.component';
 
 @Component({
+    standalone: true,
     selector: 'batch-add',
     templateUrl: './batch-add.component.html',
     styleUrls: ['./batch-add.component.scss'],
@@ -85,6 +86,19 @@ export class BatchAddComponent extends UIStateComponent implements OnInit, OnDes
     }
 
     upload(): void {
+        const file = this.fileUpload()?.fileInput()?.nativeElement.files[0];
+        if (!this.sourceCode() || !file) {
+            return; // Prevent upload if no source code or file
+        }
+        this.batchService
+            .uploadFile(this.sourceCode().id.toString(), file)
+            .subscribe((response) => {
+                if (response.status === OperationStatus.OK) {
+                    this.back();
+                }
+                this.uploadResponse.set(response);
+            });
+    /*
         this.batchService
             .uploadFile(this.sourceCode().id.toString(), this.fileUpload().fileInput.nativeElement.files[0])
             .subscribe((response) => {
@@ -93,9 +107,15 @@ export class BatchAddComponent extends UIStateComponent implements OnInit, OnDes
                 }
                 this.uploadResponse.set(response);
             });
+*/
     }
 
     fileUploadChanged(): void {
+        this.file.set(this.fileUpload()?.fileInput()?.nativeElement.files[0] || undefined);
+    }
+/*
+    fileUploadChanged(): void {
         this.file.set(this.fileUpload().fileInput.nativeElement.files[0] || false);
     }
+*/
 }

@@ -36,8 +36,13 @@
                 <div class="flex justify-content-flex-end gap-8px">
                   <button mat-stroked-button="mat-stroked-button" (click)="back()">
                   {{ 'batch-add.Cancel' | translate }}</button>
+
+                  <button mat-flat-button="mat-flat-button" color="primary" [disabled]="!sourceCode() || fileUpload.filesLength() === 0"
+                  (click)="upload()"> {{ 'batch-add.Upload-File-button' | translate }}</button>
+<!--
                   <button mat-flat-button="mat-flat-button" color="primary" [disabled]="!sourceCode() || !file()"
                   (click)="upload()"> {{ 'batch-add.Upload-File-button' | translate }}</button>
+-->
                 </div>
               </ct-section-footer-row>
             </ct-section-footer>

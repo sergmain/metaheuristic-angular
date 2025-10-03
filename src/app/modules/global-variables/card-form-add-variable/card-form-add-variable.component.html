@@ -51,7 +51,11 @@ TODO p0 2023-05-20 implement
             <div class="flex justify-content-flex-end gap-8px">
                 <button mat-stroked-button (click)="cancel()">Cancel</button>
                 <button mat-flat-button="mat-flat-button" (click)="upload()" color="primary"
+                    [disabled]="fileUpload.filesLength()===0">Create</button>
+<!--
+                <button mat-flat-button="mat-flat-button" (click)="upload()" color="primary"
                     [disabled]="checkDisable()">Create</button>
+-->
             </div>
         </ct-section-footer-row>
     </ct-section-footer>

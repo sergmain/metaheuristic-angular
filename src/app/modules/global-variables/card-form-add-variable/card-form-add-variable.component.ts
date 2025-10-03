@@ -36,11 +36,12 @@ export class CardFormAddVariableComponent {
     });
 
     upload(): void {
+        const file = this.fileUpload()?.fileInput()?.nativeElement.files[0];
+        if (!this.form.value.poolCode || !file) {
+            return; // Prevent upload if no this.form.value.poolCode or file
+        }
         this.globalVariablesService
-            .createResourceFromFile(
-                this.form.value.poolCode,
-                this.fileUpload().fileInput.nativeElement.files[0]
-            )
+            .createResourceFromFile(this.form.value.poolCode, file)
             .subscribe((response: OperationStatusRest) => {
                 this.afterResponse.emit(response);
             });
@@ -51,9 +52,16 @@ export class CardFormAddVariableComponent {
     }
 
     checkDisable(): boolean {
+        const file = this.fileUpload()?.fileInput()?.nativeElement.files[0];
+        if (!this.form.valid || !file) {
+            return; // Prevent upload if no this.form.value.poolCode or file
+        }
+        return file.filesLength()===0;
+/*
         if (this.form.valid && this.fileUpload().fileInput.nativeElement.files.length) {
             return false;
         }
         return true;
+*/
     }
 }

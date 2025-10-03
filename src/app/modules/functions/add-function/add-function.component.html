@@ -8,7 +8,7 @@
       </ct-section-header>
       <ct-section-body>
         <ct-section-body-row>
-          <ct-file-upload #fileUpload></ct-file-upload>
+          <ct-file-upload #fileUpload (changed)="changed($event)" acceptTypes=".zip"></ct-file-upload>
         </ct-section-body-row>
       </ct-section-body>
       <ct-section-footer>
@@ -16,7 +16,7 @@
           <div class="flex justify-content-flex-end gap-8px">
             <button mat-stroked-button="mat-stroked-button" (click)="cancel()">Cancel </button>
             <button mat-flat-button="mat-flat-button" (click)="upload()" color="primary"
-              [disabled]="!fileUpload()?.fileInput?.nativeElement?.files?.length">Upload
+              [disabled]="!fileUpload.filesLength()">Upload
             bundle</button>
           </div>
         </ct-section-footer-row>

@@ -15,9 +15,11 @@
             <div class="flex justify-content-flex-end gap-8px">
                 <button mat-stroked-button (click)="cancel()">Cancel</button>
                 <button mat-flat-button="mat-flat-button"
-    [disabled]="!file()?.fileInput?.nativeElement?.files?.length" color="primary"
-    (click)="upload()">Upload</button>
-                </div>
+                        [disabled]="!file()?.filesLength()"
+                        color="primary"
+                        (click)="upload()">Upload</button>
+            </div>
+<!--            [disabled]="!file()?.fileInput?.nativeElement?.files?.length"-->
         </ct-section-footer-row>
     </ct-section-footer>
 </ct-section>
