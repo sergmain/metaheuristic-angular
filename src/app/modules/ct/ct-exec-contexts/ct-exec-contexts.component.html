@@ -3,30 +3,30 @@
     <ct-section-header-row>
       <ct-heading>Exec Contexts in Source Code #{{ sourceCodeId() }}</ct-heading>
     </ct-section-header-row>
-    @if (response) {
+    @if (response()) {
       <ct-section-header-row>
         <table>
           <tr>
             <td>UID: </td>
-            <td>{{response.sourceCodeUid}}</td>
+            <td>{{response().sourceCodeUid}}</td>
           </tr>
           <tr>
             <td>Is valid:</td>
-            <td>{{response.sourceCodeValid}}</td>
+            <td>{{response().sourceCodeValid}}</td>
           </tr>
           <tr>
             <td>Type: </td>
-            <td>{{response.sourceCodeType}}</td>
+            <td>{{response().sourceCodeType}}</td>
           </tr>
         </table>
       </ct-section-header-row>
     }
   </ct-section-header>
   <ct-section-body>
-    @if (response) {
+    @if (response()) {
       <ct-section-body-row>
         <ct-table>
-          <table class="mat-table" mat-table="mat-table" [dataSource]="execContextTableSource">
+          <table class="mat-table" mat-table="mat-table" [dataSource]="execContextTableSource()">
             <ng-container matColumnDef="id">
               <th mat-header-cell="mat-header-cell" *matHeaderCellDef>Id</th>
               <td mat-cell="mat-cell" *matCellDef="let el">{{el.id}}</td>
@@ -58,7 +58,7 @@
               <th mat-header-cell="mat-header-cell" *matHeaderCellDef></th>
               <td mat-cell="mat-cell" *matCellDef="let el">
                 <div class="flex justify-content-flex-end gap-9px">
-                  @if ((el.execState == execState.NONE) && (el.valid) && (response.sourceCodeValid)) {
+                  @if ((el.execState == execState.NONE) && (el.valid) && (response().sourceCodeValid)) {
                     <button mat-flat-button="mat-flat-button" size="forTableRow" color="primary"
                     (click)="produce(el,$event)">Produce</button>
                   }
@@ -103,7 +103,7 @@
             <mat-icon>arrow_forward_ios</mat-icon>
           </button>
         </div>
-        <a mat-flat-button="mat-flat-button" color="primary" [disabled]="!response"
+        <a mat-flat-button="mat-flat-button" color="primary" [disabled]="!response()"
           [routerLink]="['/dispatcher','source-codes',sourceCodeId(),'exec-context','add']">Add Exec
         Context</a>
       </div>
@@ -121,6 +121,6 @@
 
 <ng-template #stateOfTasksTemplate>
   <ng-container>
-    <ct-state-of-tasks [sourceCodeId]="sourceCodeId()" [execContextId]="execContextId"></ct-state-of-tasks>
+    <ct-state-of-tasks [sourceCodeId]="sourceCodeId()" [execContextId]="execContextId()"></ct-state-of-tasks>
   </ng-container>
 </ng-template>

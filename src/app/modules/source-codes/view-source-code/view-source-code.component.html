@@ -1,16 +1,16 @@
-@if (sourceCodeResponse) {
+@if (sourceCodeResponse()) {
   <ct-cols align-items="flex-start">
     <ct-col size="8">
       <ct-section>
         <ct-section-header>
           <ct-section-header-row>
-            <ct-heading>Edit SourceCode {{sourceCode ? sourceCode.id : ''}}</ct-heading>
+            <ct-heading>Edit SourceCode {{sourceCode() ? sourceCode().id : ''}}</ct-heading>
           </ct-section-header-row>
         </ct-section-header>
         <ct-section-body>
           <ct-section-body-row>
             <ct-section-content>
-              <ct-pre>{{sourceCode.source}}</ct-pre>
+              <ct-pre>{{sourceCode().source}}</ct-pre>
             </ct-section-content>
           </ct-section-body-row>
         </ct-section-body>
@@ -25,7 +25,7 @@
       </ct-section>
     </ct-col>
     <ct-col size="4">
-      <ct-rest-status class="uploadRestStatus" [content]="sourceCodeResponseForValidate"></ct-rest-status>
+      <ct-rest-status class="uploadRestStatus" [content]="sourceCodeResponseForValidate()"></ct-rest-status>
     </ct-col>
   </ct-cols>
 }

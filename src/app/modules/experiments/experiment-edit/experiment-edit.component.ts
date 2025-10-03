@@ -73,9 +73,9 @@ export class ExperimentEditComponent extends UIStateComponent implements OnInit 
         this.experimentsService
             .editFormCommit(this.simpleExperiment)
             .subscribe({
-                next: operationStatusRest => this.operationStatusRest.set(operationStatusRest,
+                next: operationStatusRest => this.operationStatusRest.set(operationStatusRest),
                 complete: () => this.setIsLoadingEnd()
-            }));
+            });
     }
 
     back(): void {

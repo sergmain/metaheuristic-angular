@@ -3,14 +3,14 @@
   <ct-section-header>
     <ct-section-header-row>
       <ct-heading>
-        <div>{{ 'batch-status.Status of execution of batch _batchId_' | translate:{batchId: batchId} }} </div>
+        <div>{{ 'batch-status.Status of execution of batch _batchId_' | translate:{batchId: batchId()} }} </div>
       </ct-heading>
     </ct-section-header-row>
   </ct-section-header>
   <ct-section-body>
-    @if ([states.wait,states.show].includes(currentState)) {
+    @if ([states.wait,states.show].includes(currentState())) {
       <ct-section-body-row>
-        <ct-pre>{{response.console}}</ct-pre>
+        <ct-pre>{{response().console}}</ct-pre>
       </ct-section-body-row>
     }
   </ct-section-body>

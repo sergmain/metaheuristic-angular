@@ -23,9 +23,9 @@
       </ct-section-footer>
     </ct-section>
   </ct-col>
-  @if (response) {
+  @if (response()) {
     <ct-col size="6">
-      <ct-rest-status [content]="response"></ct-rest-status>
+      <ct-rest-status [content]="response()"></ct-rest-status>
     </ct-col>
   }
 </ct-cols>

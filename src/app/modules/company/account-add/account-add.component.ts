@@ -85,10 +85,12 @@ export class AccountAddComponent implements OnInit {
                 publicName: this.form.value.publicName
             }, this.companyUniqueId)
             .subscribe({
-                next: (operationStatusRest) => this.operationStatusRest.set(operationStatusRest,
+                next: (operationStatusRest) => {
+                    this.operationStatusRest.set(operationStatusRest);
+                },
                 complete: () => {
                     if (this.operationStatusRest().status === OperationStatus.OK) {
-                        this.isDone.set(true));
+                        this.isDone.set(true);
                         this.form.reset();
                     }
                     this.isLoading.set(false);

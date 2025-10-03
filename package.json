@@ -81,7 +81,9 @@
     "npm info ngxtension": "npm info ngxtension",
     "npm install -g ngxtension": "npm install -g ngxtension",
     "npm install ngxtension --save-dev": "npm install ngxtension --save-dev",
-    "npm install @ngxtension/schematics --save-dev": "npm install @ngxtension/schematics --save-dev"
+    "npm install @ngxtension/schematics --save-dev": "npm install @ngxtension/schematics --save-dev",
+    "npm install typescript@latest": "npm install typescript@latest",
+    "npm install rxjs@latest": "npm install rxjs@latest"
   },
   "engines": {
     "node": ">=18.18.2",
@@ -110,8 +112,9 @@
     "material-icons": "^1.13.12",
     "ngx-toastr": "^19.1.0",
     "normalize.css": "8.0.1",
-    "rxjs": "7.8.1",
+    "rxjs": "^7.8.2",
     "tslib": "^2.6.2",
+    "typescript": "^5.9.3",
     "yaml": "^2.8.1",
     "zone.js": "^0.15.1"
   },

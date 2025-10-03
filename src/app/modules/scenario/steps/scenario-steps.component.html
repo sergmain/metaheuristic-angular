@@ -1,4 +1,4 @@
-@if (simpleScenarioSteps) {
+@if (simpleScenarioSteps()) {
   <ct-section>
     <ct-section-header>
       <ct-section-header-row>
@@ -43,8 +43,8 @@
                 </div>
               </td>
             </ng-container>
-            <tr mat-header-row *matHeaderRowDef="columnsToDisplay"> </tr>
-            <tr mat-row *matRowDef="let row; columns: columnsToDisplay;" cdkDrag > </tr>
+            <tr mat-header-row *matHeaderRowDef="columnsToDisplay()"> </tr>
+            <tr mat-row *matRowDef="let row; columns: columnsToDisplay();" cdkDrag > </tr>
           </table>
         </ct-table>
       </ct-section-body-row>

@@ -3,7 +3,7 @@
     <ct-section>
       <ct-section-header>
         <ct-section-header-row>
-          <ct-heading>Edit params for API  {{auth ? auth.id : ''}} ({{auth ? auth.code : ''}})
+          <ct-heading>Edit params for API  {{auth() ? auth().id : ''}} ({{auth() ? auth().code : ''}})
           </ct-heading>
         </ct-section-header-row>
       </ct-section-header>

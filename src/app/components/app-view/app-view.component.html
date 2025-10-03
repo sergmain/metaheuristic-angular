@@ -30,7 +30,7 @@
           <ct-section class="flex-2">
             <ct-section-body>
               <ct-section-body-row>
-                <div [innerHtml]="htmlContent"></div>
+                <div [innerHtml]="htmlContent()"></div>
               </ct-section-body-row>
             </ct-section-body>
           </ct-section>
@@ -56,13 +56,13 @@
       <div class="flex justify-content-flex-start gap-9px align-items-center">
         <button
           class="mat-button mat-button--sidenav"
-          [class.active]="sidenav"
+          [class.active]="sidenav()"
           mat-button
-          [disabled]="sidenavButtonDisable"
+          [disabled]="sidenavButtonDisable()"
           (click)="toggleSideNav()">
           <mat-icon class="mat-icon">menu</mat-icon>
         </button>
-        <button class="mat-button mat-button--menu-item" mat-button routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" routerLink="">{{brandingTitle}}</button>
+        <button class="mat-button mat-button--menu-item" mat-button routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" routerLink="">{{brandingTitle()}}</button>
         @if (
           false && (isRole.Admin ||
           isRole.Data ||
@@ -95,7 +95,7 @@
       </div>
       <batch-change-notification></batch-change-notification>
       <div class="flex justify-content-flex-end align-items-center">
-        <theme-toggle [checked]="theme === 'dark'" (checkedChange)="toggleTheme($event)"></theme-toggle>
+        <theme-toggle [checked]="theme() === 'dark'" (checkedChange)="toggleTheme($event)"></theme-toggle>
         <mat-select #matSelectLanguage [(value)]="lang.current" (selectionChange)="toggleLanguage($event)">
           @for (language of lang.list; track language) {
             <mat-option [value]="language">{{language}}
@@ -117,10 +117,10 @@
       </div>
     } @else {
       <div class="flex justify-content-flex-start gap-9px align-items-center">
-        <button class="mat-button mat-button--menu-item" mat-button routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" routerLink="">{{brandingTitle}}</button>
+        <button class="mat-button mat-button--menu-item" mat-button routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" routerLink="">{{brandingTitle()}}</button>
       </div>
       <div class="flex justify-content-flex-end align-items-center">
-        <theme-toggle [checked]="theme === 'dark'" (checkedChange)="toggleTheme($event)"></theme-toggle>
+        <theme-toggle [checked]="theme() === 'dark'" (checkedChange)="toggleTheme($event)"></theme-toggle>
         <button mat-icon-button matTooltip="Close Metaheuristic"  (click)="shutdown()" >
           <mat-icon>power_settings_new</mat-icon>
         </button>
@@ -134,12 +134,12 @@
 
 <ng-template #anonymous_header_template>
   <div class="flex justify-content-flex-start gap-9px align-items-center">
-    <button class="mat-button mat-button--menu-item" mat-button routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" routerLink="">{{brandingTitle}}</button>
+    <button class="mat-button mat-button--menu-item" mat-button routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" routerLink="">{{brandingTitle()}}</button>
 
   </div>
 
   <div class="flex justify-content-flex-end align-items-center">
-    <theme-toggle [checked]="theme === 'dark'" (checkedChange)="toggleTheme($event)"></theme-toggle>
+    <theme-toggle [checked]="theme() === 'dark'" (checkedChange)="toggleTheme($event)"></theme-toggle>
 
     <button mat-icon-button matTooltip="Close Metaheuristic"  (click)="shutdown()" >
       <mat-icon>power_settings_new</mat-icon>

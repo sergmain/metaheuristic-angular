@@ -1,4 +1,4 @@
-@if (experimentsResult) {
+@if (experimentsResult()) {
   <ct-section>
     <ct-section-header>
       <ct-section-header-row>
@@ -8,7 +8,7 @@
     <ct-section-body>
       <ct-section-body-row>
         <ct-table [isWaiting]="isLoading">
-          <table class="mat-table" mat-table="mat-table" [dataSource]="dataSource">
+          <table class="mat-table" mat-table="mat-table" [dataSource]="dataSource()">
             <ng-container matColumnDef="id">
               <th mat-header-cell *matHeaderCellDef>Id</th>
               <td mat-cell *matCellDef="let el">{{el.experiment.id}} </td>
@@ -41,8 +41,8 @@
                 </ng-container>
               </td>
             </ng-container>
-            <tr mat-header-row="mat-header-row" *matHeaderRowDef="columnsToDisplay"></tr>
-            <tr mat-row="mat-row" *matRowDef="let row; columns: columnsToDisplay;"></tr>
+            <tr mat-header-row="mat-header-row" *matHeaderRowDef="columnsToDisplay()"></tr>
+            <tr mat-row="mat-row" *matRowDef="let row; columns: columnsToDisplay();"></tr>
           </table>
         </ct-table>
       </ct-section-body-row>
@@ -50,7 +50,7 @@
     <ct-section-footer>
       <ct-section-footer-row>
         <div class="flex justify-content-space-between">
-          <ct-table-pagination [pageableDefault]="experimentsResult.items" [globalDisable]="false"
+          <ct-table-pagination [pageableDefault]="experimentsResult().items" [globalDisable]="false"
           (next)="nextPage()" (prev)="prevPage()"></ct-table-pagination>
           <ng-container *ngTemplateOutlet="addButtonTemplate"></ng-container>
         </div>
@@ -65,15 +65,15 @@
 
 <ng-template #actionsTemplate let-element="element">
   <div class="flex justify-content-flex-end gap-9px">
-    @if (element.experiment.execState === ExecContextState.NONE) {
+    @if (element.experiment.execState === ExecContextState().NONE) {
       <button
       mat-flat-button color="primary" size="forTableRow" (click)="produce(element)">Produce</button>
     }
-    @if (element.experiment.execState === ExecContextState.PRODUCED || element.experiment.execState === ExecContextState.STOPPED) {
+    @if (element.experiment.execState === ExecContextState().PRODUCED || element.experiment.execState === ExecContextState().STOPPED) {
       <button
       mat-flat-button color="primary" size="forTableRow" (click)="start(element)">Start</button>
     }
-    @if (element.experiment.execState === ExecContextState.STARTED) {
+    @if (element.experiment.execState === ExecContextState().STARTED) {
       <button
       mat-flat-button color="primary" size="forTableRow" (click)="stop(element)">Stop</button>
     }

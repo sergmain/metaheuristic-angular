@@ -17,7 +17,7 @@
             <mat-icon>cancel</mat-icon>
           </button>
         } @else {
-          {{apiKeys.openaiKey}}
+          {{apiKeys().openaiKey}}
           <button mat-icon-button (click)="startEditingOpenaiKey()" matTooltip="Edit OPENAI_API_KEY" color="primary">
             <mat-icon>edit_document</mat-icon>
           </button>

@@ -3,7 +3,7 @@
     <ct-section>
       <ct-section-header>
         <ct-section-header-row>
-          <ct-heading>Edit Account {{account ? account.username : ''}} ({{account ? account.publicName : ''}})
+          <ct-heading>Edit Account {{account() ? account().username : ''}} ({{account() ? account().publicName : ''}})
           </ct-heading>
         </ct-section-header-row>
       </ct-section-header>
@@ -13,11 +13,11 @@
             <ct-section-content>
               <mat-form-field appearance="outline">
                 <mat-label>Public Name</mat-label>
-                <input matInput="matInput" [(ngModel)]="account.publicName" />
+                <input matInput="matInput" [(ngModel)]="account().publicName" />
               </mat-form-field>
             </ct-section-content>
             <ct-section-content>
-              <mat-checkbox [(ngModel)]="account.enabled">Is account enabled?</mat-checkbox>
+              <mat-checkbox [(ngModel)]="account().enabled">Is account() enabled?</mat-checkbox>
             </ct-section-content>
           </ct-section-body-row>
         </ct-section-body>

@@ -1,19 +1,19 @@
-@if (accountWithRoleResult) {
+@if (accountWithRoleResult()) {
   <ct-cols>
     <ct-col size="6">
       <ct-section>
         <ct-section-header>
           <ct-section-header-row>
             <ct-heading>
-              Edit Account #{{accountId}} Roles
+              Edit Account #{{accountId()}} Roles
             </ct-heading>
           </ct-section-header-row>
         </ct-section-header>
         <ct-section-body>
           <ct-section-body-row>
-            @for (el of roleModel | keyvalue; track el) {
+            @for (el of roleModel() | keyvalue; track el) {
               <div style="margin: 0.5em 0">
-                <mat-checkbox [(ngModel)]="el.value" (change)="save(el)" [disabled]="isLoading">{{ el.key}}
+                <mat-checkbox [(ngModel)]="el.value" (change)="save(el)" [disabled]="isLoading()">{{ el.key}}
                 </mat-checkbox>
               </div>
             }
@@ -22,7 +22,7 @@
       </ct-section>
     </ct-col>
     <ct-col size="6">
-      <ct-rest-status [content]="operationStatusRest"></ct-rest-status>
+      <ct-rest-status [content]="operationStatusRest()"></ct-rest-status>
     </ct-col>
   </ct-cols>
 }

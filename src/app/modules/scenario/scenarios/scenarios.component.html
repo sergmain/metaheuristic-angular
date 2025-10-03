@@ -1,4 +1,4 @@
-@if (scenariosResult) {
+@if (scenariosResult()) {
   <ct-section>
     <ct-section-header>
       <ct-section-header-row>
@@ -12,7 +12,7 @@
       <ct-section-body>
         <ct-section-body-row>
           <ct-table [isWaiting]="isLoading">
-            <table mat-table [dataSource]="dataSource">
+            <table mat-table [dataSource]="dataSource()">
               <ng-container matColumnDef="id">
                 <th mat-header-cell *matHeaderCellDef>ID </th>
                 <td mat-cell *matCellDef="let el">{{el.scenarioId}} </td>
@@ -47,8 +47,8 @@
                   </div>
                 </td>
               </ng-container>
-              <tr mat-header-row *matHeaderRowDef="columnsToDisplay"> </tr>
-              <tr mat-row *matRowDef="let row; columns: columnsToDisplay;"> </tr>
+              <tr mat-header-row *matHeaderRowDef="columnsToDisplay()"> </tr>
+              <tr mat-row *matRowDef="let row; columns: columnsToDisplay();"> </tr>
             </table>
           </ct-table>
         </ct-section-body-row>
@@ -58,7 +58,7 @@
           <div class="flex justify-content-space-between">
             <div class="flex justify-content-flex-start gap-8px">
               <ct-table-pagination (prev)="prevPage()" (next)="nextPage()"
-              [pageableDefault]="scenariosResult.scenarios"></ct-table-pagination>
+              [pageableDefault]="scenariosResult().scenarios"></ct-table-pagination>
             </div>
           </div>
         </ct-section-footer-row>

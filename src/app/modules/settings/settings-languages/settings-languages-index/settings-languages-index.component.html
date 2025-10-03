@@ -10,8 +10,8 @@
             <ct-section-body-row>
               <mat-form-field appearance="outline">
                 <mat-label> {{ 'settings-select-language.Language of UI' | translate }}</mat-label>
-                <mat-select [(ngModel)]="language">
-                  @for (lang of listOfLanguage; track lang) {
+                <mat-select [ngModel]="language()" (ngModelChange)="language.set($event)">
+                  @for (lang of listOfLanguage(); track lang) {
                     <div>
                       <mat-option [value]="lang">{{lang.name}}</mat-option>
                     </div>
@@ -31,7 +31,7 @@
           </div>
         } @else {
           <div class="vert-centered-flex">
-            {{apiKeys.openaiKey}}
+            {{apiKeys().openaiKey}}
           </div>
           <div class="vert-centered-flex">
             <button mat-icon-button (click)="startChangingLanguage()" matTooltip="Change languag of UI" color="primary">

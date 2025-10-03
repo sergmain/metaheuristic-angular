@@ -1,11 +1,11 @@
-@if (MhUtils.isNotNull(simpleScenarioSteps)) {
+@if (MhUtils.isNotNull(simpleScenarioSteps())) {
   <ct-section>
     <ct-section-body style="width: 50%;">
       <ct-section-body-row>
         <div class="flex gap-8px justify-content-space-between">
-          Scenario: {{simpleScenarioSteps.scenarioInfo.name}}<br/>
-          {{simpleScenarioSteps.scenarioInfo.description}}
-          @if (!newNodePresent() && !isFormActive) {
+          Scenario: {{simpleScenarioSteps().scenarioInfo.name}}<br/>
+          {{simpleScenarioSteps().scenarioInfo.description}}
+          @if (!newNodePresent() && !isFormActive()) {
             <button mat-icon-button (click)="startEditingScenarioInfo()" matTooltip="Edit scenario info" color="primary">
               <mat-icon>edit_document</mat-icon>
             </button>
@@ -21,7 +21,7 @@
           }
         </div>
       </ct-section-body-row>
-      @if (isFormActive) {
+      @if (isFormActive()) {
         <ct-section-body-row>
           <form [formGroup]="scenarioForm" novalidate="novalidate">
             <mat-form-field appearance="outline" style="width: 100%;">
@@ -37,12 +37,12 @@
         </ct-section-body-row>
       }
     </ct-section-body>
-    @if (isFormActive) {
+    @if (isFormActive()) {
       <ct-section-footer style="width: 50%;">
         <ct-section-footer-row>
           <div class="flex justify-content-flex-end gap-8px">
             <button mat-flat-button color="primary" size="forTableRow"
-              (click)="isFormActive=false; updateScenarioInfo()" [disabled]="notToUpdateScenarioInfo()">
+              (click)="isFormActive.set(false); updateScenarioInfo()" [disabled]="notToUpdateScenarioInfo()">
             Save</button>
             <button mat-flat-button color="accent" size="forTableRow" (click)="cancelUpdatingScenarioInfo()">
             Cancel</button>
@@ -67,7 +67,7 @@
             <mat-form-field appearance="outline">
               <mat-label> {{ 'evaluation-add.List of APIs' | translate }}</mat-label>
               <mat-select formControlName="apiUid">
-                @for (apiOption of listOfApis; track apiOption) {
+                @for (apiOption of listOfApis(); track apiOption) {
                   <mat-option  [value]="apiOption">
                     {{apiOption.id}}, {{apiOption.uid}}
                   </mat-option>
@@ -85,7 +85,7 @@
               cdkAutosizeMinRows="10" value="" autocomplete="off"></textarea>
             </mat-form-field>
             <mat-form-field appearance="outline" style="width: 100%;">
-              <mat-label>Code of result, min 3 chars, required</mat-label>
+              <mat-label>Code of result(), min 3 chars, required</mat-label>
               <input matInput type="text" autocomplete="off" formControlName="resultCode" />
             </mat-form-field>
           </form>
@@ -114,14 +114,14 @@
 </ct-section>
 
 <ng-template #scenarioTree>
-  <mat-tree [dataSource]="dataSource" [treeControl]="treeControl" cdkDropList (cdkDropListDropped)="drop($event)">
-    <mat-tree-node *matTreeNodeDef="let node; when: modeEditOrNewNode" matTreeNodePadding
-      cdkDrag [cdkDragData]="node" (mouseenter)="dragHover(node)"
+  <mat-tree [dataSource]="dataSource()" [treeControl]="treeControl()" cdkDropList (cdkDropListDropped)="drop($event)">
+    <mat-tree-node *matTreeNodeDef="let node; when modeEditOrNewNode" matTreeNodePadding
+      cdkDrag [cdkDragData]="node()" (mouseenter)="dragHover(node())"
       (mouseleave)="dragHoverEnd()" (cdkDragStarted)="dragStart()" (cdkDragReleased)="dragEnd()"
       >
       <button mat-icon-button disabled></button>
 
-      @if (showMyContainer) {
+      @if (showMyContainer()) {
         <ct-cols style="width: 100%;">
           <ct-col style="width: 75%;">
             <ct-section>
@@ -129,18 +129,18 @@
                 <ct-section-header-row>
                   <ct-section-header-row>
                     <div class="flex justify-content-space-between gap-9px">
-                      @if (modeNewNode(node)) {
+                      @if (modeNewNode(node())) {
                         <ct-heading>New step</ct-heading>
                       }
-                      @if (modeEditNode(node)) {
+                      @if (modeEditNode(node())) {
                         <ct-heading>Edit step</ct-heading>
                       }
                       <div class="flex justify-content-flex-end gap-8px">
                         <button mat-flat-button="mat-flat-button" color="primary"
-                          [disabled]="isApi" (click)="isApi=!isApi"
+                          [disabled]="isApi()" (click)="isApi.set(!isApi())"
                         >API</button>
                         <button mat-flat-button="mat-flat-button" color="primary"
-                          [disabled]="!isApi" (click)="isApi=!isApi"
+                          [disabled]="!isApi()" (click)="isApi.set(!isApi())"
                         >Processing</button>
                       </div>
                     </div>
@@ -150,11 +150,11 @@
               <ct-section-body>
                 <ct-section-body-row>
                   <form [formGroup]="form" #formDirective="ngForm"  novalidate="novalidate">
-                    @if (!isApi) {
+                    @if (!isApi()) {
                       <mat-form-field appearance="outline" style="width: 50%;">
                         <mat-label>Type of processing, required</mat-label>
                         <mat-select formControlName="processingFunction">
-                          @for (f of listOfFunctions; track f) {
+                          @for (f of listOfFunctions(); track f) {
                             <mat-option [value]="f">{{ f.code }}</mat-option>
                           }
                         </mat-select>
@@ -165,34 +165,34 @@
                         <mat-form-field appearance="outline" style="width: 50%;">
                           <mat-label>{{ 'scenario.API' | translate }}</mat-label>
                           <mat-select formControlName="apiUid">
-                            @for (api of listOfApis; track api) {
+                            @for (api of listOfApis(); track api) {
                               <mat-option [value]="api">{{api.uid}}</mat-option>
                             }
                           </mat-select>
                         </mat-form-field>
                       }
-                      @if (isApi) {
+                      @if (isApi()) {
                         <mat-label>{{ 'scenario.Use cache' | translate }}</mat-label>
                       }
                       <mat-slide-toggle formControlName="cachable"></mat-slide-toggle>
                     </div>
                     <mat-form-field appearance="outline" style="width: 100%;">
-                      @if (isApi) {
+                      @if (isApi()) {
                         <mat-label>Prompt name, min 5 chars, required</mat-label>
                       }
-                      @if (!isApi) {
+                      @if (!isApi()) {
                         <mat-label>Name of process, min 5 chars, required</mat-label>
                       }
                       <input matInput type="text" autocomplete="off" formControlName="name"/>
                     </mat-form-field>
-                    @if (isApi) {
+                    @if (isApi()) {
                       <mat-form-field appearance="outline" style="width: 100%;">
                         <mat-label>Prompt, min 3 chars, required</mat-label>
                         <textarea formControlName="prompt" matInput="matInput" cdkTextareaAutosize="cdkTextareaAutosize"
                         cdkAutosizeMinRows="10" value="" autocomplete="off"></textarea>
                       </mat-form-field>
                     }
-                    @if (!isApi) {
+                    @if (!isApi()) {
                       <mat-form-field appearance="outline" style="width: 100%;">
                         <mat-label>Input data, must be defined before, min 3 chars, required</mat-label>
                         <textarea formControlName="prompt" matInput cdkTextareaAutosize
@@ -200,12 +200,12 @@
                       </mat-form-field>
                     }
                     <mat-form-field appearance="outline" style="width: 100%;">
-                      <mat-label>Code of result, min 3 chars, required</mat-label>
+                      <mat-label>Code of result(), min 3 chars, required</mat-label>
                       <input matInput type="text" autocomplete="off" formControlName="resultCode" />
                     </mat-form-field>
                     @if (isAcceptanceTestFunc()) {
                       <mat-form-field appearance="outline" style="width: 100%;" >
-                        <mat-label>Expected result of calling API, min 1 chars, required</mat-label>
+                        <mat-label>Expected result() of calling API, min 1 chars, required</mat-label>
                         <input matInput type="text" autocomplete="off" formControlName="expected" />
                       </mat-form-field>
                     }
@@ -213,7 +213,7 @@
                       <mat-form-field appearance="outline" style="width: 50%;">
                         <mat-label>{{ 'evaluation-add.Type of aggregation' | translate }}</mat-label>
                         <mat-select formControlName="aggregateType">
-                          @for (aggregate of listOfAggregateTypes; track aggregate) {
+                          @for (aggregate of listOfAggregateTypes(); track aggregate) {
                             <mat-option [value]="aggregate">{{aggregate}}</mat-option>
                           }
                         </mat-select>
@@ -227,16 +227,16 @@
                 <ct-section-footer-row>
                   <div class="flex justify-content-flex-end gap-8px ngif-modeNewNode(node)">
                     <button mat-flat-button color="primary" size="forTableRow"
-                      (click)="showMyContainer=false; saveNode(node)" [disabled]="notToCreate()">
+                      (click)="showMyContainer.set(false); saveNode(node())" [disabled]="notToCreate()">
                     Create</button>
-                    <button mat-flat-button color="accent" size="forTableRow" (click)="deleteNewNode(node)">
+                    <button mat-flat-button color="accent" size="forTableRow" (click)="deleteNewNode(node())">
                     Delete</button>
                   </div>
                   <div class="flex justify-content-flex-end gap-8px ngif-modeEditNode(node)">
                     <button mat-flat-button color="primary" size="forTableRow"
-                      (click)="showMyContainer=false; saveNode(node)" [disabled]="notToCreate()">
+                      (click)="showMyContainer.set(false); saveNode(node())" [disabled]="notToCreate()">
                     Save</button>
-                    <button mat-flat-button color="accent" size="forTableRow" (click)="setModeToShow(node)">
+                    <button mat-flat-button color="accent" size="forTableRow" (click)="setModeToShow(node())">
                     Cancel</button>
                   </div>
                 </ct-section-footer-row>
@@ -247,62 +247,62 @@
       }
     </mat-tree-node>
 
-    <mat-tree-node *matTreeNodeDef="let node; when: hasNewNodePresent" matTreeNodeToggle matTreeNodePadding
-      cdkDrag [cdkDragData]="node" (mouseenter)="dragHover(node)" (mouseleave)="dragHoverEnd()"
+    <mat-tree-node *matTreeNodeDef="let node; when hasNewNodePresent" matTreeNodeToggle matTreeNodePadding
+      cdkDrag [cdkDragData]="node()" (mouseenter)="dragHover(node())" (mouseleave)="dragHoverEnd()"
       (cdkDragStarted)="dragStart()" (cdkDragReleased)="dragEnd()">
       <button mat-icon-button
-        matTreeNodeToggle (click)="expansionModel.toggle(node.uuid)"
-        [attr.aria-label]="'toggle ' + node.uuid"  matTooltip="Expand node">
+        matTreeNodeToggle (click)="expansionModel.toggle(node().uuid)"
+        [attr.aria-label]="'toggle ' + node().uuid"  matTooltip="Expand node">
         <mat-icon class="mat-icon-rtl-mirror">
-          {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+          {{treeControl().isExpanded(node()) ? 'expand_more' : 'chevron_right'}}
         </mat-icon>
       </button>
-      {{node.name}}<br/> {{node.prompt}}<br/>Result code: [[{{node.resultCode}}]]
+      {{node().name}}<br/> {{node().prompt}}<br/>Result code: [[{{node.resultCode}}]]
     </mat-tree-node>
 
-    <mat-tree-node *matTreeNodeDef="let node; when: hasNewNodeAbsentAndNotEvaluation" matTreeNodeToggle matTreeNodePadding
-      cdkDrag [cdkDragData]="node" (mouseenter)="dragHover(node)" (mouseleave)="dragHoverEnd()"
+    <mat-tree-node *matTreeNodeDef="let node; when hasNewNodeAbsentAndNotEvaluation" matTreeNodeToggle matTreeNodePadding
+      cdkDrag [cdkDragData]="node()" (mouseenter)="dragHover(node())" (mouseleave)="dragHoverEnd()"
       (cdkDragStarted)="dragStart()" (cdkDragReleased)="dragEnd()"
 
       >
       <ct-section-body style="width: 100%;">
-        <ct-section-body-row [ngClass]="{ 'background-highlight': isActiveNode(node) }">
+        <ct-section-body-row [ngClass]="{ 'background-highlight': isActiveNode(node()) }">
           <div class="flex">
             <!--normal item -->
             <button mat-icon-button
-              matTreeNodeToggle (click)="expansionModel.toggle(node.uuid)"
-              [attr.aria-label]="'toggle ' + node.uuid">
+              matTreeNodeToggle (click)="expansionModel.toggle(node().uuid)"
+              [attr.aria-label]="'toggle ' + node().uuid">
               <mat-icon class="mat-icon-rtl-mirror">
-                {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+                {{treeControl().isExpanded(node()) ? 'expand_more' : 'chevron_right'}}
               </mat-icon>
             </button>
-            @if (isEnhanceText(node)) {
-              [[{{node.resultCode}}]] = {{node.prompt}}
+            @if (isEnhanceText(node())) {
+              [[{{node.resultCode}}]] = {{node().prompt}}
             } @else {
-              Type: {{MhUtils.isNull(node.functionCode) ? 'API: '+ node.apiCode : 'Process: ' + node.functionCode}}, Name: {{node.name}}<br/>{{node.prompt}}<br/>Result code: [[{{node.resultCode}}]]
+              Type: {{MhUtils.isNull(node().functionCode) ? 'API: '+ node().apiCode : 'Process: ' + node().functionCode}}, Name: {{node().name}}<br/>{{node().prompt}}<br/>Result code: [[{{node.resultCode}}]]
             }
-            @if (isMhAcceptanceTestNode(node)) {
-              <br/>expected: {{node.expected}}
+            @if (isMhAcceptanceTestNode(node())) {
+              <br/>expected: {{node().expected}}
             }
             @if (!stepEvaluation()) {
-              <button mat-icon-button (click)="addNewStubItem(node)" matTooltip="Add new step" color="primary"
+              <button mat-icon-button (click)="addNewStubItem(node())" matTooltip="Add new step" color="primary"
                 >
                 <mat-icon>add</mat-icon></button>
               }
               @if (!stepEvaluation()) {
-                <button mat-icon-button (click)="startEditingNode(node)" matTooltip="Edit step" color="primary"
+                <button mat-icon-button (click)="startEditingNode(node())" matTooltip="Edit step" color="primary"
                   >
                   <mat-icon>edit_document</mat-icon>
                 </button>
               }
-              @if (!stepEvaluation() && canBeEvaluated(node)) {
-                <button mat-icon-button (click)="startStepEvaluation(node)" matTooltip="Evaluate step" color="primary"
+              @if (!stepEvaluation() && canBeEvaluated(node())) {
+                <button mat-icon-button (click)="startStepEvaluation(node())" matTooltip="Evaluate step" color="primary"
                   >
                   <mat-icon>chat_paste_go</mat-icon>
                 </button>
               }
               @if (!stepEvaluation()) {
-                <button mat-icon-button (click)="delete(node)" matTooltip="Delete step" color="warn"
+                <button mat-icon-button (click)="delete(node())" matTooltip="Delete step" color="warn"
                   >
                   <mat-icon>delete_forever</mat-icon>
                 </button>
@@ -367,7 +367,7 @@
               <div class="flex">
                 @if (MhUtils.isNotNull(stepEvaluationState.prompt)) {
                   <mat-form-field appearance="outline" style="width: 100%;" disabled>
-                    <mat-label>Actual prompt:</mat-label>
+                    <mat-label>Actual prompt():</mat-label>
                     <textarea matInput [value]="stepEvaluationState.prompt" cdkTextareaAutosize="cdkTextareaAutosize"
                     style="overflow:hidden" autocomplete="off" disabled></textarea>
                   </mat-form-field>
@@ -381,7 +381,7 @@
                 }
                 @if (MhUtils.isNotNull(stepEvaluationState.rawResult)) {
                   <mat-form-field appearance="outline" style="width: 100%;" disabled>
-                    <mat-label>Raw result of evaluation:</mat-label>
+                    <mat-label>Raw result() of evaluation:</mat-label>
                     <textarea matInput [value]="stepEvaluationState.rawResult" cdkTextareaAutosize="cdkTextareaAutosize"
                     style="overflow:hidden" autocomplete="off" disabled></textarea>
                   </mat-form-field>
@@ -403,6 +403,6 @@
 
   <ng-template #execContexts>
     <ng-container>
-      <ct-exec-contexts [sourceCodeId]="sourceCodeId" [modal]="true"></ct-exec-contexts>
+      <ct-exec-contexts [sourceCodeId]="sourceCodeId()" [modal]="true"></ct-exec-contexts>
     </ng-container>
   </ng-template>

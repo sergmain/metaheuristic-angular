@@ -1,15 +1,15 @@
-@if (simpleCompaniesResult) {
+@if (simpleCompaniesResult()) {
   <ct-section>
     <ct-section-header>
       <ct-section-header-row>
         <div class="flex justify-content-space-between">
           <ct-heading>Companies</ct-heading>
-          @if (!dispatcherAssetModeService.isReplicated(simpleCompaniesResult.assetMode)) {
+          @if (!dispatcherAssetModeService.isReplicated(simpleCompaniesResult().assetMode)) {
             <ng-container *ngTemplateOutlet="addButtonTemplate"></ng-container>
           }
         </div>
       </ct-section-header-row>
-      @if (dispatcherAssetModeService.isReplicated(simpleCompaniesResult.assetMode)) {
+      @if (dispatcherAssetModeService.isReplicated(simpleCompaniesResult().assetMode)) {
         <ct-section-header-row>
           <ct-alert theme="info">
             Management of companies are disabled, assetMode is 'replicated'.
@@ -26,8 +26,8 @@
       <ct-section-footer-row>
         <div class="flex justify-content-space-between">
           <ct-table-pagination (prev)="prevPage()" (next)="nextPage()"
-          [pageableDefault]="simpleCompaniesResult.companies"></ct-table-pagination>
-          @if (!dispatcherAssetModeService.isReplicated(simpleCompaniesResult.assetMode)) {
+          [pageableDefault]="simpleCompaniesResult().companies"></ct-table-pagination>
+          @if (!dispatcherAssetModeService.isReplicated(simpleCompaniesResult().assetMode)) {
             <ng-container *ngTemplateOutlet="addButtonTemplate"></ng-container>
           }
         </div>
@@ -40,9 +40,9 @@
 
 <ng-template #mainTableTemplate>
   <ct-table [isWaiting]="isLoading">
-    <table class="mat-table" mat-table="mat-table" [dataSource]="dataSource">
-      <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
-      <tr mat-row *matRowDef="let row; columns: columnsToDisplay;"></tr>
+    <table class="mat-table" mat-table="mat-table" [dataSource]="dataSource()">
+      <tr mat-header-row *matHeaderRowDef="columnsToDisplay()"></tr>
+      <tr mat-row *matRowDef="let row; columns: columnsToDisplay();"></tr>
       <ng-container matColumnDef="uniqueId">
         <th mat-header-cell *matHeaderCellDef>Id</th>
         <td mat-cell="mat-cell" *matCellDef="let el">{{el.uniqueId}} </td>
@@ -56,7 +56,7 @@
         <td mat-cell="mat-cell" *matCellDef="let el">
           <div class="flex justify-content-flex-end gap-9px">
             @if (authenticationService.isRoleMasterAdmin()) {
-              @if (!dispatcherAssetModeService.isReplicated(simpleCompaniesResult.assetMode)) {
+              @if (!dispatcherAssetModeService.isReplicated(simpleCompaniesResult().assetMode)) {
                 <a mat-flat-button color="primary" size="forTableRow"
                 [routerLink]="['../',el.uniqueId,'edit']">Edit</a>
               }

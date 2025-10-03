@@ -1,4 +1,4 @@
-@if (batchesResult) {
+@if (batchesResult()) {
   <ct-section>
     <ct-section-header>
       <ct-section-header-row>
@@ -11,14 +11,14 @@
     <ct-section-body>
       <ct-section-body-row>
         <ct-table [isWaiting]="isLoading">
-          <table class="mat-table" mat-table [dataSource]="dataSource">
+          <table class="mat-table" mat-table [dataSource]="dataSource()">
             <ng-container matColumnDef="check">
               <th mat-header-cell *matHeaderCellDef>
                 <mat-checkbox
                   color="warn"
                   (change)="masterToggle()"
-                  [checked]="selection.hasValue() && isAllSelected()"
-                  [indeterminate]="selection.hasValue() && !isAllSelected()">
+                  [checked]="selection().hasValue() && isAllSelected()"
+                  [indeterminate]="selection().hasValue() && !isAllSelected()">
                   <div class="check-area"></div>
                 </mat-checkbox>
               </th>
@@ -27,8 +27,8 @@
                   <mat-checkbox
                     color="warn"
                     (click)="$event.stopPropagation()"
-                    (change)="selection.toggle(el)"
-                    [checked]="selection.isSelected(el)">
+                    (change)="selection().toggle(el)"
+                    [checked]="selection().isSelected(el)">
                     <div class="check-area"></div>
                   </mat-checkbox>
                 }
@@ -121,11 +121,11 @@
                 </div>
               </td>
             </ng-container>
-            <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+            <tr mat-header-row *matHeaderRowDef="columnsToDisplay()"></tr>
             <tr mat-row
-              *matRowDef="let row; columns: columnsToDisplay;"
+              *matRowDef="let row; columns: columnsToDisplay();"
               (click)="checkAndToggleRowSeletion(row)"
-              [class.selected-color]="downloadSelector.isSelected(row)"
+              [class.selected-color]="downloadSelector().isSelected(row)"
             ></tr>
           </table>
         </ct-table>
@@ -137,7 +137,7 @@
           <button mat-flat-button
             color="warn"
             (click)="deleteMany()"
-            [disabled]="isLoading || selection.selected.length === 0"
+            [disabled]="isLoading || selection().selected.length === 0"
             title="Delete Checked">
             Delete Checked
           </button>
@@ -146,8 +146,8 @@
       <ct-section-footer-row>
         <div class="flex justify-content-space-between">
           <ct-table-pagination (prev)="prevPage()" (next)="nextPage()"
-          [pageableDefault]="batchesResult.batches"></ct-table-pagination>
-          @if (downloadSelector.size > 0) {
+          [pageableDefault]="batchesResult().batches"></ct-table-pagination>
+          @if (downloadSelector().size > 0) {
             <ng-container *ngTemplateOutlet="downloadButtonsTemplate"></ng-container>
           }
           <ng-container *ngTemplateOutlet="uploadButtonTemplate"></ng-container>
@@ -162,7 +162,7 @@
 <ng-template #downloadButtonsTemplate>
   <div class="flex justify-content-center gap-unit(1) align-items-center">
     <div class="selected-count">
-      Selected × {{downloadSelector.size}}
+      Selected × {{downloadSelector().size}}
     </div>
     <button mat-flat-button
       color="primary"
@@ -172,7 +172,7 @@
     </button>
     <button mat-flat-button
       [disabled]="isLoading"
-      (click)="downloadSelector.clear()"
+      (click)="downloadSelector().clear()"
       color="primary">
       Discard
     </button>

@@ -13,11 +13,11 @@
   <ct-section>
     <ct-section-body style="width: 50%;">
       <ct-section-body-row>
-        <form [formGroup]="form" novalidate="novalidate">
+        <form [formGroup]="form()" novalidate="novalidate">
           <mat-form-field appearance="outline">
             <mat-label>Select a new scenario group</mat-label>
             <mat-select formControlName="group">
-              @for (group of simpleScenarioGroupsAllResult.scenarioGroups; track group) {
+              @for (group of simpleScenarioGroupsAllResult().scenarioGroups; track group) {
                 <mat-option  [value]="group">
                   {{group.scenarioGroupId}}, {{group.name}}
                 </mat-option>

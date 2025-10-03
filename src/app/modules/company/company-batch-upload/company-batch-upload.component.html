@@ -1,4 +1,4 @@
-@if (sourceCodesForCompany) {
+@if (sourceCodesForCompany()) {
   <ct-cols>
     <ct-col size="6">
       <ct-section>
@@ -11,8 +11,8 @@
           <ct-section-body-row>
             <mat-form-field appearance="outline" style="width:100%">
               <mat-label> {{ 'batch-add.List of Source Codes' | translate }}</mat-label>
-              <mat-select [(ngModel)]="sourceCode">
-                @for (sourceCode of sourceCodesForCompany.items; track sourceCode) {
+              <mat-select [ngModel]="sourceCode()" (ngModelChange)="sourceCode.set($event)">
+                @for (sourceCode of sourceCodesForCompany().items; track sourceCode) {
                   <div>
                     <mat-option [value]="sourceCode">{{sourceCode.uid}}</mat-option>
                   </div>
@@ -36,7 +36,7 @@
                 <div class="flex justify-content-flex-end gap-8px">
                   <button mat-stroked-button="mat-stroked-button" (click)="back()">
                   {{ 'batch-add.Cancel' | translate }}</button>
-                  <button mat-flat-button="mat-flat-button" color="primary" [disabled]="!sourceCode || !file"
+                  <button mat-flat-button="mat-flat-button" color="primary" [disabled]="!sourceCode() || !file()"
                   (click)="upload()"> {{ 'batch-add.Upload-File-button' | translate }}</button>
                 </div>
               </ct-section-footer-row>
@@ -44,7 +44,7 @@
           </ct-section>
         </ct-col>
         <ct-col size="6">
-          <ct-rest-status [content]="batchDataUploadingStatus"></ct-rest-status>
+          <ct-rest-status [content]="batchDataUploadingStatus()"></ct-rest-status>
         </ct-col>
       </ct-cols>
     }

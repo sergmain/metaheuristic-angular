@@ -1,4 +1,4 @@
-@if (simpleSessionsResult) {
+@if (simpleSessionsResult()) {
   <ct-section>
     <ct-section-header>
       <ct-section-header-row>
@@ -17,7 +17,7 @@
         <div class="flex justify-content-space-between">
           <div class="flex justify-content-flex-start gap-8px">
             <ct-table-pagination
-              [pageableDefault]="simpleSessionsResult.sessions"
+              [pageableDefault]="simpleSessionsResult().sessions"
               [globalDisable]="isLoading"
               (next)="nextPage()"
               (prev)="prevPage()">

@@ -1,10 +1,10 @@
-@if (processorResult) {
+@if (processorResult()) {
   <ct-section>
     <ct-section-header>
       <ct-section-header-row>
         <div class="flex justify-content-space-between align-items-center">
           <ct-heading>Processors</ct-heading>
-          <mat-slide-toggle [(ngModel)]="showStatusOfProcessor">
+          <mat-slide-toggle [ngModel]="showStatusOfProcessor()" (ngModelChange)="showStatusOfProcessor.set($event)">
             Show current status of processor
           </mat-slide-toggle>
         </div>
@@ -13,22 +13,22 @@
     <ct-section-body>
       <ct-section-body-row>
         <ct-table [isWaiting]="isLoading">
-          <table mat-table [dataSource]="dataSource" multiTemplateDataRows="multiTemplateDataRows">
+          <table mat-table [dataSource]="dataSource()" multiTemplateDataRows="multiTemplateDataRows">
             <ng-container matColumnDef="check">
               <th mat-header-cell *matHeaderCellDef>
                 <mat-checkbox
                   color="warn"
                   (change)="$event ? masterToggle() : null"
-                  [checked]="selection.hasValue() && isAllSelected()"
-                  [indeterminate]="selection.hasValue() && !isAllSelected()">
+                  [checked]="selection().hasValue() && isAllSelected()"
+                  [indeterminate]="selection().hasValue() && !isAllSelected()">
                 </mat-checkbox>
               </th>
               <td mat-cell *matCellDef="let el">
                 <mat-checkbox
                   color="warn"
                   (click)="$event.stopPropagation()"
-                  (change)="$event ? selection.toggle(el) : null"
-                  [checked]="selection.isSelected(el)">
+                  (change)="$event ? selection().toggle(el) : null"
+                  [checked]="selection().isSelected(el)">
                 </mat-checkbox>
               </td>
             </ng-container>
@@ -56,7 +56,7 @@
               <td mat-cell *matCellDef="let el"> </td>
             </ng-container>
             <ng-container matColumnDef="env">
-              <td mat-cell *matCellDef="let el" [attr.colspan]="columnsToDisplay.length - 1">
+              <td mat-cell *matCellDef="let el" [attr.colspan]="columnsToDisplay().length - 1">
                 <b>Status of Processor:</b>
                 <ct-pre-10px>{{el.processor.status || '—'}} </ct-pre-10px>
               </td>
@@ -109,9 +109,9 @@
                 </div>
               </td>
             </ng-container>
-            <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
-            <tr class="first-row" mat-row *matRowDef="let row; columns: columnsToDisplay;"></tr>
-            <tr class="second-row" mat-row *matRowDef="let row; columns: secondColumnsToDisplay;" [hidden]="!showStatusOfProcessor"></tr>
+            <tr mat-header-row *matHeaderRowDef="columnsToDisplay()"></tr>
+            <tr class="first-row" mat-row *matRowDef="let row; columns: columnsToDisplay();"></tr>
+            <tr class="second-row" mat-row *matRowDef="let row; columns: secondColumnsToDisplay();" [hidden]="!showStatusOfProcessor()"></tr>
           </table>
         </ct-table>
       </ct-section-body-row>
@@ -121,7 +121,7 @@
         <button mat-flat-button
           color="warn"
           (click)="deleteMany()"
-          [disabled]="isLoading || !selection.selected.length"
+          [disabled]="isLoading || !selection().selected.length"
           title="Delete Checked">
           Delete Checked
         </button>
@@ -130,7 +130,7 @@
         <ct-table-pagination
           (prev)="prevPage()"
           (next)="nextPage()"
-          [pageableDefault]="processorResult.items">
+          [pageableDefault]="processorResult().items">
         </ct-table-pagination>
       </ct-section-footer-row>
     </ct-section-footer>

@@ -1,24 +1,24 @@
-@if (accountResult) {
+@if (accountResult()) {
   <ct-cols align-items="baseline">
     <ct-col size="6">
       <ct-section>
         <ct-section-header>
           <ct-section-header-row>
-            <ct-heading>Edit Account #{{accountId}} </ct-heading>
+            <ct-heading>Edit Account #{{accountId()}} </ct-heading>
           </ct-section-header-row>
         </ct-section-header>
         <ct-section-body>
           <ct-section-body-row>
             <mat-form-field appearance="outline" style="width: 100%;" disabled>
               <mat-label>Username</mat-label>
-              <input matInput [value]="accountResult.account.username" disabled />
+              <input matInput [value]="accountResult().account.username" disabled />
             </mat-form-field>
             <mat-form-field appearance="outline" style="width: 100%;">
               <mat-label>Public Name</mat-label>
-              <input matInput [(ngModel)]="publicName" />
+              <input matInput [ngModel]="publicName()" (ngModelChange)="publicName.set($event)" />
             </mat-form-field>
             <br>
-              <mat-checkbox [(ngModel)]="isEnabled">Is account enabled?</mat-checkbox>
+              <mat-checkbox [ngModel]="isEnabled()" (ngModelChange)="isEnabled.set($event)">Is account enabled?</mat-checkbox>
             </ct-section-body-row>
           </ct-section-body>
           <ct-section-footer>

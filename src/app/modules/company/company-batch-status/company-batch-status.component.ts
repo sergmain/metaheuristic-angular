@@ -32,9 +32,9 @@ export class CompanyBatchStatusComponent implements OnInit {
         this.companyService
             .getBatchStatus(this.companyUniqueId, this.batchId())
             .subscribe({
-                next: (batchDataStatus) => this.batchDataStatus.set(batchDataStatus,
-                error: () => this.isLoading.set(false,
-                complete: () => this.isLoading() = false
-            })));
+                next: (batchDataStatus) => this.batchDataStatus.set(batchDataStatus),
+                error: () => this.isLoading.set(false),
+                complete: () => this.isLoading.set(false)
+            });
     }
 }

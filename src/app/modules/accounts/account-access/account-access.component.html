@@ -1,34 +1,34 @@
-@if (response) {
+@if (response()) {
   <ct-cols>
     <ct-col size="6">
       <ct-section>
         <ct-section-header>
           <ct-section-header-row>
             <ct-heading>
-              Account Role id {{response.account?.id }}, login {{response.account?.username}}
+              Account Role id {{response().account?.id }}, login {{response().account?.username}}
             </ct-heading>
           </ct-section-header-row>
         </ct-section-header>
         <ct-section-body>
-          @if (response) {
+          @if (response()) {
             <ct-section-body-row style="font-size:125%;">
               <ct-section-content>
-                <mat-checkbox [(ngModel)]="isManager">Manager</mat-checkbox>
+                <mat-checkbox [ngModel]="isManager()" (ngModelChange)="isManager.set($event)">Manager</mat-checkbox>
               </ct-section-content>
               <ct-section-content>
-                <mat-checkbox [(ngModel)]="isOperator">Operator</mat-checkbox>
+                <mat-checkbox [ngModel]="isOperator()" (ngModelChange)="isOperator.set($event)">Operator</mat-checkbox>
               </ct-section-content>
               <ct-section-content>
-                <mat-checkbox [(ngModel)]="isBilling">Billing</mat-checkbox>
+                <mat-checkbox [ngModel]="isBilling()" (ngModelChange)="isBilling.set($event)">Billing</mat-checkbox>
               </ct-section-content>
               <ct-section-content>
-                <mat-checkbox [(ngModel)]="isData">Data</mat-checkbox>
+                <mat-checkbox [ngModel]="isData()" (ngModelChange)="isData.set($event)">Data</mat-checkbox>
               </ct-section-content>
               <ct-section-content>
-                <mat-checkbox [(ngModel)]="isServerRestAccess">Server Rest Access</mat-checkbox>
+                <mat-checkbox [ngModel]="isServerRestAccess()" (ngModelChange)="isServerRestAccess.set($event)">Server Rest Access</mat-checkbox>
               </ct-section-content>
               <ct-section-content>
-                <mat-checkbox [(ngModel)]="isAdmin">Admin</mat-checkbox>
+                <mat-checkbox [ngModel]="isAdmin()" (ngModelChange)="isAdmin.set($event)">Admin</mat-checkbox>
               </ct-section-content>
             </ct-section-body-row>
           }

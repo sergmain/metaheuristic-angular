@@ -63,9 +63,9 @@ export class AccountEditPasswordComponent implements OnInit {
         this.companyService
             .passwordEdit(this.accoundId, this.companyUniqueId)
             .subscribe({
-                next: accountResult => this.accountResult.set(accountResult,
-                complete: () => this.isLoading.set(false
-            })));
+                next: accountResult => this.accountResult.set(accountResult),
+                complete: () => this.isLoading.set(false)
+            });
     }
 
 
@@ -78,9 +78,9 @@ export class AccountEditPasswordComponent implements OnInit {
         this.companyService
             .passwordEditFormCommit(this.accoundId, this.form.value.password, this.form.value.password2, this.companyUniqueId)
             .subscribe({
-                next: operationStatusRest => this.operationStatusRest.set(operationStatusRest,
-                complete: () => this.isLoading.set(false
-            })));
+                next: operationStatusRest => this.operationStatusRest.set(operationStatusRest),
+                complete: () => this.isLoading.set(false)
+            });
     }
 
 }

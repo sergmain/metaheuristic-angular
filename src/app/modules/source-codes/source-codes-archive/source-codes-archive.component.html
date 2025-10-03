@@ -1,4 +1,4 @@
-@if (sourceCodesResult) {
+@if (sourceCodesResult()) {
   <ct-section>
     <ct-section-header>
       <ct-section-header-row>
@@ -43,14 +43,14 @@
             </ng-container>
             <tr mat-header-row="mat-header-row" *matHeaderRowDef="columnsToDisplay"> </tr>
             <tr mat-row="mat-row" *matRowDef="let row; columns: columnsToDisplay;"
-            [class.deleted-table-row]="deletedRows.includes(row)"></tr>
+            [class.deleted-table-row]="deletedRows().includes(row)"></tr>
           </table>
         </ct-table>
       </ct-section-body-row>
     </ct-section-body>
     <ct-section-footer>
       <ct-section-footer-row>
-        <ct-table-pagination [pageableDefault]="sourceCodesResult?.items" [globalDisable]="isLoading"
+        <ct-table-pagination [pageableDefault]="sourceCodesResult()?.items" [globalDisable]="isLoading"
         (next)="nextPage()" (prev)="prevPage()"></ct-table-pagination>
       </ct-section-footer-row>
     </ct-section-footer>

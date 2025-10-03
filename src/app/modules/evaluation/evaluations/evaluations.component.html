@@ -1,4 +1,4 @@
-@if (simpleEvaluationsResult) {
+@if (simpleEvaluationsResult()) {
   <ct-section>
     <ct-section-header>
       <ct-section-header-row>
@@ -20,7 +20,7 @@
         <div class="flex justify-content-space-between">
           <div class="flex justify-content-flex-start gap-8px">
             <ct-table-pagination
-              [pageableDefault]="simpleEvaluationsResult.evaluations"
+              [pageableDefault]="simpleEvaluationsResult().evaluations"
               [globalDisable]="isLoading"
               (next)="nextPage()"
               (prev)="prevPage()">
@@ -76,8 +76,8 @@
           </div>
         </td>
       </ng-container>
-      <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
-      <tr mat-row *matRowDef="let row; columns: columnsToDisplay;"></tr>
+      <tr mat-header-row *matHeaderRowDef="columnsToDisplay()"></tr>
+      <tr mat-row *matRowDef="let row; columns: columnsToDisplay();"></tr>
     </table>
   </ct-table>
 </ng-template>

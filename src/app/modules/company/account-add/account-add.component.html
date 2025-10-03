@@ -45,13 +45,13 @@
                     <div class="flex justify-content-flex-end gap-8px">
                         <button mat-stroked-button="mat-stroked-button" (click)="back()">Cancel</button>
                         <button mat-flat-button="mat-flat-button" (click)="createAccount()" color="primary"
-                            [disabled]="isDone || isLoading || form.invalid">Create Account</button>
+                            [disabled]="isDone() || isLoading() || form.invalid">Create Account</button>
                     </div>
                 </ct-section-footer-row>
             </ct-section-footer>
         </ct-section>
     </ct-col>
     <ct-col size="6">
-        <ct-rest-status [content]="operationStatusRest"></ct-rest-status>
+        <ct-rest-status [content]="operationStatusRest()"></ct-rest-status>
     </ct-col>
 </ct-cols>

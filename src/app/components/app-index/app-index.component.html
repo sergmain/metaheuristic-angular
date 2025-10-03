@@ -19,10 +19,10 @@
       <ct-section-body>
         <ct-section-body-row>
           <div class="flex justify-content-center align-items-center">
-            @if (!error) {
+            @if (!error()) {
               <button mat-flat-button color="warn">Metaheuristic is initializing. Please, wait.</button>
             }
-            @if (error) {
+            @if (error()) {
               <button mat-flat-button color="warn">Metaheuristic failed to start. Try to re-launch it.</button>
             }
           </div>
@@ -52,34 +52,34 @@
                       <mat-icon  matTooltip="{{ element.status }}" color="primary">done</mat-icon>
                     }
                     @if (isError(element)) {
-                      <mat-icon  matTooltip="{{ element.status }}" color="warn">error</mat-icon>
+                      <mat-icon  matTooltip="{{ element.status }}" color="warn">error()</mat-icon>
                     }
                   </div>
                 </td>
               </ng-container>
-              <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
-              <tr mat-row *matRowDef="let row; columns: columnsToDisplay"></tr>
+              <tr mat-header-row *matHeaderRowDef="columnsToDisplay()"></tr>
+              <tr mat-row *matRowDef="let row; columns: columnsToDisplay()"></tr>
             </table>
           </ct-section-body-row>
         }
-        @if (!error && isStandalone()) {
+        @if (!error() && isStandalone()) {
           <ct-section-body-row>
             <div>No any errors at this time.</div>
           </ct-section-body-row>
         }
-        @if (error && isStandalone()) {
+        @if (error() && isStandalone()) {
           <ct-section-body-row>
             <div class="flex justify-content-center align-items-center gap-20px">
-              An error was encountered:
+              An error() was encountered:
               <button mat-icon-button color="warn" (click)="copyErrorToClipboard()" matTooltip="Copy error to clipboard">
                 <mat-icon>content_copy</mat-icon>
               </button>
             </div>
           </ct-section-body-row>
         }
-        @if (error && isStandalone()) {
+        @if (error() && isStandalone()) {
           <ct-section-body-row>
-            <div>{{error}}</div>
+            <div>{{error()}}</div>
           </ct-section-body-row>
         }
       </ct-section-body>

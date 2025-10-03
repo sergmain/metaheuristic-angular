@@ -52,12 +52,12 @@
     </ct-section>
   </ct-col>
   <ct-col size="6">
-    @if (response) {
+    @if (response()) {
       <ct-section>
         <ct-section-body>
           <ct-section-body-row>
-            <p>STATUS: {{response.status}}</p>
-            @for (error of response.errorMessages; track error; let i = $index) {
+            <p>STATUS: {{response().status}}</p>
+            @for (error of response().errorMessages; track error; let i = $index) {
               <p>{{error}}</p>
             }
           </ct-section-body-row>

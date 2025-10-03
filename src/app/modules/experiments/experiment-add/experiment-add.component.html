@@ -12,7 +12,7 @@
             <mat-form-field appearance="outline">
               <mat-label>List of Uids of source codes</mat-label>
               <mat-select formControlName="sourceCodeUID">
-                @for (sourceCode of sourceCodeUidsForCompany?.items; track sourceCode) {
+                @for (sourceCode of sourceCodeUidsForCompany()?.items; track sourceCode) {
                   <div>
                     <mat-option [value]="sourceCode.uid">{{sourceCode.uid}}</mat-option>
                   </div>
@@ -58,6 +58,6 @@
                 </ct-section>
               </ct-col>
               <ct-col size="6">
-                <ct-rest-status [content]="operationStatusRest"></ct-rest-status>
+                <ct-rest-status [content]="operationStatusRest()"></ct-rest-status>
               </ct-col>
             </ct-cols>

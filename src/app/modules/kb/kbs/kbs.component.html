@@ -1,4 +1,4 @@
-@if (simpleKbsResult) {
+@if (simpleKbsResult()) {
   <ct-section>
     <ct-section-header>
       <ct-section-header-row>
@@ -6,7 +6,7 @@
           <ct-heading>Knowledge Bases</ct-heading>
         </div>
         <div class="flex justify-content-space-between">
-          <mat-slide-toggle [(ngModel)]="expandParams">
+          <mat-slide-toggle [ngModel]="expandParams()" (ngModelChange)="expandParams.set($event)">
             Expand params
           </mat-slide-toggle>
           <button mat-flat-button color="primary" routerLink="add">Add KB</button>
@@ -22,7 +22,7 @@
       <ct-section-footer-row>
         <div class="flex justify-content-space-between">
           <ct-table-pagination
-            [pageableDefault]="simpleKbsResult.kbs"
+            [pageableDefault]="simpleKbsResult().kbs"
             [globalDisable]="isLoading"
             (next)="nextPage()"
             (prev)="prevPage()">
@@ -72,14 +72,14 @@
         <td mat-cell *matCellDef="let el"> </td>
       </ng-container>
       <ng-container matColumnDef="params">
-        <td mat-cell *matCellDef="let el" [attr.colspan]="columnsToDisplay.length - 1">
+        <td mat-cell *matCellDef="let el" [attr.colspan]="columnsToDisplay().length - 1">
           <b>Params:</b>
           <ct-pre-10px>{{el.params || '—'}} </ct-pre-10px>
         </td>
       </ng-container>
-      <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
-      <tr class="first-row" mat-row *matRowDef="let row; columns: columnsToDisplay;"></tr>
-      <tr class="second-row" mat-row *matRowDef="let row; columns: secondColumnsToDisplay;" [hidden]="!expandParams"></tr>
+      <tr mat-header-row *matHeaderRowDef="columnsToDisplay()"></tr>
+      <tr class="first-row" mat-row *matRowDef="let row; columns: columnsToDisplay();"></tr>
+      <tr class="second-row" mat-row *matRowDef="let row; columns: secondColumnsToDisplay();" [hidden]="!expandParams()"></tr>
     </table>
   </ct-table>
 </ng-template>

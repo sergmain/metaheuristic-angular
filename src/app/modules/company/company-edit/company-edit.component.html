@@ -1,4 +1,4 @@
-@if (simpleCompanyResult) {
+@if (simpleCompanyResult()) {
   <ct-cols>
     <ct-col size="6">
       <ct-section>
@@ -11,14 +11,14 @@
           <ct-section-body-row>
             <mat-form-field appearance="outline" style="width: 100%;">
               <mat-label>Name of company</mat-label>
-              <input matInput="matInput" [(ngModel)]="name" />
+              <input matInput="matInput" [ngModel]="name()" (ngModelChange)="name.set($event)" />
               <mat-hint>This is a required field.</mat-hint>
             </mat-form-field>
             <br>
               <br>
                 <mat-form-field appearance="outline" style="width: 100%;">
-                  <mat-label>Company's groups</mat-label>
-                  <input matInput="matInput" [(ngModel)]="groups" />
+                  <mat-label>Company's groups()</mat-label>
+                  <input matInput="matInput" [ngModel]="groups()" (ngModelChange)="groups.set($event)" />
                 </mat-form-field>
                 <br>
                   <div class="flex justify-content-flex-end gap-unit-1">
@@ -30,7 +30,7 @@
             </ct-section>
           </ct-col>
           <ct-col size="6">
-            <ct-rest-status [content]="operationStatusRest"></ct-rest-status>
+            <ct-rest-status [content]="operationStatusRest()"></ct-rest-status>
           </ct-col>
         </ct-cols>
       }

@@ -1,13 +1,13 @@
-@if (!isLoading) {
+@if (!isLoading()) {
   <ct-section>
     <ct-section-header>
       <ct-section-header-row>
-        <ct-heading>Batch #{{batchDataStatus?.batchId}}</ct-heading>
+        <ct-heading>Batch #{{batchDataStatus()?.batchId}}</ct-heading>
       </ct-section-header-row>
     </ct-section-header>
     <ct-section-body>
       <ct-section-body-row>
-        <ct-pre>{{batchDataStatus?.console}}</ct-pre>
+        <ct-pre>{{batchDataStatus()?.console}}</ct-pre>
       </ct-section-body-row>
     </ct-section-body>
   </ct-section>

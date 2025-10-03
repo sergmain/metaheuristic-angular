@@ -471,9 +471,10 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
     dragHover(node: StepFlatNode) {
         if (this.dragging) {
             clearTimeout(this.expandTimeout());
-            this.expandTimeout.set(setTimeout(() => {
-                this.treeControl().expand(node));
-            }, this.expandDelay);
+            this.expandTimeout.set(
+                setTimeout(() => {
+                    this.treeControl().expand(node)
+                }, this.expandDelay));
         }
     }
     dragHoverEnd() {
@@ -632,47 +633,55 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
         this.showMyContainer.set(true);
         let detailNode = this.findInTree(node);
         console.log("50.10", JSON.stringify(detailNode));
-        detailNode.node.isNew = true;
-        detailNode.node.mode = NodeMode.edit;
+
+        const currentNode = detailNode.node();
+        if (!currentNode) {
+            // Handle undefined case (e.g., initialize a default object or throw an error)
+            console.error('Node is undefined');
+            return; // Or set a default SimpleScenarioStep object
+        }
+        
+        currentNode.isNew = true;
+        currentNode.mode = NodeMode.edit;
 
         this.form = new FormGroup({
-            name: new FormControl(detailNode.node.name, [Validators.required, Validators.minLength(5)]),
-            prompt: new FormControl(detailNode.node.prompt, [Validators.required, Validators.minLength(3)]),
-            resultCode: new FormControl(detailNode.node.resultCode, [Validators.required, Validators.minLength(3)]),
+            name: new FormControl(currentNode.name, [Validators.required, Validators.minLength(5)]),
+            prompt: new FormControl(currentNode.prompt, [Validators.required, Validators.minLength(3)]),
+            resultCode: new FormControl(currentNode.resultCode, [Validators.required, Validators.minLength(3)]),
             apiUid: new FormControl(null),
             aggregateType: new FormControl(null),
             processingFunction: new FormControl(null),
-            expected: new FormControl(detailNode.node.expected),
-            cachable: new FormControl(detailNode.node.isCachable)
+            expected: new FormControl(currentNode.expected),
+            cachable: new FormControl(currentNode.isCachable)
         });
 
         // noinspection UnnecessaryLocalVariableJS
-        const apiUid = this.listOfApis().find((c) => c.uid == detailNode.node.apiCode);
+        const apiUid = this.listOfApis().find((c) => c.uid == currentNode.apiCode);
         // const apiUid = new class implements ApiUid {
-        //     id: number = detailNode.node.apiId;
-        //     uid: string = detailNode.node.apiCode;
+        //     id: number = currentNode.apiId;
+        //     uid: string = currentNode.apiCode;
         // }
         this.form.get('apiUid').setValue(apiUid);
 
-        if (MhUtils.isNull(detailNode.node.functionCode)) {
+        if (MhUtils.isNull(currentNode.functionCode)) {
             this.isApi.set(true);
         }
         else {
             this.isApi.set(false);
             // this.processingFunction = new class implements InternalFunction {
-            //     code: string = detailNode.node.functionCode;
-            //     translate: string = detailNode.node.functionCode;
+            //     code: string = currentNode.functionCode;
+            //     translate: string = currentNode.functionCode;
             // };
             // noinspection UnnecessaryLocalVariableJS
-            const processingFunction = this.listOfFunctions().find((c) => c.code == detailNode.node.functionCode);
+            const processingFunction = this.listOfFunctions().find((c) => c.code == currentNode.functionCode);
             // const apiUid = new class implements ApiUid {
-            //     id: number = detailNode.node.apiId;
-            //     uid: string = detailNode.node.apiCode;
+            //     id: number = currentNode.apiId;
+            //     uid: string = currentNode.apiCode;
             // }
             // this.form.value.processingFunction = processingFunction;
             this.form.get('processingFunction').setValue(processingFunction);
 
-            this.form.get('aggregateType').setValue(detailNode.node.aggregateType);
+            this.form.get('aggregateType').setValue(currentNode.aggregateType);
 
         }
         console.log("50.20", this.isApi(), this.form.value.apiUid, this.form.value.processingFunction, this.form.value.aggregateType);
@@ -686,7 +695,13 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
         this.treeControl().expand(node);
         let detailNode = this.findInTree(node);
         console.log("10.11", detailNode)
-        this.addNewNode(detailNode.node);
+        const currentNode = detailNode.node();
+        if (!currentNode) {
+            // Handle undefined case (e.g., initialize a default object or throw an error)
+            console.error('Node is undefined');
+            return; // Or set a default SimpleScenarioStep object
+        }
+        this.addNewNode(currentNode);
         this.dataChange.next(this.dataTree);
     }
 
@@ -767,10 +782,10 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
                 console.log("runStepEvaluation(), response: ", JSON.stringify(o));
                 // console.log("getSourceCodeId(), sourceCodeId", this.sourceCodeId());
 
-                this.stepEvaluationState.prompt = o.prompt;
-                this.stepEvaluationState.result = o.result;
-                this.stepEvaluationState.rawResult = o.rawrResult;
-                this.stepEvaluationState.error = o.error;
+                this.stepEvaluationState.prompt.set(o.prompt);
+                this.stepEvaluationState.result.set(o.result);
+                this.stepEvaluationState.rawResult.set(o.rawrResult);
+                this.stepEvaluationState.error.set(o.error);
                 this.stepEvaluationState.previousPrompt = se.prompt;
             });
     }
@@ -942,7 +957,11 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
         }
         for (let i = 0; i < nodes.length; i++) {
             let n = nodes[i];
-            if (n.nodeId===node.node.nodeId) {
+            const currentNode = node.node();
+            if (!currentNode) {
+                continue;
+            }
+            if (n.nodeId===currentNode.nodeId) {
                 nodes.splice(i, 1);
             }
         }
@@ -1042,8 +1061,15 @@ export class ScenarioDetailsComponent extends UIStateComponent implements OnInit
         node.isNew = false;
         console.log("40.20", node);
         let detailNode = this.findInTree(node);
-        detailNode.node.mode = NodeMode.show;
-        detailNode.node.isNew = false;
+        const currentNode = detailNode.node();
+        if (!currentNode) {
+            // Handle undefined case (e.g., initialize a default object or throw an error)
+            console.error('Node is undefined');
+            return; // Or set a default SimpleScenarioStep object
+        }
+
+        currentNode.mode = NodeMode.show;
+        currentNode.isNew = false;
         this.formDirective().resetForm();
         this.form.reset();
         this.dataChange.next(this.dataTree);
