@@ -15,6 +15,7 @@ const statusUrl: string = environment.baseUrl+'dispatcher/anon/ping'
 const electronStatusUrl: string = 'http://localhost:64968/status';
 
 @Component({
+    standalone: true,
     selector: 'app-root',
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.scss'],

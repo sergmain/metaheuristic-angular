@@ -30,6 +30,7 @@ import { CtSectionFooterComponent } from '../../ct/ct-section-footer/ct-section-
 import { CtSectionFooterRowComponent } from '../../ct/ct-section-footer-row/ct-section-footer-row.component';
 import { MatButton } from '@angular/material/button';
 import { CtRestStatusComponent } from '../../ct/ct-rest-status/ct-rest-status.component';
+import {MyTranslateService} from './translate.service';
 
 @Component({
     standalone: true,
@@ -45,6 +46,7 @@ export class BatchAddComponent extends UIStateComponent implements OnInit, OnDes
       private route = inject(ActivatedRoute);
       private translate = inject(TranslateService);
       private settingsService = inject(SettingsService);
+    tr = inject(MyTranslateService);
     currentStates: Set<LoadStates> = new Set();
     response = signal<SourceCodeUidsForCompany | undefined>(undefined);
     uploadResponse = signal<OperationStatusRest | undefined>(undefined);

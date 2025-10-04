@@ -10,7 +10,9 @@
         <ct-section-body>
           <ct-section-body-row>
             <mat-form-field appearance="outline">
-              <mat-label> {{ 'batch-add.List of Source Codes' | translate }}</mat-label>
+<!--              <mat-label> {{ 'batch-add.List of Source Codes' | translate }}</mat-label>-->
+                <mat-label>{{ tr.translate('batch-add.List of Source Codes') }}</mat-label>
+
               <mat-select [ngModel]="sourceCode()" (ngModelChange)="sourceCode.set($event)">
                 @for (sourceCode of listOfSourceCodes(); track sourceCode) {
                   <div>
