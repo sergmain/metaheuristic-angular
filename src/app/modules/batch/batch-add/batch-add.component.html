@@ -4,14 +4,15 @@
       <ct-section>
         <ct-section-header>
           <ct-section-header-row>
-            <ct-heading><app-translate key="batch-add.Upload file for processing"/></ct-heading>
+            <ct-heading>{{ 'batch-add.Upload file for processing' | translate }}</ct-heading>
           </ct-section-header-row>
         </ct-section-header>
         <ct-section-body>
           <ct-section-body-row>
             <mat-form-field appearance="outline">
-<!--              <mat-label><app-translate key="batch-add.List of Source Codes"/></mat-label>-->
+<!--              <mat-label> {{ 'batch-add.List of Source Codes' | translate }}</mat-label>-->
                 <mat-label>{{ tr.translate('batch-add.List of Source Codes') }}</mat-label>
+
               <mat-select [ngModel]="sourceCode()" (ngModelChange)="sourceCode.set($event)">
                 @for (sourceCode of listOfSourceCodes(); track sourceCode) {
                   <div>
@@ -19,16 +20,16 @@
                   </div>
                 }
               </mat-select>
-              <mat-hint><app-translate key="batch-add.This is a required field."/></mat-hint>
+              <mat-hint>{{ 'batch-add.This is a required field.' | translate }}</mat-hint>
             </mat-form-field>
             <br>
               <br>
                 <div>
                   <ct-file-upload #fileUpload acceptTypes=".zip, .xml"
-                    buttonTitle="Select File" (changed)="fileUploadChanged()">
+                    buttonTitle="{{'batch-add.Select File' | translate}}" (changed)="fileUploadChanged()">
                   </ct-file-upload>
-                  <ct-hint><app-translate key="batch-add.This is a required field."/></ct-hint>
-                  <ct-hint><app-translate key="batch-add.Only .xml and .zip files are supported"/></ct-hint>
+                  <ct-hint>{{ 'batch-add.This is a required field.' | translate }}</ct-hint>
+                  <ct-hint>{{ 'batch-add.Only .xml and .zip files are supported' | translate }}</ct-hint>
                 </div>
               </ct-section-body-row>
             </ct-section-body>
@@ -36,10 +37,10 @@
               <ct-section-footer-row>
                 <div class="flex justify-content-flex-end gap-8px">
                   <button mat-stroked-button="mat-stroked-button" (click)="back()">
-                  <app-translate key="batch-add.Cancel"/></button>
+                  {{ 'batch-add.Cancel' | translate }}</button>
 
                   <button mat-flat-button="mat-flat-button" color="primary" [disabled]="isUploadDisabled()"
-                  (click)="upload()"><app-translate key="batch-add.Upload-File-button"/></button>
+                  (click)="upload()"> {{ 'batch-add.Upload-File-button' | translate }}</button>
 <!--
                   <button mat-flat-button="mat-flat-button" color="primary" [disabled]="!sourceCode() || !file()"
                   (click)="upload()"> {{ 'batch-add.Upload-File-button' | translate }}</button>

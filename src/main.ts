@@ -12,13 +12,13 @@ import {CommonModule} from '@angular/common';
 import {bootstrapApplication, BrowserModule} from '@angular/platform-browser';
 import {provideAnimations} from '@angular/platform-browser/animations';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
-import {HttpLoaderFactory} from './app/app.module';
+import {provideTranslateService, TranslateLoader, TranslateModule, TranslationObject} from '@ngx-translate/core';
 import { provideToastr } from 'ngx-toastr';
 import {AppComponent} from './app/app.component';
 import { Observable, map } from 'rxjs';
 import { parse } from 'yaml';
 import { provideZonelessChangeDetection } from '@angular/core';
+import {provideTranslateHttpLoader} from '@ngx-translate/http-loader';
 
 class TranslateYamlHttpLoader implements TranslateLoader {
     constructor(
@@ -26,7 +26,7 @@ class TranslateYamlHttpLoader implements TranslateLoader {
         public path: string = 'assets/i18n/'
     ) {}
 
-    public getTranslation(lang: string): Observable<any> {
+    public getTranslation(lang: string): Observable<TranslationObject> {
         let url = `${this.path}${lang}.yaml`;
         console.log('translation lang, url: ', lang, url);
         return this.http
@@ -49,10 +49,11 @@ bootstrapApplication(AppComponent, {
     providers: [
         provideZonelessChangeDetection(),
         importProvidersFrom(
-            CommonModule,
-            BrowserModule,
+            // CommonModule,
+            // BrowserModule,
             FormsModule,
             ReactiveFormsModule,
+/*
             TranslateModule.forRoot({
                 loader: {
                     provide: TranslateLoader,
@@ -60,7 +61,16 @@ bootstrapApplication(AppComponent, {
                     deps: [HttpClient]
                 }
             }),
+*/
         ),
+        provideTranslateService({
+            loader: provideTranslateHttpLoader({
+                prefix: './assets/i18n/',  // Your path from before
+                suffix: '.json'
+            }),
+            fallbackLang: 'EN',  // Adjust as needed
+            // Add fallbackLanguage if desired
+        }),
         // Add the new router provider
         provideRouter(
             ROOT_ROUTES,
