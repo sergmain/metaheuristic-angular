@@ -1,4 +1,4 @@
-import { Component, viewChild, inject, signal } from '@angular/core';
+import { Component, viewChild, inject, signal, computed } from '@angular/core';
 import {Router} from '@angular/router';
 import {FunctionsService} from '@app/services/functions/functions.service';
 import {CtFileUploadComponent} from '@app/modules/ct/ct-file-upload/ct-file-upload.component';
@@ -13,10 +13,8 @@ import { CtSectionHeaderRowComponent } from '../../ct/ct-section-header-row/ct-s
 import { CtHeadingComponent } from '../../ct/ct-heading/ct-heading.component';
 import { CtSectionBodyComponent } from '../../ct/ct-section-body/ct-section-body.component';
 import { CtSectionBodyRowComponent } from '../../ct/ct-section-body-row/ct-section-body-row.component';
-import { CtFileUploadComponent as CtFileUploadComponent_1 } from '../../ct/ct-file-upload/ct-file-upload.component';
 import { CtSectionFooterComponent } from '../../ct/ct-section-footer/ct-section-footer.component';
 import { CtSectionFooterRowComponent } from '../../ct/ct-section-footer-row/ct-section-footer-row.component';
-
 import { CtRestStatusComponent } from '../../ct/ct-rest-status/ct-rest-status.component';
 import { MatFormField, MatLabel, MatInput } from '@angular/material/input';
 
@@ -25,16 +23,23 @@ import { MatFormField, MatLabel, MatInput } from '@angular/material/input';
     selector: 'add-function',
     templateUrl: './add-function.component.html',
     styleUrls: ['./add-function.component.scss'],
-    imports: [CtFileUploadComponent, CtColsComponent, CtColComponent, CtSectionComponent, CtSectionHeaderComponent, CtSectionHeaderRowComponent, CtHeadingComponent, CtSectionBodyComponent, CtSectionBodyRowComponent, CtFileUploadComponent_1, CtSectionFooterComponent, CtSectionFooterRowComponent, MatButton, CtRestStatusComponent, FormsModule, ReactiveFormsModule, MatFormField, MatLabel, MatInput]
+    imports: [CtFileUploadComponent, CtColsComponent, CtColComponent, CtSectionComponent, CtSectionHeaderComponent, CtSectionHeaderRowComponent, CtHeadingComponent, CtSectionBodyComponent, CtSectionBodyRowComponent, CtSectionFooterComponent, CtSectionFooterRowComponent, MatButton, CtRestStatusComponent, FormsModule, ReactiveFormsModule, MatFormField, MatLabel, MatInput]
 })
 
 export class AddFunctionComponent {
-      private functionsService = inject(FunctionsService);
-      private router = inject(Router);
+    private functionsService = inject(FunctionsService);
+    private router = inject(Router);
+    
     response = signal<UploadingStatus | undefined>(undefined);
 
     fileUpload = viewChild<CtFileUploadComponent>('fileUpload');
-    button = viewChild(MatButton);
+    button = viewChild<MatButton>('button');
+
+    // Computed signal for upload button disabled state
+    isUploadDisabled = computed(() => {
+        const upload = this.fileUpload();
+        return !upload || upload.filesLength() === 0;
+    });
 
     form: FormGroup = new FormGroup({
         repo: new FormControl('', [Validators.required, Validators.minLength(10), Validators.pattern('https?:\\/\\/.*')]),
@@ -63,29 +68,29 @@ export class AddFunctionComponent {
     }
 
     changed(value: string): void {
-        console.log('Changed event:', value); // Debug
-        const filesLength = this.fileUpload()?.filesLength();
-        if (this.button()) {
-            this.button().disabled = !filesLength;
-        }
+        console.log('File changed event:', value);
+        // No need to manually update button state - the computed signal handles it
     }
 
     uploadFromGit(): void {
-        if (this.button()) {
-            this.button().disabled = true;
+        const button = this.button();
+        if (button) {
+            button.disabled = true;
         }
         this.functionsService
             .uploadFromGit(this.form.value.repo, this.form.value.branch, this.form.value.commit, this.form.value.path)
             .subscribe({
                 next: sourceCodeResult => {
-                    if (this.button()) {
-                        this.button().disabled = false;
+                    const btn = this.button();
+                    if (btn) {
+                        btn.disabled = false;
                     }
                     // this.responseChange.emit(sourceCodeResult); // Uncomment if needed
                 },
                 error: () => {
-                    if (this.button()) {
-                        this.button().disabled = false;
+                    const btn = this.button();
+                    if (btn) {
+                        btn.disabled = false;
                     }
                 },
             });

@@ -16,7 +16,7 @@
           <div class="flex justify-content-flex-end gap-8px">
             <button mat-stroked-button="mat-stroked-button" (click)="cancel()">Cancel </button>
             <button mat-flat-button="mat-flat-button" (click)="upload()" color="primary"
-              [disabled]="!fileUpload.filesLength()">Upload
+              [disabled]="isUploadDisabled()">Upload
             bundle</button>
           </div>
         </ct-section-footer-row>
@@ -74,4 +74,3 @@
       </ct-section>
     </ct-col>
   </ct-cols>
-
