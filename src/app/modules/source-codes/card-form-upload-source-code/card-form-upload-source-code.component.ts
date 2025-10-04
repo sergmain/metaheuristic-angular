@@ -1,4 +1,4 @@
-import { Component, output, viewChild, inject } from '@angular/core';
+import { Component, output, viewChild, inject, computed } from '@angular/core';
 import { SourceCodesService } from '@app/services/source-codes/source-codes.service';
 import { MatButton } from '@angular/material/button';
 import { SourceCodeResult } from '@app/services/source-codes/SourceCodeResult';
@@ -20,14 +20,21 @@ import { CtSectionFooterRowComponent } from '../../ct/ct-section-footer-row/ct-s
     imports: [CtSectionComponent, CtSectionHeaderComponent, CtSectionHeaderRowComponent, CtHeadingComponent, CtSectionBodyComponent, CtSectionBodyRowComponent, CtFileUploadComponent, CtSectionFooterComponent, CtSectionFooterRowComponent, MatButton]
 })
 export class CardFormUploadSourceCodeComponent {
-      private sourceCodesService = inject(SourceCodesService);
+    private sourceCodesService = inject(SourceCodesService);
+    
     button = viewChild(MatButton);
     file = viewChild(CtFileUploadComponent);
     responseChange = output<SourceCodeResult>();
     abort = output<void>();
 
+    // Computed signal for upload button disabled state
+    isUploadDisabled = computed(() => {
+        const upload = this.file();
+        return !upload || upload.filesLength() === 0;
+    });
+
     upload(): void {
-        const fileInput = this.file()?.fileInput(); // Get the fileInput signal value
+        const fileInput = this.file()?.fileInput();
         const file = fileInput?.nativeElement?.files?.[0];
 
         if (file) {
@@ -37,13 +44,6 @@ export class CardFormUploadSourceCodeComponent {
                     this.responseChange.emit(response);
                 });
         }
-/*
-        this.sourceCodesService
-            .uploadSourceCode(this.file().fileInput.nativeElement.files[0])
-            .subscribe(response => {
-                this.responseChange.emit(response);
-            });
-*/
     }
 
     cancel(): void {
@@ -51,19 +51,7 @@ export class CardFormUploadSourceCodeComponent {
     }
 
     changed(value: string): void {
-        const filesLength = this.file()?.filesLength(); // Use the computed signal
-        if (this.button()) {
-            this.button().disabled = !filesLength; // Set disabled property on MatButton
-        }
+        console.log('File changed event:', value);
+        // No need to manually update button state - the computed signal handles it
     }
-
-    /*
-    changed(value: string): void {
-        if ((this.file().fileInput.nativeElement as HTMLInputElement).files.length) {
-            this.button().disabled = false;
-        } else {
-            this.button().disabled = true;
-        }
-    }
-*/
 }

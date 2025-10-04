@@ -1,4 +1,4 @@
-import { Component, output, viewChild, inject } from '@angular/core';
+import { Component, output, viewChild, inject, computed } from '@angular/core';
 import { FormControl, FormGroup, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { OperationStatusRest } from '@app/models/OperationStatusRest';
 import { GlobalVariablesService } from '@app/services/global-variables/global-variables.service';
@@ -22,7 +22,8 @@ import { MatButton } from '@angular/material/button';
     imports: [CtSectionComponent, CtSectionHeaderComponent, CtSectionHeaderRowComponent, CtHeadingComponent, CtSectionBodyComponent, FormsModule, ReactiveFormsModule, CtSectionBodyRowComponent, CtFileUploadComponent, MatHint, MatFormField, MatLabel, MatInput, CtSectionFooterComponent, CtSectionFooterRowComponent, MatButton]
 })
 export class CardFormAddVariableComponent {
-      private globalVariablesService = inject(GlobalVariablesService);
+    private globalVariablesService = inject(GlobalVariablesService);
+    
     afterResponse = output<OperationStatusRest>();
     abort = output<void>();
 
@@ -35,10 +36,16 @@ export class CardFormAddVariableComponent {
         ]),
     });
 
+    // Computed signal for upload button disabled state
+    isUploadDisabled = computed(() => {
+        const upload = this.fileUpload();
+        return !this.form.valid || !upload || upload.filesLength() === 0;
+    });
+
     upload(): void {
         const file = this.fileUpload()?.fileInput()?.nativeElement.files[0];
         if (!this.form.value.poolCode || !file) {
-            return; // Prevent upload if no this.form.value.poolCode or file
+            return; // Prevent upload if no poolCode or file
         }
         this.globalVariablesService
             .createResourceFromFile(this.form.value.poolCode, file)
@@ -49,19 +56,5 @@ export class CardFormAddVariableComponent {
 
     cancel(): void {
         this.abort.emit();
-    }
-
-    checkDisable(): boolean {
-        const file = this.fileUpload()?.fileInput()?.nativeElement.files[0];
-        if (!this.form.valid || !file) {
-            return; // Prevent upload if no this.form.value.poolCode or file
-        }
-        return file.filesLength()===0;
-/*
-        if (this.form.valid && this.fileUpload().fileInput.nativeElement.files.length) {
-            return false;
-        }
-        return true;
-*/
     }
 }

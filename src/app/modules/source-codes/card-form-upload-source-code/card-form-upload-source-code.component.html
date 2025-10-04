@@ -15,7 +15,7 @@
             <div class="flex justify-content-flex-end gap-8px">
                 <button mat-stroked-button (click)="cancel()">Cancel</button>
                 <button mat-flat-button="mat-flat-button"
-                        [disabled]="!file()?.filesLength()"
+                        [disabled]="isUploadDisabled()"
                         color="primary"
                         (click)="upload()">Upload</button>
             </div>

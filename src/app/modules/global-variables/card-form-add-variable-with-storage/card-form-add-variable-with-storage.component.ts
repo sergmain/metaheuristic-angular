@@ -1,6 +1,5 @@
-import { Component, OnInit, output, viewChild, inject } from '@angular/core';
+import { Component, OnInit, output, inject } from '@angular/core';
 import { OperationStatusRest } from '@app/models/OperationStatusRest';
-import { CtFileUploadComponent } from '../../ct/ct-file-upload/ct-file-upload.component';
 import { FormGroup, FormControl, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { GlobalVariablesService } from '@app/services/global-variables/global-variables.service';
 import { CtSectionComponent } from '../../ct/ct-section/ct-section.component';
@@ -25,8 +24,8 @@ import { MatButton } from '@angular/material/button';
 })
 export class CardFormAddVariableWithStorageComponent {
       private globalVariablesService = inject(GlobalVariablesService);
+    
     afterResponse = output<OperationStatusRest>();
-    fileUpload = viewChild<CtFileUploadComponent>('fileUpload');
     abort = output<void>();
 
     form: FormGroup = new FormGroup({

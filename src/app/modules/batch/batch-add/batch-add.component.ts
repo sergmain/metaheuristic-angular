@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, viewChild, inject, signal } from '@angular/core';
+import { Component, OnDestroy, OnInit, viewChild, inject, signal, computed } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LoadStates } from '@app/enums/LoadStates';
 import { BatchService } from '@app/services/batch/batch.service';
@@ -53,6 +53,12 @@ export class BatchAddComponent extends UIStateComponent implements OnInit, OnDes
     file = signal<File | undefined>(undefined);
     listOfSourceCodes = signal<SourceCodeUid[]>([]);
     fileUpload = viewChild<CtFileUploadComponent>('fileUpload');
+
+    // Computed signal for upload button disabled state
+    isUploadDisabled = computed(() => {
+        const upload = this.fileUpload();
+        return !this.sourceCode() || !upload || upload.filesLength() === 0;
+    });
 
     constructor(public readonly authenticationService: AuthenticationService = inject(AuthenticationService)) {
         super(authenticationService);
