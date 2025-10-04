@@ -26,7 +26,7 @@ class TranslateYamlHttpLoader implements TranslateLoader {
         public path: string = 'assets/i18n/'
     ) {}
 
-    public getTranslation(lang: string): Observable<Object> {
+    public getTranslation(lang: string): Observable<any> {
         let url = `${this.path}${lang}.yaml`;
         console.log('translation lang, url: ', lang, url);
         return this.http

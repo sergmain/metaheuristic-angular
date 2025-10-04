@@ -37,7 +37,12 @@
     "npm-i-package-lockg": "npm i --package-lock-only",
     "ng add @angular-eslint/schematics": "ng add @angular-eslint/schematics",
     "ng g @angular-eslint/schematics:convert-tslint-to-eslint": "ng g @angular-eslint/schematics:convert-tslint-to-eslint metaheuristic-app-e2e",
-    "test": "ng test",
+    "npm run test": "npm run test",
+    "npm run test:watch": "npm run test:watch",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:ui": "vitest --ui",
+    "test:coverage": "vitest run --coverage",
     "lint": "ng lint",
     "e2e": "ng e2e",
     "version": "ng version",
@@ -83,7 +88,8 @@
     "npm install ngxtension --save-dev": "npm install ngxtension --save-dev",
     "npm install @ngxtension/schematics --save-dev": "npm install @ngxtension/schematics --save-dev",
     "npm install typescript@latest": "npm install typescript@latest",
-    "npm install rxjs@latest": "npm install rxjs@latest"
+    "npm install rxjs@latest": "npm install rxjs@latest",
+    "npm install --save-dev vitest @vitest/ui @analogjs/vite-plugin-angular jsdom": "npm install --save-dev vitest @vitest/ui @analogjs/vite-plugin-angular jsdom"
   },
   "engines": {
     "node": ">=18.18.2",
@@ -104,7 +110,6 @@
     "@biesbjerg/ngx-translate-extract-marker": "1.0.0",
     "@material-design-icons/font": "^0.14.13",
     "@material-design-icons/svg": "^0.14.13",
-    "@ngx-translate/core": "^15.0.0",
     "@ngx-translate/http-loader": "8.0.0",
     "core-js": "3.45.1",
     "file-saver": "2.0.5",
@@ -128,14 +133,19 @@
     "@angular/cli": "^20.3.3",
     "@angular/compiler-cli": "^20.3.2",
     "@angular/language-service": "^20.3.2",
+    "@ngx-translate/core": "^17.0.0",
     "@types/node": "^18.18.6",
     "@typescript-eslint/eslint-plugin": "^8.44.0",
     "@typescript-eslint/parser": "^8.44.0",
     "@vendure/ngx-translate-extract": "^10.1.0",
+    "@vitest/ui": "^2.1.9",
     "electron": "^38.2.0",
     "electron-builder": "^26.0.20",
     "eslint": "^9.35.0",
+    "jsdom": "^25.0.1",
     "ngxtension": "^4.0.0",
-    "ts-node": "10.9.2"
+    "ts-node": "10.9.2",
+    "vite": "^6.3.6",
+    "vitest": "^2.1.9"
   }
 }

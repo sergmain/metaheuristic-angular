@@ -1,9 +1,7 @@
-import {Component, ElementRef, OnInit, OnChanges, input, output, viewChild, signal, computed} from '@angular/core';
-import { marker } from '@biesbjerg/ngx-translate-extract-marker';
-import { TranslateService } from '@ngx-translate/core';
+import {Component, computed, ElementRef, input, OnChanges, OnInit, output, signal, viewChild} from '@angular/core';
 
-import { MatButton } from '@angular/material/button';
-import { MatIcon } from '@angular/material/icon';
+import {MatButton} from '@angular/material/button';
+import {MatIcon} from '@angular/material/icon';
 
 @Component({
     standalone : true,

@@ -4,12 +4,10 @@ import { LoadStates } from '@app/enums/LoadStates';
 import { BatchService } from '@app/services/batch/batch.service';
 import { SourceCode } from '@app/services/source-codes/SourceCode';
 import { SourceCodeUid } from '@app/services/source-codes/SourceCodeUid';
-import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { OperationStatus } from '@app/enums/OperationStatus';
 import { OperationStatusRest } from '@app/models/OperationStatusRest';
 import { UIStateComponent } from '@app/models/UIStateComponent';
 import { AuthenticationService } from '@app/services/authentication';
-import { SettingsService, SettingsServiceEventChange } from '@app/services/settings/settings.service';
 import { SourceCodeUidsForCompany } from '@app/services/source-codes/SourceCodeUidsForCompany';
 import { CtFileUploadComponent } from '../../ct/ct-file-upload/ct-file-upload.component';
 
@@ -30,21 +28,22 @@ import { CtSectionFooterComponent } from '../../ct/ct-section-footer/ct-section-
 import { CtSectionFooterRowComponent } from '../../ct/ct-section-footer-row/ct-section-footer-row.component';
 import { MatButton } from '@angular/material/button';
 import { CtRestStatusComponent } from '../../ct/ct-rest-status/ct-rest-status.component';
+import { TranslateComponent } from '../translate.component';
+import {MyTranslateService} from '@app/modules/batch/translate.service';
 
 @Component({
     standalone: true,
     selector: 'batch-add',
     templateUrl: './batch-add.component.html',
     styleUrls: ['./batch-add.component.scss'],
-    imports: [CtColsComponent, CtColComponent, CtSectionComponent, CtSectionHeaderComponent, CtSectionHeaderRowComponent, CtHeadingComponent, CtSectionBodyComponent, CtSectionBodyRowComponent, MatFormField, MatLabel, MatSelect, FormsModule, MatOption, MatHint, CtFileUploadComponent, CtHintComponent, CtSectionFooterComponent, CtSectionFooterRowComponent, MatButton, CtRestStatusComponent, TranslateModule]
+    imports: [CtColsComponent, CtColComponent, CtSectionComponent, CtSectionHeaderComponent, CtSectionHeaderRowComponent, CtHeadingComponent, CtSectionBodyComponent, CtSectionBodyRowComponent, MatFormField, MatLabel, MatSelect, FormsModule, MatOption, MatHint, CtFileUploadComponent, CtHintComponent, CtSectionFooterComponent, CtSectionFooterRowComponent, MatButton, CtRestStatusComponent, TranslateComponent]
 })
 
 export class BatchAddComponent extends UIStateComponent implements OnInit, OnDestroy {
       private batchService = inject(BatchService);
       private router = inject(Router);
       private route = inject(ActivatedRoute);
-      private translate = inject(TranslateService);
-      private settingsService = inject(SettingsService);
+      tr = inject(MyTranslateService);
     currentStates: Set<LoadStates> = new Set();
     response = signal<SourceCodeUidsForCompany | undefined>(undefined);
     uploadResponse = signal<OperationStatusRest | undefined>(undefined);
@@ -65,11 +64,8 @@ export class BatchAddComponent extends UIStateComponent implements OnInit, OnDes
     }
 
     ngOnInit(): void {
-        this.subscribeSubscription(this.settingsService.events.subscribe(event => {
-            if (event instanceof SettingsServiceEventChange) {
-                this.translate.use(event.settings.language);
-            }
-        }));
+        // Language switching is now handled by TranslateComponent internally
+        // No need to manually switch language here anymore
 
         this.updateResponse();
     }
@@ -119,9 +115,4 @@ export class BatchAddComponent extends UIStateComponent implements OnInit, OnDes
     fileUploadChanged(): void {
         this.file.set(this.fileUpload()?.fileInput()?.nativeElement.files[0] || undefined);
     }
-/*
-    fileUploadChanged(): void {
-        this.file.set(this.fileUpload().fileInput.nativeElement.files[0] || false);
-    }
-*/
 }
