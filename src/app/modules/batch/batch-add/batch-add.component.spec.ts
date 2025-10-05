@@ -3,7 +3,7 @@ import { provideRouter } from '@angular/router';
 import { provideHttpClient } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { signal, NO_ERRORS_SCHEMA } from '@angular/core';
+import { signal, Pipe, PipeTransform } from '@angular/core';
 import { of } from 'rxjs';
 import { describe, it, expect, beforeEach, vi } from 'vitest';
 
@@ -12,11 +12,16 @@ import { BatchService } from '@app/services/batch/batch.service';
 import { AuthenticationService } from '@app/services/authentication';
 import { SourceCodeUidsForCompany } from '@app/services/source-codes/SourceCodeUidsForCompany';
 import { OperationStatus } from '@app/enums/OperationStatus';
+import { TranslateModule } from '@ngx-translate/core';
 
-// Mock TranslateService for the TranslateComponent that BatchAddComponent uses
-class MockTranslateService {
-  instant(key: string): string {
-    return key; // Just return the key as-is for tests
+// Mock TranslatePipe for vitest compatibility
+@Pipe({
+  name: 'translate',
+  standalone: true
+})
+class MockTranslatePipe implements PipeTransform {
+  transform(value: string): string {
+    return value; // Just return the key
   }
 }
 
@@ -55,8 +60,11 @@ describe('BatchAddComponent - File Upload', () => {
         provideHttpClientTesting(),
         { provide: BatchService, useValue: batchServiceMock },
         { provide: AuthenticationService, useValue: authServiceMock }
-      ],
-      schemas: [NO_ERRORS_SCHEMA]  // This will ignore unknown elements
+      ]
+    })
+    .overrideComponent(BatchAddComponent, {
+      remove: { imports: [TranslateModule] },
+      add: { imports: [MockTranslatePipe] }
     })
     .compileComponents();
 
