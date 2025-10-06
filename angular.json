@@ -142,6 +142,7 @@
               "sourceMap": false,
               "namedChunks": false,
               "aot": true,
+              "baseHref": "./",
               "extractLicenses": true,
               "budgets": [
                 {
@@ -167,7 +168,8 @@
               "sourceMap": false,
               "namedChunks": false,
               "aot": true,
-              "extractLicenses": true,
+              "baseHref": "./",
+              "extractLicenses": false,
               "budgets": [
                 {
                   "type": "initial",

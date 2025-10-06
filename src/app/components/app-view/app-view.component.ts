@@ -12,10 +12,10 @@ import {RuntimeService} from '@services/runtime/runtime.service';
 import {MhUtils} from '@services/mh-utils/mh-utils.service';
 import { NgTemplateOutlet } from '@angular/common';
 import { MatToolbar, MatToolbarRow } from '@angular/material/toolbar';
-import { CtContentComponent } from '../../modules/ct/ct-content/ct-content.component';
-import { CtSectionComponent } from '../../modules/ct/ct-section/ct-section.component';
-import { CtSectionBodyComponent } from '../../modules/ct/ct-section-body/ct-section-body.component';
-import { CtSectionBodyRowComponent } from '../../modules/ct/ct-section-body-row/ct-section-body-row.component';
+import { CtContentComponent } from '@app/modules/ct/ct-content/ct-content.component';
+import { CtSectionComponent } from '@app/modules/ct/ct-section/ct-section.component';
+import { CtSectionBodyComponent } from '@app/modules/ct/ct-section-body/ct-section-body.component';
+import { CtSectionBodyRowComponent } from '@app/modules/ct/ct-section-body-row/ct-section-body-row.component';
 import { LoginComponent } from '../login/login.component';
 import { MatButton, MatIconButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
@@ -30,6 +30,7 @@ import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation
 declare function initQuitProcess(): any;
 
 @Component({
+    standalone: true,
     selector: 'app-view',
     templateUrl: './app-view.component.html',
     styleUrls: ['./app-view.component.scss'],

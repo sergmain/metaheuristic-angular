@@ -1,7 +1,7 @@
 import {provideRouter, withHashLocation} from '@angular/router';
 import {ROOT_ROUTES} from './app/app.routing.module';
 
-import {enableProdMode, importProvidersFrom} from '@angular/core';
+import {enableProdMode, importProvidersFrom, Injectable} from '@angular/core';
 
 
 import {environment} from './environments/environment';
@@ -20,6 +20,7 @@ import { parse } from 'yaml';
 import { provideZonelessChangeDetection } from '@angular/core';
 import {provideTranslateHttpLoader} from '@ngx-translate/http-loader';
 
+@Injectable()
 class TranslateYamlHttpLoader implements TranslateLoader {
     constructor(
         private http: HttpClient,
@@ -45,6 +46,12 @@ if (environment.production) {
     enableProdMode();
 }
 
+const yamlLoaderFactory = (http: HttpClient): TranslateLoader => {
+    const loader = new TranslateYamlHttpLoader(http);
+    loader.path = './assets/i18n/'; // Matches your prefix
+    return loader;
+};
+
 bootstrapApplication(AppComponent, {
     providers: [
         provideZonelessChangeDetection(),
@@ -65,6 +72,9 @@ bootstrapApplication(AppComponent, {
         ),
         provideTranslateService({
             loader: provideTranslateHttpLoader({
+                provide: TranslateLoader,
+                useFactory: HttpLoaderFactory,
+                deps: [HttpClient],
                 prefix: './assets/i18n/',  // Your path from before
                 suffix: '.json'
             }),
