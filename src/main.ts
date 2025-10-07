@@ -72,14 +72,11 @@ bootstrapApplication(AppComponent, {
         ),
         provideTranslateService({
             loader: provideTranslateHttpLoader({
-                provide: TranslateLoader,
-                useFactory: HttpLoaderFactory,
-                deps: [HttpClient],
-                prefix: './assets/i18n/',  // Your path from before
+                prefix: './assets/i18n/',
                 suffix: '.json'
             }),
-            fallbackLang: 'EN',  // Adjust as needed
-            // Add fallbackLanguage if desired
+            fallbackLang: 'EN',
+            lang: 'EN'  // Current language
         }),
         // Add the new router provider
         provideRouter(

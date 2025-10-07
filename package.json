@@ -126,6 +126,7 @@
     "yaml": "^2.8.1"
   },
   "devDependencies": {
+    "@analogjs/vite-plugin-angular": "^1.21.2",
     "@angular-devkit/build-angular": "^20.3.3",
     "@angular-eslint/builder": "^20.3.0",
     "@angular-eslint/eslint-plugin": "^20.3.0",
