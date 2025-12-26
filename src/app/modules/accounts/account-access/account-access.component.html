@@ -10,26 +10,17 @@
           </ct-section-header-row>
         </ct-section-header>
         <ct-section-body>
-          @if (response()) {
+          @if (roles().length > 0) {
             <ct-section-body-row style="font-size:125%;">
-              <ct-section-content>
-                <mat-checkbox [ngModel]="isManager()" (ngModelChange)="isManager.set($event)">Manager</mat-checkbox>
-              </ct-section-content>
-              <ct-section-content>
-                <mat-checkbox [ngModel]="isOperator()" (ngModelChange)="isOperator.set($event)">Operator</mat-checkbox>
-              </ct-section-content>
-              <ct-section-content>
-                <mat-checkbox [ngModel]="isBilling()" (ngModelChange)="isBilling.set($event)">Billing</mat-checkbox>
-              </ct-section-content>
-              <ct-section-content>
-                <mat-checkbox [ngModel]="isData()" (ngModelChange)="isData.set($event)">Data</mat-checkbox>
-              </ct-section-content>
-              <ct-section-content>
-                <mat-checkbox [ngModel]="isServerRestAccess()" (ngModelChange)="isServerRestAccess.set($event)">Server Rest Access</mat-checkbox>
-              </ct-section-content>
-              <ct-section-content>
-                <mat-checkbox [ngModel]="isAdmin()" (ngModelChange)="isAdmin.set($event)">Admin</mat-checkbox>
-              </ct-section-content>
+              @for (role of roles(); track role.role) {
+                <ct-section-content>
+                  <mat-checkbox
+                    [ngModel]="role.enabled"
+                    (ngModelChange)="toggleRole(role, $event)">
+                    {{role.displayName}}
+                  </mat-checkbox>
+                </ct-section-content>
+              }
             </ct-section-body-row>
           }
         </ct-section-body>

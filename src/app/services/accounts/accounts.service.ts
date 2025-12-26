@@ -19,6 +19,10 @@ export class AccountsService {
         return this.http.get<AccountsResult>(url(`accounts`), { params: { page } });
     }
 
+    getPossibleRoles(): Observable<string[]> {
+        return this.http.get<string[]>(url(`possible-roles`));
+    }
+
     addFormCommit(account: ɵTypedOrUntyped<{ password: FormControl<string | null>; publicName: FormControl<string | null>; password2: FormControl<string | null>; username: FormControl<string | null> }, ɵFormGroupValue<{ password: FormControl<string | null>; publicName: FormControl<string | null>; password2: FormControl<string | null>; username: FormControl<string | null> }>, any>): Observable<OperationStatusRest> {
         return this.http.post<OperationStatusRest>(url(`account-add-commit`), account);
     }

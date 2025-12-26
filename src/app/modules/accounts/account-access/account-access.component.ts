@@ -1,8 +1,8 @@
 import { Component, OnInit, inject, signal } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AccountsService, Authority, SimpleAccount } from '@app/services/accounts';
-import { Role } from '@app/services/authentication';
+import { AccountsService, Authority } from '@app/services/accounts';
 import { AccountResult } from '@app/services/accounts/AccountResult';
+import { forkJoin } from 'rxjs';
 
 import { CtColsComponent } from '../../ct/ct-cols/ct-cols.component';
 import { CtColComponent } from '../../ct/ct-col/ct-col.component';
@@ -19,6 +19,12 @@ import { CtSectionFooterComponent } from '../../ct/ct-section-footer/ct-section-
 import { CtSectionFooterRowComponent } from '../../ct/ct-section-footer-row/ct-section-footer-row.component';
 import { MatButton } from '@angular/material/button';
 
+interface RoleState {
+    role: string;
+    displayName: string;
+    enabled: boolean;
+}
+
 @Component({
     selector: 'account-access',
     templateUrl: './account-access.component.html',
@@ -26,47 +32,50 @@ import { MatButton } from '@angular/material/button';
     imports: [CtColsComponent, CtColComponent, CtSectionComponent, CtSectionHeaderComponent, CtSectionHeaderRowComponent, CtHeadingComponent, CtSectionBodyComponent, CtSectionBodyRowComponent, CtSectionContentComponent, MatCheckbox, FormsModule, CtSectionFooterComponent, CtSectionFooterRowComponent, MatButton]
 })
 export class AccountAccessComponent implements OnInit {
-      private router = inject(Router);
-      private route = inject(ActivatedRoute);
-      private accountsService = inject(AccountsService);
-    response = signal<AccountResult | undefined>(undefined);
+    private router = inject(Router);
+    private route = inject(ActivatedRoute);
+    private accountsService = inject(AccountsService);
 
-    isManager = signal<boolean>(false);
-    isOperator = signal<boolean>(false);
-    isBilling = signal<boolean>(false);
-    isData = signal<boolean>(false);
-    isAdmin = signal<boolean>(false);
-    isServerRestAccess = signal<boolean>(false);
+    response = signal<AccountResult | undefined>(undefined);
+    roles = signal<RoleState[]>([]);
 
     ngOnInit(): void {
-        this.accountsService
-            .getAccount(this.route.snapshot.paramMap.get('accountId'))
-            .subscribe((response) => {
-                this.response.set(response);
-                const roles: Role[] = [];
-                response.account.authorities.forEach((authority: Authority) => roles.push(authority.authority));
-                this.isManager.set(roles.includes(Role.ROLE_MANAGER));
-                this.isOperator.set(roles.includes(Role.ROLE_OPERATOR));
-                this.isBilling.set(roles.includes(Role.ROLE_BILLING));
-                this.isData.set(roles.includes(Role.ROLE_DATA));
-                this.isAdmin.set(roles.includes(Role.ROLE_ADMIN));
-                this.isServerRestAccess.set(roles.includes(Role.ROLE_SERVER_REST_ACCESS));
-            });
+        const accountId = this.route.snapshot.paramMap.get('accountId');
+
+        forkJoin({
+            account: this.accountsService.getAccount(accountId),
+            possibleRoles: this.accountsService.getPossibleRoles()
+        }).subscribe(({ account, possibleRoles }) => {
+            this.response.set(account);
+
+            const userRoles: string[] = account.account.authorities.map((a: Authority) => a.authority);
+
+            const roleStates: RoleState[] = possibleRoles.map(role => ({
+                role: role,
+                displayName: role,
+                enabled: userRoles.includes(role)
+            }));
+
+            this.roles.set(roleStates);
+        });
+    }
+
+    toggleRole(role: RoleState, enabled: boolean): void {
+        const updated = this.roles().map(r =>
+            r.role === role.role ? { ...r, enabled } : r
+        );
+        this.roles.set(updated);
     }
 
     save(): void {
-        const roles: string[] = [];
-        const accountId: string = this.route.snapshot.paramMap.get('accountId');
-
-        if (this.isAdmin()) { roles.push(Role.ROLE_ADMIN); }
-        if (this.isBilling()) { roles.push(Role.ROLE_BILLING); }
-        if (this.isData()) { roles.push(Role.ROLE_DATA); }
-        if (this.isManager()) { roles.push(Role.ROLE_MANAGER); }
-        if (this.isOperator()) { roles.push(Role.ROLE_OPERATOR); }
-        if (this.isServerRestAccess()) { roles.push(Role.ROLE_SERVER_REST_ACCESS); }
+        const accountId = this.route.snapshot.paramMap.get('accountId');
+        const selectedRoles = this.roles()
+            .filter(r => r.enabled)
+            .map(r => r.role)
+            .join(',');
 
         this.accountsService
-            .roleFormCommit(accountId, roles.join(','))
+            .roleFormCommit(accountId, selectedRoles)
             .subscribe(() => { });
     }
 
